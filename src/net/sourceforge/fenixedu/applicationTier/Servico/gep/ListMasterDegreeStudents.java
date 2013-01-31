@@ -25,76 +25,78 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class ListMasterDegreeStudents extends FenixService {
 
-    @Service
-    public static Collection run(String executionYearName) {
-	final ExecutionYear executionYear = ExecutionYear.readExecutionYearByName(executionYearName);
+	@Service
+	public static Collection run(String executionYearName) {
+		final ExecutionYear executionYear = ExecutionYear.readExecutionYearByName(executionYearName);
 
-	final Collection<InfoStudentCurricularPlanWithFirstTimeEnrolment> infoStudentCurricularPlans = new ArrayList();
-	final Collection<StudentCurricularPlan> studentCurricularPlans = new ArrayList();
-	final Collection<DegreeCurricularPlan> masterDegreeCurricularPlans = DegreeCurricularPlan.readByDegreeTypeAndState(
-		DegreeType.MASTER_DEGREE, DegreeCurricularPlanState.ACTIVE);
-	CollectionUtils.filter(masterDegreeCurricularPlans, new Predicate() {
+		final Collection<InfoStudentCurricularPlanWithFirstTimeEnrolment> infoStudentCurricularPlans = new ArrayList();
+		final Collection<StudentCurricularPlan> studentCurricularPlans = new ArrayList();
+		final Collection<DegreeCurricularPlan> masterDegreeCurricularPlans =
+				DegreeCurricularPlan.readByDegreeTypeAndState(DegreeType.MASTER_DEGREE, DegreeCurricularPlanState.ACTIVE);
+		CollectionUtils.filter(masterDegreeCurricularPlans, new Predicate() {
 
-	    public boolean evaluate(Object arg0) {
-		DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) arg0;
-		for (ExecutionDegree executionDegree : degreeCurricularPlan.getExecutionDegrees()) {
-		    if (executionDegree.getExecutionYear().equals(executionYear)) {
-			return true;
-		    }
+			@Override
+			public boolean evaluate(Object arg0) {
+				DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) arg0;
+				for (ExecutionDegree executionDegree : degreeCurricularPlan.getExecutionDegrees()) {
+					if (executionDegree.getExecutionYear().equals(executionYear)) {
+						return true;
+					}
+				}
+				return false;
+			}
+
+		});
+
+		for (DegreeCurricularPlan degreeCurricularPlan : masterDegreeCurricularPlans) {
+			studentCurricularPlans.addAll(degreeCurricularPlan.getStudentCurricularPlans());
 		}
-		return false;
-	    }
 
-	});
+		for (StudentCurricularPlan studentCurricularPlan : studentCurricularPlans) {
 
-	for (DegreeCurricularPlan degreeCurricularPlan : masterDegreeCurricularPlans) {
-	    studentCurricularPlans.addAll(degreeCurricularPlan.getStudentCurricularPlans());
+			if (!studentCurricularPlan.isActive()) {
+				continue;
+			}
+
+			boolean firstTimeEnrolment = true;
+			if (studentCurricularPlan.getSpecialization() != null
+					&& studentCurricularPlan.getSpecialization().equals(Specialization.STUDENT_CURRICULAR_PLAN_MASTER_DEGREE)) {
+
+				Collection<StudentCurricularPlan> previousStudentCurricularPlans =
+						studentCurricularPlan.getRegistration().getStudentCurricularPlansBySpecialization(
+								Specialization.STUDENT_CURRICULAR_PLAN_MASTER_DEGREE);
+
+				previousStudentCurricularPlans.remove(studentCurricularPlan);
+				for (StudentCurricularPlan previousStudentCurricularPlan : previousStudentCurricularPlans) {
+					if (previousStudentCurricularPlan.getDegreeCurricularPlan().getDegree()
+							.equals(studentCurricularPlan.getDegreeCurricularPlan().getDegree())) {
+						firstTimeEnrolment = false;
+						break;
+					}
+				}
+			} else if (studentCurricularPlan.getSpecialization() != null
+					&& studentCurricularPlan.getSpecialization().equals(Specialization.STUDENT_CURRICULAR_PLAN_SPECIALIZATION)) {
+				if (!studentCurricularPlan.getDegreeCurricularPlan().getFirstExecutionDegree().getExecutionYear()
+						.equals(executionYear)) {
+					continue;
+				}
+			}
+
+			if (firstTimeEnrolment) {
+				if (!studentCurricularPlan.getDegreeCurricularPlan().getFirstExecutionDegree().getExecutionYear()
+						.equals(executionYear)) {
+					firstTimeEnrolment = false;
+				}
+			}
+
+			InfoStudentCurricularPlanWithFirstTimeEnrolment infoStudentCurricularPlan =
+					InfoStudentCurricularPlanWithFirstTimeEnrolment.newInfoFromDomain(studentCurricularPlan);
+			infoStudentCurricularPlan.setFirstTimeEnrolment(firstTimeEnrolment);
+			infoStudentCurricularPlans.add(infoStudentCurricularPlan);
+		}
+
+		return infoStudentCurricularPlans;
+
 	}
-
-	for (StudentCurricularPlan studentCurricularPlan : studentCurricularPlans) {
-
-	    if (!studentCurricularPlan.isActive()) {
-		continue;
-	    }
-
-	    boolean firstTimeEnrolment = true;
-	    if (studentCurricularPlan.getSpecialization() != null
-		    && studentCurricularPlan.getSpecialization().equals(Specialization.STUDENT_CURRICULAR_PLAN_MASTER_DEGREE)) {
-
-		Collection<StudentCurricularPlan> previousStudentCurricularPlans = studentCurricularPlan.getRegistration()
-			.getStudentCurricularPlansBySpecialization(Specialization.STUDENT_CURRICULAR_PLAN_MASTER_DEGREE);
-
-		previousStudentCurricularPlans.remove(studentCurricularPlan);
-		for (StudentCurricularPlan previousStudentCurricularPlan : previousStudentCurricularPlans) {
-		    if (previousStudentCurricularPlan.getDegreeCurricularPlan().getDegree().equals(
-			    studentCurricularPlan.getDegreeCurricularPlan().getDegree())) {
-			firstTimeEnrolment = false;
-			break;
-		    }
-		}
-	    } else if (studentCurricularPlan.getSpecialization() != null
-		    && studentCurricularPlan.getSpecialization().equals(Specialization.STUDENT_CURRICULAR_PLAN_SPECIALIZATION)) {
-		if (!studentCurricularPlan.getDegreeCurricularPlan().getFirstExecutionDegree().getExecutionYear().equals(
-			executionYear)) {
-		    continue;
-		}
-	    }
-
-	    if (firstTimeEnrolment) {
-		if (!studentCurricularPlan.getDegreeCurricularPlan().getFirstExecutionDegree().getExecutionYear().equals(
-			executionYear)) {
-		    firstTimeEnrolment = false;
-		}
-	    }
-
-	    InfoStudentCurricularPlanWithFirstTimeEnrolment infoStudentCurricularPlan = InfoStudentCurricularPlanWithFirstTimeEnrolment
-		    .newInfoFromDomain(studentCurricularPlan);
-	    infoStudentCurricularPlan.setFirstTimeEnrolment(firstTimeEnrolment);
-	    infoStudentCurricularPlans.add(infoStudentCurricularPlan);
-	}
-
-	return infoStudentCurricularPlans;
-
-    }
 
 }

@@ -14,26 +14,26 @@ import java.util.List;
  * 
  */
 public class InfoSiteDegreeCurricularPlans extends DataTranferObject implements ISiteComponent {
-    private List degreeCurricularPlans;
+	private List degreeCurricularPlans;
 
-    /**
+	/**
      *  
      */
-    public InfoSiteDegreeCurricularPlans() {
-    }
+	public InfoSiteDegreeCurricularPlans() {
+	}
 
-    /**
-     * @return
-     */
-    public List getDegreeCurricularPlans() {
-	return degreeCurricularPlans;
-    }
+	/**
+	 * @return
+	 */
+	public List getDegreeCurricularPlans() {
+		return degreeCurricularPlans;
+	}
 
-    /**
-     * @param degreeCurricularPlans
-     */
-    public void setDegreeCurricularPlans(List degreeCurricularPlans) {
-	this.degreeCurricularPlans = degreeCurricularPlans;
-    }
+	/**
+	 * @param degreeCurricularPlans
+	 */
+	public void setDegreeCurricularPlans(List degreeCurricularPlans) {
+		this.degreeCurricularPlans = degreeCurricularPlans;
+	}
 
 }

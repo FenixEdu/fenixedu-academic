@@ -14,18 +14,18 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class ReadNumerusClausus extends FenixService {
 
-    @Service
-    public static Integer run(Integer degreeCurricularPlanID) throws NonExistingServiceException {
+	@Service
+	public static Integer run(Integer degreeCurricularPlanID) throws NonExistingServiceException {
 
-	DegreeCurricularPlan degreeCurricularPlan = null;
+		DegreeCurricularPlan degreeCurricularPlan = null;
 
-	degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanID);
+		degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanID);
 
-	if (degreeCurricularPlan == null) {
-	    throw new NonExistingServiceException();
+		if (degreeCurricularPlan == null) {
+			throw new NonExistingServiceException();
+		}
+
+		return degreeCurricularPlan.getNumerusClausus();
 	}
-
-	return degreeCurricularPlan.getNumerusClausus();
-    }
 
 }

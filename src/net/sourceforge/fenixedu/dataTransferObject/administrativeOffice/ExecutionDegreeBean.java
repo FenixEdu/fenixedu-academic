@@ -10,86 +10,86 @@ import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 
 public class ExecutionDegreeBean implements Serializable {
 
-    /**
-     * Serial version id.
-     */
-    private static final long serialVersionUID = 1L;
+	/**
+	 * Serial version id.
+	 */
+	private static final long serialVersionUID = 1L;
 
-    private Degree degree;
+	private Degree degree;
 
-    private DegreeCurricularPlan degreeCurricularPlan;
+	private DegreeCurricularPlan degreeCurricularPlan;
 
-    private ExecutionDegree executionDegree;
+	private ExecutionDegree executionDegree;
 
-    private ExecutionYear executionYear;
+	private ExecutionYear executionYear;
 
-    private CycleType cycleType;
+	private CycleType cycleType;
 
-    public ExecutionDegreeBean() {
-	super();
+	public ExecutionDegreeBean() {
+		super();
 
-	this.degree = null;
-	this.degreeCurricularPlan = null;
-	this.executionDegree = null;
-	this.executionYear = null;
-    }
+		this.degree = null;
+		this.degreeCurricularPlan = null;
+		this.executionDegree = null;
+		this.executionYear = null;
+	}
 
-    public ExecutionDegreeBean(Degree degree) {
-	this();
+	public ExecutionDegreeBean(Degree degree) {
+		this();
 
-	setDegree(degree);
-    }
+		setDegree(degree);
+	}
 
-    public ExecutionDegreeBean(DegreeCurricularPlan degreeCurricularPlan) {
-	this(degreeCurricularPlan == null ? null : degreeCurricularPlan.getDegree());
+	public ExecutionDegreeBean(DegreeCurricularPlan degreeCurricularPlan) {
+		this(degreeCurricularPlan == null ? null : degreeCurricularPlan.getDegree());
 
-	setDegreeCurricularPlan(degreeCurricularPlan);
-    }
+		setDegreeCurricularPlan(degreeCurricularPlan);
+	}
 
-    public ExecutionDegreeBean(ExecutionDegree executionDegree) {
-	this(executionDegree == null ? null : executionDegree.getDegreeCurricularPlan());
+	public ExecutionDegreeBean(ExecutionDegree executionDegree) {
+		this(executionDegree == null ? null : executionDegree.getDegreeCurricularPlan());
 
-	setExecutionDegree(executionDegree);
-    }
+		setExecutionDegree(executionDegree);
+	}
 
-    public Degree getDegree() {
-	return this.degree;
-    }
+	public Degree getDegree() {
+		return this.degree;
+	}
 
-    public void setDegree(Degree degree) {
-	this.degree = degree;
-    }
+	public void setDegree(Degree degree) {
+		this.degree = degree;
+	}
 
-    public DegreeCurricularPlan getDegreeCurricularPlan() {
-	return this.degreeCurricularPlan;
-    }
+	public DegreeCurricularPlan getDegreeCurricularPlan() {
+		return this.degreeCurricularPlan;
+	}
 
-    public void setDegreeCurricularPlan(DegreeCurricularPlan degreeCurricularPlan) {
-	this.degreeCurricularPlan = degreeCurricularPlan;
-    }
+	public void setDegreeCurricularPlan(DegreeCurricularPlan degreeCurricularPlan) {
+		this.degreeCurricularPlan = degreeCurricularPlan;
+	}
 
-    public ExecutionDegree getExecutionDegree() {
-	return this.executionDegree;
-    }
+	public ExecutionDegree getExecutionDegree() {
+		return this.executionDegree;
+	}
 
-    public void setExecutionDegree(ExecutionDegree executionDegree) {
-	this.executionDegree = executionDegree;
-    }
+	public void setExecutionDegree(ExecutionDegree executionDegree) {
+		this.executionDegree = executionDegree;
+	}
 
-    public ExecutionYear getExecutionYear() {
-	return this.executionYear;
-    }
+	public ExecutionYear getExecutionYear() {
+		return this.executionYear;
+	}
 
-    public void setExecutionYear(ExecutionYear executionYear) {
-	this.executionYear = executionYear;
-    }
+	public void setExecutionYear(ExecutionYear executionYear) {
+		this.executionYear = executionYear;
+	}
 
-    public CycleType getCycleType() {
-	return cycleType;
-    }
+	public CycleType getCycleType() {
+		return cycleType;
+	}
 
-    public void setCycleType(CycleType cycleType) {
-	this.cycleType = cycleType;
-    }
+	public void setCycleType(CycleType cycleType) {
+		this.cycleType = cycleType;
+	}
 
 }

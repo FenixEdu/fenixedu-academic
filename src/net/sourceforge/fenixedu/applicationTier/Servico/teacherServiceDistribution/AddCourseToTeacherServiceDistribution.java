@@ -9,17 +9,17 @@ import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TeacherService
 
 public class AddCourseToTeacherServiceDistribution extends FenixService {
 
-    public void run(Integer tsdId, final Integer courseId) throws FenixServiceException {
+	public void run(Integer tsdId, final Integer courseId) throws FenixServiceException {
 
-	TeacherServiceDistribution rootTSD = rootDomainObject.readTeacherServiceDistributionByOID(tsdId).getRootTSD();
-	CompetenceCourse course = rootDomainObject.readCompetenceCourseByOID(courseId);
+		TeacherServiceDistribution rootTSD = rootDomainObject.readTeacherServiceDistributionByOID(tsdId).getRootTSD();
+		CompetenceCourse course = rootDomainObject.readCompetenceCourseByOID(courseId);
 
-	if (!rootTSD.getCompetenceCourses().contains(course)) {
-	    for (ExecutionSemester period : rootTSD.getTSDProcessPhase().getTSDProcess().getExecutionPeriods()) {
-		if (course.getCurricularCoursesWithActiveScopesInExecutionPeriod(period).size() > 0) {
-		    new TSDCompetenceCourse(rootTSD, course, period);
+		if (!rootTSD.getCompetenceCourses().contains(course)) {
+			for (ExecutionSemester period : rootTSD.getTSDProcessPhase().getTSDProcess().getExecutionPeriods()) {
+				if (course.getCurricularCoursesWithActiveScopesInExecutionPeriod(period).size() > 0) {
+					new TSDCompetenceCourse(rootTSD, course, period);
+				}
+			}
 		}
-	    }
 	}
-    }
 }

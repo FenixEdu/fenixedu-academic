@@ -14,52 +14,60 @@ import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 abstract public class CurriculumEntry implements Serializable, ICurriculumEntry {
 
-    public boolean isNotInDegreeCurriculumEnrolmentEntry() {
-	return false;
-    }
+	public boolean isNotInDegreeCurriculumEnrolmentEntry() {
+		return false;
+	}
 
-    final public boolean getIsNotInDegreeCurriculumEnrolmentEntry() {
-	return isNotInDegreeCurriculumEnrolmentEntry();
-    }
+	final public boolean getIsNotInDegreeCurriculumEnrolmentEntry() {
+		return isNotInDegreeCurriculumEnrolmentEntry();
+	}
 
-    protected double ectsCredits(final CurricularCourse curricularCourse) {
-	final double ectsCredits = curricularCourse.getEctsCredits().doubleValue();
-	return ectsCredits == 0 ? 6.0 : ectsCredits;
-    }
+	protected double ectsCredits(final CurricularCourse curricularCourse) {
+		final double ectsCredits = curricularCourse.getEctsCredits().doubleValue();
+		return ectsCredits == 0 ? 6.0 : ectsCredits;
+	}
 
-    public BigDecimal getWeigthTimesGrade() {
-	final String grade = getGradeValue();
-	return StringUtils.isNumeric(grade) ? getWeigthForCurriculum().multiply(BigDecimal.valueOf(Double.valueOf(grade))) : null;
-    }
+	@Override
+	public BigDecimal getWeigthTimesGrade() {
+		final String grade = getGradeValue();
+		return StringUtils.isNumeric(grade) ? getWeigthForCurriculum().multiply(BigDecimal.valueOf(Double.valueOf(grade))) : null;
+	}
 
-    abstract public Grade getGrade();
+	@Override
+	abstract public Grade getGrade();
 
-    public String getGradeValue() {
-	return getGrade() == null ? null : getGrade().getValue();
-    }
+	@Override
+	public String getGradeValue() {
+		return getGrade() == null ? null : getGrade().getValue();
+	}
 
-    public ExecutionSemester getExecutionPeriod() {
-	return null;
-    }
+	@Override
+	public ExecutionSemester getExecutionPeriod() {
+		return null;
+	}
 
-    final public boolean hasExecutionPeriod() {
-	return getExecutionPeriod() != null;
-    }
+	@Override
+	final public boolean hasExecutionPeriod() {
+		return getExecutionPeriod() != null;
+	}
 
-    final public ExecutionYear getExecutionYear() {
-	return getExecutionPeriod() == null ? null : getExecutionPeriod().getExecutionYear();
-    }
+	@Override
+	final public ExecutionYear getExecutionYear() {
+		return getExecutionPeriod() == null ? null : getExecutionPeriod().getExecutionYear();
+	}
 
-    final public String getCode() {
-	return null;
-    }
+	@Override
+	final public String getCode() {
+		return null;
+	}
 
-    public MultiLanguageString getName() {
-	return new MultiLanguageString();
-    }
+	@Override
+	public MultiLanguageString getName() {
+		return new MultiLanguageString();
+	}
 
-    @Override
-    public MultiLanguageString getPresentationName() {
-	return getName();
-    }
+	@Override
+	public MultiLanguageString getPresentationName() {
+		return getName();
+	}
 }

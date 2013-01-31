@@ -9,7 +9,6 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.Seminaries.CourseEquivalency;
 import net.sourceforge.fenixedu.domain.Seminaries.Seminary;
 
 /**
@@ -21,40 +20,41 @@ import net.sourceforge.fenixedu.domain.Seminaries.Seminary;
  */
 public class InfoSeminaryWithEquivalencies extends InfoSeminary {
 
-    private List equivalencies;
+	private List equivalencies;
 
-    /**
-     * @return
-     */
-    public List getEquivalencies() {
-	return equivalencies;
-    }
-
-    /**
-     * @param list
-     */
-    public void setEquivalencies(List list) {
-	equivalencies = list;
-    }
-
-    public void copyFromDomain(Seminary seminary) {
-	super.copyFromDomain(seminary);
-	if (seminary != null) {
-	    for (Iterator iter = seminary.getEquivalenciesIterator(); iter.hasNext();) {
-		this.equivalencies = new LinkedList();
-		this.equivalencies.add((CourseEquivalency) iter.next());
-
-	    }
+	/**
+	 * @return
+	 */
+	public List getEquivalencies() {
+		return equivalencies;
 	}
-    }
 
-    public static InfoSeminaryWithEquivalencies newInfoFromDomain(Seminary seminary) {
-	InfoSeminaryWithEquivalencies infoSeminary = null;
-	if (seminary != null) {
-	    infoSeminary = new InfoSeminaryWithEquivalencies();
-	    infoSeminary.copyFromDomain(seminary);
+	/**
+	 * @param list
+	 */
+	public void setEquivalencies(List list) {
+		equivalencies = list;
 	}
-	return infoSeminary;
-    }
+
+	@Override
+	public void copyFromDomain(Seminary seminary) {
+		super.copyFromDomain(seminary);
+		if (seminary != null) {
+			for (Iterator iter = seminary.getEquivalenciesIterator(); iter.hasNext();) {
+				this.equivalencies = new LinkedList();
+				this.equivalencies.add(iter.next());
+
+			}
+		}
+	}
+
+	public static InfoSeminaryWithEquivalencies newInfoFromDomain(Seminary seminary) {
+		InfoSeminaryWithEquivalencies infoSeminary = null;
+		if (seminary != null) {
+			infoSeminary = new InfoSeminaryWithEquivalencies();
+			infoSeminary.copyFromDomain(seminary);
+		}
+		return infoSeminary;
+	}
 
 }

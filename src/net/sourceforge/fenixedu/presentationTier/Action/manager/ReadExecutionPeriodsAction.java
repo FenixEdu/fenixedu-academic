@@ -20,14 +20,7 @@ import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
@@ -38,31 +31,34 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
  * @author Fernanda Quitério 17/Dez/2003
  */
 @Mapping(module = "manager", path = "/readExecutionPeriods", input = "mainPageInput.do", scope = "request")
-@Forwards(value = { @Forward(name = "readExecutionPeriods", path = "/manager/readExecutionPeriods_bd.jsp", tileProperties = @Tile(navLocal = "/manager/executionCourseManagement/mainMenu.jsp")) })
+@Forwards(value = { @Forward(
+		name = "readExecutionPeriods",
+		path = "/manager/readExecutionPeriods_bd.jsp",
+		tileProperties = @Tile(navLocal = "/manager/executionCourseManagement/mainMenu.jsp")) })
 public class ReadExecutionPeriodsAction extends FenixAction {
 
-    @Override
-    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-	    throws FenixActionException, FenixFilterException {
+	@Override
+	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+			throws FenixActionException, FenixFilterException {
 
-	List infoExecutionPeriods = ReadExecutionPeriods.run();
+		List infoExecutionPeriods = ReadExecutionPeriods.run();
 
-	if (infoExecutionPeriods != null && !infoExecutionPeriods.isEmpty()) {
+		if (infoExecutionPeriods != null && !infoExecutionPeriods.isEmpty()) {
 
-	    // Collections.sort(infoExecutionPeriods, new
-	    // ExecutionPeriodComparator());
-	    ComparatorChain comparator = new ComparatorChain();
-	    comparator.addComparator(new BeanComparator("infoExecutionYear.year"), true);
-	    comparator.addComparator(new BeanComparator("name"), true);
-	    Collections.sort(infoExecutionPeriods, comparator);
+			// Collections.sort(infoExecutionPeriods, new
+			// ExecutionPeriodComparator());
+			ComparatorChain comparator = new ComparatorChain();
+			comparator.addComparator(new BeanComparator("infoExecutionYear.year"), true);
+			comparator.addComparator(new BeanComparator("name"), true);
+			Collections.sort(infoExecutionPeriods, comparator);
 
-	    if (infoExecutionPeriods != null && !infoExecutionPeriods.isEmpty()) {
-		request.setAttribute(PresentationConstants.LIST_EXECUTION_PERIODS, infoExecutionPeriods);
-	    }
+			if (infoExecutionPeriods != null && !infoExecutionPeriods.isEmpty()) {
+				request.setAttribute(PresentationConstants.LIST_EXECUTION_PERIODS, infoExecutionPeriods);
+			}
+
+		}
+
+		return mapping.findForward("readExecutionPeriods");
 
 	}
-
-	return mapping.findForward("readExecutionPeriods");
-
-    }
 }

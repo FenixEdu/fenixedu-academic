@@ -16,76 +16,76 @@ import org.joda.time.YearMonthDay;
  */
 public class MasterDegreeThesis extends MasterDegreeThesis_Base {
 
-    public MasterDegreeThesis() {
-	super();
-	setRootDomainObject(RootDomainObject.getInstance());
-    }
-
-    public MasterDegreeThesisDataVersion getActiveMasterDegreeThesisDataVersion() {
-
-	for (MasterDegreeThesisDataVersion masterDegreeThesisDataVersion : getMasterDegreeThesisDataVersions()) {
-	    if (masterDegreeThesisDataVersion.getCurrentState().getState().equals(State.ACTIVE)) {
-		return masterDegreeThesisDataVersion;
-	    }
+	public MasterDegreeThesis() {
+		super();
+		setRootDomainObject(RootDomainObject.getInstance());
 	}
 
-	return null;
-    }
+	public MasterDegreeThesisDataVersion getActiveMasterDegreeThesisDataVersion() {
 
-    public String getDissertationTitle() {
-	return getActiveMasterDegreeThesisDataVersion().getDissertationTitle();
-    }
+		for (MasterDegreeThesisDataVersion masterDegreeThesisDataVersion : getMasterDegreeThesisDataVersions()) {
+			if (masterDegreeThesisDataVersion.getCurrentState().getState().equals(State.ACTIVE)) {
+				return masterDegreeThesisDataVersion;
+			}
+		}
 
-    public YearMonthDay getProofDateYearMonthDay() {
-	final MasterDegreeProofVersion version = getActiveMasterDegreeProofVersion();
-	return version != null ? version.getProofDateYearMonthDay() : null;
-    }
-
-    public MasterDegreeProofVersion getActiveMasterDegreeProofVersion() {
-	MasterDegreeProofVersion activeMasterDegreeProofVersion = null;
-
-	for (MasterDegreeProofVersion candidateMasterDegreeProofVersion : this.getMasterDegreeProofVersions()) {
-	    if (candidateMasterDegreeProofVersion.getCurrentState().getState().equals(State.ACTIVE)) {
-		activeMasterDegreeProofVersion = candidateMasterDegreeProofVersion;
-		break;
-	    }
+		return null;
 	}
 
-	return activeMasterDegreeProofVersion;
-    }
+	public String getDissertationTitle() {
+		return getActiveMasterDegreeThesisDataVersion().getDissertationTitle();
+	}
 
-    public boolean isConcluded() {
-	MasterDegreeProofVersion activeMasterDegreeProofVersion = getActiveMasterDegreeProofVersion();
-	return activeMasterDegreeProofVersion != null && activeMasterDegreeProofVersion.isConcluded();
-    }
+	public YearMonthDay getProofDateYearMonthDay() {
+		final MasterDegreeProofVersion version = getActiveMasterDegreeProofVersion();
+		return version != null ? version.getProofDateYearMonthDay() : null;
+	}
 
-    public boolean isConcluded(Integer year) {
-	return isConcluded() && getActiveMasterDegreeProofVersion().getProofDateYearMonthDay().getYear() == year;
-    }
+	public MasterDegreeProofVersion getActiveMasterDegreeProofVersion() {
+		MasterDegreeProofVersion activeMasterDegreeProofVersion = null;
 
-    public MasterDegreeThesisState getState() {
-	MasterDegreeProofVersion activeMasterDegreeProofVersion = getActiveMasterDegreeProofVersion();
+		for (MasterDegreeProofVersion candidateMasterDegreeProofVersion : this.getMasterDegreeProofVersions()) {
+			if (candidateMasterDegreeProofVersion.getCurrentState().getState().equals(State.ACTIVE)) {
+				activeMasterDegreeProofVersion = candidateMasterDegreeProofVersion;
+				break;
+			}
+		}
 
-	if (activeMasterDegreeProofVersion != null) {
-	    if (activeMasterDegreeProofVersion.isConcluded()) {
-		return MasterDegreeThesisState.CONCLUDED;
-	    }
-	    if (activeMasterDegreeProofVersion.getThesisDeliveryDateYearMonthDay() != null) {
-		return MasterDegreeThesisState.DELIVERED;
-	    } else {
+		return activeMasterDegreeProofVersion;
+	}
+
+	public boolean isConcluded() {
+		MasterDegreeProofVersion activeMasterDegreeProofVersion = getActiveMasterDegreeProofVersion();
+		return activeMasterDegreeProofVersion != null && activeMasterDegreeProofVersion.isConcluded();
+	}
+
+	public boolean isConcluded(Integer year) {
+		return isConcluded() && getActiveMasterDegreeProofVersion().getProofDateYearMonthDay().getYear() == year;
+	}
+
+	public MasterDegreeThesisState getState() {
+		MasterDegreeProofVersion activeMasterDegreeProofVersion = getActiveMasterDegreeProofVersion();
+
+		if (activeMasterDegreeProofVersion != null) {
+			if (activeMasterDegreeProofVersion.isConcluded()) {
+				return MasterDegreeThesisState.CONCLUDED;
+			}
+			if (activeMasterDegreeProofVersion.getThesisDeliveryDateYearMonthDay() != null) {
+				return MasterDegreeThesisState.DELIVERED;
+			} else {
+				return MasterDegreeThesisState.NOT_DELIVERED;
+			}
+		}
+
 		return MasterDegreeThesisState.NOT_DELIVERED;
-	    }
 	}
 
-	return MasterDegreeThesisState.NOT_DELIVERED;
-    }
-
-    public void delete() {
-	getMasterDegreeThesisDataVersions().clear();
-	getMasterDegreeProofVersions().clear();
-	removeStudentCurricularPlan();
-	removeRootDomainObject();
-	super.deleteDomainObject();
-    }
+	public void delete() {
+		getMasterDegreeThesisDataVersions().clear();
+		getMasterDegreeProofVersions().clear();
+		removeStudentCurricularPlan();
+		removeRootDomainObject();
+		super.deleteDomainObject();
+	}
 
 }

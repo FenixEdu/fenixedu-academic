@@ -15,95 +15,96 @@ import pt.ist.fenixWebFramework.security.accessControl.Checked;
 
 public class GenericEventSpaceOccupation extends GenericEventSpaceOccupation_Base {
 
-    @Checked("SpacePredicates.checkPermissionsToManageGenericEventSpaceOccupations")
-    public GenericEventSpaceOccupation(AllocatableSpace allocatableSpace, GenericEvent genericEvent) {
+	@Checked("SpacePredicates.checkPermissionsToManageGenericEventSpaceOccupations")
+	public GenericEventSpaceOccupation(AllocatableSpace allocatableSpace, GenericEvent genericEvent) {
 
-	super();
+		super();
 
-	setGenericEvent(genericEvent);
+		setGenericEvent(genericEvent);
 
-	if (allocatableSpace != null && !allocatableSpace.isFree(this)) {
-	    throw new DomainException("error.roomOccupation.room.is.not.free");
+		if (allocatableSpace != null && !allocatableSpace.isFree(this)) {
+			throw new DomainException("error.roomOccupation.room.is.not.free");
+		}
+
+		setResource(allocatableSpace);
 	}
 
-	setResource(allocatableSpace);
-    }
-
-    @Checked("SpacePredicates.checkPermissionsToManageGenericEventSpaceOccupations")
-    public void delete() {
-	super.setGenericEvent(null);
-	super.delete();
-    }
-
-    @Checked("SpacePredicates.checkPermissionsToManageGenericEventSpaceOccupations")
-    public void verifyIfIsPossibleCloseGenericEvent() {
-    }
-
-    @Override
-    public void setGenericEvent(GenericEvent genericEvent) {
-	if (genericEvent == null) {
-	    throw new DomainException("error.GenericEventSpaceOccupation.empty.genericEvent");
+	@Override
+	@Checked("SpacePredicates.checkPermissionsToManageGenericEventSpaceOccupations")
+	public void delete() {
+		super.setGenericEvent(null);
+		super.delete();
 	}
-	super.setGenericEvent(genericEvent);
-    }
 
-    @Override
-    public boolean isGenericEventSpaceOccupation() {
-	return true;
-    }
+	@Checked("SpacePredicates.checkPermissionsToManageGenericEventSpaceOccupations")
+	public void verifyIfIsPossibleCloseGenericEvent() {
+	}
 
-    @Override
-    public Group getAccessGroup() {
-	return getSpace().getGenericEventOccupationsAccessGroupWithChainOfResponsibility();
-    }
+	@Override
+	public void setGenericEvent(GenericEvent genericEvent) {
+		if (genericEvent == null) {
+			throw new DomainException("error.GenericEventSpaceOccupation.empty.genericEvent");
+		}
+		super.setGenericEvent(genericEvent);
+	}
 
-    @Override
-    public FrequencyType getFrequency() {
-	return getGenericEvent().getFrequency();
-    }
+	@Override
+	public boolean isGenericEventSpaceOccupation() {
+		return true;
+	}
 
-    @Override
-    public YearMonthDay getBeginDate() {
-	return getGenericEvent() == null ? null : getGenericEvent().getBeginDate();
-    }
+	@Override
+	public Group getAccessGroup() {
+		return getSpace().getGenericEventOccupationsAccessGroupWithChainOfResponsibility();
+	}
 
-    @Override
-    public YearMonthDay getEndDate() {
-	return getGenericEvent().getEndDate();
-    }
+	@Override
+	public FrequencyType getFrequency() {
+		return getGenericEvent().getFrequency();
+	}
 
-    @Override
-    public Boolean getDailyFrequencyMarkSaturday() {
-	return getGenericEvent().getDailyFrequencyMarkSaturday();
-    }
+	@Override
+	public YearMonthDay getBeginDate() {
+		return getGenericEvent() == null ? null : getGenericEvent().getBeginDate();
+	}
 
-    @Override
-    public Boolean getDailyFrequencyMarkSunday() {
-	return getGenericEvent().getDailyFrequencyMarkSunday();
-    }
+	@Override
+	public YearMonthDay getEndDate() {
+		return getGenericEvent().getEndDate();
+	}
 
-    @Override
-    public HourMinuteSecond getStartTimeDateHourMinuteSecond() {
-	return getGenericEvent().getStartTimeDateHourMinuteSecond();
-    }
+	@Override
+	public Boolean getDailyFrequencyMarkSaturday() {
+		return getGenericEvent().getDailyFrequencyMarkSaturday();
+	}
 
-    @Override
-    public HourMinuteSecond getEndTimeDateHourMinuteSecond() {
-	return getGenericEvent().getEndTimeDateHourMinuteSecond();
-    }
+	@Override
+	public Boolean getDailyFrequencyMarkSunday() {
+		return getGenericEvent().getDailyFrequencyMarkSunday();
+	}
 
-    @Override
-    public DiaSemana getDayOfWeek() {
-	return null;
-    }
+	@Override
+	public HourMinuteSecond getStartTimeDateHourMinuteSecond() {
+		return getGenericEvent().getStartTimeDateHourMinuteSecond();
+	}
 
-    @Override
-    public boolean isOccupiedByExecutionCourse(ExecutionCourse executionCourse, DateTime start, DateTime end) {
-	return false;
-    }
+	@Override
+	public HourMinuteSecond getEndTimeDateHourMinuteSecond() {
+		return getGenericEvent().getEndTimeDateHourMinuteSecond();
+	}
 
-    @Override
-    public String getPresentationString() {
-	return getGenericEvent().getGanttDiagramEventName().getContent();
-    }
+	@Override
+	public DiaSemana getDayOfWeek() {
+		return null;
+	}
+
+	@Override
+	public boolean isOccupiedByExecutionCourse(ExecutionCourse executionCourse, DateTime start, DateTime end) {
+		return false;
+	}
+
+	@Override
+	public String getPresentationString() {
+		return getGenericEvent().getGanttDiagramEventName().getContent();
+	}
 }

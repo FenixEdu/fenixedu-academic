@@ -5,12 +5,12 @@ package net.sourceforge.fenixedu.util.classProperties;
  */
 
 public class ExecutionCoursePropertyValue extends GeneralClassPropertyValue {
-    public static final String SECOND_PHASE_VALUE_STR = "SECOND";
+	public static final String SECOND_PHASE_VALUE_STR = "SECOND";
 
-    public static final ExecutionCoursePropertyValue SECOND_PHASE_VALUE = new ExecutionCoursePropertyValue(
-	    ExecutionCoursePropertyValue.SECOND_PHASE_VALUE_STR);
+	public static final ExecutionCoursePropertyValue SECOND_PHASE_VALUE = new ExecutionCoursePropertyValue(
+			ExecutionCoursePropertyValue.SECOND_PHASE_VALUE_STR);
 
-    public ExecutionCoursePropertyValue(String value) {
-	super(value);
-    }
+	public ExecutionCoursePropertyValue(String value) {
+		super(value);
+	}
 }

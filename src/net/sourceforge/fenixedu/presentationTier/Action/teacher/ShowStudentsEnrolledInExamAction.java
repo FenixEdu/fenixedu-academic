@@ -35,54 +35,59 @@ import org.apache.struts.action.ActionMapping;
 
 public class ShowStudentsEnrolledInExamAction extends FenixAction {
 
-    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-	    throws FenixActionException, FenixFilterException {
+	@Override
+	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+			throws FenixActionException, FenixFilterException {
 
-	final IUserView userView = getUserView(request);
+		final IUserView userView = getUserView(request);
 
-	final Integer executionCourseCode = Integer.valueOf(request.getParameter("objectCode"));
-	final Integer writtenEvaluationCode = Integer.valueOf(request.getParameter("evaluationCode"));
+		final Integer executionCourseCode = Integer.valueOf(request.getParameter("objectCode"));
+		final Integer writtenEvaluationCode = Integer.valueOf(request.getParameter("evaluationCode"));
 
-	final Object[] args = { executionCourseCode, writtenEvaluationCode };
-	SiteView siteView = null;
-	try {
-	    siteView = (SiteView) ServiceUtils.executeService("ReadStudentsEnrolledInWrittenEvaluation", args);
-	} catch (FenixServiceException e) {
-	    ActionErrors actionErrors = new ActionErrors();
-	    actionErrors.add(e.getMessage(), new ActionError(e.getMessage()));
-	    saveErrors(request, actionErrors);
-	    return mapping.getInputForward();
+		final Object[] args = { executionCourseCode, writtenEvaluationCode };
+		SiteView siteView = null;
+		try {
+			siteView = (SiteView) ServiceUtils.executeService("ReadStudentsEnrolledInWrittenEvaluation", args);
+		} catch (FenixServiceException e) {
+			ActionErrors actionErrors = new ActionErrors();
+			actionErrors.add(e.getMessage(), new ActionError(e.getMessage()));
+			saveErrors(request, actionErrors);
+			return mapping.getInputForward();
+		}
+
+		InfoSiteTeacherStudentsEnrolledList infoSiteTeacherStudentsEnrolledList =
+				(InfoSiteTeacherStudentsEnrolledList) siteView.getComponent();
+
+		ComparatorChain comparatorChain = new ComparatorChain();
+
+		comparatorChain.addComparator(new ReverseComparator(new BeanComparator("infoRoom.capacidadeExame")));
+		comparatorChain.addComparator(new BeanComparator("infoRoom.nome"));
+		comparatorChain.addComparator(new BeanComparator("infoStudent.number"));
+
+		// Select all the objects with room to later sort them
+		List infoWrittenEvaluationEnrolmentList =
+				(List) CollectionUtils.select(infoSiteTeacherStudentsEnrolledList.getInfoWrittenEvaluationEnrolmentList(),
+						new Predicate() {
+							@Override
+							public boolean evaluate(Object input) {
+								InfoWrittenEvaluationEnrolment infoWrittenEvaluationEnrolment =
+										(InfoWrittenEvaluationEnrolment) input;
+								return infoWrittenEvaluationEnrolment.getInfoRoom() != null;
+							}
+						});
+
+		Collections.sort(infoWrittenEvaluationEnrolmentList, comparatorChain);
+		Collection collection =
+				CollectionUtils.subtract(infoSiteTeacherStudentsEnrolledList.getInfoWrittenEvaluationEnrolmentList(),
+						infoWrittenEvaluationEnrolmentList);
+		infoSiteTeacherStudentsEnrolledList.setInfoWrittenEvaluationEnrolmentList((List) collection);
+		infoSiteTeacherStudentsEnrolledList.getInfoWrittenEvaluationEnrolmentList().addAll(infoWrittenEvaluationEnrolmentList);
+
+		request.setAttribute("siteView", siteView);
+		request.setAttribute("objectCode", executionCourseCode);
+		request.setAttribute("evaluationCode", writtenEvaluationCode);
+
+		return mapping.findForward("showStudents");
+
 	}
-
-	InfoSiteTeacherStudentsEnrolledList infoSiteTeacherStudentsEnrolledList = (InfoSiteTeacherStudentsEnrolledList) siteView
-		.getComponent();
-
-	ComparatorChain comparatorChain = new ComparatorChain();
-
-	comparatorChain.addComparator(new ReverseComparator(new BeanComparator("infoRoom.capacidadeExame")));
-	comparatorChain.addComparator(new BeanComparator("infoRoom.nome"));
-	comparatorChain.addComparator(new BeanComparator("infoStudent.number"));
-
-	// Select all the objects with room to later sort them
-	List infoWrittenEvaluationEnrolmentList = (List) CollectionUtils.select(infoSiteTeacherStudentsEnrolledList
-		.getInfoWrittenEvaluationEnrolmentList(), new Predicate() {
-	    public boolean evaluate(Object input) {
-		InfoWrittenEvaluationEnrolment infoWrittenEvaluationEnrolment = (InfoWrittenEvaluationEnrolment) input;
-		return infoWrittenEvaluationEnrolment.getInfoRoom() != null;
-	    }
-	});
-
-	Collections.sort(infoWrittenEvaluationEnrolmentList, comparatorChain);
-	Collection collection = CollectionUtils.subtract(infoSiteTeacherStudentsEnrolledList
-		.getInfoWrittenEvaluationEnrolmentList(), infoWrittenEvaluationEnrolmentList);
-	infoSiteTeacherStudentsEnrolledList.setInfoWrittenEvaluationEnrolmentList((List) collection);
-	infoSiteTeacherStudentsEnrolledList.getInfoWrittenEvaluationEnrolmentList().addAll(infoWrittenEvaluationEnrolmentList);
-
-	request.setAttribute("siteView", siteView);
-	request.setAttribute("objectCode", executionCourseCode);
-	request.setAttribute("evaluationCode", writtenEvaluationCode);
-
-	return mapping.findForward("showStudents");
-
-    }
 }

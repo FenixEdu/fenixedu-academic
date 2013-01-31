@@ -17,54 +17,58 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(path = "/tutorshipSummaryPeriod", module = "pedagogicalCouncil")
 @Forwards({
-	@Forward(name = "createPeriod", path = "/pedagogicalCouncil/tutorship/createPeriod.jsp", tileProperties = @Tile(title = "private.pedagogiccouncil.tutoring.formtutor")),
-	@Forward(name = "confirmMessagePeriod", path = "/pedagogicalCouncil/tutorship/confirmCreatePeriod.jsp", tileProperties = @Tile(title = "private.pedagogiccouncil.tutoring.formtutor")) })
+		@Forward(name = "createPeriod", path = "/pedagogicalCouncil/tutorship/createPeriod.jsp", tileProperties = @Tile(
+				title = "private.pedagogiccouncil.tutoring.formtutor")),
+		@Forward(
+				name = "confirmMessagePeriod",
+				path = "/pedagogicalCouncil/tutorship/confirmCreatePeriod.jsp",
+				tileProperties = @Tile(title = "private.pedagogiccouncil.tutoring.formtutor")) })
 public class TutorshipSummaryPeriodDA extends FenixDispatchAction {
 
-    public ActionForward prepareCreate(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
+	public ActionForward prepareCreate(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
 
-	RenderUtils.invalidateViewState();
+		RenderUtils.invalidateViewState();
 
-	TutorshipSummaryPeriodBean bean = new TutorshipSummaryPeriodBean();
-	setTutorshipSummaryPeriodBean(request, bean);
+		TutorshipSummaryPeriodBean bean = new TutorshipSummaryPeriodBean();
+		setTutorshipSummaryPeriodBean(request, bean);
 
-	return mapping.findForward("createPeriod");
-    }
-
-    public ActionForward prepareCreate2(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-
-	TutorshipSummaryPeriodBean bean = getTutorshipSummaryPeriodBean();
-
-	if (bean == null) {
-	    return prepareCreate(mapping, actionForm, request, response);
+		return mapping.findForward("createPeriod");
 	}
 
-	setTutorshipSummaryPeriodBean(request, bean);
+	public ActionForward prepareCreate2(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
 
-	return mapping.findForward("createPeriod");
-    }
+		TutorshipSummaryPeriodBean bean = getTutorshipSummaryPeriodBean();
 
-    public ActionForward create(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
+		if (bean == null) {
+			return prepareCreate(mapping, actionForm, request, response);
+		}
 
-	TutorshipSummaryPeriodBean bean = getTutorshipSummaryPeriodBean();
+		setTutorshipSummaryPeriodBean(request, bean);
 
-	if (bean != null && bean.isValid()) {
-	    bean.save();
-
-	    return mapping.findForward("confirmMessagePeriod");
+		return mapping.findForward("createPeriod");
 	}
 
-	return prepareCreate2(mapping, actionForm, request, response);
-    }
+	public ActionForward create(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
 
-    protected TutorshipSummaryPeriodBean getTutorshipSummaryPeriodBean() {
-	return getRenderedObject("periodBean");
-    }
+		TutorshipSummaryPeriodBean bean = getTutorshipSummaryPeriodBean();
 
-    protected void setTutorshipSummaryPeriodBean(HttpServletRequest request, TutorshipSummaryPeriodBean bean) {
-	request.setAttribute("periodBean", bean);
-    }
+		if (bean != null && bean.isValid()) {
+			bean.save();
+
+			return mapping.findForward("confirmMessagePeriod");
+		}
+
+		return prepareCreate2(mapping, actionForm, request, response);
+	}
+
+	protected TutorshipSummaryPeriodBean getTutorshipSummaryPeriodBean() {
+		return getRenderedObject("periodBean");
+	}
+
+	protected void setTutorshipSummaryPeriodBean(HttpServletRequest request, TutorshipSummaryPeriodBean bean) {
+		request.setAttribute("periodBean", bean);
+	}
 }

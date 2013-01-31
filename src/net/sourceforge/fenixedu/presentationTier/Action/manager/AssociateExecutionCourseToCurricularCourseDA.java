@@ -36,88 +36,102 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
  * @author lmac1
  */
 
-@Mapping(module = "manager", path = "/associateExecutionCourseToCurricularCourse", input = "/associateExecutionCourseToCurricularCourse.do?method=prepare&page=0", attribute = "associateExecutionCourseToCurricularCourseForm", formBean = "associateExecutionCourseToCurricularCourseForm", scope = "request", parameter = "method")
+@Mapping(
+		module = "manager",
+		path = "/associateExecutionCourseToCurricularCourse",
+		input = "/associateExecutionCourseToCurricularCourse.do?method=prepare&page=0",
+		attribute = "associateExecutionCourseToCurricularCourseForm",
+		formBean = "associateExecutionCourseToCurricularCourseForm",
+		scope = "request",
+		parameter = "method")
 @Forwards(value = {
-		@Forward(name = "viewExecutionCoursesToAssociate", path = "/manager/readExecutionCoursesByExecutionPeriod_bd.jsp", tileProperties = @Tile(navLocal = "/manager/curricularCourseNavLocalManager.jsp")),
+		@Forward(
+				name = "viewExecutionCoursesToAssociate",
+				path = "/manager/readExecutionCoursesByExecutionPeriod_bd.jsp",
+				tileProperties = @Tile(navLocal = "/manager/curricularCourseNavLocalManager.jsp")),
 		@Forward(name = "readDegreeCurricularPlan", path = "/readDegreeCurricularPlan.do"),
 		@Forward(name = "readCurricularCourse", path = "/readCurricularCourse.do"),
 		@Forward(name = "readAvailableExecutionPeriods", path = "/readExecutionPeriodToAssociateExecutionCoursesAction.do") })
 @Exceptions(value = {
-		@ExceptionHandling(type = net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException.class, key = "resources.Action.exceptions.NonExistingActionException", handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class, scope = "request"),
-		@ExceptionHandling(type = net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException.class, key = "resources.Action.exceptions.ExistingActionException", handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class, scope = "request") })
+		@ExceptionHandling(
+				type = net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException.class,
+				key = "resources.Action.exceptions.NonExistingActionException",
+				handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class,
+				scope = "request"),
+		@ExceptionHandling(
+				type = net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException.class,
+				key = "resources.Action.exceptions.ExistingActionException",
+				handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class,
+				scope = "request") })
 public class AssociateExecutionCourseToCurricularCourseDA extends FenixDispatchAction {
 
-    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-	    throws FenixActionException, FenixFilterException {
+	public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+			throws FenixActionException, FenixFilterException {
 
-	IUserView userView = UserView.getUser();
+		IUserView userView = UserView.getUser();
 
-	Integer executionPeriodId = new Integer(request.getParameter("executionPeriodId"));
+		Integer executionPeriodId = new Integer(request.getParameter("executionPeriodId"));
 
-	List infoExecutionCoursesList = null;
-	try {
-	    infoExecutionCoursesList = (List) ReadExecutionCoursesByExecutionPeriod.run(executionPeriodId);
+		List infoExecutionCoursesList = null;
+		try {
+			infoExecutionCoursesList = ReadExecutionCoursesByExecutionPeriod.run(executionPeriodId);
 
-	} catch (NonExistingServiceException e) {
-	    throw new NonExistingActionException(e.getMessage(), mapping.findForward("readAvailableExecutionPeriods"));
-	} catch (FenixServiceException fenixServiceException) {
-	    throw new FenixActionException(fenixServiceException);
+		} catch (NonExistingServiceException e) {
+			throw new NonExistingActionException(e.getMessage(), mapping.findForward("readAvailableExecutionPeriods"));
+		} catch (FenixServiceException fenixServiceException) {
+			throw new FenixActionException(fenixServiceException);
+		}
+
+		Collections.sort(infoExecutionCoursesList, new BeanComparator("nome"));
+
+		InfoExecutionPeriod infoExecutionPeriod =
+				((InfoExecutionCourse) infoExecutionCoursesList.get(0)).getInfoExecutionPeriod();
+
+		String ExecutionPeriodNameAndYear =
+				new String(infoExecutionPeriod.getName() + "-" + infoExecutionPeriod.getInfoExecutionYear().getYear());
+		request.setAttribute("executionPeriodNameAndYear", ExecutionPeriodNameAndYear);
+		request.setAttribute("name", "associate");
+		request.setAttribute("infoExecutionCoursesList", infoExecutionCoursesList);
+
+		return mapping.findForward("viewExecutionCoursesToAssociate");
 	}
 
-	Collections.sort(infoExecutionCoursesList, new BeanComparator("nome"));
+	public ActionForward associate(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
-	InfoExecutionPeriod infoExecutionPeriod = ((InfoExecutionCourse) infoExecutionCoursesList.get(0))
-		.getInfoExecutionPeriod();
+		IUserView userView = UserView.getUser();
 
-	String ExecutionPeriodNameAndYear = new String(infoExecutionPeriod.getName() + "-"
-		+ infoExecutionPeriod.getInfoExecutionYear().getYear());
-	request.setAttribute("executionPeriodNameAndYear", ExecutionPeriodNameAndYear);
-	request.setAttribute("name", "associate");
-	request.setAttribute("infoExecutionCoursesList", infoExecutionCoursesList);
+		DynaActionForm associateForm = (DynaActionForm) form;
 
-	return mapping.findForward("viewExecutionCoursesToAssociate");
-    }
+		Integer curricularCourseId = new Integer(request.getParameter("curricularCourseId"));
+		Integer executionPeriodId = new Integer(request.getParameter("executionPeriodId"));
+		if (associateForm.get("executionCourseId") == null) {
+			return mapping.findForward("viewExecutionCoursesToAssociate");
+		}
 
-    public ActionForward associate(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixActionException, FenixFilterException {
+		Integer executionCourseId = new Integer((String) associateForm.get("executionCourseId"));
 
-	IUserView userView = UserView.getUser();
+		try {
+			AssociateExecutionCourseToCurricularCourse.run(executionCourseId, curricularCourseId, executionPeriodId);
+		} catch (ExistingServiceException e) {
+			throw new ExistingActionException(e.getMessage(), mapping.findForward("readAvailableExecutionPeriods"));
+		} catch (NonExistingServiceException ex) {
+			if (ex.getMessage().equals("message.nonExistingCurricularCourse")) {
+				throw new NonExistingActionException(ex.getMessage(), mapping.findForward("readDegreeCurricularPlan"));
+			} else if (ex.getMessage().equals("message.nonExisting.executionCourse")) {
+				throw new NonExistingActionException(ex.getMessage(), "");
+			} else {
+				throw new NonExistingActionException(ex.getMessage(), mapping.findForward("readAvailableExecutionPeriods"));
+			}
+		} catch (FenixServiceException fenixServiceException) {
+			throw new FenixActionException(fenixServiceException);
+		}
 
-	DynaActionForm associateForm = (DynaActionForm) form;
-
-	Integer curricularCourseId = new Integer(request.getParameter("curricularCourseId"));
-	Integer executionPeriodId = new Integer(request.getParameter("executionPeriodId"));
-	if (associateForm.get("executionCourseId") == null)
-	    return mapping.findForward("viewExecutionCoursesToAssociate");
-
-	Integer executionCourseId = new Integer((String) associateForm.get("executionCourseId"));
-
-	try {
-	    AssociateExecutionCourseToCurricularCourse.run(executionCourseId, curricularCourseId, executionPeriodId);
-	} catch (ExistingServiceException e) {
-	    throw new ExistingActionException(e.getMessage(), mapping.findForward("readAvailableExecutionPeriods"));
-	} catch (NonExistingServiceException ex) {
-	    if (ex.getMessage().equals("message.nonExistingCurricularCourse"))
-		throw new NonExistingActionException(ex.getMessage(), mapping.findForward("readDegreeCurricularPlan"));
-	    else if (ex.getMessage().equals("message.nonExisting.executionCourse"))
-		throw new NonExistingActionException(ex.getMessage(), "");
-	    else
-		throw new NonExistingActionException(ex.getMessage(), mapping.findForward("readAvailableExecutionPeriods"));
-	} catch (FenixServiceException fenixServiceException) {
-	    throw new FenixActionException(fenixServiceException);
+		return mapping.findForward("readCurricularCourse");
 	}
-
-	return mapping.findForward("readCurricularCourse");
-    }
 }

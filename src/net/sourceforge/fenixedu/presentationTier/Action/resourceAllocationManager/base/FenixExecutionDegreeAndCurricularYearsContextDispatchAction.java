@@ -12,15 +12,16 @@ import org.apache.struts.action.ActionMapping;
 
 public abstract class FenixExecutionDegreeAndCurricularYearsContextDispatchAction extends FenixContextDispatchAction {
 
-    public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
+	@Override
+	public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
 
-	ContextUtils.setExecutionDegreeContext(request);
-	ContextUtils.setCurricularYearsContext(request);
+		ContextUtils.setExecutionDegreeContext(request);
+		ContextUtils.setCurricularYearsContext(request);
 
-	ActionForward actionForward = super.execute(mapping, actionForm, request, response);
+		ActionForward actionForward = super.execute(mapping, actionForm, request, response);
 
-	return actionForward;
-    }
+		return actionForward;
+	}
 
 }

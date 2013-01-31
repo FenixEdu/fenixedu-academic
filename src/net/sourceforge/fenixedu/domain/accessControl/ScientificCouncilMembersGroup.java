@@ -4,18 +4,18 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 
 public class ScientificCouncilMembersGroup extends RoleTypeGroup {
 
-    /**
-     * Default serial id.
-     */
-    private static final long serialVersionUID = 1L;
+	/**
+	 * Default serial id.
+	 */
+	private static final long serialVersionUID = 1L;
 
-    public ScientificCouncilMembersGroup() {
-	super(RoleType.SCIENTIFIC_COUNCIL);
-    }
+	public ScientificCouncilMembersGroup() {
+		super(RoleType.SCIENTIFIC_COUNCIL);
+	}
 
-    @Override
-    public String getPresentationNameKey() {
-	return "label.name." + getClass().getSimpleName();
-    }
+	@Override
+	public String getPresentationNameKey() {
+		return "label.name." + getClass().getSimpleName();
+	}
 
 }

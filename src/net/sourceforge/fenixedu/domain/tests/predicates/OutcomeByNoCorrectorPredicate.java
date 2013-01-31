@@ -9,45 +9,48 @@ import net.sourceforge.fenixedu.domain.tests.NewQuestion;
 import net.sourceforge.fenixedu.presentationTier.Action.teacher.tests.PredicateBean;
 
 public class OutcomeByNoCorrectorPredicate extends AtomicPredicate implements Predicate {
-    private final NewAtomicQuestion atomicQuestion;
+	private final NewAtomicQuestion atomicQuestion;
 
-    public OutcomeByNoCorrectorPredicate(NewAtomicQuestion atomicQuestion) {
-	super();
+	public OutcomeByNoCorrectorPredicate(NewAtomicQuestion atomicQuestion) {
+		super();
 
-	this.atomicQuestion = atomicQuestion;
-    }
-
-    public OutcomeByNoCorrectorPredicate(PredicateBean predicateBean) {
-	this(predicateBean.getAtomicQuestion());
-    }
-
-    public boolean evaluate(NewQuestion question, Person person) {
-	if (this.getAtomicQuestion().getAnswer(person) == null) {
-	    return false;
+		this.atomicQuestion = atomicQuestion;
 	}
 
-	for (NewCorrector corrector : this.getAtomicQuestion().getCorrectors()) {
-	    if (corrector.getPredicate().evaluate(this.getAtomicQuestion(), person)) {
-		return false;
-	    }
+	public OutcomeByNoCorrectorPredicate(PredicateBean predicateBean) {
+		this(predicateBean.getAtomicQuestion());
 	}
 
-	return true;
-    }
+	@Override
+	public boolean evaluate(NewQuestion question, Person person) {
+		if (this.getAtomicQuestion().getAnswer(person) == null) {
+			return false;
+		}
 
-    public NewAtomicQuestion getAtomicQuestion() {
-	return atomicQuestion;
-    }
+		for (NewCorrector corrector : this.getAtomicQuestion().getCorrectors()) {
+			if (corrector.getPredicate().evaluate(this.getAtomicQuestion(), person)) {
+				return false;
+			}
+		}
 
-    public boolean uses(Object object) {
-	NewAtomicQuestion atomicQuestion = (NewAtomicQuestion) object;
+		return true;
+	}
 
-	return atomicQuestion.equals(this.getAtomicQuestion());
-    }
+	public NewAtomicQuestion getAtomicQuestion() {
+		return atomicQuestion;
+	}
 
-    public Predicate transform(HashMap<Object, Object> transformMap) {
-	NewAtomicQuestion transformation = (NewAtomicQuestion) transformMap.get(getAtomicQuestion());
-	return new OutcomeByNoCorrectorPredicate(transformation != null ? transformation : getAtomicQuestion());
-    }
+	@Override
+	public boolean uses(Object object) {
+		NewAtomicQuestion atomicQuestion = (NewAtomicQuestion) object;
+
+		return atomicQuestion.equals(this.getAtomicQuestion());
+	}
+
+	@Override
+	public Predicate transform(HashMap<Object, Object> transformMap) {
+		NewAtomicQuestion transformation = (NewAtomicQuestion) transformMap.get(getAtomicQuestion());
+		return new OutcomeByNoCorrectorPredicate(transformation != null ? transformation : getAtomicQuestion());
+	}
 
 }

@@ -7,28 +7,28 @@ import net.sourceforge.fenixedu.domain.PrescriptionEnum;
 
 class PrescriptionRuleThreeEntries extends PrescriptionRuleGeneric {
 
-    public PrescriptionRuleThreeEntries() {
-	super();
-    }
+	public PrescriptionRuleThreeEntries() {
+		super();
+	}
 
-    @Override
-    public BigDecimal getMinimumEcts() {
-	return new BigDecimal(59.5);
-    }
+	@Override
+	public BigDecimal getMinimumEcts() {
+		return new BigDecimal(59.5);
+	}
 
-    @Override
-    protected int getNumberOfEntriesStudentInSecretary() {
-	return 3;
-    }
+	@Override
+	protected int getNumberOfEntriesStudentInSecretary() {
+		return 3;
+	}
 
-    @Override
-    public PrescriptionEnum getPrescriptionEnum() {
-	return PrescriptionEnum.ALLPRESCRIPTION;
-    }
+	@Override
+	public PrescriptionEnum getPrescriptionEnum() {
+		return PrescriptionEnum.ALLPRESCRIPTION;
+	}
 
-    @Override
-    public ExecutionYear getRegistrationStart() {
-	return ExecutionYear.readCurrentExecutionYear().getPreviousExecutionYear().getPreviousExecutionYear();
-    }
+	@Override
+	public ExecutionYear getRegistrationStart() {
+		return ExecutionYear.readCurrentExecutionYear().getPreviousExecutionYear().getPreviousExecutionYear();
+	}
 
 }

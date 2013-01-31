@@ -21,18 +21,8 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionEx
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
  * @author <a href="mailto:goncalo@ist.utl.pt">Goncalo Luiz</a> <br/>
@@ -44,53 +34,54 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
  */
 @Mapping(module = "external", path = "/authenticate", scope = "request")
 public class Authentication extends FenixAction {
-    final static String allowedProtocol = "https";
+	final static String allowedProtocol = "https";
 
-    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-	    throws FenixActionException {
-	final String username = request.getParameter("username");
-	final String password = request.getParameter("password");
-	final String requestURL = request.getRequestURL().toString();
-	boolean result = false;
-	final String remoteHostName = BaseAuthenticationAction.getRemoteHostName(request);
-	Object argsAutenticacao[] = { username, password, requestURL, remoteHostName };
-	try {
-	    String scheme = request.getScheme();
+	@Override
+	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+			throws FenixActionException {
+		final String username = request.getParameter("username");
+		final String password = request.getParameter("password");
+		final String requestURL = request.getRequestURL().toString();
+		boolean result = false;
+		final String remoteHostName = BaseAuthenticationAction.getRemoteHostName(request);
+		Object argsAutenticacao[] = { username, password, requestURL, remoteHostName };
+		try {
+			String scheme = request.getScheme();
 
-	    if (allowedProtocol.equalsIgnoreCase(scheme)) {
+			if (allowedProtocol.equalsIgnoreCase(scheme)) {
 
-		Person person = Person.readPersonByUsername(username);
-		if (person == null) {
-		    person = Person.readPersonByIstUsername(username);
+				Person person = Person.readPersonByUsername(username);
+				if (person == null) {
+					person = Person.readPersonByIstUsername(username);
+				}
+				if (person != null) {
+					SetUserUID.run(person);
+				}
+
+				ServiceManagerServiceFactory.executeService(PropertiesManager.getProperty("authenticationService"),
+						argsAutenticacao);
+				result = true;
+			}
+
+		} catch (Exception e) {
+			result = false;
 		}
-		if (person != null) {
-		    SetUserUID.run(person);
+
+		try {
+			sendAnswer(response, result);
+		} catch (IOException ex) {
+			throw new FenixActionException(ex);
 		}
 
-		ServiceManagerServiceFactory.executeService(PropertiesManager.getProperty("authenticationService"),
-			argsAutenticacao);
-		result = true;
-	    }
-
-	} catch (Exception e) {
-	    result = false;
+		return null;
 	}
 
-	try {
-	    sendAnswer(response, result);
-	} catch (IOException ex) {
-	    throw new FenixActionException(ex);
+	private void sendAnswer(HttpServletResponse response, boolean result) throws IOException {
+		ServletOutputStream writer = response.getOutputStream();
+		response.setContentType("text/plain");
+		writer.print(result);
+		writer.flush();
+		response.flushBuffer();
 	}
-
-	return null;
-    }
-
-    private void sendAnswer(HttpServletResponse response, boolean result) throws IOException {
-	ServletOutputStream writer = response.getOutputStream();
-	response.setContentType("text/plain");
-	writer.print(result);
-	writer.flush();
-	response.flushBuffer();
-    }
 
 }

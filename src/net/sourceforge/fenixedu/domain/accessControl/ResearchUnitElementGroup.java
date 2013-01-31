@@ -12,61 +12,61 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.ResearchUnit;
 
 public class ResearchUnitElementGroup extends DomainBackedGroup<ResearchUnit> {
 
-    /**
+	/**
 	 * 
 	 */
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    public ResearchUnitElementGroup(ResearchUnit unit) {
-	super(unit);
-    }
-
-    @Override
-    public String getPresentationNameBundle() {
-	return "resources.Researcher";
-    }
-
-    @Override
-    public String getPresentationNameKey() {
-	return "label.researchUnitElement";
-    }
-
-    @Override
-    public Set<Person> getElements() {
-	return new HashSet<Person>(getObject().getPossibleGroupMembers());
-    }
-
-    @Override
-    public boolean isMember(Person person) {
-	return person != null && person.getWorkingResearchUnitsAndParents().contains(getObject());
-    }
-
-    @Override
-    protected Argument[] getExpressionArguments() {
-	return new Argument[] { new IdOperator(getObject()) };
-    }
-
-    public static class Builder implements GroupBuilder {
-
-	@Override
-	public Group build(Object[] arguments) {
-	    ResearchUnit unit = (ResearchUnit) arguments[0];
-	    if (unit == null) {
-		throw new VariableNotDefinedException("unit");
-	    }
-	    return new ResearchUnitElementGroup(unit);
-
+	public ResearchUnitElementGroup(ResearchUnit unit) {
+		super(unit);
 	}
 
 	@Override
-	public int getMaxArguments() {
-	    return 1;
+	public String getPresentationNameBundle() {
+		return "resources.Researcher";
 	}
 
 	@Override
-	public int getMinArguments() {
-	    return 1;
+	public String getPresentationNameKey() {
+		return "label.researchUnitElement";
 	}
 
-    }
+	@Override
+	public Set<Person> getElements() {
+		return new HashSet<Person>(getObject().getPossibleGroupMembers());
+	}
+
+	@Override
+	public boolean isMember(Person person) {
+		return person != null && person.getWorkingResearchUnitsAndParents().contains(getObject());
+	}
+
+	@Override
+	protected Argument[] getExpressionArguments() {
+		return new Argument[] { new IdOperator(getObject()) };
+	}
+
+	public static class Builder implements GroupBuilder {
+
+		@Override
+		public Group build(Object[] arguments) {
+			ResearchUnit unit = (ResearchUnit) arguments[0];
+			if (unit == null) {
+				throw new VariableNotDefinedException("unit");
+			}
+			return new ResearchUnitElementGroup(unit);
+
+		}
+
+		@Override
+		public int getMaxArguments() {
+			return 1;
+		}
+
+		@Override
+		public int getMinArguments() {
+			return 1;
+		}
+
+	}
 }

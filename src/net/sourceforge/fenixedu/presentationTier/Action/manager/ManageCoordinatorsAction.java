@@ -39,186 +39,187 @@ import pt.ist.fenixWebFramework.security.UserView;
  */
 public class ManageCoordinatorsAction extends FenixDispatchAction {
 
-    public ActionForward view(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-	ActionErrors errors = new ActionErrors();
+	public ActionForward view(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		ActionErrors errors = new ActionErrors();
 
-	Integer executionDegreeId = getFromRequest("executionDegreeId", request);
-	request.setAttribute("executionDegreeId", executionDegreeId);
+		Integer executionDegreeId = getFromRequest("executionDegreeId", request);
+		request.setAttribute("executionDegreeId", executionDegreeId);
 
-	IUserView userView = UserView.getUser();
+		IUserView userView = UserView.getUser();
 
-	Object[] args = { executionDegreeId };
-	InfoExecutionDegree infoExecutionDegree = null;
-	try {
-	    infoExecutionDegree = (InfoExecutionDegree) ServiceManagerServiceFactory.executeService("ReadExecutionDegree", args);
-	} catch (FenixServiceException e) {
-	    e.printStackTrace();
-	    errors.add("impossibleExecutionDegree", new ActionError("error.invalidExecutionDegree"));
-	}
-	if (infoExecutionDegree == null || infoExecutionDegree.getInfoDegreeCurricularPlan() == null
-		|| infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree() == null) {
-	    errors.add("impossibleExecutionDegree", new ActionError("error.invalidExecutionDegree"));
-	}
-	if (!errors.isEmpty()) {
-	    saveErrors(request, errors);
-	}
+		Object[] args = { executionDegreeId };
+		InfoExecutionDegree infoExecutionDegree = null;
+		try {
+			infoExecutionDegree = (InfoExecutionDegree) ServiceManagerServiceFactory.executeService("ReadExecutionDegree", args);
+		} catch (FenixServiceException e) {
+			e.printStackTrace();
+			errors.add("impossibleExecutionDegree", new ActionError("error.invalidExecutionDegree"));
+		}
+		if (infoExecutionDegree == null || infoExecutionDegree.getInfoDegreeCurricularPlan() == null
+				|| infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree() == null) {
+			errors.add("impossibleExecutionDegree", new ActionError("error.invalidExecutionDegree"));
+		}
+		if (!errors.isEmpty()) {
+			saveErrors(request, errors);
+		}
 
-	Integer[] responsibleCoordinatorsIds = findResponsibleCoodinators(infoExecutionDegree.getCoordinatorsList());
-	DynaActionForm coordinatorsForm = (DynaActionForm) actionForm;
-	coordinatorsForm.set("responsibleCoordinatorsIds", responsibleCoordinatorsIds);
-	request.setAttribute("infoExecutionDegree", infoExecutionDegree);
-	request.setAttribute("degreeId", infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getIdInternal());
-	request.setAttribute("degreeCurricularPlanId", infoExecutionDegree.getInfoDegreeCurricularPlan().getIdInternal());
+		Integer[] responsibleCoordinatorsIds = findResponsibleCoodinators(infoExecutionDegree.getCoordinatorsList());
+		DynaActionForm coordinatorsForm = (DynaActionForm) actionForm;
+		coordinatorsForm.set("responsibleCoordinatorsIds", responsibleCoordinatorsIds);
+		request.setAttribute("infoExecutionDegree", infoExecutionDegree);
+		request.setAttribute("degreeId", infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getIdInternal());
+		request.setAttribute("degreeCurricularPlanId", infoExecutionDegree.getInfoDegreeCurricularPlan().getIdInternal());
 
-	return mapping.findForward("manageCoordinators");
-    }
-
-    /**
-     * Get all the responsible professors from the list of coordinators.
-     * 
-     * @param list
-     * @return Integer[]
-     */
-    private Integer[] findResponsibleCoodinators(List coordinatorsList) {
-	List responsibleCoordinatorsList = (List) CollectionUtils.select(coordinatorsList, new Predicate() {
-	    public boolean evaluate(Object obj) {
-		InfoCoordinator infoCoordinator = (InfoCoordinator) obj;
-		return infoCoordinator.getResponsible().booleanValue();
-	    }
-	});
-
-	ListIterator listIterator = responsibleCoordinatorsList.listIterator();
-	List responsibleCoordinatorsIdsList = new ArrayList();
-
-	while (listIterator.hasNext()) {
-	    InfoCoordinator infoCoordinator = (InfoCoordinator) listIterator.next();
-
-	    responsibleCoordinatorsIdsList.add(infoCoordinator.getIdInternal());
+		return mapping.findForward("manageCoordinators");
 	}
 
-	return (Integer[]) responsibleCoordinatorsIdsList.toArray(new Integer[] {});
-    }
+	/**
+	 * Get all the responsible professors from the list of coordinators.
+	 * 
+	 * @param list
+	 * @return Integer[]
+	 */
+	private Integer[] findResponsibleCoodinators(List coordinatorsList) {
+		List responsibleCoordinatorsList = (List) CollectionUtils.select(coordinatorsList, new Predicate() {
+			@Override
+			public boolean evaluate(Object obj) {
+				InfoCoordinator infoCoordinator = (InfoCoordinator) obj;
+				return infoCoordinator.getResponsible().booleanValue();
+			}
+		});
 
-    public ActionForward prepareInsert(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-	ActionErrors errors = new ActionErrors();
+		ListIterator listIterator = responsibleCoordinatorsList.listIterator();
+		List responsibleCoordinatorsIdsList = new ArrayList();
 
-	Integer executionDegreeId = getFromRequest("executionDegreeId", request);
-	request.setAttribute("executionDegreeId", executionDegreeId);
+		while (listIterator.hasNext()) {
+			InfoCoordinator infoCoordinator = (InfoCoordinator) listIterator.next();
 
-	IUserView userView = UserView.getUser();
+			responsibleCoordinatorsIdsList.add(infoCoordinator.getIdInternal());
+		}
 
-	Object[] args = { executionDegreeId };
-	InfoExecutionDegree infoExecutionDegree = null;
-	try {
-	    infoExecutionDegree = (InfoExecutionDegree) ServiceManagerServiceFactory.executeService("ReadExecutionDegree", args);
-	} catch (FenixServiceException e) {
-	    e.printStackTrace();
-	    errors.add("impossibleExecutionDegree", new ActionError("error.invalidExecutionDegree"));
-	}
-	if (infoExecutionDegree == null || infoExecutionDegree.getInfoDegreeCurricularPlan() == null
-		|| infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree() == null) {
-	    errors.add("impossibleExecutionDegree", new ActionError("error.invalidExecutionDegree"));
-	}
-	if (!errors.isEmpty()) {
-	    saveErrors(request, errors);
-	}
-
-	request.setAttribute("infoExecutionDegree", infoExecutionDegree);
-	request.setAttribute("degreeId", infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getIdInternal());
-	request.setAttribute("degreeCurricularPlanId", infoExecutionDegree.getInfoDegreeCurricularPlan().getIdInternal());
-
-	return mapping.findForward("insertCoordinator");
-    }
-
-    public ActionForward insert(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-	ActionErrors errors = new ActionErrors();
-	IUserView userView = UserView.getUser();
-
-	Integer executionDegreeId = getFromRequest("executionDegreeId", request);
-	request.setAttribute("executionDegreeId", executionDegreeId);
-
-	Integer degreeId = getFromRequest("degreeId", request);
-	request.setAttribute("degreeId", degreeId);
-
-	getFromRequest("degreeCurricularPlanId", request);
-
-	request.setAttribute("degreeCurricularPlanId", executionDegreeId);
-
-	DynaActionForm coordinatorForm = (DynaActionForm) actionForm;
-	Integer coordinatorNumber = new Integer((String) coordinatorForm.get("number"));
-	String istUsername = Employee.readByNumber(coordinatorNumber).getPerson().getIstUsername();
-
-	try {
-	    AddCoordinator.run(executionDegreeId, istUsername);
-	} catch (FenixServiceException e) {
-	    e.printStackTrace();
-	    errors.add("impossibleInsertCoordinator", new ActionError("error.impossibleInsertCoordinator"));
-	}
-	if (!errors.isEmpty()) {
-	    saveErrors(request, errors);
+		return (Integer[]) responsibleCoordinatorsIdsList.toArray(new Integer[] {});
 	}
 
-	return mapping.findForward("viewCoordinators");
-    }
+	public ActionForward prepareInsert(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		ActionErrors errors = new ActionErrors();
 
-    public ActionForward edit(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
+		Integer executionDegreeId = getFromRequest("executionDegreeId", request);
+		request.setAttribute("executionDegreeId", executionDegreeId);
 
-	ActionErrors errors = new ActionErrors();
+		IUserView userView = UserView.getUser();
 
-	IUserView userView = UserView.getUser();
+		Object[] args = { executionDegreeId };
+		InfoExecutionDegree infoExecutionDegree = null;
+		try {
+			infoExecutionDegree = (InfoExecutionDegree) ServiceManagerServiceFactory.executeService("ReadExecutionDegree", args);
+		} catch (FenixServiceException e) {
+			e.printStackTrace();
+			errors.add("impossibleExecutionDegree", new ActionError("error.invalidExecutionDegree"));
+		}
+		if (infoExecutionDegree == null || infoExecutionDegree.getInfoDegreeCurricularPlan() == null
+				|| infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree() == null) {
+			errors.add("impossibleExecutionDegree", new ActionError("error.invalidExecutionDegree"));
+		}
+		if (!errors.isEmpty()) {
+			saveErrors(request, errors);
+		}
 
-	Integer executionDegreeId = getFromRequest("executionDegreeId", request);
-	request.setAttribute("executionDegreeId", executionDegreeId);
+		request.setAttribute("infoExecutionDegree", infoExecutionDegree);
+		request.setAttribute("degreeId", infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getIdInternal());
+		request.setAttribute("degreeCurricularPlanId", infoExecutionDegree.getInfoDegreeCurricularPlan().getIdInternal());
 
-	Integer degreeId = getFromRequest("degreeId", request);
-	request.setAttribute("degreeId", degreeId);
-
-	getFromRequest("degreeCurricularPlanId", request);
-	request.setAttribute("degreeCurricularPlanId", executionDegreeId);
-
-	DynaActionForm coordinatorsForm = (DynaActionForm) actionForm;
-	Integer[] responsibleCoordinatorsIds = (Integer[]) coordinatorsForm.get("responsibleCoordinatorsIds");
-	Integer[] deletedCoordinatorsIds = (Integer[]) coordinatorsForm.get("deletedCoordinatorsIds");
-
-	if (responsibleCoordinatorsIds != null) {
-	    List responsibleCoordinatorsIdsList = Arrays.asList(responsibleCoordinatorsIds);
-
-	    try {
-		ResponsibleCoordinators.run(executionDegreeId, responsibleCoordinatorsIdsList);
-	    } catch (FenixServiceException e) {
-		e.printStackTrace();
-		errors.add("impossibleInsertCoordinator", new ActionError("error.impossibleInsertCoordinator"));
-	    }
-	    if (!errors.isEmpty()) {
-		saveErrors(request, errors);
-	    }
+		return mapping.findForward("insertCoordinator");
 	}
 
-	if (deletedCoordinatorsIds != null) {
-	    List deletedCoordinatorsIdsList = Arrays.asList(deletedCoordinatorsIds);
+	public ActionForward insert(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		ActionErrors errors = new ActionErrors();
+		IUserView userView = UserView.getUser();
 
-	    RemoveCoordinators.run(executionDegreeId, deletedCoordinatorsIdsList);
-	    if (!errors.isEmpty()) {
-		saveErrors(request, errors);
-	    }
+		Integer executionDegreeId = getFromRequest("executionDegreeId", request);
+		request.setAttribute("executionDegreeId", executionDegreeId);
+
+		Integer degreeId = getFromRequest("degreeId", request);
+		request.setAttribute("degreeId", degreeId);
+
+		getFromRequest("degreeCurricularPlanId", request);
+
+		request.setAttribute("degreeCurricularPlanId", executionDegreeId);
+
+		DynaActionForm coordinatorForm = (DynaActionForm) actionForm;
+		Integer coordinatorNumber = new Integer((String) coordinatorForm.get("number"));
+		String istUsername = Employee.readByNumber(coordinatorNumber).getPerson().getIstUsername();
+
+		try {
+			AddCoordinator.run(executionDegreeId, istUsername);
+		} catch (FenixServiceException e) {
+			e.printStackTrace();
+			errors.add("impossibleInsertCoordinator", new ActionError("error.impossibleInsertCoordinator"));
+		}
+		if (!errors.isEmpty()) {
+			saveErrors(request, errors);
+		}
+
+		return mapping.findForward("viewCoordinators");
 	}
 
-	return mapping.findForward("viewCoordinators");
-    }
+	public ActionForward edit(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
 
-    private Integer getFromRequest(String parameter, HttpServletRequest request) {
-	Integer parameterCode = null;
-	String parameterCodeString = request.getParameter(parameter);
-	if (parameterCodeString == null) {
-	    parameterCodeString = (String) request.getAttribute(parameter);
+		ActionErrors errors = new ActionErrors();
+
+		IUserView userView = UserView.getUser();
+
+		Integer executionDegreeId = getFromRequest("executionDegreeId", request);
+		request.setAttribute("executionDegreeId", executionDegreeId);
+
+		Integer degreeId = getFromRequest("degreeId", request);
+		request.setAttribute("degreeId", degreeId);
+
+		getFromRequest("degreeCurricularPlanId", request);
+		request.setAttribute("degreeCurricularPlanId", executionDegreeId);
+
+		DynaActionForm coordinatorsForm = (DynaActionForm) actionForm;
+		Integer[] responsibleCoordinatorsIds = (Integer[]) coordinatorsForm.get("responsibleCoordinatorsIds");
+		Integer[] deletedCoordinatorsIds = (Integer[]) coordinatorsForm.get("deletedCoordinatorsIds");
+
+		if (responsibleCoordinatorsIds != null) {
+			List responsibleCoordinatorsIdsList = Arrays.asList(responsibleCoordinatorsIds);
+
+			try {
+				ResponsibleCoordinators.run(executionDegreeId, responsibleCoordinatorsIdsList);
+			} catch (FenixServiceException e) {
+				e.printStackTrace();
+				errors.add("impossibleInsertCoordinator", new ActionError("error.impossibleInsertCoordinator"));
+			}
+			if (!errors.isEmpty()) {
+				saveErrors(request, errors);
+			}
+		}
+
+		if (deletedCoordinatorsIds != null) {
+			List deletedCoordinatorsIdsList = Arrays.asList(deletedCoordinatorsIds);
+
+			RemoveCoordinators.run(executionDegreeId, deletedCoordinatorsIdsList);
+			if (!errors.isEmpty()) {
+				saveErrors(request, errors);
+			}
+		}
+
+		return mapping.findForward("viewCoordinators");
 	}
-	if (parameterCodeString != null) {
-	    parameterCode = new Integer(parameterCodeString);
+
+	private Integer getFromRequest(String parameter, HttpServletRequest request) {
+		Integer parameterCode = null;
+		String parameterCodeString = request.getParameter(parameter);
+		if (parameterCodeString == null) {
+			parameterCodeString = (String) request.getAttribute(parameter);
+		}
+		if (parameterCodeString != null) {
+			parameterCode = new Integer(parameterCodeString);
+		}
+		return parameterCode;
 	}
-	return parameterCode;
-    }
 }

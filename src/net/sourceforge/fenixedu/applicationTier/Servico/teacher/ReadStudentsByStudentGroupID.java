@@ -26,21 +26,21 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class ReadStudentsByStudentGroupID extends FenixService {
 
-    @Service
-    public static List run(Integer executionCourseId, Integer groupId) throws FenixServiceException {
+	@Service
+	public static List run(Integer executionCourseId, Integer groupId) throws FenixServiceException {
 
-	List infoStudents = new LinkedList();
+		List infoStudents = new LinkedList();
 
-	StudentGroup studentGroup = rootDomainObject.readStudentGroupByOID(groupId);
+		StudentGroup studentGroup = rootDomainObject.readStudentGroupByOID(groupId);
 
-	Iterator iter = studentGroup.getAttends().iterator();
+		Iterator iter = studentGroup.getAttends().iterator();
 
-	while (iter.hasNext()) {
-	    Attends attend = (Attends) iter.next();
-	    Integer studentID = attend.getRegistration().getIdInternal();
-	    Registration registration = rootDomainObject.readRegistrationByOID(studentID);
-	    infoStudents.add(InfoStudent.newInfoFromDomain(registration));
+		while (iter.hasNext()) {
+			Attends attend = (Attends) iter.next();
+			Integer studentID = attend.getRegistration().getIdInternal();
+			Registration registration = rootDomainObject.readRegistrationByOID(studentID);
+			infoStudents.add(InfoStudent.newInfoFromDomain(registration));
+		}
+		return infoStudents;
 	}
-	return infoStudents;
-    }
 }

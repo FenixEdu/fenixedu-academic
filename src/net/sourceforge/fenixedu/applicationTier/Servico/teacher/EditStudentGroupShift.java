@@ -23,34 +23,34 @@ import net.sourceforge.fenixedu.domain.StudentGroup;
 
 public class EditStudentGroupShift extends FenixService {
 
-    public Boolean run(Integer executionCourseCode, Integer studentGroupCode, Integer groupPropertiesCode, Integer newShiftCode)
-	    throws FenixServiceException {
+	public Boolean run(Integer executionCourseCode, Integer studentGroupCode, Integer groupPropertiesCode, Integer newShiftCode)
+			throws FenixServiceException {
 
-	Grouping grouping = rootDomainObject.readGroupingByOID(groupPropertiesCode);
+		Grouping grouping = rootDomainObject.readGroupingByOID(groupPropertiesCode);
 
-	if (grouping == null) {
-	    throw new ExistingServiceException();
+		if (grouping == null) {
+			throw new ExistingServiceException();
+		}
+
+		Shift shift = rootDomainObject.readShiftByOID(newShiftCode);
+
+		// grouping.checkShiftCapacity(shift);
+
+		StudentGroup studentGroup = rootDomainObject.readStudentGroupByOID(studentGroupCode);
+
+		if (studentGroup == null) {
+			throw new InvalidArgumentsServiceException();
+		}
+
+		String oldShiftName = studentGroup.getShift().getNome();
+		studentGroup.editShift(shift);
+		List<ExecutionCourse> ecs = grouping.getExecutionCourses();
+		for (ExecutionCourse ec : ecs) {
+			GroupsAndShiftsManagementLog.createLog(ec, "resources.MessagingResources",
+					"log.executionCourse.groupAndShifts.grouping.shift.edited", studentGroup.getGroupNumber().toString(),
+					oldShiftName, shift.getNome(), grouping.getName(), ec.getNome(), ec.getDegreePresentationString());
+		}
+
+		return Boolean.TRUE;
 	}
-
-	Shift shift = rootDomainObject.readShiftByOID(newShiftCode);
-
-	// grouping.checkShiftCapacity(shift);
-
-	StudentGroup studentGroup = rootDomainObject.readStudentGroupByOID(studentGroupCode);
-
-	if (studentGroup == null) {
-	    throw new InvalidArgumentsServiceException();
-	}
-
-	String oldShiftName = studentGroup.getShift().getNome();
-	studentGroup.editShift(shift);
-	List<ExecutionCourse> ecs = grouping.getExecutionCourses();
-	for (ExecutionCourse ec : ecs) {
-	    GroupsAndShiftsManagementLog.createLog(ec, "resources.MessagingResources",
-		    "log.executionCourse.groupAndShifts.grouping.shift.edited", studentGroup.getGroupNumber().toString(),
-		    oldShiftName, shift.getNome(), grouping.getName(), ec.getNome(), ec.getDegreePresentationString());
-	}
-
-	return Boolean.TRUE;
-    }
 }

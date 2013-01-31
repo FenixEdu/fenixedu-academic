@@ -9,41 +9,41 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class EctsInstitutionByCurricularYearConversionTable extends EctsInstitutionByCurricularYearConversionTable_Base {
 
-    protected EctsInstitutionByCurricularYearConversionTable(Unit school, AcademicInterval year, CycleType cycle,
-	    CurricularYear curricularYear, EctsComparabilityTable table) {
-	super();
-	init(year, curricularYear, table);
-	setSchool(school);
-	setCycle(cycle);
-    }
-
-    @Override
-    protected RootDomainObject getRootDomainObject() {
-	return getSchool().getRootDomainObject();
-    }
-
-    @Override
-    public DomainObject getTargetEntity() {
-	return getSchool();
-    }
-
-    @Service
-    public static void createConversionTable(Unit ist, AcademicInterval year, CycleType cycleType,
-	    CurricularYear curricularYear, String[] table) {
-	EctsInstitutionByCurricularYearConversionTable conversion = EctsTableIndex.readOrCreateByYear(year).getEnrolmentTableBy(ist,
-		curricularYear, cycleType);
-	EctsComparabilityTable ectsTable = EctsComparabilityTable.fromStringArray(table);
-	if (conversion != null) {
-	    conversion.delete();
+	protected EctsInstitutionByCurricularYearConversionTable(Unit school, AcademicInterval year, CycleType cycle,
+			CurricularYear curricularYear, EctsComparabilityTable table) {
+		super();
+		init(year, curricularYear, table);
+		setSchool(school);
+		setCycle(cycle);
 	}
-	if (ectsTable != null) {
-	    new EctsInstitutionByCurricularYearConversionTable(ist, year, cycleType, curricularYear, ectsTable);
-	}
-    }
 
-    @Override
-    public void delete() {
-	removeSchool();
-	super.delete();
-    }
+	@Override
+	protected RootDomainObject getRootDomainObject() {
+		return getSchool().getRootDomainObject();
+	}
+
+	@Override
+	public DomainObject getTargetEntity() {
+		return getSchool();
+	}
+
+	@Service
+	public static void createConversionTable(Unit ist, AcademicInterval year, CycleType cycleType, CurricularYear curricularYear,
+			String[] table) {
+		EctsInstitutionByCurricularYearConversionTable conversion =
+				EctsTableIndex.readOrCreateByYear(year).getEnrolmentTableBy(ist, curricularYear, cycleType);
+		EctsComparabilityTable ectsTable = EctsComparabilityTable.fromStringArray(table);
+		if (conversion != null) {
+			conversion.delete();
+		}
+		if (ectsTable != null) {
+			new EctsInstitutionByCurricularYearConversionTable(ist, year, cycleType, curricularYear, ectsTable);
+		}
+	}
+
+	@Override
+	public void delete() {
+		removeSchool();
+		super.delete();
+	}
 }

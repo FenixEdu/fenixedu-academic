@@ -13,94 +13,96 @@ import net.sourceforge.fenixedu.domain.ExecutionCourseSite;
 
 public class InfoSite extends InfoObject implements ISiteComponent {
 
-    private final ExecutionCourseSite site;
+	private final ExecutionCourseSite site;
 
-    private InfoExecutionCourse infoExecutionCourse;
+	private InfoExecutionCourse infoExecutionCourse;
 
-    public InfoSite(final ExecutionCourseSite site) {
-	this.site = site;
-    }
+	public InfoSite(final ExecutionCourseSite site) {
+		this.site = site;
+	}
 
-    /**
-     * @return the dynamicMailDistribution
-     */
-    public Boolean getDynamicMailDistribution() {
-	return getSite().getDynamicMailDistribution();
-    }
+	/**
+	 * @return the dynamicMailDistribution
+	 */
+	public Boolean getDynamicMailDistribution() {
+		return getSite().getDynamicMailDistribution();
+	}
 
-    /**
-     * @return InfoExecutionCourse
-     */
-    public InfoExecutionCourse getInfoExecutionCourse() {
-	return infoExecutionCourse;
-    }
+	/**
+	 * @return InfoExecutionCourse
+	 */
+	public InfoExecutionCourse getInfoExecutionCourse() {
+		return infoExecutionCourse;
+	}
 
-    /**
-     * Sets the infoExecutionCourse.
-     * 
-     * @param infoExecutionCourse
-     *            The infoExecutionCourse to set
-     */
-    public void setInfoExecutionCourse(InfoExecutionCourse infoExecutionCourse) {
-	this.infoExecutionCourse = infoExecutionCourse;
-    }
+	/**
+	 * Sets the infoExecutionCourse.
+	 * 
+	 * @param infoExecutionCourse
+	 *            The infoExecutionCourse to set
+	 */
+	public void setInfoExecutionCourse(InfoExecutionCourse infoExecutionCourse) {
+		this.infoExecutionCourse = infoExecutionCourse;
+	}
 
-    public boolean equals(Object obj) {
-	return obj instanceof InfoSite && getSite() == ((InfoSite) obj).getSite();
-    }
+	@Override
+	public boolean equals(Object obj) {
+		return obj instanceof InfoSite && getSite() == ((InfoSite) obj).getSite();
+	}
 
-    /**
-     * @see java.lang.Object#toString()
-     */
-    public String toString() {
-	return getSite().toString();
-    }
+	/**
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return getSite().toString();
+	}
 
-    /**
-     * @return String
-     */
-    public String getAlternativeSite() {
-	return getSite().getAlternativeSite();
-    }
+	/**
+	 * @return String
+	 */
+	public String getAlternativeSite() {
+		return getSite().getAlternativeSite();
+	}
 
-    /**
-     * @return String
-     */
-    public String getMail() {
-	return getSite().getMail();
-    }
+	/**
+	 * @return String
+	 */
+	public String getMail() {
+		return getSite().getMail();
+	}
 
-    /**
-     * @return String
-     */
-    public String getInitialStatement() {
-	return getSite().getInitialStatement();
-    }
+	/**
+	 * @return String
+	 */
+	public String getInitialStatement() {
+		return getSite().getInitialStatement();
+	}
 
-    /**
-     * @return String
-     */
-    public String getIntroduction() {
-	return getSite().getIntroduction();
-    }
+	/**
+	 * @return String
+	 */
+	public String getIntroduction() {
+		return getSite().getIntroduction();
+	}
 
-    /**
-     * @return String
-     */
-    public String getStyle() {
-	return getSite().getStyle();
-    }
+	/**
+	 * @return String
+	 */
+	public String getStyle() {
+		return getSite().getStyle();
+	}
 
-    public static InfoSite newInfoFromDomain(ExecutionCourseSite site) {
-	return site == null ? null : new InfoSite(site);
-    }
+	public static InfoSite newInfoFromDomain(ExecutionCourseSite site) {
+		return site == null ? null : new InfoSite(site);
+	}
 
-    @Override
-    public Integer getIdInternal() {
-	return getSite().getIdInternal();
-    }
+	@Override
+	public Integer getIdInternal() {
+		return getSite().getIdInternal();
+	}
 
-    private ExecutionCourseSite getSite() {
-	return site;
-    }
+	private ExecutionCourseSite getSite() {
+		return site;
+	}
 }

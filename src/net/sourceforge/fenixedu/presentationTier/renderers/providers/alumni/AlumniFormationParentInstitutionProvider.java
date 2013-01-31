@@ -9,16 +9,18 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class AlumniFormationParentInstitutionProvider implements DataProvider {
 
-    public Object provide(Object source, Object currentValue) {
+	@Override
+	public Object provide(Object source, Object currentValue) {
 
-	AlumniFormation formation = (AlumniFormation) source;
-	List<AcademicalInstitutionUnit> unitsByType = AcademicalInstitutionUnit.readOfficialParentUnitsByType(formation
-		.getInstitutionType());
-	return unitsByType;
-    }
+		AlumniFormation formation = (AlumniFormation) source;
+		List<AcademicalInstitutionUnit> unitsByType =
+				AcademicalInstitutionUnit.readOfficialParentUnitsByType(formation.getInstitutionType());
+		return unitsByType;
+	}
 
-    public Converter getConverter() {
-	return null;
-    }
+	@Override
+	public Converter getConverter() {
+		return null;
+	}
 
 }

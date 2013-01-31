@@ -12,29 +12,29 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
  */
 public class FunctionalityParameter extends FunctionalityParameter_Base {
 
-    protected FunctionalityParameter() {
-	super();
-	setRootDomainObject(RootDomainObject.getInstance());
-    }
+	protected FunctionalityParameter() {
+		super();
+		setRootDomainObject(RootDomainObject.getInstance());
+	}
 
-    public FunctionalityParameter(Functionality functionality, String name) {
-	this();
+	public FunctionalityParameter(Functionality functionality, String name) {
+		this();
 
-	setFunctionality(functionality);
-	setName(name);
-    }
+		setFunctionality(functionality);
+		setName(name);
+	}
 
-    public FunctionalityParameter(Functionality functionality, String name, MetaDomainObject type) {
-	this(functionality, name);
-	setType(type);
-    }
+	public FunctionalityParameter(Functionality functionality, String name, MetaDomainObject type) {
+		this(functionality, name);
+		setType(type);
+	}
 
-    public void delete() {
-	removeType();
-	removeFunctionality();
-	removeRootDomainObject();
+	public void delete() {
+		removeType();
+		removeFunctionality();
+		removeRootDomainObject();
 
-	deleteDomainObject();
-    }
+		deleteDomainObject();
+	}
 
 }

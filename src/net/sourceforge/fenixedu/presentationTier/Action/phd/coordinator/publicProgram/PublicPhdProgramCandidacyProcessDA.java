@@ -56,396 +56,395 @@ import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 })
 public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProcessDA {
 
-    public ActionForward listProcesses(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) {
+	public ActionForward listProcesses(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) {
 
-	SelectPhdCandidacyPeriodBean selectPeriodBean = getSelectPhdCandidacyPeriodBean();
+		SelectPhdCandidacyPeriodBean selectPeriodBean = getSelectPhdCandidacyPeriodBean();
 
-	if (selectPeriodBean == null) {
-	    selectPeriodBean = new SelectPhdCandidacyPeriodBean(EPFLPhdCandidacyPeriod.getMostRecentCandidacyPeriod());
-	}
-
-	final Statistics statistics = new Statistics();
-
-	final List<PublicPhdCandidacyBean> candidacyHashCodes = new ArrayList<PublicPhdCandidacyBean>();
-	for (final PublicCandidacyHashCode hashCode : RootDomainObject.getInstance().getCandidacyHashCodesSet()) {
-	    if (hashCode.isFromPhdProgram()) {
-		final PhdProgramPublicCandidacyHashCode phdHashCode = (PhdProgramPublicCandidacyHashCode) hashCode;
-
-		PhdCandidacyPeriod phdCandidacyPeriod = selectPeriodBean.getPhdCandidacyPeriod();
-
-		if (!phdHashCode.hasPhdProgramCandidacyProcess()) {
-
-		    if (phdCandidacyPeriod.contains(phdHashCode.getWhenCreated())) {
-			statistics.plusTotalRequests();
-			candidacyHashCodes.add(new PublicPhdCandidacyBean(phdHashCode));
-		    }
-
-		    continue;
+		if (selectPeriodBean == null) {
+			selectPeriodBean = new SelectPhdCandidacyPeriodBean(EPFLPhdCandidacyPeriod.getMostRecentCandidacyPeriod());
 		}
 
-		PhdIndividualProgramProcess individualProgramProcess = phdHashCode.getIndividualProgramProcess();
+		final Statistics statistics = new Statistics();
 
-		if (individualProgramProcess.getExecutionYear() != ExecutionYear.readCurrentExecutionYear()) {
-		    continue;
+		final List<PublicPhdCandidacyBean> candidacyHashCodes = new ArrayList<PublicPhdCandidacyBean>();
+		for (final PublicCandidacyHashCode hashCode : RootDomainObject.getInstance().getCandidacyHashCodesSet()) {
+			if (hashCode.isFromPhdProgram()) {
+				final PhdProgramPublicCandidacyHashCode phdHashCode = (PhdProgramPublicCandidacyHashCode) hashCode;
+
+				PhdCandidacyPeriod phdCandidacyPeriod = selectPeriodBean.getPhdCandidacyPeriod();
+
+				if (!phdHashCode.hasPhdProgramCandidacyProcess()) {
+
+					if (phdCandidacyPeriod.contains(phdHashCode.getWhenCreated())) {
+						statistics.plusTotalRequests();
+						candidacyHashCodes.add(new PublicPhdCandidacyBean(phdHashCode));
+					}
+
+					continue;
+				}
+
+				PhdIndividualProgramProcess individualProgramProcess = phdHashCode.getIndividualProgramProcess();
+
+				if (individualProgramProcess.getExecutionYear() != ExecutionYear.readCurrentExecutionYear()) {
+					continue;
+				}
+
+				if (!PhdIndividualProgramCollaborationType.EPFL.equals(individualProgramProcess.getCollaborationType())) {
+					continue;
+				}
+
+				if (!PhdIndividualProgramProcessState.CANDIDACY.equals(individualProgramProcess.getActiveState())) {
+					continue;
+				}
+
+				if (phdHashCode.hasCandidacyProcess()) {
+					statistics.plusTotalCandidates();
+				}
+
+				if (phdHashCode.hasCandidacyProcess() && phdHashCode.getPhdProgramCandidacyProcess().isValidatedByCandidate()) {
+					statistics.plusTotalValidated();
+				}
+
+				candidacyHashCodes.add(new PublicPhdCandidacyBean(phdHashCode));
+			}
 		}
 
-		if (!PhdIndividualProgramCollaborationType.EPFL.equals(individualProgramProcess.getCollaborationType())) {
-		    continue;
+		request.setAttribute("candidacyHashCodes", candidacyHashCodes);
+		request.setAttribute("statistics", statistics);
+		request.setAttribute("selectPeriodBean", selectPeriodBean);
+
+		RenderUtils.invalidateViewState();
+
+		return mapping.findForward("listProcesses");
+	}
+
+	private SelectPhdCandidacyPeriodBean getSelectPhdCandidacyPeriodBean() {
+		return (SelectPhdCandidacyPeriodBean) getObjectFromViewState("select-period-bean");
+	}
+
+	public ActionForward viewProcess(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) {
+		request.setAttribute("hashCode", getDomainObject(request, "hashCodeId"));
+		return mapping.findForward("viewProcess");
+	}
+
+	public ActionForward viewCandidacyRefereeLetter(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) {
+		request.setAttribute("candidacyRefereeLetter",
+				((PhdCandidacyReferee) getDomainObject(request, "candidacyRefereeId")).getLetter());
+		return mapping.findForward("viewCandidacyRefereeLetter");
+	}
+
+	public ActionForward manageFocusAreas(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) {
+
+		request.setAttribute("focusAreas", RootDomainObject.getInstance().getPhdProgramFocusAreas());
+
+		return mapping.findForward("manageFocusAreas");
+	}
+
+	public ActionForward manageThesisSubjects(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) {
+
+		PhdProgramFocusArea focusArea = getDomainObject(request, "focusAreaId");
+
+		request.setAttribute("focusArea", focusArea);
+		request.setAttribute("thesisSubjectBean", new ThesisSubjectBean());
+		request.setAttribute("thesisSubjects", focusArea.getThesisSubjects());
+
+		return mapping.findForward("manageThesisSubjects");
+	}
+
+	public ActionForward addThesisSubject(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) {
+
+		ThesisSubjectBean bean = getRenderedObject("thesisSubjectBean");
+		PhdProgramFocusArea focusArea = getDomainObject(request, "focusAreaId");
+
+		try {
+			ThesisSubject.createThesisSubject(focusArea, bean.getName(), bean.getDescription(), bean.getTeacher(),
+					bean.getExternalAdvisorName());
+
+		} catch (PhdDomainOperationException e) {
+			addActionMessage("error", request, e.getKey(), e.getArgs());
+			return addThesisSubjectInvalid(mapping, form, request, response);
 		}
 
-		if (!PhdIndividualProgramProcessState.CANDIDACY.equals(individualProgramProcess.getActiveState())) {
-		    continue;
+		RenderUtils.invalidateViewState();
+		return manageThesisSubjects(mapping, form, request, response);
+	}
+
+	public ActionForward addThesisSubjectInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) {
+		PhdProgramFocusArea focusArea = getDomainObject(request, "focusAreaId");
+		ThesisSubjectBean bean = getRenderedObject("thesisSubjectBean");
+
+		request.setAttribute("focusArea", focusArea);
+		request.setAttribute("thesisSubjectBean", bean);
+		request.setAttribute("thesisSubjects", focusArea.getThesisSubjects());
+
+		return mapping.findForward("manageThesisSubjects");
+	}
+
+	public ActionForward removeThesisSubject(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) {
+		ThesisSubject thesisSubject =
+				(ThesisSubject) AbstractDomainObject.fromExternalId((String) getFromRequest(request, "thesisSubjectId"));
+		try {
+			thesisSubject.delete();
+		} catch (PhdDomainOperationException e) {
+			addActionMessage("errors", request, e.getKey(), e.getArgs());
 		}
 
-		if (phdHashCode.hasCandidacyProcess()) {
-		    statistics.plusTotalCandidates();
+		RenderUtils.invalidateViewState();
+		return manageThesisSubjects(mapping, form, request, response);
+	}
+
+	public ActionForward prepareEditThesisSubject(final ActionMapping mapping, final ActionForm form,
+			final HttpServletRequest request, final HttpServletResponse response) {
+		ThesisSubject subject = getDomainObject(request, "thesisSubjectId");
+		PhdProgramFocusArea focusArea = getDomainObject(request, "focusAreaId");
+
+		ThesisSubjectBean bean = new ThesisSubjectBean(subject);
+
+		request.setAttribute("bean", bean);
+		request.setAttribute("focusArea", focusArea);
+		request.setAttribute("thesisSubject", subject);
+
+		return mapping.findForward("editThesisSubject");
+	}
+
+	public ActionForward editThesisSubject(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request,
+			final HttpServletResponse response) {
+		ThesisSubject subject = getDomainObject(request, "thesisSubjectId");
+		ThesisSubjectBean bean = getRenderedObject("bean");
+
+		try {
+			subject.edit(bean.getName(), bean.getDescription(), bean.getTeacher(), bean.getExternalAdvisorName());
+		} catch (PhdDomainOperationException e) {
+			addActionMessage("error", request, e.getKey(), e.getArgs());
+			return editThesisSubjectInvalid(mapping, form, request, response);
 		}
 
-		if (phdHashCode.hasCandidacyProcess() && phdHashCode.getPhdProgramCandidacyProcess().isValidatedByCandidate()) {
-		    statistics.plusTotalValidated();
+		return manageThesisSubjects(mapping, form, request, response);
+
+	}
+
+	public ActionForward editThesisSubjectInvalid(final ActionMapping mapping, final ActionForm form,
+			final HttpServletRequest request, final HttpServletResponse response) {
+		ThesisSubjectBean bean = getRenderedObject("bean");
+		request.setAttribute("bean", bean);
+
+		return mapping.findForward("editThesisSubject");
+	}
+
+	static public class SelectPhdCandidacyPeriodBean implements Serializable {
+
+		private static final long serialVersionUID = 1L;
+
+		private PhdCandidacyPeriod candidacyPeriod;
+
+		public PhdCandidacyPeriod getPhdCandidacyPeriod() {
+			return this.candidacyPeriod;
 		}
 
-		candidacyHashCodes.add(new PublicPhdCandidacyBean(phdHashCode));
-	    }
+		public void setPhdCandidacyPeriod(final PhdCandidacyPeriod candidacyPeriod) {
+			this.candidacyPeriod = candidacyPeriod;
+		}
+
+		public SelectPhdCandidacyPeriodBean(final PhdCandidacyPeriod candidacyPeriod) {
+			this.candidacyPeriod = candidacyPeriod;
+		}
+
 	}
 
-	request.setAttribute("candidacyHashCodes", candidacyHashCodes);
-	request.setAttribute("statistics", statistics);
-	request.setAttribute("selectPeriodBean", selectPeriodBean);
-
-	RenderUtils.invalidateViewState();
-
-	return mapping.findForward("listProcesses");
-    }
-
-    private SelectPhdCandidacyPeriodBean getSelectPhdCandidacyPeriodBean() {
-	return (SelectPhdCandidacyPeriodBean) getObjectFromViewState("select-period-bean");
-    }
-
-    public ActionForward viewProcess(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) {
-	request.setAttribute("hashCode", getDomainObject(request, "hashCodeId"));
-	return mapping.findForward("viewProcess");
-    }
-
-    public ActionForward viewCandidacyRefereeLetter(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) {
-	request.setAttribute("candidacyRefereeLetter",
-		((PhdCandidacyReferee) getDomainObject(request, "candidacyRefereeId")).getLetter());
-	return mapping.findForward("viewCandidacyRefereeLetter");
-    }
-
-    public ActionForward manageFocusAreas(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
-
-	request.setAttribute("focusAreas", RootDomainObject.getInstance().getPhdProgramFocusAreas());
-
-	return mapping.findForward("manageFocusAreas");
-    }
-
-    public ActionForward manageThesisSubjects(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
-
-	PhdProgramFocusArea focusArea = getDomainObject(request, "focusAreaId");
-
-	request.setAttribute("focusArea", focusArea);
-	request.setAttribute("thesisSubjectBean", new ThesisSubjectBean());
-	request.setAttribute("thesisSubjects", focusArea.getThesisSubjects());
-
-	return mapping.findForward("manageThesisSubjects");
-    }
-
-    public ActionForward addThesisSubject(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
-
-	ThesisSubjectBean bean = getRenderedObject("thesisSubjectBean");
-	PhdProgramFocusArea focusArea = getDomainObject(request, "focusAreaId");
-
-	try {
-	    ThesisSubject.createThesisSubject(focusArea, bean.getName(), bean.getDescription(), bean.getTeacher(),
-		    bean.getExternalAdvisorName());
-
-	} catch (PhdDomainOperationException e) {
-	    addActionMessage("error", request, e.getKey(), e.getArgs());
-	    return addThesisSubjectInvalid(mapping, form, request, response);
-	}
-
-	RenderUtils.invalidateViewState();
-	return manageThesisSubjects(mapping, form, request, response);
-    }
-
-    public ActionForward addThesisSubjectInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
-	PhdProgramFocusArea focusArea = getDomainObject(request, "focusAreaId");
-	ThesisSubjectBean bean = getRenderedObject("thesisSubjectBean");
-
-	request.setAttribute("focusArea", focusArea);
-	request.setAttribute("thesisSubjectBean", bean);
-	request.setAttribute("thesisSubjects", focusArea.getThesisSubjects());
-
-	return mapping.findForward("manageThesisSubjects");
-    }
-
-    public ActionForward removeThesisSubject(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
-	ThesisSubject thesisSubject = (ThesisSubject) AbstractDomainObject.fromExternalId((String) getFromRequest(request,
-		"thesisSubjectId"));
-	try {
-	    thesisSubject.delete();
-	} catch (PhdDomainOperationException e) {
-	    addActionMessage("errors", request, e.getKey(), e.getArgs());
-	}
-
-	RenderUtils.invalidateViewState();
-	return manageThesisSubjects(mapping, form, request, response);
-    }
-
-    public ActionForward prepareEditThesisSubject(final ActionMapping mapping, final ActionForm form,
-	    final HttpServletRequest request, final HttpServletResponse response) {
-	ThesisSubject subject = getDomainObject(request, "thesisSubjectId");
-	PhdProgramFocusArea focusArea = getDomainObject(request, "focusAreaId");
-
-	ThesisSubjectBean bean = new ThesisSubjectBean(subject);
-
-	request.setAttribute("bean", bean);
-	request.setAttribute("focusArea", focusArea);
-	request.setAttribute("thesisSubject", subject);
-
-	return mapping.findForward("editThesisSubject");
-    }
-
-    public ActionForward editThesisSubject(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request,
-	    final HttpServletResponse response) {
-	ThesisSubject subject = getDomainObject(request, "thesisSubjectId");
-	ThesisSubjectBean bean = getRenderedObject("bean");
-
-	try {
-	    subject.edit(bean.getName(), bean.getDescription(), bean.getTeacher(), bean.getExternalAdvisorName());
-	} catch (PhdDomainOperationException e) {
-	    addActionMessage("error", request, e.getKey(), e.getArgs());
-	    return editThesisSubjectInvalid(mapping, form, request, response);
-	}
-
-	return manageThesisSubjects(mapping, form, request, response);
-
-    }
-
-    public ActionForward editThesisSubjectInvalid(final ActionMapping mapping, final ActionForm form,
-	    final HttpServletRequest request, final HttpServletResponse response) {
-	ThesisSubjectBean bean = getRenderedObject("bean");
-	request.setAttribute("bean", bean);
-
-	return mapping.findForward("editThesisSubject");
-    }
-
-    static public class SelectPhdCandidacyPeriodBean implements Serializable {
-
-	private static final long serialVersionUID = 1L;
-
-	private PhdCandidacyPeriod candidacyPeriod;
-
-	public PhdCandidacyPeriod getPhdCandidacyPeriod() {
-	    return this.candidacyPeriod;
-	}
-
-	public void setPhdCandidacyPeriod(final PhdCandidacyPeriod candidacyPeriod) {
-	    this.candidacyPeriod = candidacyPeriod;
-	}
-
-	public SelectPhdCandidacyPeriodBean(final PhdCandidacyPeriod candidacyPeriod) {
-	    this.candidacyPeriod = candidacyPeriod;
-	}
-
-    }
-
-    static public final class PhdCandidacyPeriodDataProvider extends AbstractDomainObjectProvider {
-
-	@Override
-	public Object provide(Object source, Object currentValue) {
-	    return getCandidacyPeriods();
-	}
-
-	private List<PhdCandidacyPeriod> getCandidacyPeriods() {
-	    List<PhdCandidacyPeriod> candidacyPeriodList = new ArrayList<PhdCandidacyPeriod>();
-
-	    CollectionUtils.select(RootDomainObject.getInstance().getCandidacyPeriods(), new Predicate() {
+	static public final class PhdCandidacyPeriodDataProvider extends AbstractDomainObjectProvider {
 
 		@Override
-		public boolean evaluate(Object arg0) {
-		    return arg0 instanceof PhdCandidacyPeriod;
+		public Object provide(Object source, Object currentValue) {
+			return getCandidacyPeriods();
 		}
 
-	    }, candidacyPeriodList);
+		private List<PhdCandidacyPeriod> getCandidacyPeriods() {
+			List<PhdCandidacyPeriod> candidacyPeriodList = new ArrayList<PhdCandidacyPeriod>();
 
-	    return candidacyPeriodList;
-	}
+			CollectionUtils.select(RootDomainObject.getInstance().getCandidacyPeriods(), new Predicate() {
 
-    }
+				@Override
+				public boolean evaluate(Object arg0) {
+					return arg0 instanceof PhdCandidacyPeriod;
+				}
 
-    static public class Statistics implements Serializable {
-	static private final long serialVersionUID = 1L;
+			}, candidacyPeriodList);
 
-	private int totalRequests = 0;
-	private int totalCandidates = 0;
-	private int totalValidated = 0;
-
-	Statistics() {
-	}
-
-	public int getTotalRequests() {
-	    return totalRequests;
-	}
-
-	private void plusTotalRequests() {
-	    totalRequests++;
-	}
-
-	public int getTotalCandidates() {
-	    return totalCandidates;
-	}
-
-	private void plusTotalCandidates() {
-	    totalCandidates++;
-	}
-
-	public int getTotalValidated() {
-	    return totalValidated;
-	}
-
-	private void plusTotalValidated() {
-	    totalValidated++;
-	}
-    }
-
-    static public class PublicPhdCandidacyBean implements Serializable {
-
-	private static final long serialVersionUID = 1L;
-
-	private PhdProgramPublicCandidacyHashCode hashCode;
-
-	private String email;
-	private String name;
-	private String phdFocusArea;
-	private boolean candidate;
-	private boolean validated;
-
-	public PublicPhdCandidacyBean() {
-	}
-
-	public PublicPhdCandidacyBean(final PhdProgramPublicCandidacyHashCode hashCode) {
-	    setHashCode(hashCode);
-
-	    setEmail(hashCode.getEmail());
-	    setName(hashCode.hasCandidacyProcess() ? hashCode.getPerson().getName() : null);
-	    setPhdFocusArea(hashCode.hasCandidacyProcess()
-		    && hashCode.getIndividualProgramProcess().getPhdProgramFocusArea() != null ? hashCode
-		    .getIndividualProgramProcess().getPhdProgramFocusArea().getName().getContent() : null);
-	    setCandidate(hashCode.hasCandidacyProcess());
-	    setValidated(hashCode.hasCandidacyProcess() ? hashCode.getPhdProgramCandidacyProcess().isValidatedByCandidate()
-		    : false);
-	}
-
-	public PhdProgramPublicCandidacyHashCode getHashCode() {
-	    return this.hashCode;
-	}
-
-	public void setHashCode(PhdProgramPublicCandidacyHashCode hashCode) {
-	    this.hashCode = hashCode;
-	}
-
-	public String getEmail() {
-	    return email;
-	}
-
-	public void setEmail(String email) {
-	    this.email = email;
-	}
-
-	public String getName() {
-	    return name;
-	}
-
-	public void setName(String name) {
-	    this.name = name;
-	}
-
-	public String getPhdFocusArea() {
-	    return phdFocusArea;
-	}
-
-	public void setPhdFocusArea(String phdFocusArea) {
-	    this.phdFocusArea = phdFocusArea;
-	}
-
-	public boolean isCandidate() {
-	    return candidate;
-	}
-
-	public void setCandidate(boolean candidate) {
-	    this.candidate = candidate;
-	}
-
-	public boolean isValidated() {
-	    return validated;
-	}
-
-	public void setValidated(boolean validated) {
-	    this.validated = validated;
-	}
-    }
-
-    public static class ThesisSubjectBean implements Serializable {
-
-	private static final long serialVersionUID = 1L;
-
-	private MultiLanguageString name;
-	private MultiLanguageString description;
-	private Teacher teacher;
-	private String externalAdvisorName;
-
-	public ThesisSubjectBean() {
+			return candidacyPeriodList;
+		}
 
 	}
 
-	public ThesisSubjectBean(final ThesisSubject thesisSubject) {
-	    setName(thesisSubject.getName());
-	    setDescription(thesisSubject.getDescription());
-	    setTeacher(thesisSubject.getTeacher());
-	    setExternalAdvisorName(thesisSubject.getExternalAdvisorName());
+	static public class Statistics implements Serializable {
+		static private final long serialVersionUID = 1L;
+
+		private int totalRequests = 0;
+		private int totalCandidates = 0;
+		private int totalValidated = 0;
+
+		Statistics() {
+		}
+
+		public int getTotalRequests() {
+			return totalRequests;
+		}
+
+		private void plusTotalRequests() {
+			totalRequests++;
+		}
+
+		public int getTotalCandidates() {
+			return totalCandidates;
+		}
+
+		private void plusTotalCandidates() {
+			totalCandidates++;
+		}
+
+		public int getTotalValidated() {
+			return totalValidated;
+		}
+
+		private void plusTotalValidated() {
+			totalValidated++;
+		}
 	}
 
-	public MultiLanguageString getName() {
-	    return name;
+	static public class PublicPhdCandidacyBean implements Serializable {
+
+		private static final long serialVersionUID = 1L;
+
+		private PhdProgramPublicCandidacyHashCode hashCode;
+
+		private String email;
+		private String name;
+		private String phdFocusArea;
+		private boolean candidate;
+		private boolean validated;
+
+		public PublicPhdCandidacyBean() {
+		}
+
+		public PublicPhdCandidacyBean(final PhdProgramPublicCandidacyHashCode hashCode) {
+			setHashCode(hashCode);
+
+			setEmail(hashCode.getEmail());
+			setName(hashCode.hasCandidacyProcess() ? hashCode.getPerson().getName() : null);
+			setPhdFocusArea(hashCode.hasCandidacyProcess()
+					&& hashCode.getIndividualProgramProcess().getPhdProgramFocusArea() != null ? hashCode
+					.getIndividualProgramProcess().getPhdProgramFocusArea().getName().getContent() : null);
+			setCandidate(hashCode.hasCandidacyProcess());
+			setValidated(hashCode.hasCandidacyProcess() ? hashCode.getPhdProgramCandidacyProcess().isValidatedByCandidate() : false);
+		}
+
+		public PhdProgramPublicCandidacyHashCode getHashCode() {
+			return this.hashCode;
+		}
+
+		public void setHashCode(PhdProgramPublicCandidacyHashCode hashCode) {
+			this.hashCode = hashCode;
+		}
+
+		public String getEmail() {
+			return email;
+		}
+
+		public void setEmail(String email) {
+			this.email = email;
+		}
+
+		public String getName() {
+			return name;
+		}
+
+		public void setName(String name) {
+			this.name = name;
+		}
+
+		public String getPhdFocusArea() {
+			return phdFocusArea;
+		}
+
+		public void setPhdFocusArea(String phdFocusArea) {
+			this.phdFocusArea = phdFocusArea;
+		}
+
+		public boolean isCandidate() {
+			return candidate;
+		}
+
+		public void setCandidate(boolean candidate) {
+			this.candidate = candidate;
+		}
+
+		public boolean isValidated() {
+			return validated;
+		}
+
+		public void setValidated(boolean validated) {
+			this.validated = validated;
+		}
 	}
 
-	public void setName(MultiLanguageString name) {
-	    this.name = name;
-	}
+	public static class ThesisSubjectBean implements Serializable {
 
-	public MultiLanguageString getDescription() {
-	    return description;
-	}
+		private static final long serialVersionUID = 1L;
 
-	public void setDescription(MultiLanguageString description) {
-	    this.description = description;
-	}
+		private MultiLanguageString name;
+		private MultiLanguageString description;
+		private Teacher teacher;
+		private String externalAdvisorName;
 
-	public Teacher getTeacher() {
-	    return teacher;
-	}
+		public ThesisSubjectBean() {
 
-	public void setTeacher(final Teacher teacher) {
-	    this.teacher = teacher;
-	}
+		}
 
-	public String getExternalAdvisorName() {
-	    return externalAdvisorName;
-	}
+		public ThesisSubjectBean(final ThesisSubject thesisSubject) {
+			setName(thesisSubject.getName());
+			setDescription(thesisSubject.getDescription());
+			setTeacher(thesisSubject.getTeacher());
+			setExternalAdvisorName(thesisSubject.getExternalAdvisorName());
+		}
 
-	public void setExternalAdvisorName(String externalAdvisorName) {
-	    this.externalAdvisorName = externalAdvisorName;
+		public MultiLanguageString getName() {
+			return name;
+		}
+
+		public void setName(MultiLanguageString name) {
+			this.name = name;
+		}
+
+		public MultiLanguageString getDescription() {
+			return description;
+		}
+
+		public void setDescription(MultiLanguageString description) {
+			this.description = description;
+		}
+
+		public Teacher getTeacher() {
+			return teacher;
+		}
+
+		public void setTeacher(final Teacher teacher) {
+			this.teacher = teacher;
+		}
+
+		public String getExternalAdvisorName() {
+			return externalAdvisorName;
+		}
+
+		public void setExternalAdvisorName(String externalAdvisorName) {
+			this.externalAdvisorName = externalAdvisorName;
+		}
 	}
-    }
 
 }

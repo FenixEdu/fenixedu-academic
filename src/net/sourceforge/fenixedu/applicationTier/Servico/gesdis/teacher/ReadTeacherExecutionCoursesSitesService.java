@@ -27,22 +27,22 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class ReadTeacherExecutionCoursesSitesService extends FenixService {
 
-    @Checked("RolePredicates.TEACHER_PREDICATE")
-    @Service
-    public static List run(InfoTeacher infoTeacher) throws FenixServiceException {
+	@Checked("RolePredicates.TEACHER_PREDICATE")
+	@Service
+	public static List run(InfoTeacher infoTeacher) throws FenixServiceException {
 
-	final List<InfoSite> infoSites = new ArrayList<InfoSite>();
+		final List<InfoSite> infoSites = new ArrayList<InfoSite>();
 
-	final Teacher teacher = rootDomainObject.readTeacherByOID(infoTeacher.getIdInternal());
-	final List<Professorship> professorships = teacher.getProfessorships();
-	for (final Professorship professorship : professorships) {
-	    final ExecutionCourse executionCourse = professorship.getExecutionCourse();
-	    final ExecutionCourseSite site = executionCourse.getSite();
-	    final InfoSite infoSite = InfoSite.newInfoFromDomain(site);
-	    infoSite.setInfoExecutionCourse(InfoExecutionCourse.newInfoFromDomain(executionCourse));
-	    infoSites.add(infoSite);
+		final Teacher teacher = rootDomainObject.readTeacherByOID(infoTeacher.getIdInternal());
+		final List<Professorship> professorships = teacher.getProfessorships();
+		for (final Professorship professorship : professorships) {
+			final ExecutionCourse executionCourse = professorship.getExecutionCourse();
+			final ExecutionCourseSite site = executionCourse.getSite();
+			final InfoSite infoSite = InfoSite.newInfoFromDomain(site);
+			infoSite.setInfoExecutionCourse(InfoExecutionCourse.newInfoFromDomain(executionCourse));
+			infoSites.add(infoSite);
+		}
+
+		return infoSites;
 	}
-
-	return infoSites;
-    }
 }

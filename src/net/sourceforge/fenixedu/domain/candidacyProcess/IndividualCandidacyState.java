@@ -7,38 +7,38 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public enum IndividualCandidacyState {
 
-    STAND_BY,
+	STAND_BY,
 
-    ACCEPTED,
+	ACCEPTED,
 
-    REJECTED,
+	REJECTED,
 
-    CANCELLED,
+	CANCELLED,
 
-    NOT_ACCEPTED;
+	NOT_ACCEPTED;
 
-    public String getName() {
-	return name();
-    }
+	public String getName() {
+		return name();
+	}
 
-    public String getQualifiedName() {
-	return IndividualCandidacyState.class.getSimpleName() + "." + name();
-    }
+	public String getQualifiedName() {
+		return IndividualCandidacyState.class.getSimpleName() + "." + name();
+	}
 
-    public String getFullyQualifiedName() {
-	return IndividualCandidacyState.class.getName() + "." + name();
-    }
+	public String getFullyQualifiedName() {
+		return IndividualCandidacyState.class.getName() + "." + name();
+	}
 
-    protected String localizedName(Locale locale) {
-	return ResourceBundle.getBundle("resources.EnumerationResources", locale).getString(getQualifiedName());
-    }
+	protected String localizedName(Locale locale) {
+		return ResourceBundle.getBundle("resources.EnumerationResources", locale).getString(getQualifiedName());
+	}
 
-    protected String localizedName() {
-	return localizedName(Language.getLocale());
-    }
+	protected String localizedName() {
+		return localizedName(Language.getLocale());
+	}
 
-    public String getLocalizedName() {
-	return localizedName();
-    }
+	public String getLocalizedName() {
+		return localizedName();
+	}
 
 }

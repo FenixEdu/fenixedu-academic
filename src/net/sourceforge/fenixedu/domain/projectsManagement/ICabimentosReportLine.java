@@ -9,19 +9,19 @@ package net.sourceforge.fenixedu.domain.projectsManagement;
  * 
  */
 public interface ICabimentosReportLine {
-    public abstract Double getCabimentos();
+	public abstract Double getCabimentos();
 
-    public abstract void setCabimentos(Double cabimentos);
+	public abstract void setCabimentos(Double cabimentos);
 
-    public abstract Double getJustifications();
+	public abstract Double getJustifications();
 
-    public abstract void setJustifications(Double justifications);
+	public abstract void setJustifications(Double justifications);
 
-    public abstract String getProjectCode();
+	public abstract String getProjectCode();
 
-    public abstract void setProjectCode(String projectCode);
+	public abstract void setProjectCode(String projectCode);
 
-    public abstract Double getTotal();
+	public abstract Double getTotal();
 
-    public abstract void setTotal(Double total);
+	public abstract void setTotal(Double total);
 }

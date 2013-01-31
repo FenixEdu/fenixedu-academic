@@ -15,53 +15,53 @@ import net.sourceforge.fenixedu.util.DiaSemana;
 
 public class SupportLessonDTO extends InfoObject {
 
-    private Integer professorshipID;
+	private Integer professorshipID;
 
-    private DiaSemana weekDay;
+	private DiaSemana weekDay;
 
-    private Date startTime;
+	private Date startTime;
 
-    private Date endTime;
+	private Date endTime;
 
-    private String place;
+	private String place;
 
-    public String getPlace() {
-	return place;
-    }
+	public String getPlace() {
+		return place;
+	}
 
-    public void setPlace(String place) {
-	this.place = place;
-    }
+	public void setPlace(String place) {
+		this.place = place;
+	}
 
-    public Integer getProfessorshipID() {
-	return professorshipID;
-    }
+	public Integer getProfessorshipID() {
+		return professorshipID;
+	}
 
-    public void setProfessorshipID(Integer professorshipID) {
-	this.professorshipID = professorshipID;
-    }
+	public void setProfessorshipID(Integer professorshipID) {
+		this.professorshipID = professorshipID;
+	}
 
-    public Date getEndTime() {
-	return endTime;
-    }
+	public Date getEndTime() {
+		return endTime;
+	}
 
-    public void setEndTime(Date endTime) {
-	this.endTime = endTime;
-    }
+	public void setEndTime(Date endTime) {
+		this.endTime = endTime;
+	}
 
-    public Date getStartTime() {
-	return startTime;
-    }
+	public Date getStartTime() {
+		return startTime;
+	}
 
-    public void setStartTime(Date startTime) {
-	this.startTime = startTime;
-    }
+	public void setStartTime(Date startTime) {
+		this.startTime = startTime;
+	}
 
-    public DiaSemana getWeekDay() {
-	return weekDay;
-    }
+	public DiaSemana getWeekDay() {
+		return weekDay;
+	}
 
-    public void setWeekDay(DiaSemana weekDay) {
-	this.weekDay = weekDay;
-    }
+	public void setWeekDay(DiaSemana weekDay) {
+		this.weekDay = weekDay;
+	}
 }

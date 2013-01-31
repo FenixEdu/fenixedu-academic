@@ -9,32 +9,34 @@ import pt.ist.fenixWebFramework.renderers.layouts.Layout;
 
 public class CorrectorForTest extends OutputRenderer {
 
-    private String classes;
+	private String classes;
 
-    public String getClasses() {
-	return classes;
-    }
+	@Override
+	public String getClasses() {
+		return classes;
+	}
 
-    public void setClasses(String classes) {
-	this.classes = classes;
-    }
+	@Override
+	public void setClasses(String classes) {
+		this.classes = classes;
+	}
 
-    @Override
-    protected Layout getLayout(Object object, Class type) {
-	return new Layout() {
-	    @Override
-	    public HtmlComponent createComponent(Object object, Class type) {
-		NewCorrector corrector = (NewCorrector) object;
+	@Override
+	protected Layout getLayout(Object object, Class type) {
+		return new Layout() {
+			@Override
+			public HtmlComponent createComponent(Object object, Class type) {
+				NewCorrector corrector = (NewCorrector) object;
 
-		HtmlInlineContainer container = new HtmlInlineContainer();
+				HtmlInlineContainer container = new HtmlInlineContainer();
 
-		container.addChild(new HtmlText(corrector.getPercentage() + "%:"));
+				container.addChild(new HtmlText(corrector.getPercentage() + "%:"));
 
-		container.addChild(renderValue(corrector.getPredicate(), corrector.getPredicate().getClass(), null, "values"));
+				container.addChild(renderValue(corrector.getPredicate(), corrector.getPredicate().getClass(), null, "values"));
 
-		return container;
-	    }
-	};
-    }
+				return container;
+			}
+		};
+	}
 
 }

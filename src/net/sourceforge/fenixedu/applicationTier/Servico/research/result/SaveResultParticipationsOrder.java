@@ -8,8 +8,8 @@ import net.sourceforge.fenixedu.domain.research.result.ResultParticipation;
 import pt.ist.fenixWebFramework.services.Service;
 
 public class SaveResultParticipationsOrder extends FenixService {
-    @Service
-    public static void run(ResearchResult result, List<ResultParticipation> newParticipationsOrder) {
-	result.setParticipationsOrder(newParticipationsOrder);
-    }
+	@Service
+	public static void run(ResearchResult result, List<ResultParticipation> newParticipationsOrder) {
+		result.setParticipationsOrder(newParticipationsOrder);
+	}
 }

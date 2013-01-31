@@ -16,40 +16,40 @@ import org.joda.time.YearMonthDay;
 
 public class RectoratePaymentCode extends RectoratePaymentCode_Base {
 
-    protected RectoratePaymentCode(final YearMonthDay startDate, final YearMonthDay endDate, final Money minAmount,
-	    final Money maxAmount) {
-	super();
-	init(PaymentCodeType.RECTORATE, startDate, endDate, minAmount, maxAmount, null);
-    }
-
-    @Override
-    protected void internalProcess(Person person, Money amount, DateTime whenRegistered, String sibsTransactionId, String comments) {
-
-    }
-
-    @Override
-    public boolean isForRectorate() {
-	return true;
-    }
-
-    public static RectoratePaymentCode create(final LocalDate startDate, final LocalDate endDate, final Money minAmount,
-	    final Money maxAmount) {
-	return new RectoratePaymentCode(startDate.toDateTimeAtStartOfDay().toYearMonthDay(), endDate.toDateTimeAtStartOfDay()
-		.toYearMonthDay(), minAmount, maxAmount);
-    }
-
-    public static List<RectoratePaymentCode> getAllRectoratePaymentCodes() {
-	List<RectoratePaymentCode> result = new ArrayList<RectoratePaymentCode>();
-
-	List<PaymentCode> paymentCodes = RootDomainObject.getInstance().getPaymentCodes();
-
-	for (PaymentCode paymentCode : paymentCodes) {
-	    if (paymentCode.isForRectorate() && !StringUtils.isEmpty(paymentCode.getCode())) {
-		result.add((RectoratePaymentCode) paymentCode);
-	    }
+	protected RectoratePaymentCode(final YearMonthDay startDate, final YearMonthDay endDate, final Money minAmount,
+			final Money maxAmount) {
+		super();
+		init(PaymentCodeType.RECTORATE, startDate, endDate, minAmount, maxAmount, null);
 	}
 
-	return result;
-    }
+	@Override
+	protected void internalProcess(Person person, Money amount, DateTime whenRegistered, String sibsTransactionId, String comments) {
+
+	}
+
+	@Override
+	public boolean isForRectorate() {
+		return true;
+	}
+
+	public static RectoratePaymentCode create(final LocalDate startDate, final LocalDate endDate, final Money minAmount,
+			final Money maxAmount) {
+		return new RectoratePaymentCode(startDate.toDateTimeAtStartOfDay().toYearMonthDay(), endDate.toDateTimeAtStartOfDay()
+				.toYearMonthDay(), minAmount, maxAmount);
+	}
+
+	public static List<RectoratePaymentCode> getAllRectoratePaymentCodes() {
+		List<RectoratePaymentCode> result = new ArrayList<RectoratePaymentCode>();
+
+		List<PaymentCode> paymentCodes = RootDomainObject.getInstance().getPaymentCodes();
+
+		for (PaymentCode paymentCode : paymentCodes) {
+			if (paymentCode.isForRectorate() && !StringUtils.isEmpty(paymentCode.getCode())) {
+				result.add((RectoratePaymentCode) paymentCode);
+			}
+		}
+
+		return result;
+	}
 
 }

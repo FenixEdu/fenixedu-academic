@@ -22,59 +22,59 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public abstract class ViewTeacherCreditsDA extends FenixDispatchAction {
 
-    public ActionForward prepareTeacherSearch(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws NumberFormatException, FenixFilterException, FenixServiceException {
-	request.setAttribute("teacherBean", new TeacherCreditsBean());
-	return mapping.findForward("selectTeacher");
-    }
-
-    public abstract ActionForward showTeacherCredits(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws NumberFormatException, FenixServiceException, Exception;
-
-    public abstract ActionForward viewAnnualTeachingCredits(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws NumberFormatException, FenixServiceException, Exception;
-
-    protected ActionForward viewAnnualTeachingCredits(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response, RoleType roleType) throws NumberFormatException, FenixServiceException, Exception {
-	Teacher teacher = AbstractDomainObject.fromExternalId((String) getFromRequest(request, "teacherOid"));
-	ExecutionYear executionYear = AbstractDomainObject.fromExternalId((String) getFromRequest(request, "executionYearOid"));
-	if (teacher == null) {
-	    Professorship professorship = rootDomainObject.readProfessorshipByOID(getIntegerFromRequest(request,
-		    "professorshipID"));
-	    if (professorship != null) {
-		teacher = professorship.getTeacher();
-		executionYear = professorship.getExecutionCourse().getExecutionYear();
-	    }
+	public ActionForward prepareTeacherSearch(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws NumberFormatException, FenixFilterException, FenixServiceException {
+		request.setAttribute("teacherBean", new TeacherCreditsBean());
+		return mapping.findForward("selectTeacher");
 	}
-	AnnualTeachingCreditsBean annualTeachingCreditsBean = new AnnualTeachingCreditsBean(executionYear, teacher, roleType);
 
-	for (AnnualTeachingCredits annualTeachingCredits : teacher.getAnnualTeachingCredits()) {
-	    if (annualTeachingCredits.getAnnualCreditsState().getExecutionYear().equals(executionYear)) {
-		if (annualTeachingCredits.isPastResume()) {
-		    TeacherCreditsBean teacherBean = new TeacherCreditsBean(teacher);
-		    teacherBean.preparePastTeachingCredits();
-		    request.setAttribute("teacherBean", teacherBean);
-		    return mapping.findForward("showPastTeacherCredits");
-		} else {
-		    annualTeachingCreditsBean = new AnnualTeachingCreditsBean(annualTeachingCredits, roleType);
-		    break;
+	public abstract ActionForward showTeacherCredits(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws NumberFormatException, FenixServiceException, Exception;
+
+	public abstract ActionForward viewAnnualTeachingCredits(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws NumberFormatException, FenixServiceException, Exception;
+
+	protected ActionForward viewAnnualTeachingCredits(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response, RoleType roleType) throws NumberFormatException, FenixServiceException, Exception {
+		Teacher teacher = AbstractDomainObject.fromExternalId((String) getFromRequest(request, "teacherOid"));
+		ExecutionYear executionYear = AbstractDomainObject.fromExternalId((String) getFromRequest(request, "executionYearOid"));
+		if (teacher == null) {
+			Professorship professorship =
+					rootDomainObject.readProfessorshipByOID(getIntegerFromRequest(request, "professorshipID"));
+			if (professorship != null) {
+				teacher = professorship.getTeacher();
+				executionYear = professorship.getExecutionCourse().getExecutionYear();
+			}
 		}
-	    }
-	}
-	request.setAttribute("annualTeachingCreditsBean", annualTeachingCreditsBean);
-	request.setAttribute("teacherBean", new TeacherCreditsBean());
-	return mapping.findForward("showAnnualTeacherCredits");
-    }
+		AnnualTeachingCreditsBean annualTeachingCreditsBean = new AnnualTeachingCreditsBean(executionYear, teacher, roleType);
 
-    public ActionForward recalculateCredits(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws NumberFormatException, FenixServiceException, Exception {
-	Teacher teacher = AbstractDomainObject.fromExternalId((String) getFromRequest(request, "teacherOid"));
-	ExecutionYear executionYear = AbstractDomainObject.fromExternalId((String) getFromRequest(request, "executionYearOid"));
-	AnnualTeachingCredits annualTeachingCredits = AnnualTeachingCredits.readByYearAndTeacher(executionYear, teacher);
-	if (annualTeachingCredits != null) {
-	    annualTeachingCredits.calculateCredits();
+		for (AnnualTeachingCredits annualTeachingCredits : teacher.getAnnualTeachingCredits()) {
+			if (annualTeachingCredits.getAnnualCreditsState().getExecutionYear().equals(executionYear)) {
+				if (annualTeachingCredits.isPastResume()) {
+					TeacherCreditsBean teacherBean = new TeacherCreditsBean(teacher);
+					teacherBean.preparePastTeachingCredits();
+					request.setAttribute("teacherBean", teacherBean);
+					return mapping.findForward("showPastTeacherCredits");
+				} else {
+					annualTeachingCreditsBean = new AnnualTeachingCreditsBean(annualTeachingCredits, roleType);
+					break;
+				}
+			}
+		}
+		request.setAttribute("annualTeachingCreditsBean", annualTeachingCreditsBean);
+		request.setAttribute("teacherBean", new TeacherCreditsBean());
+		return mapping.findForward("showAnnualTeacherCredits");
 	}
-	return viewAnnualTeachingCredits(mapping, form, request, response);
-    }
+
+	public ActionForward recalculateCredits(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws NumberFormatException, FenixServiceException, Exception {
+		Teacher teacher = AbstractDomainObject.fromExternalId((String) getFromRequest(request, "teacherOid"));
+		ExecutionYear executionYear = AbstractDomainObject.fromExternalId((String) getFromRequest(request, "executionYearOid"));
+		AnnualTeachingCredits annualTeachingCredits = AnnualTeachingCredits.readByYearAndTeacher(executionYear, teacher);
+		if (annualTeachingCredits != null) {
+			annualTeachingCredits.calculateCredits();
+		}
+		return viewAnnualTeachingCredits(mapping, form, request, response);
+	}
 
 }

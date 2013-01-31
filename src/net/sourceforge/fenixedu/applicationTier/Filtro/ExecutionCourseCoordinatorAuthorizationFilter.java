@@ -15,18 +15,18 @@ import pt.utl.ist.berserk.ServiceResponse;
  */
 public class ExecutionCourseCoordinatorAuthorizationFilter extends CoordinatorAuthorizationFilter {
 
-    @Override
-    protected ExecutionYear getSpecificExecutionYear(ServiceRequest request, ServiceResponse response) {
-	Object argument = request.getServiceParameters().getParameter(0);
+	@Override
+	protected ExecutionYear getSpecificExecutionYear(ServiceRequest request, ServiceResponse response) {
+		Object argument = request.getServiceParameters().getParameter(0);
 
-	ExecutionCourse executionCourse;
-	if (argument instanceof InfoExecutionCourse) {
-	    executionCourse = rootDomainObject.readExecutionCourseByOID(((InfoExecutionCourse) argument).getIdInternal());
-	} else {
-	    executionCourse = rootDomainObject.readExecutionCourseByOID((Integer) argument);
+		ExecutionCourse executionCourse;
+		if (argument instanceof InfoExecutionCourse) {
+			executionCourse = rootDomainObject.readExecutionCourseByOID(((InfoExecutionCourse) argument).getIdInternal());
+		} else {
+			executionCourse = rootDomainObject.readExecutionCourseByOID((Integer) argument);
+		}
+
+		return (executionCourse == null) ? null : executionCourse.getExecutionYear();
 	}
-
-	return (executionCourse == null) ? null : executionCourse.getExecutionYear();
-    }
 
 }

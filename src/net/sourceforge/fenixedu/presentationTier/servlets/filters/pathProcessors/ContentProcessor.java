@@ -18,138 +18,138 @@ import net.sourceforge.fenixedu.presentationTier.servlets.filters.functionalitie
 
 public class ContentProcessor extends SiteElementPathProcessor {
 
-    @Override
-    public ProcessingContext getProcessingContext(ProcessingContext parentContext) {
-	return new ContentContext(parentContext);
-    }
-
-    @Override
-    protected boolean accepts(ProcessingContext context, PathElementsProvider provider) {
-	ContentContext ownContext = (ContentContext) context;
-
-	int i;
-	for (i = 0;; i++) {
-	    String current = provider.peek(i);
-
-	    if (!ownContext.addContent(current)) {
-		break;
-	    }
+	@Override
+	public ProcessingContext getProcessingContext(ProcessingContext parentContext) {
+		return new ContentContext(parentContext);
 	}
 
-	while (i > 1) {
-	    provider.next();
-	    i--;
-	}
+	@Override
+	protected boolean accepts(ProcessingContext context, PathElementsProvider provider) {
+		ContentContext ownContext = (ContentContext) context;
 
-	return !ownContext.getContents().isEmpty();
-    }
+		int i;
+		for (i = 0;; i++) {
+			String current = provider.peek(i);
 
-    @Override
-    protected boolean forward(ProcessingContext context, PathElementsProvider provider) throws IOException, ServletException {
-	if (provider.hasNext()) {
-	    return false;
-	} else {
-	    ContentContext ownContext = (ContentContext) context;
-	    if (ownContext.getContents().isEmpty()) {
-		return false;
-	    }
-
-	    HttpServletRequest request = ownContext.getRequest();
-	    FilterFunctionalityContext filterContext = (FilterFunctionalityContext) request
-		    .getAttribute(FunctionalityContext.CONTEXT_KEY);
-	    if (filterContext == null) {
-		filterContext = new FilterFunctionalityContext(request, ownContext.getContents());
-		filterContext.setHasBeenForwarded();
-		request.setAttribute(FunctionalityContext.CONTEXT_KEY, filterContext);
-	    }
-	    filterContext.addAllContent(ownContext.getContents());
-
-	    String url = filterContext.getCurrentContextPath();
-
-	    context.getResponse().sendRedirect(request.getContextPath() + url);
-	    return true;
-	}
-    }
-
-    public static class ContentContext extends ProcessingContext {
-
-	private List<Content> contents;
-
-	public ContentContext(ProcessingContext parent) {
-	    super(parent);
-
-	    this.contents = new ArrayList<Content>();
-	}
-
-	public boolean addContent(String name) {
-	    for (Content content : getCurrentPossibilities()) {
-		String pathName = getElementPathName(content);
-
-		if (pathName == null) {
-		    continue;
+			if (!ownContext.addContent(current)) {
+				break;
+			}
 		}
 
-		if (pathName.equalsIgnoreCase(name)) {
-		    addContents(content);
-		    return true;
+		while (i > 1) {
+			provider.next();
+			i--;
 		}
-	    }
 
-	    return false;
+		return !ownContext.getContents().isEmpty();
 	}
 
-	public Site getSite() {
-	    return ((SiteContext) getParent()).getSite();
-	}
+	@Override
+	protected boolean forward(ProcessingContext context, PathElementsProvider provider) throws IOException, ServletException {
+		if (provider.hasNext()) {
+			return false;
+		} else {
+			ContentContext ownContext = (ContentContext) context;
+			if (ownContext.getContents().isEmpty()) {
+				return false;
+			}
 
-	public String getContextURI() {
-	    return ((SiteContext) getParent()).getSiteBasePath() + "&sectionID=%s";
-	}
+			HttpServletRequest request = ownContext.getRequest();
+			FilterFunctionalityContext filterContext =
+					(FilterFunctionalityContext) request.getAttribute(FunctionalityContext.CONTEXT_KEY);
+			if (filterContext == null) {
+				filterContext = new FilterFunctionalityContext(request, ownContext.getContents());
+				filterContext.setHasBeenForwarded();
+				request.setAttribute(FunctionalityContext.CONTEXT_KEY, filterContext);
+			}
+			filterContext.addAllContent(ownContext.getContents());
 
-	private Collection<Content> getCurrentPossibilities() {
-	    Content content = getLastContent();
+			String url = filterContext.getCurrentContextPath();
 
-	    if (content == null) {
-		Site site = getSite();
-		if (site == null) {
-		    return Collections.emptyList();
+			context.getResponse().sendRedirect(request.getContextPath() + url);
+			return true;
 		}
-		List<Content> contents = new ArrayList<Content>();
-		for (Content childContent : site.getChildrenAsContent()) {
-		    contents.add(childContent);
+	}
+
+	public static class ContentContext extends ProcessingContext {
+
+		private List<Content> contents;
+
+		public ContentContext(ProcessingContext parent) {
+			super(parent);
+
+			this.contents = new ArrayList<Content>();
 		}
-		return contents;
-	    } else {
-		return (content.isContainer()) ? ((Container) content).getChildrenAsContent() : Collections.EMPTY_LIST;
-	    }
+
+		public boolean addContent(String name) {
+			for (Content content : getCurrentPossibilities()) {
+				String pathName = getElementPathName(content);
+
+				if (pathName == null) {
+					continue;
+				}
+
+				if (pathName.equalsIgnoreCase(name)) {
+					addContents(content);
+					return true;
+				}
+			}
+
+			return false;
+		}
+
+		public Site getSite() {
+			return ((SiteContext) getParent()).getSite();
+		}
+
+		public String getContextURI() {
+			return ((SiteContext) getParent()).getSiteBasePath() + "&sectionID=%s";
+		}
+
+		private Collection<Content> getCurrentPossibilities() {
+			Content content = getLastContent();
+
+			if (content == null) {
+				Site site = getSite();
+				if (site == null) {
+					return Collections.emptyList();
+				}
+				List<Content> contents = new ArrayList<Content>();
+				for (Content childContent : site.getChildrenAsContent()) {
+					contents.add(childContent);
+				}
+				return contents;
+			} else {
+				return (content.isContainer()) ? ((Container) content).getChildrenAsContent() : Collections.EMPTY_LIST;
+			}
+		}
+
+		public Content getLastContent() {
+			List<Content> contents = getContents();
+
+			if (contents.isEmpty()) {
+				return null;
+			} else {
+				return contents.get(contents.size() - 1);
+			}
+		}
+
+		public void addContents(Content content) {
+			this.contents.add(content);
+		}
+
+		public List<Content> getContents() {
+			return this.contents;
+		}
+
 	}
 
-	public Content getLastContent() {
-	    List<Content> contents = getContents();
-
-	    if (contents.isEmpty()) {
-		return null;
-	    } else {
-		return contents.get(contents.size() - 1);
-	    }
+	public static String getSectionPath(Section section) {
+		if (section == null) {
+			return "";
+		} else {
+			return getSectionPath(section.getSuperiorSection()) + "/" + getElementPathName(section);
+		}
 	}
-
-	public void addContents(Content content) {
-	    this.contents.add(content);
-	}
-
-	public List<Content> getContents() {
-	    return this.contents;
-	}
-
-    }
-
-    public static String getSectionPath(Section section) {
-	if (section == null) {
-	    return "";
-	} else {
-	    return getSectionPath(section.getSuperiorSection()) + "/" + getElementPathName(section);
-	}
-    }
 
 }

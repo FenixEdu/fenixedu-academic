@@ -18,92 +18,92 @@ import org.apache.struts.validator.ValidatorForm;
  * 
  */
 public class UnitAnnouncementBoardsManagementForm extends ValidatorForm {
-    private static final long serialVersionUID = 5861718840827152423L;
+	private static final long serialVersionUID = 5861718840827152423L;
 
-    private String name;
-    private Integer keyUnit;
-    private Boolean mandatory;
-    private String unitBoardWritePermittedGroupType = UnitBoardPermittedGroupType.UB_PUBLIC.name();
-    private String unitBoardReadPermittedGroupType = UnitBoardPermittedGroupType.UB_PUBLIC.name();
-    private String unitBoardManagementPermittedGroupType = UnitBoardPermittedGroupType.UB_MANAGER.name();
-    private String returnAction;
-    private String returnMethod;
-    private Boolean tabularVersion;
+	private String name;
+	private Integer keyUnit;
+	private Boolean mandatory;
+	private String unitBoardWritePermittedGroupType = UnitBoardPermittedGroupType.UB_PUBLIC.name();
+	private String unitBoardReadPermittedGroupType = UnitBoardPermittedGroupType.UB_PUBLIC.name();
+	private String unitBoardManagementPermittedGroupType = UnitBoardPermittedGroupType.UB_MANAGER.name();
+	private String returnAction;
+	private String returnMethod;
+	private Boolean tabularVersion;
 
-    public String getReturnMethod() {
-	return returnMethod;
-    }
+	public String getReturnMethod() {
+		return returnMethod;
+	}
 
-    public void setReturnMethod(String returnMethod) {
-	this.returnMethod = returnMethod;
-    }
+	public void setReturnMethod(String returnMethod) {
+		this.returnMethod = returnMethod;
+	}
 
-    public String getReturnAction() {
-	return returnAction;
-    }
+	public String getReturnAction() {
+		return returnAction;
+	}
 
-    public void setReturnAction(String returnAction) {
-	this.returnAction = returnAction;
-    }
+	public void setReturnAction(String returnAction) {
+		this.returnAction = returnAction;
+	}
 
-    @Override
-    public void reset(ActionMapping mapping, HttpServletRequest request) {
-	this.mandatory = false;
-    }
+	@Override
+	public void reset(ActionMapping mapping, HttpServletRequest request) {
+		this.mandatory = false;
+	}
 
-    public Integer getKeyUnit() {
-	return keyUnit;
-    }
+	public Integer getKeyUnit() {
+		return keyUnit;
+	}
 
-    public void setKeyUnit(Integer keyUnit) {
-	this.keyUnit = keyUnit;
-    }
+	public void setKeyUnit(Integer keyUnit) {
+		this.keyUnit = keyUnit;
+	}
 
-    public Boolean getMandatory() {
-	return mandatory;
-    }
+	public Boolean getMandatory() {
+		return mandatory;
+	}
 
-    public void setMandatory(Boolean mandatory) {
-	this.mandatory = mandatory;
-    }
+	public void setMandatory(Boolean mandatory) {
+		this.mandatory = mandatory;
+	}
 
-    public String getName() {
-	return name;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public void setName(String name) {
-	this.name = name;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    public String getUnitBoardReadPermittedGroupType() {
-	return unitBoardReadPermittedGroupType;
-    }
+	public String getUnitBoardReadPermittedGroupType() {
+		return unitBoardReadPermittedGroupType;
+	}
 
-    public void setUnitBoardReadPermittedGroupType(String unitBoardReadPermittedGroupType) {
-	this.unitBoardReadPermittedGroupType = unitBoardReadPermittedGroupType;
-    }
+	public void setUnitBoardReadPermittedGroupType(String unitBoardReadPermittedGroupType) {
+		this.unitBoardReadPermittedGroupType = unitBoardReadPermittedGroupType;
+	}
 
-    public String getUnitBoardWritePermittedGroupType() {
-	return unitBoardWritePermittedGroupType;
-    }
+	public String getUnitBoardWritePermittedGroupType() {
+		return unitBoardWritePermittedGroupType;
+	}
 
-    public void setUnitBoardWritePermittedGroupType(String unitBoardWritePermittedGroupType) {
-	this.unitBoardWritePermittedGroupType = unitBoardWritePermittedGroupType;
-    }
+	public void setUnitBoardWritePermittedGroupType(String unitBoardWritePermittedGroupType) {
+		this.unitBoardWritePermittedGroupType = unitBoardWritePermittedGroupType;
+	}
 
-    public String getUnitBoardManagementPermittedGroupType() {
-	return unitBoardManagementPermittedGroupType;
-    }
+	public String getUnitBoardManagementPermittedGroupType() {
+		return unitBoardManagementPermittedGroupType;
+	}
 
-    public void setUnitBoardManagementPermittedGroupType(String unitBoardManagementPermittedGroupType) {
-	this.unitBoardManagementPermittedGroupType = unitBoardManagementPermittedGroupType;
-    }
+	public void setUnitBoardManagementPermittedGroupType(String unitBoardManagementPermittedGroupType) {
+		this.unitBoardManagementPermittedGroupType = unitBoardManagementPermittedGroupType;
+	}
 
-    public Boolean getTabularVersion() {
-	return tabularVersion;
-    }
+	public Boolean getTabularVersion() {
+		return tabularVersion;
+	}
 
-    public void setTabularVersion(Boolean tabularVersion) {
-	this.tabularVersion = tabularVersion;
-    }
+	public void setTabularVersion(Boolean tabularVersion) {
+		this.tabularVersion = tabularVersion;
+	}
 }

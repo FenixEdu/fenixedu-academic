@@ -13,12 +13,12 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  * 
  */
 public interface IPersistentSuportOracle {
-    public abstract void startTransaction() throws ExcepcaoPersistencia;
+	public abstract void startTransaction() throws ExcepcaoPersistencia;
 
-    public abstract void commitTransaction() throws ExcepcaoPersistencia;
+	public abstract void commitTransaction() throws ExcepcaoPersistencia;
 
-    public abstract void cancelTransaction() throws ExcepcaoPersistencia;
+	public abstract void cancelTransaction() throws ExcepcaoPersistencia;
 
-    public abstract PreparedStatement prepareStatement(String statement) throws ExcepcaoPersistencia;
+	public abstract PreparedStatement prepareStatement(String statement) throws ExcepcaoPersistencia;
 
 }

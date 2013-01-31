@@ -7,13 +7,15 @@ import net.sourceforge.fenixedu.injectionCode.AccessControlPredicate;
 
 public class DegreeCurricularPlanEquivalencePlanPredicates {
 
-    public static final AccessControlPredicate<DegreeCurricularPlanEquivalencePlan> checkPermissionsToCreate = new AccessControlPredicate<DegreeCurricularPlanEquivalencePlan>() {
-	public boolean evaluate(DegreeCurricularPlanEquivalencePlan degreeCurricularPlanEquivalencePlan) {
-	    return hasRoleType(RoleType.SCIENTIFIC_COUNCIL) || hasRoleType(RoleType.MANAGER);
-	}
-    };
+	public static final AccessControlPredicate<DegreeCurricularPlanEquivalencePlan> checkPermissionsToCreate =
+			new AccessControlPredicate<DegreeCurricularPlanEquivalencePlan>() {
+				@Override
+				public boolean evaluate(DegreeCurricularPlanEquivalencePlan degreeCurricularPlanEquivalencePlan) {
+					return hasRoleType(RoleType.SCIENTIFIC_COUNCIL) || hasRoleType(RoleType.MANAGER);
+				}
+			};
 
-    private static boolean hasRoleType(final RoleType roleType) {
-	return AccessControl.getPerson().hasRole(roleType);
-    }
+	private static boolean hasRoleType(final RoleType roleType) {
+		return AccessControl.getPerson().hasRole(roleType);
+	}
 }

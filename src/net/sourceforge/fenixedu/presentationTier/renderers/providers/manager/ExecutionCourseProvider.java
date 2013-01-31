@@ -8,11 +8,11 @@ import net.sourceforge.fenixedu.presentationTier.renderers.providers.AbstractDom
 
 public class ExecutionCourseProvider extends AbstractDomainObjectProvider {
 
-    @Override
-    public Object provide(Object arg0, Object arg1) {
-	ExecutionCourseBean bean = (ExecutionCourseBean) arg0;
-	ExecutionSemester executionSemester = bean.getExecutionSemester();
-	return executionSemester == null ? Collections.EMPTY_LIST : executionSemester.getAssociatedExecutionCourses();
-    }
+	@Override
+	public Object provide(Object arg0, Object arg1) {
+		ExecutionCourseBean bean = (ExecutionCourseBean) arg0;
+		ExecutionSemester executionSemester = bean.getExecutionSemester();
+		return executionSemester == null ? Collections.EMPTY_LIST : executionSemester.getAssociatedExecutionCourses();
+	}
 
 }

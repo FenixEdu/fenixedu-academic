@@ -27,241 +27,244 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class DegreeCandidacyForGraduatedPerson extends DegreeCandidacyForGraduatedPerson_Base {
 
-    private DegreeCandidacyForGraduatedPerson() {
-	super();
-    }
-
-    DegreeCandidacyForGraduatedPerson(final DegreeCandidacyForGraduatedPersonIndividualProcess process,
-	    final DegreeCandidacyForGraduatedPersonIndividualProcessBean bean) {
-	this();
-
-	Person person = init(bean, process);
-
-	createFormationEntries(bean.getFormationConcludedBeanList(), bean.getFormationNonConcludedBeanList());
-	DegreeCandidacyForGraduatedPersonSeriesGade newSCICSeriesGrade = new DegreeCandidacyForGraduatedPersonSeriesGade();
-	newSCICSeriesGrade.setDegree(bean.getSelectedDegree());
-	getIndividualCandidacySeriesGrade().add(newSCICSeriesGrade);
-	setSelectedDegree(bean.getSelectedDegree());
-	
-	/*
-	 * 06/04/2009 - The candidacy may not be associated with a person. In
-	 * this case we will not create an Event
-	 */
-	if (bean.getInternalPersonCandidacy()) {
-	    createDebt(person);
-	}
-    }
-
-    @Override
-    protected void checkParameters(final Person person, final IndividualCandidacyProcess process,
-	    final IndividualCandidacyProcessBean bean) {
-	DegreeCandidacyForGraduatedPersonIndividualProcess degreeCandidacyProcess = (DegreeCandidacyForGraduatedPersonIndividualProcess) process;
-	DegreeCandidacyForGraduatedPersonIndividualProcessBean degreeCandidacyBean = (DegreeCandidacyForGraduatedPersonIndividualProcessBean) bean;
-
-	LocalDate candidacyDate = degreeCandidacyBean.getCandidacyDate();
-	Degree selectedDegree = degreeCandidacyBean.getSelectedDegree();
-	PrecedentDegreeInformationBean precedentDegreeInformation = degreeCandidacyBean.getPrecedentDegreeInformation();
-
-	checkParameters(person, degreeCandidacyProcess, candidacyDate, selectedDegree, precedentDegreeInformation);
-    }
-
-    private void checkParameters(final Person person, final DegreeCandidacyForGraduatedPersonIndividualProcess process,
-	    final LocalDate candidacyDate, final Degree selectedDegree,
-	    final PrecedentDegreeInformationBean precedentDegreeInformation) {
-
-	checkParameters(person, process, candidacyDate);
-
-	/*
-	 * 31/03/2009 - The candidacy will not be associated with a Person if it
-	 * is submited externally (not in administrative office)
-	 * 
-	 * if (person == null) { throw new
-	 * DomainException("error.IndividualCandidacy.invalid.person"); }
-	 * 
-	 * if(person.hasValidDegreeCandidacyForGraduatedPerson(process.
-	 * getCandidacyExecutionInterval())) { throw newDomainException(
-	 * "error.DegreeCandidacyForGraduatedPerson.person.already.has.candidacy"
-	 * , process .getCandidacyExecutionInterval().getName()); }
-	 */
-
-	if (selectedDegree == null) {
-	    throw new DomainException("error.DegreeCandidacyForGraduatedPerson.invalid.degree");
+	private DegreeCandidacyForGraduatedPerson() {
+		super();
 	}
 
-	if (precedentDegreeInformation == null) {
-	    throw new DomainException("error.DegreeCandidacyForGraduatedPerson.invalid.precedentDegreeInformation");
-	}
-    }
+	DegreeCandidacyForGraduatedPerson(final DegreeCandidacyForGraduatedPersonIndividualProcess process,
+			final DegreeCandidacyForGraduatedPersonIndividualProcessBean bean) {
+		this();
 
-    @Override
-    protected void createDebt(final Person person) {
-	new DegreeCandidacyForGraduatedPersonEvent(this, person);
-    }
+		Person person = init(bean, process);
 
-    @Override
-    public DegreeCandidacyForGraduatedPersonIndividualProcess getCandidacyProcess() {
-	return (DegreeCandidacyForGraduatedPersonIndividualProcess) super.getCandidacyProcess();
-    }
+		createFormationEntries(bean.getFormationConcludedBeanList(), bean.getFormationNonConcludedBeanList());
+		DegreeCandidacyForGraduatedPersonSeriesGade newSCICSeriesGrade = new DegreeCandidacyForGraduatedPersonSeriesGade();
+		newSCICSeriesGrade.setDegree(bean.getSelectedDegree());
+		getIndividualCandidacySeriesGrade().add(newSCICSeriesGrade);
+		setSelectedDegree(bean.getSelectedDegree());
 
-    public void editCandidacyInformation(final DegreeCandidacyForGraduatedPersonIndividualProcessBean bean) {
-	checkParameters(bean.getCandidacyDate(), bean.getSelectedDegree(), bean.getPrecedentDegreeInformation());
-
-	setCandidacyDate(bean.getCandidacyDate());
-	setSelectedDegree(bean.getSelectedDegree());
-
-	PrecedentDegreeInformationForIndividualCandidacyFactory.edit(bean);
-    }
-
-    private void checkParameters(final LocalDate candidacyDate, final Degree selectedDegree,
-	    PrecedentDegreeInformationBean precedentDegreeInformation) {
-
-	checkParameters(getPersonalDetails().getPerson(), getCandidacyProcess(), candidacyDate);
-	if (selectedDegree == null) {
-	    throw new DomainException("error.DegreeCandidacyForGraduatedPerson.invalid.degree");
+		/*
+		 * 06/04/2009 - The candidacy may not be associated with a person. In
+		 * this case we will not create an Event
+		 */
+		if (bean.getInternalPersonCandidacy()) {
+			createDebt(person);
+		}
 	}
 
-	if (hasRegistration() && getRegistration().getDegree() != selectedDegree) {
-	    throw new DomainException("error.DegreeCandidacyForGraduatedPerson.cannot.change.degree");
+	@Override
+	protected void checkParameters(final Person person, final IndividualCandidacyProcess process,
+			final IndividualCandidacyProcessBean bean) {
+		DegreeCandidacyForGraduatedPersonIndividualProcess degreeCandidacyProcess =
+				(DegreeCandidacyForGraduatedPersonIndividualProcess) process;
+		DegreeCandidacyForGraduatedPersonIndividualProcessBean degreeCandidacyBean =
+				(DegreeCandidacyForGraduatedPersonIndividualProcessBean) bean;
+
+		LocalDate candidacyDate = degreeCandidacyBean.getCandidacyDate();
+		Degree selectedDegree = degreeCandidacyBean.getSelectedDegree();
+		PrecedentDegreeInformationBean precedentDegreeInformation = degreeCandidacyBean.getPrecedentDegreeInformation();
+
+		checkParameters(person, degreeCandidacyProcess, candidacyDate, selectedDegree, precedentDegreeInformation);
 	}
 
-	if (precedentDegreeInformation == null) {
-	    throw new DomainException("error.DegreeCandidacyForGraduatedPerson.invalid.precedentDegreeInformation");
+	private void checkParameters(final Person person, final DegreeCandidacyForGraduatedPersonIndividualProcess process,
+			final LocalDate candidacyDate, final Degree selectedDegree,
+			final PrecedentDegreeInformationBean precedentDegreeInformation) {
+
+		checkParameters(person, process, candidacyDate);
+
+		/*
+		 * 31/03/2009 - The candidacy will not be associated with a Person if it
+		 * is submited externally (not in administrative office)
+		 * 
+		 * if (person == null) { throw new
+		 * DomainException("error.IndividualCandidacy.invalid.person"); }
+		 * 
+		 * if(person.hasValidDegreeCandidacyForGraduatedPerson(process.
+		 * getCandidacyExecutionInterval())) { throw newDomainException(
+		 * "error.DegreeCandidacyForGraduatedPerson.person.already.has.candidacy"
+		 * , process .getCandidacyExecutionInterval().getName()); }
+		 */
+
+		if (selectedDegree == null) {
+			throw new DomainException("error.DegreeCandidacyForGraduatedPerson.invalid.degree");
+		}
+
+		if (precedentDegreeInformation == null) {
+			throw new DomainException("error.DegreeCandidacyForGraduatedPerson.invalid.precedentDegreeInformation");
+		}
 	}
-    }
 
-    void editCandidacyResult(final DegreeCandidacyForGraduatedPersonIndividualCandidacyResultBean bean) {
-	checkParameters(bean);
-
-	setAffinity(bean.getAffinity());
-	setDegreeNature(bean.getDegreeNature());
-	setCandidacyGrade(bean.getGrade());
-
-	if (isCandidacyResultStateValid(bean.getState())) {
-	    setState(bean.getState());
+	@Override
+	protected void createDebt(final Person person) {
+		new DegreeCandidacyForGraduatedPersonEvent(this, person);
 	}
-    }
 
-    private void checkParameters(final DegreeCandidacyForGraduatedPersonIndividualCandidacyResultBean bean) {
-	if (isAccepted() && bean.getState() != IndividualCandidacyState.ACCEPTED && hasRegistration()) {
-	    throw new DomainException("error.DegreeCandidacyForGraduatedPerson.cannot.change.state.from.accepted.candidacies");
+	@Override
+	public DegreeCandidacyForGraduatedPersonIndividualProcess getCandidacyProcess() {
+		return (DegreeCandidacyForGraduatedPersonIndividualProcess) super.getCandidacyProcess();
 	}
-    }
 
-    void editSelectedDegree(final Degree selectedDegree) {
-	setSelectedDegree(selectedDegree);
-    }
+	public void editCandidacyInformation(final DegreeCandidacyForGraduatedPersonIndividualProcessBean bean) {
+		checkParameters(bean.getCandidacyDate(), bean.getSelectedDegree(), bean.getPrecedentDegreeInformation());
 
-    @Override
-    protected ExecutionYear getCandidacyExecutionInterval() {
-	return (ExecutionYear) super.getCandidacyExecutionInterval();
-    }
+		setCandidacyDate(bean.getCandidacyDate());
+		setSelectedDegree(bean.getSelectedDegree());
 
-    @Override
-    protected Registration createRegistration(Person person, DegreeCurricularPlan degreeCurricularPlan, CycleType cycleType,
-	    Ingression ingression) {
-	final Registration registration = super.createRegistration(person, degreeCurricularPlan, cycleType, ingression);
-	registration.setRegistrationYear(getCandidacyExecutionInterval());
-	return registration;
-    }
-
-    @Override
-    public void exportValues(StringBuilder result) {
-	super.exportValues(result);
-
-	final ResourceBundle bundle = ResourceBundle.getBundle("resources.AcademicAdminOffice", Language.getLocale());
-	final ResourceBundle candidateBundle = ResourceBundle.getBundle("resources.CandidateResources", Language.getLocale());
-
-	Formatter formatter = new Formatter(result);
-
-	formatter.format("%s: %s\n", candidateBundle.getString("label.process.id"), getCandidacyProcess().getProcessCode());
-	PrecedentDegreeInformation precedentDegreeInformation = getCandidacyProcess().getPrecedentDegreeInformation();
-	formatter.format("%s: %s\n", bundle.getString("label.SecondCycleIndividualCandidacy.previous.degree"),
-		precedentDegreeInformation.getDegreeDesignation());
-	formatter.format("%s: %s\n", bundle.getString("label.conclusionDate"), precedentDegreeInformation.getConclusionDate());
-	formatter.format("%s: %s\n", bundle.getString("label.SecondCycleIndividualCandidacy.institution"),
-		precedentDegreeInformation.getInstitution().getName());
-	formatter.format("%s: %s\n", bundle.getString("label.conclusionGrade"), precedentDegreeInformation.getConclusionGrade());
-	formatter.format("\n");
-	formatter.format("%s: %f\n", bundle.getString("label.SecondCycleIndividualCandidacy.affinity"),
-		getAffinity() != null ? getAffinity() : BigDecimal.ZERO);
-	formatter.format("%s: %d\n", bundle.getString("label.SecondCycleIndividualCandidacy.degreeNature"),
-		getDegreeNature() != null ? getDegreeNature() : 0);
-	formatter.format("%s: %f\n", bundle.getString("label.SecondCycleIndividualCandidacy.candidacyGrade"),
-		getCandidacyGrade() != null ? getCandidacyGrade() : BigDecimal.ZERO);
-    }
-
-    @Override
-    public String getDescription() {
-	return getCandidacyProcess().getDisplayName() + (hasSelectedDegree() ? ": " + getSelectedDegree().getNameI18N() : "");
-    }
-
-    public boolean isDegreeCandidacyForGraduatedPerson() {
-	return true;
-    }
-    
-    public DegreeCandidacyForGraduatedPersonSeriesGade getDegreeCandidacyForGraduatedPersonSeriesGadeForDegree(Degree degree) {
-	for (IndividualCandidacySeriesGrade seriesGrade : getIndividualCandidacySeriesGrade()) {
-	    if (seriesGrade.getDegree() == degree){
-		return (DegreeCandidacyForGraduatedPersonSeriesGade) seriesGrade;
-	    }
+		PrecedentDegreeInformationForIndividualCandidacyFactory.edit(bean);
 	}
-	return null;
-    }
-    
-    private DegreeCandidacyForGraduatedPersonSeriesGade getDegreeCandidacyForGraduatedPersonSeriesGade(){
-	if (getIndividualCandidacySeriesGrade().size() == 0) {
-	    return null;
-	}else{
-	    return (DegreeCandidacyForGraduatedPersonSeriesGade) getIndividualCandidacySeriesGrade().get(0);
+
+	private void checkParameters(final LocalDate candidacyDate, final Degree selectedDegree,
+			PrecedentDegreeInformationBean precedentDegreeInformation) {
+
+		checkParameters(getPersonalDetails().getPerson(), getCandidacyProcess(), candidacyDate);
+		if (selectedDegree == null) {
+			throw new DomainException("error.DegreeCandidacyForGraduatedPerson.invalid.degree");
+		}
+
+		if (hasRegistration() && getRegistration().getDegree() != selectedDegree) {
+			throw new DomainException("error.DegreeCandidacyForGraduatedPerson.cannot.change.degree");
+		}
+
+		if (precedentDegreeInformation == null) {
+			throw new DomainException("error.DegreeCandidacyForGraduatedPerson.invalid.precedentDegreeInformation");
+		}
 	}
-    }
-    
-    @Override
-    public BigDecimal getAffinity() {
-	if(getDegreeCandidacyForGraduatedPersonSeriesGade() != null){
-	    return getDegreeCandidacyForGraduatedPersonSeriesGade().getAffinity();
-	}else{
-	    return null;
+
+	void editCandidacyResult(final DegreeCandidacyForGraduatedPersonIndividualCandidacyResultBean bean) {
+		checkParameters(bean);
+
+		setAffinity(bean.getAffinity());
+		setDegreeNature(bean.getDegreeNature());
+		setCandidacyGrade(bean.getGrade());
+
+		if (isCandidacyResultStateValid(bean.getState())) {
+			setState(bean.getState());
+		}
 	}
-    }
-    
-    @Override
-    public Integer getDegreeNature() {
-	if(getDegreeCandidacyForGraduatedPersonSeriesGade() != null){
-	    return getDegreeCandidacyForGraduatedPersonSeriesGade().getDegreeNature();
-	}else{
-	    return null;
+
+	private void checkParameters(final DegreeCandidacyForGraduatedPersonIndividualCandidacyResultBean bean) {
+		if (isAccepted() && bean.getState() != IndividualCandidacyState.ACCEPTED && hasRegistration()) {
+			throw new DomainException("error.DegreeCandidacyForGraduatedPerson.cannot.change.state.from.accepted.candidacies");
+		}
 	}
-    }
-    
-    @Override
-    public BigDecimal getCandidacyGrade() {
-	if(getDegreeCandidacyForGraduatedPersonSeriesGade() != null){
-	    return getDegreeCandidacyForGraduatedPersonSeriesGade().getCandidacyGrade();
-	}else{
-	    return null;
+
+	void editSelectedDegree(final Degree selectedDegree) {
+		setSelectedDegree(selectedDegree);
 	}
-    }
-    
-    @Override
-    public void setSelectedDegree(Degree selectedDegree) {
-	getDegreeCandidacyForGraduatedPersonSeriesGade().setDegree(selectedDegree);
-        super.setSelectedDegree(selectedDegree);
-    }
-    
-    @Override
-    public void setAffinity(BigDecimal value) {
-	getDegreeCandidacyForGraduatedPersonSeriesGade().setAffinity(value);
-    }
-    
-    @Override
-    public void setDegreeNature(Integer value) {
-	getDegreeCandidacyForGraduatedPersonSeriesGade().setDegreeNature(value);
-    }
-    
-    @Override
-    public void setCandidacyGrade(BigDecimal value) {
-	getDegreeCandidacyForGraduatedPersonSeriesGade().setCandidacyGrade(value);
-    }
-    
+
+	@Override
+	protected ExecutionYear getCandidacyExecutionInterval() {
+		return (ExecutionYear) super.getCandidacyExecutionInterval();
+	}
+
+	@Override
+	protected Registration createRegistration(Person person, DegreeCurricularPlan degreeCurricularPlan, CycleType cycleType,
+			Ingression ingression) {
+		final Registration registration = super.createRegistration(person, degreeCurricularPlan, cycleType, ingression);
+		registration.setRegistrationYear(getCandidacyExecutionInterval());
+		return registration;
+	}
+
+	@Override
+	public void exportValues(StringBuilder result) {
+		super.exportValues(result);
+
+		final ResourceBundle bundle = ResourceBundle.getBundle("resources.AcademicAdminOffice", Language.getLocale());
+		final ResourceBundle candidateBundle = ResourceBundle.getBundle("resources.CandidateResources", Language.getLocale());
+
+		Formatter formatter = new Formatter(result);
+
+		formatter.format("%s: %s\n", candidateBundle.getString("label.process.id"), getCandidacyProcess().getProcessCode());
+		PrecedentDegreeInformation precedentDegreeInformation = getCandidacyProcess().getPrecedentDegreeInformation();
+		formatter.format("%s: %s\n", bundle.getString("label.SecondCycleIndividualCandidacy.previous.degree"),
+				precedentDegreeInformation.getDegreeDesignation());
+		formatter.format("%s: %s\n", bundle.getString("label.conclusionDate"), precedentDegreeInformation.getConclusionDate());
+		formatter.format("%s: %s\n", bundle.getString("label.SecondCycleIndividualCandidacy.institution"),
+				precedentDegreeInformation.getInstitution().getName());
+		formatter.format("%s: %s\n", bundle.getString("label.conclusionGrade"), precedentDegreeInformation.getConclusionGrade());
+		formatter.format("\n");
+		formatter.format("%s: %f\n", bundle.getString("label.SecondCycleIndividualCandidacy.affinity"),
+				getAffinity() != null ? getAffinity() : BigDecimal.ZERO);
+		formatter.format("%s: %d\n", bundle.getString("label.SecondCycleIndividualCandidacy.degreeNature"),
+				getDegreeNature() != null ? getDegreeNature() : 0);
+		formatter.format("%s: %f\n", bundle.getString("label.SecondCycleIndividualCandidacy.candidacyGrade"),
+				getCandidacyGrade() != null ? getCandidacyGrade() : BigDecimal.ZERO);
+	}
+
+	@Override
+	public String getDescription() {
+		return getCandidacyProcess().getDisplayName() + (hasSelectedDegree() ? ": " + getSelectedDegree().getNameI18N() : "");
+	}
+
+	@Override
+	public boolean isDegreeCandidacyForGraduatedPerson() {
+		return true;
+	}
+
+	public DegreeCandidacyForGraduatedPersonSeriesGade getDegreeCandidacyForGraduatedPersonSeriesGadeForDegree(Degree degree) {
+		for (IndividualCandidacySeriesGrade seriesGrade : getIndividualCandidacySeriesGrade()) {
+			if (seriesGrade.getDegree() == degree) {
+				return (DegreeCandidacyForGraduatedPersonSeriesGade) seriesGrade;
+			}
+		}
+		return null;
+	}
+
+	private DegreeCandidacyForGraduatedPersonSeriesGade getDegreeCandidacyForGraduatedPersonSeriesGade() {
+		if (getIndividualCandidacySeriesGrade().size() == 0) {
+			return null;
+		} else {
+			return (DegreeCandidacyForGraduatedPersonSeriesGade) getIndividualCandidacySeriesGrade().get(0);
+		}
+	}
+
+	@Override
+	public BigDecimal getAffinity() {
+		if (getDegreeCandidacyForGraduatedPersonSeriesGade() != null) {
+			return getDegreeCandidacyForGraduatedPersonSeriesGade().getAffinity();
+		} else {
+			return null;
+		}
+	}
+
+	@Override
+	public Integer getDegreeNature() {
+		if (getDegreeCandidacyForGraduatedPersonSeriesGade() != null) {
+			return getDegreeCandidacyForGraduatedPersonSeriesGade().getDegreeNature();
+		} else {
+			return null;
+		}
+	}
+
+	@Override
+	public BigDecimal getCandidacyGrade() {
+		if (getDegreeCandidacyForGraduatedPersonSeriesGade() != null) {
+			return getDegreeCandidacyForGraduatedPersonSeriesGade().getCandidacyGrade();
+		} else {
+			return null;
+		}
+	}
+
+	@Override
+	public void setSelectedDegree(Degree selectedDegree) {
+		getDegreeCandidacyForGraduatedPersonSeriesGade().setDegree(selectedDegree);
+		super.setSelectedDegree(selectedDegree);
+	}
+
+	@Override
+	public void setAffinity(BigDecimal value) {
+		getDegreeCandidacyForGraduatedPersonSeriesGade().setAffinity(value);
+	}
+
+	@Override
+	public void setDegreeNature(Integer value) {
+		getDegreeCandidacyForGraduatedPersonSeriesGade().setDegreeNature(value);
+	}
+
+	@Override
+	public void setCandidacyGrade(BigDecimal value) {
+		getDegreeCandidacyForGraduatedPersonSeriesGade().setCandidacyGrade(value);
+	}
+
 }

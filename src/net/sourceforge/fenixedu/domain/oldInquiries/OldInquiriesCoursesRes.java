@@ -5,7 +5,6 @@
 package net.sourceforge.fenixedu.domain.oldInquiries;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;
-import net.sourceforge.fenixedu.domain.oldInquiries.OldInquiriesCoursesRes_Base;
 
 /**
  * @author Jo�o Fialho & Rita Ferreira
@@ -13,15 +12,15 @@ import net.sourceforge.fenixedu.domain.oldInquiries.OldInquiriesCoursesRes_Base;
  */
 public class OldInquiriesCoursesRes extends OldInquiriesCoursesRes_Base {
 
-    public OldInquiriesCoursesRes() {
-	super();
-	setRootDomainObject(RootDomainObject.getInstance());
-    }
+	public OldInquiriesCoursesRes() {
+		super();
+		setRootDomainObject(RootDomainObject.getInstance());
+	}
 
-    public void delete() {
-	removeExecutionPeriod();
-	removeDegree();
-	deleteDomainObject();
-    }
+	public void delete() {
+		removeExecutionPeriod();
+		removeDegree();
+		deleteDomainObject();
+	}
 
 }

@@ -13,25 +13,27 @@ import net.sourceforge.fenixedu.domain.grant.contract.GrantContract;
  */
 public class InfoGrantContractWithGrantOwnerAndGrantType extends InfoGrantContract {
 
-    public void copyFromDomain(GrantContract grantContract) {
-	super.copyFromDomain(grantContract);
+	@Override
+	public void copyFromDomain(GrantContract grantContract) {
+		super.copyFromDomain(grantContract);
 
-	if (grantContract != null) {
-	    setGrantOwnerInfo(InfoGrantOwnerWithPerson.newInfoFromDomain(grantContract.getGrantOwner()));
-	    setGrantTypeInfo(InfoGrantType.newInfoFromDomain(grantContract.getGrantType()));
-	    if (grantContract.getGrantCostCenter() != null)
-		setGrantCostCenterInfo(InfoGrantCostCenter.newInfoFromDomain(grantContract.getGrantCostCenter()));
+		if (grantContract != null) {
+			setGrantOwnerInfo(InfoGrantOwnerWithPerson.newInfoFromDomain(grantContract.getGrantOwner()));
+			setGrantTypeInfo(InfoGrantType.newInfoFromDomain(grantContract.getGrantType()));
+			if (grantContract.getGrantCostCenter() != null) {
+				setGrantCostCenterInfo(InfoGrantCostCenter.newInfoFromDomain(grantContract.getGrantCostCenter()));
+			}
 
+		}
 	}
-    }
 
-    public static InfoGrantContract newInfoFromDomain(GrantContract grantContract) {
-	InfoGrantContractWithGrantOwnerAndGrantType infoGrantContract = null;
-	if (grantContract != null) {
-	    infoGrantContract = new InfoGrantContractWithGrantOwnerAndGrantType();
-	    infoGrantContract.copyFromDomain(grantContract);
+	public static InfoGrantContract newInfoFromDomain(GrantContract grantContract) {
+		InfoGrantContractWithGrantOwnerAndGrantType infoGrantContract = null;
+		if (grantContract != null) {
+			infoGrantContract = new InfoGrantContractWithGrantOwnerAndGrantType();
+			infoGrantContract.copyFromDomain(grantContract);
+		}
+		return infoGrantContract;
 	}
-	return infoGrantContract;
-    }
 
 }

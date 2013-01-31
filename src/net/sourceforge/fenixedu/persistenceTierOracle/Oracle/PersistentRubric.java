@@ -21,33 +21,33 @@ import net.sourceforge.fenixedu.persistenceTierOracle.BackendInstance;
  */
 public class PersistentRubric {
 
-    public List<IRubric> getRubricList(String rubricTableName, final BackendInstance instance) throws ExcepcaoPersistencia {
-	List<IRubric> rubricList = new ArrayList<IRubric>();
+	public List<IRubric> getRubricList(String rubricTableName, final BackendInstance instance) throws ExcepcaoPersistencia {
+		List<IRubric> rubricList = new ArrayList<IRubric>();
 
-	String query = "select COD, DESCRICAO from " + rubricTableName + " order by COD";
+		String query = "select COD, DESCRICAO from " + rubricTableName + " order by COD";
 
-	try {
-	    PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance(instance);
-	    p.startTransaction();
+		try {
+			PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance(instance);
+			p.startTransaction();
 
-	    PreparedStatement stmt = p.prepareStatement(query);
+			PreparedStatement stmt = p.prepareStatement(query);
 
-	    ResultSet rs = stmt.executeQuery();
+			ResultSet rs = stmt.executeQuery();
 
-	    while (rs.next()) {
-		String code = rs.getString(1);
-		String description = rs.getString(2);
-		IRubric rubric = new Rubric(code, description);
-		rubricList.add(rubric);
-	    }
+			while (rs.next()) {
+				String code = rs.getString(1);
+				String description = rs.getString(2);
+				IRubric rubric = new Rubric(code, description);
+				rubricList.add(rubric);
+			}
 
-	    rs.close();
-	    p.commitTransaction();
+			rs.close();
+			p.commitTransaction();
 
-	} catch (SQLException e) {
-	    throw new ExcepcaoPersistencia();
+		} catch (SQLException e) {
+			throw new ExcepcaoPersistencia();
+		}
+		return rubricList;
 	}
-	return rubricList;
-    }
 
 }

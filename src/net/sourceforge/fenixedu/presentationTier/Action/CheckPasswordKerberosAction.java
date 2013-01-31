@@ -19,52 +19,55 @@ import org.apache.struts.action.ActionMapping;
 
 public class CheckPasswordKerberosAction extends FenixAction {
 
-    private static final String SUCCESS_MESSAGE = "SUCCESS";
+	private static final String SUCCESS_MESSAGE = "SUCCESS";
 
-    private static final String UNEXPECTED_ERROR_MESSAGE = "UNEXPECTED_ERROR";
+	private static final String UNEXPECTED_ERROR_MESSAGE = "UNEXPECTED_ERROR";
 
-    public final ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
+	@Override
+	public final ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
 
-	// check hosts accessing this action
-	if (!HostAccessControl.isAllowed(this, request)) {
-	    throw new NotAuthorizedActionException("error.NotAuthorized");
+		// check hosts accessing this action
+		if (!HostAccessControl.isAllowed(this, request)) {
+			throw new NotAuthorizedActionException("error.NotAuthorized");
+		}
+
+		if (request.getMethod().equalsIgnoreCase("post")) {
+
+			final String username = request.getParameter("username");
+			final String password = request.getParameter("password");
+			final String requestURL = request.getRequestURL().toString();
+			final Object authenticationArgs[] =
+					{ username, password, requestURL, BaseAuthenticationAction.getRemoteHostName(request) };
+
+			String result = null;
+
+			try {
+				final IUserView userView =
+						(IUserView) ServiceManagerServiceFactory.executeService("KerberosExternalAuthentication",
+								authenticationArgs);
+
+				result =
+						SUCCESS_MESSAGE + "\n"
+								+ (userView.getPerson().hasIstUsername() ? userView.getPerson().getIstUsername() : username);
+
+			} catch (PasswordExpiredServiceException e) {
+				result = e.getMessage();
+			} catch (InvalidPasswordServiceException e) {
+				result = e.getMessage();
+			} catch (ExcepcaoAutenticacao e) {
+				result = KerberosException.WRONG_PASSWORD;
+			} catch (Throwable e) {
+				result = UNEXPECTED_ERROR_MESSAGE;
+			}
+
+			response.setContentType("text/html");
+			response.getOutputStream().write(result.getBytes());
+			response.getOutputStream().close();
+		}
+
+		return null;
+
 	}
-
-	if (request.getMethod().equalsIgnoreCase("post")) {
-
-	    final String username = request.getParameter("username");
-	    final String password = request.getParameter("password");
-	    final String requestURL = request.getRequestURL().toString();
-	    final Object authenticationArgs[] = { username, password, requestURL,
-		    BaseAuthenticationAction.getRemoteHostName(request) };
-
-	    String result = null;
-
-	    try {
-		final IUserView userView = (IUserView) ServiceManagerServiceFactory.executeService(
-			"KerberosExternalAuthentication", authenticationArgs);
-
-		result = SUCCESS_MESSAGE + "\n"
-			+ (userView.getPerson().hasIstUsername() ? userView.getPerson().getIstUsername() : username);
-
-	    } catch (PasswordExpiredServiceException e) {
-		result = e.getMessage();
-	    } catch (InvalidPasswordServiceException e) {
-		result = e.getMessage();
-	    } catch (ExcepcaoAutenticacao e) {
-		result = KerberosException.WRONG_PASSWORD;
-	    } catch (Throwable e) {
-		result = UNEXPECTED_ERROR_MESSAGE;
-	    }
-
-	    response.setContentType("text/html");
-	    response.getOutputStream().write(result.getBytes());
-	    response.getOutputStream().close();
-	}
-
-	return null;
-
-    }
 
 }

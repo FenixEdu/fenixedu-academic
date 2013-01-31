@@ -11,38 +11,39 @@ import org.codehaus.xfire.MessageContext;
 
 public class PaymentManagement implements IPaymentManagement {
 
-    private static final String storedPassword;
-    private static final String storedUsername;
-    private static final String CGD = "CGD";
-    private static final String CC = "CC";
+	private static final String storedPassword;
+	private static final String storedUsername;
+	private static final String CGD = "CGD";
+	private static final String CC = "CC";
 
-    static {
-	storedUsername = PropertiesManager.getProperty("webServices.PaymentManagement.username");
-	storedPassword = PropertiesManager.getProperty("webServices.PaymentManagement.password");
-    }
+	static {
+		storedUsername = PropertiesManager.getProperty("webServices.PaymentManagement.username");
+		storedPassword = PropertiesManager.getProperty("webServices.PaymentManagement.password");
+	}
 
-    @Override
-    public String generatePaymentTicket(String username, String password, String source, MessageContext context)
-	    throws NotAuthorizedException {
-	checkPermissions(username, password, context);
-	Person person = null;
-	if (source.startsWith(CGD) && source.length() == 18) {
-	    CardGenerationEntry card = CardGenerationEntry.readCardByCGDIdentifier(source.substring(CGD.length(), source.length() - 2));
-	    if (card != null) {
-		person = card.getPerson();
-	    }
+	@Override
+	public String generatePaymentTicket(String username, String password, String source, MessageContext context)
+			throws NotAuthorizedException {
+		checkPermissions(username, password, context);
+		Person person = null;
+		if (source.startsWith(CGD) && source.length() == 18) {
+			CardGenerationEntry card =
+					CardGenerationEntry.readCardByCGDIdentifier(source.substring(CGD.length(), source.length() - 2));
+			if (card != null) {
+				person = card.getPerson();
+			}
+		}
+		if (source.startsWith(CC)) {
+			person = Person.readByDocumentIdNumberAndIdDocumentType(source.substring(CC.length()), IDDocumentType.IDENTITY_CARD);
+		}
+		return person == null ? StringUtils.EMPTY : person.generatePaymentTicket();
 	}
-	if (source.startsWith(CC)) {
-	    person = Person.readByDocumentIdNumberAndIdDocumentType(source.substring(CC.length()), IDDocumentType.IDENTITY_CARD);
-	}
-	return person == null ? StringUtils.EMPTY : person.generatePaymentTicket();
-    }
 
-    private void checkPermissions(String username, String password, MessageContext context) throws NotAuthorizedException {
-	// check user/pass
-	if (!storedUsername.equals(username) || !storedPassword.equals(password)) {
-	    throw new NotAuthorizedException();
+	private void checkPermissions(String username, String password, MessageContext context) throws NotAuthorizedException {
+		// check user/pass
+		if (!storedUsername.equals(username) || !storedPassword.equals(password)) {
+			throw new NotAuthorizedException();
+		}
 	}
-    }
 
 }

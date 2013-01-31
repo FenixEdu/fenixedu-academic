@@ -18,32 +18,32 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 @Mapping(path = "/setParkingCardId", module = "external")
 public class SetParkingCardIdDA extends FenixDispatchAction {
 
-    public ActionForward setId(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-	    throws Exception {
-	final String password = request.getParameter("password");
-	final String identificationCardCode = request.getParameter("identificationCardCode");
-	final Long parkingCardID = Long.valueOf(request.getParameter("parkingCardId"));
+	public ActionForward setId(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+		final String password = request.getParameter("password");
+		final String identificationCardCode = request.getParameter("identificationCardCode");
+		final Long parkingCardID = Long.valueOf(request.getParameter("parkingCardId"));
 
-	String message = "ko";
+		String message = "ko";
 
-	try {
-	    message = SetParkingCardId.run(password, identificationCardCode, parkingCardID);
-	} catch (NotAuthorizedException ex) {
-	    message = "Not authorized";
-	} catch (UserDoesNotExistException ex) {
-	    message = "User does not exist.";
-	} catch (Throwable ex) {
-	    message = ex.getMessage();
-	    ex.printStackTrace();
-	} finally {
-	    final ServletOutputStream servletOutputStream = response.getOutputStream();
-	    response.setContentType("text/html");
-	    servletOutputStream.print(message);
-	    servletOutputStream.flush();
-	    response.flushBuffer();
+		try {
+			message = SetParkingCardId.run(password, identificationCardCode, parkingCardID);
+		} catch (NotAuthorizedException ex) {
+			message = "Not authorized";
+		} catch (UserDoesNotExistException ex) {
+			message = "User does not exist.";
+		} catch (Throwable ex) {
+			message = ex.getMessage();
+			ex.printStackTrace();
+		} finally {
+			final ServletOutputStream servletOutputStream = response.getOutputStream();
+			response.setContentType("text/html");
+			servletOutputStream.print(message);
+			servletOutputStream.flush();
+			response.flushBuffer();
+		}
+
+		return null;
 	}
-
-	return null;
-    }
 
 }

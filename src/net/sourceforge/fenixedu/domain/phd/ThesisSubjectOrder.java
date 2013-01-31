@@ -7,55 +7,55 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 
 public class ThesisSubjectOrder extends ThesisSubjectOrder_Base {
 
-    public static Comparator<ThesisSubjectOrder> COMPARATOR_BY_ORDER = new Comparator<ThesisSubjectOrder>() {
-	@Override
-	public int compare(ThesisSubjectOrder order1, ThesisSubjectOrder order2) {
-	    return order1.getSubjectOrder() - order2.getSubjectOrder();
-	}
-    };
-
-    public ThesisSubjectOrder() {
-	super();
-	setRootDomainObject(RootDomainObject.getInstance());
-    }
-
-    public ThesisSubjectOrder(ThesisSubject subject, PhdIndividualProgramProcess phdProcess, int order) {
-	this();
-	setThesisSubject(subject);
-	setPhdIndividualProgramProcess(phdProcess);
-	setSubjectOrder(order);
-    }
-
-    public void delete() {
-	if (hasPhdIndividualProgramProcess()) {
-	    for (ThesisSubjectOrder followingSubjectOrder : getPhdIndividualProgramProcess().getThesisSubjectOrdersSorted()) {
-		if (followingSubjectOrder.getSubjectOrder() > getSubjectOrder()) {
-		    followingSubjectOrder.decreaseSubjectOrder();
+	public static Comparator<ThesisSubjectOrder> COMPARATOR_BY_ORDER = new Comparator<ThesisSubjectOrder>() {
+		@Override
+		public int compare(ThesisSubjectOrder order1, ThesisSubjectOrder order2) {
+			return order1.getSubjectOrder() - order2.getSubjectOrder();
 		}
-	    }
-	    removePhdIndividualProgramProcess();
+	};
+
+	public ThesisSubjectOrder() {
+		super();
+		setRootDomainObject(RootDomainObject.getInstance());
 	}
-	
-	removeThesisSubject();
 
-	removeRootDomainObject();
-	deleteDomainObject();
-    }
-
-    public void decreaseSubjectOrder() {
-	if (getSubjectOrder() > 1) {
-	    setSubjectOrder(getSubjectOrder() - 1);
+	public ThesisSubjectOrder(ThesisSubject subject, PhdIndividualProgramProcess phdProcess, int order) {
+		this();
+		setThesisSubject(subject);
+		setPhdIndividualProgramProcess(phdProcess);
+		setSubjectOrder(order);
 	}
-    }
 
-    @ConsistencyPredicate
-    public boolean checkHasThesisSubject() {
-	return hasThesisSubject();
-    }
+	public void delete() {
+		if (hasPhdIndividualProgramProcess()) {
+			for (ThesisSubjectOrder followingSubjectOrder : getPhdIndividualProgramProcess().getThesisSubjectOrdersSorted()) {
+				if (followingSubjectOrder.getSubjectOrder() > getSubjectOrder()) {
+					followingSubjectOrder.decreaseSubjectOrder();
+				}
+			}
+			removePhdIndividualProgramProcess();
+		}
 
-    @ConsistencyPredicate
-    public boolean checkHasPhdIndividualProgramProcess() {
-	return hasPhdIndividualProgramProcess();
-    }
+		removeThesisSubject();
+
+		removeRootDomainObject();
+		deleteDomainObject();
+	}
+
+	public void decreaseSubjectOrder() {
+		if (getSubjectOrder() > 1) {
+			setSubjectOrder(getSubjectOrder() - 1);
+		}
+	}
+
+	@ConsistencyPredicate
+	public boolean checkHasThesisSubject() {
+		return hasThesisSubject();
+	}
+
+	@ConsistencyPredicate
+	public boolean checkHasPhdIndividualProgramProcess() {
+		return hasPhdIndividualProgramProcess();
+	}
 
 }

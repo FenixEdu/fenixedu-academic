@@ -13,10 +13,10 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class DeleteFAQEntry extends FenixService {
 
-    @Checked("RolePredicates.MANAGER_PREDICATE")
-    @Service
-    public static void run(Integer entryId) {
-	rootDomainObject.readFAQEntryByOID(entryId).delete();
-    }
+	@Checked("RolePredicates.MANAGER_PREDICATE")
+	@Service
+	public static void run(Integer entryId) {
+		rootDomainObject.readFAQEntryByOID(entryId).delete();
+	}
 
 }

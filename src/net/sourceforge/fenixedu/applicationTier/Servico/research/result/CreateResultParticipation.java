@@ -15,37 +15,38 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class CreateResultParticipation extends FenixService {
 
-    @Service
-    public static void run(ResultParticipationCreationBean bean) throws FenixServiceException {
-	final ResearchResult result = bean.getResult();
-	final ResultParticipationRole role = bean.getRole();
-	final Unit organization = bean.getOrganization();
-	PersonName participator = bean.getParticipator();
-	Person enroledParticipator = null;
+	@Service
+	public static void run(ResultParticipationCreationBean bean) throws FenixServiceException {
+		final ResearchResult result = bean.getResult();
+		final ResultParticipationRole role = bean.getRole();
+		final Unit organization = bean.getOrganization();
+		PersonName participator = bean.getParticipator();
+		Person enroledParticipator = null;
 
-	if (participator == null) {
-	    if (bean.isBeanExternal()) {
-		final InsertExternalPerson newPerson = new InsertExternalPerson();
-		final String participatorName = bean.getParticipatorName();
+		if (participator == null) {
+			if (bean.isBeanExternal()) {
+				final InsertExternalPerson newPerson = new InsertExternalPerson();
+				final String participatorName = bean.getParticipatorName();
 
-		if (organization != null) {
-		    enroledParticipator = (newPerson.run(new InsertExternalPerson.ServiceArguments(bean.getParticipatorName(),
-			    bean.getOrganization()))).getPerson();
+				if (organization != null) {
+					enroledParticipator =
+							(newPerson.run(new InsertExternalPerson.ServiceArguments(bean.getParticipatorName(), bean
+									.getOrganization()))).getPerson();
+				} else {
+					if (bean.isUnitExternal()) {
+						final String orgName = bean.getOrganizationName();
+						enroledParticipator = (newPerson.run(participatorName, orgName)).getPerson();
+					} else {
+						throw new DomainException("error.label.invalidNameForInternalUnit");
+					}
+				}
+			} else {
+				throw new DomainException("error.label.invalidNameForPersonInSelection");
+			}
 		} else {
-		    if (bean.isUnitExternal()) {
-			final String orgName = bean.getOrganizationName();
-			enroledParticipator = (newPerson.run(participatorName, orgName)).getPerson();
-		    } else {
-			throw new DomainException("error.label.invalidNameForInternalUnit");
-		    }
+			enroledParticipator = participator.getPerson();
 		}
-	    } else {
-		throw new DomainException("error.label.invalidNameForPersonInSelection");
-	    }
-	} else {
-	    enroledParticipator = participator.getPerson();
+		result.addParticipation(enroledParticipator, role);
+		ResearchResultMetaDataManager.updateMetaDataInStorageFor(result);
 	}
-	result.addParticipation(enroledParticipator, role);
-	ResearchResultMetaDataManager.updateMetaDataInStorageFor(result);
-    }
 }

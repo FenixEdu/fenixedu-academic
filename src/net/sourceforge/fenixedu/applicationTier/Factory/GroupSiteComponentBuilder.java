@@ -38,374 +38,374 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class GroupSiteComponentBuilder {
 
-    private static GroupSiteComponentBuilder instance = null;
+	private static GroupSiteComponentBuilder instance = null;
 
-    public GroupSiteComponentBuilder() {
-    }
-
-    public static GroupSiteComponentBuilder getInstance() {
-	if (instance == null) {
-	    instance = new GroupSiteComponentBuilder();
-	}
-	return instance;
-    }
-
-    public ISiteComponent getComponent(ISiteComponent component, Integer executionCourseCode, Integer groupPropertiesCode,
-	    Integer code, Integer shiftCode, Integer value) throws FenixServiceException {
-
-	if (component instanceof InfoSiteProjects) {
-	    return getInfoSiteProjectsName((InfoSiteProjects) component, executionCourseCode);
-	} else if (component instanceof InfoSiteShiftsAndGroups) {
-	    return getInfoSiteShiftsAndGroups((InfoSiteShiftsAndGroups) component, groupPropertiesCode);
-
-	} else if (component instanceof InfoSiteStudentGroup) {
-	    return getInfoSiteStudentGroupInformation((InfoSiteStudentGroup) component, code);
-	} else if (component instanceof InfoSiteStudentsAndGroups) {
-	    return getInfoSiteStudentsAndGroups((InfoSiteStudentsAndGroups) component, groupPropertiesCode, shiftCode, value);
-	}
-	return null;
-    }
-
-    /**
-     * @param component
-     * @param site
-     * @return
-     * @throws ExcepcaoPersistencia
-     */
-
-    private ISiteComponent getInfoSiteProjectsName(InfoSiteProjects component, Integer executionCourseCode)
-	    throws FenixServiceException {
-
-	List infoGroupPropertiesList = readExecutionCourseProjects(executionCourseCode);
-	component.setInfoGroupPropertiesList(infoGroupPropertiesList);
-	return component;
-    }
-
-    public List readExecutionCourseProjects(Integer executionCourseCode) throws ExcepcaoInexistente, FenixServiceException {
-
-	List<InfoGrouping> projects = null;
-	Grouping groupProperties;
-
-	ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(executionCourseCode);
-
-	List executionCourseProjects = executionCourse.getGroupings();
-
-	projects = new ArrayList<InfoGrouping>();
-	Iterator iterator = executionCourseProjects.iterator();
-
-	while (iterator.hasNext()) {
-
-	    groupProperties = (Grouping) iterator.next();
-
-	    InfoGrouping infoGroupProperties = InfoGroupingWithExportGrouping.newInfoFromDomain(groupProperties);
-
-	    projects.add(infoGroupProperties);
-
+	public GroupSiteComponentBuilder() {
 	}
 
-	return projects;
-    }
-
-    /**
-     * @param component
-     * @param site
-     * @param groupPropertiesCode
-     * @param shiftCode
-     * @return
-     * @throws ExcepcaoPersistencia
-     */
-
-    private ISiteComponent getInfoSiteStudentsAndGroups(InfoSiteStudentsAndGroups component, Integer groupPropertiesCode,
-	    Integer shiftCode, Integer value) throws FenixServiceException {
-
-	List infoSiteStudentsAndGroups = new ArrayList();
-	Shift shift = null;
-	if (value.intValue() == 1) {
-	    infoSiteStudentsAndGroups = readStudentsAndGroupsByShift(groupPropertiesCode, shiftCode);
-	    shift = readShift(shiftCode);
+	public static GroupSiteComponentBuilder getInstance() {
+		if (instance == null) {
+			instance = new GroupSiteComponentBuilder();
+		}
+		return instance;
 	}
 
-	if (value.intValue() == 2) {
-	    infoSiteStudentsAndGroups = readStudentsAndGroupsWithoutShift(groupPropertiesCode);
+	public ISiteComponent getComponent(ISiteComponent component, Integer executionCourseCode, Integer groupPropertiesCode,
+			Integer code, Integer shiftCode, Integer value) throws FenixServiceException {
+
+		if (component instanceof InfoSiteProjects) {
+			return getInfoSiteProjectsName((InfoSiteProjects) component, executionCourseCode);
+		} else if (component instanceof InfoSiteShiftsAndGroups) {
+			return getInfoSiteShiftsAndGroups((InfoSiteShiftsAndGroups) component, groupPropertiesCode);
+
+		} else if (component instanceof InfoSiteStudentGroup) {
+			return getInfoSiteStudentGroupInformation((InfoSiteStudentGroup) component, code);
+		} else if (component instanceof InfoSiteStudentsAndGroups) {
+			return getInfoSiteStudentsAndGroups((InfoSiteStudentsAndGroups) component, groupPropertiesCode, shiftCode, value);
+		}
+		return null;
 	}
 
-	if (value.intValue() == 3) {
-	    infoSiteStudentsAndGroups = readAllStudentsAndGroups(groupPropertiesCode);
+	/**
+	 * @param component
+	 * @param site
+	 * @return
+	 * @throws ExcepcaoPersistencia
+	 */
+
+	private ISiteComponent getInfoSiteProjectsName(InfoSiteProjects component, Integer executionCourseCode)
+			throws FenixServiceException {
+
+		List infoGroupPropertiesList = readExecutionCourseProjects(executionCourseCode);
+		component.setInfoGroupPropertiesList(infoGroupPropertiesList);
+		return component;
 	}
 
-	component.setInfoSiteStudentsAndGroupsList(infoSiteStudentsAndGroups);
+	public List readExecutionCourseProjects(Integer executionCourseCode) throws ExcepcaoInexistente, FenixServiceException {
 
-	if (shift != null) {
-	    component.setInfoShift(InfoShift.newInfoFromDomain(shift));
+		List<InfoGrouping> projects = null;
+		Grouping groupProperties;
+
+		ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(executionCourseCode);
+
+		List executionCourseProjects = executionCourse.getGroupings();
+
+		projects = new ArrayList<InfoGrouping>();
+		Iterator iterator = executionCourseProjects.iterator();
+
+		while (iterator.hasNext()) {
+
+			groupProperties = (Grouping) iterator.next();
+
+			InfoGrouping infoGroupProperties = InfoGroupingWithExportGrouping.newInfoFromDomain(groupProperties);
+
+			projects.add(infoGroupProperties);
+
+		}
+
+		return projects;
 	}
 
-	return component;
-    }
+	/**
+	 * @param component
+	 * @param site
+	 * @param groupPropertiesCode
+	 * @param shiftCode
+	 * @return
+	 * @throws ExcepcaoPersistencia
+	 */
 
-    private List readStudentsAndGroupsByShift(Integer groupPropertiesCode, Integer shiftCode) throws ExcepcaoInexistente,
-	    FenixServiceException {
+	private ISiteComponent getInfoSiteStudentsAndGroups(InfoSiteStudentsAndGroups component, Integer groupPropertiesCode,
+			Integer shiftCode, Integer value) throws FenixServiceException {
 
-	List<InfoSiteStudentAndGroup> infoSiteStudentsAndGroupsList = new ArrayList<InfoSiteStudentAndGroup>();
+		List infoSiteStudentsAndGroups = new ArrayList();
+		Shift shift = null;
+		if (value.intValue() == 1) {
+			infoSiteStudentsAndGroups = readStudentsAndGroupsByShift(groupPropertiesCode, shiftCode);
+			shift = readShift(shiftCode);
+		}
 
-	Grouping groupProperties = RootDomainObject.getInstance().readGroupingByOID(groupPropertiesCode);
-	Shift shift = RootDomainObject.getInstance().readShiftByOID(shiftCode);
+		if (value.intValue() == 2) {
+			infoSiteStudentsAndGroups = readStudentsAndGroupsWithoutShift(groupPropertiesCode);
+		}
 
-	if (groupProperties == null) {
-	    throw new ExistingServiceException();
+		if (value.intValue() == 3) {
+			infoSiteStudentsAndGroups = readAllStudentsAndGroups(groupPropertiesCode);
+		}
+
+		component.setInfoSiteStudentsAndGroupsList(infoSiteStudentsAndGroups);
+
+		if (shift != null) {
+			component.setInfoShift(InfoShift.newInfoFromDomain(shift));
+		}
+
+		return component;
 	}
 
-	List studentGroups = getStudentGroupsByShiftAndGrouping(groupProperties, shift);
-	Iterator iterStudentGroups = studentGroups.iterator();
-	while (iterStudentGroups.hasNext()) {
+	private List readStudentsAndGroupsByShift(Integer groupPropertiesCode, Integer shiftCode) throws ExcepcaoInexistente,
+			FenixServiceException {
 
-	    List studentGroupAttendList = new ArrayList();
-	    StudentGroup studentGroup = (StudentGroup) iterStudentGroups.next();
+		List<InfoSiteStudentAndGroup> infoSiteStudentsAndGroupsList = new ArrayList<InfoSiteStudentAndGroup>();
 
-	    studentGroupAttendList = studentGroup.getAttends();
+		Grouping groupProperties = RootDomainObject.getInstance().readGroupingByOID(groupPropertiesCode);
+		Shift shift = RootDomainObject.getInstance().readShiftByOID(shiftCode);
 
-	    Iterator iterAttendsList = studentGroupAttendList.iterator();
-	    InfoSiteStudentInformation infoSiteStudentInformation = null;
-	    InfoSiteStudentAndGroup infoSiteStudentAndGroup = null;
+		if (groupProperties == null) {
+			throw new ExistingServiceException();
+		}
 
-	    Attends attend = null;
+		List studentGroups = getStudentGroupsByShiftAndGrouping(groupProperties, shift);
+		Iterator iterStudentGroups = studentGroups.iterator();
+		while (iterStudentGroups.hasNext()) {
 
-	    while (iterAttendsList.hasNext()) {
-		infoSiteStudentInformation = new InfoSiteStudentInformation();
-		infoSiteStudentAndGroup = new InfoSiteStudentAndGroup();
+			List studentGroupAttendList = new ArrayList();
+			StudentGroup studentGroup = (StudentGroup) iterStudentGroups.next();
 
-		attend = (Attends) iterAttendsList.next();
+			studentGroupAttendList = studentGroup.getAttends();
 
-		infoSiteStudentAndGroup.setInfoStudentGroup(InfoStudentGroup.newInfoFromDomain(studentGroup));
+			Iterator iterAttendsList = studentGroupAttendList.iterator();
+			InfoSiteStudentInformation infoSiteStudentInformation = null;
+			InfoSiteStudentAndGroup infoSiteStudentAndGroup = null;
 
-		infoSiteStudentInformation.setNumber(attend.getRegistration().getNumber());
+			Attends attend = null;
 
-		infoSiteStudentInformation.setName(attend.getRegistration().getPerson().getName());
+			while (iterAttendsList.hasNext()) {
+				infoSiteStudentInformation = new InfoSiteStudentInformation();
+				infoSiteStudentAndGroup = new InfoSiteStudentAndGroup();
 
-		infoSiteStudentInformation.setEmail(attend.getRegistration().getPerson().getEmail());
+				attend = (Attends) iterAttendsList.next();
 
-		infoSiteStudentAndGroup.setInfoSiteStudentInformation(infoSiteStudentInformation);
+				infoSiteStudentAndGroup.setInfoStudentGroup(InfoStudentGroup.newInfoFromDomain(studentGroup));
 
-		infoSiteStudentsAndGroupsList.add(infoSiteStudentAndGroup);
-	    }
+				infoSiteStudentInformation.setNumber(attend.getRegistration().getNumber());
+
+				infoSiteStudentInformation.setName(attend.getRegistration().getPerson().getName());
+
+				infoSiteStudentInformation.setEmail(attend.getRegistration().getPerson().getEmail());
+
+				infoSiteStudentAndGroup.setInfoSiteStudentInformation(infoSiteStudentInformation);
+
+				infoSiteStudentsAndGroupsList.add(infoSiteStudentAndGroup);
+			}
+		}
+
+		Collections.sort(infoSiteStudentsAndGroupsList, InfoSiteStudentAndGroup.COMPARATOR_BY_NUMBER);
+
+		return infoSiteStudentsAndGroupsList;
 	}
 
-	Collections.sort(infoSiteStudentsAndGroupsList, InfoSiteStudentAndGroup.COMPARATOR_BY_NUMBER);
+	private List readStudentsAndGroupsWithoutShift(Integer groupPropertiesCode) throws ExcepcaoInexistente, FenixServiceException {
 
-	return infoSiteStudentsAndGroupsList;
-    }
+		List<InfoSiteStudentAndGroup> infoSiteStudentsAndGroupsList = new ArrayList<InfoSiteStudentAndGroup>();
 
-    private List readStudentsAndGroupsWithoutShift(Integer groupPropertiesCode) throws ExcepcaoInexistente, FenixServiceException {
+		Grouping groupProperties = RootDomainObject.getInstance().readGroupingByOID(groupPropertiesCode);
+		if (groupProperties == null) {
+			throw new ExistingServiceException();
+		}
 
-	List<InfoSiteStudentAndGroup> infoSiteStudentsAndGroupsList = new ArrayList<InfoSiteStudentAndGroup>();
+		List studentGroups = getStudentGroupsWithoutShiftByGrouping(groupProperties);
+		Iterator iterStudentGroups = studentGroups.iterator();
+		while (iterStudentGroups.hasNext()) {
 
-	Grouping groupProperties = RootDomainObject.getInstance().readGroupingByOID(groupPropertiesCode);
-	if (groupProperties == null) {
-	    throw new ExistingServiceException();
+			List studentGroupAttendList = new ArrayList();
+			StudentGroup studentGroup = (StudentGroup) iterStudentGroups.next();
+
+			studentGroupAttendList = studentGroup.getAttends();
+
+			Iterator iterAttendsList = studentGroupAttendList.iterator();
+			InfoSiteStudentInformation infoSiteStudentInformation = null;
+			InfoSiteStudentAndGroup infoSiteStudentAndGroup = null;
+			Attends attend = null;
+
+			while (iterAttendsList.hasNext()) {
+				infoSiteStudentInformation = new InfoSiteStudentInformation();
+				infoSiteStudentAndGroup = new InfoSiteStudentAndGroup();
+
+				attend = (Attends) iterAttendsList.next();
+
+				infoSiteStudentAndGroup.setInfoStudentGroup(InfoStudentGroup.newInfoFromDomain(studentGroup));
+
+				infoSiteStudentInformation.setNumber(attend.getRegistration().getNumber());
+
+				infoSiteStudentInformation.setName(attend.getRegistration().getPerson().getName());
+
+				infoSiteStudentInformation.setEmail(attend.getRegistration().getPerson().getEmail());
+
+				infoSiteStudentAndGroup.setInfoSiteStudentInformation(infoSiteStudentInformation);
+
+				infoSiteStudentsAndGroupsList.add(infoSiteStudentAndGroup);
+			}
+		}
+
+		Collections.sort(infoSiteStudentsAndGroupsList, InfoSiteStudentAndGroup.COMPARATOR_BY_NUMBER);
+
+		return infoSiteStudentsAndGroupsList;
 	}
 
-	List studentGroups = getStudentGroupsWithoutShiftByGrouping(groupProperties);
-	Iterator iterStudentGroups = studentGroups.iterator();
-	while (iterStudentGroups.hasNext()) {
+	private List readAllStudentsAndGroups(Integer groupPropertiesCode) throws ExcepcaoInexistente, FenixServiceException {
 
-	    List studentGroupAttendList = new ArrayList();
-	    StudentGroup studentGroup = (StudentGroup) iterStudentGroups.next();
+		List<InfoSiteStudentAndGroup> infoSiteStudentsAndGroupsList = new ArrayList<InfoSiteStudentAndGroup>();
 
-	    studentGroupAttendList = studentGroup.getAttends();
+		Grouping groupProperties = RootDomainObject.getInstance().readGroupingByOID(groupPropertiesCode);
+		if (groupProperties == null) {
+			throw new ExistingServiceException();
+		}
 
-	    Iterator iterAttendsList = studentGroupAttendList.iterator();
-	    InfoSiteStudentInformation infoSiteStudentInformation = null;
-	    InfoSiteStudentAndGroup infoSiteStudentAndGroup = null;
-	    Attends attend = null;
+		List studentGroups = getAllStudentGroups(groupProperties);
+		Iterator iterStudentGroups = studentGroups.iterator();
+		while (iterStudentGroups.hasNext()) {
 
-	    while (iterAttendsList.hasNext()) {
-		infoSiteStudentInformation = new InfoSiteStudentInformation();
-		infoSiteStudentAndGroup = new InfoSiteStudentAndGroup();
+			List studentGroupAttendList = new ArrayList();
+			StudentGroup studentGroup = (StudentGroup) iterStudentGroups.next();
 
-		attend = (Attends) iterAttendsList.next();
+			studentGroupAttendList = studentGroup.getAttends();
 
-		infoSiteStudentAndGroup.setInfoStudentGroup(InfoStudentGroup.newInfoFromDomain(studentGroup));
+			Iterator iterAttendsList = studentGroupAttendList.iterator();
+			InfoSiteStudentInformation infoSiteStudentInformation = null;
+			InfoSiteStudentAndGroup infoSiteStudentAndGroup = null;
+			Attends attend = null;
 
-		infoSiteStudentInformation.setNumber(attend.getRegistration().getNumber());
+			while (iterAttendsList.hasNext()) {
+				infoSiteStudentInformation = new InfoSiteStudentInformation();
+				infoSiteStudentAndGroup = new InfoSiteStudentAndGroup();
 
-		infoSiteStudentInformation.setName(attend.getRegistration().getPerson().getName());
+				attend = (Attends) iterAttendsList.next();
 
-		infoSiteStudentInformation.setEmail(attend.getRegistration().getPerson().getEmail());
+				infoSiteStudentAndGroup.setInfoStudentGroup(InfoStudentGroup.newInfoFromDomain(studentGroup));
 
-		infoSiteStudentAndGroup.setInfoSiteStudentInformation(infoSiteStudentInformation);
+				infoSiteStudentInformation.setNumber(attend.getRegistration().getNumber());
 
-		infoSiteStudentsAndGroupsList.add(infoSiteStudentAndGroup);
-	    }
+				infoSiteStudentInformation.setName(attend.getRegistration().getPerson().getName());
+
+				infoSiteStudentInformation.setEmail(attend.getRegistration().getPerson().getEmail());
+
+				infoSiteStudentAndGroup.setInfoSiteStudentInformation(infoSiteStudentInformation);
+
+				infoSiteStudentsAndGroupsList.add(infoSiteStudentAndGroup);
+			}
+		}
+
+		Collections.sort(infoSiteStudentsAndGroupsList, InfoSiteStudentAndGroup.COMPARATOR_BY_NUMBER);
+
+		return infoSiteStudentsAndGroupsList;
 	}
 
-	Collections.sort(infoSiteStudentsAndGroupsList, InfoSiteStudentAndGroup.COMPARATOR_BY_NUMBER);
-
-	return infoSiteStudentsAndGroupsList;
-    }
-
-    private List readAllStudentsAndGroups(Integer groupPropertiesCode) throws ExcepcaoInexistente, FenixServiceException {
-
-	List<InfoSiteStudentAndGroup> infoSiteStudentsAndGroupsList = new ArrayList<InfoSiteStudentAndGroup>();
-
-	Grouping groupProperties = RootDomainObject.getInstance().readGroupingByOID(groupPropertiesCode);
-	if (groupProperties == null) {
-	    throw new ExistingServiceException();
+	private List getStudentGroupsByShiftAndGrouping(Grouping groupProperties, Shift shift) {
+		List<StudentGroup> result = new ArrayList<StudentGroup>();
+		List studentGroups = groupProperties.getStudentGroupsWithShift();
+		Iterator iter = studentGroups.iterator();
+		while (iter.hasNext()) {
+			StudentGroup sg = (StudentGroup) iter.next();
+			if (sg.getShift().equals(shift)) {
+				result.add(sg);
+			}
+		}
+		return result;
 	}
 
-	List studentGroups = getAllStudentGroups(groupProperties);
-	Iterator iterStudentGroups = studentGroups.iterator();
-	while (iterStudentGroups.hasNext()) {
-
-	    List studentGroupAttendList = new ArrayList();
-	    StudentGroup studentGroup = (StudentGroup) iterStudentGroups.next();
-
-	    studentGroupAttendList = studentGroup.getAttends();
-
-	    Iterator iterAttendsList = studentGroupAttendList.iterator();
-	    InfoSiteStudentInformation infoSiteStudentInformation = null;
-	    InfoSiteStudentAndGroup infoSiteStudentAndGroup = null;
-	    Attends attend = null;
-
-	    while (iterAttendsList.hasNext()) {
-		infoSiteStudentInformation = new InfoSiteStudentInformation();
-		infoSiteStudentAndGroup = new InfoSiteStudentAndGroup();
-
-		attend = (Attends) iterAttendsList.next();
-
-		infoSiteStudentAndGroup.setInfoStudentGroup(InfoStudentGroup.newInfoFromDomain(studentGroup));
-
-		infoSiteStudentInformation.setNumber(attend.getRegistration().getNumber());
-
-		infoSiteStudentInformation.setName(attend.getRegistration().getPerson().getName());
-
-		infoSiteStudentInformation.setEmail(attend.getRegistration().getPerson().getEmail());
-
-		infoSiteStudentAndGroup.setInfoSiteStudentInformation(infoSiteStudentInformation);
-
-		infoSiteStudentsAndGroupsList.add(infoSiteStudentAndGroup);
-	    }
+	private List<StudentGroup> getStudentGroupsWithoutShiftByGrouping(Grouping groupProperties) {
+		return new ArrayList<StudentGroup>(groupProperties.getStudentGroupsWithoutShift());
 	}
 
-	Collections.sort(infoSiteStudentsAndGroupsList, InfoSiteStudentAndGroup.COMPARATOR_BY_NUMBER);
-
-	return infoSiteStudentsAndGroupsList;
-    }
-
-    private List getStudentGroupsByShiftAndGrouping(Grouping groupProperties, Shift shift) {
-	List<StudentGroup> result = new ArrayList<StudentGroup>();
-	List studentGroups = groupProperties.getStudentGroupsWithShift();
-	Iterator iter = studentGroups.iterator();
-	while (iter.hasNext()) {
-	    StudentGroup sg = (StudentGroup) iter.next();
-	    if (sg.getShift().equals(shift)) {
-		result.add(sg);
-	    }
-	}
-	return result;
-    }
-
-    private List<StudentGroup> getStudentGroupsWithoutShiftByGrouping(Grouping groupProperties) {
-	return new ArrayList<StudentGroup>(groupProperties.getStudentGroupsWithoutShift());
-    }
-
-    private List<StudentGroup> getAllStudentGroups(Grouping groupProperties) {
-	return new ArrayList<StudentGroup>(groupProperties.getStudentGroups());
-    }
-
-    private Shift readShift(Integer shiftCode) throws ExcepcaoInexistente, FenixServiceException {
-	return RootDomainObject.getInstance().readShiftByOID(shiftCode);
-    }
-
-    /**
-     * @param component
-     * @param site
-     * @param groupPropertiesCode
-     * @return
-     * @throws ExcepcaoPersistencia
-     */
-
-    private ISiteComponent getInfoSiteShiftsAndGroups(InfoSiteShiftsAndGroups component, Integer groupPropertiesCode)
-	    throws FenixServiceException {
-
-	Grouping grouping = RootDomainObject.getInstance().readGroupingByOID(groupPropertiesCode);
-
-	List infoSiteShiftsAndGroups = ReadShiftsAndGroups.run(grouping).getInfoSiteGroupsByShiftList();
-	component.setInfoSiteGroupsByShiftList(infoSiteShiftsAndGroups);
-
-	InfoGrouping infoGrouping = readGrouping(groupPropertiesCode);
-	component.setInfoGrouping(infoGrouping);
-
-	return component;
-    }
-
-    public InfoGrouping readGrouping(Integer groupPropertiesCode) throws FenixServiceException {
-
-	InfoGrouping infoGroupProperties = null;
-
-	Grouping grouping = RootDomainObject.getInstance().readGroupingByOID(groupPropertiesCode);
-
-	infoGroupProperties = InfoGroupingWithExportGrouping.newInfoFromDomain(grouping);
-
-	return infoGroupProperties;
-    }
-
-    /**
-     * @param component
-     * @param site
-     * @param groupPropertiesCode
-     * @return
-     * @throws ExcepcaoPersistencia
-     */
-
-    private ISiteComponent getInfoSiteStudentGroupInformation(InfoSiteStudentGroup component, Integer studentGroupCode)
-	    throws FenixServiceException {
-
-	List infoSiteStudents = readStudentGroupInformation(studentGroupCode);
-	component.setInfoSiteStudentInformationList(infoSiteStudents);
-
-	InfoStudentGroup studentGroup = readStudentGroupNumber(studentGroupCode);
-	component.setInfoStudentGroup(studentGroup);
-
-	return component;
-    }
-
-    public List readStudentGroupInformation(Integer studentGroupCode) throws FenixServiceException {
-
-	List<InfoSiteStudentInformation> studentGroupAttendInformationList = null;
-
-	StudentGroup studentGroup = RootDomainObject.getInstance().readStudentGroupByOID(studentGroupCode);
-	List studentGroupAttendList = studentGroup.getAttends();
-
-	studentGroupAttendInformationList = new ArrayList<InfoSiteStudentInformation>(studentGroupAttendList.size());
-	Iterator iter = studentGroupAttendList.iterator();
-	InfoSiteStudentInformation infoSiteStudentInformation = null;
-	Attends attend = null;
-
-	while (iter.hasNext()) {
-
-	    infoSiteStudentInformation = new InfoSiteStudentInformation();
-
-	    attend = (Attends) iter.next();
-
-	    infoSiteStudentInformation.setNumber(attend.getRegistration().getNumber());
-
-	    infoSiteStudentInformation.setName(attend.getRegistration().getPerson().getName());
-
-	    infoSiteStudentInformation.setEmail(attend.getRegistration().getPerson().getEmail());
-
-	    infoSiteStudentInformation.setUsername(attend.getRegistration().getPerson().getUsername());
-
-	    studentGroupAttendInformationList.add(infoSiteStudentInformation);
-
+	private List<StudentGroup> getAllStudentGroups(Grouping groupProperties) {
+		return new ArrayList<StudentGroup>(groupProperties.getStudentGroups());
 	}
 
-	Collections.sort(studentGroupAttendInformationList, InfoSiteStudentInformation.COMPARATOR_BY_NUMBER);
+	private Shift readShift(Integer shiftCode) throws ExcepcaoInexistente, FenixServiceException {
+		return RootDomainObject.getInstance().readShiftByOID(shiftCode);
+	}
 
-	return studentGroupAttendInformationList;
-    }
+	/**
+	 * @param component
+	 * @param site
+	 * @param groupPropertiesCode
+	 * @return
+	 * @throws ExcepcaoPersistencia
+	 */
 
-    public InfoStudentGroup readStudentGroupNumber(Integer studentGroupID) throws FenixServiceException {
-	StudentGroup studentGroup = RootDomainObject.getInstance().readStudentGroupByOID(studentGroupID);
-	return InfoStudentGroup.newInfoFromDomain(studentGroup);
-    }
+	private ISiteComponent getInfoSiteShiftsAndGroups(InfoSiteShiftsAndGroups component, Integer groupPropertiesCode)
+			throws FenixServiceException {
+
+		Grouping grouping = RootDomainObject.getInstance().readGroupingByOID(groupPropertiesCode);
+
+		List infoSiteShiftsAndGroups = ReadShiftsAndGroups.run(grouping).getInfoSiteGroupsByShiftList();
+		component.setInfoSiteGroupsByShiftList(infoSiteShiftsAndGroups);
+
+		InfoGrouping infoGrouping = readGrouping(groupPropertiesCode);
+		component.setInfoGrouping(infoGrouping);
+
+		return component;
+	}
+
+	public InfoGrouping readGrouping(Integer groupPropertiesCode) throws FenixServiceException {
+
+		InfoGrouping infoGroupProperties = null;
+
+		Grouping grouping = RootDomainObject.getInstance().readGroupingByOID(groupPropertiesCode);
+
+		infoGroupProperties = InfoGroupingWithExportGrouping.newInfoFromDomain(grouping);
+
+		return infoGroupProperties;
+	}
+
+	/**
+	 * @param component
+	 * @param site
+	 * @param groupPropertiesCode
+	 * @return
+	 * @throws ExcepcaoPersistencia
+	 */
+
+	private ISiteComponent getInfoSiteStudentGroupInformation(InfoSiteStudentGroup component, Integer studentGroupCode)
+			throws FenixServiceException {
+
+		List infoSiteStudents = readStudentGroupInformation(studentGroupCode);
+		component.setInfoSiteStudentInformationList(infoSiteStudents);
+
+		InfoStudentGroup studentGroup = readStudentGroupNumber(studentGroupCode);
+		component.setInfoStudentGroup(studentGroup);
+
+		return component;
+	}
+
+	public List readStudentGroupInformation(Integer studentGroupCode) throws FenixServiceException {
+
+		List<InfoSiteStudentInformation> studentGroupAttendInformationList = null;
+
+		StudentGroup studentGroup = RootDomainObject.getInstance().readStudentGroupByOID(studentGroupCode);
+		List studentGroupAttendList = studentGroup.getAttends();
+
+		studentGroupAttendInformationList = new ArrayList<InfoSiteStudentInformation>(studentGroupAttendList.size());
+		Iterator iter = studentGroupAttendList.iterator();
+		InfoSiteStudentInformation infoSiteStudentInformation = null;
+		Attends attend = null;
+
+		while (iter.hasNext()) {
+
+			infoSiteStudentInformation = new InfoSiteStudentInformation();
+
+			attend = (Attends) iter.next();
+
+			infoSiteStudentInformation.setNumber(attend.getRegistration().getNumber());
+
+			infoSiteStudentInformation.setName(attend.getRegistration().getPerson().getName());
+
+			infoSiteStudentInformation.setEmail(attend.getRegistration().getPerson().getEmail());
+
+			infoSiteStudentInformation.setUsername(attend.getRegistration().getPerson().getUsername());
+
+			studentGroupAttendInformationList.add(infoSiteStudentInformation);
+
+		}
+
+		Collections.sort(studentGroupAttendInformationList, InfoSiteStudentInformation.COMPARATOR_BY_NUMBER);
+
+		return studentGroupAttendInformationList;
+	}
+
+	public InfoStudentGroup readStudentGroupNumber(Integer studentGroupID) throws FenixServiceException {
+		StudentGroup studentGroup = RootDomainObject.getInstance().readStudentGroupByOID(studentGroupID);
+		return InfoStudentGroup.newInfoFromDomain(studentGroup);
+	}
 
 }

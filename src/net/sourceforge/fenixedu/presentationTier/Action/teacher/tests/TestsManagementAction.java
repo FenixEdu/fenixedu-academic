@@ -30,14 +30,6 @@ import org.apache.struts.action.ActionMessages;
 
 import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
@@ -49,222 +41,234 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
  * 
  */
 
-@Mapping(module = "teacher", path = "/tests/tests", input = "/tests/tests.do?method=manageTests", scope = "request", parameter = "method")
+@Mapping(
+		module = "teacher",
+		path = "/tests/tests",
+		input = "/tests/tests.do?method=manageTests",
+		scope = "request",
+		parameter = "method")
 @Forwards(value = {
-		@Forward(name = "deleteTestGroup", path = "/teacher/tests/tests/deleteTestGroup.jsp", tileProperties = @Tile(navLocal = "/teacher/commons/executionCourseAdministrationNavbar.jsp")),
-		@Forward(name = "correctTestGroup", path = "/teacher/tests/tests/correctTestGroup.jsp", tileProperties = @Tile(navLocal = "/teacher/commons/executionCourseAdministrationNavbar.jsp")),
-		@Forward(name = "correctTestByPerson", path = "/teacher/tests/tests/correctTestByPerson.jsp", tileProperties = @Tile(navLocal = "/teacher/commons/executionCourseAdministrationNavbar.jsp")),
-		@Forward(name = "manageTests", path = "/teacher/tests/tests/manageTests.jsp", tileProperties = @Tile(navLocal = "/teacher/commons/executionCourseAdministrationNavbar.jsp")),
-		@Forward(name = "viewTest", path = "/teacher/tests/tests/viewTest.jsp", tileProperties = @Tile(navLocal = "/teacher/commons/executionCourseAdministrationNavbar.jsp")) })
+		@Forward(name = "deleteTestGroup", path = "/teacher/tests/tests/deleteTestGroup.jsp", tileProperties = @Tile(
+				navLocal = "/teacher/commons/executionCourseAdministrationNavbar.jsp")),
+		@Forward(name = "correctTestGroup", path = "/teacher/tests/tests/correctTestGroup.jsp", tileProperties = @Tile(
+				navLocal = "/teacher/commons/executionCourseAdministrationNavbar.jsp")),
+		@Forward(name = "correctTestByPerson", path = "/teacher/tests/tests/correctTestByPerson.jsp", tileProperties = @Tile(
+				navLocal = "/teacher/commons/executionCourseAdministrationNavbar.jsp")),
+		@Forward(name = "manageTests", path = "/teacher/tests/tests/manageTests.jsp", tileProperties = @Tile(
+				navLocal = "/teacher/commons/executionCourseAdministrationNavbar.jsp")),
+		@Forward(name = "viewTest", path = "/teacher/tests/tests/viewTest.jsp", tileProperties = @Tile(
+				navLocal = "/teacher/commons/executionCourseAdministrationNavbar.jsp")) })
 public class TestsManagementAction extends FenixDispatchAction {
 
-    public ActionForward manageTests(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-	Integer executionCourseId = getCodeFromRequest(request, "oid");
+	public ActionForward manageTests(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+		Integer executionCourseId = getCodeFromRequest(request, "oid");
 
-	ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);
+		ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);
 
-	Teacher teacher = getPerson(request).getTeacher();
+		Teacher teacher = getPerson(request).getTeacher();
 
-	List<NewTestGroup> testGroups = new ArrayList<NewTestGroup>();
+		List<NewTestGroup> testGroups = new ArrayList<NewTestGroup>();
 
-	for (NewTestGroup testGroup : teacher.getTestGroups()) {
-	    if (testGroup.getExecutionCourse().equals(executionCourse)) {
-		testGroups.add(testGroup);
-	    }
-	}
-
-	request.setAttribute("testGroups", testGroups);
-	request.setAttribute("executionCourse", executionCourse);
-
-	return mapping.findForward("manageTests");
-    }
-
-    public ActionForward viewTestGroup(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-	Integer testGroupId = getCodeFromRequest(request, "oid");
-
-	NewTestGroup testGroup = rootDomainObject.readNewTestGroupByOID(testGroupId);
-
-	request.setAttribute("oid", testGroup.getOrderedTests().get(0).getIdInternal());
-	request.setAttribute("executionCourse", testGroup.getExecutionCourse());
-
-	return this.viewTest(mapping, form, request, response);
-    }
-
-    public ActionForward viewTest(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-	    throws FenixFilterException, FenixServiceException {
-	Integer testId = getCodeFromRequest(request, "oid");
-
-	NewTest test = (NewTest) rootDomainObject.readNewTestElementByOID(testId);
-
-	request.setAttribute("test", test);
-	request.setAttribute("executionCourse", test.getTestGroup().getExecutionCourse());
-
-	return mapping.findForward("viewTest");
-    }
-
-    public ActionForward publishTestGroup(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-	Integer testGroupId = getCodeFromRequest(request, "oid");
-
-	NewTestGroup testGroup = rootDomainObject.readNewTestGroupByOID(testGroupId);
-
-	PublishTestGroup.run(testGroup);
-
-	request.setAttribute("oid", testGroup.getExecutionCourse().getIdInternal());
-
-	return this.manageTests(mapping, form, request, response);
-    }
-
-    public ActionForward unpublishTestGroup(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-	Integer testGroupId = getCodeFromRequest(request, "oid");
-
-	NewTestGroup testGroup = rootDomainObject.readNewTestGroupByOID(testGroupId);
-
-	UnpublishTestGroup.run(testGroup);
-
-	request.setAttribute("oid", testGroup.getExecutionCourse().getIdInternal());
-
-	return this.manageTests(mapping, form, request, response);
-    }
-
-    public ActionForward prepareDeleteTestGroup(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-	Integer testGroupId = getCodeFromRequest(request, "oid");
-
-	NewTestGroup testGroup = rootDomainObject.readNewTestGroupByOID(testGroupId);
-
-	request.setAttribute("testGroup", testGroup);
-	request.setAttribute("executionCourse", testGroup.getExecutionCourse());
-
-	return mapping.findForward("deleteTestGroup");
-    }
-
-    public ActionForward deleteTestGroup(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-	Integer testGroupId = getCodeFromRequest(request, "oid");
-
-	NewTestGroup testGroup = rootDomainObject.readNewTestGroupByOID(testGroupId);
-
-	request.setAttribute("oid", testGroup.getExecutionCourse().getIdInternal());
-
-	DeleteTestGroup.run(testGroup);
-
-	return this.manageTests(mapping, form, request, response);
-    }
-
-    public ActionForward finishTestGroup(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-	Integer testGroupId = getCodeFromRequest(request, "oid");
-
-	NewTestGroup testGroup = rootDomainObject.readNewTestGroupByOID(testGroupId);
-
-	FinishTestGroup.run(testGroup);
-
-	request.setAttribute("oid", testGroup.getExecutionCourse().getIdInternal());
-
-	return this.manageTests(mapping, form, request, response);
-    }
-
-    public ActionForward publishGrades(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-	Integer testGroupId = getCodeFromRequest(request, "oid");
-
-	NewTestGroup testGroup = rootDomainObject.readNewTestGroupByOID(testGroupId);
-
-	PublishGrades.run(testGroup);
-
-	request.setAttribute("oid", testGroup.getExecutionCourse().getIdInternal());
-
-	return this.manageTests(mapping, form, request, response);
-    }
-
-    public ActionForward correctTestGroup(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-	Integer testGroupId = getCodeFromRequest(request, "oid");
-
-	NewTestGroup testGroup = rootDomainObject.readNewTestGroupByOID(testGroupId);
-
-	CorrectTestGroup.run(testGroup);
-
-	List<CorrectTestBean> uncorrectedByPerson = new ArrayList<CorrectTestBean>();
-	List<CorrectTestBean> correctedByPerson = new ArrayList<CorrectTestBean>();
-
-	for (NewTest test : testGroup.getTests()) {
-	    for (Person person : test.getPersons()) {
-		if (test.getAllUncorrectedQuestionsCount(person) == 0) {
-		    correctedByPerson.add(new CorrectTestBean(test, person));
-		} else {
-		    uncorrectedByPerson.add(new CorrectTestBean(test, person));
+		for (NewTestGroup testGroup : teacher.getTestGroups()) {
+			if (testGroup.getExecutionCourse().equals(executionCourse)) {
+				testGroups.add(testGroup);
+			}
 		}
-	    }
+
+		request.setAttribute("testGroups", testGroups);
+		request.setAttribute("executionCourse", executionCourse);
+
+		return mapping.findForward("manageTests");
 	}
 
-	request.setAttribute("testGroup", testGroup);
-	request.setAttribute("uncorrectedByPerson", uncorrectedByPerson);
-	request.setAttribute("correctedByPerson", correctedByPerson);
-	request.setAttribute("executionCourse", testGroup.getExecutionCourse());
+	public ActionForward viewTestGroup(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+		Integer testGroupId = getCodeFromRequest(request, "oid");
 
-	return mapping.findForward("correctTestGroup");
-    }
+		NewTestGroup testGroup = rootDomainObject.readNewTestGroupByOID(testGroupId);
 
-    public ActionForward correctByPerson(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-	Integer personId = getCodeFromRequest(request, "personId");
-	Integer testGroupId = getCodeFromRequest(request, "testGroupId");
+		request.setAttribute("oid", testGroup.getOrderedTests().get(0).getIdInternal());
+		request.setAttribute("executionCourse", testGroup.getExecutionCourse());
 
-	NewTestGroup testGroup = rootDomainObject.readNewTestGroupByOID(testGroupId);
-	Person person = (Person) rootDomainObject.readPartyByOID(personId);
-
-	NewTest test = testGroup.getTest(person);
-
-	request.setAttribute("test", test);
-	request.setAttribute("person", person);
-	request.setAttribute("executionCourse", testGroup.getExecutionCourse());
-
-	return mapping.findForward("correctTestByPerson");
-    }
-
-    private Integer getCodeFromRequest(HttpServletRequest request, String codeString) {
-	Integer code = null;
-	Object objectCode = request.getAttribute(codeString);
-
-	if (objectCode != null) {
-	    if (objectCode instanceof String)
-		code = new Integer((String) objectCode);
-	    else if (objectCode instanceof Integer)
-		code = (Integer) objectCode;
-	} else {
-	    String thisCodeString = request.getParameter(codeString);
-	    if (thisCodeString != null)
-		code = new Integer(thisCodeString);
+		return this.viewTest(mapping, form, request, response);
 	}
 
-	return code;
-    }
+	public ActionForward viewTest(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+			throws FenixFilterException, FenixServiceException {
+		Integer testId = getCodeFromRequest(request, "oid");
 
-    private Person getPerson(HttpServletRequest request) {
-	IUserView userView = getUserView(request);
+		NewTest test = (NewTest) rootDomainObject.readNewTestElementByOID(testId);
 
-	return userView.getPerson();
-    }
+		request.setAttribute("test", test);
+		request.setAttribute("executionCourse", test.getTestGroup().getExecutionCourse());
 
-    private Object getMetaObject(String key) {
-	IViewState viewState = RenderUtils.getViewState(key);
-
-	if (viewState == null) {
-	    return null;
+		return mapping.findForward("viewTest");
 	}
 
-	return viewState.getMetaObject().getObject();
-    }
+	public ActionForward publishTestGroup(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+		Integer testGroupId = getCodeFromRequest(request, "oid");
 
-    private void createMessage(HttpServletRequest request, String name, String key) {
-	ActionMessages messages = getMessages(request);
-	messages.add(name, new ActionMessage(key, true));
-	saveMessages(request, messages);
-    }
+		NewTestGroup testGroup = rootDomainObject.readNewTestGroupByOID(testGroupId);
+
+		PublishTestGroup.run(testGroup);
+
+		request.setAttribute("oid", testGroup.getExecutionCourse().getIdInternal());
+
+		return this.manageTests(mapping, form, request, response);
+	}
+
+	public ActionForward unpublishTestGroup(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+		Integer testGroupId = getCodeFromRequest(request, "oid");
+
+		NewTestGroup testGroup = rootDomainObject.readNewTestGroupByOID(testGroupId);
+
+		UnpublishTestGroup.run(testGroup);
+
+		request.setAttribute("oid", testGroup.getExecutionCourse().getIdInternal());
+
+		return this.manageTests(mapping, form, request, response);
+	}
+
+	public ActionForward prepareDeleteTestGroup(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+		Integer testGroupId = getCodeFromRequest(request, "oid");
+
+		NewTestGroup testGroup = rootDomainObject.readNewTestGroupByOID(testGroupId);
+
+		request.setAttribute("testGroup", testGroup);
+		request.setAttribute("executionCourse", testGroup.getExecutionCourse());
+
+		return mapping.findForward("deleteTestGroup");
+	}
+
+	public ActionForward deleteTestGroup(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+		Integer testGroupId = getCodeFromRequest(request, "oid");
+
+		NewTestGroup testGroup = rootDomainObject.readNewTestGroupByOID(testGroupId);
+
+		request.setAttribute("oid", testGroup.getExecutionCourse().getIdInternal());
+
+		DeleteTestGroup.run(testGroup);
+
+		return this.manageTests(mapping, form, request, response);
+	}
+
+	public ActionForward finishTestGroup(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+		Integer testGroupId = getCodeFromRequest(request, "oid");
+
+		NewTestGroup testGroup = rootDomainObject.readNewTestGroupByOID(testGroupId);
+
+		FinishTestGroup.run(testGroup);
+
+		request.setAttribute("oid", testGroup.getExecutionCourse().getIdInternal());
+
+		return this.manageTests(mapping, form, request, response);
+	}
+
+	public ActionForward publishGrades(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+		Integer testGroupId = getCodeFromRequest(request, "oid");
+
+		NewTestGroup testGroup = rootDomainObject.readNewTestGroupByOID(testGroupId);
+
+		PublishGrades.run(testGroup);
+
+		request.setAttribute("oid", testGroup.getExecutionCourse().getIdInternal());
+
+		return this.manageTests(mapping, form, request, response);
+	}
+
+	public ActionForward correctTestGroup(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+		Integer testGroupId = getCodeFromRequest(request, "oid");
+
+		NewTestGroup testGroup = rootDomainObject.readNewTestGroupByOID(testGroupId);
+
+		CorrectTestGroup.run(testGroup);
+
+		List<CorrectTestBean> uncorrectedByPerson = new ArrayList<CorrectTestBean>();
+		List<CorrectTestBean> correctedByPerson = new ArrayList<CorrectTestBean>();
+
+		for (NewTest test : testGroup.getTests()) {
+			for (Person person : test.getPersons()) {
+				if (test.getAllUncorrectedQuestionsCount(person) == 0) {
+					correctedByPerson.add(new CorrectTestBean(test, person));
+				} else {
+					uncorrectedByPerson.add(new CorrectTestBean(test, person));
+				}
+			}
+		}
+
+		request.setAttribute("testGroup", testGroup);
+		request.setAttribute("uncorrectedByPerson", uncorrectedByPerson);
+		request.setAttribute("correctedByPerson", correctedByPerson);
+		request.setAttribute("executionCourse", testGroup.getExecutionCourse());
+
+		return mapping.findForward("correctTestGroup");
+	}
+
+	public ActionForward correctByPerson(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+		Integer personId = getCodeFromRequest(request, "personId");
+		Integer testGroupId = getCodeFromRequest(request, "testGroupId");
+
+		NewTestGroup testGroup = rootDomainObject.readNewTestGroupByOID(testGroupId);
+		Person person = (Person) rootDomainObject.readPartyByOID(personId);
+
+		NewTest test = testGroup.getTest(person);
+
+		request.setAttribute("test", test);
+		request.setAttribute("person", person);
+		request.setAttribute("executionCourse", testGroup.getExecutionCourse());
+
+		return mapping.findForward("correctTestByPerson");
+	}
+
+	private Integer getCodeFromRequest(HttpServletRequest request, String codeString) {
+		Integer code = null;
+		Object objectCode = request.getAttribute(codeString);
+
+		if (objectCode != null) {
+			if (objectCode instanceof String) {
+				code = new Integer((String) objectCode);
+			} else if (objectCode instanceof Integer) {
+				code = (Integer) objectCode;
+			}
+		} else {
+			String thisCodeString = request.getParameter(codeString);
+			if (thisCodeString != null) {
+				code = new Integer(thisCodeString);
+			}
+		}
+
+		return code;
+	}
+
+	private Person getPerson(HttpServletRequest request) {
+		IUserView userView = getUserView(request);
+
+		return userView.getPerson();
+	}
+
+	private Object getMetaObject(String key) {
+		IViewState viewState = RenderUtils.getViewState(key);
+
+		if (viewState == null) {
+			return null;
+		}
+
+		return viewState.getMetaObject().getObject();
+	}
+
+	private void createMessage(HttpServletRequest request, String name, String key) {
+		ActionMessages messages = getMessages(request);
+		messages.add(name, new ActionMessage(key, true));
+		saveMessages(request, messages);
+	}
 
 }

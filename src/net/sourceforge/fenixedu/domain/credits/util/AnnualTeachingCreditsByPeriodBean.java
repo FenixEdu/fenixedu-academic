@@ -24,158 +24,159 @@ import org.apache.commons.collections.comparators.ComparatorChain;
 import org.joda.time.Interval;
 
 public class AnnualTeachingCreditsByPeriodBean implements Serializable {
-    private ExecutionSemester executionPeriod;
-    private Teacher teacher;
-    private Boolean canLockTeacherCredits = false;
-    private Boolean canUnlockTeacherCredits = false;
-    private Boolean canEditTeacherCredits = false;
-    private Boolean canEditTeacherCreditsReductions = false;
-    private Boolean canEditTeacherManagementFunctions = false;
+	private ExecutionSemester executionPeriod;
+	private Teacher teacher;
+	private Boolean canLockTeacherCredits = false;
+	private Boolean canUnlockTeacherCredits = false;
+	private Boolean canEditTeacherCredits = false;
+	private Boolean canEditTeacherCreditsReductions = false;
+	private Boolean canEditTeacherManagementFunctions = false;
 
-    public AnnualTeachingCreditsByPeriodBean(ExecutionSemester executionPeriod, Teacher teacher, RoleType roleType) {
-	super();
-	this.executionPeriod = executionPeriod;
-	this.teacher = teacher;
-	if (roleType != null) {
-	    TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionPeriod);
-	    boolean inValidCreditsPeriod = executionPeriod.isInValidCreditsPeriod(roleType);
-	    setCanLockTeacherCredits(roleType.equals(RoleType.DEPARTMENT_MEMBER) && inValidCreditsPeriod
-		    && (teacherService == null || teacherService.getTeacherServiceLock() == null));
-	    setCanUnlockTeacherCredits((!roleType.equals(RoleType.DEPARTMENT_MEMBER)) && inValidCreditsPeriod
-		    && teacherService != null && teacherService.getTeacherServiceLock() != null);
-	    setCanEditTeacherCredits(inValidCreditsPeriod
-		    && (getCanLockTeacherCredits() || !roleType.equals(RoleType.DEPARTMENT_MEMBER)));
-	    ReductionService creditsReductionService = getCreditsReductionService();
-	    setCanEditTeacherCreditsReductions(roleType.equals(RoleType.DEPARTMENT_ADMINISTRATIVE_OFFICE) ? false
-		    : getCanEditTeacherCredits()
-			    && (creditsReductionService == null || creditsReductionService.getAttributionDate() == null));
-	    setCanEditTeacherManagementFunctions(roleType.equals(RoleType.DEPARTMENT_MEMBER) ? false : getCanEditTeacherCredits());
-	}
-    }
-
-    public List<Professorship> getProfessorships() {
-	List<Professorship> professorships = new ArrayList<Professorship>();
-	for (Professorship professorship : getTeacher().getProfessorships()) {
-	    if (professorship.getExecutionCourse().getExecutionPeriod().equals(executionPeriod)
-		    && professorship.getExecutionCourse().hasAnyLesson()
-		    && (!professorship.getExecutionCourse().isDissertation())) {
-		professorships.add(professorship);
-	    }
+	public AnnualTeachingCreditsByPeriodBean(ExecutionSemester executionPeriod, Teacher teacher, RoleType roleType) {
+		super();
+		this.executionPeriod = executionPeriod;
+		this.teacher = teacher;
+		if (roleType != null) {
+			TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionPeriod);
+			boolean inValidCreditsPeriod = executionPeriod.isInValidCreditsPeriod(roleType);
+			setCanLockTeacherCredits(roleType.equals(RoleType.DEPARTMENT_MEMBER) && inValidCreditsPeriod
+					&& (teacherService == null || teacherService.getTeacherServiceLock() == null));
+			setCanUnlockTeacherCredits((!roleType.equals(RoleType.DEPARTMENT_MEMBER)) && inValidCreditsPeriod
+					&& teacherService != null && teacherService.getTeacherServiceLock() != null);
+			setCanEditTeacherCredits(inValidCreditsPeriod
+					&& (getCanLockTeacherCredits() || !roleType.equals(RoleType.DEPARTMENT_MEMBER)));
+			ReductionService creditsReductionService = getCreditsReductionService();
+			setCanEditTeacherCreditsReductions(roleType.equals(RoleType.DEPARTMENT_ADMINISTRATIVE_OFFICE) ? false : getCanEditTeacherCredits()
+					&& (creditsReductionService == null || creditsReductionService.getAttributionDate() == null));
+			setCanEditTeacherManagementFunctions(roleType.equals(RoleType.DEPARTMENT_MEMBER) ? false : getCanEditTeacherCredits());
+		}
 	}
 
-	Collections.sort(professorships, new BeanComparator("executionCourse.name"));
-	return professorships;
-    }
+	public List<Professorship> getProfessorships() {
+		List<Professorship> professorships = new ArrayList<Professorship>();
+		for (Professorship professorship : getTeacher().getProfessorships()) {
+			if (professorship.getExecutionCourse().getExecutionPeriod().equals(executionPeriod)
+					&& professorship.getExecutionCourse().hasAnyLesson()
+					&& (!professorship.getExecutionCourse().isDissertation())) {
+				professorships.add(professorship);
+			}
+		}
 
-    public List<InstitutionWorkTime> getInstitutionWorkTime() {
-	List<InstitutionWorkTime> institutionWorkingTimes = new ArrayList<InstitutionWorkTime>();
-	TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionPeriod);
-	if (teacherService != null && !teacherService.getInstitutionWorkTimes().isEmpty()) {
-	    institutionWorkingTimes.addAll(teacherService.getInstitutionWorkTimes());
+		Collections.sort(professorships, new BeanComparator("executionCourse.name"));
+		return professorships;
 	}
 
-	ComparatorChain comparatorChain = new ComparatorChain();
-	BeanComparator semesterComparator = new BeanComparator("teacherService.executionPeriod");
-	BeanComparator weekDayComparator = new BeanComparator("weekDay");
-	BeanComparator startTimeComparator = new BeanComparator("startTime");
-	comparatorChain.addComparator(semesterComparator);
-	comparatorChain.addComparator(weekDayComparator);
-	comparatorChain.addComparator(startTimeComparator);
-	Collections.sort(institutionWorkingTimes, comparatorChain);
-	return institutionWorkingTimes;
-    }
+	public List<InstitutionWorkTime> getInstitutionWorkTime() {
+		List<InstitutionWorkTime> institutionWorkingTimes = new ArrayList<InstitutionWorkTime>();
+		TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionPeriod);
+		if (teacherService != null && !teacherService.getInstitutionWorkTimes().isEmpty()) {
+			institutionWorkingTimes.addAll(teacherService.getInstitutionWorkTimes());
+		}
 
-    public List<PersonFunction> getPersonFunctions() {
-	List<PersonFunction> personFunctions = new ArrayList<PersonFunction>(teacher.getPerson().getPersonFuntions(
-		executionPeriod.getBeginDateYearMonthDay(), executionPeriod.getEndDateYearMonthDay()));
-	return personFunctions;
-    }
-
-    public List<OtherService> getOtherServices() {
-	List<OtherService> otherServices = new ArrayList<OtherService>();
-	TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionPeriod);
-	if (teacherService != null && !teacherService.getOtherServices().isEmpty()) {
-	    otherServices.addAll(teacherService.getOtherServices());
+		ComparatorChain comparatorChain = new ComparatorChain();
+		BeanComparator semesterComparator = new BeanComparator("teacherService.executionPeriod");
+		BeanComparator weekDayComparator = new BeanComparator("weekDay");
+		BeanComparator startTimeComparator = new BeanComparator("startTime");
+		comparatorChain.addComparator(semesterComparator);
+		comparatorChain.addComparator(weekDayComparator);
+		comparatorChain.addComparator(startTimeComparator);
+		Collections.sort(institutionWorkingTimes, comparatorChain);
+		return institutionWorkingTimes;
 	}
-	return otherServices;
-    }
 
-    public List<PersonContractSituation> getServiceExemptions() {
-	Interval executionYearInterval = new Interval(executionPeriod.getBeginDateYearMonthDay().toDateTimeAtMidnight(),
-		executionPeriod.getEndDateYearMonthDay().plusDays(1).toDateTimeAtMidnight());
-	return new ArrayList<PersonContractSituation>(teacher.getValidTeacherServiceExemptions(executionYearInterval));
-    }
+	public List<PersonFunction> getPersonFunctions() {
+		List<PersonFunction> personFunctions =
+				new ArrayList<PersonFunction>(teacher.getPerson().getPersonFuntions(executionPeriod.getBeginDateYearMonthDay(),
+						executionPeriod.getEndDateYearMonthDay()));
+		return personFunctions;
+	}
 
-    public ReductionService getCreditsReductionService() {
-	TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionPeriod);
-	return teacherService != null ? teacherService.getReductionService() : null;
-    }
+	public List<OtherService> getOtherServices() {
+		List<OtherService> otherServices = new ArrayList<OtherService>();
+		TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionPeriod);
+		if (teacherService != null && !teacherService.getOtherServices().isEmpty()) {
+			otherServices.addAll(teacherService.getOtherServices());
+		}
+		return otherServices;
+	}
 
-    public BigDecimal getCreditsReduction() {
-	ReductionService reductionService = getCreditsReductionService();
-	return reductionService != null ? reductionService.getCreditsReduction() : null;
-    }
+	public List<PersonContractSituation> getServiceExemptions() {
+		Interval executionYearInterval =
+				new Interval(executionPeriod.getBeginDateYearMonthDay().toDateTimeAtMidnight(), executionPeriod
+						.getEndDateYearMonthDay().plusDays(1).toDateTimeAtMidnight());
+		return new ArrayList<PersonContractSituation>(teacher.getValidTeacherServiceExemptions(executionYearInterval));
+	}
 
-    public BigDecimal getCreditsReductionServiceAttribute() {
-	ReductionService reductionService = getCreditsReductionService();
-	return reductionService != null ? reductionService.getCreditsReductionAttributed() : null;
-    }
+	public ReductionService getCreditsReductionService() {
+		TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionPeriod);
+		return teacherService != null ? teacherService.getReductionService() : null;
+	}
 
-    public Teacher getTeacher() {
-	return teacher;
-    }
+	public BigDecimal getCreditsReduction() {
+		ReductionService reductionService = getCreditsReductionService();
+		return reductionService != null ? reductionService.getCreditsReduction() : null;
+	}
 
-    public ExecutionSemester getExecutionPeriod() {
-	return executionPeriod;
-    }
+	public BigDecimal getCreditsReductionServiceAttribute() {
+		ReductionService reductionService = getCreditsReductionService();
+		return reductionService != null ? reductionService.getCreditsReductionAttributed() : null;
+	}
 
-    public Boolean getCanEditTeacherCredits() {
-	return canEditTeacherCredits;
-    }
+	public Teacher getTeacher() {
+		return teacher;
+	}
 
-    public void setCanEditTeacherCredits(Boolean canEditTeacherCredits) {
-	this.canEditTeacherCredits = canEditTeacherCredits;
-    }
+	public ExecutionSemester getExecutionPeriod() {
+		return executionPeriod;
+	}
 
-    public Boolean getCanEditTeacherCreditsReductions() {
-	return canEditTeacherCreditsReductions;
-    }
+	public Boolean getCanEditTeacherCredits() {
+		return canEditTeacherCredits;
+	}
 
-    public void setCanEditTeacherCreditsReductions(Boolean canEditTeacherCreditsReductions) {
-	this.canEditTeacherCreditsReductions = canEditTeacherCreditsReductions;
-    }
+	public void setCanEditTeacherCredits(Boolean canEditTeacherCredits) {
+		this.canEditTeacherCredits = canEditTeacherCredits;
+	}
 
-    public Boolean getCanEditTeacherManagementFunctions() {
-	return canEditTeacherManagementFunctions;
-    }
+	public Boolean getCanEditTeacherCreditsReductions() {
+		return canEditTeacherCreditsReductions;
+	}
 
-    public void setCanEditTeacherManagementFunctions(Boolean canEditTeacherManagementFunctions) {
-	this.canEditTeacherManagementFunctions = canEditTeacherManagementFunctions;
-    }
+	public void setCanEditTeacherCreditsReductions(Boolean canEditTeacherCreditsReductions) {
+		this.canEditTeacherCreditsReductions = canEditTeacherCreditsReductions;
+	}
 
-    public TeacherService getTeacherService() {
-	return teacher.getTeacherServiceByExecutionPeriod(executionPeriod);
-    }
+	public Boolean getCanEditTeacherManagementFunctions() {
+		return canEditTeacherManagementFunctions;
+	}
 
-    public Boolean getCanLockTeacherCredits() {
-	return canLockTeacherCredits;
-    }
+	public void setCanEditTeacherManagementFunctions(Boolean canEditTeacherManagementFunctions) {
+		this.canEditTeacherManagementFunctions = canEditTeacherManagementFunctions;
+	}
 
-    public void setCanLockTeacherCredits(Boolean canLockTeacherCredits) {
-	this.canLockTeacherCredits = canLockTeacherCredits;
-    }
+	public TeacherService getTeacherService() {
+		return teacher.getTeacherServiceByExecutionPeriod(executionPeriod);
+	}
 
-    public Boolean getCanUnlockTeacherCredits() {
-	return canUnlockTeacherCredits;
-    }
+	public Boolean getCanLockTeacherCredits() {
+		return canLockTeacherCredits;
+	}
 
-    public void setCanUnlockTeacherCredits(Boolean canUnlockTeacherCredits) {
-	this.canUnlockTeacherCredits = canUnlockTeacherCredits;
-    }
+	public void setCanLockTeacherCredits(Boolean canLockTeacherCredits) {
+		this.canLockTeacherCredits = canLockTeacherCredits;
+	}
 
-    public Set<TeacherServiceLog> getLogs() {
-	final TeacherService teacherService = getTeacherService();
-	return teacherService == null ? Collections.EMPTY_SET : teacherService.getSortedLogs();
-    }
+	public Boolean getCanUnlockTeacherCredits() {
+		return canUnlockTeacherCredits;
+	}
+
+	public void setCanUnlockTeacherCredits(Boolean canUnlockTeacherCredits) {
+		this.canUnlockTeacherCredits = canUnlockTeacherCredits;
+	}
+
+	public Set<TeacherServiceLog> getLogs() {
+		final TeacherService teacherService = getTeacherService();
+		return teacherService == null ? Collections.EMPTY_SET : teacherService.getSortedLogs();
+	}
 
 }

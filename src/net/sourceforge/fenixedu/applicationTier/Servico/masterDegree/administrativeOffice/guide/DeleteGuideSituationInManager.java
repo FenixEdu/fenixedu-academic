@@ -12,11 +12,11 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class DeleteGuideSituationInManager extends FenixService {
 
-    @Checked("RolePredicates.MANAGER_PREDICATE")
-    @Service
-    public static void run(Integer guideSituationID) {
-	GuideSituation guideSituation = rootDomainObject.readGuideSituationByOID(guideSituationID);
-	guideSituation.delete();
-    }
+	@Checked("RolePredicates.MANAGER_PREDICATE")
+	@Service
+	public static void run(Integer guideSituationID) {
+		GuideSituation guideSituation = rootDomainObject.readGuideSituationByOID(guideSituationID);
+		guideSituation.delete();
+	}
 
 }

@@ -15,27 +15,28 @@ import pt.ist.fenixWebFramework.renderers.components.HtmlTableRow;
  */
 public class InquiryTeacherShiftTypeResumeRenderer extends InquiryBlocksResumeRenderer {
 
-    protected void createFinalCells(HtmlTableRow tableRow, BlockResumeResult blockResumeResult) {
+	@Override
+	protected void createFinalCells(HtmlTableRow tableRow, BlockResumeResult blockResumeResult) {
 
-	HtmlTableCell linksCell = tableRow.createCell();
-	String resultsParameters = buildParametersForResults(blockResumeResult);
+		HtmlTableCell linksCell = tableRow.createCell();
+		String resultsParameters = buildParametersForResults(blockResumeResult);
 
-	HtmlLink link = new HtmlLink();
-	link.setModule("/publico");
-	link.setUrl("/viewTeacherResults.do?" + resultsParameters);
-	link.setTarget("_blank");
-	link.setText("Resultados");
+		HtmlLink link = new HtmlLink();
+		link.setModule("/publico");
+		link.setUrl("/viewTeacherResults.do?" + resultsParameters);
+		link.setTarget("_blank");
+		link.setText("Resultados");
 
-	linksCell.setBody(link);
-	linksCell.setClasses("col-actions");
-    }
+		linksCell.setBody(link);
+		linksCell.setClasses("col-actions");
+	}
 
-    private String buildParametersForResults(BlockResumeResult blocksResumeResult) {
-	TeacherShiftTypeGroupsResumeResult teacherShiftResume = (TeacherShiftTypeGroupsResumeResult) blocksResumeResult;
-	StringBuilder builder = new StringBuilder();
-	builder.append("professorshipOID=").append(teacherShiftResume.getProfessorship().getExternalId());
-	builder.append("&shiftType=").append(teacherShiftResume.getShiftType().name());
-	return builder.toString();
-    }
+	private String buildParametersForResults(BlockResumeResult blocksResumeResult) {
+		TeacherShiftTypeGroupsResumeResult teacherShiftResume = (TeacherShiftTypeGroupsResumeResult) blocksResumeResult;
+		StringBuilder builder = new StringBuilder();
+		builder.append("professorshipOID=").append(teacherShiftResume.getProfessorship().getExternalId());
+		builder.append("&shiftType=").append(teacherShiftResume.getShiftType().name());
+		return builder.toString();
+	}
 
 }

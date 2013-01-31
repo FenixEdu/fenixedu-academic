@@ -4,5 +4,5 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 
 public interface PaymentsBean {
 
-    public ExecutionYear getExecutionYear();
+	public ExecutionYear getExecutionYear();
 }

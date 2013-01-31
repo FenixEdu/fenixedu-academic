@@ -15,27 +15,27 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 @Deprecated
 public enum StudentCurricularPlanState {
 
-    ACTIVE,
+	ACTIVE,
 
-    CONCLUDED,
+	CONCLUDED,
 
-    INCOMPLETE,
+	INCOMPLETE,
 
-    SCHOOLPARTCONCLUDED,
+	SCHOOLPARTCONCLUDED,
 
-    INACTIVE,
+	INACTIVE,
 
-    PAST;
+	PAST;
 
-    public String getName() {
-	return name();
-    }
+	public String getName() {
+		return name();
+	}
 
-    public String getLocalizedName() {
-	return getLocalizedName(Language.getLocale());
-    }
+	public String getLocalizedName() {
+		return getLocalizedName(Language.getLocale());
+	}
 
-    public String getLocalizedName(final Locale locale) {
-	return ResourceBundle.getBundle("resources.EnumerationResources", locale).getString(getName());
-    }
+	public String getLocalizedName(final Locale locale) {
+		return ResourceBundle.getBundle("resources.EnumerationResources", locale).getString(getName());
+	}
 }

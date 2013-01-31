@@ -15,46 +15,38 @@ import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(module = "researcher", path = "/projects/projectsManagement", scope = "session", parameter = "method")
 @Forwards(value = { @Forward(name = "Success", path = "/researcher/projects/projectsManagement.jsp") })
 public class ProjectsManagementDispatchAction extends FenixDispatchAction {
 
-    public ActionForward listProjects(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-	final IUserView userView = getUserView(request);
+	public ActionForward listProjects(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		final IUserView userView = getUserView(request);
 
-	List<Project> projects = new ArrayList<Project>();
+		List<Project> projects = new ArrayList<Project>();
 
-	for (ProjectParticipation participation : userView.getPerson().getProjectParticipations()) {
-	    if (!projects.contains(participation.getProject())) {
-		projects.add(participation.getProject());
-	    }
+		for (ProjectParticipation participation : userView.getPerson().getProjectParticipations()) {
+			if (!projects.contains(participation.getProject())) {
+				projects.add(participation.getProject());
+			}
+		}
+		request.setAttribute("projects", projects);
+		return mapping.findForward("Success");
 	}
-	request.setAttribute("projects", projects);
-	return mapping.findForward("Success");
-    }
 
-    public ActionForward delete(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-	    throws Exception {
-	final IUserView userView = getUserView(request);
-	final Integer oid = Integer.parseInt(request.getParameter("projectId"));
+	public ActionForward delete(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+		final IUserView userView = getUserView(request);
+		final Integer oid = Integer.parseInt(request.getParameter("projectId"));
 
-	DeleteResearchProject.run(oid);
+		DeleteResearchProject.run(oid);
 
-	return listProjects(mapping, form, request, response);
-    }
+		return listProjects(mapping, form, request, response);
+	}
 
 }

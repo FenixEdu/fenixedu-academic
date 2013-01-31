@@ -18,60 +18,60 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
  */
 public class InquiryTextBoxQuestionRenderer extends InputRenderer {
 
-    private Integer maxLength;
-    private String defaultSize;
+	private Integer maxLength;
+	private String defaultSize;
 
-    @Override
-    protected Layout getLayout(Object object, Class type) {
+	@Override
+	protected Layout getLayout(Object object, Class type) {
 
-	return new Layout() {
+		return new Layout() {
 
-	    @Override
-	    public HtmlComponent createComponent(Object object, Class type) {
+			@Override
+			public HtmlComponent createComponent(Object object, Class type) {
 
-		Boolean textArea = (Boolean) getContext().getProperties().get("textArea");
-		Boolean readOnly = (Boolean) getContext().getProperties().get("readOnly");
+				Boolean textArea = (Boolean) getContext().getProperties().get("textArea");
+				Boolean readOnly = (Boolean) getContext().getProperties().get("readOnly");
 
-		if (textArea != null && textArea) {
-		    HtmlTextArea htmlTextArea = new HtmlTextArea();
-		    htmlTextArea.setRows(5);
-		    htmlTextArea.setColumns(50);
-		    String value = object != null ? object.toString() : null;
-		    if (readOnly && StringUtils.isEmpty(value)) {
-			value = RenderUtils.getResourceString("INQUIRIES_RESOURCES", "label.inquiry.question.notAnswered");
-		    }
-		    htmlTextArea.setValue(value);
-		    htmlTextArea.setReadOnly(readOnly);
-		    return htmlTextArea;
-		} else {
-		    HtmlTextInput htmlTextInput = new HtmlTextInput();
-		    htmlTextInput.setSize(getDefaultSize().toString());
-		    htmlTextInput.setMaxLength(getMaxLength());
-		    String value = object != null ? object.toString() : null;
-		    if (readOnly && StringUtils.isEmpty(value)) {
-			value = RenderUtils.getResourceString("INQUIRIES_RESOURCES", "label.inquiry.question.notAnswered");
-		    }
-		    htmlTextInput.setValue(value);
-		    htmlTextInput.setReadOnly(readOnly);
-		    return htmlTextInput;
-		}
-	    }
-	};
-    }
+				if (textArea != null && textArea) {
+					HtmlTextArea htmlTextArea = new HtmlTextArea();
+					htmlTextArea.setRows(5);
+					htmlTextArea.setColumns(50);
+					String value = object != null ? object.toString() : null;
+					if (readOnly && StringUtils.isEmpty(value)) {
+						value = RenderUtils.getResourceString("INQUIRIES_RESOURCES", "label.inquiry.question.notAnswered");
+					}
+					htmlTextArea.setValue(value);
+					htmlTextArea.setReadOnly(readOnly);
+					return htmlTextArea;
+				} else {
+					HtmlTextInput htmlTextInput = new HtmlTextInput();
+					htmlTextInput.setSize(getDefaultSize().toString());
+					htmlTextInput.setMaxLength(getMaxLength());
+					String value = object != null ? object.toString() : null;
+					if (readOnly && StringUtils.isEmpty(value)) {
+						value = RenderUtils.getResourceString("INQUIRIES_RESOURCES", "label.inquiry.question.notAnswered");
+					}
+					htmlTextInput.setValue(value);
+					htmlTextInput.setReadOnly(readOnly);
+					return htmlTextInput;
+				}
+			}
+		};
+	}
 
-    public Integer getMaxLength() {
-	return maxLength;
-    }
+	public Integer getMaxLength() {
+		return maxLength;
+	}
 
-    public void setMaxLength(Integer maxLength) {
-	this.maxLength = maxLength;
-    }
+	public void setMaxLength(Integer maxLength) {
+		this.maxLength = maxLength;
+	}
 
-    public void setDefaultSize(String defaultSize) {
-	this.defaultSize = defaultSize;
-    }
+	public void setDefaultSize(String defaultSize) {
+		this.defaultSize = defaultSize;
+	}
 
-    public String getDefaultSize() {
-	return defaultSize;
-    }
+	public String getDefaultSize() {
+		return defaultSize;
+	}
 }

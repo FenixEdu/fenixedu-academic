@@ -8,52 +8,52 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 
 public class CurriculumModuleBean implements Serializable {
 
-    private List<CurriculumModuleBean> groupsEnroled;
-    private List<CurriculumModuleBean> curricularCoursesEnroled;
+	private List<CurriculumModuleBean> groupsEnroled;
+	private List<CurriculumModuleBean> curricularCoursesEnroled;
 
-    private List<DegreeModuleToEnrol> groupsToEnrol;
-    private List<DegreeModuleToEnrol> curricularCoursesToEnrol;
+	private List<DegreeModuleToEnrol> groupsToEnrol;
+	private List<DegreeModuleToEnrol> curricularCoursesToEnrol;
 
-    private CurriculumModule curriculumModule;
+	private CurriculumModule curriculumModule;
 
-    public List<CurriculumModuleBean> getCurricularCoursesEnroled() {
-	return curricularCoursesEnroled;
-    }
+	public List<CurriculumModuleBean> getCurricularCoursesEnroled() {
+		return curricularCoursesEnroled;
+	}
 
-    public void setCurricularCoursesEnroled(List<CurriculumModuleBean> curricularCoursesEnroled) {
-	this.curricularCoursesEnroled = curricularCoursesEnroled;
-    }
+	public void setCurricularCoursesEnroled(List<CurriculumModuleBean> curricularCoursesEnroled) {
+		this.curricularCoursesEnroled = curricularCoursesEnroled;
+	}
 
-    public List<DegreeModuleToEnrol> getCurricularCoursesToEnrol() {
-	return curricularCoursesToEnrol;
-    }
+	public List<DegreeModuleToEnrol> getCurricularCoursesToEnrol() {
+		return curricularCoursesToEnrol;
+	}
 
-    public void setCurricularCoursesToEnrol(List<DegreeModuleToEnrol> curricularCoursesToEnrol) {
-	this.curricularCoursesToEnrol = curricularCoursesToEnrol;
-    }
+	public void setCurricularCoursesToEnrol(List<DegreeModuleToEnrol> curricularCoursesToEnrol) {
+		this.curricularCoursesToEnrol = curricularCoursesToEnrol;
+	}
 
-    public List<CurriculumModuleBean> getGroupsEnroled() {
-	return groupsEnroled;
-    }
+	public List<CurriculumModuleBean> getGroupsEnroled() {
+		return groupsEnroled;
+	}
 
-    public void setGroupsEnroled(List<CurriculumModuleBean> groupsEnroled) {
-	this.groupsEnroled = groupsEnroled;
-    }
+	public void setGroupsEnroled(List<CurriculumModuleBean> groupsEnroled) {
+		this.groupsEnroled = groupsEnroled;
+	}
 
-    public List<DegreeModuleToEnrol> getGroupsToEnrol() {
-	return groupsToEnrol;
-    }
+	public List<DegreeModuleToEnrol> getGroupsToEnrol() {
+		return groupsToEnrol;
+	}
 
-    public void setGroupsToEnrol(List<DegreeModuleToEnrol> groupsToEnrol) {
-	this.groupsToEnrol = groupsToEnrol;
-    }
+	public void setGroupsToEnrol(List<DegreeModuleToEnrol> groupsToEnrol) {
+		this.groupsToEnrol = groupsToEnrol;
+	}
 
-    public CurriculumModule getCurriculumModule() {
-	return this.curriculumModule;
-    }
+	public CurriculumModule getCurriculumModule() {
+		return this.curriculumModule;
+	}
 
-    public void setCurriculumModule(CurriculumModule curriculumModule) {
-	this.curriculumModule = curriculumModule;
-    }
+	public void setCurriculumModule(CurriculumModule curriculumModule) {
+		this.curriculumModule = curriculumModule;
+	}
 
 }

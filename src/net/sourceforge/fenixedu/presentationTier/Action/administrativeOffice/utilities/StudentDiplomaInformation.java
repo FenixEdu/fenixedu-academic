@@ -19,191 +19,191 @@ import org.joda.time.YearMonthDay;
 
 public class StudentDiplomaInformation implements java.io.Serializable {
 
-    /**
+	/**
      * 
      */
-    private static final long serialVersionUID = -7632049994026398211L;
+	private static final long serialVersionUID = -7632049994026398211L;
 
-    static final SimpleDateFormat DATE_FORMAT;
+	static final SimpleDateFormat DATE_FORMAT;
 
-    static {
-	DATE_FORMAT = new SimpleDateFormat("ddMMyyyy");
-	DATE_FORMAT.setLenient(false);
-    }
-
-    private String graduateTitle;
-
-    private String name;
-
-    private String nameOfFather;
-
-    private String nameOfMother;
-
-    private String birthLocale;
-
-    private String degreeName;
-
-    private String dissertationTitle;
-
-    private String classificationResult;
-
-    private YearMonthDay conclusionDate;
-
-    private boolean isMasterDegree;
-
-    private String filename;
-
-    @SuppressWarnings("unchecked")
-    public static StudentDiplomaInformation buildFromXmlFile(InputStream stream, String fileName) {
-
-	final StudentDiplomaInformation result = createFrom(parseXml(stream));
-	result.filename = fileName;
-
-	return result;
-    }
-
-    private static StudentDiplomaInformation createFrom(final Map<String, String> parseResult) {
-	final StudentDiplomaInformation result = new StudentDiplomaInformation();
-
-	result.isMasterDegree = Boolean.parseBoolean(parseResult.get("MasterDegree"));
-	result.graduateTitle = parseResult.get("GraduateTitle");
-	result.name = parseResult.get("Name");
-	result.nameOfFather = parseResult.get("NameOfFather");
-	result.nameOfMother = parseResult.get("NameOfMother");
-	result.birthLocale = parseResult.get("BirthLocale");
-	result.degreeName = parseResult.get("DegreeFilteredName");
-	result.dissertationTitle = parseResult.get("DissertationTitle");
-	result.classificationResult = parseResult.get("ClassificationResult");
-	result.conclusionDate = parseDate(parseResult.get("ConclusionDate"));
-
-	return result;
-    }
-
-    @SuppressWarnings("unchecked")
-    private static Map<String, String> parseXml(InputStream stream) {
-
-	try {
-	    final SAXBuilder parser = new SAXBuilder(false);
-	    final Document document = parser.build(stream);
-	    final Element rootElement = document.getRootElement();
-	    final Map<String, String> result = new HashMap<String, String>();
-
-	    if (rootElement.getName().equals("Aluno_Mestrado")) {
-		result.put("MasterDegree", Boolean.TRUE.toString());
-	    } else if (rootElement.getName().equals("Aluno_Doutoramento")) {
-		result.put("MasterDegree", Boolean.FALSE.toString());
-	    } else {
-		throw new RuntimeException("Unexpected diploma type");
-	    }
-
-	    final Element diplomaElement = rootElement.getChild("Carta_Curso");
-	    for (final Element childElement : (List<Element>) diplomaElement.getChildren()) {
-		result.put(childElement.getName(), childElement.getValue());
-	    }
-
-	    return result;
-
-	} catch (JDOMException e) {
-	    throw new RuntimeException(e);
-	} catch (IOException e) {
-	    throw new RuntimeException(e);
+	static {
+		DATE_FORMAT = new SimpleDateFormat("ddMMyyyy");
+		DATE_FORMAT.setLenient(false);
 	}
-    }
 
-    private static YearMonthDay parseDate(final String rawDate) {
-	try {
-	    return YearMonthDay.fromDateFields(DATE_FORMAT.parse(rawDate));
-	} catch (ParseException e) {
-	    throw new RuntimeException(e);
+	private String graduateTitle;
+
+	private String name;
+
+	private String nameOfFather;
+
+	private String nameOfMother;
+
+	private String birthLocale;
+
+	private String degreeName;
+
+	private String dissertationTitle;
+
+	private String classificationResult;
+
+	private YearMonthDay conclusionDate;
+
+	private boolean isMasterDegree;
+
+	private String filename;
+
+	@SuppressWarnings("unchecked")
+	public static StudentDiplomaInformation buildFromXmlFile(InputStream stream, String fileName) {
+
+		final StudentDiplomaInformation result = createFrom(parseXml(stream));
+		result.filename = fileName;
+
+		return result;
 	}
-    }
 
-    public String getGraduateTitle() {
-	return graduateTitle;
-    }
+	private static StudentDiplomaInformation createFrom(final Map<String, String> parseResult) {
+		final StudentDiplomaInformation result = new StudentDiplomaInformation();
 
-    public void setGraduateTitle(String graduateTitle) {
-	this.graduateTitle = graduateTitle;
-    }
+		result.isMasterDegree = Boolean.parseBoolean(parseResult.get("MasterDegree"));
+		result.graduateTitle = parseResult.get("GraduateTitle");
+		result.name = parseResult.get("Name");
+		result.nameOfFather = parseResult.get("NameOfFather");
+		result.nameOfMother = parseResult.get("NameOfMother");
+		result.birthLocale = parseResult.get("BirthLocale");
+		result.degreeName = parseResult.get("DegreeFilteredName");
+		result.dissertationTitle = parseResult.get("DissertationTitle");
+		result.classificationResult = parseResult.get("ClassificationResult");
+		result.conclusionDate = parseDate(parseResult.get("ConclusionDate"));
 
-    public String getName() {
-	return name;
-    }
+		return result;
+	}
 
-    public void setName(String name) {
-	this.name = name;
-    }
+	@SuppressWarnings("unchecked")
+	private static Map<String, String> parseXml(InputStream stream) {
 
-    public String getNameOfFather() {
-	return nameOfFather;
-    }
+		try {
+			final SAXBuilder parser = new SAXBuilder(false);
+			final Document document = parser.build(stream);
+			final Element rootElement = document.getRootElement();
+			final Map<String, String> result = new HashMap<String, String>();
 
-    public void setNameOfFather(String nameOfFather) {
-	this.nameOfFather = nameOfFather;
-    }
+			if (rootElement.getName().equals("Aluno_Mestrado")) {
+				result.put("MasterDegree", Boolean.TRUE.toString());
+			} else if (rootElement.getName().equals("Aluno_Doutoramento")) {
+				result.put("MasterDegree", Boolean.FALSE.toString());
+			} else {
+				throw new RuntimeException("Unexpected diploma type");
+			}
 
-    public String getNameOfMother() {
-	return nameOfMother;
-    }
+			final Element diplomaElement = rootElement.getChild("Carta_Curso");
+			for (final Element childElement : (List<Element>) diplomaElement.getChildren()) {
+				result.put(childElement.getName(), childElement.getValue());
+			}
 
-    public void setNameOfMother(String nameOfMother) {
-	this.nameOfMother = nameOfMother;
-    }
+			return result;
 
-    public String getBirthLocale() {
-	return birthLocale;
-    }
+		} catch (JDOMException e) {
+			throw new RuntimeException(e);
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
+	}
 
-    public void setBirthLocale(String birthLocale) {
-	this.birthLocale = birthLocale;
-    }
+	private static YearMonthDay parseDate(final String rawDate) {
+		try {
+			return YearMonthDay.fromDateFields(DATE_FORMAT.parse(rawDate));
+		} catch (ParseException e) {
+			throw new RuntimeException(e);
+		}
+	}
 
-    public String getDegreeName() {
-	return degreeName;
-    }
+	public String getGraduateTitle() {
+		return graduateTitle;
+	}
 
-    public void setDegreeName(String degreeName) {
-	this.degreeName = degreeName;
-    }
+	public void setGraduateTitle(String graduateTitle) {
+		this.graduateTitle = graduateTitle;
+	}
 
-    public String getDissertationTitle() {
-	return dissertationTitle;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public void setDissertationTitle(String dissertationTitle) {
-	this.dissertationTitle = dissertationTitle;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    public String getClassificationResult() {
-	return classificationResult;
-    }
+	public String getNameOfFather() {
+		return nameOfFather;
+	}
 
-    public void setClassificationResult(String classificationResult) {
-	this.classificationResult = classificationResult;
-    }
+	public void setNameOfFather(String nameOfFather) {
+		this.nameOfFather = nameOfFather;
+	}
 
-    public YearMonthDay getConclusionDate() {
-	return conclusionDate;
-    }
+	public String getNameOfMother() {
+		return nameOfMother;
+	}
 
-    public void setConclusionDate(YearMonthDay conclusionDate) {
-	this.conclusionDate = conclusionDate;
-    }
+	public void setNameOfMother(String nameOfMother) {
+		this.nameOfMother = nameOfMother;
+	}
 
-    public boolean isMasterDegree() {
-	return isMasterDegree;
-    }
+	public String getBirthLocale() {
+		return birthLocale;
+	}
 
-    public void setMasterDegree(boolean isMasterDegree) {
-	this.isMasterDegree = isMasterDegree;
-    }
+	public void setBirthLocale(String birthLocale) {
+		this.birthLocale = birthLocale;
+	}
 
-    public String getFilename() {
-	return filename;
-    }
+	public String getDegreeName() {
+		return degreeName;
+	}
 
-    public void setFilename(String filename) {
-	this.filename = filename;
-    }
+	public void setDegreeName(String degreeName) {
+		this.degreeName = degreeName;
+	}
+
+	public String getDissertationTitle() {
+		return dissertationTitle;
+	}
+
+	public void setDissertationTitle(String dissertationTitle) {
+		this.dissertationTitle = dissertationTitle;
+	}
+
+	public String getClassificationResult() {
+		return classificationResult;
+	}
+
+	public void setClassificationResult(String classificationResult) {
+		this.classificationResult = classificationResult;
+	}
+
+	public YearMonthDay getConclusionDate() {
+		return conclusionDate;
+	}
+
+	public void setConclusionDate(YearMonthDay conclusionDate) {
+		this.conclusionDate = conclusionDate;
+	}
+
+	public boolean isMasterDegree() {
+		return isMasterDegree;
+	}
+
+	public void setMasterDegree(boolean isMasterDegree) {
+		this.isMasterDegree = isMasterDegree;
+	}
+
+	public String getFilename() {
+		return filename;
+	}
+
+	public void setFilename(String filename) {
+		this.filename = filename;
+	}
 
 }

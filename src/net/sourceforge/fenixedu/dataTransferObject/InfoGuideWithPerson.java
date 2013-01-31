@@ -11,20 +11,21 @@ import net.sourceforge.fenixedu.domain.Guide;
  */
 public class InfoGuideWithPerson extends InfoGuide {
 
-    public void copyFromDomain(Guide guide) {
-	super.copyFromDomain(guide);
-	if (guide != null) {
-	    setInfoPerson(InfoPerson.newInfoFromDomain(guide.getPerson()));
+	@Override
+	public void copyFromDomain(Guide guide) {
+		super.copyFromDomain(guide);
+		if (guide != null) {
+			setInfoPerson(InfoPerson.newInfoFromDomain(guide.getPerson()));
+		}
 	}
-    }
 
-    public static InfoGuideWithPerson newInfoFromDomain(Guide guide) {
-	InfoGuideWithPerson infoGuide = null;
-	if (guide != null) {
-	    infoGuide = new InfoGuideWithPerson();
-	    infoGuide.copyFromDomain(guide);
+	public static InfoGuideWithPerson newInfoFromDomain(Guide guide) {
+		InfoGuideWithPerson infoGuide = null;
+		if (guide != null) {
+			infoGuide = new InfoGuideWithPerson();
+			infoGuide.copyFromDomain(guide);
+		}
+		return infoGuide;
 	}
-	return infoGuide;
-    }
 
 }

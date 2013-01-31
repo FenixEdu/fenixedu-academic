@@ -26,52 +26,52 @@ import org.apache.struts.action.ActionMapping;
 
 public class VisualizeMasterDegreeThesisDispatchAction extends FenixDispatchAction {
 
-    public ActionForward getStudentAndMasterDegreeThesisDataVersion(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ActionForward getStudentAndMasterDegreeThesisDataVersion(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-	final Integer scpID = Integer.valueOf(request.getParameter("scpID"));
-	StudentCurricularPlan studentCurricularPlan = rootDomainObject.readStudentCurricularPlanByOID(scpID);
+		final Integer scpID = Integer.valueOf(request.getParameter("scpID"));
+		StudentCurricularPlan studentCurricularPlan = rootDomainObject.readStudentCurricularPlanByOID(scpID);
 
-	new MasterDegreeThesisOperations().transportStudentCurricularPlan(form, request, new ActionErrors(),
-		studentCurricularPlan);
+		new MasterDegreeThesisOperations().transportStudentCurricularPlan(form, request, new ActionErrors(),
+				studentCurricularPlan);
 
-	List<MasterDegreeThesisDataVersion> masterDegreeThesisDataHistory = studentCurricularPlan
-		.readNotActiveMasterDegreeThesisDataVersions();
-	if (masterDegreeThesisDataHistory.isEmpty() == false) {
-	    request.setAttribute(PresentationConstants.MASTER_DEGREE_THESIS_HISTORY, masterDegreeThesisDataHistory);
+		List<MasterDegreeThesisDataVersion> masterDegreeThesisDataHistory =
+				studentCurricularPlan.readNotActiveMasterDegreeThesisDataVersions();
+		if (masterDegreeThesisDataHistory.isEmpty() == false) {
+			request.setAttribute(PresentationConstants.MASTER_DEGREE_THESIS_HISTORY, masterDegreeThesisDataHistory);
+		}
+
+		MasterDegreeThesisDataVersion masterDegreeThesisDataVersion =
+				studentCurricularPlan.getMasterDegreeThesis().getActiveMasterDegreeThesisDataVersion();
+
+		if (masterDegreeThesisDataVersion.getGuiders().isEmpty() == false) {
+			request.setAttribute(PresentationConstants.GUIDERS_LIST, masterDegreeThesisDataVersion.getGuiders());
+		}
+
+		if (masterDegreeThesisDataVersion.getAssistentGuiders().isEmpty() == false) {
+			request.setAttribute(PresentationConstants.ASSISTENT_GUIDERS_LIST,
+					masterDegreeThesisDataVersion.getAssistentGuiders());
+		}
+
+		if (masterDegreeThesisDataVersion.getExternalAssistentGuiders().isEmpty() == false) {
+			request.setAttribute(PresentationConstants.EXTERNAL_ASSISTENT_GUIDERS_LIST,
+					masterDegreeThesisDataVersion.getExternalAssistentGuiders());
+		}
+
+		if (masterDegreeThesisDataVersion.getExternalGuiders().isEmpty() == false) {
+			request.setAttribute(PresentationConstants.EXTERNAL_GUIDERS_LIST, masterDegreeThesisDataVersion.getExternalGuiders());
+		}
+
+		Date lastModification = new Date(masterDegreeThesisDataVersion.getLastModification().getTime());
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy k:mm:ss");
+		String formattedLastModification = simpleDateFormat.format(lastModification);
+
+		request.setAttribute(PresentationConstants.RESPONSIBLE_EMPLOYEE, masterDegreeThesisDataVersion.getResponsibleEmployee());
+		request.setAttribute(PresentationConstants.LAST_MODIFICATION, formattedLastModification);
+		request.setAttribute(PresentationConstants.DISSERTATION_TITLE, masterDegreeThesisDataVersion.getDissertationTitle());
+
+		return mapping.findForward("start");
+
 	}
-
-	MasterDegreeThesisDataVersion masterDegreeThesisDataVersion = studentCurricularPlan.getMasterDegreeThesis()
-		.getActiveMasterDegreeThesisDataVersion();
-
-	if (masterDegreeThesisDataVersion.getGuiders().isEmpty() == false) {
-	    request.setAttribute(PresentationConstants.GUIDERS_LIST, masterDegreeThesisDataVersion.getGuiders());
-	}
-
-	if (masterDegreeThesisDataVersion.getAssistentGuiders().isEmpty() == false) {
-	    request.setAttribute(PresentationConstants.ASSISTENT_GUIDERS_LIST, masterDegreeThesisDataVersion
-		    .getAssistentGuiders());
-	}
-
-	if (masterDegreeThesisDataVersion.getExternalAssistentGuiders().isEmpty() == false) {
-	    request.setAttribute(PresentationConstants.EXTERNAL_ASSISTENT_GUIDERS_LIST, masterDegreeThesisDataVersion
-		    .getExternalAssistentGuiders());
-	}
-
-	if (masterDegreeThesisDataVersion.getExternalGuiders().isEmpty() == false) {
-	    request.setAttribute(PresentationConstants.EXTERNAL_GUIDERS_LIST, masterDegreeThesisDataVersion.getExternalGuiders());
-	}
-
-	Date lastModification = new Date(masterDegreeThesisDataVersion.getLastModification().getTime());
-	SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy k:mm:ss");
-	String formattedLastModification = simpleDateFormat.format(lastModification);
-
-	request.setAttribute(PresentationConstants.RESPONSIBLE_EMPLOYEE, masterDegreeThesisDataVersion.getResponsibleEmployee());
-	request.setAttribute(PresentationConstants.LAST_MODIFICATION, formattedLastModification);
-	request.setAttribute(PresentationConstants.DISSERTATION_TITLE, masterDegreeThesisDataVersion.getDissertationTitle());
-
-	return mapping.findForward("start");
-
-    }
 
 }

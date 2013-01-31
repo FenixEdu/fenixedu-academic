@@ -15,34 +15,34 @@ import net.sourceforge.fenixedu.injectionCode.IGroup;
  */
 public class TeachersAndInstitutionSiteManagersGroup extends LeafGroup {
 
-    /**
-     * Serial version id.
-     */
-    private static final long serialVersionUID = 1L;
-    private final IGroup group;
+	/**
+	 * Serial version id.
+	 */
+	private static final long serialVersionUID = 1L;
+	private final IGroup group;
 
-    public TeachersAndInstitutionSiteManagersGroup() {
-	super();
+	public TeachersAndInstitutionSiteManagersGroup() {
+		super();
 
-	RoleTypeGroup teachers = new RoleTypeGroup(RoleType.TEACHER);
-	InstitutionSiteManagers websiteManagers = new InstitutionSiteManagers();
+		RoleTypeGroup teachers = new RoleTypeGroup(RoleType.TEACHER);
+		InstitutionSiteManagers websiteManagers = new InstitutionSiteManagers();
 
-	this.group = new GroupUnion(teachers, websiteManagers);
-    }
+		this.group = new GroupUnion(teachers, websiteManagers);
+	}
 
-    @Override
-    public Set<Person> getElements() {
-	return this.group.getElements();
-    }
+	@Override
+	public Set<Person> getElements() {
+		return this.group.getElements();
+	}
 
-    @Override
-    public boolean isMember(Person person) {
-	return this.group.isMember(person);
-    }
+	@Override
+	public boolean isMember(Person person) {
+		return this.group.isMember(person);
+	}
 
-    @Override
-    protected Argument[] getExpressionArguments() {
-	return new Argument[0];
-    }
+	@Override
+	protected Argument[] getExpressionArguments() {
+		return new Argument[0];
+	}
 
 }

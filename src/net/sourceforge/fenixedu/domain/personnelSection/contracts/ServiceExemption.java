@@ -6,21 +6,21 @@ import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class ServiceExemption extends ServiceExemption_Base {
 
-    public ServiceExemption(final String giafId, final MultiLanguageString name) {
-	super();
-	check(giafId, "");
-	check(name, "");
-	setRootDomainObject(RootDomainObject.getInstance());
-	setGiafId(giafId);
-	setName(name);
-	setIsSabaticalOrEquivalent(false);
-	setHasMandatoryCredits(true);
-	setGiveCredits(false);
-    }
+	public ServiceExemption(final String giafId, final MultiLanguageString name) {
+		super();
+		check(giafId, "");
+		check(name, "");
+		setRootDomainObject(RootDomainObject.getInstance());
+		setGiafId(giafId);
+		setName(name);
+		setIsSabaticalOrEquivalent(false);
+		setHasMandatoryCredits(true);
+		setGiveCredits(false);
+	}
 
-    @Service
-    public void edit(final MultiLanguageString name) {
-	check(name, "");
-	setName(name);
-    }
+	@Service
+	public void edit(final MultiLanguageString name) {
+		check(name, "");
+		setName(name);
+	}
 }

@@ -12,37 +12,38 @@ import net.sourceforge.fenixedu.domain.accessControl.groups.language.Argument;
 
 public class ExternalTeachersForCurrentSemester extends Group {
 
-    @Override
-    public Set<Person> getElements() {
-	final Set<Person> result = new HashSet<Person>();
-	final ExecutionSemester executionSemester = ExecutionSemester.readActualExecutionSemester();
-	for (final TeacherAuthorization teacherAuthorization : executionSemester.getAuthorizationSet()) {
-	    if (teacherAuthorization instanceof ExternalTeacherAuthorization) {
-		final Teacher teacher = teacherAuthorization.getTeacher();
-		result.add(teacher.getPerson());
-	    }
-	}
-	return result;
-    }
-
-    @Override
-    public boolean isMember(final Person person) {
-	if (person != null) {
-	    for (final TeacherAuthorization teacherAuthorization : person.getTeacherAuthorizationsAuthorizedSet()) {
-		if (teacherAuthorization instanceof ExternalTeacherAuthorization) {
-		    final ExternalTeacherAuthorization externalTeacherAuthorization = (ExternalTeacherAuthorization) teacherAuthorization;
-		    if (externalTeacherAuthorization.getExecutionSemester().isCurrent()) {
-			return true;
-		    }
+	@Override
+	public Set<Person> getElements() {
+		final Set<Person> result = new HashSet<Person>();
+		final ExecutionSemester executionSemester = ExecutionSemester.readActualExecutionSemester();
+		for (final TeacherAuthorization teacherAuthorization : executionSemester.getAuthorizationSet()) {
+			if (teacherAuthorization instanceof ExternalTeacherAuthorization) {
+				final Teacher teacher = teacherAuthorization.getTeacher();
+				result.add(teacher.getPerson());
+			}
 		}
-	    }
+		return result;
 	}
-	return false;
-    }
 
-    @Override
-    protected Argument[] getExpressionArguments() {
-	return null;
-    }
+	@Override
+	public boolean isMember(final Person person) {
+		if (person != null) {
+			for (final TeacherAuthorization teacherAuthorization : person.getTeacherAuthorizationsAuthorizedSet()) {
+				if (teacherAuthorization instanceof ExternalTeacherAuthorization) {
+					final ExternalTeacherAuthorization externalTeacherAuthorization =
+							(ExternalTeacherAuthorization) teacherAuthorization;
+					if (externalTeacherAuthorization.getExecutionSemester().isCurrent()) {
+						return true;
+					}
+				}
+			}
+		}
+		return false;
+	}
+
+	@Override
+	protected Argument[] getExpressionArguments() {
+		return null;
+	}
 
 }

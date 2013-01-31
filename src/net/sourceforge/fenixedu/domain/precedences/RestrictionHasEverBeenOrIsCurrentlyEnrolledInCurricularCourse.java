@@ -8,33 +8,34 @@ import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseEnrollmentType
  */
 
 public class RestrictionHasEverBeenOrIsCurrentlyEnrolledInCurricularCourse extends
-	RestrictionHasEverBeenOrIsCurrentlyEnrolledInCurricularCourse_Base {
+		RestrictionHasEverBeenOrIsCurrentlyEnrolledInCurricularCourse_Base {
 
-    public RestrictionHasEverBeenOrIsCurrentlyEnrolledInCurricularCourse() {
-	super();
-    }
-
-    public RestrictionHasEverBeenOrIsCurrentlyEnrolledInCurricularCourse(Integer number, Precedence precedence,
-	    CurricularCourse precedentCurricularCourse) {
-	super();
-
-	setPrecedence(precedence);
-	setPrecedentCurricularCourse(precedentCurricularCourse);
-    }
-
-    public CurricularCourseEnrollmentType evaluate(PrecedenceContext precedenceContext) {
-	CurricularCourse curricularCourse = this.getPrecedentCurricularCourse();
-	CurricularCourseEnrollmentType result1 = null;
-	CurricularCourseEnrollmentType result2 = null;
-
-	if (precedenceContext.getStudentCurricularPlan().isCurricularCourseEnrolled(curricularCourse)) {
-	    result1 = CurricularCourseEnrollmentType.DEFINITIVE;
-	} else {
-	    result1 = CurricularCourseEnrollmentType.NOT_ALLOWED;
+	public RestrictionHasEverBeenOrIsCurrentlyEnrolledInCurricularCourse() {
+		super();
 	}
 
-	result2 = super.evaluate(precedenceContext);
+	public RestrictionHasEverBeenOrIsCurrentlyEnrolledInCurricularCourse(Integer number, Precedence precedence,
+			CurricularCourse precedentCurricularCourse) {
+		super();
 
-	return result1.or(result2);
-    }
+		setPrecedence(precedence);
+		setPrecedentCurricularCourse(precedentCurricularCourse);
+	}
+
+	@Override
+	public CurricularCourseEnrollmentType evaluate(PrecedenceContext precedenceContext) {
+		CurricularCourse curricularCourse = this.getPrecedentCurricularCourse();
+		CurricularCourseEnrollmentType result1 = null;
+		CurricularCourseEnrollmentType result2 = null;
+
+		if (precedenceContext.getStudentCurricularPlan().isCurricularCourseEnrolled(curricularCourse)) {
+			result1 = CurricularCourseEnrollmentType.DEFINITIVE;
+		} else {
+			result1 = CurricularCourseEnrollmentType.NOT_ALLOWED;
+		}
+
+		result2 = super.evaluate(precedenceContext);
+
+		return result1.or(result2);
+	}
 }

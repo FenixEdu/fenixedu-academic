@@ -12,26 +12,26 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class CreateDelegateCandidacyPeriod extends FenixService {
 
-    @Checked("RolePredicates.PEDAGOGICAL_COUNCIL_PREDICATE")
-    @Service
-    public static void run(ElectionPeriodBean bean) throws FenixServiceException {
-	final Integer degreeOID = bean.getDegree().getIdInternal();
+	@Checked("RolePredicates.PEDAGOGICAL_COUNCIL_PREDICATE")
+	@Service
+	public static void run(ElectionPeriodBean bean) throws FenixServiceException {
+		final Integer degreeOID = bean.getDegree().getIdInternal();
 
-	run(bean, degreeOID.toString());
-    }
-
-    @Checked("RolePredicates.PEDAGOGICAL_COUNCIL_PREDICATE")
-    @Service
-    public static void run(ElectionPeriodBean bean, String degreeOID) throws FenixServiceException {
-	final ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
-	final Degree degree = rootDomainObject.readDegreeByOID(Integer.parseInt(degreeOID));
-
-	try {
-	    YearDelegateElection.createDelegateElectionWithCandidacyPeriod(degree, executionYear, bean.getStartDate(), bean
-		    .getEndDate(), bean.getCurricularYear());
-
-	} catch (DomainException ex) {
-	    throw new FenixServiceException(ex.getMessage(), ex.getArgs());
+		run(bean, degreeOID.toString());
 	}
-    }
+
+	@Checked("RolePredicates.PEDAGOGICAL_COUNCIL_PREDICATE")
+	@Service
+	public static void run(ElectionPeriodBean bean, String degreeOID) throws FenixServiceException {
+		final ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
+		final Degree degree = rootDomainObject.readDegreeByOID(Integer.parseInt(degreeOID));
+
+		try {
+			YearDelegateElection.createDelegateElectionWithCandidacyPeriod(degree, executionYear, bean.getStartDate(),
+					bean.getEndDate(), bean.getCurricularYear());
+
+		} catch (DomainException ex) {
+			throw new FenixServiceException(ex.getMessage(), ex.getArgs());
+		}
+	}
 }

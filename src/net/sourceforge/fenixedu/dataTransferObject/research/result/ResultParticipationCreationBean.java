@@ -10,159 +10,159 @@ import net.sourceforge.fenixedu.domain.research.result.ResearchResult;
 import net.sourceforge.fenixedu.domain.research.result.ResultParticipation.ResultParticipationRole;
 
 public class ResultParticipationCreationBean implements Serializable {
-    private ResearchResult result;
+	private ResearchResult result;
 
-    private UnitName organizationNameObject;
+	private UnitName organizationNameObject;
 
-    private PersonName participator;
+	private PersonName participator;
 
-    private ResultParticipationRole role;
+	private ResultParticipationRole role;
 
-    private String participatorName;
+	private String participatorName;
 
-    private String organizationName;
+	private String organizationName;
 
-    private ParticipationType personParticipationType;
+	private ParticipationType personParticipationType;
 
-    private ParticipationType unitParticipationType;
+	private ParticipationType unitParticipationType;
 
-    private String email;
+	private String email;
 
-    public ResultParticipationCreationBean(ResearchResult result) {
-	setResult(result);
-	setRole(ResultParticipationRole.getDefaultRole());
-	setOrganizationNameObject(null);
-	setOrganizationName(null);
-	setParticipator(null);
-	setParticipatorName(null);
-	setPersonParticipationType(ParticipationType.INTERNAL);
-	setUnitParticipationType(ParticipationType.INTERNAL);
-    }
-
-    public String getEmail() {
-	return email;
-    }
-
-    public void setEmail(String email) {
-	this.email = email;
-    }
-
-    public boolean isBeanExternal() {
-	return getPersonParticipationType().equals(ParticipationType.EXTERNAL);
-    }
-
-    public boolean isUnitExternal() {
-	return getUnitParticipationType().equals(ParticipationType.EXTERNAL);
-    }
-
-    public void setOrganization(Unit unit) {
-	setOrganizationNameObject((unit != null) ? unit.getUnitName() : null);
-    }
-
-    public Unit getOrganization() {
-	UnitName unitName = this.getOrganizationNameObject();
-	return (unitName == null) ? null : unitName.getUnit();
-    }
-
-    public String getOrganizationName() {
-	return organizationName;
-    }
-
-    public void setOrganizationName(String organizationName) {
-	this.organizationName = organizationName;
-    }
-
-    public PersonName getParticipator() {
-	return participator;
-    }
-
-    public void setParticipator(PersonName participator) {
-	this.participator = participator;
-    }
-
-    public String getParticipatorName() {
-	return participatorName;
-    }
-
-    public void setParticipatorName(String participatorName) {
-	this.participatorName = participatorName;
-    }
-
-    public ResearchResult getResult() {
-	return result;
-    }
-
-    public void setResult(ResearchResult result) {
-	this.result = result;
-    }
-
-    public ResultParticipationRole getRole() {
-	return role;
-    }
-
-    public void setRole(ResultParticipationRole role) {
-	this.role = role;
-    }
-
-    public ExternalContract getExternalPerson() {
-	return (this.participator == null) ? null : this.participator.getPerson().getExternalContract();
-    }
-
-    public void setExternalPerson(ExternalContract externalPerson) {
-	if (externalPerson == null) {
-	    this.participator = null;
-	} else {
-	    setParticipator(externalPerson.getPerson().getPersonName());
-	}
-    }
-
-    public ParticipationType getPersonParticipationType() {
-	return personParticipationType;
-    }
-
-    public void setPersonParticipationType(ParticipationType participationType) {
-	this.personParticipationType = participationType;
-    }
-
-    public boolean hasOrganization() {
-	return (getOrganization() != null || (getOrganizationName() != null && getOrganizationName().length() > 0));
-    }
-
-    public static enum ParticipationType {
-	INTERNAL("Internal"), EXTERNAL("External");
-
-	private String type;
-
-	private ParticipationType(String type) {
-	    this.type = type;
+	public ResultParticipationCreationBean(ResearchResult result) {
+		setResult(result);
+		setRole(ResultParticipationRole.getDefaultRole());
+		setOrganizationNameObject(null);
+		setOrganizationName(null);
+		setParticipator(null);
+		setParticipatorName(null);
+		setPersonParticipationType(ParticipationType.INTERNAL);
+		setUnitParticipationType(ParticipationType.INTERNAL);
 	}
 
-	public String getType() {
-	    return type;
+	public String getEmail() {
+		return email;
 	}
-    }
 
-    public ParticipationType getUnitParticipationType() {
-	return unitParticipationType;
-    }
+	public void setEmail(String email) {
+		this.email = email;
+	}
 
-    public void setUnitParticipationType(ParticipationType unitParticipationType) {
-	this.unitParticipationType = unitParticipationType;
-    }
+	public boolean isBeanExternal() {
+		return getPersonParticipationType().equals(ParticipationType.EXTERNAL);
+	}
 
-    public void reset() {
-	this.setParticipator(null);
-	this.setParticipatorName(null);
-	this.setOrganizationName(null);
-	this.setOrganizationNameObject(null);
-    }
+	public boolean isUnitExternal() {
+		return getUnitParticipationType().equals(ParticipationType.EXTERNAL);
+	}
 
-    public UnitName getOrganizationNameObject() {
-	return organizationNameObject;
-    }
+	public void setOrganization(Unit unit) {
+		setOrganizationNameObject((unit != null) ? unit.getUnitName() : null);
+	}
 
-    public void setOrganizationNameObject(UnitName name) {
-	organizationNameObject = name;
-    }
+	public Unit getOrganization() {
+		UnitName unitName = this.getOrganizationNameObject();
+		return (unitName == null) ? null : unitName.getUnit();
+	}
+
+	public String getOrganizationName() {
+		return organizationName;
+	}
+
+	public void setOrganizationName(String organizationName) {
+		this.organizationName = organizationName;
+	}
+
+	public PersonName getParticipator() {
+		return participator;
+	}
+
+	public void setParticipator(PersonName participator) {
+		this.participator = participator;
+	}
+
+	public String getParticipatorName() {
+		return participatorName;
+	}
+
+	public void setParticipatorName(String participatorName) {
+		this.participatorName = participatorName;
+	}
+
+	public ResearchResult getResult() {
+		return result;
+	}
+
+	public void setResult(ResearchResult result) {
+		this.result = result;
+	}
+
+	public ResultParticipationRole getRole() {
+		return role;
+	}
+
+	public void setRole(ResultParticipationRole role) {
+		this.role = role;
+	}
+
+	public ExternalContract getExternalPerson() {
+		return (this.participator == null) ? null : this.participator.getPerson().getExternalContract();
+	}
+
+	public void setExternalPerson(ExternalContract externalPerson) {
+		if (externalPerson == null) {
+			this.participator = null;
+		} else {
+			setParticipator(externalPerson.getPerson().getPersonName());
+		}
+	}
+
+	public ParticipationType getPersonParticipationType() {
+		return personParticipationType;
+	}
+
+	public void setPersonParticipationType(ParticipationType participationType) {
+		this.personParticipationType = participationType;
+	}
+
+	public boolean hasOrganization() {
+		return (getOrganization() != null || (getOrganizationName() != null && getOrganizationName().length() > 0));
+	}
+
+	public static enum ParticipationType {
+		INTERNAL("Internal"), EXTERNAL("External");
+
+		private String type;
+
+		private ParticipationType(String type) {
+			this.type = type;
+		}
+
+		public String getType() {
+			return type;
+		}
+	}
+
+	public ParticipationType getUnitParticipationType() {
+		return unitParticipationType;
+	}
+
+	public void setUnitParticipationType(ParticipationType unitParticipationType) {
+		this.unitParticipationType = unitParticipationType;
+	}
+
+	public void reset() {
+		this.setParticipator(null);
+		this.setParticipatorName(null);
+		this.setOrganizationName(null);
+		this.setOrganizationNameObject(null);
+	}
+
+	public UnitName getOrganizationNameObject() {
+		return organizationNameObject;
+	}
+
+	public void setOrganizationNameObject(UnitName name) {
+		organizationNameObject = name;
+	}
 
 }

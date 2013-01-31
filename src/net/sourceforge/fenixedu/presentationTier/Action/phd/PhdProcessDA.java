@@ -34,167 +34,167 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 abstract public class PhdProcessDA extends PhdDA {
 
-    static protected final Pattern AREA_CODE_REGEX = Pattern.compile("\\d{4}-\\d{3}");
-    static protected final String PHD_RESOURCES = "resources.PhdResources";
+	static protected final Pattern AREA_CODE_REGEX = Pattern.compile("\\d{4}-\\d{3}");
+	static protected final String PHD_RESOURCES = "resources.PhdResources";
 
-    @Override
-    public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
+	@Override
+	public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
 
-	final Process process = getProcess(request);
-	if (process != null) {
-	    request.setAttribute("processId", process.getExternalId());
-	    request.setAttribute("process", process);
+		final Process process = getProcess(request);
+		if (process != null) {
+			request.setAttribute("processId", process.getExternalId());
+			request.setAttribute("process", process);
+		}
+
+		final Person loggedPerson = getLoggedPerson(request);
+		if (loggedPerson != null) {
+			request.setAttribute("alertMessagesToNotify", loggedPerson.getUnreadedPhdAlertMessages());
+			request.setAttribute("isTeacher", loggedPerson.hasRole(RoleType.TEACHER) || loggedPerson.hasAnyProfessorships());
+		}
+
+		return super.execute(mapping, actionForm, request, response);
 	}
 
-	final Person loggedPerson = getLoggedPerson(request);
-	if (loggedPerson != null) {
-	    request.setAttribute("alertMessagesToNotify", loggedPerson.getUnreadedPhdAlertMessages());
-	    request.setAttribute("isTeacher", loggedPerson.hasRole(RoleType.TEACHER) || loggedPerson.hasAnyProfessorships());
+	/**
+	 * First read value from request attribute to allow overriding of processId
+	 * value
+	 */
+	protected PhdProgramProcess getProcess(HttpServletRequest request) {
+		final String processIdAttribute = (String) request.getAttribute("processId");
+		return DomainObject.fromExternalId(processIdAttribute != null ? processIdAttribute : (String) request
+				.getParameter("processId"));
 	}
 
-	return super.execute(mapping, actionForm, request, response);
-    }
-
-    /**
-     * First read value from request attribute to allow overriding of processId
-     * value
-     */
-    protected PhdProgramProcess getProcess(HttpServletRequest request) {
-	final String processIdAttribute = (String) request.getAttribute("processId");
-	return DomainObject.fromExternalId(processIdAttribute != null ? processIdAttribute : (String) request
-		.getParameter("processId"));
-    }
-
-    protected ActionForward executeActivity(Class<? extends Activity<? extends Process>> activity, Object activityParameter,
-	    HttpServletRequest request, ActionMapping mapping, String errorForward, String sucessForward) {
-	return executeActivity(activity, activityParameter, request, mapping, errorForward, sucessForward, null);
-    }
-
-    protected ActionForward executeActivity(Class<? extends Activity<? extends Process>> activityClass, Object activityParameter,
-	    HttpServletRequest request, ActionMapping mapping, String errorForward, String sucessForward, String sucessMessage,
-	    String... sucessMessageArgs) {
-
-	try {
-
-	    ExecuteProcessActivity.run(getProcess(request), activityClass.getSimpleName(), activityParameter);
-
-	    if (!StringUtils.isEmpty(sucessMessage)) {
-		addSuccessMessage(request, sucessMessage, sucessMessageArgs);
-	    }
-
-	    return mapping.findForward(sucessForward);
-
-	} catch (DomainException e) {
-	    addErrorMessage(request, e.getKey(), e.getArgs());
-
-	    return mapping.findForward(errorForward);
-	}
-    }
-
-    protected boolean validateAreaCodeAndAreaOfAreaCode(HttpServletRequest request, final Person person, Country country,
-	    String areaCode, String areaOfAreaCode) {
-
-	if (person != null && person.hasRole(RoleType.EMPLOYEE)) {
-	    return true;
+	protected ActionForward executeActivity(Class<? extends Activity<? extends Process>> activity, Object activityParameter,
+			HttpServletRequest request, ActionMapping mapping, String errorForward, String sucessForward) {
+		return executeActivity(activity, activityParameter, request, mapping, errorForward, sucessForward, null);
 	}
 
-	if (country.isDefaultCountry() && !StringUtils.isEmpty(areaCode) && !AREA_CODE_REGEX.matcher(areaCode).matches()) {
-	    addErrorMessage(request, "error.areaCode.invalidFormat.for.national.address");
+	protected ActionForward executeActivity(Class<? extends Activity<? extends Process>> activityClass, Object activityParameter,
+			HttpServletRequest request, ActionMapping mapping, String errorForward, String sucessForward, String sucessMessage,
+			String... sucessMessageArgs) {
 
-	    return false;
+		try {
+
+			ExecuteProcessActivity.run(getProcess(request), activityClass.getSimpleName(), activityParameter);
+
+			if (!StringUtils.isEmpty(sucessMessage)) {
+				addSuccessMessage(request, sucessMessage, sucessMessageArgs);
+			}
+
+			return mapping.findForward(sucessForward);
+
+		} catch (DomainException e) {
+			addErrorMessage(request, e.getKey(), e.getArgs());
+
+			return mapping.findForward(errorForward);
+		}
 	}
 
-	if (!StringUtils.isEmpty(areaCode) && StringUtils.isEmpty(areaOfAreaCode)) {
-	    addErrorMessage(request, "error.areaOfAreaCode.is.required.if.areaCode.is.specified");
+	protected boolean validateAreaCodeAndAreaOfAreaCode(HttpServletRequest request, final Person person, Country country,
+			String areaCode, String areaOfAreaCode) {
 
-	    return false;
+		if (person != null && person.hasRole(RoleType.EMPLOYEE)) {
+			return true;
+		}
+
+		if (country.isDefaultCountry() && !StringUtils.isEmpty(areaCode) && !AREA_CODE_REGEX.matcher(areaCode).matches()) {
+			addErrorMessage(request, "error.areaCode.invalidFormat.for.national.address");
+
+			return false;
+		}
+
+		if (!StringUtils.isEmpty(areaCode) && StringUtils.isEmpty(areaOfAreaCode)) {
+			addErrorMessage(request, "error.areaOfAreaCode.is.required.if.areaCode.is.specified");
+
+			return false;
+		}
+
+		return true;
 	}
 
-	return true;
-    }
-
-    protected void setIsEmployeeAttributeAndMessage(HttpServletRequest request, Person person) {
-	if (person != null && person.hasRole(RoleType.EMPLOYEE)) {
-	    request.setAttribute("isEmployee", true);
-	    addWarningMessage(request, "message.employee.data.must.be.updated.in.human.resources.section");
-	} else {
-	    request.setAttribute("isEmployee", false);
-	}
-    }
-
-    protected String getMessageFromResource(final String key, Object... args) {
-	return MessageFormat.format(ResourceBundle.getBundle(PHD_RESOURCES, Language.getLocale()).getString(key), args);
-    }
-
-    protected String getZipDocumentsFilename(PhdIndividualProgramProcess process) {
-	return process.getProcessNumber().replace("/", "-") + "-Documents.zip";
-    }
-
-    protected byte[] createZip(final Collection<PhdProgramProcessDocument> documents) throws IOException {
-	return PhdDocumentsZip.zip(documents);
-    }
-
-    protected byte[] createZip(HttpServletRequest request) throws IOException {
-	return PhdDocumentsZip.zip(getProcess(request).getLatestDocumentVersions());
-    }
-
-    protected byte[] createGuidanceDocumentsZip(HttpServletRequest request) throws IOException {
-	return PhdDocumentsZip.zip(new ArrayList<PhdProgramProcessDocument>(((PhdIndividualProgramProcess) getProcess(request))
-		.getLatestGuidanceDocumentVersions()));
-    }
-
-    protected void initPersonBeanUglyHack(final PersonBean personBean, Person person) {
-	personBean.setName(person.getName());
-	personBean.setGivenNames(person.getGivenNames());
-	personBean.setFamilyNames(person.getFamilyNames());
-	personBean.setUsername(person.getUsername());
-	personBean.setGender(person.getGender());
-	personBean.setMaritalStatus(person.getMaritalStatus());
-	personBean.setFatherName(person.getNameOfFather());
-	personBean.setMotherName(person.getNameOfMother());
-	personBean.setProfession(person.getProfession());
-	personBean.setNationality(person.getCountry());
-
-	personBean.setCountryOfBirth(person.getCountryOfBirth());
-	personBean.setDateOfBirth(person.getDateOfBirthYearMonthDay());
-	personBean.setParishOfBirth(person.getParishOfBirth());
-	personBean.setDistrictOfBirth(person.getDistrictOfBirth());
-	personBean.setDistrictSubdivisionOfBirth(person.getDistrictSubdivisionOfBirth());
-
-	personBean.setDocumentIdEmissionDate(person.getEmissionDateOfDocumentIdYearMonthDay());
-	personBean.setDocumentIdEmissionLocation(person.getEmissionLocationOfDocumentId());
-	personBean.setDocumentIdExpirationDate(person.getExpirationDateOfDocumentIdYearMonthDay());
-	personBean.setDocumentIdNumber(person.getDocumentIdNumber());
-	personBean.setIdDocumentType(person.getIdDocumentType());
-	personBean.setSocialSecurityNumber(person.getSocialSecurityNumber());
-
-	PendingPartyContactBean pendingPartyContactBean = new PendingPartyContactBean(person);
-	if (pendingPartyContactBean.getDefaultPhysicalAddress() != null) {
-	    final PhysicalAddress physicalAddress = pendingPartyContactBean.getDefaultPhysicalAddress();
-	    personBean.setAddress(physicalAddress.getAddress());
-	    personBean.setArea(physicalAddress.getArea());
-	    personBean.setAreaCode(physicalAddress.getAreaCode());
-	    personBean.setAreaOfAreaCode(physicalAddress.getAreaOfAreaCode());
-	    personBean.setParishOfResidence(physicalAddress.getParishOfResidence());
-	    personBean.setDistrictSubdivisionOfResidence(physicalAddress.getDistrictSubdivisionOfResidence());
-	    personBean.setDistrictOfResidence(physicalAddress.getDistrictOfResidence());
-	    personBean.setCountryOfResidence(physicalAddress.getCountryOfResidence());
+	protected void setIsEmployeeAttributeAndMessage(HttpServletRequest request, Person person) {
+		if (person != null && person.hasRole(RoleType.EMPLOYEE)) {
+			request.setAttribute("isEmployee", true);
+			addWarningMessage(request, "message.employee.data.must.be.updated.in.human.resources.section");
+		} else {
+			request.setAttribute("isEmployee", false);
+		}
 	}
 
-	personBean.setPhone(pendingPartyContactBean.getDefaultPhone() != null ? pendingPartyContactBean.getDefaultPhone()
-		.getNumber() : null);
-	personBean.setMobile(pendingPartyContactBean.getDefaultMobilePhone() != null ? pendingPartyContactBean
-		.getDefaultMobilePhone().getNumber() : null);
-
-	if (pendingPartyContactBean.getDefaultEmailAddress() != null) {
-	    personBean.setEmail(pendingPartyContactBean.getDefaultEmailAddress().getValue());
+	protected String getMessageFromResource(final String key, Object... args) {
+		return MessageFormat.format(ResourceBundle.getBundle(PHD_RESOURCES, Language.getLocale()).getString(key), args);
 	}
 
-	personBean.setEmailAvailable(person.getAvailableEmail());
-	personBean.setHomepageAvailable(person.getAvailableWebSite());
+	protected String getZipDocumentsFilename(PhdIndividualProgramProcess process) {
+		return process.getProcessNumber().replace("/", "-") + "-Documents.zip";
+	}
 
-	personBean.setPerson(person);
-    }
+	protected byte[] createZip(final Collection<PhdProgramProcessDocument> documents) throws IOException {
+		return PhdDocumentsZip.zip(documents);
+	}
+
+	protected byte[] createZip(HttpServletRequest request) throws IOException {
+		return PhdDocumentsZip.zip(getProcess(request).getLatestDocumentVersions());
+	}
+
+	protected byte[] createGuidanceDocumentsZip(HttpServletRequest request) throws IOException {
+		return PhdDocumentsZip.zip(new ArrayList<PhdProgramProcessDocument>(((PhdIndividualProgramProcess) getProcess(request))
+				.getLatestGuidanceDocumentVersions()));
+	}
+
+	protected void initPersonBeanUglyHack(final PersonBean personBean, Person person) {
+		personBean.setName(person.getName());
+		personBean.setGivenNames(person.getGivenNames());
+		personBean.setFamilyNames(person.getFamilyNames());
+		personBean.setUsername(person.getUsername());
+		personBean.setGender(person.getGender());
+		personBean.setMaritalStatus(person.getMaritalStatus());
+		personBean.setFatherName(person.getNameOfFather());
+		personBean.setMotherName(person.getNameOfMother());
+		personBean.setProfession(person.getProfession());
+		personBean.setNationality(person.getCountry());
+
+		personBean.setCountryOfBirth(person.getCountryOfBirth());
+		personBean.setDateOfBirth(person.getDateOfBirthYearMonthDay());
+		personBean.setParishOfBirth(person.getParishOfBirth());
+		personBean.setDistrictOfBirth(person.getDistrictOfBirth());
+		personBean.setDistrictSubdivisionOfBirth(person.getDistrictSubdivisionOfBirth());
+
+		personBean.setDocumentIdEmissionDate(person.getEmissionDateOfDocumentIdYearMonthDay());
+		personBean.setDocumentIdEmissionLocation(person.getEmissionLocationOfDocumentId());
+		personBean.setDocumentIdExpirationDate(person.getExpirationDateOfDocumentIdYearMonthDay());
+		personBean.setDocumentIdNumber(person.getDocumentIdNumber());
+		personBean.setIdDocumentType(person.getIdDocumentType());
+		personBean.setSocialSecurityNumber(person.getSocialSecurityNumber());
+
+		PendingPartyContactBean pendingPartyContactBean = new PendingPartyContactBean(person);
+		if (pendingPartyContactBean.getDefaultPhysicalAddress() != null) {
+			final PhysicalAddress physicalAddress = pendingPartyContactBean.getDefaultPhysicalAddress();
+			personBean.setAddress(physicalAddress.getAddress());
+			personBean.setArea(physicalAddress.getArea());
+			personBean.setAreaCode(physicalAddress.getAreaCode());
+			personBean.setAreaOfAreaCode(physicalAddress.getAreaOfAreaCode());
+			personBean.setParishOfResidence(physicalAddress.getParishOfResidence());
+			personBean.setDistrictSubdivisionOfResidence(physicalAddress.getDistrictSubdivisionOfResidence());
+			personBean.setDistrictOfResidence(physicalAddress.getDistrictOfResidence());
+			personBean.setCountryOfResidence(physicalAddress.getCountryOfResidence());
+		}
+
+		personBean.setPhone(pendingPartyContactBean.getDefaultPhone() != null ? pendingPartyContactBean.getDefaultPhone()
+				.getNumber() : null);
+		personBean.setMobile(pendingPartyContactBean.getDefaultMobilePhone() != null ? pendingPartyContactBean
+				.getDefaultMobilePhone().getNumber() : null);
+
+		if (pendingPartyContactBean.getDefaultEmailAddress() != null) {
+			personBean.setEmail(pendingPartyContactBean.getDefaultEmailAddress().getValue());
+		}
+
+		personBean.setEmailAvailable(person.getAvailableEmail());
+		personBean.setHomepageAvailable(person.getAvailableWebSite());
+
+		personBean.setPerson(person);
+	}
 
 }

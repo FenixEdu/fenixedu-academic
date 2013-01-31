@@ -31,84 +31,93 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
  * 
  */
-@Mapping(module = "candidate", path = "/viewCandidacies", attribute = "candidacyForm", formBean = "candidacyForm", scope = "request", parameter = "method")
+@Mapping(
+		module = "candidate",
+		path = "/viewCandidacies",
+		attribute = "candidacyForm",
+		formBean = "candidacyForm",
+		scope = "request",
+		parameter = "method")
 @Forwards(value = {
-	@Forward(name = "uploadDocuments", path = "/candidate/uploadDocuments.jsp", tileProperties = @Tile(title = "private.candidate.applications")),
-	@Forward(name = "viewDetail", path = "/candidate/viewCandidacyDetails.jsp", tileProperties = @Tile(title = "private.candidate.applications")),
-	@Forward(name = "view", path = "/candidate/viewCandidacies.jsp", tileProperties = @Tile(title = "private.candidate.applications")) })
+		@Forward(name = "uploadDocuments", path = "/candidate/uploadDocuments.jsp", tileProperties = @Tile(
+				title = "private.candidate.applications")),
+		@Forward(name = "viewDetail", path = "/candidate/viewCandidacyDetails.jsp", tileProperties = @Tile(
+				title = "private.candidate.applications")),
+		@Forward(name = "view", path = "/candidate/viewCandidacies.jsp", tileProperties = @Tile(
+				title = "private.candidate.applications")) })
 public class ViewCandidaciesDsipatchAction extends FenixDispatchAction {
 
-    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
-	return mapping.findForward("view");
-    }
-
-    public ActionForward viewDetail(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
-
-	final Candidacy candidacy = getCandidacy(request);
-	request.setAttribute("canChangePersonalData", candidacy.getActiveCandidacySituation().canChangePersonalData());
-	request.setAttribute("candidacy", candidacy);
-
-	return mapping.findForward("viewDetail");
-    }
-
-    private Candidacy getCandidacy(HttpServletRequest request) {
-	final Integer candidacyID = Integer.valueOf(request.getParameter("candidacyID"));
-	for (final Candidacy candidacy : getUserView(request).getPerson().getCandidaciesSet()) {
-	    if (candidacy.getIdInternal().equals(candidacyID)) {
-		return candidacy;
-	    }
+	public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+		return mapping.findForward("view");
 	}
 
-	return null;
-    }
+	public ActionForward viewDetail(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) {
 
-    public ActionForward prepareUploadDocuments(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
+		final Candidacy candidacy = getCandidacy(request);
+		request.setAttribute("canChangePersonalData", candidacy.getActiveCandidacySituation().canChangePersonalData());
+		request.setAttribute("candidacy", candidacy);
 
-	fillRequest(request, getCandidacy(request));
-
-	return mapping.findForward("uploadDocuments");
-    }
-
-    public ActionForward uploadDocuments(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-
-	List<CandidacyDocumentUploadBean> beans = (List<CandidacyDocumentUploadBean>) RenderUtils
-		.getViewState("candidacyDocuments").getMetaObject().getObject();
-
-	for (CandidacyDocumentUploadBean bean : beans) {
-	    bean.createTemporaryFile();
+		return mapping.findForward("viewDetail");
 	}
 
-	SaveCandidacyDocumentFiles.run(beans);
+	private Candidacy getCandidacy(HttpServletRequest request) {
+		final Integer candidacyID = Integer.valueOf(request.getParameter("candidacyID"));
+		for (final Candidacy candidacy : getUserView(request).getPerson().getCandidaciesSet()) {
+			if (candidacy.getIdInternal().equals(candidacyID)) {
+				return candidacy;
+			}
+		}
 
-	for (CandidacyDocumentUploadBean bean : beans) {
-	    bean.deleteTemporaryFile();
+		return null;
 	}
 
-	fillRequest(request, getCandidacy(beans));
+	public ActionForward prepareUploadDocuments(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) {
 
-	return mapping.findForward("uploadDocuments");
-    }
+		fillRequest(request, getCandidacy(request));
 
-    private void fillRequest(HttpServletRequest request, Candidacy candidacy) {
-	if (RenderUtils.getViewState("candidacyDocuments") != null) {
-	    RenderUtils.invalidateViewState("candidacyDocuments");
-	}
-	List<CandidacyDocumentUploadBean> candidacyDocuments = new ArrayList<CandidacyDocumentUploadBean>();
-	for (CandidacyDocument candidacyDocument : candidacy.getCandidacyDocuments()) {
-	    candidacyDocuments.add(new CandidacyDocumentUploadBean(candidacyDocument));
+		return mapping.findForward("uploadDocuments");
 	}
 
-	request.setAttribute("candidacyDocuments", candidacyDocuments);
-	request.setAttribute("candidacy", candidacy);
-    }
+	public ActionForward uploadDocuments(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
-    private Candidacy getCandidacy(List<CandidacyDocumentUploadBean> beans) {
-	if (!beans.isEmpty()) {
-	    return beans.get(0).getCandidacyDocument().getCandidacy();
+		List<CandidacyDocumentUploadBean> beans =
+				(List<CandidacyDocumentUploadBean>) RenderUtils.getViewState("candidacyDocuments").getMetaObject().getObject();
+
+		for (CandidacyDocumentUploadBean bean : beans) {
+			bean.createTemporaryFile();
+		}
+
+		SaveCandidacyDocumentFiles.run(beans);
+
+		for (CandidacyDocumentUploadBean bean : beans) {
+			bean.deleteTemporaryFile();
+		}
+
+		fillRequest(request, getCandidacy(beans));
+
+		return mapping.findForward("uploadDocuments");
 	}
-	return null;
-    }
+
+	private void fillRequest(HttpServletRequest request, Candidacy candidacy) {
+		if (RenderUtils.getViewState("candidacyDocuments") != null) {
+			RenderUtils.invalidateViewState("candidacyDocuments");
+		}
+		List<CandidacyDocumentUploadBean> candidacyDocuments = new ArrayList<CandidacyDocumentUploadBean>();
+		for (CandidacyDocument candidacyDocument : candidacy.getCandidacyDocuments()) {
+			candidacyDocuments.add(new CandidacyDocumentUploadBean(candidacyDocument));
+		}
+
+		request.setAttribute("candidacyDocuments", candidacyDocuments);
+		request.setAttribute("candidacy", candidacy);
+	}
+
+	private Candidacy getCandidacy(List<CandidacyDocumentUploadBean> beans) {
+		if (!beans.isEmpty()) {
+			return beans.get(0).getCandidacyDocument().getCandidacy();
+		}
+		return null;
+	}
 }

@@ -12,42 +12,42 @@ import pt.utl.ist.berserk.ServiceResponse;
 
 public class DeleteProfessorshipAuthorizationFilter extends AuthorizationByRoleFilter {
 
-    @Override
-    protected RoleType getRoleType() {
-	return RoleType.TEACHER;
-    }
-
-    @Override
-    public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
-	IUserView id = getRemoteUser(request);
-	Object[] arguments = getServiceCallArguments(request);
-
-	try {
-
-	    final Person loggedPerson = id.getPerson();
-	    final Integer executionCourseID = (Integer) arguments[0];
-	    final Integer selectedTeacherID = (Integer) arguments[1];
-
-	    Teacher teacher = rootDomainObject.readTeacherByOID(selectedTeacherID);
-	    ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseID);
-
-	    Professorship selectedProfessorship = null;
-	    if (teacher != null) {
-		selectedProfessorship = teacher.getProfessorshipByExecutionCourse(executionCourse);
-	    }
-
-	    if ((id == null) || (selectedProfessorship == null) || (id.getRoleTypes() == null) || !id.hasRoleType(getRoleType())
-		    || isSamePersonAsBeingRemoved(loggedPerson, selectedProfessorship.getPerson())
-		    || selectedProfessorship.getResponsibleFor()) {
-		throw new NotAuthorizedFilterException();
-	    }
-	} catch (RuntimeException e) {
-	    throw new NotAuthorizedFilterException();
+	@Override
+	protected RoleType getRoleType() {
+		return RoleType.TEACHER;
 	}
-    }
 
-    private boolean isSamePersonAsBeingRemoved(Person loggedPerson, Person selectedPerson) {
-	return loggedPerson == selectedPerson;
-    }
+	@Override
+	public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
+		IUserView id = getRemoteUser(request);
+		Object[] arguments = getServiceCallArguments(request);
+
+		try {
+
+			final Person loggedPerson = id.getPerson();
+			final Integer executionCourseID = (Integer) arguments[0];
+			final Integer selectedTeacherID = (Integer) arguments[1];
+
+			Teacher teacher = rootDomainObject.readTeacherByOID(selectedTeacherID);
+			ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseID);
+
+			Professorship selectedProfessorship = null;
+			if (teacher != null) {
+				selectedProfessorship = teacher.getProfessorshipByExecutionCourse(executionCourse);
+			}
+
+			if ((id == null) || (selectedProfessorship == null) || (id.getRoleTypes() == null) || !id.hasRoleType(getRoleType())
+					|| isSamePersonAsBeingRemoved(loggedPerson, selectedProfessorship.getPerson())
+					|| selectedProfessorship.getResponsibleFor()) {
+				throw new NotAuthorizedFilterException();
+			}
+		} catch (RuntimeException e) {
+			throw new NotAuthorizedFilterException();
+		}
+	}
+
+	private boolean isSamePersonAsBeingRemoved(Person loggedPerson, Person selectedPerson) {
+		return loggedPerson == selectedPerson;
+	}
 
 }

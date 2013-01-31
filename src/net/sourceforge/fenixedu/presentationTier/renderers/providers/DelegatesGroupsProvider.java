@@ -6,15 +6,15 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class DelegatesGroupsProvider implements DataProvider {
 
-    @Override
-    public Converter getConverter() {
-	return null;
-    }
+	@Override
+	public Converter getConverter() {
+		return null;
+	}
 
-    @Override
-    public Object provide(Object source, Object currentValue) {
-	final GroupsBean bean = (GroupsBean) source;
-	return bean.getGroups();
-    }
+	@Override
+	public Object provide(Object source, Object currentValue) {
+		final GroupsBean bean = (GroupsBean) source;
+		return bean.getGroups();
+	}
 
 }

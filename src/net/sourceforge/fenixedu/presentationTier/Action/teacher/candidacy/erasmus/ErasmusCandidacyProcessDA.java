@@ -30,78 +30,81 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
-@Mapping(path = "/caseHandlingMobilityApplicationProcess", module = "teacher", formBeanClass = ErasmusCandidacyProcessDA.ErasmusCandidacyProcessForm.class)
+@Mapping(
+		path = "/caseHandlingMobilityApplicationProcess",
+		module = "teacher",
+		formBeanClass = ErasmusCandidacyProcessDA.ErasmusCandidacyProcessForm.class)
 @Forwards({ @Forward(name = "intro", path = "/candidacy/erasmus/mainCandidacyProcess.jsp") })
 public class ErasmusCandidacyProcessDA extends
-	net.sourceforge.fenixedu.presentationTier.Action.candidacy.erasmus.ErasmusCandidacyProcessDA {
-
-    @Override
-    public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-	setChooseDegreeBean(request);
-	ActionForward forward = super.execute(mapping, actionForm, request, response);
-	setChooseDegreeBean(request);
-	request.setAttribute("chooseDegreeBeanSchemaName", "ErasmusChooseDegreeBean.coordinator.selectDegree");
-	return forward;
-    }
-
-    @Override
-    protected List<IndividualCandidacyProcess> getChildProcesses(final CandidacyProcess process, HttpServletRequest request) {
-	Collection<IndividualCandidacyProcess> processes = super.getChildProcesses(process, request);
-
-	List<IndividualCandidacyProcess> result = new ArrayList<IndividualCandidacyProcess>();
-
-	CollectionUtils.select(processes, new Predicate() {
-
-	    @Override
-	    public boolean evaluate(Object arg0) {
-		IndividualCandidacyProcess child = (IndividualCandidacyProcess) arg0;
-
-		return ((MobilityApplicationProcess) process).getDegreesAssociatedToTeacherAsCoordinator(getTeacher()).contains(
-			((MobilityIndividualApplicationProcess) child).getCandidacy().getSelectedDegree());
-	    }
-
-	}, result);
-
-	return result;
-    }
-
-    private Teacher getTeacher() {
-	return AccessControl.getPerson().getTeacher();
-    }
-
-    public DegreeCurricularPlan getDegreeCurricularPlan(HttpServletRequest request) {
-	final Integer degreeCurricularPlanOID = CoordinatedDegreeInfo.findDegreeCurricularPlanID(request);
-	request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanOID);
-
-	if (degreeCurricularPlanOID != null) {
-	    return rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanOID);
-	}
-
-	return null;
-    }
-
-    public static class ErasmusCandidacyDegreesProvider implements DataProvider {
+		net.sourceforge.fenixedu.presentationTier.Action.candidacy.erasmus.ErasmusCandidacyProcessDA {
 
 	@Override
-	public Object provide(Object source, Object currentValue) {
-	    ChooseDegreeBean bean = (ChooseDegreeBean) source;
-
-	    Teacher teacher = AccessControl.getPerson().getTeacher();
-	    return ((MobilityApplicationProcess) bean.getCandidacyProcess()).getDegreesAssociatedToTeacherAsCoordinator(teacher);
+	public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		setChooseDegreeBean(request);
+		ActionForward forward = super.execute(mapping, actionForm, request, response);
+		setChooseDegreeBean(request);
+		request.setAttribute("chooseDegreeBeanSchemaName", "ErasmusChooseDegreeBean.coordinator.selectDegree");
+		return forward;
 	}
 
 	@Override
-	public Converter getConverter() {
-	    return new DomainObjectKeyConverter();
+	protected List<IndividualCandidacyProcess> getChildProcesses(final CandidacyProcess process, HttpServletRequest request) {
+		Collection<IndividualCandidacyProcess> processes = super.getChildProcesses(process, request);
+
+		List<IndividualCandidacyProcess> result = new ArrayList<IndividualCandidacyProcess>();
+
+		CollectionUtils.select(processes, new Predicate() {
+
+			@Override
+			public boolean evaluate(Object arg0) {
+				IndividualCandidacyProcess child = (IndividualCandidacyProcess) arg0;
+
+				return ((MobilityApplicationProcess) process).getDegreesAssociatedToTeacherAsCoordinator(getTeacher()).contains(
+						((MobilityIndividualApplicationProcess) child).getCandidacy().getSelectedDegree());
+			}
+
+		}, result);
+
+		return result;
 	}
 
-    }
+	private Teacher getTeacher() {
+		return AccessControl.getPerson().getTeacher();
+	}
 
-    @Override
-    public ActionForward prepareCreateNewProcess(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
-	throw new DomainException("error.permission.denied");
-    }
+	public DegreeCurricularPlan getDegreeCurricularPlan(HttpServletRequest request) {
+		final Integer degreeCurricularPlanOID = CoordinatedDegreeInfo.findDegreeCurricularPlanID(request);
+		request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanOID);
+
+		if (degreeCurricularPlanOID != null) {
+			return rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanOID);
+		}
+
+		return null;
+	}
+
+	public static class ErasmusCandidacyDegreesProvider implements DataProvider {
+
+		@Override
+		public Object provide(Object source, Object currentValue) {
+			ChooseDegreeBean bean = (ChooseDegreeBean) source;
+
+			Teacher teacher = AccessControl.getPerson().getTeacher();
+			return ((MobilityApplicationProcess) bean.getCandidacyProcess()).getDegreesAssociatedToTeacherAsCoordinator(teacher);
+		}
+
+		@Override
+		public Converter getConverter() {
+			return new DomainObjectKeyConverter();
+		}
+
+	}
+
+	@Override
+	public ActionForward prepareCreateNewProcess(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) {
+		throw new DomainException("error.permission.denied");
+	}
 
 }

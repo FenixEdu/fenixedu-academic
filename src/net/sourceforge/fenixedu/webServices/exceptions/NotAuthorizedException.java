@@ -9,19 +9,19 @@ package net.sourceforge.fenixedu.webServices.exceptions;
  */
 public class NotAuthorizedException extends Exception {
 
-    public static String key = "error.exception.notAuthorized";
+	public static String key = "error.exception.notAuthorized";
 
-    public NotAuthorizedException() {
-	super(key);
-    }
+	public NotAuthorizedException() {
+		super(key);
+	}
 
-    public NotAuthorizedException(Throwable cause) {
+	public NotAuthorizedException(Throwable cause) {
 
-	super(key, cause);
-    }
+		super(key, cause);
+	}
 
-    public static String getKey() {
-	return key;
-    }
+	public static String getKey() {
+		return key;
+	}
 
 }

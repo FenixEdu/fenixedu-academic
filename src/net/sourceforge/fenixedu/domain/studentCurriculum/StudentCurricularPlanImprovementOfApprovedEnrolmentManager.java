@@ -20,112 +20,115 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 public class StudentCurricularPlanImprovementOfApprovedEnrolmentManager extends StudentCurricularPlanEnrolment {
 
-    public StudentCurricularPlanImprovementOfApprovedEnrolmentManager(final EnrolmentContext enrolmentContext) {
-	super(enrolmentContext);
-    }
-
-    @Override
-    protected void assertEnrolmentPreConditions() {
-	if (isResponsiblePersonManager()) {
-	    return;
+	public StudentCurricularPlanImprovementOfApprovedEnrolmentManager(final EnrolmentContext enrolmentContext) {
+		super(enrolmentContext);
 	}
 
-	if (!hasRegistrationInValidState()) {
-	    throw new DomainException("error.StudentCurricularPlan.cannot.enrol.with.registration.inactive");
-	}
-
-	if (getStudent().isAnyGratuityOrAdministrativeOfficeFeeAndInsuranceInDebt()) {
-	    throw new DomainException("error.StudentCurricularPlan.cannot.enrol.with.debts.for.previous.execution.years");
-	}
-
-	if (areModifiedCyclesConcluded()) {
-	    checkUpdateRegistrationAfterConclusion();
-	}
-
-    }
-
-    private boolean hasRegistrationInValidState() {
-	return getRegistration().isRegistered(getExecutionYear())
-		|| getRegistration().isRegistered(getExecutionYear().getPreviousExecutionYear());
-    }
-
-    @Override
-    protected void unEnrol() {
-	for (final CurriculumModule curriculumModule : enrolmentContext.getToRemove()) {
-	    if (curriculumModule instanceof Enrolment) {
-		final Enrolment enrolment = (Enrolment) curriculumModule;
-		enrolment.unEnrollImprovement(getExecutionSemester());
-	    } else {
-		throw new DomainException(
-			"StudentCurricularPlanImprovementOfApprovedEnrolmentManager.can.only.manage.enrolment.evaluations.of.enrolments");
-	    }
-	}
-    }
-
-    @Override
-    protected void addEnroled() {
-	// Nothing...
-    }
-
-    @Override
-    protected Map<IDegreeModuleToEvaluate, Set<ICurricularRule>> getRulesToEvaluate() {
-	final Map<IDegreeModuleToEvaluate, Set<ICurricularRule>> result = new HashMap<IDegreeModuleToEvaluate, Set<ICurricularRule>>();
-
-	for (final IDegreeModuleToEvaluate degreeModuleToEvaluate : enrolmentContext.getDegreeModulesToEvaluate()) {
-
-	    if (degreeModuleToEvaluate.isEnroled() && degreeModuleToEvaluate.canCollectRules()) {
-		final EnroledCurriculumModuleWrapper moduleEnroledWrapper = (EnroledCurriculumModuleWrapper) degreeModuleToEvaluate;
-
-		if (moduleEnroledWrapper.getCurriculumModule() instanceof Enrolment) {
-		    final Enrolment enrolment = (Enrolment) moduleEnroledWrapper.getCurriculumModule();
-		    result.put(degreeModuleToEvaluate,
-			    Collections.<ICurricularRule> singleton(new ImprovementOfApprovedEnrolment(enrolment)));
-
-		} else {
-		    throw new DomainException(
-			    "StudentCurricularPlanImprovementOfApprovedEnrolmentManager.can.only.manage.enrolment.evaluations.of.enrolments");
+	@Override
+	protected void assertEnrolmentPreConditions() {
+		if (isResponsiblePersonManager()) {
+			return;
 		}
-	    }
-	}
 
-	return result;
-    }
-
-    @Override
-    protected void performEnrolments(final Map<EnrolmentResultType, List<IDegreeModuleToEvaluate>> degreeModulesToEvaluate) {
-	Collection<Enrolment> toCreate = new HashSet<Enrolment>();
-
-	for (final Entry<EnrolmentResultType, List<IDegreeModuleToEvaluate>> entry : degreeModulesToEvaluate.entrySet()) {
-
-	    for (final IDegreeModuleToEvaluate degreeModuleToEvaluate : entry.getValue()) {
-		if (degreeModuleToEvaluate.isEnroled()) {
-		    final EnroledCurriculumModuleWrapper moduleEnroledWrapper = (EnroledCurriculumModuleWrapper) degreeModuleToEvaluate;
-
-		    if (moduleEnroledWrapper.getCurriculumModule() instanceof Enrolment) {
-			final Enrolment enrolment = (Enrolment) moduleEnroledWrapper.getCurriculumModule();
-			toCreate.add(enrolment);
-		    } else {
-			throw new DomainException(
-				"StudentCurricularPlanImprovementOfApprovedEnrolmentManager.can.only.manage.enrolment.evaluations.of.enrolments");
-		    }
+		if (!hasRegistrationInValidState()) {
+			throw new DomainException("error.StudentCurricularPlan.cannot.enrol.with.registration.inactive");
 		}
-	    }
+
+		if (getStudent().isAnyGratuityOrAdministrativeOfficeFeeAndInsuranceInDebt()) {
+			throw new DomainException("error.StudentCurricularPlan.cannot.enrol.with.debts.for.previous.execution.years");
+		}
+
+		if (areModifiedCyclesConcluded()) {
+			checkUpdateRegistrationAfterConclusion();
+		}
+
 	}
 
-	if (!toCreate.isEmpty()) {
-	    getStudentCurricularPlan().createEnrolmentEvaluationForImprovement(toCreate, getResponsiblePerson(),
-		    getExecutionSemester());
+	private boolean hasRegistrationInValidState() {
+		return getRegistration().isRegistered(getExecutionYear())
+				|| getRegistration().isRegistered(getExecutionYear().getPreviousExecutionYear());
 	}
-    }
 
-    @Override
-    protected boolean isEnrolingInCycle(CycleCurriculumGroup cycle) {
-	for (final IDegreeModuleToEvaluate dmte : enrolmentContext.getDegreeModulesToEvaluate()) {
-	    if (dmte.isEnroled() && cycle.hasCurriculumModule(dmte.getCurriculumGroup())) {
-		return true;
-	    }
+	@Override
+	protected void unEnrol() {
+		for (final CurriculumModule curriculumModule : enrolmentContext.getToRemove()) {
+			if (curriculumModule instanceof Enrolment) {
+				final Enrolment enrolment = (Enrolment) curriculumModule;
+				enrolment.unEnrollImprovement(getExecutionSemester());
+			} else {
+				throw new DomainException(
+						"StudentCurricularPlanImprovementOfApprovedEnrolmentManager.can.only.manage.enrolment.evaluations.of.enrolments");
+			}
+		}
 	}
-	return false;
-    }
+
+	@Override
+	protected void addEnroled() {
+		// Nothing...
+	}
+
+	@Override
+	protected Map<IDegreeModuleToEvaluate, Set<ICurricularRule>> getRulesToEvaluate() {
+		final Map<IDegreeModuleToEvaluate, Set<ICurricularRule>> result =
+				new HashMap<IDegreeModuleToEvaluate, Set<ICurricularRule>>();
+
+		for (final IDegreeModuleToEvaluate degreeModuleToEvaluate : enrolmentContext.getDegreeModulesToEvaluate()) {
+
+			if (degreeModuleToEvaluate.isEnroled() && degreeModuleToEvaluate.canCollectRules()) {
+				final EnroledCurriculumModuleWrapper moduleEnroledWrapper =
+						(EnroledCurriculumModuleWrapper) degreeModuleToEvaluate;
+
+				if (moduleEnroledWrapper.getCurriculumModule() instanceof Enrolment) {
+					final Enrolment enrolment = (Enrolment) moduleEnroledWrapper.getCurriculumModule();
+					result.put(degreeModuleToEvaluate,
+							Collections.<ICurricularRule> singleton(new ImprovementOfApprovedEnrolment(enrolment)));
+
+				} else {
+					throw new DomainException(
+							"StudentCurricularPlanImprovementOfApprovedEnrolmentManager.can.only.manage.enrolment.evaluations.of.enrolments");
+				}
+			}
+		}
+
+		return result;
+	}
+
+	@Override
+	protected void performEnrolments(final Map<EnrolmentResultType, List<IDegreeModuleToEvaluate>> degreeModulesToEvaluate) {
+		Collection<Enrolment> toCreate = new HashSet<Enrolment>();
+
+		for (final Entry<EnrolmentResultType, List<IDegreeModuleToEvaluate>> entry : degreeModulesToEvaluate.entrySet()) {
+
+			for (final IDegreeModuleToEvaluate degreeModuleToEvaluate : entry.getValue()) {
+				if (degreeModuleToEvaluate.isEnroled()) {
+					final EnroledCurriculumModuleWrapper moduleEnroledWrapper =
+							(EnroledCurriculumModuleWrapper) degreeModuleToEvaluate;
+
+					if (moduleEnroledWrapper.getCurriculumModule() instanceof Enrolment) {
+						final Enrolment enrolment = (Enrolment) moduleEnroledWrapper.getCurriculumModule();
+						toCreate.add(enrolment);
+					} else {
+						throw new DomainException(
+								"StudentCurricularPlanImprovementOfApprovedEnrolmentManager.can.only.manage.enrolment.evaluations.of.enrolments");
+					}
+				}
+			}
+		}
+
+		if (!toCreate.isEmpty()) {
+			getStudentCurricularPlan().createEnrolmentEvaluationForImprovement(toCreate, getResponsiblePerson(),
+					getExecutionSemester());
+		}
+	}
+
+	@Override
+	protected boolean isEnrolingInCycle(CycleCurriculumGroup cycle) {
+		for (final IDegreeModuleToEvaluate dmte : enrolmentContext.getDegreeModulesToEvaluate()) {
+			if (dmte.isEnroled() && cycle.hasCurriculumModule(dmte.getCurriculumGroup())) {
+				return true;
+			}
+		}
+		return false;
+	}
 
 }

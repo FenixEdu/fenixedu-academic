@@ -15,15 +15,15 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Mapping(module = "operator", path = "/partyContacts", scope = "request", parameter = "method")
 @Forwards(value = { @Forward(name = "visualizePersonalInformation", path = "/manager/personManagement/viewPerson.jsp"),
-	@Forward(name = "editPartyContact", path = "/manager/personManagement/contacts/editPartyContact.jsp"),
-	@Forward(name = "createPartyContact", path = "/manager/personManagement/contacts/createPartyContact.jsp") })
+		@Forward(name = "editPartyContact", path = "/manager/personManagement/contacts/editPartyContact.jsp"),
+		@Forward(name = "createPartyContact", path = "/manager/personManagement/contacts/createPartyContact.jsp") })
 public class PartyContactsManagementDispatchActionForOperator extends PartyContactsManagementDispatchActionForManager {
 
-    @Override
-    public ActionForward backToShowInformation(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) {
-	return new ActionForward("redirectToShowInformation", "/findPerson.do?method=viewPerson&personID="
-		+ getFromRequest(request, "personID"), false, "/operator");
-    }
+	@Override
+	public ActionForward backToShowInformation(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) {
+		return new ActionForward("redirectToShowInformation", "/findPerson.do?method=viewPerson&personID="
+				+ getFromRequest(request, "personID"), false, "/operator");
+	}
 
 }

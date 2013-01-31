@@ -16,56 +16,56 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 
 public class ActiveStudentsFromDegreeTypeGroup extends Group {
 
-    private final DegreeType degreeType;
-    
-    public ActiveStudentsFromDegreeTypeGroup(DegreeType degreeType) {
-	this.degreeType = degreeType;
-    }
+	private final DegreeType degreeType;
 
-    @Override
-    public Set<Person> getElements() {
-	List<Degree> degrees = Degree.readAllByDegreeType(degreeType);
-	Set<Person> students = new HashSet<Person>();
+	public ActiveStudentsFromDegreeTypeGroup(DegreeType degreeType) {
+		this.degreeType = degreeType;
+	}
 
-	for (Degree degree : degrees) {
-	    for (Registration registration : degree.getRegistrations()) {
-		if(registration.isActive()) {
-		    students.add(registration.getPerson());
+	@Override
+	public Set<Person> getElements() {
+		List<Degree> degrees = Degree.readAllByDegreeType(degreeType);
+		Set<Person> students = new HashSet<Person>();
+
+		for (Degree degree : degrees) {
+			for (Registration registration : degree.getRegistrations()) {
+				if (registration.isActive()) {
+					students.add(registration.getPerson());
+				}
+			}
 		}
-	    }
-	}
-	return students;
-    }
-
-    @Override
-    public String getPresentationNameKey() {
-	return super.getPresentationNameKey() + "." + degreeType.toString();
-    }
-
-    @Override
-    protected Argument[] getExpressionArguments() {
-	return new Argument[] { new StaticArgument(degreeType.getName()) };
-    }
-    
-    public static class Builder implements GroupBuilder {
-
-	@Override
-	public Group build(Object[] arguments) {
-	    final DegreeType degreeType = DegreeType.valueOf((String) arguments[0]);
-	    if (degreeType == null) {
-		throw new VariableNotDefinedException("degreeType");
-	    }
-	    return new ActiveStudentsFromDegreeTypeGroup(degreeType);
+		return students;
 	}
 
 	@Override
-	public int getMaxArguments() {
-	    return 1;
+	public String getPresentationNameKey() {
+		return super.getPresentationNameKey() + "." + degreeType.toString();
 	}
 
 	@Override
-	public int getMinArguments() {
-	    return 1;
+	protected Argument[] getExpressionArguments() {
+		return new Argument[] { new StaticArgument(degreeType.getName()) };
 	}
-    }
+
+	public static class Builder implements GroupBuilder {
+
+		@Override
+		public Group build(Object[] arguments) {
+			final DegreeType degreeType = DegreeType.valueOf((String) arguments[0]);
+			if (degreeType == null) {
+				throw new VariableNotDefinedException("degreeType");
+			}
+			return new ActiveStudentsFromDegreeTypeGroup(degreeType);
+		}
+
+		@Override
+		public int getMaxArguments() {
+			return 1;
+		}
+
+		@Override
+		public int getMinArguments() {
+			return 1;
+		}
+	}
 }

@@ -13,32 +13,32 @@ import dml.DomainModel;
 
 public class RemoteHostRequest extends RemoteRequest {
 
-    @Override
-    protected int getStatus() {
-	return HttpServletResponse.SC_OK;
-    }
-
-    @Override
-    protected void writeResponseBody(Writer writer) throws IOException {
-	writer.write("<domainClassInfos>");
-	final DomainModel domainModel = FenixFramework.getDomainModel();
-	for (final DomainClass domainClass : domainModel.getDomainClasses()) {
-	    final String className = domainClass.getFullName();
-	    try {
-		final Class clazz = Class.forName(className);
-		if (!Modifier.isAbstract(clazz.getModifiers())) {
-		    final int mapClassToId = DomainClassInfo.mapClassToId(clazz);
-
-		    writer.write("<domainClassInfo>");
-		    writeTag(writer, "domainClassId", Integer.toString(mapClassToId));
-		    writeTag(writer, "domainClassName", clazz.getName());
-		    writer.write("</domainClassInfo>");
-		}
-	    } catch (final ClassNotFoundException e) {
-		throw new Error(e);
-	    }
+	@Override
+	protected int getStatus() {
+		return HttpServletResponse.SC_OK;
 	}
-	writer.write("</domainClassInfos>");
-    }
+
+	@Override
+	protected void writeResponseBody(Writer writer) throws IOException {
+		writer.write("<domainClassInfos>");
+		final DomainModel domainModel = FenixFramework.getDomainModel();
+		for (final DomainClass domainClass : domainModel.getDomainClasses()) {
+			final String className = domainClass.getFullName();
+			try {
+				final Class clazz = Class.forName(className);
+				if (!Modifier.isAbstract(clazz.getModifiers())) {
+					final int mapClassToId = DomainClassInfo.mapClassToId(clazz);
+
+					writer.write("<domainClassInfo>");
+					writeTag(writer, "domainClassId", Integer.toString(mapClassToId));
+					writeTag(writer, "domainClassName", clazz.getName());
+					writer.write("</domainClassInfo>");
+				}
+			} catch (final ClassNotFoundException e) {
+				throw new Error(e);
+			}
+		}
+		writer.write("</domainClassInfos>");
+	}
 
 }

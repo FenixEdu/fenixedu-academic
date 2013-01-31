@@ -17,175 +17,176 @@ import org.apache.commons.lang.StringUtils;
 
 public class ExamDateCertificate extends AdministrativeOfficeDocument {
 
-    public static class ExamDateEntry {
+	public static class ExamDateEntry {
 
-	private String curricularCourseName;
+		private String curricularCourseName;
 
-	private String firstSeasonDate;
+		private String firstSeasonDate;
 
-	private String firstSeasonHour;
+		private String firstSeasonHour;
 
-	private String secondSeasonDate;
+		private String secondSeasonDate;
 
-	private String secondSeasonHour;
+		private String secondSeasonHour;
 
-	private String specialSeasonDate;
+		private String specialSeasonDate;
 
-	private String specialSeasonHour;
+		private String specialSeasonHour;
 
-	public ExamDateEntry() {
+		public ExamDateEntry() {
 
+		}
+
+		public String getCurricularCourseName() {
+			return curricularCourseName;
+		}
+
+		public void setCurricularCourseName(String curricularCourseName) {
+			this.curricularCourseName = curricularCourseName;
+		}
+
+		public String getFirstSeasonDate() {
+			return firstSeasonDate;
+		}
+
+		public void setFirstSeasonDate(String firstSeasonDate) {
+			this.firstSeasonDate = firstSeasonDate;
+		}
+
+		public String getFirstSeasonHour() {
+			return firstSeasonHour;
+		}
+
+		public void setFirstSeasonHour(String firstSeasonHour) {
+			this.firstSeasonHour = firstSeasonHour;
+		}
+
+		public String getSecondSeasonDate() {
+			return secondSeasonDate;
+		}
+
+		public void setSecondSeasonDate(String secondSeasonDate) {
+			this.secondSeasonDate = secondSeasonDate;
+		}
+
+		public String getSecondSeasonHour() {
+			return secondSeasonHour;
+		}
+
+		public void setSecondSeasonHour(String secondSeasonHour) {
+			this.secondSeasonHour = secondSeasonHour;
+		}
+
+		public String getSpecialSeasonDate() {
+			return specialSeasonDate;
+		}
+
+		public void setSpecialSeasonDate(String specialSeasonDate) {
+			this.specialSeasonDate = specialSeasonDate;
+		}
+
+		public String getSpecialSeasonHour() {
+			return specialSeasonHour;
+		}
+
+		public void setSpecialSeasonHour(String specialSeasonHour) {
+			this.specialSeasonHour = specialSeasonHour;
+		}
+
+		public Boolean getAnyExamAvailable() {
+			return (!StringUtils.isEmpty(this.specialSeasonDate) && !StringUtils.isEmpty(this.specialSeasonHour))
+					|| (!StringUtils.isEmpty(this.secondSeasonDate) && !StringUtils.isEmpty(this.secondSeasonHour))
+					|| (!StringUtils.isEmpty(this.firstSeasonDate) && !StringUtils.isEmpty(this.firstSeasonHour));
+		}
 	}
 
-	public String getCurricularCourseName() {
-	    return curricularCourseName;
+	private static final long serialVersionUID = 1L;
+
+	protected ExamDateCertificate(final IDocumentRequest documentRequest) {
+		super(documentRequest);
 	}
 
-	public void setCurricularCourseName(String curricularCourseName) {
-	    this.curricularCourseName = curricularCourseName;
+	@Override
+	protected DocumentRequest getDocumentRequest() {
+		return (DocumentRequest) super.getDocumentRequest();
 	}
 
-	public String getFirstSeasonDate() {
-	    return firstSeasonDate;
+	@SuppressWarnings("unchecked")
+	@Override
+	protected void fillReport() {
+		super.fillReport();
+		addDataSourceElements(getExamDateEntries());
+		addParameter("name", getDocumentRequest().getRegistration().getPerson().getName());
+		addParameter("studentNumber", getStudentNumber());
 	}
 
-	public void setFirstSeasonDate(String firstSeasonDate) {
-	    this.firstSeasonDate = firstSeasonDate;
+	private String getStudentNumber() {
+		final Registration registration = getDocumentRequest().getRegistration();
+		if (ExamDateCertificateRequest.FREE_PAYMENT_AGREEMENTS.contains(registration.getRegistrationAgreement())) {
+			final String agreementInformation = registration.getAgreementInformation();
+			if (!StringUtils.isEmpty(agreementInformation)) {
+				return registration.getRegistrationAgreement().toString() + SINGLE_SPACE + agreementInformation;
+			}
+		}
+		return registration.getStudent().getNumber().toString();
 	}
 
-	public String getFirstSeasonHour() {
-	    return firstSeasonHour;
+	private List<ExamDateEntry> getExamDateEntries() {
+		final List<ExamDateEntry> result = new ArrayList<ExamDateEntry>();
+		final ExamDateCertificateRequest request = (ExamDateCertificateRequest) getDocumentRequest();
+
+		for (final Enrolment enrolment : request.getEnrolments()) {
+			final ExamDateEntry entry = new ExamDateEntry();
+			entry.setCurricularCourseName(enrolment.getCurricularCourse().getName());
+			fillFirstSeasonExam(request, enrolment, entry);
+			fillSecondSeasonExam(request, enrolment, entry);
+			fillSpecialSeasonExam(request, enrolment, entry);
+
+			result.add(entry);
+		}
+
+		return result;
 	}
 
-	public void setFirstSeasonHour(String firstSeasonHour) {
-	    this.firstSeasonHour = firstSeasonHour;
+	private void fillSpecialSeasonExam(final ExamDateCertificateRequest request, final Enrolment enrolment,
+			final ExamDateEntry entry) {
+		final Exam specialSeasonExam = request.getExamFor(enrolment, Season.SPECIAL_SEASON_OBJ);
+		if (specialSeasonExam != null) {
+			entry.setSpecialSeasonDate(specialSeasonExam.getDayDateYearMonthDay().toString(DD_SLASH_MM_SLASH_YYYY, getLocale()));
+			entry.setSpecialSeasonHour(specialSeasonExam.getBeginningDateHourMinuteSecond().toString("HH:mm"));
+		}
 	}
 
-	public String getSecondSeasonDate() {
-	    return secondSeasonDate;
+	private void fillSecondSeasonExam(final ExamDateCertificateRequest request, final Enrolment enrolment,
+			final ExamDateEntry entry) {
+		final Exam secondSeasonExam = request.getExamFor(enrolment, Season.SEASON2_OBJ);
+		if (secondSeasonExam != null) {
+			entry.setSecondSeasonDate(secondSeasonExam.getDayDateYearMonthDay().toString(DD_SLASH_MM_SLASH_YYYY, getLocale()));
+			entry.setSecondSeasonHour(secondSeasonExam.getBeginningDateHourMinuteSecond().toString("HH:mm"));
+		}
 	}
 
-	public void setSecondSeasonDate(String secondSeasonDate) {
-	    this.secondSeasonDate = secondSeasonDate;
+	private void fillFirstSeasonExam(final ExamDateCertificateRequest request, final Enrolment enrolment,
+			final ExamDateEntry entry) {
+		final Exam firstSeasonExam = request.getExamFor(enrolment, Season.SEASON1_OBJ);
+		if (firstSeasonExam != null) {
+			entry.setFirstSeasonDate(firstSeasonExam.getDayDateYearMonthDay().toString(DD_SLASH_MM_SLASH_YYYY, getLocale()));
+			entry.setFirstSeasonHour(firstSeasonExam.getBeginningDateHourMinuteSecond().toString("HH:mm"));
+		}
 	}
 
-	public String getSecondSeasonHour() {
-	    return secondSeasonHour;
+	@Override
+	protected boolean showPriceFields() {
+		return false;
 	}
 
-	public void setSecondSeasonHour(String secondSeasonHour) {
-	    this.secondSeasonHour = secondSeasonHour;
+	@Override
+	protected String getDegreeDescription() {
+		final Registration registration = getDocumentRequest().getRegistration();
+		final DegreeType degreeType = registration.getDegreeType();
+		final CycleType cycleType =
+				degreeType.hasExactlyOneCycleType() ? degreeType.getCycleType() : registration.getCycleType(getExecutionYear());
+		return registration.getDegreeDescription(getExecutionYear(), cycleType, getLocale());
 	}
-
-	public String getSpecialSeasonDate() {
-	    return specialSeasonDate;
-	}
-
-	public void setSpecialSeasonDate(String specialSeasonDate) {
-	    this.specialSeasonDate = specialSeasonDate;
-	}
-
-	public String getSpecialSeasonHour() {
-	    return specialSeasonHour;
-	}
-
-	public void setSpecialSeasonHour(String specialSeasonHour) {
-	    this.specialSeasonHour = specialSeasonHour;
-	}
-
-	public Boolean getAnyExamAvailable() {
-	    return (!StringUtils.isEmpty(this.specialSeasonDate) && !StringUtils.isEmpty(this.specialSeasonHour))
-		    || (!StringUtils.isEmpty(this.secondSeasonDate) && !StringUtils.isEmpty(this.secondSeasonHour))
-		    || (!StringUtils.isEmpty(this.firstSeasonDate) && !StringUtils.isEmpty(this.firstSeasonHour));
-	}
-    }
-
-    private static final long serialVersionUID = 1L;
-
-    protected ExamDateCertificate(final IDocumentRequest documentRequest) {
-	super(documentRequest);
-    }
-
-    @Override
-    protected DocumentRequest getDocumentRequest() {
-	return (DocumentRequest) super.getDocumentRequest();
-    }
-
-    @SuppressWarnings("unchecked")
-    @Override
-    protected void fillReport() {
-	super.fillReport();
-	addDataSourceElements(getExamDateEntries());
-	addParameter("name", getDocumentRequest().getRegistration().getPerson().getName());
-	addParameter("studentNumber", getStudentNumber());
-    }
-
-    private String getStudentNumber() {
-	final Registration registration = getDocumentRequest().getRegistration();
-	if (ExamDateCertificateRequest.FREE_PAYMENT_AGREEMENTS.contains(registration.getRegistrationAgreement())) {
-	    final String agreementInformation = registration.getAgreementInformation();
-	    if (!StringUtils.isEmpty(agreementInformation)) {
-		return registration.getRegistrationAgreement().toString() + SINGLE_SPACE + agreementInformation;
-	    }
-	}
-	return registration.getStudent().getNumber().toString();
-    }
-
-    private List<ExamDateEntry> getExamDateEntries() {
-	final List<ExamDateEntry> result = new ArrayList<ExamDateEntry>();
-	final ExamDateCertificateRequest request = (ExamDateCertificateRequest) getDocumentRequest();
-
-	for (final Enrolment enrolment : request.getEnrolments()) {
-	    final ExamDateEntry entry = new ExamDateEntry();
-	    entry.setCurricularCourseName(enrolment.getCurricularCourse().getName());
-	    fillFirstSeasonExam(request, enrolment, entry);
-	    fillSecondSeasonExam(request, enrolment, entry);
-	    fillSpecialSeasonExam(request, enrolment, entry);
-
-	    result.add(entry);
-	}
-
-	return result;
-    }
-
-    private void fillSpecialSeasonExam(final ExamDateCertificateRequest request, final Enrolment enrolment,
-	    final ExamDateEntry entry) {
-	final Exam specialSeasonExam = request.getExamFor(enrolment, Season.SPECIAL_SEASON_OBJ);
-	if (specialSeasonExam != null) {
-	    entry.setSpecialSeasonDate(specialSeasonExam.getDayDateYearMonthDay().toString(DD_SLASH_MM_SLASH_YYYY, getLocale()));
-	    entry.setSpecialSeasonHour(specialSeasonExam.getBeginningDateHourMinuteSecond().toString("HH:mm"));
-	}
-    }
-
-    private void fillSecondSeasonExam(final ExamDateCertificateRequest request, final Enrolment enrolment,
-	    final ExamDateEntry entry) {
-	final Exam secondSeasonExam = request.getExamFor(enrolment, Season.SEASON2_OBJ);
-	if (secondSeasonExam != null) {
-	    entry.setSecondSeasonDate(secondSeasonExam.getDayDateYearMonthDay().toString(DD_SLASH_MM_SLASH_YYYY, getLocale()));
-	    entry.setSecondSeasonHour(secondSeasonExam.getBeginningDateHourMinuteSecond().toString("HH:mm"));
-	}
-    }
-
-    private void fillFirstSeasonExam(final ExamDateCertificateRequest request, final Enrolment enrolment,
-	    final ExamDateEntry entry) {
-	final Exam firstSeasonExam = request.getExamFor(enrolment, Season.SEASON1_OBJ);
-	if (firstSeasonExam != null) {
-	    entry.setFirstSeasonDate(firstSeasonExam.getDayDateYearMonthDay().toString(DD_SLASH_MM_SLASH_YYYY, getLocale()));
-	    entry.setFirstSeasonHour(firstSeasonExam.getBeginningDateHourMinuteSecond().toString("HH:mm"));
-	}
-    }
-
-    @Override
-    protected boolean showPriceFields() {
-	return false;
-    }
-
-    protected String getDegreeDescription() {
-	final Registration registration = getDocumentRequest().getRegistration();
-	final DegreeType degreeType = registration.getDegreeType();
-	final CycleType cycleType = degreeType.hasExactlyOneCycleType() ? degreeType.getCycleType() : registration
-		.getCycleType(getExecutionYear());
-	return registration.getDegreeDescription(getExecutionYear(), cycleType, getLocale());
-    }
 
 }

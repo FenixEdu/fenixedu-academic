@@ -21,28 +21,28 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class UpdateAndReadGratuitySituationsByStudentNumber extends FenixService {
 
-    @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
-    @Service
-    public static List<InfoGratuitySituation> run(Integer studentNumber) {
+	@Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
+	@Service
+	public static List<InfoGratuitySituation> run(Integer studentNumber) {
 
-	List<InfoGratuitySituation> infoGratuitySituationsList = new ArrayList<InfoGratuitySituation>();
+		List<InfoGratuitySituation> infoGratuitySituationsList = new ArrayList<InfoGratuitySituation>();
 
-	for (Registration registration : Registration.readByNumberAndDegreeType(studentNumber, DegreeType.MASTER_DEGREE)) {
-	    List<StudentCurricularPlan> studentCurricularPlansList = registration.getStudentCurricularPlans();
+		for (Registration registration : Registration.readByNumberAndDegreeType(studentNumber, DegreeType.MASTER_DEGREE)) {
+			List<StudentCurricularPlan> studentCurricularPlansList = registration.getStudentCurricularPlans();
 
-	    for (StudentCurricularPlan studentCurricularPlan : studentCurricularPlansList) {
+			for (StudentCurricularPlan studentCurricularPlan : studentCurricularPlansList) {
 
-		List<GratuitySituation> gratuitySituations = studentCurricularPlan.getGratuitySituations();
-		for (GratuitySituation gratuitySituation : gratuitySituations) {
-		    gratuitySituation.updateValues();
+				List<GratuitySituation> gratuitySituations = studentCurricularPlan.getGratuitySituations();
+				for (GratuitySituation gratuitySituation : gratuitySituations) {
+					gratuitySituation.updateValues();
 
-		    infoGratuitySituationsList.add(InfoGratuitySituationWithInfoPersonAndInfoExecutionDegree
-			    .newInfoFromDomain(gratuitySituation));
+					infoGratuitySituationsList.add(InfoGratuitySituationWithInfoPersonAndInfoExecutionDegree
+							.newInfoFromDomain(gratuitySituation));
+				}
+			}
+
 		}
-	    }
 
+		return infoGratuitySituationsList;
 	}
-
-	return infoGratuitySituationsList;
-    }
 }

@@ -11,78 +11,78 @@ import net.sourceforge.fenixedu.domain.Professorship;
 
 public class ExecutionCourseSummaryElement implements Serializable {
 
-    private ExecutionCourse executionCourse;
-    private BigDecimal numberOfLessonInstances;
-    private BigDecimal numberOfLessonInstancesWithSummary;
-    // percentage value like xx.yy%
-    private BigDecimal percentageOfLessonsWithSummary;
-    private BigDecimal numberOfLessonInstancesWithNotTaughtSummary;
-    private BigDecimal percentageOfLessonsWithNotTaughtSummary;
+	private ExecutionCourse executionCourse;
+	private BigDecimal numberOfLessonInstances;
+	private BigDecimal numberOfLessonInstancesWithSummary;
+	// percentage value like xx.yy%
+	private BigDecimal percentageOfLessonsWithSummary;
+	private BigDecimal numberOfLessonInstancesWithNotTaughtSummary;
+	private BigDecimal percentageOfLessonsWithNotTaughtSummary;
 
-    public ExecutionCourseSummaryElement(ExecutionCourse executionCourse, BigDecimal numberOfLessonInstance,
-	    BigDecimal numberOfLessonInstanceWithSummary, BigDecimal percentageOfLessonsWithSummary,
-	    BigDecimal numberOfLessonInstancesWithNotTaughtSummary, BigDecimal percentageOfLessonsWithNotTaughtSummary) {
-	setExecutionCourse(executionCourse);
-	setNumberOfLessonInstances(numberOfLessonInstance);
-	setNumberOfLessonInstancesWithSummary(numberOfLessonInstanceWithSummary);
-	setPercentageOfLessonsWithSummary(percentageOfLessonsWithSummary);
-	setNumberOfLessonInstancesWithNotTaughtSummary(numberOfLessonInstancesWithNotTaughtSummary);
-	setPercentageOfLessonsWithNotTaughtSummary(percentageOfLessonsWithNotTaughtSummary);
-    }
-    
-    public Set<Person> getPersons() {
-	Set<Person> persons = new HashSet<Person>();
-	for (Professorship professorship : getExecutionCourse().getProfessorships()) {
-	    persons.add(professorship.getPerson());
+	public ExecutionCourseSummaryElement(ExecutionCourse executionCourse, BigDecimal numberOfLessonInstance,
+			BigDecimal numberOfLessonInstanceWithSummary, BigDecimal percentageOfLessonsWithSummary,
+			BigDecimal numberOfLessonInstancesWithNotTaughtSummary, BigDecimal percentageOfLessonsWithNotTaughtSummary) {
+		setExecutionCourse(executionCourse);
+		setNumberOfLessonInstances(numberOfLessonInstance);
+		setNumberOfLessonInstancesWithSummary(numberOfLessonInstanceWithSummary);
+		setPercentageOfLessonsWithSummary(percentageOfLessonsWithSummary);
+		setNumberOfLessonInstancesWithNotTaughtSummary(numberOfLessonInstancesWithNotTaughtSummary);
+		setPercentageOfLessonsWithNotTaughtSummary(percentageOfLessonsWithNotTaughtSummary);
 	}
-	return persons;
-    }
 
-    public ExecutionCourse getExecutionCourse() {
-	return executionCourse;
-    }
+	public Set<Person> getPersons() {
+		Set<Person> persons = new HashSet<Person>();
+		for (Professorship professorship : getExecutionCourse().getProfessorships()) {
+			persons.add(professorship.getPerson());
+		}
+		return persons;
+	}
 
-    public void setExecutionCourse(ExecutionCourse executionCourse) {
-	this.executionCourse = executionCourse;
-    }
+	public ExecutionCourse getExecutionCourse() {
+		return executionCourse;
+	}
 
-    public BigDecimal getNumberOfLessonInstances() {
-	return numberOfLessonInstances;
-    }
+	public void setExecutionCourse(ExecutionCourse executionCourse) {
+		this.executionCourse = executionCourse;
+	}
 
-    public void setNumberOfLessonInstances(BigDecimal numberOfLessonInstances) {
-	this.numberOfLessonInstances = numberOfLessonInstances;
-    }
+	public BigDecimal getNumberOfLessonInstances() {
+		return numberOfLessonInstances;
+	}
 
-    public BigDecimal getNumberOfLessonInstancesWithSummary() {
-	return numberOfLessonInstancesWithSummary;
-    }
+	public void setNumberOfLessonInstances(BigDecimal numberOfLessonInstances) {
+		this.numberOfLessonInstances = numberOfLessonInstances;
+	}
 
-    public void setNumberOfLessonInstancesWithSummary(BigDecimal numberOfLessonInstancesWithSummary) {
-	this.numberOfLessonInstancesWithSummary = numberOfLessonInstancesWithSummary;
-    }
+	public BigDecimal getNumberOfLessonInstancesWithSummary() {
+		return numberOfLessonInstancesWithSummary;
+	}
 
-    public BigDecimal getPercentageOfLessonsWithSummary() {
-	return percentageOfLessonsWithSummary.setScale(2);
-    }
+	public void setNumberOfLessonInstancesWithSummary(BigDecimal numberOfLessonInstancesWithSummary) {
+		this.numberOfLessonInstancesWithSummary = numberOfLessonInstancesWithSummary;
+	}
 
-    public void setPercentageOfLessonsWithSummary(BigDecimal percentageOfLessonsWithSummary) {
-	this.percentageOfLessonsWithSummary = percentageOfLessonsWithSummary;
-    }
+	public BigDecimal getPercentageOfLessonsWithSummary() {
+		return percentageOfLessonsWithSummary.setScale(2);
+	}
 
-    public void setNumberOfLessonInstancesWithNotTaughtSummary(BigDecimal numberOfLessonInstancesWithNotTaughtSummary) {
-	this.numberOfLessonInstancesWithNotTaughtSummary = numberOfLessonInstancesWithNotTaughtSummary;
-    }
+	public void setPercentageOfLessonsWithSummary(BigDecimal percentageOfLessonsWithSummary) {
+		this.percentageOfLessonsWithSummary = percentageOfLessonsWithSummary;
+	}
 
-    public BigDecimal getNumberOfLessonInstancesWithNotTaughtSummary() {
-	return numberOfLessonInstancesWithNotTaughtSummary;
-    }
+	public void setNumberOfLessonInstancesWithNotTaughtSummary(BigDecimal numberOfLessonInstancesWithNotTaughtSummary) {
+		this.numberOfLessonInstancesWithNotTaughtSummary = numberOfLessonInstancesWithNotTaughtSummary;
+	}
 
-    public void setPercentageOfLessonsWithNotTaughtSummary(BigDecimal percentageOfLessonsWithNotTaughtSummary) {
-	this.percentageOfLessonsWithNotTaughtSummary = percentageOfLessonsWithNotTaughtSummary;
-    }
+	public BigDecimal getNumberOfLessonInstancesWithNotTaughtSummary() {
+		return numberOfLessonInstancesWithNotTaughtSummary;
+	}
 
-    public BigDecimal getPercentageOfLessonsWithNotTaughtSummary() {
-	return percentageOfLessonsWithNotTaughtSummary.setScale(2);
-    }
+	public void setPercentageOfLessonsWithNotTaughtSummary(BigDecimal percentageOfLessonsWithNotTaughtSummary) {
+		this.percentageOfLessonsWithNotTaughtSummary = percentageOfLessonsWithNotTaughtSummary;
+	}
+
+	public BigDecimal getPercentageOfLessonsWithNotTaughtSummary() {
+		return percentageOfLessonsWithNotTaughtSummary.setScale(2);
+	}
 }

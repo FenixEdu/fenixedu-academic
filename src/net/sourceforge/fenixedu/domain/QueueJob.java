@@ -12,76 +12,76 @@ import org.joda.time.DateTime;
 import pt.ist.fenixWebFramework.services.Service;
 
 public abstract class QueueJob extends QueueJob_Base {
-    public static enum Priority {
-	HIGH, NORMAL;
-    }
+	public static enum Priority {
+		HIGH, NORMAL;
+	}
 
-    public QueueJob() {
-	super();
-	this.setRequestDate(new DateTime());
-	setFailedCounter(new Integer(0));
-	setRootDomainObject(RootDomainObject.getInstance());
-	setRootDomainObjectQueueUndone(RootDomainObject.getInstance());
-	setDone(Boolean.FALSE);
-	setPerson(AccessControl.getPerson());
-    }
+	public QueueJob() {
+		super();
+		this.setRequestDate(new DateTime());
+		setFailedCounter(new Integer(0));
+		setRootDomainObject(RootDomainObject.getInstance());
+		setRootDomainObjectQueueUndone(RootDomainObject.getInstance());
+		setDone(Boolean.FALSE);
+		setPerson(AccessControl.getPerson());
+	}
 
-    public abstract QueueJobResult execute() throws Exception;
+	public abstract QueueJobResult execute() throws Exception;
 
-    public String getDescription() {
-	return "Tarefa";
-    }
+	public String getDescription() {
+		return "Tarefa";
+	}
 
-    public String getFilename() {
-	return "ficheiro";
-    }
+	public String getFilename() {
+		return "ficheiro";
+	}
 
-    public boolean getIsNotDoneAndCancelled() {
-	return !getDone() && !hasRootDomainObjectQueueUndone();
-    }
+	public boolean getIsNotDoneAndCancelled() {
+		return !getDone() && !hasRootDomainObjectQueueUndone();
+	}
 
-    public boolean getIsNotDoneAndNotCancelled() {
-	return !getDone() && hasRootDomainObjectQueueUndone();
-    }
+	public boolean getIsNotDoneAndNotCancelled() {
+		return !getDone() && hasRootDomainObjectQueueUndone();
+	}
 
-    public static List<QueueJob> getAllJobsForClassOrSubClass(final Class aClass, int max) {
-	List<QueueJob> tempList = (List<QueueJob>) CollectionUtils.select(RootDomainObject.getInstance().getQueueJob(),
-		new Predicate() {
+	public static List<QueueJob> getAllJobsForClassOrSubClass(final Class aClass, int max) {
+		List<QueueJob> tempList =
+				(List<QueueJob>) CollectionUtils.select(RootDomainObject.getInstance().getQueueJob(), new Predicate() {
 
-		    @Override
-		    public boolean evaluate(Object arg0) {
-			return aClass.isInstance(arg0);
-		    }
+					@Override
+					public boolean evaluate(Object arg0) {
+						return aClass.isInstance(arg0);
+					}
 
-		});
+				});
 
-	return tempList.size() > max ? tempList.subList(0, max) : tempList;
-    }
+		return tempList.size() > max ? tempList.subList(0, max) : tempList;
+	}
 
-    public static List<QueueJob> getUndoneJobsForClass(final Class clazz) {
-	return new ArrayList<QueueJob>(CollectionUtils.select(RootDomainObject.getInstance().getQueueJobUndone(),
-		new Predicate() {
+	public static List<QueueJob> getUndoneJobsForClass(final Class clazz) {
+		return new ArrayList<QueueJob>(CollectionUtils.select(RootDomainObject.getInstance().getQueueJobUndone(),
+				new Predicate() {
 
-		    @Override
-		    public boolean evaluate(Object arg0) {
-			return clazz.isInstance(arg0);
-		    }
+					@Override
+					public boolean evaluate(Object arg0) {
+						return clazz.isInstance(arg0);
+					}
 
-		}));
-    }
+				}));
+	}
 
-    public Priority getPriority() {
-	return Priority.NORMAL;
-    }
+	public Priority getPriority() {
+		return Priority.NORMAL;
+	}
 
-    @Service
-    public void cancel() {
-	removeRootDomainObjectQueueUndone();
-    }
+	@Service
+	public void cancel() {
+		removeRootDomainObjectQueueUndone();
+	}
 
-    @Service
-    public void resend() {
-	setRootDomainObjectQueueUndone(RootDomainObject.getInstance());
-    }
+	@Service
+	public void resend() {
+		setRootDomainObjectQueueUndone(RootDomainObject.getInstance());
+	}
 
 }

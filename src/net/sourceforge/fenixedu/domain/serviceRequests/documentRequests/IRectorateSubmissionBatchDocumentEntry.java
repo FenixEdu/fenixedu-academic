@@ -8,26 +8,26 @@ import net.sourceforge.fenixedu.domain.serviceRequests.RegistryCode;
 import net.sourceforge.fenixedu.domain.student.Student;
 
 public interface IRectorateSubmissionBatchDocumentEntry {
-    public RegistryCode getRegistryCode();
+	public RegistryCode getRegistryCode();
 
-    public DocumentRequestType getDocumentRequestType();
+	public DocumentRequestType getDocumentRequestType();
 
-    public CycleType getRequestedCycle();
+	public CycleType getRequestedCycle();
 
-    public String getProgrammeTypeDescription();
+	public String getProgrammeTypeDescription();
 
-    public Student getStudent();
+	public Student getStudent();
 
-    public Person getPerson();
+	public Person getPerson();
 
-    public AcademicServiceRequestSituationType getAcademicServiceRequestSituationType();
+	public AcademicServiceRequestSituationType getAcademicServiceRequestSituationType();
 
-    public GeneratedDocument getLastGeneratedDocument();
+	public GeneratedDocument getLastGeneratedDocument();
 
-    public String getViewStudentProgrammeLink();
+	public String getViewStudentProgrammeLink();
 
-    public String getReceivedActionLink();
+	public String getReceivedActionLink();
 
-    public boolean isProgrammeLinkVisible();
+	public boolean isProgrammeLinkVisible();
 
 }

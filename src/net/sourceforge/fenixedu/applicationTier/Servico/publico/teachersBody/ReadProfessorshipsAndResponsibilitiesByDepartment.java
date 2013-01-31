@@ -33,137 +33,142 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class ReadProfessorshipsAndResponsibilitiesByDepartment extends FenixService {
 
-    @Service
-    public static List run(Integer departmentId, Integer executionYearId) throws FenixServiceException {
+	@Service
+	public static List run(Integer departmentId, Integer executionYearId) throws FenixServiceException {
 
-	// Execution Year
-	ExecutionYear executionYear = null;
-	if (executionYearId != null) {
-	    executionYear = rootDomainObject.readExecutionYearByOID(executionYearId);
-	}
-	// Departement
-	Department department = rootDomainObject.readDepartmentByOID(departmentId);
-	List teachers = department.getAllCurrentTeachers();
-	Iterator iter = teachers.iterator();
-
-	List<Professorship> professorships = new ArrayList<Professorship>();
-	List<Professorship> responsibleFors = new ArrayList<Professorship>();
-	while (iter.hasNext()) {
-	    Teacher teacher = (Teacher) iter.next();
-	    List<Professorship> teacherProfessorships = null;
-	    if (executionYear == null) {
-		teacherProfessorships = teacher.getProfessorships();
-	    } else {
-		teacherProfessorships = teacher.getProfessorships(executionYear);
-	    }
-	    if (teacherProfessorships != null) {
-		professorships.addAll(teacherProfessorships);
-	    }
-
-	    List<Professorship> teacherResponsibleFors = null;
-	    if (executionYear == null) {
-		teacherResponsibleFors = teacher.responsibleFors();
-	    } else {
-		teacherResponsibleFors = new ArrayList<Professorship>();
-		for (final Professorship professorship : teacher.responsibleFors()) {
-		    if (professorship.getExecutionCourse().isLecturedIn(executionYear)) {
-			teacherResponsibleFors.add(professorship);
-		    }
+		// Execution Year
+		ExecutionYear executionYear = null;
+		if (executionYearId != null) {
+			executionYear = rootDomainObject.readExecutionYearByOID(executionYearId);
 		}
-	    }
-	    if (teacherResponsibleFors != null) {
-		responsibleFors.addAll(teacherResponsibleFors);
-	    }
-	}
+		// Departement
+		Department department = rootDomainObject.readDepartmentByOID(departmentId);
+		List teachers = department.getAllCurrentTeachers();
+		Iterator iter = teachers.iterator();
 
-	List detailedProfessorships = getDetailedProfessorships(professorships, responsibleFors);
+		List<Professorship> professorships = new ArrayList<Professorship>();
+		List<Professorship> responsibleFors = new ArrayList<Professorship>();
+		while (iter.hasNext()) {
+			Teacher teacher = (Teacher) iter.next();
+			List<Professorship> teacherProfessorships = null;
+			if (executionYear == null) {
+				teacherProfessorships = teacher.getProfessorships();
+			} else {
+				teacherProfessorships = teacher.getProfessorships(executionYear);
+			}
+			if (teacherProfessorships != null) {
+				professorships.addAll(teacherProfessorships);
+			}
 
-	Collections.sort(detailedProfessorships, new Comparator() {
-
-	    public int compare(Object o1, Object o2) {
-
-		DetailedProfessorship detailedProfessorship1 = (DetailedProfessorship) o1;
-		DetailedProfessorship detailedProfessorship2 = (DetailedProfessorship) o2;
-		int result = detailedProfessorship1.getInfoProfessorship().getInfoExecutionCourse().getIdInternal().intValue()
-			- detailedProfessorship2.getInfoProfessorship().getInfoExecutionCourse().getIdInternal().intValue();
-		if (result == 0
-			&& (detailedProfessorship1.getResponsibleFor().booleanValue() || detailedProfessorship2
-				.getResponsibleFor().booleanValue())) {
-		    if (detailedProfessorship1.getResponsibleFor().booleanValue()) {
-			return -1;
-		    }
-		    if (detailedProfessorship2.getResponsibleFor().booleanValue()) {
-			return 1;
-		    }
+			List<Professorship> teacherResponsibleFors = null;
+			if (executionYear == null) {
+				teacherResponsibleFors = teacher.responsibleFors();
+			} else {
+				teacherResponsibleFors = new ArrayList<Professorship>();
+				for (final Professorship professorship : teacher.responsibleFors()) {
+					if (professorship.getExecutionCourse().isLecturedIn(executionYear)) {
+						teacherResponsibleFors.add(professorship);
+					}
+				}
+			}
+			if (teacherResponsibleFors != null) {
+				responsibleFors.addAll(teacherResponsibleFors);
+			}
 		}
 
+		List detailedProfessorships = getDetailedProfessorships(professorships, responsibleFors);
+
+		Collections.sort(detailedProfessorships, new Comparator() {
+
+			@Override
+			public int compare(Object o1, Object o2) {
+
+				DetailedProfessorship detailedProfessorship1 = (DetailedProfessorship) o1;
+				DetailedProfessorship detailedProfessorship2 = (DetailedProfessorship) o2;
+				int result =
+						detailedProfessorship1.getInfoProfessorship().getInfoExecutionCourse().getIdInternal().intValue()
+								- detailedProfessorship2.getInfoProfessorship().getInfoExecutionCourse().getIdInternal()
+										.intValue();
+				if (result == 0
+						&& (detailedProfessorship1.getResponsibleFor().booleanValue() || detailedProfessorship2
+								.getResponsibleFor().booleanValue())) {
+					if (detailedProfessorship1.getResponsibleFor().booleanValue()) {
+						return -1;
+					}
+					if (detailedProfessorship2.getResponsibleFor().booleanValue()) {
+						return 1;
+					}
+				}
+
+				return result;
+			}
+
+		});
+
+		List result = new ArrayList();
+		iter = detailedProfessorships.iterator();
+		List<DetailedProfessorship> temp = new ArrayList<DetailedProfessorship>();
+		while (iter.hasNext()) {
+			DetailedProfessorship detailedProfessorship = (DetailedProfessorship) iter.next();
+			if (temp.isEmpty()
+					|| temp.get(temp.size() - 1).getInfoProfessorship().getInfoExecutionCourse()
+							.equals(detailedProfessorship.getInfoProfessorship().getInfoExecutionCourse())) {
+				temp.add(detailedProfessorship);
+			} else {
+				result.add(temp);
+				temp = new ArrayList<DetailedProfessorship>();
+				temp.add(detailedProfessorship);
+			}
+		}
+		if (!temp.isEmpty()) {
+			result.add(temp);
+		}
 		return result;
-	    }
-
-	});
-
-	List result = new ArrayList();
-	iter = detailedProfessorships.iterator();
-	List<DetailedProfessorship> temp = new ArrayList<DetailedProfessorship>();
-	while (iter.hasNext()) {
-	    DetailedProfessorship detailedProfessorship = (DetailedProfessorship) iter.next();
-	    if (temp.isEmpty()
-		    || ((DetailedProfessorship) temp.get(temp.size() - 1)).getInfoProfessorship().getInfoExecutionCourse()
-			    .equals(detailedProfessorship.getInfoProfessorship().getInfoExecutionCourse())) {
-		temp.add(detailedProfessorship);
-	    } else {
-		result.add(temp);
-		temp = new ArrayList<DetailedProfessorship>();
-		temp.add(detailedProfessorship);
-	    }
 	}
-	if (!temp.isEmpty()) {
-	    result.add(temp);
+
+	protected static List getDetailedProfessorships(List professorships, final List responsibleFors) {
+
+		List detailedProfessorshipList = (List) CollectionUtils.collect(professorships, new Transformer() {
+
+			@Override
+			public Object transform(Object input) {
+
+				Professorship professorship = (Professorship) input;
+
+				InfoProfessorship infoProfessorShip = InfoProfessorship.newInfoFromDomain(professorship);
+
+				List executionCourseCurricularCoursesList = getInfoCurricularCourses(professorship.getExecutionCourse());
+
+				DetailedProfessorship detailedProfessorship = new DetailedProfessorship();
+
+				detailedProfessorship.setResponsibleFor(professorship.getResponsibleFor());
+
+				detailedProfessorship.setInfoProfessorship(infoProfessorShip);
+				detailedProfessorship.setExecutionCourseCurricularCoursesList(executionCourseCurricularCoursesList);
+
+				return detailedProfessorship;
+			}
+
+			private List getInfoCurricularCourses(ExecutionCourse executionCourse) {
+
+				List infoCurricularCourses =
+						(List) CollectionUtils.collect(executionCourse.getAssociatedCurricularCourses(), new Transformer() {
+
+							@Override
+							public Object transform(Object input) {
+
+								CurricularCourse curricularCourse = (CurricularCourse) input;
+
+								InfoCurricularCourse infoCurricularCourse =
+										InfoCurricularCourse.newInfoFromDomain(curricularCourse);
+								return infoCurricularCourse;
+							}
+						});
+				return infoCurricularCourses;
+			}
+		});
+
+		return detailedProfessorshipList;
 	}
-	return result;
-    }
-
-    protected static List getDetailedProfessorships(List professorships, final List responsibleFors) {
-
-	List detailedProfessorshipList = (List) CollectionUtils.collect(professorships, new Transformer() {
-
-	    public Object transform(Object input) {
-
-		Professorship professorship = (Professorship) input;
-
-		InfoProfessorship infoProfessorShip = InfoProfessorship.newInfoFromDomain(professorship);
-
-		List executionCourseCurricularCoursesList = getInfoCurricularCourses(professorship.getExecutionCourse());
-
-		DetailedProfessorship detailedProfessorship = new DetailedProfessorship();
-
-		detailedProfessorship.setResponsibleFor(professorship.getResponsibleFor());
-
-		detailedProfessorship.setInfoProfessorship(infoProfessorShip);
-		detailedProfessorship.setExecutionCourseCurricularCoursesList(executionCourseCurricularCoursesList);
-
-		return detailedProfessorship;
-	    }
-
-	    private List getInfoCurricularCourses(ExecutionCourse executionCourse) {
-
-		List infoCurricularCourses = (List) CollectionUtils.collect(executionCourse.getAssociatedCurricularCourses(),
-			new Transformer() {
-
-			    public Object transform(Object input) {
-
-				CurricularCourse curricularCourse = (CurricularCourse) input;
-
-				InfoCurricularCourse infoCurricularCourse = InfoCurricularCourse
-					.newInfoFromDomain(curricularCourse);
-				return infoCurricularCourse;
-			    }
-			});
-		return infoCurricularCourses;
-	    }
-	});
-
-	return detailedProfessorshipList;
-    }
 
 }

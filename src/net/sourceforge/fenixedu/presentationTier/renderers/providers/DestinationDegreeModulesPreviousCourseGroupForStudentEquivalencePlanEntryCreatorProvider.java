@@ -5,11 +5,11 @@ import net.sourceforge.fenixedu.domain.studentCurricularPlan.equivalencyPlan.Stu
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 
 public class DestinationDegreeModulesPreviousCourseGroupForStudentEquivalencePlanEntryCreatorProvider extends
-	DestinationDegreeModulesPreviousCourseGroupForEquivalencePlanEntryCreatorProvider implements DataProvider {
+		DestinationDegreeModulesPreviousCourseGroupForEquivalencePlanEntryCreatorProvider implements DataProvider {
 
-    @Override
-    protected DegreeCurricularPlan getDegreeCurricularPlan(Object source) {
-	return ((StudentEquivalencyPlanEntryCreator) source).getDegreeCurricularPlanEquivalencePlan().getDegreeCurricularPlan();
-    }
+	@Override
+	protected DegreeCurricularPlan getDegreeCurricularPlan(Object source) {
+		return ((StudentEquivalencyPlanEntryCreator) source).getDegreeCurricularPlanEquivalencePlan().getDegreeCurricularPlan();
+	}
 
 }

@@ -11,38 +11,38 @@ import net.sourceforge.fenixedu.util.EvaluationType;
 
 public class OnlineTest extends OnlineTest_Base {
 
-    public static List<OnlineTest> readOnlineTests() {
-	List<OnlineTest> result = new ArrayList<OnlineTest>();
+	public static List<OnlineTest> readOnlineTests() {
+		List<OnlineTest> result = new ArrayList<OnlineTest>();
 
-	for (Evaluation evaluation : RootDomainObject.getInstance().getEvaluations()) {
-	    if (evaluation instanceof OnlineTest) {
-		result.add((OnlineTest) evaluation);
-	    }
+		for (Evaluation evaluation : RootDomainObject.getInstance().getEvaluations()) {
+			if (evaluation instanceof OnlineTest) {
+				result.add((OnlineTest) evaluation);
+			}
+		}
+
+		return result;
 	}
 
-	return result;
-    }
+	public OnlineTest() {
+		super();
+		setGradeScale(GradeScale.TYPE20);
+	}
 
-    public OnlineTest() {
-	super();
-	setGradeScale(GradeScale.TYPE20);
-    }
+	@Override
+	public EvaluationType getEvaluationType() {
+		return EvaluationType.ONLINE_TEST_TYPE;
+	}
 
-    @Override
-    public EvaluationType getEvaluationType() {
-	return EvaluationType.ONLINE_TEST_TYPE;
-    }
+	@Override
+	public void delete() {
+		logRemove();
+		removeDistributedTest();
+		super.delete();
+	}
 
-    @Override
-    public void delete() {
-	logRemove();
-	removeDistributedTest();
-	super.delete();
-    }
-
-    @Override
-    public String getPresentationName() {
-	return BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "label.online.test") + " "
-		+ getDistributedTest().getEvaluationTitle();
-    }
+	@Override
+	public String getPresentationName() {
+		return BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "label.online.test") + " "
+				+ getDistributedTest().getEvaluationTitle();
+	}
 }

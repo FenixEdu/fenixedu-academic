@@ -11,67 +11,67 @@ import pt.utl.ist.fenix.tools.util.StringNormalizer;
 
 public class CreateProjectSubmissionBean implements Serializable {
 
-    private StudentGroup studentGroupReference;
+	private StudentGroup studentGroupReference;
 
-    private Attends attendsReference;
+	private Attends attendsReference;
 
-    private Project projectReference;
+	private Project projectReference;
 
-    private Person personReference;
+	private Person personReference;
 
-    private transient InputStream inputStream;
+	private transient InputStream inputStream;
 
-    private String filename;
+	private String filename;
 
-    public StudentGroup getStudentGroup() {
-	return this.studentGroupReference;
+	public StudentGroup getStudentGroup() {
+		return this.studentGroupReference;
 
-    }
+	}
 
-    public void setStudentGroup(StudentGroup studentGroup) {
-	this.studentGroupReference = studentGroup;
-    }
+	public void setStudentGroup(StudentGroup studentGroup) {
+		this.studentGroupReference = studentGroup;
+	}
 
-    public Attends getAttends() {
-	return this.attendsReference;
+	public Attends getAttends() {
+		return this.attendsReference;
 
-    }
+	}
 
-    public void setAttends(Attends attends) {
-	this.attendsReference = attends;
+	public void setAttends(Attends attends) {
+		this.attendsReference = attends;
 
-    }
+	}
 
-    public Project getProject() {
-	return this.projectReference;
-    }
+	public Project getProject() {
+		return this.projectReference;
+	}
 
-    public void setProject(Project project) {
-	this.projectReference = project;
-    }
+	public void setProject(Project project) {
+		this.projectReference = project;
+	}
 
-    public Person getPerson() {
-	return this.personReference;
-    }
+	public Person getPerson() {
+		return this.personReference;
+	}
 
-    public void setPerson(Person person) {
-	this.personReference = person;
-    }
+	public void setPerson(Person person) {
+		this.personReference = person;
+	}
 
-    public InputStream getInputStream() {
-	return inputStream;
-    }
+	public InputStream getInputStream() {
+		return inputStream;
+	}
 
-    public void setInputStream(InputStream fileInputStream) {
-	this.inputStream = fileInputStream;
-    }
+	public void setInputStream(InputStream fileInputStream) {
+		this.inputStream = fileInputStream;
+	}
 
-    public String getFilename() {
-	return filename;
-    }
+	public String getFilename() {
+		return filename;
+	}
 
-    public void setFilename(String filename) {
-	this.filename = StringNormalizer.normalize(filename);
-    }
+	public void setFilename(String filename) {
+		this.filename = StringNormalizer.normalize(filename);
+	}
 
 }

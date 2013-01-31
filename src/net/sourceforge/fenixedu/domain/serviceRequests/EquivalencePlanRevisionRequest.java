@@ -9,93 +9,93 @@ import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.Academic
 
 public class EquivalencePlanRevisionRequest extends EquivalencePlanRevisionRequest_Base {
 
-    protected EquivalencePlanRevisionRequest() {
-	super();
-    }
-
-    public EquivalencePlanRevisionRequest(final RegistrationAcademicServiceRequestCreateBean bean) {
-	this();
-	super.init(bean);
-
-	checkParameters(bean);
-	super.setEquivalencePlanRequest(bean.getEquivalencePlanRequest());
-    }
-
-    @Override
-    public void setEquivalencePlanRequest(final EquivalencePlanRequest equivalencePlanRequest) {
-	throw new DomainException("error.EquivalencePlanRevisionRequest.cannot.modify.equivalencePlanRequest");
-    }
-
-    private void checkParameters(final RegistrationAcademicServiceRequestCreateBean bean) {
-	final EquivalencePlanRequest equivalencePlanRequest = bean.getEquivalencePlanRequest();
-	final ExecutionYear executionYear = bean.getExecutionYear();
-
-	if (equivalencePlanRequest == null) {
-	    throw new DomainException("error.EquivalencePlanRevisionRequest.equivalencePlanRequest.cannot.be.null");
+	protected EquivalencePlanRevisionRequest() {
+		super();
 	}
 
-	if (!equivalencePlanRequest.hasConcluded()) {
-	    throw new DomainException("error.EquivalencePlanRevisionRequest.equivalencePlanRequest.is.not.concluded");
+	public EquivalencePlanRevisionRequest(final RegistrationAcademicServiceRequestCreateBean bean) {
+		this();
+		super.init(bean);
+
+		checkParameters(bean);
+		super.setEquivalencePlanRequest(bean.getEquivalencePlanRequest());
 	}
 
-	if (executionYear == null) {
-	    throw new DomainException("error.EquivalencePlanRevisionRequest.executionYear.cannot.be.null");
+	@Override
+	public void setEquivalencePlanRequest(final EquivalencePlanRequest equivalencePlanRequest) {
+		throw new DomainException("error.EquivalencePlanRevisionRequest.cannot.modify.equivalencePlanRequest");
 	}
-    }
 
-    @Override
-    public AcademicServiceRequestType getAcademicServiceRequestType() {
-	return AcademicServiceRequestType.REVISION_EQUIVALENCE_PLAN;
-    }
+	private void checkParameters(final RegistrationAcademicServiceRequestCreateBean bean) {
+		final EquivalencePlanRequest equivalencePlanRequest = bean.getEquivalencePlanRequest();
+		final ExecutionYear executionYear = bean.getExecutionYear();
 
-    @Override
-    public EventType getEventType() {
-	return null;
-    }
+		if (equivalencePlanRequest == null) {
+			throw new DomainException("error.EquivalencePlanRevisionRequest.equivalencePlanRequest.cannot.be.null");
+		}
 
-    @Override
-    protected void disconnect() {
-	super.setEquivalencePlanRequest(null);
-	super.disconnect();
-    }
+		if (!equivalencePlanRequest.hasConcluded()) {
+			throw new DomainException("error.EquivalencePlanRevisionRequest.equivalencePlanRequest.is.not.concluded");
+		}
 
-    @Override
-    protected void internalChangeState(AcademicServiceRequestBean academicServiceRequestBean) {
-	super.internalChangeState(academicServiceRequestBean);
-
-	if (academicServiceRequestBean.isToProcess()) {
-	    academicServiceRequestBean.setSituationDate(getActiveSituation().getSituationDate().toYearMonthDay());
+		if (executionYear == null) {
+			throw new DomainException("error.EquivalencePlanRevisionRequest.executionYear.cannot.be.null");
+		}
 	}
-    }
 
-    @Override
-    public boolean isToPrint() {
-	return false;
-    }
+	@Override
+	public AcademicServiceRequestType getAcademicServiceRequestType() {
+		return AcademicServiceRequestType.REVISION_EQUIVALENCE_PLAN;
+	}
 
-    @Override
-    public boolean isPossibleToSendToOtherEntity() {
-	return true;
-    }
-    
-    @Override
-    public boolean isManagedWithRectorateSubmissionBatch() {
-        return false;
-    }
+	@Override
+	public EventType getEventType() {
+		return null;
+	}
 
-    @Override
-    public boolean isAvailableForTransitedRegistrations() {
-	return false;
-    }
+	@Override
+	protected void disconnect() {
+		super.setEquivalencePlanRequest(null);
+		super.disconnect();
+	}
 
-    @Override
-    public boolean isPayedUponCreation() {
-	return false;
-    }
+	@Override
+	protected void internalChangeState(AcademicServiceRequestBean academicServiceRequestBean) {
+		super.internalChangeState(academicServiceRequestBean);
 
-    @Override
-    public boolean hasPersonalInfo() {
-	return false;
-    }
+		if (academicServiceRequestBean.isToProcess()) {
+			academicServiceRequestBean.setSituationDate(getActiveSituation().getSituationDate().toYearMonthDay());
+		}
+	}
+
+	@Override
+	public boolean isToPrint() {
+		return false;
+	}
+
+	@Override
+	public boolean isPossibleToSendToOtherEntity() {
+		return true;
+	}
+
+	@Override
+	public boolean isManagedWithRectorateSubmissionBatch() {
+		return false;
+	}
+
+	@Override
+	public boolean isAvailableForTransitedRegistrations() {
+		return false;
+	}
+
+	@Override
+	public boolean isPayedUponCreation() {
+		return false;
+	}
+
+	@Override
+	public boolean hasPersonalInfo() {
+		return false;
+	}
 
 }

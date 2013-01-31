@@ -17,77 +17,78 @@ import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 public class LabelFormatterTagLib extends BodyTagSupport implements PropertyContainerTag {
 
-    private Properties properties;
+	private Properties properties;
 
-    private String name;
+	private String name;
 
-    private String property;
+	private String property;
 
-    private String scope;
+	private String scope;
 
-    public LabelFormatterTagLib() {
+	public LabelFormatterTagLib() {
 
-	this.properties = new Properties();
-    }
-
-    public void addProperty(String name, String value) {
-	this.properties.put(name, value);
-    }
-
-    @Override
-    public int doEndTag() throws JspException {
-
-	final LabelFormatter labelFormatter = (LabelFormatter) TagUtils.getInstance().lookup(this.pageContext, this.name,
-		this.property, this.scope);
-
-	final JspWriter out = this.pageContext.getOut();
-
-	try {
-	    out.write(labelFormatter.toString(new StrutsMessageResourceProvider(this.properties, getUserLocale(),
-		    this.pageContext.getServletContext(), (HttpServletRequest) this.pageContext.getRequest())));
-	} catch (IOException e) {
-	    throw new JspException(e);
+		this.properties = new Properties();
 	}
 
-	return EVAL_PAGE;
-    }
+	@Override
+	public void addProperty(String name, String value) {
+		this.properties.put(name, value);
+	}
 
-    private Locale getUserLocale() {
-	return TagUtils.getInstance().getUserLocale(this.pageContext, null);
-    }
+	@Override
+	public int doEndTag() throws JspException {
 
-    @Override
-    public void release() {
-	super.release();
+		final LabelFormatter labelFormatter =
+				(LabelFormatter) TagUtils.getInstance().lookup(this.pageContext, this.name, this.property, this.scope);
 
-	this.properties = new Properties();
-	this.name = null;
-	this.property = null;
-	this.scope = null;
-    }
+		final JspWriter out = this.pageContext.getOut();
 
-    public String getName() {
-	return name;
-    }
+		try {
+			out.write(labelFormatter.toString(new StrutsMessageResourceProvider(this.properties, getUserLocale(),
+					this.pageContext.getServletContext(), (HttpServletRequest) this.pageContext.getRequest())));
+		} catch (IOException e) {
+			throw new JspException(e);
+		}
 
-    public void setName(String name) {
-	this.name = name;
-    }
+		return EVAL_PAGE;
+	}
 
-    public String getProperty() {
-	return property;
-    }
+	private Locale getUserLocale() {
+		return TagUtils.getInstance().getUserLocale(this.pageContext, null);
+	}
 
-    public void setProperty(String property) {
-	this.property = property;
-    }
+	@Override
+	public void release() {
+		super.release();
 
-    public String getScope() {
-	return scope;
-    }
+		this.properties = new Properties();
+		this.name = null;
+		this.property = null;
+		this.scope = null;
+	}
 
-    public void setScope(String scope) {
-	this.scope = scope;
-    }
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getProperty() {
+		return property;
+	}
+
+	public void setProperty(String property) {
+		this.property = property;
+	}
+
+	public String getScope() {
+		return scope;
+	}
+
+	public void setScope(String scope) {
+		this.scope = scope;
+	}
 
 }

@@ -22,20 +22,21 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadShiftsByClass extends FenixService {
 
-    @Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
-    @Service
-    public static Object run(InfoClass infoClass) {
-	SchoolClass schoolClass = rootDomainObject.readSchoolClassByOID(infoClass.getIdInternal());
+	@Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
+	@Service
+	public static Object run(InfoClass infoClass) {
+		SchoolClass schoolClass = rootDomainObject.readSchoolClassByOID(infoClass.getIdInternal());
 
-	List<Shift> shifts = schoolClass.getAssociatedShifts();
+		List<Shift> shifts = schoolClass.getAssociatedShifts();
 
-	return CollectionUtils.collect(shifts, new Transformer() {
-	    public Object transform(Object arg0) {
-		Shift shift = (Shift) arg0;
-		InfoShift infoShift = InfoShift.newInfoFromDomain(shift);
-		return infoShift;
-	    }
-	});
-    }
+		return CollectionUtils.collect(shifts, new Transformer() {
+			@Override
+			public Object transform(Object arg0) {
+				Shift shift = (Shift) arg0;
+				InfoShift infoShift = InfoShift.newInfoFromDomain(shift);
+				return infoShift;
+			}
+		});
+	}
 
 }

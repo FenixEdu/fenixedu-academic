@@ -10,66 +10,66 @@ import org.apache.commons.lang.StringUtils;
 
 public class InstitutionPhdCandidacyProcessProperties {
 
-    static private final long serialVersionUID = 1L;
+	static private final long serialVersionUID = 1L;
 
-    static private String getProperty(final String key) {
-	return PropertiesManager.getProperty(key);
-    }
-
-    static public String getPublicCandidacyAccessLink(final Locale locale) {
-	String countryCode = readCountryCode(locale);
-
-	return getProperty("phd.institution.public.candidacy.access.link." + countryCode);
-    }
-
-    static private String readCountryCode(final Locale locale) {
-	String country = locale.getCountry();
-	String language = locale.getLanguage();
-
-	String result = null;
-	if (!StringUtils.isEmpty(country)) {
-	    result = country.toUpperCase();
-	} else if (!StringUtils.isEmpty(language)) {
-	    result = language.toUpperCase();
+	static private String getProperty(final String key) {
+		return PropertiesManager.getProperty(key);
 	}
 
-	if (!StringUtils.isEmpty(result)) {
-	    return result;
+	static public String getPublicCandidacyAccessLink(final Locale locale) {
+		String countryCode = readCountryCode(locale);
+
+		return getProperty("phd.institution.public.candidacy.access.link." + countryCode);
 	}
 
-	return "PT";
-    }
+	static private String readCountryCode(final Locale locale) {
+		String country = locale.getCountry();
+		String language = locale.getLanguage();
 
-    static public String getPublicCandidacySubmissionLink(final Locale locale) {
-	String countryCode = readCountryCode(locale);
+		String result = null;
+		if (!StringUtils.isEmpty(country)) {
+			result = country.toUpperCase();
+		} else if (!StringUtils.isEmpty(language)) {
+			result = language.toUpperCase();
+		}
 
-	return getProperty("phd.institution.public.candidacy.submission.link." + countryCode);
-    }
+		if (!StringUtils.isEmpty(result)) {
+			return result;
+		}
 
-    static public String getPublicCandidacyRefereeFormLink(final Locale locale) {
-	String countryCode = readCountryCode(locale);
-
-	return getProperty("phd.institution.public.candidacy.referee.form.link." + countryCode);
-    }
-
-    static public String getPhdExternalAccessLink() {
-	return getProperty("phd.public.external.access.link");
-    }
-
-    static public String getPublicCandidacyAccessLink(PhdProgramPublicCandidacyHashCode candidacyProcessHashCode,
-	    final Locale locale) {
-
-	String countryCode = readCountryCode(locale);
-
-	String url = String.format("%s?hash=%s&locale=", getPublicCandidacyAccessLink(locale),
-		candidacyProcessHashCode.getValue());
-
-	if ("PT".equals(countryCode)) {
-	    return url + "pt_PT";
-	} else if ("EN".equals(countryCode)) {
-	    return url + "en_EN";
+		return "PT";
 	}
 
-	throw new DomainException("unable to build url");
-    }
+	static public String getPublicCandidacySubmissionLink(final Locale locale) {
+		String countryCode = readCountryCode(locale);
+
+		return getProperty("phd.institution.public.candidacy.submission.link." + countryCode);
+	}
+
+	static public String getPublicCandidacyRefereeFormLink(final Locale locale) {
+		String countryCode = readCountryCode(locale);
+
+		return getProperty("phd.institution.public.candidacy.referee.form.link." + countryCode);
+	}
+
+	static public String getPhdExternalAccessLink() {
+		return getProperty("phd.public.external.access.link");
+	}
+
+	static public String getPublicCandidacyAccessLink(PhdProgramPublicCandidacyHashCode candidacyProcessHashCode,
+			final Locale locale) {
+
+		String countryCode = readCountryCode(locale);
+
+		String url =
+				String.format("%s?hash=%s&locale=", getPublicCandidacyAccessLink(locale), candidacyProcessHashCode.getValue());
+
+		if ("PT".equals(countryCode)) {
+			return url + "pt_PT";
+		} else if ("EN".equals(countryCode)) {
+			return url + "en_EN";
+		}
+
+		throw new DomainException("unable to build url");
+	}
 }

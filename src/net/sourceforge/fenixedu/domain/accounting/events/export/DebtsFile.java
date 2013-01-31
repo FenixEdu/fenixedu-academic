@@ -18,76 +18,76 @@ import net.sourceforge.fenixedu.domain.residence.ResidenceYear;
 
 public abstract class DebtsFile extends DebtsFile_Base {
 
-    protected static final String ENTITY_CODE;
+	protected static final String ENTITY_CODE;
 
-    protected static final String SOURCE_INSTITUTION_ID;
+	protected static final String SOURCE_INSTITUTION_ID;
 
-    protected static final String DESTINATION_INSTITUTION_ID;
+	protected static final String DESTINATION_INSTITUTION_ID;
 
-    static {
-	ENTITY_CODE = PropertiesManager.getProperty("sibs.entityCode");
-	SOURCE_INSTITUTION_ID = PropertiesManager.getProperty("sibs.sourceInstitutionId");
-	DESTINATION_INSTITUTION_ID = PropertiesManager.getProperty("sibs.destinationInstitutionId");
-    }
+	static {
+		ENTITY_CODE = PropertiesManager.getProperty("sibs.entityCode");
+		SOURCE_INSTITUTION_ID = PropertiesManager.getProperty("sibs.sourceInstitutionId");
+		DESTINATION_INSTITUTION_ID = PropertiesManager.getProperty("sibs.destinationInstitutionId");
+	}
 
-    public DebtsFile() {
-	super();
-    }
+	public DebtsFile() {
+		super();
+	}
 
-    protected Map<Person, List<Event>> getNotPayedEventsGroupedByPerson(final ExecutionYear executionYear,
-	    StringBuilder errorsBuilder) {
-	final Map<Person, List<Event>> result = new HashMap<Person, List<Event>>();
+	protected Map<Person, List<Event>> getNotPayedEventsGroupedByPerson(final ExecutionYear executionYear,
+			StringBuilder errorsBuilder) {
+		final Map<Person, List<Event>> result = new HashMap<Person, List<Event>>();
 
-	for (final AnnualEvent event : executionYear.getAnnualEventsSet()) {
-	    try {
-		if (getAcceptedEventClasses().contains(event.getClass()) && event.isOpen()) {
-		    getEventsForPerson(result, event.getPerson()).add(event);
+		for (final AnnualEvent event : executionYear.getAnnualEventsSet()) {
+			try {
+				if (getAcceptedEventClasses().contains(event.getClass()) && event.isOpen()) {
+					getEventsForPerson(result, event.getPerson()).add(event);
+				}
+			} catch (Throwable e) {
+				appendToErrors(errorsBuilder, event.getExternalId(), e);
+			}
 		}
-	    } catch (Throwable e) {
-		appendToErrors(errorsBuilder, event.getExternalId(), e);
-	    }
-	}
 
-	if (ResidenceYear.hasCurrentYear()) {
-	    for (final ResidenceMonth month : ResidenceYear.getCurrentYear().getMonths()) {
-		for (final ResidenceEvent residenceEvent : month.getEventsSet()) {
-		    if (residenceEvent.isOpen() && residenceEvent.getPaymentLimitDate().isAfterNow()) {
-			getEventsForPerson(result, residenceEvent.getPerson()).add(residenceEvent);
-		    }
+		if (ResidenceYear.hasCurrentYear()) {
+			for (final ResidenceMonth month : ResidenceYear.getCurrentYear().getMonths()) {
+				for (final ResidenceEvent residenceEvent : month.getEventsSet()) {
+					if (residenceEvent.isOpen() && residenceEvent.getPaymentLimitDate().isAfterNow()) {
+						getEventsForPerson(result, residenceEvent.getPerson()).add(residenceEvent);
+					}
+				}
+			}
 		}
-	    }
+
+		for (InstitutionAffiliationEvent event : RootDomainObject.getInstance().getInstitutionUnit().getOpenAffiliationEventSet()) {
+			Person person = event.getPerson();
+			if (!result.containsKey(person)) {
+				result.put(person, new ArrayList<Event>());
+			}
+			result.get(person).add(event);
+		}
+
+		return result;
 	}
 
-	for (InstitutionAffiliationEvent event : RootDomainObject.getInstance().getInstitutionUnit().getOpenAffiliationEventSet()) {
-	    Person person = event.getPerson();
-	    if (!result.containsKey(person)) {
-		result.put(person, new ArrayList<Event>());
-	    }
-	    result.get(person).add(event);
+	protected abstract List<Class> getAcceptedEventClasses();
+
+	protected List<Event> getEventsForPerson(final Map<Person, List<Event>> result, final Person person) {
+		List<Event> eventsForPerson = result.get(person);
+		if (eventsForPerson == null) {
+			eventsForPerson = new ArrayList<Event>();
+			result.put(person, eventsForPerson);
+		}
+
+		return eventsForPerson;
 	}
 
-	return result;
-    }
+	protected void appendToErrors(StringBuilder errorsBuilder, String domainObjectId, Throwable e) {
+		String message = e.getMessage();
+		String className = e.getStackTrace()[0].getClassName();
+		int codeLine = e.getStackTrace()[0].getLineNumber();
 
-    protected abstract List<Class> getAcceptedEventClasses();
-
-    protected List<Event> getEventsForPerson(final Map<Person, List<Event>> result, final Person person) {
-	List<Event> eventsForPerson = result.get(person);
-	if (eventsForPerson == null) {
-	    eventsForPerson = new ArrayList<Event>();
-	    result.put(person, eventsForPerson);
+		errorsBuilder.append(message).append("[ ").append("domain object externalId - ").append(domainObjectId).append(" : ")
+				.append(className).append(" : ").append(codeLine).append("]");
 	}
-
-	return eventsForPerson;
-    }
-
-    protected void appendToErrors(StringBuilder errorsBuilder, String domainObjectId, Throwable e) {
-	String message = e.getMessage();
-	String className = e.getStackTrace()[0].getClassName();
-	int codeLine = e.getStackTrace()[0].getLineNumber();
-
-	errorsBuilder.append(message).append("[ ").append("domain object externalId - ").append(domainObjectId).append(" : ")
-	.append(className).append(" : ").append(codeLine).append("]");
-    }
 
 }

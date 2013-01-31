@@ -9,30 +9,30 @@ import net.sourceforge.fenixedu.domain.candidacyProcess.over23.Over23IndividualC
 
 public class Over23IndividualCandidacyEvent extends Over23IndividualCandidacyEvent_Base {
 
-    private Over23IndividualCandidacyEvent() {
-	super();
-    }
+	private Over23IndividualCandidacyEvent() {
+		super();
+	}
 
-    public Over23IndividualCandidacyEvent(final Over23IndividualCandidacy candidacy, final Person person) {
-	this();
-	super.init(candidacy, EventType.OVER23_INDIVIDUAL_CANDIDACY, person);
+	public Over23IndividualCandidacyEvent(final Over23IndividualCandidacy candidacy, final Person person) {
+		this();
+		super.init(candidacy, EventType.OVER23_INDIVIDUAL_CANDIDACY, person);
 
-	attachAvailablePaymentCode(person);
-    }
+		attachAvailablePaymentCode(person);
+	}
 
-    @Override
-    protected AdministrativeOffice readAdministrativeOffice() {
-	return AdministrativeOffice.readByAdministrativeOfficeType(AdministrativeOfficeType.DEGREE);
-    }
+	@Override
+	protected AdministrativeOffice readAdministrativeOffice() {
+		return AdministrativeOffice.readByAdministrativeOfficeType(AdministrativeOfficeType.DEGREE);
+	}
 
-    @Override
-    protected EntryType getEntryType() {
-	return EntryType.OVER23_INDIVIDUAL_CANDIDACY_FEE;
-    }
+	@Override
+	protected EntryType getEntryType() {
+		return EntryType.OVER23_INDIVIDUAL_CANDIDACY_FEE;
+	}
 
-    @Override
-    public boolean isExemptionAppliable() {
-	return true;
-    }
+	@Override
+	public boolean isExemptionAppliable() {
+		return true;
+	}
 
 }

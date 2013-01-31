@@ -26,37 +26,37 @@ import pt.ist.fenixWebFramework.security.UserView;
 
 public class ShowMarkDispatchAction extends FenixDispatchAction {
 
-    public ActionForward prepareShowMark(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
+	public ActionForward prepareShowMark(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
 
-	ActionErrors errors = new ActionErrors();
+		ActionErrors errors = new ActionErrors();
 
-	String curricularCourseId = MarksManagementDispatchAction.getFromRequest("courseId", request);
-	MarksManagementDispatchAction.getFromRequest("objectCode", request);
-	MarksManagementDispatchAction.getFromRequest("degreeId", request);
-	// Get students List
-	IUserView userView = UserView.getUser();
-	Object args[] = { userView, Integer.valueOf(curricularCourseId), null };
-	List listEnrolmentEvaluation = null;
-	try {
-	    listEnrolmentEvaluation = (List) ServiceManagerServiceFactory.executeService(
-		    "ReadStudentMarksListByCurricularCourse", args);
-	} catch (NotAuthorizedException e) {
-	    return mapping.findForward("NotAuthorized");
-	} catch (NonExistingServiceException e) {
-	    errors.add("nonExisting", new ActionError("error.exception.noStudents"));
-	    saveErrors(request, errors);
-	    return mapping.findForward("NoStudents");
+		String curricularCourseId = MarksManagementDispatchAction.getFromRequest("courseId", request);
+		MarksManagementDispatchAction.getFromRequest("objectCode", request);
+		MarksManagementDispatchAction.getFromRequest("degreeId", request);
+		// Get students List
+		IUserView userView = UserView.getUser();
+		Object args[] = { userView, Integer.valueOf(curricularCourseId), null };
+		List listEnrolmentEvaluation = null;
+		try {
+			listEnrolmentEvaluation =
+					(List) ServiceManagerServiceFactory.executeService("ReadStudentMarksListByCurricularCourse", args);
+		} catch (NotAuthorizedException e) {
+			return mapping.findForward("NotAuthorized");
+		} catch (NonExistingServiceException e) {
+			errors.add("nonExisting", new ActionError("error.exception.noStudents"));
+			saveErrors(request, errors);
+			return mapping.findForward("NoStudents");
+		}
+		if (listEnrolmentEvaluation.size() == 0) {
+			errors.add("StudentNotEnroled", new ActionError("error.students.Mark.NotAvailable"));
+			saveErrors(request, errors);
+			return mapping.findForward("NoStudents");
+		}
+
+		request.setAttribute("showMarks", "showMarks");
+		request.setAttribute("studentList", listEnrolmentEvaluation);
+
+		return mapping.findForward("displayStudentList");
 	}
-	if (listEnrolmentEvaluation.size() == 0) {
-	    errors.add("StudentNotEnroled", new ActionError("error.students.Mark.NotAvailable"));
-	    saveErrors(request, errors);
-	    return mapping.findForward("NoStudents");
-	}
-
-	request.setAttribute("showMarks", "showMarks");
-	request.setAttribute("studentList", listEnrolmentEvaluation);
-
-	return mapping.findForward("displayStudentList");
-    }
 }

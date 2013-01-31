@@ -24,101 +24,106 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
+
 import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
 import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
  * 
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
  * 
  */
-@Mapping(module = "masterDegreeAdministrativeOffice", path = "/chooseDeclarationInfoAction", input = "df.page.chooseStudentForDeclaration", attribute = "chooseCertificateInfoForm", formBean = "chooseCertificateInfoForm", scope = "request", parameter = "method")
-@Forwards(value = {
-		@Forward(name = "ChooseSuccess", path = "/printDeclaration.do?method=prepare"),
+@Mapping(
+		module = "masterDegreeAdministrativeOffice",
+		path = "/chooseDeclarationInfoAction",
+		input = "df.page.chooseStudentForDeclaration",
+		attribute = "chooseCertificateInfoForm",
+		formBean = "chooseCertificateInfoForm",
+		scope = "request",
+		parameter = "method")
+@Forwards(value = { @Forward(name = "ChooseSuccess", path = "/printDeclaration.do?method=prepare"),
 		@Forward(name = "PrepareReady", path = "df.page.chooseStudentForDeclaration"),
 		@Forward(name = "ChooseStudentCurricularPlan", path = "df.page.chooseStudentCurricularPlanForDeclaration") })
-@Exceptions(value = { @ExceptionHandling(type = net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException.class, key = "resources.Action.exceptions.NonExistingActionException", handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class, scope = "request") })
+@Exceptions(value = { @ExceptionHandling(
+		type = net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException.class,
+		key = "resources.Action.exceptions.NonExistingActionException",
+		handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class,
+		scope = "request") })
 public class ChooseDeclarationInfoAction extends FenixDispatchAction {
 
-    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-	    throws Exception {
+	public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
 
-	return mapping.findForward("PrepareReady");
-    }
-
-    public ActionForward chooseStudent(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-
-	Integer number = new Integer((String) ((DynaActionForm) form).get("requesterNumber"));
-	request.setAttribute("registrations", Registration.readByNumberAndDegreeType(number, DegreeType.MASTER_DEGREE));
-
-	request.setAttribute(PresentationConstants.DOCUMENT_REASON, DocumentReason.values());
-
-	return mapping.findForward("ChooseStudentCurricularPlan");
-    }
-
-    /**
-     * @param mapping
-     * @param form
-     * @param request
-     * @param response
-     * @return
-     */
-    public ActionForward chooseFinal(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-
-	IUserView userView = getUserView(request);
-
-	DynaActionForm chooseDeclaration = (DynaActionForm) form;
-
-	// Get the Information
-	String[] destination = (String[]) chooseDeclaration.get("destination");
-	Integer studentCurricularPlanID = (Integer) chooseDeclaration.get("studentCurricularPlanID");
-
-	if (destination.length != 0) {
-	    request.setAttribute(PresentationConstants.DOCUMENT_REASON_LIST, destination);
+		return mapping.findForward("PrepareReady");
 	}
 
-	InfoStudentCurricularPlan infoStudentCurricularPlan = InfoStudentCurricularPlan.newInfoFromDomain(rootDomainObject
-		.readStudentCurricularPlanByOID(studentCurricularPlanID));
+	public ActionForward chooseStudent(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
 
-	InfoExecutionYear infoExecutionYear = InfoExecutionYear.newInfoFromDomain(ExecutionYear.readCurrentExecutionYear());
+		Integer number = new Integer((String) ((DynaActionForm) form).get("requesterNumber"));
+		request.setAttribute("registrations", Registration.readByNumberAndDegreeType(number, DegreeType.MASTER_DEGREE));
 
-	List enrolmentList = null;
+		request.setAttribute(PresentationConstants.DOCUMENT_REASON, DocumentReason.values());
 
-	// try {
-	enrolmentList = GetEnrolmentList.run(infoStudentCurricularPlan.getIdInternal());
-
-	// } catch (NonExistingServiceException e) {
-	// throw new NonExistingActionException("Inscrição", e);
-	// }
-
-	String anoLectivo;
-	if (enrolmentList.size() == 0) {
-	    anoLectivo = infoExecutionYear.getYear();
-	} else {
-	    anoLectivo = ((InfoEnrolment) enrolmentList.get(0)).getInfoExecutionPeriod().getInfoExecutionYear().getYear();
+		return mapping.findForward("ChooseStudentCurricularPlan");
 	}
 
-	Locale locale = new Locale("pt", "PT");
-	Date date = new Date();
-	String formatedDate = "Lisboa, " + DateFormat.getDateInstance(DateFormat.LONG, locale).format(date);
-	request.setAttribute(PresentationConstants.INFO_STUDENT_CURRICULAR_PLAN, infoStudentCurricularPlan);
-	request.setAttribute(PresentationConstants.DATE, formatedDate);
-	request.setAttribute(PresentationConstants.INFO_EXECUTION_YEAR, infoExecutionYear);
-	request.setAttribute("anoLectivo", anoLectivo);
-	return mapping.findForward("ChooseSuccess");
+	/**
+	 * @param mapping
+	 * @param form
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	public ActionForward chooseFinal(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
 
-    }
+		IUserView userView = getUserView(request);
+
+		DynaActionForm chooseDeclaration = (DynaActionForm) form;
+
+		// Get the Information
+		String[] destination = (String[]) chooseDeclaration.get("destination");
+		Integer studentCurricularPlanID = (Integer) chooseDeclaration.get("studentCurricularPlanID");
+
+		if (destination.length != 0) {
+			request.setAttribute(PresentationConstants.DOCUMENT_REASON_LIST, destination);
+		}
+
+		InfoStudentCurricularPlan infoStudentCurricularPlan =
+				InfoStudentCurricularPlan.newInfoFromDomain(rootDomainObject
+						.readStudentCurricularPlanByOID(studentCurricularPlanID));
+
+		InfoExecutionYear infoExecutionYear = InfoExecutionYear.newInfoFromDomain(ExecutionYear.readCurrentExecutionYear());
+
+		List enrolmentList = null;
+
+		// try {
+		enrolmentList = GetEnrolmentList.run(infoStudentCurricularPlan.getIdInternal());
+
+		// } catch (NonExistingServiceException e) {
+		// throw new NonExistingActionException("Inscrição", e);
+		// }
+
+		String anoLectivo;
+		if (enrolmentList.size() == 0) {
+			anoLectivo = infoExecutionYear.getYear();
+		} else {
+			anoLectivo = ((InfoEnrolment) enrolmentList.get(0)).getInfoExecutionPeriod().getInfoExecutionYear().getYear();
+		}
+
+		Locale locale = new Locale("pt", "PT");
+		Date date = new Date();
+		String formatedDate = "Lisboa, " + DateFormat.getDateInstance(DateFormat.LONG, locale).format(date);
+		request.setAttribute(PresentationConstants.INFO_STUDENT_CURRICULAR_PLAN, infoStudentCurricularPlan);
+		request.setAttribute(PresentationConstants.DATE, formatedDate);
+		request.setAttribute(PresentationConstants.INFO_EXECUTION_YEAR, infoExecutionYear);
+		request.setAttribute("anoLectivo", anoLectivo);
+		return mapping.findForward("ChooseSuccess");
+
+	}
 
 }

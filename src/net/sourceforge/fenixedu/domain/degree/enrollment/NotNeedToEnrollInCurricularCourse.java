@@ -18,66 +18,66 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 
 public class NotNeedToEnrollInCurricularCourse extends NotNeedToEnrollInCurricularCourse_Base {
 
-    public NotNeedToEnrollInCurricularCourse() {
-	super();
-	setRootDomainObject(RootDomainObject.getInstance());
-    }
-
-    public NotNeedToEnrollInCurricularCourse(CurricularCourse curricularCourse, StudentCurricularPlan studentCurricularPlan) {
-	this();
-	setCurricularCourse(curricularCourse);
-	setStudentCurricularPlan(studentCurricularPlan);
-    }
-
-    public void delete() {
-	removeStudentCurricularPlan();
-	removeCurricularCourse();
-	removeRootDomainObject();
-	getEnrolments().clear();
-	getExternalEnrolments().clear();
-	super.deleteDomainObject();
-    }
-
-    public Double getEctsCredits() {
-	if (isDueToEquivalence()) {
-	    return Double.valueOf(0d);
-	}
-	return getCurricularCourse().getEctsCredits();
-    }
-
-    private boolean isDueToEquivalence() {
-	return isDueToOtherEnrolmentEquivalence() || isDueToGlobalEquivalence();
-    }
-
-    private boolean isDueToGlobalEquivalence() {
-	for (final CurricularCourseEquivalence curricularCourseEquivalence : getCurricularCourse()
-		.getCurricularCourseEquivalencesSet()) {
-	    if (curricularCourseEquivalence.isSatisfied(getRegistration())) {
-		return true;
-	    }
+	public NotNeedToEnrollInCurricularCourse() {
+		super();
+		setRootDomainObject(RootDomainObject.getInstance());
 	}
 
-	return false;
-    }
-
-    private boolean isDueToOtherEnrolmentEquivalence() {
-	for (final Enrolment enrolment : getEnrolmentsSet()) {
-	    if (getRegistration().hasEnrolments(enrolment)) {
-		return true;
-	    }
+	public NotNeedToEnrollInCurricularCourse(CurricularCourse curricularCourse, StudentCurricularPlan studentCurricularPlan) {
+		this();
+		setCurricularCourse(curricularCourse);
+		setStudentCurricularPlan(studentCurricularPlan);
 	}
 
-	return false;
-    }
+	public void delete() {
+		removeStudentCurricularPlan();
+		removeCurricularCourse();
+		removeRootDomainObject();
+		getEnrolments().clear();
+		getExternalEnrolments().clear();
+		super.deleteDomainObject();
+	}
 
-    public Registration getRegistration() {
-	return getStudentCurricularPlan().getRegistration();
-    }
+	public Double getEctsCredits() {
+		if (isDueToEquivalence()) {
+			return Double.valueOf(0d);
+		}
+		return getCurricularCourse().getEctsCredits();
+	}
 
-    public Collection<IEnrolment> getIEnrolments() {
-	Set<IEnrolment> res = new HashSet<IEnrolment>(getEnrolmentsSet());
-	res.addAll(getExternalEnrolmentsSet());
-	return res;
-    }
+	private boolean isDueToEquivalence() {
+		return isDueToOtherEnrolmentEquivalence() || isDueToGlobalEquivalence();
+	}
+
+	private boolean isDueToGlobalEquivalence() {
+		for (final CurricularCourseEquivalence curricularCourseEquivalence : getCurricularCourse()
+				.getCurricularCourseEquivalencesSet()) {
+			if (curricularCourseEquivalence.isSatisfied(getRegistration())) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	private boolean isDueToOtherEnrolmentEquivalence() {
+		for (final Enrolment enrolment : getEnrolmentsSet()) {
+			if (getRegistration().hasEnrolments(enrolment)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	public Registration getRegistration() {
+		return getStudentCurricularPlan().getRegistration();
+	}
+
+	public Collection<IEnrolment> getIEnrolments() {
+		Set<IEnrolment> res = new HashSet<IEnrolment>(getEnrolmentsSet());
+		res.addAll(getExternalEnrolmentsSet());
+		return res;
+	}
 
 }

@@ -8,13 +8,13 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class DeleteProjectParticipant extends FenixService {
 
-    @Checked("ResultPredicates.author")
-    @Service
-    public static void run(Integer participationId) throws FenixServiceException {
-	ProjectParticipation participation = rootDomainObject.readProjectParticipationByOID(participationId);
-	if (participation == null) {
-	    throw new FenixServiceException();
+	@Checked("ResultPredicates.author")
+	@Service
+	public static void run(Integer participationId) throws FenixServiceException {
+		ProjectParticipation participation = rootDomainObject.readProjectParticipationByOID(participationId);
+		if (participation == null) {
+			throw new FenixServiceException();
+		}
+		participation.delete();
 	}
-	participation.delete();
-    }
 }

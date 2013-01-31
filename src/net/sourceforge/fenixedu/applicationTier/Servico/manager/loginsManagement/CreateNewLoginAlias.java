@@ -7,16 +7,16 @@ import net.sourceforge.fenixedu.domain.LoginAliasType;
 
 public class CreateNewLoginAlias extends FenixService {
 
-    public void run(LoginAliasBean bean) {
-	if (bean != null) {
-	    if (bean.getLoginAliasType().equals(LoginAliasType.CUSTOM_ALIAS)) {
-		LoginAlias.createNewCustomLoginAlias(bean.getLogin(), bean.getAlias());
-	    } else if (bean.getLoginAliasType().equals(LoginAliasType.ROLE_TYPE_ALIAS)) {
-		LoginAlias.createNewRoleLoginAlias(bean.getLogin(), bean.getAlias(), bean.getRoleType());
-	    } else if (bean.getLoginAliasType().equals(LoginAliasType.INSTITUTION_ALIAS)) {
-		bean.getLogin().getUser().getPerson().setIstUsername();
-	    }
+	public void run(LoginAliasBean bean) {
+		if (bean != null) {
+			if (bean.getLoginAliasType().equals(LoginAliasType.CUSTOM_ALIAS)) {
+				LoginAlias.createNewCustomLoginAlias(bean.getLogin(), bean.getAlias());
+			} else if (bean.getLoginAliasType().equals(LoginAliasType.ROLE_TYPE_ALIAS)) {
+				LoginAlias.createNewRoleLoginAlias(bean.getLogin(), bean.getAlias(), bean.getRoleType());
+			} else if (bean.getLoginAliasType().equals(LoginAliasType.INSTITUTION_ALIAS)) {
+				bean.getLogin().getUser().getPerson().setIstUsername();
+			}
+		}
 	}
-    }
 
 }

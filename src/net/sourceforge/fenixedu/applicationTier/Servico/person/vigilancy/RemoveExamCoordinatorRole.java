@@ -7,11 +7,11 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class RemoveExamCoordinatorRole extends FenixService {
 
-    @Service
-    public static void run(Person person) {
+	@Service
+	public static void run(Person person) {
 
-	person.removeRoleByType(RoleType.EXAM_COORDINATOR);
+		person.removeRoleByType(RoleType.EXAM_COORDINATOR);
 
-    }
+	}
 
 }

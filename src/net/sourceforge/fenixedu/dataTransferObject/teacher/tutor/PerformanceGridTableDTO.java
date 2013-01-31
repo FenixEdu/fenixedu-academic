@@ -14,270 +14,271 @@ import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.domain.student.Registration;
 
 public class PerformanceGridTableDTO extends DataTranferObject {
-    private ExecutionYear studentEntryYear;
+	private ExecutionYear studentEntryYear;
 
-    private ExecutionYear monitoringYear;
+	private ExecutionYear monitoringYear;
 
-    private List<PerformanceGridLine> performanceGridTableLines;
+	private List<PerformanceGridLine> performanceGridTableLines;
 
-    public PerformanceGridTableDTO(ExecutionYear studentEntryYear, ExecutionYear monitoringYear) {
-	setStudentEntryYear(studentEntryYear);
-	setMonitoringYear(monitoringYear);
-	this.performanceGridTableLines = new ArrayList<PerformanceGridLine>();
-    }
-
-    public ExecutionYear getMonitoringYear() {
-	return (monitoringYear == null) ? null : this.monitoringYear;
-    }
-
-    public void setMonitoringYear(ExecutionYear monitoringYear) {
-	this.monitoringYear = monitoringYear;
-    }
-
-    public ExecutionYear getStudentEntryYear() {
-	return (studentEntryYear == null) ? null : this.studentEntryYear;
-    }
-
-    public void setStudentEntryYear(ExecutionYear studentEntryYear) {
-	this.studentEntryYear = studentEntryYear;
-    }
-
-    public List<PerformanceGridLine> getPerformanceGridTableLines() {
-	return performanceGridTableLines;
-    }
-
-    public void setPerformanceGridTableLines(List<PerformanceGridLine> performanceGridTableLines) {
-	this.performanceGridTableLines = performanceGridTableLines;
-    }
-
-    public PerformanceGridLine getNewPerformanceGridLine(Tutorship tutorship) {
-	return new PerformanceGridLine(tutorship);
-    }
-
-    public void addPerformanceGridLine(PerformanceGridLine newLine) {
-	this.performanceGridTableLines.add(newLine);
-
-    }
-
-    /*
-     * Performance Grid Line (one for each student)
-     */
-    public class PerformanceGridLine {
-	private Registration registration;
-
-	private Tutorship tutorship;
-
-	private Double aritmeticAverage;
-
-	private Integer approvedEnrolmentsNumber;
-
-	private List<Enrolment> enrolmentsWithLastExecutionPeriod;
-
-	private List<Integer> approvedRatioBySemester = new ArrayList<Integer>(2);
-
-	private List<PerformanceGridLineYearGroup> studentPerformanceByYear = new ArrayList<PerformanceGridLineYearGroup>(5);
-
-	public PerformanceGridLine(Tutorship tutoship) {
-	    setTutorship(tutoship);
-	    setRegistration(tutoship.getStudentCurricularPlan().getRegistration());
+	public PerformanceGridTableDTO(ExecutionYear studentEntryYear, ExecutionYear monitoringYear) {
+		setStudentEntryYear(studentEntryYear);
+		setMonitoringYear(monitoringYear);
+		this.performanceGridTableLines = new ArrayList<PerformanceGridLine>();
 	}
 
-	public Registration getRegistration() {
-	    return (registration);
+	public ExecutionYear getMonitoringYear() {
+		return (monitoringYear == null) ? null : this.monitoringYear;
 	}
 
-	public void setRegistration(Registration registration) {
-	    this.registration = registration;
+	public void setMonitoringYear(ExecutionYear monitoringYear) {
+		this.monitoringYear = monitoringYear;
 	}
 
-	public Tutorship getTutorship() {
-	    return (tutorship);
+	public ExecutionYear getStudentEntryYear() {
+		return (studentEntryYear == null) ? null : this.studentEntryYear;
 	}
 
-	public void setTutorship(Tutorship tutorship) {
-	    this.tutorship = tutorship;
+	public void setStudentEntryYear(ExecutionYear studentEntryYear) {
+		this.studentEntryYear = studentEntryYear;
 	}
 
-	public List<Integer> getApprovedRatioBySemester() {
-	    return approvedRatioBySemester;
+	public List<PerformanceGridLine> getPerformanceGridTableLines() {
+		return performanceGridTableLines;
 	}
 
-	public void setApprovedRatioBySemester(List<Integer> approvedRatioBySemester) {
-	    this.approvedRatioBySemester = approvedRatioBySemester;
+	public void setPerformanceGridTableLines(List<PerformanceGridLine> performanceGridTableLines) {
+		this.performanceGridTableLines = performanceGridTableLines;
 	}
 
-	public Integer getApprovedRatioFirstSemester() {
-	    return approvedRatioBySemester.get(0);
+	public PerformanceGridLine getNewPerformanceGridLine(Tutorship tutorship) {
+		return new PerformanceGridLine(tutorship);
 	}
 
-	public Integer getApprovedRatioSecondSemester() {
-	    return approvedRatioBySemester.get(1);
-	}
+	public void addPerformanceGridLine(PerformanceGridLine newLine) {
+		this.performanceGridTableLines.add(newLine);
 
-	public Double getAritmeticAverage() {
-	    return aritmeticAverage;
-	}
-
-	public void setAritmeticAverage(Double aritmeticAverage) {
-	    this.aritmeticAverage = aritmeticAverage;
-	}
-
-	public Integer getApprovedEnrolmentsNumber() {
-	    return approvedEnrolmentsNumber;
-	}
-
-	public void setApprovedEnrolmentsNumber(Integer approvedEnrolmentsNumber) {
-	    this.approvedEnrolmentsNumber = approvedEnrolmentsNumber;
-	}
-
-	public String getEntryGrade() {
-	    if (this.getRegistration().getEntryGrade() != null)
-		return String.format("%.2f", this.getRegistration().getEntryGrade());
-	    else
-		return ("-");
-	}
-
-	public List<PerformanceGridLineYearGroup> getStudentPerformanceByYear() {
-	    return this.studentPerformanceByYear;
-	}
-
-	public void setStudentPerformanceByYear(List<PerformanceGridLineYearGroup> studentPerformanceByYear) {
-	    this.studentPerformanceByYear = studentPerformanceByYear;
-	}
-
-	public List<Enrolment> getEnrolmentsWithLastExecutionPeriod() {
-	    return this.enrolmentsWithLastExecutionPeriod;
-	}
-
-	public void setEnrolmentsWithLastExecutionPeriod(List<Enrolment> enrolmentsWithLastExecutionPeriod) {
-	    this.enrolmentsWithLastExecutionPeriod = enrolmentsWithLastExecutionPeriod;
-	}
-
-	public ExecutionYear getCurrentMonitoringYearYear() {
-	    return getMonitoringYear();
-	}
-
-	public PerformanceGridLineYearGroup getNewPerformanceGridLineYearGroup() {
-	    return new PerformanceGridLineYearGroup();
 	}
 
 	/*
-	 * Student curricular information to present in each curricular year of
-	 * the performance grid
+	 * Performance Grid Line (one for each student)
 	 */
-	public class PerformanceGridLineYearGroup implements Serializable {
-	    private List<Enrolment> firstSemesterEnrolments;
-	    private List<Enrolment> secondSemesterEnrolments;
-	    private double enrolledFirstSemesterECTS;
-	    private double approvedFirstSemesterECTS;
-	    private double enrolledSecondSemesterECTS;
-	    private double approvedSecondSemesterECTS;
+	public class PerformanceGridLine {
+		private Registration registration;
 
-	    public PerformanceGridLineYearGroup() {
-		firstSemesterEnrolments = new ArrayList<Enrolment>();
-		secondSemesterEnrolments = new ArrayList<Enrolment>();
-		enrolledFirstSemesterECTS = 0.0;
-		approvedFirstSemesterECTS = 0.0;
-		enrolledSecondSemesterECTS = 0.0;
-		approvedSecondSemesterECTS = 0.0;
-	    }
+		private Tutorship tutorship;
 
-	    public List<Enrolment> getFirstSemesterEnrolments() {
-		List<Enrolment> enrolments = new ArrayList<Enrolment>();
-		for (Enrolment enrolmentDR : this.firstSemesterEnrolments) {
-		    enrolments.add(enrolmentDR);
+		private Double aritmeticAverage;
+
+		private Integer approvedEnrolmentsNumber;
+
+		private List<Enrolment> enrolmentsWithLastExecutionPeriod;
+
+		private List<Integer> approvedRatioBySemester = new ArrayList<Integer>(2);
+
+		private List<PerformanceGridLineYearGroup> studentPerformanceByYear = new ArrayList<PerformanceGridLineYearGroup>(5);
+
+		public PerformanceGridLine(Tutorship tutoship) {
+			setTutorship(tutoship);
+			setRegistration(tutoship.getStudentCurricularPlan().getRegistration());
 		}
-		return enrolments;
-	    }
 
-	    public void setFirstSemesterEnrolments(List<Enrolment> firstSemesterEnrolments) {
-		this.firstSemesterEnrolments = new ArrayList<Enrolment>();
-		for (Enrolment enrolment : firstSemesterEnrolments) {
-		    this.firstSemesterEnrolments.add(enrolment);
+		public Registration getRegistration() {
+			return (registration);
 		}
-		updateInformationECTS();
-	    }
 
-	    public List<Enrolment> getSecondSemesterEnrolments() {
-		List<Enrolment> enrolments = new ArrayList<Enrolment>();
-		for (Enrolment enrolmentDR : this.secondSemesterEnrolments) {
-		    enrolments.add(enrolmentDR);
+		public void setRegistration(Registration registration) {
+			this.registration = registration;
 		}
-		return enrolments;
-	    }
 
-	    public void setSecondSemesterEnrolments(List<Enrolment> secondSemesterEnrolments) {
-		this.secondSemesterEnrolments = new ArrayList<Enrolment>();
-		for (Enrolment enrolment : secondSemesterEnrolments) {
-		    this.secondSemesterEnrolments.add(enrolment);
+		public Tutorship getTutorship() {
+			return (tutorship);
 		}
-		updateInformationECTS();
-	    }
 
-	    public double getEnrolledFirstSemesterECTS() {
-		return enrolledFirstSemesterECTS;
-	    }
-
-	    public void setEnrolledFirstSemesterECTS(double enrolledFirstSemesterECTS) {
-		this.enrolledFirstSemesterECTS = enrolledFirstSemesterECTS;
-	    }
-
-	    public double getApprovedFirstSemesterECTS() {
-		return approvedFirstSemesterECTS;
-	    }
-
-	    public void setApprovedFirstSemesterECTS(double approvedFirstSemesterECTS) {
-		this.approvedFirstSemesterECTS = approvedFirstSemesterECTS;
-	    }
-
-	    public double getEnrolledSecondSemesterECTS() {
-		return enrolledSecondSemesterECTS;
-	    }
-
-	    public void setEnrolledSecondSemesterECTS(double enrolledSecondSemesterECTS) {
-		this.enrolledSecondSemesterECTS = enrolledSecondSemesterECTS;
-	    }
-
-	    public double getApprovedSecondSemesterECTS() {
-		return approvedSecondSemesterECTS;
-	    }
-
-	    public void setApprovedSecondSemesterECTS(double approvedSecondSemesterECTS) {
-		this.approvedSecondSemesterECTS = approvedSecondSemesterECTS;
-	    }
-
-	    public void addEnrolmentToSemester(DegreeModuleScope scope, CurricularCourse curricular, Enrolment enrolment) {
-		if (curricular.isAnual()) {
-		    this.firstSemesterEnrolments.add(enrolment);
-		    this.secondSemesterEnrolments.add(enrolment);
-		} else {
-		    if (scope.isFirstSemester()) {
-			this.firstSemesterEnrolments.add(enrolment);
-		    } else if (scope.isSecondSemester()) {
-			this.secondSemesterEnrolments.add(enrolment);
-		    }
+		public void setTutorship(Tutorship tutorship) {
+			this.tutorship = tutorship;
 		}
-		updateInformationECTS();
-	    }
 
-	    public void updateInformationECTS() {
-		setEnrolledFirstSemesterECTS(0.0);
-		setApprovedFirstSemesterECTS(0.0);
-		setEnrolledSecondSemesterECTS(0.0);
-		setApprovedSecondSemesterECTS(0.0);
-		for (Enrolment enrolment : getFirstSemesterEnrolments()) {
-		    if (enrolment.getEnrollmentState().equals(EnrollmentState.APROVED)) {
-			this.approvedFirstSemesterECTS += enrolment.getEctsCreditsForCurriculum().doubleValue();
-		    }
-		    this.enrolledFirstSemesterECTS += enrolment.getEctsCreditsForCurriculum().doubleValue();
+		public List<Integer> getApprovedRatioBySemester() {
+			return approvedRatioBySemester;
 		}
-		for (Enrolment enrolment : getSecondSemesterEnrolments()) {
-		    if (enrolment.getEnrollmentState().equals(EnrollmentState.APROVED)) {
-			this.approvedSecondSemesterECTS += enrolment.getEctsCreditsForCurriculum().doubleValue();
-		    }
-		    this.enrolledSecondSemesterECTS += enrolment.getEctsCreditsForCurriculum().doubleValue();
+
+		public void setApprovedRatioBySemester(List<Integer> approvedRatioBySemester) {
+			this.approvedRatioBySemester = approvedRatioBySemester;
 		}
-	    }
+
+		public Integer getApprovedRatioFirstSemester() {
+			return approvedRatioBySemester.get(0);
+		}
+
+		public Integer getApprovedRatioSecondSemester() {
+			return approvedRatioBySemester.get(1);
+		}
+
+		public Double getAritmeticAverage() {
+			return aritmeticAverage;
+		}
+
+		public void setAritmeticAverage(Double aritmeticAverage) {
+			this.aritmeticAverage = aritmeticAverage;
+		}
+
+		public Integer getApprovedEnrolmentsNumber() {
+			return approvedEnrolmentsNumber;
+		}
+
+		public void setApprovedEnrolmentsNumber(Integer approvedEnrolmentsNumber) {
+			this.approvedEnrolmentsNumber = approvedEnrolmentsNumber;
+		}
+
+		public String getEntryGrade() {
+			if (this.getRegistration().getEntryGrade() != null) {
+				return String.format("%.2f", this.getRegistration().getEntryGrade());
+			} else {
+				return ("-");
+			}
+		}
+
+		public List<PerformanceGridLineYearGroup> getStudentPerformanceByYear() {
+			return this.studentPerformanceByYear;
+		}
+
+		public void setStudentPerformanceByYear(List<PerformanceGridLineYearGroup> studentPerformanceByYear) {
+			this.studentPerformanceByYear = studentPerformanceByYear;
+		}
+
+		public List<Enrolment> getEnrolmentsWithLastExecutionPeriod() {
+			return this.enrolmentsWithLastExecutionPeriod;
+		}
+
+		public void setEnrolmentsWithLastExecutionPeriod(List<Enrolment> enrolmentsWithLastExecutionPeriod) {
+			this.enrolmentsWithLastExecutionPeriod = enrolmentsWithLastExecutionPeriod;
+		}
+
+		public ExecutionYear getCurrentMonitoringYearYear() {
+			return getMonitoringYear();
+		}
+
+		public PerformanceGridLineYearGroup getNewPerformanceGridLineYearGroup() {
+			return new PerformanceGridLineYearGroup();
+		}
+
+		/*
+		 * Student curricular information to present in each curricular year of
+		 * the performance grid
+		 */
+		public class PerformanceGridLineYearGroup implements Serializable {
+			private List<Enrolment> firstSemesterEnrolments;
+			private List<Enrolment> secondSemesterEnrolments;
+			private double enrolledFirstSemesterECTS;
+			private double approvedFirstSemesterECTS;
+			private double enrolledSecondSemesterECTS;
+			private double approvedSecondSemesterECTS;
+
+			public PerformanceGridLineYearGroup() {
+				firstSemesterEnrolments = new ArrayList<Enrolment>();
+				secondSemesterEnrolments = new ArrayList<Enrolment>();
+				enrolledFirstSemesterECTS = 0.0;
+				approvedFirstSemesterECTS = 0.0;
+				enrolledSecondSemesterECTS = 0.0;
+				approvedSecondSemesterECTS = 0.0;
+			}
+
+			public List<Enrolment> getFirstSemesterEnrolments() {
+				List<Enrolment> enrolments = new ArrayList<Enrolment>();
+				for (Enrolment enrolmentDR : this.firstSemesterEnrolments) {
+					enrolments.add(enrolmentDR);
+				}
+				return enrolments;
+			}
+
+			public void setFirstSemesterEnrolments(List<Enrolment> firstSemesterEnrolments) {
+				this.firstSemesterEnrolments = new ArrayList<Enrolment>();
+				for (Enrolment enrolment : firstSemesterEnrolments) {
+					this.firstSemesterEnrolments.add(enrolment);
+				}
+				updateInformationECTS();
+			}
+
+			public List<Enrolment> getSecondSemesterEnrolments() {
+				List<Enrolment> enrolments = new ArrayList<Enrolment>();
+				for (Enrolment enrolmentDR : this.secondSemesterEnrolments) {
+					enrolments.add(enrolmentDR);
+				}
+				return enrolments;
+			}
+
+			public void setSecondSemesterEnrolments(List<Enrolment> secondSemesterEnrolments) {
+				this.secondSemesterEnrolments = new ArrayList<Enrolment>();
+				for (Enrolment enrolment : secondSemesterEnrolments) {
+					this.secondSemesterEnrolments.add(enrolment);
+				}
+				updateInformationECTS();
+			}
+
+			public double getEnrolledFirstSemesterECTS() {
+				return enrolledFirstSemesterECTS;
+			}
+
+			public void setEnrolledFirstSemesterECTS(double enrolledFirstSemesterECTS) {
+				this.enrolledFirstSemesterECTS = enrolledFirstSemesterECTS;
+			}
+
+			public double getApprovedFirstSemesterECTS() {
+				return approvedFirstSemesterECTS;
+			}
+
+			public void setApprovedFirstSemesterECTS(double approvedFirstSemesterECTS) {
+				this.approvedFirstSemesterECTS = approvedFirstSemesterECTS;
+			}
+
+			public double getEnrolledSecondSemesterECTS() {
+				return enrolledSecondSemesterECTS;
+			}
+
+			public void setEnrolledSecondSemesterECTS(double enrolledSecondSemesterECTS) {
+				this.enrolledSecondSemesterECTS = enrolledSecondSemesterECTS;
+			}
+
+			public double getApprovedSecondSemesterECTS() {
+				return approvedSecondSemesterECTS;
+			}
+
+			public void setApprovedSecondSemesterECTS(double approvedSecondSemesterECTS) {
+				this.approvedSecondSemesterECTS = approvedSecondSemesterECTS;
+			}
+
+			public void addEnrolmentToSemester(DegreeModuleScope scope, CurricularCourse curricular, Enrolment enrolment) {
+				if (curricular.isAnual()) {
+					this.firstSemesterEnrolments.add(enrolment);
+					this.secondSemesterEnrolments.add(enrolment);
+				} else {
+					if (scope.isFirstSemester()) {
+						this.firstSemesterEnrolments.add(enrolment);
+					} else if (scope.isSecondSemester()) {
+						this.secondSemesterEnrolments.add(enrolment);
+					}
+				}
+				updateInformationECTS();
+			}
+
+			public void updateInformationECTS() {
+				setEnrolledFirstSemesterECTS(0.0);
+				setApprovedFirstSemesterECTS(0.0);
+				setEnrolledSecondSemesterECTS(0.0);
+				setApprovedSecondSemesterECTS(0.0);
+				for (Enrolment enrolment : getFirstSemesterEnrolments()) {
+					if (enrolment.getEnrollmentState().equals(EnrollmentState.APROVED)) {
+						this.approvedFirstSemesterECTS += enrolment.getEctsCreditsForCurriculum().doubleValue();
+					}
+					this.enrolledFirstSemesterECTS += enrolment.getEctsCreditsForCurriculum().doubleValue();
+				}
+				for (Enrolment enrolment : getSecondSemesterEnrolments()) {
+					if (enrolment.getEnrollmentState().equals(EnrollmentState.APROVED)) {
+						this.approvedSecondSemesterECTS += enrolment.getEctsCreditsForCurriculum().doubleValue();
+					}
+					this.enrolledSecondSemesterECTS += enrolment.getEctsCreditsForCurriculum().doubleValue();
+				}
+			}
+		}
 	}
-    }
 }

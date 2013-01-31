@@ -10,23 +10,23 @@ import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class CreatePortal extends FenixService {
 
-    @Service
-    public static void run(MetaDomainObject metaDomainObject, MultiLanguageString name, String prefix) {
+	@Service
+	public static void run(MetaDomainObject metaDomainObject, MultiLanguageString name, String prefix) {
 
-	Portal portal = new MetaDomainObjectPortal(metaDomainObject);
-	configurePortal(portal, name, prefix);
-    }
+		Portal portal = new MetaDomainObjectPortal(metaDomainObject);
+		configurePortal(portal, name, prefix);
+	}
 
-    @Service
-    public static void run(Container container, MultiLanguageString name, String prefix) {
-	Portal portal = new Portal();
-	portal.setFirstParent(container);
-	configurePortal(portal, name, prefix);
+	@Service
+	public static void run(Container container, MultiLanguageString name, String prefix) {
+		Portal portal = new Portal();
+		portal.setFirstParent(container);
+		configurePortal(portal, name, prefix);
 
-    }
+	}
 
-    private static void configurePortal(Portal portal, MultiLanguageString name, String prefix) {
-	portal.setName(name);
-	portal.setPrefix(prefix);
-    }
+	private static void configurePortal(Portal portal, MultiLanguageString name, String prefix) {
+		portal.setName(name);
+		portal.setPrefix(prefix);
+	}
 }

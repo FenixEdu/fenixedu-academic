@@ -5,25 +5,25 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 public class AdministrativeOfficeServiceAgreementTemplate extends AdministrativeOfficeServiceAgreementTemplate_Base {
 
-    private AdministrativeOfficeServiceAgreementTemplate() {
-	super();
-    }
-
-    public AdministrativeOfficeServiceAgreementTemplate(AdministrativeOffice administrativeOffice) {
-	this();
-	init(administrativeOffice);
-    }
-
-    private void checkParameters(AdministrativeOffice administrativeOffice) {
-	if (administrativeOffice == null) {
-	    throw new DomainException(
-		    "error.accounting.serviceAgreementTemplates.AdministrativeOfficeServiceAgreementTemplate.administrativeOffice.cannot.be.null");
+	private AdministrativeOfficeServiceAgreementTemplate() {
+		super();
 	}
 
-    }
+	public AdministrativeOfficeServiceAgreementTemplate(AdministrativeOffice administrativeOffice) {
+		this();
+		init(administrativeOffice);
+	}
 
-    protected void init(AdministrativeOffice administrativeOffice) {
-	checkParameters(administrativeOffice);
-	addAdministrativeOffice(administrativeOffice);
-    }
+	private void checkParameters(AdministrativeOffice administrativeOffice) {
+		if (administrativeOffice == null) {
+			throw new DomainException(
+					"error.accounting.serviceAgreementTemplates.AdministrativeOfficeServiceAgreementTemplate.administrativeOffice.cannot.be.null");
+		}
+
+	}
+
+	protected void init(AdministrativeOffice administrativeOffice) {
+		checkParameters(administrativeOffice);
+		addAdministrativeOffice(administrativeOffice);
+	}
 }

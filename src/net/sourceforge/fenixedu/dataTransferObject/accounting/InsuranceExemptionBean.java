@@ -9,53 +9,53 @@ import org.joda.time.YearMonthDay;
 
 public class InsuranceExemptionBean implements Serializable {
 
-    /**
+	/**
      * 
      */
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    private InsuranceEvent insuranceEvent;
+	private InsuranceEvent insuranceEvent;
 
-    private InsuranceExemptionJustificationType justificationType;
+	private InsuranceExemptionJustificationType justificationType;
 
-    private String reason;
+	private String reason;
 
-    private YearMonthDay dispatchDate;
+	private YearMonthDay dispatchDate;
 
-    public InsuranceExemptionBean(final InsuranceEvent event) {
-	setInsuranceEvent(event);
-    }
+	public InsuranceExemptionBean(final InsuranceEvent event) {
+		setInsuranceEvent(event);
+	}
 
-    public InsuranceEvent getInsuranceEvent() {
-	return insuranceEvent;
-    }
+	public InsuranceEvent getInsuranceEvent() {
+		return insuranceEvent;
+	}
 
-    public void setInsuranceEvent(InsuranceEvent insuranceEvent) {
-	this.insuranceEvent = insuranceEvent;
-    }
+	public void setInsuranceEvent(InsuranceEvent insuranceEvent) {
+		this.insuranceEvent = insuranceEvent;
+	}
 
-    public InsuranceExemptionJustificationType getJustificationType() {
-	return justificationType;
-    }
+	public InsuranceExemptionJustificationType getJustificationType() {
+		return justificationType;
+	}
 
-    public void setJustificationType(InsuranceExemptionJustificationType justificationType) {
-	this.justificationType = justificationType;
-    }
+	public void setJustificationType(InsuranceExemptionJustificationType justificationType) {
+		this.justificationType = justificationType;
+	}
 
-    public String getReason() {
-	return reason;
-    }
+	public String getReason() {
+		return reason;
+	}
 
-    public void setReason(String reason) {
-	this.reason = reason;
-    }
+	public void setReason(String reason) {
+		this.reason = reason;
+	}
 
-    public YearMonthDay getDispatchDate() {
-	return dispatchDate;
-    }
+	public YearMonthDay getDispatchDate() {
+		return dispatchDate;
+	}
 
-    public void setDispatchDate(YearMonthDay dispatchDate) {
-	this.dispatchDate = dispatchDate;
-    }
+	public void setDispatchDate(YearMonthDay dispatchDate) {
+		this.dispatchDate = dispatchDate;
+	}
 
 }

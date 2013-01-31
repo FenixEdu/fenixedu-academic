@@ -41,126 +41,145 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
 /**
  * @author Luis Cruz
  */
-@Mapping(module = "student", path = "/finalDegreeWorkAttribution", input = "/finalDegreeWorkAttribution.do?method=prepare&page=0", attribute = "finalDegreeWorkAttributionForm", formBean = "finalDegreeWorkAttributionForm", scope = "request", parameter = "method")
+@Mapping(
+		module = "student",
+		path = "/finalDegreeWorkAttribution",
+		input = "/finalDegreeWorkAttribution.do?method=prepare&page=0",
+		attribute = "finalDegreeWorkAttributionForm",
+		formBean = "finalDegreeWorkAttributionForm",
+		scope = "request",
+		parameter = "method")
 @Forwards(value = {
-	@Forward(name = "NoConfirmationInProcessException", path = "/student/finalDegreeWork/noConfirmationInProcess.jsp"),
-	@Forward(name = "prepareShowFinalDegreeWorkList", path = "/finalDegreeWorkAttribution.do?method=prepare&page=0"),
-	@Forward(name = "showFinalDegreeWorkList", path = "/student/finalDegreeWork/attribution.jsp", tileProperties = @Tile(title = "private.student.finalists.confirmattribution" )) })
-@Exceptions(value = {
-	@ExceptionHandling(type = net.sourceforge.fenixedu.applicationTier.Servico.student.ConfirmAttributionOfFinalDegreeWork.NoAttributionToConfirmException.class, key = "error.message.NoAttributionToConfirmException", handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class, scope = "request"),
-	@ExceptionHandling(type = net.sourceforge.fenixedu.applicationTier.Servico.student.CheckCandidacyConditionsForFinalDegreeWork.NoDegreeStudentCurricularPlanFoundException.class, key = "error.message.NoDegreeStudentCurricularPlanFoundException", handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class, scope = "request") })
+		@Forward(name = "NoConfirmationInProcessException", path = "/student/finalDegreeWork/noConfirmationInProcess.jsp"),
+		@Forward(name = "prepareShowFinalDegreeWorkList", path = "/finalDegreeWorkAttribution.do?method=prepare&page=0"),
+		@Forward(name = "showFinalDegreeWorkList", path = "/student/finalDegreeWork/attribution.jsp", tileProperties = @Tile(
+				title = "private.student.finalists.confirmattribution")) })
+@Exceptions(
+		value = {
+				@ExceptionHandling(
+						type = net.sourceforge.fenixedu.applicationTier.Servico.student.ConfirmAttributionOfFinalDegreeWork.NoAttributionToConfirmException.class,
+						key = "error.message.NoAttributionToConfirmException",
+						handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class,
+						scope = "request"),
+				@ExceptionHandling(
+						type = net.sourceforge.fenixedu.applicationTier.Servico.student.CheckCandidacyConditionsForFinalDegreeWork.NoDegreeStudentCurricularPlanFoundException.class,
+						key = "error.message.NoDegreeStudentCurricularPlanFoundException",
+						handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class,
+						scope = "request") })
 public class FinalDegreeWorkAttributionDA extends FenixDispatchAction {
 
-    public ActionForward prepare(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request,
-	    final ExecutionYear executionYear) throws Exception {
-	final DynaActionForm finalDegreeWorkAttributionForm = (DynaActionForm) form;
-	finalDegreeWorkAttributionForm.set("executionYearOID", executionYear.getIdInternal().toString());
+	public ActionForward prepare(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request,
+			final ExecutionYear executionYear) throws Exception {
+		final DynaActionForm finalDegreeWorkAttributionForm = (DynaActionForm) form;
+		finalDegreeWorkAttributionForm.set("executionYearOID", executionYear.getIdInternal().toString());
 
-	final Set<ExecutionYear> executionYears = new TreeSet<ExecutionYear>(ExecutionYear.REVERSE_COMPARATOR_BY_YEAR);
-	executionYears.addAll(rootDomainObject.getExecutionYearsSet());
-	request.setAttribute("executionYears", executionYears);
+		final Set<ExecutionYear> executionYears = new TreeSet<ExecutionYear>(ExecutionYear.REVERSE_COMPARATOR_BY_YEAR);
+		executionYears.addAll(rootDomainObject.getExecutionYearsSet());
+		request.setAttribute("executionYears", executionYears);
 
-	final FinalDegreeWorkGroup group = findGroup(executionYear);
-	if (group != null) {
-	    final InfoGroup infoGroup = InfoGroup.newInfoFromDomain(group);
+		final FinalDegreeWorkGroup group = findGroup(executionYear);
+		if (group != null) {
+			final InfoGroup infoGroup = InfoGroup.newInfoFromDomain(group);
 
-	    final ExecutionDegree executionDegree = group.getExecutionDegree();
-	    if (!executionDegree.hasScheduling() || executionDegree.getScheduling().getAttributionByTeachers() != Boolean.TRUE) {
-		return mapping.findForward("NoConfirmationInProcessException");
-	    }
+			final ExecutionDegree executionDegree = group.getExecutionDegree();
+			if (!executionDegree.hasScheduling() || executionDegree.getScheduling().getAttributionByTeachers() != Boolean.TRUE) {
+				return mapping.findForward("NoConfirmationInProcessException");
+			}
 
-	    Collections.sort(infoGroup.getGroupProposals(), new BeanComparator("orderOfPreference"));
+			Collections.sort(infoGroup.getGroupProposals(), new BeanComparator("orderOfPreference"));
 
-	    request.setAttribute("infoGroup", infoGroup);
+			request.setAttribute("infoGroup", infoGroup);
 
-	    InfoGroupProposal infoGroupProposal = (InfoGroupProposal) CollectionUtils.find(infoGroup.getGroupProposals(),
-		    new PREDICATE_FIND_PROPOSAL_ATTRIBUTED_TO_GROUP_BY_TEACHER(infoGroup.getIdInternal()));
-	    if (infoGroupProposal != null) {
-		finalDegreeWorkAttributionForm.set("attributedByTeacher", infoGroupProposal.getFinalDegreeWorkProposal()
-			.getIdInternal().toString());
-	    }
+			InfoGroupProposal infoGroupProposal =
+					(InfoGroupProposal) CollectionUtils.find(infoGroup.getGroupProposals(),
+							new PREDICATE_FIND_PROPOSAL_ATTRIBUTED_TO_GROUP_BY_TEACHER(infoGroup.getIdInternal()));
+			if (infoGroupProposal != null) {
+				finalDegreeWorkAttributionForm.set("attributedByTeacher", infoGroupProposal.getFinalDegreeWorkProposal()
+						.getIdInternal().toString());
+			}
 
-	    String confirmAttributions[] = new String[infoGroup.getGroupStudents().size()];
-	    for (int i = 0; i < infoGroup.getGroupStudents().size(); i++) {
-		InfoGroupStudent infoGroupStudent = infoGroup.getGroupStudents().get(i);
-		if (infoGroupStudent != null && infoGroupStudent.getFinalDegreeWorkProposalConfirmation() != null) {
-		    confirmAttributions[i] = infoGroupStudent.getFinalDegreeWorkProposalConfirmation().getIdInternal().toString();
-		    confirmAttributions[i] += infoGroupStudent.getStudent().getIdInternal();
+			String confirmAttributions[] = new String[infoGroup.getGroupStudents().size()];
+			for (int i = 0; i < infoGroup.getGroupStudents().size(); i++) {
+				InfoGroupStudent infoGroupStudent = infoGroup.getGroupStudents().get(i);
+				if (infoGroupStudent != null && infoGroupStudent.getFinalDegreeWorkProposalConfirmation() != null) {
+					confirmAttributions[i] = infoGroupStudent.getFinalDegreeWorkProposalConfirmation().getIdInternal().toString();
+					confirmAttributions[i] += infoGroupStudent.getStudent().getIdInternal();
+				}
+			}
+			finalDegreeWorkAttributionForm.set("confirmAttributions", confirmAttributions);
+
+			request.setAttribute("finalDegreeWorkAttributionForm", finalDegreeWorkAttributionForm);
 		}
-	    }
-	    finalDegreeWorkAttributionForm.set("confirmAttributions", confirmAttributions);
 
-	    request.setAttribute("finalDegreeWorkAttributionForm", finalDegreeWorkAttributionForm);
+		return mapping.findForward("showFinalDegreeWorkList");
+
 	}
 
-	return mapping.findForward("showFinalDegreeWorkList");
+	public ActionForward prepareWithArgs(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		final ExecutionYear executionYear = getDomainObject(request, "executionYearOID");
+		return prepare(mapping, form, request, executionYear);
+	}
 
-    }
+	public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+		final DynaActionForm finalDegreeWorkAttributionForm = (DynaActionForm) form;
+		final ExecutionYear executionYear;
+		final String executionYearOID = (String) finalDegreeWorkAttributionForm.get("executionYearOID");
+		executionYear =
+				executionYearOID == null || executionYearOID.equals("") ? ExecutionYear.readCurrentExecutionYear() : rootDomainObject
+						.readExecutionYearByOID(Integer.valueOf(executionYearOID));
+		return prepare(mapping, finalDegreeWorkAttributionForm, request, executionYear);
+	}
 
-    public ActionForward prepareWithArgs(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-	final ExecutionYear executionYear = getDomainObject(request, "executionYearOID");
-	return prepare(mapping, form, request, executionYear);
-    }
-
-    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-	    throws Exception {
-	final DynaActionForm finalDegreeWorkAttributionForm = (DynaActionForm) form;
-	final ExecutionYear executionYear;
-	final String executionYearOID = (String) finalDegreeWorkAttributionForm.get("executionYearOID");
-	executionYear = executionYearOID == null || executionYearOID.equals("") ? ExecutionYear.readCurrentExecutionYear()
-		: rootDomainObject.readExecutionYearByOID(Integer.valueOf(executionYearOID));
-	return prepare(mapping, finalDegreeWorkAttributionForm, request, executionYear);
-    }
-
-    private FinalDegreeWorkGroup findGroup(final ExecutionYear executionYear) {
-	final IUserView userView = UserView.getUser();
-	for (final Registration registration : userView.getPerson().getStudent().getRegistrationsSet()) {
-	    for (final GroupStudent groupStudent : registration.getAssociatedGroupStudentsSet()) {
-		final FinalDegreeWorkGroup group = groupStudent.getFinalDegreeDegreeWorkGroup();
-		if (group != null && !group.getGroupProposalsSet().isEmpty()) {
-		    final ExecutionDegree executionDegree = group.getExecutionDegree();
-		    if (executionDegree != null && executionDegree.getExecutionYear() == executionYear) {
-			return group;
-		    }
+	private FinalDegreeWorkGroup findGroup(final ExecutionYear executionYear) {
+		final IUserView userView = UserView.getUser();
+		for (final Registration registration : userView.getPerson().getStudent().getRegistrationsSet()) {
+			for (final GroupStudent groupStudent : registration.getAssociatedGroupStudentsSet()) {
+				final FinalDegreeWorkGroup group = groupStudent.getFinalDegreeDegreeWorkGroup();
+				if (group != null && !group.getGroupProposalsSet().isEmpty()) {
+					final ExecutionDegree executionDegree = group.getExecutionDegree();
+					if (executionDegree != null && executionDegree.getExecutionYear() == executionYear) {
+						return group;
+					}
+				}
+			}
 		}
-	    }
-	}
-	return null;
-    }
-
-    public ActionForward confirmAttribution(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-	DynaActionForm finalDegreeWorkAttributionForm = (DynaActionForm) form;
-
-	String selectedGroupProposalOID = (String) finalDegreeWorkAttributionForm.get("selectedGroupProposal");
-
-	IUserView userView = UserView.getUser();
-
-	if (selectedGroupProposalOID != null && !selectedGroupProposalOID.equals("")) {
-
-	    ConfirmAttributionOfFinalDegreeWork.run(userView.getUtilizador(), new Integer(selectedGroupProposalOID));
+		return null;
 	}
 
-	return mapping.findForward("prepareShowFinalDegreeWorkList");
-    }
+	public ActionForward confirmAttribution(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		DynaActionForm finalDegreeWorkAttributionForm = (DynaActionForm) form;
 
-    private class PREDICATE_FIND_PROPOSAL_ATTRIBUTED_TO_GROUP_BY_TEACHER implements Predicate {
+		String selectedGroupProposalOID = (String) finalDegreeWorkAttributionForm.get("selectedGroupProposal");
 
-	Integer groupID = null;
+		IUserView userView = UserView.getUser();
 
-	@Override
-	public boolean evaluate(Object arg0) {
-	    InfoGroupProposal infoGroupProposal = (InfoGroupProposal) arg0;
-	    return (infoGroupProposal.getFinalDegreeWorkProposal().getGroupAttributedByTeacher() != null)
-		    && (groupID.equals(infoGroupProposal.getFinalDegreeWorkProposal().getGroupAttributedByTeacher()
-			    .getIdInternal()));
+		if (selectedGroupProposalOID != null && !selectedGroupProposalOID.equals("")) {
+
+			ConfirmAttributionOfFinalDegreeWork.run(userView.getUtilizador(), new Integer(selectedGroupProposalOID));
+		}
+
+		return mapping.findForward("prepareShowFinalDegreeWorkList");
 	}
 
-	public PREDICATE_FIND_PROPOSAL_ATTRIBUTED_TO_GROUP_BY_TEACHER(Integer groupID) {
-	    super();
-	    this.groupID = groupID;
+	private class PREDICATE_FIND_PROPOSAL_ATTRIBUTED_TO_GROUP_BY_TEACHER implements Predicate {
+
+		Integer groupID = null;
+
+		@Override
+		public boolean evaluate(Object arg0) {
+			InfoGroupProposal infoGroupProposal = (InfoGroupProposal) arg0;
+			return (infoGroupProposal.getFinalDegreeWorkProposal().getGroupAttributedByTeacher() != null)
+					&& (groupID.equals(infoGroupProposal.getFinalDegreeWorkProposal().getGroupAttributedByTeacher()
+							.getIdInternal()));
+		}
+
+		public PREDICATE_FIND_PROPOSAL_ATTRIBUTED_TO_GROUP_BY_TEACHER(Integer groupID) {
+			super();
+			this.groupID = groupID;
+		}
 	}
-    }
 
 }

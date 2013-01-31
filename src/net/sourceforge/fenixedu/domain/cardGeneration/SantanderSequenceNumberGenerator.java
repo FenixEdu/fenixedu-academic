@@ -6,31 +6,31 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 public class SantanderSequenceNumberGenerator extends SantanderSequenceNumberGenerator_Base {
-    
-    private  SantanderSequenceNumberGenerator() {
-        super();
-        setRootDomainObject(RootDomainObject.getInstance());
-        setSequenceNumber(0);
-    }
-    
-    private static SantanderSequenceNumberGenerator getInstance() {
-	SantanderSequenceNumberGenerator instance;
-	List<SantanderSequenceNumberGenerator> instances = RootDomainObject.getInstance().getSantanderSequenceNumberGenerators();
-	if (instances.size() > 1) {
-	    throw new DomainException("santanderSequenceNumberGenerator.more.than.one.instances.exist");
+
+	private SantanderSequenceNumberGenerator() {
+		super();
+		setRootDomainObject(RootDomainObject.getInstance());
+		setSequenceNumber(0);
 	}
-	if (instances.size() == 0) {
-	    instance = new SantanderSequenceNumberGenerator();
-	} else {
-	    instance = instances.iterator().next();
+
+	private static SantanderSequenceNumberGenerator getInstance() {
+		SantanderSequenceNumberGenerator instance;
+		List<SantanderSequenceNumberGenerator> instances = RootDomainObject.getInstance().getSantanderSequenceNumberGenerators();
+		if (instances.size() > 1) {
+			throw new DomainException("santanderSequenceNumberGenerator.more.than.one.instances.exist");
+		}
+		if (instances.size() == 0) {
+			instance = new SantanderSequenceNumberGenerator();
+		} else {
+			instance = instances.iterator().next();
+		}
+		return instance;
 	}
-	return instance;
-    }
-    
-    public static int getNewSequenceNumber() {
-	Integer seqNumber = getInstance().getSequenceNumber();
-	getInstance().setSequenceNumber(++seqNumber);
-	return seqNumber;
-    }
-    
+
+	public static int getNewSequenceNumber() {
+		Integer seqNumber = getInstance().getSequenceNumber();
+		getInstance().setSequenceNumber(++seqNumber);
+		return seqNumber;
+	}
+
 }

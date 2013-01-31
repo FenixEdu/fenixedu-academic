@@ -7,19 +7,19 @@ import net.sourceforge.fenixedu.domain.phd.PhdStudyPlan;
 
 public class DeleteStudyPlan extends PhdIndividualProgramProcessActivity {
 
-    @Override
-    protected void activityPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
-	if (!process.isAllowedToManageProcess(userView)) {
-	    throw new PreConditionNotValidException();
+	@Override
+	protected void activityPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
+		if (!process.isAllowedToManageProcess(userView)) {
+			throw new PreConditionNotValidException();
+		}
 	}
-    }
 
-    @Override
-    protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView, Object object) {
+	@Override
+	protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView, Object object) {
 
-	((PhdStudyPlan) object).delete();
+		((PhdStudyPlan) object).delete();
 
-	return process;
-    }
+		return process;
+	}
 
 }

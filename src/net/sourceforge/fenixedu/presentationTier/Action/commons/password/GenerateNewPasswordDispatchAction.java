@@ -29,68 +29,68 @@ import org.apache.struts.action.DynaActionForm;
 
 public class GenerateNewPasswordDispatchAction extends FenixDispatchAction {
 
-    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-	    throws Exception {
+	public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
 
-	return mapping.findForward("PrepareSuccess");
-    }
-
-    public ActionForward findPerson(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-
-	IUserView userView = getUserView(request);
-
-	DynaActionForm newPasswordForm = (DynaActionForm) form;
-
-	String username = (String) newPasswordForm.get("username");
-
-	InfoPerson infoPerson = null;
-	try {
-
-	    infoPerson = (InfoPerson) ReadPersonByUsername.run(username);
-	} catch (ExcepcaoInexistente e) {
-	    throw new NonExistingActionException("A Person", e);
+		return mapping.findForward("PrepareSuccess");
 	}
 
-	request.setAttribute("infoPerson", infoPerson);
+	public ActionForward findPerson(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
 
-	return mapping.findForward("Confirm");
-    }
+		IUserView userView = getUserView(request);
 
-    public ActionForward generatePassword(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
+		DynaActionForm newPasswordForm = (DynaActionForm) form;
 
-	IUserView userView = getUserView(request);
+		String username = (String) newPasswordForm.get("username");
 
-	Integer personID = new Integer(request.getParameter("personID"));
+		InfoPerson infoPerson = null;
+		try {
 
-	String password = null;
+			infoPerson = ReadPersonByUsername.run(username);
+		} catch (ExcepcaoInexistente e) {
+			throw new NonExistingActionException("A Person", e);
+		}
 
-	final Person person = (Person) RootDomainObject.getInstance().readPartyByOID(personID);
-	if (person != null) {
-	    SetUserUID.run(person);
+		request.setAttribute("infoPerson", infoPerson);
+
+		return mapping.findForward("Confirm");
 	}
 
-	// Change the Password
-	try {
+	public ActionForward generatePassword(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
 
-	    password = (String) GenerateNewPasswordService.run(personID);
-	} catch (FenixServiceException e) {
-	    throw new FenixActionException(e);
+		IUserView userView = getUserView(request);
+
+		Integer personID = new Integer(request.getParameter("personID"));
+
+		String password = null;
+
+		final Person person = (Person) RootDomainObject.getInstance().readPartyByOID(personID);
+		if (person != null) {
+			SetUserUID.run(person);
+		}
+
+		// Change the Password
+		try {
+
+			password = GenerateNewPasswordService.run(personID);
+		} catch (FenixServiceException e) {
+			throw new FenixActionException(e);
+		}
+
+		request.setAttribute("password", password);
+
+		InfoPerson infoPerson = null;
+		try {
+
+			infoPerson = ReadPersonByUsername.run(request.getParameter("username"));
+		} catch (ExcepcaoInexistente e) {
+			throw new NonExistingActionException("A Person", e);
+		}
+
+		request.setAttribute("infoPerson", infoPerson);
+
+		return mapping.findForward("Success");
 	}
-
-	request.setAttribute("password", password);
-
-	InfoPerson infoPerson = null;
-	try {
-
-	    infoPerson = (InfoPerson) ReadPersonByUsername.run(request.getParameter("username"));
-	} catch (ExcepcaoInexistente e) {
-	    throw new NonExistingActionException("A Person", e);
-	}
-
-	request.setAttribute("infoPerson", infoPerson);
-
-	return mapping.findForward("Success");
-    }
 }

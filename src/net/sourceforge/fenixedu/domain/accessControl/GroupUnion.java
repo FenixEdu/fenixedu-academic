@@ -13,103 +13,103 @@ import net.sourceforge.fenixedu.injectionCode.IGroup;
 
 public final class GroupUnion extends NodeGroup {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    public GroupUnion(IGroup... groups) {
-	super(groups);
-    }
-
-    public GroupUnion(Collection<IGroup> groups) {
-	super(groups);
-    }
-
-    @Override
-    public Group with(final Group... groups) {
-	final List<IGroup> resultGroups = new ArrayList<IGroup>();
-
-	for (final IGroup iter : getChildren()) {
-	    if (iter instanceof GroupUnion) {
-		resultGroups.addAll(((GroupUnion) iter).getChildren());
-	    } else {
-		resultGroups.add(iter);
-	    }
+	public GroupUnion(IGroup... groups) {
+		super(groups);
 	}
 
-	for (final IGroup iter : Arrays.asList(groups)) {
-	    if (iter instanceof GroupUnion) {
-		resultGroups.addAll(((GroupUnion) iter).getChildren());
-	    } else {
-		resultGroups.add(iter);
-	    }
+	public GroupUnion(Collection<IGroup> groups) {
+		super(groups);
 	}
 
-	return new GroupUnion(resultGroups);
-    }
+	@Override
+	public Group with(final Group... groups) {
+		final List<IGroup> resultGroups = new ArrayList<IGroup>();
 
-    @Override
-    public Group without(final Group group) {
-	Group result = this;
-
-	if (group != null) {
-	    final List<IGroup> updated = new ArrayList<IGroup>();
-	    for (final IGroup iter : getChildren()) {
-		if (!iter.equals(group) && iter instanceof Group) {
-		    updated.add(((Group) iter).without(group));
+		for (final IGroup iter : getChildren()) {
+			if (iter instanceof GroupUnion) {
+				resultGroups.addAll(((GroupUnion) iter).getChildren());
+			} else {
+				resultGroups.add(iter);
+			}
 		}
-	    }
-	    result = updated.size() == 1 ? (Group) updated.iterator().next() : new GroupUnion(updated);
+
+		for (final IGroup iter : Arrays.asList(groups)) {
+			if (iter instanceof GroupUnion) {
+				resultGroups.addAll(((GroupUnion) iter).getChildren());
+			} else {
+				resultGroups.add(iter);
+			}
+		}
+
+		return new GroupUnion(resultGroups);
 	}
 
-	return result;
-    }
+	@Override
+	public Group without(final Group group) {
+		Group result = this;
 
-    @Override
-    public int getElementsCount() {
-	int count = 0;
+		if (group != null) {
+			final List<IGroup> updated = new ArrayList<IGroup>();
+			for (final IGroup iter : getChildren()) {
+				if (!iter.equals(group) && iter instanceof Group) {
+					updated.add(((Group) iter).without(group));
+				}
+			}
+			result = updated.size() == 1 ? (Group) updated.iterator().next() : new GroupUnion(updated);
+		}
 
-	for (IGroup child : getChildren()) {
-	    count += child.getElementsCount();
+		return result;
 	}
 
-	return count;
-    }
+	@Override
+	public int getElementsCount() {
+		int count = 0;
 
-    @Override
-    public Set<Person> getElements() {
-	Set<Person> elements = new HashSet<Person>();
+		for (IGroup child : getChildren()) {
+			count += child.getElementsCount();
+		}
 
-	for (IGroup child : getChildren()) {
-	    elements.addAll(child.getElements());
+		return count;
 	}
 
-	return elements;
+	@Override
+	public Set<Person> getElements() {
+		Set<Person> elements = new HashSet<Person>();
 
-    }
+		for (IGroup child : getChildren()) {
+			elements.addAll(child.getElements());
+		}
 
-    @Override
-    public boolean allows(IUserView userView) {
-	for (IGroup group : getChildren()) {
-	    if (group.allows(userView)) {
-		return true;
-	    }
-	}
-	return false;
-    }
+		return elements;
 
-    @Override
-    public boolean isMember(Person person) {
-	for (IGroup group : getChildren()) {
-	    if (group.isMember(person)) {
-		return true;
-	    }
 	}
 
-	return false;
-    }
+	@Override
+	public boolean allows(IUserView userView) {
+		for (IGroup group : getChildren()) {
+			if (group.allows(userView)) {
+				return true;
+			}
+		}
+		return false;
+	}
 
-    @Override
-    protected String getExpressionOperator() {
-	return "||";
-    }
+	@Override
+	public boolean isMember(Person person) {
+		for (IGroup group : getChildren()) {
+			if (group.isMember(person)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	@Override
+	protected String getExpressionOperator() {
+		return "||";
+	}
 
 }

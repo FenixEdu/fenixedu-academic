@@ -30,96 +30,101 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(module = "scientificCouncil", path = "/competenceCourses/manageVersions", scope = "session", parameter = "method")
 @Forwards(value = {
-	@Forward(name = "manageVersions", path = "/scientificCouncil/bolonha/manageVersions.jsp", tileProperties = @Tile(title = "private.scientificcouncil.bolognaprocess.versionproposals")),
-	@Forward(name = "listRequests", path = "/scientificCouncil/bolonha/listVersions.jsp", tileProperties = @Tile(title = "private.scientificcouncil.bolognaprocess.versionproposals")),
-	@Forward(name = "viewVersionDetails", path = "/scientificCouncil/bolonha/viewVersionDetails.jsp", tileProperties = @Tile(title = "private.scientificcouncil.bolognaprocess.versionproposals")) })
+		@Forward(name = "manageVersions", path = "/scientificCouncil/bolonha/manageVersions.jsp", tileProperties = @Tile(
+				title = "private.scientificcouncil.bolognaprocess.versionproposals")),
+		@Forward(name = "listRequests", path = "/scientificCouncil/bolonha/listVersions.jsp", tileProperties = @Tile(
+				title = "private.scientificcouncil.bolognaprocess.versionproposals")),
+		@Forward(name = "viewVersionDetails", path = "/scientificCouncil/bolonha/viewVersionDetails.jsp", tileProperties = @Tile(
+				title = "private.scientificcouncil.bolognaprocess.versionproposals")) })
 public class ManageCompetenceCourseInformationChangeRequests extends FenixDispatchAction {
 
-    public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
+	public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
 
-	Set<Department> departments = RootDomainObject.readAllDomainObjects(Department.class);
-	request.setAttribute("departments", departments);
+		Set<Department> departments = RootDomainObject.readAllDomainObjects(Department.class);
+		request.setAttribute("departments", departments);
 
-	return mapping.findForward("manageVersions");
-    }
-
-    public ActionForward displayRequest(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) {
-
-	String departmentID = request.getParameter("departmentID");
-	Department department = (Department) RootDomainObject.readDomainObjectByOID(Department.class,
-		Integer.valueOf(departmentID));
-	putChangeRequestInRequest(request, department);
-
-	return mapping.findForward("listRequests");
-
-    }
-
-    public ActionForward viewVersion(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-
-	CompetenceCourseInformationChangeRequest changeRequest = getChangeRequest(request);
-	if (changeRequest != null && isAllowedToViewChangeRequest(getLoggedPerson(request), changeRequest)) {
-	    request.setAttribute("changeRequest", changeRequest);
-	}
-	return mapping.findForward("viewVersionDetails");
-    }
-
-    public ActionForward approveRequest(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-
-	CompetenceCourseInformationChangeRequest changeRequest = getChangeRequest(request);
-	if (changeRequest != null && isAllowedToViewChangeRequest(getLoggedPerson(request), changeRequest)) {
-	    try {
-		changeRequest.approve(getLoggedPerson(request));
-	    } catch (DomainException e) {
-		addActionMessage(request, e.getMessage());
-	    }
+		return mapping.findForward("manageVersions");
 	}
 
-	return displayRequest(mapping, form, request, response);
-    }
+	public ActionForward displayRequest(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) {
 
-    public ActionForward rejectRequest(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+		String departmentID = request.getParameter("departmentID");
+		Department department =
+				(Department) RootDomainObject.readDomainObjectByOID(Department.class, Integer.valueOf(departmentID));
+		putChangeRequestInRequest(request, department);
 
-	CompetenceCourseInformationChangeRequest changeRequest = getChangeRequest(request);
-	if (changeRequest != null && isAllowedToViewChangeRequest(getLoggedPerson(request), changeRequest)) {
-	    try {
-		changeRequest.reject(getLoggedPerson(request));
-	    } catch (DomainException e) {
-		addActionMessage(request, e.getMessage());
-	    }
+		return mapping.findForward("listRequests");
+
 	}
 
-	return displayRequest(mapping, form, request, response);
-    }
+	public ActionForward viewVersion(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
-    private CompetenceCourseInformationChangeRequest getChangeRequest(HttpServletRequest request) {
-	String competenceCourseInformationChangeRequestId = request.getParameter("changeRequestID");
-	CompetenceCourseInformationChangeRequest changeRequest = (CompetenceCourseInformationChangeRequest) RootDomainObject
-		.readDomainObjectByOID(CompetenceCourseInformationChangeRequest.class,
-			Integer.valueOf(competenceCourseInformationChangeRequestId));
-	return changeRequest;
-    }
-
-    private CompetenceCourse getCompetenceCourse(HttpServletRequest request) {
-	String competenceCourseID = request.getParameter("competenceCourseID");
-	CompetenceCourse course = (CompetenceCourse) RootDomainObject.readDomainObjectByOID(CompetenceCourse.class,
-		Integer.valueOf(competenceCourseID));
-	return course;
-    }
-
-    private void putChangeRequestInRequest(HttpServletRequest request, Department department) {
-	List<CompetenceCourseInformationChangeRequest> requests = new ArrayList<CompetenceCourseInformationChangeRequest>();
-	for (CompetenceCourse courses : department.getDepartmentUnit().getCompetenceCourses()) {
-	    requests.addAll(courses.getCompetenceCourseInformationChangeRequests());
+		CompetenceCourseInformationChangeRequest changeRequest = getChangeRequest(request);
+		if (changeRequest != null && isAllowedToViewChangeRequest(getLoggedPerson(request), changeRequest)) {
+			request.setAttribute("changeRequest", changeRequest);
+		}
+		return mapping.findForward("viewVersionDetails");
 	}
-	request.setAttribute("changeRequests", requests);
-    }
 
-    private boolean isAllowedToViewChangeRequest(Person loggedPerson, CompetenceCourseInformationChangeRequest changeRequest) {
-	return loggedPerson.hasPersonRoles(Role.getRoleByRoleType(RoleType.SCIENTIFIC_COUNCIL));
-    }
+	public ActionForward approveRequest(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+
+		CompetenceCourseInformationChangeRequest changeRequest = getChangeRequest(request);
+		if (changeRequest != null && isAllowedToViewChangeRequest(getLoggedPerson(request), changeRequest)) {
+			try {
+				changeRequest.approve(getLoggedPerson(request));
+			} catch (DomainException e) {
+				addActionMessage(request, e.getMessage());
+			}
+		}
+
+		return displayRequest(mapping, form, request, response);
+	}
+
+	public ActionForward rejectRequest(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+
+		CompetenceCourseInformationChangeRequest changeRequest = getChangeRequest(request);
+		if (changeRequest != null && isAllowedToViewChangeRequest(getLoggedPerson(request), changeRequest)) {
+			try {
+				changeRequest.reject(getLoggedPerson(request));
+			} catch (DomainException e) {
+				addActionMessage(request, e.getMessage());
+			}
+		}
+
+		return displayRequest(mapping, form, request, response);
+	}
+
+	private CompetenceCourseInformationChangeRequest getChangeRequest(HttpServletRequest request) {
+		String competenceCourseInformationChangeRequestId = request.getParameter("changeRequestID");
+		CompetenceCourseInformationChangeRequest changeRequest =
+				(CompetenceCourseInformationChangeRequest) RootDomainObject.readDomainObjectByOID(
+						CompetenceCourseInformationChangeRequest.class,
+						Integer.valueOf(competenceCourseInformationChangeRequestId));
+		return changeRequest;
+	}
+
+	private CompetenceCourse getCompetenceCourse(HttpServletRequest request) {
+		String competenceCourseID = request.getParameter("competenceCourseID");
+		CompetenceCourse course =
+				(CompetenceCourse) RootDomainObject.readDomainObjectByOID(CompetenceCourse.class,
+						Integer.valueOf(competenceCourseID));
+		return course;
+	}
+
+	private void putChangeRequestInRequest(HttpServletRequest request, Department department) {
+		List<CompetenceCourseInformationChangeRequest> requests = new ArrayList<CompetenceCourseInformationChangeRequest>();
+		for (CompetenceCourse courses : department.getDepartmentUnit().getCompetenceCourses()) {
+			requests.addAll(courses.getCompetenceCourseInformationChangeRequests());
+		}
+		request.setAttribute("changeRequests", requests);
+	}
+
+	private boolean isAllowedToViewChangeRequest(Person loggedPerson, CompetenceCourseInformationChangeRequest changeRequest) {
+		return loggedPerson.hasPersonRoles(Role.getRoleByRoleType(RoleType.SCIENTIFIC_COUNCIL));
+	}
 }

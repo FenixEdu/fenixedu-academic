@@ -18,13 +18,13 @@ import net.sourceforge.fenixedu.domain.Seminaries.Theme;
  */
 public class GetThemeById extends FenixService {
 
-    public InfoTheme run(Integer themeID) {
-	InfoTheme infoTheme = null;
-	if (themeID != null) {
-	    Theme theme = rootDomainObject.readThemeByOID(themeID);
-	    infoTheme = InfoTheme.newInfoFromDomain(theme);
+	public InfoTheme run(Integer themeID) {
+		InfoTheme infoTheme = null;
+		if (themeID != null) {
+			Theme theme = rootDomainObject.readThemeByOID(themeID);
+			infoTheme = InfoTheme.newInfoFromDomain(theme);
 
+		}
+		return infoTheme;
 	}
-	return infoTheme;
-    }
 }

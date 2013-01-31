@@ -39,258 +39,263 @@ import pt.utl.ist.fenix.tools.util.StringAppender;
 
 public class ErasmusBolonhaStudentEnrolmentLayout extends BolonhaStudentEnrolmentLayout {
 
-    protected boolean isAcademicAdminOfficeEmployee() {
-	final Person person = AccessControl.getPerson();
-	return person.hasRole(RoleType.INTERNATIONAL_RELATION_OFFICE) || canPerformStudentEnrolments;
-    }
-
-    private boolean contains(List<CurricularCourse> curricularCourseList, final IDegreeModuleToEvaluate degreeModule) {
-	if (!CurricularCourse.class.isAssignableFrom(degreeModule.getClass())) {
-	    return false;
+	protected boolean isAcademicAdminOfficeEmployee() {
+		final Person person = AccessControl.getPerson();
+		return person.hasRole(RoleType.INTERNATIONAL_RELATION_OFFICE) || canPerformStudentEnrolments;
 	}
 
-	return CollectionUtils.find(curricularCourseList, new Predicate() {
-
-	    @Override
-	    public boolean evaluate(Object arg0) {
-		return ((CurricularCourse) degreeModule).isEquivalent((CurricularCourse) arg0);
-	    }
-	}) != null;
-    }
-
-    @Override
-    protected void generateCurricularCoursesToEnrol(HtmlTable groupTable, StudentCurriculumGroupBean studentCurriculumGroupBean) {
-	final List<IDegreeModuleToEvaluate> coursesToEvaluate = studentCurriculumGroupBean.getSortedDegreeModulesToEvaluate();
-	generateCurricularCoursesToEnrol(groupTable, coursesToEvaluate);
-    }
-
-    private void generateCurricularCoursesToEnrol(HtmlTable groupTable, final List<IDegreeModuleToEvaluate> coursesToEvaluate) {
-	ErasmusBolonhaStudentEnrollmentBean bean = (ErasmusBolonhaStudentEnrollmentBean) getBolonhaStudentEnrollmentBean();
-
-	for (final IDegreeModuleToEvaluate degreeModuleToEvaluate : coursesToEvaluate) {
-	    if (!bean.getCandidacy().getCurricularCourses().contains(degreeModuleToEvaluate.getDegreeModule())) {
-		// if(contains(bean.getCandidacy().getCurricularCourses(),
-		// degreeModuleToEvaluate)) {
-		continue;
-	    }
-
-	    HtmlTableRow htmlTableRow = groupTable.createRow();
-	    HtmlTableCell cellName = htmlTableRow.createCell();
-	    cellName.setClasses(getRenderer().getCurricularCourseToEnrolNameClasses());
-
-	    String degreeName = degreeModuleToEvaluate.getName();
-
-	    if (isAcademicAdminOfficeEmployee() && degreeModuleToEvaluate.getDegreeModule() instanceof CurricularCourse) {
-		if (!StringUtils.isEmpty(degreeModuleToEvaluate.getDegreeModule().getCode())) {
-		    degreeName = degreeModuleToEvaluate.getDegreeModule().getCode() + " - " + degreeName;
+	private boolean contains(List<CurricularCourse> curricularCourseList, final IDegreeModuleToEvaluate degreeModule) {
+		if (!CurricularCourse.class.isAssignableFrom(degreeModule.getClass())) {
+			return false;
 		}
 
-		CurricularCourse curricularCourse = (CurricularCourse) degreeModuleToEvaluate.getDegreeModule();
-		degreeName += " (" + getRenderer().studentResources.getString("label.grade.scale") + " - "
-			+ curricularCourse.getGradeScaleChain().getDescription() + ") ";
-	    }
+		return CollectionUtils.find(curricularCourseList, new Predicate() {
 
-	    cellName.setBody(new HtmlText(degreeName));
-
-	    // Year
-	    final HtmlTableCell yearCell = htmlTableRow.createCell();
-	    yearCell.setClasses(getRenderer().getCurricularCourseToEnrolYearClasses());
-	    yearCell.setColspan(2);
-	    yearCell.setBody(new HtmlText(degreeModuleToEvaluate.getYearFullLabel()));
-
-	    if (!degreeModuleToEvaluate.isOptionalCurricularCourse()) {
-		// Ects
-		final HtmlTableCell ectsCell = htmlTableRow.createCell();
-		ectsCell.setClasses(getRenderer().getCurricularCourseToEnrolEctsClasses());
-
-		final StringBuilder ects = new StringBuilder();
-		ects.append(degreeModuleToEvaluate.getEctsCredits()).append(" ")
-			.append(getRenderer().studentResources.getString("label.credits.abbreviation"));
-		ectsCell.setBody(new HtmlText(ects.toString()));
-
-		HtmlTableCell checkBoxCell = htmlTableRow.createCell();
-		checkBoxCell.setClasses(getRenderer().getCurricularCourseToEnrolCheckBoxClasses());
-
-		HtmlCheckBox checkBox = new HtmlCheckBox(false);
-		checkBox.setName("degreeModuleToEnrolCheckBox" + degreeModuleToEvaluate.getKey());
-		checkBox.setUserValue(degreeModuleToEvaluate.getKey());
-		getDegreeModulesToEvaluateController().addCheckBox(checkBox);
-		checkBoxCell.setBody(checkBox);
-	    } else {
-		final HtmlTableCell cell = htmlTableRow.createCell();
-		cell.setClasses(getRenderer().getCurricularCourseToEnrolEctsClasses());
-		cell.setBody(new HtmlText(""));
-
-		HtmlTableCell linkTableCell = htmlTableRow.createCell();
-		linkTableCell.setClasses(getRenderer().getCurricularCourseToEnrolCheckBoxClasses());
-
-		final HtmlActionLink actionLink = new HtmlActionLink();
-		actionLink.setText(getRenderer().studentResources.getString("label.chooseOptionalCurricularCourse"));
-		actionLink.setController(new OptionalCurricularCourseLinkController(degreeModuleToEvaluate));
-		actionLink
-			.setOnClick("$(\\\"form[name='net.sourceforge.fenixedu.presentationTier.formbeans.FenixActionForm']\\\").method.value='prepareChooseOptionalCurricularCourseToEnrol';");
-		actionLink.setName("optionalCurricularCourseLink" + degreeModuleToEvaluate.getCurriculumGroup().getIdInternal()
-			+ "_" + degreeModuleToEvaluate.getContext().getIdInternal());
-		linkTableCell.setBody(actionLink);
-	    }
-
-	    if (getRenderer().isEncodeCurricularRules()) {
-		encodeCurricularRules(groupTable, degreeModuleToEvaluate);
-	    }
+			@Override
+			public boolean evaluate(Object arg0) {
+				return ((CurricularCourse) degreeModule).isEquivalent((CurricularCourse) arg0);
+			}
+		}) != null;
 	}
-    }
-
-    private static class ErasmusExtraCurricularEnrolmentConverter extends Converter {
 
 	@Override
-	public Object convert(Class type, Object value) {
-	    ArrayList<ErasmusExtraCurricularEnrolmentBean> list = new ArrayList<ErasmusBolonhaStudentEnrollmentBean.ErasmusExtraCurricularEnrolmentBean>();
-	    final DomainObjectKeyConverter converter = new DomainObjectKeyConverter();
-
-	    for (String string : (String[]) value) {
-		list.add(new ErasmusExtraCurricularEnrolmentBean((CurricularCourse) converter.convert(type, string), true));
-	    }
-
-	    return list;
+	protected void generateCurricularCoursesToEnrol(HtmlTable groupTable, StudentCurriculumGroupBean studentCurriculumGroupBean) {
+		final List<IDegreeModuleToEvaluate> coursesToEvaluate = studentCurriculumGroupBean.getSortedDegreeModulesToEvaluate();
+		generateCurricularCoursesToEnrol(groupTable, coursesToEvaluate);
 	}
 
-    }
+	private void generateCurricularCoursesToEnrol(HtmlTable groupTable, final List<IDegreeModuleToEvaluate> coursesToEvaluate) {
+		ErasmusBolonhaStudentEnrollmentBean bean = (ErasmusBolonhaStudentEnrollmentBean) getBolonhaStudentEnrollmentBean();
 
-    public CopyCheckBoxValuesController controller = new CopyCheckBoxValuesController();
+		for (final IDegreeModuleToEvaluate degreeModuleToEvaluate : coursesToEvaluate) {
+			if (!bean.getCandidacy().getCurricularCourses().contains(degreeModuleToEvaluate.getDegreeModule())) {
+				// if(contains(bean.getCandidacy().getCurricularCourses(),
+				// degreeModuleToEvaluate)) {
+				continue;
+			}
 
-    public boolean isContextValid(CurricularCourse curricularCourse) {
-	List<Context> parentContexts = curricularCourse.getParentContexts();
-	for (Context context : parentContexts) {
-	    if (context.isValid(getBolonhaStudentEnrollmentBean().getExecutionPeriod())) {
-		return true;
-	    }
-	}
-	return false;
-    }
+			HtmlTableRow htmlTableRow = groupTable.createRow();
+			HtmlTableCell cellName = htmlTableRow.createCell();
+			cellName.setClasses(getRenderer().getCurricularCourseToEnrolNameClasses());
 
-    @Override
-    public HtmlComponent createComponent(Object object, Class type) {
-	setBolonhaStudentEnrollmentBean((BolonhaStudentEnrollmentBean) object);
+			String degreeName = degreeModuleToEvaluate.getName();
 
-	if (getBolonhaStudentEnrollmentBean() == null) {
-	    return new HtmlText();
-	}
+			if (isAcademicAdminOfficeEmployee() && degreeModuleToEvaluate.getDegreeModule() instanceof CurricularCourse) {
+				if (!StringUtils.isEmpty(degreeModuleToEvaluate.getDegreeModule().getCode())) {
+					degreeName = degreeModuleToEvaluate.getDegreeModule().getCode() + " - " + degreeName;
+				}
 
-	final HtmlBlockContainer container = new HtmlBlockContainer();
+				CurricularCourse curricularCourse = (CurricularCourse) degreeModuleToEvaluate.getDegreeModule();
+				degreeName +=
+						" (" + getRenderer().studentResources.getString("label.grade.scale") + " - "
+								+ curricularCourse.getGradeScaleChain().getDescription() + ") ";
+			}
 
-	HtmlMultipleHiddenField hiddenEnrollments = new HtmlMultipleHiddenField();
-	hiddenEnrollments.bind(getRenderer().getInputContext().getMetaObject(), "curriculumModulesToRemove");
-	hiddenEnrollments.setConverter(new DomainObjectKeyArrayConverter());
-	hiddenEnrollments.setController(getEnrollmentsController());
+			cellName.setBody(new HtmlText(degreeName));
 
-	HtmlMultipleHiddenField hiddenDegreeModulesToEvaluate = new HtmlMultipleHiddenField();
-	hiddenDegreeModulesToEvaluate.bind(getRenderer().getInputContext().getMetaObject(), "degreeModulesToEvaluate");
-	hiddenDegreeModulesToEvaluate.setConverter(getBolonhaStudentEnrollmentBean().getDegreeModulesToEvaluateConverter());
-	hiddenDegreeModulesToEvaluate.setController(getDegreeModulesToEvaluateController());
+			// Year
+			final HtmlTableCell yearCell = htmlTableRow.createCell();
+			yearCell.setClasses(getRenderer().getCurricularCourseToEnrolYearClasses());
+			yearCell.setColspan(2);
+			yearCell.setBody(new HtmlText(degreeModuleToEvaluate.getYearFullLabel()));
 
-	HtmlMultipleHiddenField hiddenExtraCurricularEnrollments = new HtmlMultipleHiddenField();
-	hiddenExtraCurricularEnrollments.bind(getRenderer().getInputContext().getMetaObject(), "extraCurricularEnrolments");
-	hiddenExtraCurricularEnrollments.setConverter(new ErasmusExtraCurricularEnrolmentConverter());
-	hiddenExtraCurricularEnrollments.setController(controller);
+			if (!degreeModuleToEvaluate.isOptionalCurricularCourse()) {
+				// Ects
+				final HtmlTableCell ectsCell = htmlTableRow.createCell();
+				ectsCell.setClasses(getRenderer().getCurricularCourseToEnrolEctsClasses());
 
-	container.addChild(hiddenEnrollments);
-	container.addChild(hiddenDegreeModulesToEvaluate);
-	container.addChild(hiddenExtraCurricularEnrollments);
+				final StringBuilder ects = new StringBuilder();
+				ects.append(degreeModuleToEvaluate.getEctsCredits()).append(" ")
+						.append(getRenderer().studentResources.getString("label.credits.abbreviation"));
+				ectsCell.setBody(new HtmlText(ects.toString()));
 
-	generateGroup(container, getBolonhaStudentEnrollmentBean().getStudentCurricularPlan(), getBolonhaStudentEnrollmentBean()
-		.getRootStudentCurriculumGroupBean(), getBolonhaStudentEnrollmentBean().getExecutionPeriod(), 0);
+				HtmlTableCell checkBoxCell = htmlTableRow.createCell();
+				checkBoxCell.setClasses(getRenderer().getCurricularCourseToEnrolCheckBoxClasses());
 
-	HtmlTable groupTable = createGroupTable(container, 0);
+				HtmlCheckBox checkBox = new HtmlCheckBox(false);
+				checkBox.setName("degreeModuleToEnrolCheckBox" + degreeModuleToEvaluate.getKey());
+				checkBox.setUserValue(degreeModuleToEvaluate.getKey());
+				getDegreeModulesToEvaluateController().addCheckBox(checkBox);
+				checkBoxCell.setBody(checkBox);
+			} else {
+				final HtmlTableCell cell = htmlTableRow.createCell();
+				cell.setClasses(getRenderer().getCurricularCourseToEnrolEctsClasses());
+				cell.setBody(new HtmlText(""));
 
-	HtmlTableRow htmlTableRow = groupTable.createRow();
-	htmlTableRow.setClasses(getRenderer().getGroupRowClasses());
-	htmlTableRow.createCell().setBody(new HtmlText("Other Curricular Units", false));
-	HtmlTableCell cell = htmlTableRow.createCell();
-	cell.setClasses("aright");
+				HtmlTableCell linkTableCell = htmlTableRow.createCell();
+				linkTableCell.setClasses(getRenderer().getCurricularCourseToEnrolCheckBoxClasses());
 
-	HtmlCheckBox checkBox = new HtmlCheckBox(false);
-	final String name = StringAppender.append("degreeModuleToEnrolCheckBox", "");
-	checkBox.setName(name);
-	checkBox.setUserValue("true");
-	checkBox.setChecked(true);
+				final HtmlActionLink actionLink = new HtmlActionLink();
+				actionLink.setText(getRenderer().studentResources.getString("label.chooseOptionalCurricularCourse"));
+				actionLink.setController(new OptionalCurricularCourseLinkController(degreeModuleToEvaluate));
+				actionLink
+						.setOnClick("$(\\\"form[name='net.sourceforge.fenixedu.presentationTier.formbeans.FenixActionForm']\\\").method.value='prepareChooseOptionalCurricularCourseToEnrol';");
+				actionLink.setName("optionalCurricularCourseLink" + degreeModuleToEvaluate.getCurriculumGroup().getIdInternal()
+						+ "_" + degreeModuleToEvaluate.getContext().getIdInternal());
+				linkTableCell.setBody(actionLink);
+			}
 
-	cell.setBody(checkBox);
-	groupTable = createCoursesTable(container, 0);
-	NoCourseGroupCurriculumGroup group = getBolonhaStudentEnrollmentBean().getStudentCurricularPlan()
-		.getNoCourseGroupCurriculumGroup(NoCourseGroupCurriculumGroupType.STANDALONE);
-	HashSet<CurricularCourse> set = new HashSet<CurricularCourse>();
-	ErasmusBolonhaStudentEnrollmentBean erasmusBolonhaStudentEnrollmentBean = (ErasmusBolonhaStudentEnrollmentBean) getBolonhaStudentEnrollmentBean();
-	set.addAll(erasmusBolonhaStudentEnrollmentBean.getCandidacy().getCurricularCourses());
-	for (Enrolment enrolment : group.getEnrolments()) {
-	    set.add(enrolment.getCurricularCourse());
-	}
-
-	for (CurricularCourse curricularCourse : set) {
-	    if (erasmusBolonhaStudentEnrollmentBean.getStudentCurricularPlan().getEnrolmentByCurricularCourseAndExecutionPeriod(
-		    curricularCourse, erasmusBolonhaStudentEnrollmentBean.getExecutionPeriod()) != null) {
-		if (!group.hasEnrolmentWithEnroledState(curricularCourse,
-			erasmusBolonhaStudentEnrollmentBean.getExecutionPeriod())) {
-
-		    continue;
+			if (getRenderer().isEncodeCurricularRules()) {
+				encodeCurricularRules(groupTable, degreeModuleToEvaluate);
+			}
 		}
-	    }
+	}
 
-	    if (!isContextValid(curricularCourse)) {
-		continue;
-	    }
+	private static class ErasmusExtraCurricularEnrolmentConverter extends Converter {
 
-	    htmlTableRow = groupTable.createRow();
-	    HtmlTableCell cellName = htmlTableRow.createCell();
-	    cellName.setClasses(getRenderer().getCurricularCourseToEnrolNameClasses());
+		@Override
+		public Object convert(Class type, Object value) {
+			ArrayList<ErasmusExtraCurricularEnrolmentBean> list =
+					new ArrayList<ErasmusBolonhaStudentEnrollmentBean.ErasmusExtraCurricularEnrolmentBean>();
+			final DomainObjectKeyConverter converter = new DomainObjectKeyConverter();
 
-	    String degreeName = curricularCourse.getName();
+			for (String string : (String[]) value) {
+				list.add(new ErasmusExtraCurricularEnrolmentBean((CurricularCourse) converter.convert(type, string), true));
+			}
 
-	    if (isAcademicAdminOfficeEmployee() && curricularCourse instanceof CurricularCourse) {
-		if (!StringUtils.isEmpty(curricularCourse.getCode())) {
-		    degreeName = curricularCourse.getCode() + " - " + degreeName;
+			return list;
 		}
 
-		degreeName += " (" + getRenderer().studentResources.getString("label.grade.scale") + " - "
-			+ curricularCourse.getGradeScaleChain().getDescription() + ") ";
-	    }
+	}
 
-	    cellName.setBody(new HtmlText(degreeName));
+	public CopyCheckBoxValuesController controller = new CopyCheckBoxValuesController();
 
-	    // Year
-	    final HtmlTableCell yearCell = htmlTableRow.createCell();
-	    yearCell.setClasses(getRenderer().getCurricularCourseToEnrolYearClasses());
-	    yearCell.setColspan(2);
-	    yearCell.setBody(new HtmlText(getBolonhaStudentEnrollmentBean().getExecutionPeriod().getQualifiedName()));
+	public boolean isContextValid(CurricularCourse curricularCourse) {
+		List<Context> parentContexts = curricularCourse.getParentContexts();
+		for (Context context : parentContexts) {
+			if (context.isValid(getBolonhaStudentEnrollmentBean().getExecutionPeriod())) {
+				return true;
+			}
+		}
+		return false;
+	}
 
-	    final HtmlTableCell ectsCell = htmlTableRow.createCell();
-	    ectsCell.setClasses(getRenderer().getCurricularCourseToEnrolEctsClasses());
+	@Override
+	public HtmlComponent createComponent(Object object, Class type) {
+		setBolonhaStudentEnrollmentBean((BolonhaStudentEnrollmentBean) object);
 
-	    final StringBuilder ects = new StringBuilder();
-	    ects.append(curricularCourse.getEctsCredits()).append(" ")
-		    .append(getRenderer().studentResources.getString("label.credits.abbreviation"));
-	    ectsCell.setBody(new HtmlText(ects.toString()));
+		if (getBolonhaStudentEnrollmentBean() == null) {
+			return new HtmlText();
+		}
 
-	    HtmlTableCell checkBoxCell = htmlTableRow.createCell();
-	    checkBoxCell.setClasses(getRenderer().getCurricularCourseToEnrolCheckBoxClasses());
+		final HtmlBlockContainer container = new HtmlBlockContainer();
 
-	    checkBox = new HtmlCheckBox(false);
-	    checkBox.setName("extraCurricularEnrolments" + curricularCourse.getClass().getCanonicalName() + ":"
-		    + curricularCourse.getExternalId());
-	    checkBox.setUserValue(curricularCourse.getClass().getCanonicalName() + ":" + curricularCourse.getExternalId());
-	    checkBoxCell.setBody(checkBox);
-	    controller.addCheckBox(checkBox);
+		HtmlMultipleHiddenField hiddenEnrollments = new HtmlMultipleHiddenField();
+		hiddenEnrollments.bind(getRenderer().getInputContext().getMetaObject(), "curriculumModulesToRemove");
+		hiddenEnrollments.setConverter(new DomainObjectKeyArrayConverter());
+		hiddenEnrollments.setController(getEnrollmentsController());
 
-	    if (group.hasEnrolmentWithEnroledState(curricularCourse, erasmusBolonhaStudentEnrollmentBean.getExecutionPeriod())) {
-		cellName.setClasses(getRenderer().getEnrolmentNameClasses());
-		yearCell.setClasses(getRenderer().getEnrolmentYearClasses());
-		ectsCell.setClasses(getRenderer().getEnrolmentEctsClasses());
-		checkBoxCell.setClasses(getRenderer().getEnrolmentCheckBoxClasses());
+		HtmlMultipleHiddenField hiddenDegreeModulesToEvaluate = new HtmlMultipleHiddenField();
+		hiddenDegreeModulesToEvaluate.bind(getRenderer().getInputContext().getMetaObject(), "degreeModulesToEvaluate");
+		hiddenDegreeModulesToEvaluate.setConverter(getBolonhaStudentEnrollmentBean().getDegreeModulesToEvaluateConverter());
+		hiddenDegreeModulesToEvaluate.setController(getDegreeModulesToEvaluateController());
 
+		HtmlMultipleHiddenField hiddenExtraCurricularEnrollments = new HtmlMultipleHiddenField();
+		hiddenExtraCurricularEnrollments.bind(getRenderer().getInputContext().getMetaObject(), "extraCurricularEnrolments");
+		hiddenExtraCurricularEnrollments.setConverter(new ErasmusExtraCurricularEnrolmentConverter());
+		hiddenExtraCurricularEnrollments.setController(controller);
+
+		container.addChild(hiddenEnrollments);
+		container.addChild(hiddenDegreeModulesToEvaluate);
+		container.addChild(hiddenExtraCurricularEnrollments);
+
+		generateGroup(container, getBolonhaStudentEnrollmentBean().getStudentCurricularPlan(), getBolonhaStudentEnrollmentBean()
+				.getRootStudentCurriculumGroupBean(), getBolonhaStudentEnrollmentBean().getExecutionPeriod(), 0);
+
+		HtmlTable groupTable = createGroupTable(container, 0);
+
+		HtmlTableRow htmlTableRow = groupTable.createRow();
+		htmlTableRow.setClasses(getRenderer().getGroupRowClasses());
+		htmlTableRow.createCell().setBody(new HtmlText("Other Curricular Units", false));
+		HtmlTableCell cell = htmlTableRow.createCell();
+		cell.setClasses("aright");
+
+		HtmlCheckBox checkBox = new HtmlCheckBox(false);
+		final String name = StringAppender.append("degreeModuleToEnrolCheckBox", "");
+		checkBox.setName(name);
+		checkBox.setUserValue("true");
 		checkBox.setChecked(true);
-	    }
 
+		cell.setBody(checkBox);
+		groupTable = createCoursesTable(container, 0);
+		NoCourseGroupCurriculumGroup group =
+				getBolonhaStudentEnrollmentBean().getStudentCurricularPlan().getNoCourseGroupCurriculumGroup(
+						NoCourseGroupCurriculumGroupType.STANDALONE);
+		HashSet<CurricularCourse> set = new HashSet<CurricularCourse>();
+		ErasmusBolonhaStudentEnrollmentBean erasmusBolonhaStudentEnrollmentBean =
+				(ErasmusBolonhaStudentEnrollmentBean) getBolonhaStudentEnrollmentBean();
+		set.addAll(erasmusBolonhaStudentEnrollmentBean.getCandidacy().getCurricularCourses());
+		for (Enrolment enrolment : group.getEnrolments()) {
+			set.add(enrolment.getCurricularCourse());
+		}
+
+		for (CurricularCourse curricularCourse : set) {
+			if (erasmusBolonhaStudentEnrollmentBean.getStudentCurricularPlan().getEnrolmentByCurricularCourseAndExecutionPeriod(
+					curricularCourse, erasmusBolonhaStudentEnrollmentBean.getExecutionPeriod()) != null) {
+				if (!group.hasEnrolmentWithEnroledState(curricularCourse,
+						erasmusBolonhaStudentEnrollmentBean.getExecutionPeriod())) {
+
+					continue;
+				}
+			}
+
+			if (!isContextValid(curricularCourse)) {
+				continue;
+			}
+
+			htmlTableRow = groupTable.createRow();
+			HtmlTableCell cellName = htmlTableRow.createCell();
+			cellName.setClasses(getRenderer().getCurricularCourseToEnrolNameClasses());
+
+			String degreeName = curricularCourse.getName();
+
+			if (isAcademicAdminOfficeEmployee() && curricularCourse instanceof CurricularCourse) {
+				if (!StringUtils.isEmpty(curricularCourse.getCode())) {
+					degreeName = curricularCourse.getCode() + " - " + degreeName;
+				}
+
+				degreeName +=
+						" (" + getRenderer().studentResources.getString("label.grade.scale") + " - "
+								+ curricularCourse.getGradeScaleChain().getDescription() + ") ";
+			}
+
+			cellName.setBody(new HtmlText(degreeName));
+
+			// Year
+			final HtmlTableCell yearCell = htmlTableRow.createCell();
+			yearCell.setClasses(getRenderer().getCurricularCourseToEnrolYearClasses());
+			yearCell.setColspan(2);
+			yearCell.setBody(new HtmlText(getBolonhaStudentEnrollmentBean().getExecutionPeriod().getQualifiedName()));
+
+			final HtmlTableCell ectsCell = htmlTableRow.createCell();
+			ectsCell.setClasses(getRenderer().getCurricularCourseToEnrolEctsClasses());
+
+			final StringBuilder ects = new StringBuilder();
+			ects.append(curricularCourse.getEctsCredits()).append(" ")
+					.append(getRenderer().studentResources.getString("label.credits.abbreviation"));
+			ectsCell.setBody(new HtmlText(ects.toString()));
+
+			HtmlTableCell checkBoxCell = htmlTableRow.createCell();
+			checkBoxCell.setClasses(getRenderer().getCurricularCourseToEnrolCheckBoxClasses());
+
+			checkBox = new HtmlCheckBox(false);
+			checkBox.setName("extraCurricularEnrolments" + curricularCourse.getClass().getCanonicalName() + ":"
+					+ curricularCourse.getExternalId());
+			checkBox.setUserValue(curricularCourse.getClass().getCanonicalName() + ":" + curricularCourse.getExternalId());
+			checkBoxCell.setBody(checkBox);
+			controller.addCheckBox(checkBox);
+
+			if (group.hasEnrolmentWithEnroledState(curricularCourse, erasmusBolonhaStudentEnrollmentBean.getExecutionPeriod())) {
+				cellName.setClasses(getRenderer().getEnrolmentNameClasses());
+				yearCell.setClasses(getRenderer().getEnrolmentYearClasses());
+				ectsCell.setClasses(getRenderer().getEnrolmentEctsClasses());
+				checkBoxCell.setClasses(getRenderer().getEnrolmentCheckBoxClasses());
+
+				checkBox.setChecked(true);
+			}
+
+		}
+
+		return container;
 	}
-
-	return container;
-    }
 }

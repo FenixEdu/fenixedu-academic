@@ -40,132 +40,134 @@ import pt.ist.fenixWebFramework.security.UserView;
  */
 public class SeperateExecutionCourseDispatchAction extends FenixDispatchAction {
 
-    public ActionForward prepareTransfer(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixServiceException, FenixFilterException {
+	public ActionForward prepareTransfer(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws FenixServiceException, FenixFilterException {
 
-	IUserView userView = UserView.getUser();
+		IUserView userView = UserView.getUser();
 
-	Integer executionCourseId = new Integer(request.getParameter("executionCourseId"));
-	Integer executionDegreeID = getIntegerFromRequest(request, "originExecutionDegreeID");
-	Integer curricularYearID = getIntegerFromRequest(request, "curricularYearId");
+		Integer executionCourseId = new Integer(request.getParameter("executionCourseId"));
+		Integer executionDegreeID = getIntegerFromRequest(request, "originExecutionDegreeID");
+		Integer curricularYearID = getIntegerFromRequest(request, "curricularYearId");
 
-	InfoExecutionCourse infoExecutionCourse = ReadExecutionCourseWithShiftsAndCurricularCoursesByOID.run(executionCourseId);
-	request.setAttribute("infoExecutionCourse", infoExecutionCourse);
+		InfoExecutionCourse infoExecutionCourse = ReadExecutionCourseWithShiftsAndCurricularCoursesByOID.run(executionCourseId);
+		request.setAttribute("infoExecutionCourse", infoExecutionCourse);
 
-	List executionDegrees = ReadExecutionDegreesByExecutionPeriodId.run(infoExecutionCourse.getInfoExecutionPeriod()
-		.getIdInternal());
-	transformExecutionDegreesIntoLabelValueBean(executionDegrees);
-	request.setAttribute("executionDegrees", executionDegrees);
+		List executionDegrees =
+				ReadExecutionDegreesByExecutionPeriodId.run(infoExecutionCourse.getInfoExecutionPeriod().getIdInternal());
+		transformExecutionDegreesIntoLabelValueBean(executionDegrees);
+		request.setAttribute("executionDegrees", executionDegrees);
 
-	List curricularYears = RequestUtils.buildCurricularYearLabelValueBean();
-	request.setAttribute(PresentationConstants.CURRICULAR_YEAR_LIST_KEY, curricularYears);
-	request.setAttribute("originExecutionDegreeID", executionDegreeID);
-	request.setAttribute("curricularYearId", curricularYearID);
-	return mapping.findForward("showSeperationPage");
-    }
-
-    private void transformExecutionDegreesIntoLabelValueBean(List executionDegreeList) {
-	CollectionUtils.transform(executionDegreeList, new Transformer() {
-
-	    @Override
-	    public Object transform(Object arg0) {
-		InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) arg0;
-		StringBuilder label = new StringBuilder(infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree()
-			.getDegreeType().toString());
-		label.append(" em ");
-		label.append(infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getNome());
-
-		return new LabelValueBean(label.toString(), infoExecutionDegree.getIdInternal().toString());
-	    }
-
-	});
-
-	Collections.sort(executionDegreeList, new BeanComparator("label"));
-	executionDegreeList.add(0, new LabelValueBean("escolher", ""));
-    }
-
-    public ActionForward changeDestinationContext(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixServiceException, FenixFilterException {
-
-	prepareTransfer(mapping, form, request, response);
-
-	DynaActionForm dynaActionForm = (DynaActionForm) form;
-
-	String destinationExecutionDegreeId = (String) dynaActionForm.get("destinationExecutionDegreeId");
-	String destinationCurricularYear = (String) dynaActionForm.get("destinationCurricularYear");
-
-	if (isSet(destinationExecutionDegreeId) && isSet(destinationCurricularYear)) {
-	    IUserView userView = UserView.getUser();
-
-	    InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) request.getAttribute("infoExecutionCourse");
-
-	    List executionCourses = (List) ReadExecutionCoursesByExecutionDegreeIdAndExecutionPeriodIdAndCurYear.run(new Integer(
-		    destinationExecutionDegreeId), infoExecutionCourse.getInfoExecutionPeriod().getIdInternal(), new Integer(
-		    destinationCurricularYear));
-	    Collections.sort(executionCourses, new BeanComparator("nome"));
-	    request.setAttribute("executionCourses", executionCourses);
+		List curricularYears = RequestUtils.buildCurricularYearLabelValueBean();
+		request.setAttribute(PresentationConstants.CURRICULAR_YEAR_LIST_KEY, curricularYears);
+		request.setAttribute("originExecutionDegreeID", executionDegreeID);
+		request.setAttribute("curricularYearId", curricularYearID);
+		return mapping.findForward("showSeperationPage");
 	}
 
-	return mapping.findForward("showSeperationPage");
-    }
+	private void transformExecutionDegreesIntoLabelValueBean(List executionDegreeList) {
+		CollectionUtils.transform(executionDegreeList, new Transformer() {
 
-    public ActionForward transfer(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-	    throws FenixServiceException, FenixFilterException {
-	/**/
-	ExecutionCourseBean bean = new ExecutionCourseBean();
+			@Override
+			public Object transform(Object arg0) {
+				InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) arg0;
+				StringBuilder label =
+						new StringBuilder(infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getDegreeType()
+								.toString());
+				label.append(" em ");
+				label.append(infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getNome());
 
-	/**/
-	DynaActionForm dynaActionForm = (DynaActionForm) form;
+				return new LabelValueBean(label.toString(), infoExecutionDegree.getIdInternal().toString());
+			}
 
-	Integer executionCourseId = new Integer(request.getParameter("executionCourseId"));
-	String destinationExecutionCourseIDString = (String) dynaActionForm.get("destinationExecutionCourseID");
-	Integer originExecutionDegreeID = (Integer) dynaActionForm.get("originExecutionDegreeID");
-	Integer curricularYearID = (Integer) dynaActionForm.get("curricularYearId");
-	String[] shiftIdsToTransfer = (String[]) dynaActionForm.get("shiftIdsToTransfer");
-	String[] curricularCourseIdsToTransfer = (String[]) dynaActionForm.get("curricularCourseIdsToTransfer");
+		});
 
-	IUserView userView = UserView.getUser();
-
-	Integer destinationExecutionCourseID = null;
-	if (destinationExecutionCourseIDString != null && destinationExecutionCourseIDString.length() > 0
-		&& StringUtils.isNumeric(destinationExecutionCourseIDString)) {
-	    destinationExecutionCourseID = new Integer(destinationExecutionCourseIDString);
+		Collections.sort(executionDegreeList, new BeanComparator("label"));
+		executionDegreeList.add(0, new LabelValueBean("escolher", ""));
 	}
 
-	// SeperateExecutionCourse.run(executionCourseId,
-	// destinationExecutionCourseID, makeIntegerArray(shiftIdsToTransfer),
-	// makeIntegerArray(curricularCourseIdsToTransfer));
+	public ActionForward changeDestinationContext(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws FenixServiceException, FenixFilterException {
 
-	ExecutionDegree originExecutionDegree = rootDomainObject.readExecutionDegreeByOID(originExecutionDegreeID);
-	final ExecutionCourse originExecutionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);
-	final CurricularYear curricularYear = rootDomainObject.readCurricularYearByOID(curricularYearID);
+		prepareTransfer(mapping, form, request, response);
 
-	bean.setExecutionDegree(originExecutionDegree);
-	bean.setChooseNotLinked(false);
-	bean.setSourceExecutionCourse(originExecutionCourse);
-	bean.setExecutionSemester(originExecutionCourse.getExecutionPeriod());
-	bean.setCurricularYear(curricularYear);
-	request.setAttribute("originExecutionDegree", originExecutionDegree);
+		DynaActionForm dynaActionForm = (DynaActionForm) form;
 
-	Boolean transferSucess = true;
-	request.setAttribute("transferSucess", transferSucess);
-	request.setAttribute("sessionBean", bean);
+		String destinationExecutionDegreeId = (String) dynaActionForm.get("destinationExecutionDegreeId");
+		String destinationCurricularYear = (String) dynaActionForm.get("destinationCurricularYear");
 
-	return mapping.findForward("returnFromTransfer");
-    }
+		if (isSet(destinationExecutionDegreeId) && isSet(destinationCurricularYear)) {
+			IUserView userView = UserView.getUser();
 
-    private Integer[] makeIntegerArray(String[] stringArray) {
-	Integer[] integerArray = new Integer[stringArray.length];
+			InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) request.getAttribute("infoExecutionCourse");
 
-	for (int i = 0; i < stringArray.length; i++) {
-	    integerArray[i] = new Integer(stringArray[i]);
+			List executionCourses =
+					(List) ReadExecutionCoursesByExecutionDegreeIdAndExecutionPeriodIdAndCurYear.run(new Integer(
+							destinationExecutionDegreeId), infoExecutionCourse.getInfoExecutionPeriod().getIdInternal(),
+							new Integer(destinationCurricularYear));
+			Collections.sort(executionCourses, new BeanComparator("nome"));
+			request.setAttribute("executionCourses", executionCourses);
+		}
+
+		return mapping.findForward("showSeperationPage");
 	}
 
-	return integerArray;
-    }
+	public ActionForward transfer(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+			throws FenixServiceException, FenixFilterException {
+		/**/
+		ExecutionCourseBean bean = new ExecutionCourseBean();
 
-    private boolean isSet(String parameter) {
-	return parameter != null && parameter.length() > 0 && StringUtils.isNumeric(parameter);
-    }
+		/**/
+		DynaActionForm dynaActionForm = (DynaActionForm) form;
+
+		Integer executionCourseId = new Integer(request.getParameter("executionCourseId"));
+		String destinationExecutionCourseIDString = (String) dynaActionForm.get("destinationExecutionCourseID");
+		Integer originExecutionDegreeID = (Integer) dynaActionForm.get("originExecutionDegreeID");
+		Integer curricularYearID = (Integer) dynaActionForm.get("curricularYearId");
+		String[] shiftIdsToTransfer = (String[]) dynaActionForm.get("shiftIdsToTransfer");
+		String[] curricularCourseIdsToTransfer = (String[]) dynaActionForm.get("curricularCourseIdsToTransfer");
+
+		IUserView userView = UserView.getUser();
+
+		Integer destinationExecutionCourseID = null;
+		if (destinationExecutionCourseIDString != null && destinationExecutionCourseIDString.length() > 0
+				&& StringUtils.isNumeric(destinationExecutionCourseIDString)) {
+			destinationExecutionCourseID = new Integer(destinationExecutionCourseIDString);
+		}
+
+		// SeperateExecutionCourse.run(executionCourseId,
+		// destinationExecutionCourseID, makeIntegerArray(shiftIdsToTransfer),
+		// makeIntegerArray(curricularCourseIdsToTransfer));
+
+		ExecutionDegree originExecutionDegree = rootDomainObject.readExecutionDegreeByOID(originExecutionDegreeID);
+		final ExecutionCourse originExecutionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);
+		final CurricularYear curricularYear = rootDomainObject.readCurricularYearByOID(curricularYearID);
+
+		bean.setExecutionDegree(originExecutionDegree);
+		bean.setChooseNotLinked(false);
+		bean.setSourceExecutionCourse(originExecutionCourse);
+		bean.setExecutionSemester(originExecutionCourse.getExecutionPeriod());
+		bean.setCurricularYear(curricularYear);
+		request.setAttribute("originExecutionDegree", originExecutionDegree);
+
+		Boolean transferSucess = true;
+		request.setAttribute("transferSucess", transferSucess);
+		request.setAttribute("sessionBean", bean);
+
+		return mapping.findForward("returnFromTransfer");
+	}
+
+	private Integer[] makeIntegerArray(String[] stringArray) {
+		Integer[] integerArray = new Integer[stringArray.length];
+
+		for (int i = 0; i < stringArray.length; i++) {
+			integerArray[i] = new Integer(stringArray[i]);
+		}
+
+		return integerArray;
+	}
+
+	private boolean isSet(String parameter) {
+		return parameter != null && parameter.length() > 0 && StringUtils.isNumeric(parameter);
+	}
 
 }

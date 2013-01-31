@@ -34,173 +34,180 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
 /**
  * @author Tânia Pousão Created on 31/Out/2003
  */
-@Mapping(module = "coordinator", path = "/degreeSiteManagement", input = "/degreeSiteManagement.do?method=subMenu&page=0", attribute = "degreeInfoForm", formBean = "degreeInfoForm", scope = "request", parameter = "method")
+@Mapping(
+		module = "coordinator",
+		path = "/degreeSiteManagement",
+		input = "/degreeSiteManagement.do?method=subMenu&page=0",
+		attribute = "degreeInfoForm",
+		formBean = "degreeInfoForm",
+		scope = "request",
+		parameter = "method")
 @Forwards(value = {
-	@Forward(name = "editOK", path = "editOK", tileProperties = @Tile(title = "private.coordinator.management.courses.management.scientificcommittee")),
-	@Forward(name = "organizeItems", path = "manage-degree-organizeItems"),
-	@Forward(name = "degreeSiteMenu", path = "degreeSiteMenu"),
-	@Forward(name = "viewHistoric", path = "viewHistoric"),
-	@Forward(name = "organizeFiles", path = "manage-degree-organizeFiles"),
-	@Forward(name = "edit-fileItem-name", path = "manage-degree-editFileItemName"),
-	@Forward(name = "editSectionPermissions", path = "manage-degree-editSectionPermissions"),
-	@Forward(name = "confirmSectionDelete", path = "manage-degree-confirmSectionDelete"),
-	@Forward(name = "editItemPermissions", path = "manage-degree-editItemPermissions"),
-	@Forward(name = "createSection", path = "manage-degree-createSection"),
-	@Forward(name = "section", path = "manage-degree-section"),
-	@Forward(name = "editSection", path = "manage-degree-editSection"),
-	@Forward(name = "uploadFile", path = "manage-degree-uploadFile"),
-	@Forward(name = "viewInformation", path = "viewInformation"),
-	@Forward(name = "sectionsManagement", path = "manage-degree-sectionsManagement"),
-	@Forward(name = "createItem", path = "manage-degree-createItem"),
-	@Forward(name = "viewDescriptionCurricularPlan", path = "viewDescriptionCurricularPlan"),
-	@Forward(name = "editFile", path = "manage-degree-editFile"),
-	@Forward(name = "editItem", path = "manage-degree-editItem") })
+		@Forward(name = "editOK", path = "editOK", tileProperties = @Tile(
+				title = "private.coordinator.management.courses.management.scientificcommittee")),
+		@Forward(name = "organizeItems", path = "manage-degree-organizeItems"),
+		@Forward(name = "degreeSiteMenu", path = "degreeSiteMenu"), @Forward(name = "viewHistoric", path = "viewHistoric"),
+		@Forward(name = "organizeFiles", path = "manage-degree-organizeFiles"),
+		@Forward(name = "edit-fileItem-name", path = "manage-degree-editFileItemName"),
+		@Forward(name = "editSectionPermissions", path = "manage-degree-editSectionPermissions"),
+		@Forward(name = "confirmSectionDelete", path = "manage-degree-confirmSectionDelete"),
+		@Forward(name = "editItemPermissions", path = "manage-degree-editItemPermissions"),
+		@Forward(name = "createSection", path = "manage-degree-createSection"),
+		@Forward(name = "section", path = "manage-degree-section"),
+		@Forward(name = "editSection", path = "manage-degree-editSection"),
+		@Forward(name = "uploadFile", path = "manage-degree-uploadFile"),
+		@Forward(name = "viewInformation", path = "viewInformation"),
+		@Forward(name = "sectionsManagement", path = "manage-degree-sectionsManagement"),
+		@Forward(name = "createItem", path = "manage-degree-createItem"),
+		@Forward(name = "viewDescriptionCurricularPlan", path = "viewDescriptionCurricularPlan"),
+		@Forward(name = "editFile", path = "manage-degree-editFile"),
+		@Forward(name = "editItem", path = "manage-degree-editItem") })
 public class DegreeSiteManagementDispatchAction extends SiteManagementDA {
 
-    @Override
-    public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-	CoordinatedDegreeInfo.setCoordinatorContext(request);
-	DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan(request);
-	if (degreeCurricularPlan != null) {
-	    request.setAttribute("degreeCurricularPlan", degreeCurricularPlan);
+	@Override
+	public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		CoordinatedDegreeInfo.setCoordinatorContext(request);
+		DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan(request);
+		if (degreeCurricularPlan != null) {
+			request.setAttribute("degreeCurricularPlan", degreeCurricularPlan);
+		}
+
+		return super.execute(mapping, actionForm, request, response);
 	}
 
-	return super.execute(mapping, actionForm, request, response);
-    }
-
-    @Override
-    protected Site getSite(HttpServletRequest request) {
-	DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan(request);
-	if (degreeCurricularPlan != null) {
-	    return degreeCurricularPlan.getDegree().getSite();
-	} else {
-	    return null;
-	}
-    }
-
-    public DegreeCurricularPlan getDegreeCurricularPlan(HttpServletRequest request) {
-	String parameter = request.getParameter("degreeCurricularPlanID");
-
-	if (parameter == null) {
-	    return null;
+	@Override
+	protected Site getSite(HttpServletRequest request) {
+		DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan(request);
+		if (degreeCurricularPlan != null) {
+			return degreeCurricularPlan.getDegree().getSite();
+		} else {
+			return null;
+		}
 	}
 
-	try {
-	    Integer oid = new Integer(parameter);
-	    return RootDomainObject.getInstance().readDegreeCurricularPlanByOID(oid);
-	} catch (NumberFormatException e) {
-	    return null;
-	}
-    }
+	public DegreeCurricularPlan getDegreeCurricularPlan(HttpServletRequest request) {
+		String parameter = request.getParameter("degreeCurricularPlanID");
 
-    public Unit getUnit(HttpServletRequest request) {
-	DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan(request);
-	if (degreeCurricularPlan == null) {
-	    return null;
-	} else {
-	    return degreeCurricularPlan.getDegree().getUnit();
-	}
-    }
+		if (parameter == null) {
+			return null;
+		}
 
-    public ActionForward subMenu(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
-	Integer degreeCurricularPlanId = Integer.valueOf(request.getParameter("degreeCurricularPlanID"));
-	request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanId);
-	return mapping.findForward("degreeSiteMenu");
-    }
-
-    public ActionForward viewInformation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-	RequestUtils.getAndSetStringToRequest(request, "info");
-
-	Integer degreeCurricularPlanID = Integer
-		.valueOf(RequestUtils.getAndSetStringToRequest(request, "degreeCurricularPlanID"));
-	DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanID);
-
-	ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
-	DegreeInfo currentDegreeInfo = currentExecutionYear.getDegreeInfo(degreeCurricularPlan.getDegree());
-
-	if (currentDegreeInfo == null && currentExecutionYear.hasNextExecutionYear()) {
-	    currentDegreeInfo = currentExecutionYear.getNextExecutionYear().getDegreeInfo(degreeCurricularPlan.getDegree());
+		try {
+			Integer oid = new Integer(parameter);
+			return RootDomainObject.getInstance().readDegreeCurricularPlanByOID(oid);
+		} catch (NumberFormatException e) {
+			return null;
+		}
 	}
 
-	if (currentDegreeInfo == null) {
-	    final IUserView userView = UserView.getUser();
-
-	    if (!userView.getPerson().isCoordinatorFor(degreeCurricularPlan, currentExecutionYear)
-		    && !userView.getPerson().isCoordinatorFor(degreeCurricularPlan, currentExecutionYear.getNextExecutionYear())) {
-		final ActionErrors errors = new ActionErrors();
-		errors.add("notAuthorized", new ActionError("error.exception.notAuthorized2"));
-		saveErrors(request, errors);
-		return new ActionForward(mapping.getInput());
-	    }
-
-	    currentDegreeInfo = (DegreeInfo) CreateCurrentDegreeInfo.run(degreeCurricularPlan.getDegree());
+	public Unit getUnit(HttpServletRequest request) {
+		DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan(request);
+		if (degreeCurricularPlan == null) {
+			return null;
+		} else {
+			return degreeCurricularPlan.getDegree().getUnit();
+		}
 	}
 
-	request.setAttribute("currentDegreeInfo", currentDegreeInfo);
-
-	return mapping.findForward("viewInformation");
-    }
-
-    public ActionForward editDegreeInformation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
-	RequestUtils.getAndSetStringToRequest(request, "info");
-	RequestUtils.getAndSetStringToRequest(request, "degreeCurricularPlanID");
-
-	return mapping.findForward("editOK");
-    }
-
-    public ActionForward viewDescriptionCurricularPlan(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
-	Integer degreeCurricularPlanID = Integer
-		.valueOf(RequestUtils.getAndSetStringToRequest(request, "degreeCurricularPlanID"));
-	DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanID);
-	if (degreeCurricularPlan == null) {
-	    final ActionErrors errors = new ActionErrors();
-	    errors.add("noDegreeCurricularPlan", new ActionError("error.coordinator.chosenDegree"));
-	    saveErrors(request, errors);
-	    return (new ActionForward(mapping.getInput()));
-	}
-	request.setAttribute("degreeCurricularPlan", degreeCurricularPlan);
-
-	return mapping.findForward("viewDescriptionCurricularPlan");
-    }
-
-    public ActionForward editDescriptionDegreeCurricularPlan(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
-	RequestUtils.getAndSetStringToRequest(request, "degreeCurricularPlanID");
-	return mapping.findForward("editOK");
-    }
-
-    public ActionForward viewHistoric(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixFilterException {
-	// read execution degree
-	Integer degreeCurricularPlanID = Integer
-		.valueOf(RequestUtils.getAndSetStringToRequest(request, "degreeCurricularPlanID"));
-	DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanID);
-
-	if (degreeCurricularPlan.hasAnyExecutionDegrees()) {
-	    final IUserView userView = UserView.getUser();
-	    request.setAttribute("executionDegrees", userView.getPerson().getCoordinatedExecutionDegrees(degreeCurricularPlan));
+	public ActionForward subMenu(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+		Integer degreeCurricularPlanId = Integer.valueOf(request.getParameter("degreeCurricularPlanID"));
+		request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanId);
+		return mapping.findForward("degreeSiteMenu");
 	}
 
-	return mapping.findForward("viewHistoric");
-    }
+	public ActionForward viewInformation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+		RequestUtils.getAndSetStringToRequest(request, "info");
 
-    @Override
-    protected String getAuthorNameForFile(HttpServletRequest request) {
-	Unit unit = getUnit(request);
-	if (unit == null) {
-	    return null;
-	} else {
-	    return unit.getName();
+		Integer degreeCurricularPlanID =
+				Integer.valueOf(RequestUtils.getAndSetStringToRequest(request, "degreeCurricularPlanID"));
+		DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanID);
+
+		ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
+		DegreeInfo currentDegreeInfo = currentExecutionYear.getDegreeInfo(degreeCurricularPlan.getDegree());
+
+		if (currentDegreeInfo == null && currentExecutionYear.hasNextExecutionYear()) {
+			currentDegreeInfo = currentExecutionYear.getNextExecutionYear().getDegreeInfo(degreeCurricularPlan.getDegree());
+		}
+
+		if (currentDegreeInfo == null) {
+			final IUserView userView = UserView.getUser();
+
+			if (!userView.getPerson().isCoordinatorFor(degreeCurricularPlan, currentExecutionYear)
+					&& !userView.getPerson().isCoordinatorFor(degreeCurricularPlan, currentExecutionYear.getNextExecutionYear())) {
+				final ActionErrors errors = new ActionErrors();
+				errors.add("notAuthorized", new ActionError("error.exception.notAuthorized2"));
+				saveErrors(request, errors);
+				return new ActionForward(mapping.getInput());
+			}
+
+			currentDegreeInfo = CreateCurrentDegreeInfo.run(degreeCurricularPlan.getDegree());
+		}
+
+		request.setAttribute("currentDegreeInfo", currentDegreeInfo);
+
+		return mapping.findForward("viewInformation");
 	}
-    }
 
-    @Override
-    protected String getItemLocationForFile(HttpServletRequest request, Item item, Section section) {
-	return getSite(request).getReversePath();
-    }
+	public ActionForward editDegreeInformation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) {
+		RequestUtils.getAndSetStringToRequest(request, "info");
+		RequestUtils.getAndSetStringToRequest(request, "degreeCurricularPlanID");
+
+		return mapping.findForward("editOK");
+	}
+
+	public ActionForward viewDescriptionCurricularPlan(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) {
+		Integer degreeCurricularPlanID =
+				Integer.valueOf(RequestUtils.getAndSetStringToRequest(request, "degreeCurricularPlanID"));
+		DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanID);
+		if (degreeCurricularPlan == null) {
+			final ActionErrors errors = new ActionErrors();
+			errors.add("noDegreeCurricularPlan", new ActionError("error.coordinator.chosenDegree"));
+			saveErrors(request, errors);
+			return (new ActionForward(mapping.getInput()));
+		}
+		request.setAttribute("degreeCurricularPlan", degreeCurricularPlan);
+
+		return mapping.findForward("viewDescriptionCurricularPlan");
+	}
+
+	public ActionForward editDescriptionDegreeCurricularPlan(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) {
+		RequestUtils.getAndSetStringToRequest(request, "degreeCurricularPlanID");
+		return mapping.findForward("editOK");
+	}
+
+	public ActionForward viewHistoric(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws FenixFilterException {
+		// read execution degree
+		Integer degreeCurricularPlanID =
+				Integer.valueOf(RequestUtils.getAndSetStringToRequest(request, "degreeCurricularPlanID"));
+		DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanID);
+
+		if (degreeCurricularPlan.hasAnyExecutionDegrees()) {
+			final IUserView userView = UserView.getUser();
+			request.setAttribute("executionDegrees", userView.getPerson().getCoordinatedExecutionDegrees(degreeCurricularPlan));
+		}
+
+		return mapping.findForward("viewHistoric");
+	}
+
+	@Override
+	protected String getAuthorNameForFile(HttpServletRequest request) {
+		Unit unit = getUnit(request);
+		if (unit == null) {
+			return null;
+		} else {
+			return unit.getName();
+		}
+	}
+
+	@Override
+	protected String getItemLocationForFile(HttpServletRequest request, Item item, Section section) {
+		return getSite(request).getReversePath();
+	}
 
 }

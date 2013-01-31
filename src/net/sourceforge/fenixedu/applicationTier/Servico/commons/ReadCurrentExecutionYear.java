@@ -7,9 +7,9 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadCurrentExecutionYear extends FenixService {
 
-    @Service
-    public static InfoExecutionYear run() {
-	return InfoExecutionYear.newInfoFromDomain(ExecutionYear.readCurrentExecutionYear());
-    }
+	@Service
+	public static InfoExecutionYear run() {
+		return InfoExecutionYear.newInfoFromDomain(ExecutionYear.readCurrentExecutionYear());
+	}
 
 }

@@ -15,19 +15,19 @@ import org.joda.time.DateTime;
  */
 public class InternalAbandonState extends InternalAbandonState_Base {
 
-    protected InternalAbandonState(Registration registration, Person person, DateTime dateTime) {
-	super();
-	init(registration, person, dateTime);
-    }
+	protected InternalAbandonState(Registration registration, Person person, DateTime dateTime) {
+		super();
+		init(registration, person, dateTime);
+	}
 
-    @Override
-    public Set<String> getValidNextStates() {
-	return Collections.singleton(RegistrationStateType.REGISTERED.name());
-    }
+	@Override
+	public Set<String> getValidNextStates() {
+		return Collections.singleton(RegistrationStateType.REGISTERED.name());
+	}
 
-    @Override
-    public RegistrationStateType getStateType() {
-	return RegistrationStateType.INTERNAL_ABANDON;
-    }
+	@Override
+	public RegistrationStateType getStateType() {
+		return RegistrationStateType.INTERNAL_ABANDON;
+	}
 
 }

@@ -12,138 +12,138 @@ import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class PersistentSuportGiaf {
-    private static PersistentSuportGiaf instance = null;
+	private static PersistentSuportGiaf instance = null;
 
-    private static String databaseUrl = null;
+	private static String databaseUrl = null;
 
-    private static Map<Thread, Connection> connectionsMap = new HashMap<Thread, Connection>();
+	private static Map<Thread, Connection> connectionsMap = new HashMap<Thread, Connection>();
 
-    public class ConnectionProperties {
-	private String userNamePropertyName;
+	public class ConnectionProperties {
+		private String userNamePropertyName;
 
-	private String userPassPropertyName;
+		private String userPassPropertyName;
 
-	private String urlPropertyName;
+		private String urlPropertyName;
 
-	public ConnectionProperties(String userNamePropertyName, String userPassPropertyName, String urlPropertyName) {
-	    super();
-	    this.userNamePropertyName = userNamePropertyName;
-	    this.userPassPropertyName = userPassPropertyName;
-	    this.urlPropertyName = urlPropertyName;
+		public ConnectionProperties(String userNamePropertyName, String userPassPropertyName, String urlPropertyName) {
+			super();
+			this.userNamePropertyName = userNamePropertyName;
+			this.userPassPropertyName = userPassPropertyName;
+			this.urlPropertyName = urlPropertyName;
+		}
 	}
-    }
 
-    private static ConnectionProperties connectionProperties;
+	private static ConnectionProperties connectionProperties;
 
-    public PersistentSuportGiaf(String userNamePropertyName, String userPassPropertyName, String urlPropertyName) {
-	super();
-	connectionProperties = new ConnectionProperties(userNamePropertyName, userPassPropertyName, urlPropertyName);
-    }
+	public PersistentSuportGiaf(String userNamePropertyName, String userPassPropertyName, String urlPropertyName) {
+		super();
+		connectionProperties = new ConnectionProperties(userNamePropertyName, userPassPropertyName, urlPropertyName);
+	}
 
-    public static synchronized PersistentSuportGiaf getInstance() {
-	if (instance == null) {
-	    instance = new PersistentSuportGiaf("db.giaf.user", "db.giaf.pass", "db.giaf.alias");
+	public static synchronized PersistentSuportGiaf getInstance() {
+		if (instance == null) {
+			instance = new PersistentSuportGiaf("db.giaf.user", "db.giaf.pass", "db.giaf.alias");
+		}
+		return instance;
 	}
-	return instance;
-    }
 
-    private Connection openConnection() throws ExcepcaoPersistencia {
-	if (databaseUrl == null) {
-	    String DBUserName = PropertiesManager.getProperty(connectionProperties.userNamePropertyName);
-	    String DBUserPass = PropertiesManager.getProperty(connectionProperties.userPassPropertyName);
-	    String DBUrl = PropertiesManager.getProperty(connectionProperties.urlPropertyName);
-	    if (DBUserName == null || DBUserPass == null || DBUrl == null) {
-		throw new ExcepcaoPersistencia();
-	    }
-	    StringBuilder stringBuffer = new StringBuilder();
-	    stringBuffer.append("jdbc:oracle:thin:");
-	    stringBuffer.append(DBUserName);
-	    stringBuffer.append("/");
-	    stringBuffer.append(DBUserPass);
-	    stringBuffer.append("@");
-	    stringBuffer.append(DBUrl);
-	    databaseUrl = stringBuffer.toString();
+	private Connection openConnection() throws ExcepcaoPersistencia {
+		if (databaseUrl == null) {
+			String DBUserName = PropertiesManager.getProperty(connectionProperties.userNamePropertyName);
+			String DBUserPass = PropertiesManager.getProperty(connectionProperties.userPassPropertyName);
+			String DBUrl = PropertiesManager.getProperty(connectionProperties.urlPropertyName);
+			if (DBUserName == null || DBUserPass == null || DBUrl == null) {
+				throw new ExcepcaoPersistencia();
+			}
+			StringBuilder stringBuffer = new StringBuilder();
+			stringBuffer.append("jdbc:oracle:thin:");
+			stringBuffer.append(DBUserName);
+			stringBuffer.append("/");
+			stringBuffer.append(DBUserPass);
+			stringBuffer.append("@");
+			stringBuffer.append(DBUrl);
+			databaseUrl = stringBuffer.toString();
+		}
+		try {
+			DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
+			Connection connection = DriverManager.getConnection(databaseUrl);
+			connectionsMap.put(Thread.currentThread(), connection);
+			connectionsMap.put(Thread.currentThread(), connection);
+			return connection;
+		} catch (SQLException e) {
+			throw new ExcepcaoPersistencia();
+		}
 	}
-	try {
-	    DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
-	    Connection connection = DriverManager.getConnection(databaseUrl);
-	    connectionsMap.put(Thread.currentThread(), connection);
-	    connectionsMap.put(Thread.currentThread(), connection);
-	    return connection;
-	} catch (SQLException e) {
-	    throw new ExcepcaoPersistencia();
-	}
-    }
 
-    public void closeConnection() throws ExcepcaoPersistencia {
-	Connection thisconnection = connectionsMap.get(Thread.currentThread());
-	if (thisconnection != null) {
-	    try {
-		thisconnection.close();
-		connectionsMap.remove(Thread.currentThread());
-	    } catch (Exception e) {
-		throw new ExcepcaoPersistencia();
-	    }
+	public void closeConnection() throws ExcepcaoPersistencia {
+		Connection thisconnection = connectionsMap.get(Thread.currentThread());
+		if (thisconnection != null) {
+			try {
+				thisconnection.close();
+				connectionsMap.remove(Thread.currentThread());
+			} catch (Exception e) {
+				throw new ExcepcaoPersistencia();
+			}
+		}
 	}
-    }
 
-    public synchronized void startTransaction() throws ExcepcaoPersistencia {
-	try {
-	    Connection connection = openConnection();
-	    connection.setAutoCommit(false);
-	} catch (SQLException e) {
-	    throw new ExcepcaoPersistencia("", e);
+	public synchronized void startTransaction() throws ExcepcaoPersistencia {
+		try {
+			Connection connection = openConnection();
+			connection.setAutoCommit(false);
+		} catch (SQLException e) {
+			throw new ExcepcaoPersistencia("", e);
+		}
 	}
-    }
 
-    public synchronized void commitTransaction() throws ExcepcaoPersistencia {
-	Connection thisConnection = connectionsMap.get(Thread.currentThread());
-	try {
-	    thisConnection.commit();
-	    closeConnection();
-	} catch (SQLException e) {
-	    throw new ExcepcaoPersistencia(e);
+	public synchronized void commitTransaction() throws ExcepcaoPersistencia {
+		Connection thisConnection = connectionsMap.get(Thread.currentThread());
+		try {
+			thisConnection.commit();
+			closeConnection();
+		} catch (SQLException e) {
+			throw new ExcepcaoPersistencia(e);
+		}
 	}
-    }
 
-    public synchronized void cancelTransaction() throws ExcepcaoPersistencia {
-	Connection thisConnection = connectionsMap.get(Thread.currentThread());
-	try {
-	    thisConnection.rollback();
-	    closeConnection();
-	} catch (SQLException e) {
-	    throw new ExcepcaoPersistencia(e);
+	public synchronized void cancelTransaction() throws ExcepcaoPersistencia {
+		Connection thisConnection = connectionsMap.get(Thread.currentThread());
+		try {
+			thisConnection.rollback();
+			closeConnection();
+		} catch (SQLException e) {
+			throw new ExcepcaoPersistencia(e);
+		}
 	}
-    }
 
-    public synchronized PreparedStatement prepareStatement(String statement) throws ExcepcaoPersistencia {
-	Connection thisConnection = connectionsMap.get(Thread.currentThread());
-	if (thisConnection == null) {
-	    thisConnection = openConnection();
+	public synchronized PreparedStatement prepareStatement(String statement) throws ExcepcaoPersistencia {
+		Connection thisConnection = connectionsMap.get(Thread.currentThread());
+		if (thisConnection == null) {
+			thisConnection = openConnection();
+		}
+		PreparedStatement sql = null;
+		try {
+			sql = thisConnection.prepareStatement(statement);
+		} catch (java.sql.SQLException e) {
+			throw new ExcepcaoPersistencia(e);
+		}
+		return sql;
 	}
-	PreparedStatement sql = null;
-	try {
-	    sql = thisConnection.prepareStatement(statement);
-	} catch (java.sql.SQLException e) {
-	    throw new ExcepcaoPersistencia(e);
-	}
-	return sql;
-    }
 
-    public synchronized CallableStatement prepareCall(String statement) throws ExcepcaoPersistencia {
-	Connection thisConnection = connectionsMap.get(Thread.currentThread());
-	if (thisConnection == null) {
-	    thisConnection = openConnection();
+	public synchronized CallableStatement prepareCall(String statement) throws ExcepcaoPersistencia {
+		Connection thisConnection = connectionsMap.get(Thread.currentThread());
+		if (thisConnection == null) {
+			thisConnection = openConnection();
+		}
+		CallableStatement sql = null;
+		try {
+			sql = thisConnection.prepareCall(statement);
+		} catch (java.sql.SQLException e) {
+			throw new ExcepcaoPersistencia(e);
+		} catch (java.lang.NullPointerException e) {
+			throw new ExcepcaoPersistencia(e);
+		}
+		return sql;
 	}
-	CallableStatement sql = null;
-	try {
-	    sql = thisConnection.prepareCall(statement);
-	} catch (java.sql.SQLException e) {
-	    throw new ExcepcaoPersistencia(e);
-	} catch (java.lang.NullPointerException e) {
-	    throw new ExcepcaoPersistencia(e);
-	}
-	return sql;
-    }
 
 }

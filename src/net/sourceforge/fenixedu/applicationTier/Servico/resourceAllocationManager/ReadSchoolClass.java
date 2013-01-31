@@ -12,14 +12,14 @@ import net.sourceforge.fenixedu.domain.SchoolClass;
 
 public class ReadSchoolClass extends FenixService {
 
-    public InfoClass run(InfoClass infoSchoolClass) throws FenixServiceException {
-	InfoClass result = null;
-	SchoolClass schoolClass = rootDomainObject.readSchoolClassByOID(infoSchoolClass.getIdInternal());
-	if (schoolClass != null) {
-	    result = InfoClass.newInfoFromDomain(schoolClass);
-	}
+	public InfoClass run(InfoClass infoSchoolClass) throws FenixServiceException {
+		InfoClass result = null;
+		SchoolClass schoolClass = rootDomainObject.readSchoolClassByOID(infoSchoolClass.getIdInternal());
+		if (schoolClass != null) {
+			result = InfoClass.newInfoFromDomain(schoolClass);
+		}
 
-	return result;
-    }
+		return result;
+	}
 
 }

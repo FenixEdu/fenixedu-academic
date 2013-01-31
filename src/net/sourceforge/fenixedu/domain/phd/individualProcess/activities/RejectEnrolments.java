@@ -18,46 +18,46 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 
 public class RejectEnrolments extends PhdIndividualProgramProcessActivity {
 
-    @Override
-    public void activityPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
+	@Override
+	public void activityPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
 
-	if (!process.isCoordinatorForPhdProgram(userView.getPerson())) {
-	    throw new PreConditionNotValidException();
+		if (!process.isCoordinatorForPhdProgram(userView.getPerson())) {
+			throw new PreConditionNotValidException();
+		}
 	}
-    }
 
-    @Override
-    protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView, Object object) {
+	@Override
+	protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView, Object object) {
 
-	final ManageEnrolmentsBean bean = (ManageEnrolmentsBean) object;
-	final StudentCurricularPlan scp = process.getRegistration().getLastStudentCurricularPlan();
-	final String mailBody = buildBody(bean);
+		final ManageEnrolmentsBean bean = (ManageEnrolmentsBean) object;
+		final StudentCurricularPlan scp = process.getRegistration().getLastStudentCurricularPlan();
+		final String mailBody = buildBody(bean);
 
-	scp.enrol(bean.getSemester(), Collections.<IDegreeModuleToEvaluate> emptySet(),
-		getCurriculumModules(bean.getEnrolmentsToValidate()), CurricularRuleLevel.ENROLMENT_WITH_RULES);
+		scp.enrol(bean.getSemester(), Collections.<IDegreeModuleToEvaluate> emptySet(),
+				getCurriculumModules(bean.getEnrolmentsToValidate()), CurricularRuleLevel.ENROLMENT_WITH_RULES);
 
-	AlertService.alertStudent(process, AlertMessage.create(bean.getMailSubject()).isKey(false), AlertMessage.create(mailBody)
-		.isKey(false));
+		AlertService.alertStudent(process, AlertMessage.create(bean.getMailSubject()).isKey(false), AlertMessage.create(mailBody)
+				.isKey(false));
 
-	// TODO: wich group should be used in academic office?
-	// AlertService.alertAcademicOffice(process, permissionType,
-	// subjectKey, bodyKey)
+		// TODO: wich group should be used in academic office?
+		// AlertService.alertAcademicOffice(process, permissionType,
+		// subjectKey, bodyKey)
 
-	return process;
-    }
-
-    private String buildBody(ManageEnrolmentsBean bean) {
-	final StringBuilder sb = new StringBuilder();
-	sb.append(AlertService.getMessageFromResource("label.phd.rejected.enrolments")).append("\n");
-	for (final Enrolment enrolment : bean.getEnrolmentsToValidate()) {
-	    sb.append("- ").append(enrolment.getPresentationName()).append(enrolment.getExecutionPeriod().getQualifiedName())
-		    .append("\n");
+		return process;
 	}
-	return sb.toString();
-    }
 
-    private List<CurriculumModule> getCurriculumModules(List<Enrolment> enrolmentsToValidate) {
-	return new ArrayList<CurriculumModule>(enrolmentsToValidate);
-    }
+	private String buildBody(ManageEnrolmentsBean bean) {
+		final StringBuilder sb = new StringBuilder();
+		sb.append(AlertService.getMessageFromResource("label.phd.rejected.enrolments")).append("\n");
+		for (final Enrolment enrolment : bean.getEnrolmentsToValidate()) {
+			sb.append("- ").append(enrolment.getPresentationName()).append(enrolment.getExecutionPeriod().getQualifiedName())
+					.append("\n");
+		}
+		return sb.toString();
+	}
+
+	private List<CurriculumModule> getCurriculumModules(List<Enrolment> enrolmentsToValidate) {
+		return new ArrayList<CurriculumModule>(enrolmentsToValidate);
+	}
 
 }

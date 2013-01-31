@@ -27,25 +27,25 @@ import pt.ist.fenixWebFramework.security.UserView;
  */
 public class ShowAllGrantPaymentEntitiesAction extends FenixDispatchAction {
 
-    public ActionForward showForm(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-	    throws Exception {
+	public ActionForward showForm(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
 
-	IUserView userView = UserView.getUser();
-	String grantPaymentEntity = null;
+		IUserView userView = UserView.getUser();
+		String grantPaymentEntity = null;
 
-	if (verifyParameterInRequest(request, "project")) {
-	    grantPaymentEntity = GrantProject.class.getName();
-	    request.setAttribute("project", "yes");
-	} else if (verifyParameterInRequest(request, "costcenter")) {
-	    grantPaymentEntity = GrantCostCenter.class.getName();
-	    request.setAttribute("costcenter", "yes");
-	} else {
-	    throw new Exception();
+		if (verifyParameterInRequest(request, "project")) {
+			grantPaymentEntity = GrantProject.class.getName();
+			request.setAttribute("project", "yes");
+		} else if (verifyParameterInRequest(request, "costcenter")) {
+			grantPaymentEntity = GrantCostCenter.class.getName();
+			request.setAttribute("costcenter", "yes");
+		} else {
+			throw new Exception();
+		}
+
+		List grantPaymentList = ReadAllGrantPaymentEntitiesByClassName.run(grantPaymentEntity);
+		request.setAttribute("grantPaymentList", grantPaymentList);
+
+		return mapping.findForward("show-payment-entities");
 	}
-
-	List grantPaymentList = (List) ReadAllGrantPaymentEntitiesByClassName.run(grantPaymentEntity);
-	request.setAttribute("grantPaymentList", grantPaymentList);
-
-	return mapping.findForward("show-payment-entities");
-    }
 }

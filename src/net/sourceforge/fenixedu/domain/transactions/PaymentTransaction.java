@@ -17,62 +17,63 @@ import net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuideEntr
  */
 public abstract class PaymentTransaction extends PaymentTransaction_Base {
 
-    public PaymentTransaction() {
-	super();
-	setRootDomainObject(RootDomainObject.getInstance());
-    }
-
-    /**
-     * @param value
-     * @param transactionDate
-     * @param remarks
-     * @param paymentType
-     * @param transactionType
-     * @param wasInternalBalance
-     * @param responsiblePerson
-     * @param personAccount
-     * @param guideEntry
-     */
-    public PaymentTransaction(BigDecimal value, Timestamp transactionDate, String remarks, PaymentType paymentType,
-	    TransactionType transactionType, Boolean wasInternalBalance, Person responsiblePerson, PersonAccount personAccount,
-	    GuideEntry guideEntry) {
-	this();
-	setGuideEntry(guideEntry);
-	setValueBigDecimal(value);
-	setTransactionDate(transactionDate);
-	setRemarks(remarks);
-	setPaymentType(paymentType);
-	setTransactionType(transactionType);
-	setWasInternalBalance(wasInternalBalance);
-	setResponsiblePerson(responsiblePerson);
-	setPersonAccount(personAccount);
-    }
-
-    public void delete() {
-	if (this instanceof GratuityTransaction) {
-	    GratuityTransaction gratuityTransaction = (GratuityTransaction) this;
-	    GratuitySituation gratuitySituation = gratuityTransaction.getGratuitySituation();
-	    gratuityTransaction.removeGratuitySituation();
-
-	    gratuitySituation.updateValues();
+	public PaymentTransaction() {
+		super();
+		setRootDomainObject(RootDomainObject.getInstance());
 	}
 
-	removeGuideEntry();
-	super.delete();
-    }
+	/**
+	 * @param value
+	 * @param transactionDate
+	 * @param remarks
+	 * @param paymentType
+	 * @param transactionType
+	 * @param wasInternalBalance
+	 * @param responsiblePerson
+	 * @param personAccount
+	 * @param guideEntry
+	 */
+	public PaymentTransaction(BigDecimal value, Timestamp transactionDate, String remarks, PaymentType paymentType,
+			TransactionType transactionType, Boolean wasInternalBalance, Person responsiblePerson, PersonAccount personAccount,
+			GuideEntry guideEntry) {
+		this();
+		setGuideEntry(guideEntry);
+		setValueBigDecimal(value);
+		setTransactionDate(transactionDate);
+		setRemarks(remarks);
+		setPaymentType(paymentType);
+		setTransactionType(transactionType);
+		setWasInternalBalance(wasInternalBalance);
+		setResponsiblePerson(responsiblePerson);
+		setPersonAccount(personAccount);
+	}
 
-    public BigDecimal getValueWithAdjustment() {
+	@Override
+	public void delete() {
+		if (this instanceof GratuityTransaction) {
+			GratuityTransaction gratuityTransaction = (GratuityTransaction) this;
+			GratuitySituation gratuitySituation = gratuityTransaction.getGratuitySituation();
+			gratuityTransaction.removeGratuitySituation();
 
-	BigDecimal reimbursedValue = BigDecimal.ZERO;
-	if (hasGuideEntry()) {
-	    for (final ReimbursementGuideEntry reimbursementGuideEntry : getGuideEntry().getReimbursementGuideEntries()) {
-		if (reimbursementGuideEntry.getReimbursementGuide().isPayed()) {
-		    reimbursedValue = reimbursedValue.add(reimbursementGuideEntry.getValueBigDecimal());
+			gratuitySituation.updateValues();
 		}
-	    }
+
+		removeGuideEntry();
+		super.delete();
 	}
 
-	return getValueBigDecimal().subtract(reimbursedValue);
-    }
+	public BigDecimal getValueWithAdjustment() {
+
+		BigDecimal reimbursedValue = BigDecimal.ZERO;
+		if (hasGuideEntry()) {
+			for (final ReimbursementGuideEntry reimbursementGuideEntry : getGuideEntry().getReimbursementGuideEntries()) {
+				if (reimbursementGuideEntry.getReimbursementGuide().isPayed()) {
+					reimbursedValue = reimbursedValue.add(reimbursementGuideEntry.getValueBigDecimal());
+				}
+			}
+		}
+
+		return getValueBigDecimal().subtract(reimbursedValue);
+	}
 
 }

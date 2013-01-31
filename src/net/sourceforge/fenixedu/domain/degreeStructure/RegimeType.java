@@ -10,27 +10,27 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public enum RegimeType {
 
-    SEMESTRIAL,
+	SEMESTRIAL,
 
-    ANUAL;
+	ANUAL;
 
-    public String getName() {
-	return name();
-    }
+	public String getName() {
+		return name();
+	}
 
-    public String getLocalizedName() {
-	return getLocalizedName(Language.getLocale());
-    }
+	public String getLocalizedName() {
+		return getLocalizedName(Language.getLocale());
+	}
 
-    public String getLocalizedName(final Locale locale) {
-	return ResourceBundle.getBundle("resources.EnumerationResources", locale).getString(getName());
-    }
+	public String getLocalizedName(final Locale locale) {
+		return ResourceBundle.getBundle("resources.EnumerationResources", locale).getString(getName());
+	}
 
-    public String getAcronym() {
-	return getAcronym(Language.getLocale());
-    }
+	public String getAcronym() {
+		return getAcronym(Language.getLocale());
+	}
 
-    private String getAcronym(final Locale locale) {
-	return ResourceBundle.getBundle("resources.EnumerationResources", locale).getString(getName() + ".ACRONYM");
-    }
+	private String getAcronym(final Locale locale) {
+		return ResourceBundle.getBundle("resources.EnumerationResources", locale).getString(getName() + ".ACRONYM");
+	}
 }

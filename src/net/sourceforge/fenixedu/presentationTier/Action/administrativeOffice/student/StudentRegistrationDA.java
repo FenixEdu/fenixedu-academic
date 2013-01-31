@@ -13,20 +13,23 @@ import org.apache.struts.action.ActionMapping;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 
-@Forwards({ @Forward(name = "viewRegistrationDetails", path = "/academicAdminOffice/student/registration/viewRegistrationDetails.jsp") })
+@Forwards({ @Forward(
+		name = "viewRegistrationDetails",
+		path = "/academicAdminOffice/student/registration/viewRegistrationDetails.jsp") })
 public abstract class StudentRegistrationDA extends FenixDispatchAction {
 
-    protected Registration getAndSetRegistration(final HttpServletRequest request) {
-	final Integer registrationID = getIntegerFromRequest(request, "registrationID") != null ? getIntegerFromRequest(request,
-		"registrationID") : getIntegerFromRequest(request, "registrationId");
-	final Registration registration = rootDomainObject.readRegistrationByOID(Integer.valueOf(registrationID));
-	request.setAttribute("registration", registration);
-	return registration;
-    }
+	protected Registration getAndSetRegistration(final HttpServletRequest request) {
+		final Integer registrationID =
+				getIntegerFromRequest(request, "registrationID") != null ? getIntegerFromRequest(request, "registrationID") : getIntegerFromRequest(
+						request, "registrationId");
+		final Registration registration = rootDomainObject.readRegistrationByOID(Integer.valueOf(registrationID));
+		request.setAttribute("registration", registration);
+		return registration;
+	}
 
-    public ActionForward visualizeRegistration(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) {
-	getAndSetRegistration(request);
-	return mapping.findForward("viewRegistrationDetails");
-    }
+	public ActionForward visualizeRegistration(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) {
+		getAndSetRegistration(request);
+		return mapping.findForward("viewRegistrationDetails");
+	}
 }

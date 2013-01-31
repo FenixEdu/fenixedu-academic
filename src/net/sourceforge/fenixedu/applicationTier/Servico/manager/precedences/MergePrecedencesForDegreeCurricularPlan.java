@@ -9,18 +9,18 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class MergePrecedencesForDegreeCurricularPlan extends FenixService {
 
-    @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
-    @Service
-    public static void run(Integer firstPrecedenceID, Integer secondPrecedenceID) throws FenixServiceException {
+	@Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
+	@Service
+	public static void run(Integer firstPrecedenceID, Integer secondPrecedenceID) throws FenixServiceException {
 
-	if (firstPrecedenceID.intValue() == secondPrecedenceID.intValue()) {
-	    throw new InvalidArgumentsServiceException("error.manager.samePrecedencesForMerge");
+		if (firstPrecedenceID.intValue() == secondPrecedenceID.intValue()) {
+			throw new InvalidArgumentsServiceException("error.manager.samePrecedencesForMerge");
+		}
+
+		Precedence firstPrecedence = rootDomainObject.readPrecedenceByOID(firstPrecedenceID);
+		Precedence secondPrecedence = rootDomainObject.readPrecedenceByOID(secondPrecedenceID);
+
+		firstPrecedence.mergePrecedences(secondPrecedence);
 	}
-
-	Precedence firstPrecedence = rootDomainObject.readPrecedenceByOID(firstPrecedenceID);
-	Precedence secondPrecedence = rootDomainObject.readPrecedenceByOID(secondPrecedenceID);
-
-	firstPrecedence.mergePrecedences(secondPrecedence);
-    }
 
 }

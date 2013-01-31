@@ -11,15 +11,15 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 
 public class ReadStudentsByPerson extends FenixService {
 
-    public List run(InfoPerson infoPerson) {
-	final List<InfoStudent> result = new ArrayList<InfoStudent>();
+	public List run(InfoPerson infoPerson) {
+		final List<InfoStudent> result = new ArrayList<InfoStudent>();
 
-	Person person = (Person) rootDomainObject.readPartyByOID(infoPerson.getIdInternal());
-	for (final Registration registration : person.getStudents()) {
-	    result.add(InfoStudent.newInfoFromDomain(registration));
+		Person person = (Person) rootDomainObject.readPartyByOID(infoPerson.getIdInternal());
+		for (final Registration registration : person.getStudents()) {
+			result.add(InfoStudent.newInfoFromDomain(registration));
+		}
+
+		return result;
 	}
-
-	return result;
-    }
 
 }

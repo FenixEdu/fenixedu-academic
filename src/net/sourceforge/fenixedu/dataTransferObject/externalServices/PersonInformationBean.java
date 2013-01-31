@@ -26,203 +26,204 @@ import org.apache.commons.lang.StringUtils;
 
 public class PersonInformationBean {
 
-    private String name;
-    private String webAddress;
-    private String email;
-    private List<String> personalWebAdresses = new ArrayList<String>();
-    private List<String> workWebAdresses = new ArrayList<String>();
-    private List<String> personalEmails = new ArrayList<String>();
-    private List<String> workEmails = new ArrayList<String>();
-    private List<String> personCategories;
-    private String teacherDepartment;
-    private String employeeUnit;
-    private List<String> studentDegrees;
-    private String campus;
-    private List<EnrolledCourseBean> enrolledCoursesBeans = new ArrayList<EnrolledCourseBean>();
-    private List<EnrolledLessonBean> lessonsSchedule = new ArrayList<EnrolledLessonBean>();
+	private String name;
+	private String webAddress;
+	private String email;
+	private List<String> personalWebAdresses = new ArrayList<String>();
+	private List<String> workWebAdresses = new ArrayList<String>();
+	private List<String> personalEmails = new ArrayList<String>();
+	private List<String> workEmails = new ArrayList<String>();
+	private List<String> personCategories;
+	private String teacherDepartment;
+	private String employeeUnit;
+	private List<String> studentDegrees;
+	private String campus;
+	private List<EnrolledCourseBean> enrolledCoursesBeans = new ArrayList<EnrolledCourseBean>();
+	private List<EnrolledLessonBean> lessonsSchedule = new ArrayList<EnrolledLessonBean>();
 
-    public PersonInformationBean(final Person person) {
-	setName(person.getName());
+	public PersonInformationBean(final Person person) {
+		setName(person.getName());
 
-	final WebAddress defaultWebAddress = person.getDefaultWebAddress();
-	setWebAddress(defaultWebAddress != null ? defaultWebAddress.getPresentationValue() : StringUtils.EMPTY);
+		final WebAddress defaultWebAddress = person.getDefaultWebAddress();
+		setWebAddress(defaultWebAddress != null ? defaultWebAddress.getPresentationValue() : StringUtils.EMPTY);
 
-	final EmailAddress defaultEmailAddress = person.getDefaultEmailAddress();
-	setEmail(defaultEmailAddress != null ? defaultEmailAddress.getPresentationValue() : StringUtils.EMPTY);
+		final EmailAddress defaultEmailAddress = person.getDefaultEmailAddress();
+		setEmail(defaultEmailAddress != null ? defaultEmailAddress.getPresentationValue() : StringUtils.EMPTY);
 
-	fillPersonalAndWorkContacts(person.getWebAddresses(), getPersonalWebAdresses(), getWorkWebAdresses());
-	fillPersonalAndWorkContacts(person.getEmailAddresses(), getPersonalEmails(), getWorkEmails());
+		fillPersonalAndWorkContacts(person.getWebAddresses(), getPersonalWebAdresses(), getWorkWebAdresses());
+		fillPersonalAndWorkContacts(person.getEmailAddresses(), getPersonalEmails(), getWorkEmails());
 
-	setPersonCategories(new ArrayList<String>());
-	for (Role role : person.getPersonRoles()) {
-	    if (role.getRoleType().equals(RoleType.ALUMNI) || role.getRoleType().equals(RoleType.DELEGATE)
-		    || role.getRoleType().equals(RoleType.EMPLOYEE) || role.getRoleType().equals(RoleType.GRANT_OWNER)
-		    || role.getRoleType().equals(RoleType.RESEARCHER) || role.getRoleType().equals(RoleType.STUDENT)
-		    || role.getRoleType().equals(RoleType.TEACHER))
-		getPersonCategories().add(role.getRoleType().name());
-	}
-
-	setStudentDegrees(new ArrayList<String>());
-	if (person.hasStudent()) {
-	    for (Registration registration : person.getStudent().getActiveRegistrations()) {
-		getStudentDegrees().add(registration.getDegree().getPresentationName());
-		for (Attends attend : registration.getAttendsForExecutionPeriod(ExecutionSemester.readActualExecutionSemester())) {
-		    if (attend.hasEnrolment()) {
-			getEnrolledCoursesBeans().add(new EnrolledCourseBean(attend));
-		    }
+		setPersonCategories(new ArrayList<String>());
+		for (Role role : person.getPersonRoles()) {
+			if (role.getRoleType().equals(RoleType.ALUMNI) || role.getRoleType().equals(RoleType.DELEGATE)
+					|| role.getRoleType().equals(RoleType.EMPLOYEE) || role.getRoleType().equals(RoleType.GRANT_OWNER)
+					|| role.getRoleType().equals(RoleType.RESEARCHER) || role.getRoleType().equals(RoleType.STUDENT)
+					|| role.getRoleType().equals(RoleType.TEACHER)) {
+				getPersonCategories().add(role.getRoleType().name());
+			}
 		}
-	    }
 
-	    final Registration lastActiveRegistration = person.getStudent().getLastActiveRegistration();
-	    if (lastActiveRegistration != null) {
-		setCampus(lastActiveRegistration.getCampus().getName());
-		for (Shift shift : lastActiveRegistration.getShiftsForCurrentExecutionPeriod()) {
-		    for (Lesson lesson : shift.getAssociatedLessonsSet()) {
-			getLessonsSchedule().add(new EnrolledLessonBean(lesson));
-		    }
+		setStudentDegrees(new ArrayList<String>());
+		if (person.hasStudent()) {
+			for (Registration registration : person.getStudent().getActiveRegistrations()) {
+				getStudentDegrees().add(registration.getDegree().getPresentationName());
+				for (Attends attend : registration.getAttendsForExecutionPeriod(ExecutionSemester.readActualExecutionSemester())) {
+					if (attend.hasEnrolment()) {
+						getEnrolledCoursesBeans().add(new EnrolledCourseBean(attend));
+					}
+				}
+			}
+
+			final Registration lastActiveRegistration = person.getStudent().getLastActiveRegistration();
+			if (lastActiveRegistration != null) {
+				setCampus(lastActiveRegistration.getCampus().getName());
+				for (Shift shift : lastActiveRegistration.getShiftsForCurrentExecutionPeriod()) {
+					for (Lesson lesson : shift.getAssociatedLessonsSet()) {
+						getLessonsSchedule().add(new EnrolledLessonBean(lesson));
+					}
+				}
+			}
 		}
-	    }
+
+		if (person.hasTeacher()) {
+			Department department = person.getTeacher().getCurrentWorkingDepartment();
+			if (department != null) {
+				setTeacherDepartment(department.getRealName());
+			}
+		}
+
+		if (person.hasEmployee()) {
+			final Unit currentWorkingPlace = person.getEmployee().getCurrentWorkingPlace();
+			if (currentWorkingPlace != null) {
+				setEmployeeUnit(currentWorkingPlace.getName());
+			}
+			Campus currentCampus = person.getEmployee().getCurrentCampus();
+			if (currentCampus != null) {
+				setCampus(currentCampus.getName());
+			}
+		}
 	}
 
-	if (person.hasTeacher()) {
-	    Department department = person.getTeacher().getCurrentWorkingDepartment();
-	    if (department != null) {
-		setTeacherDepartment(department.getRealName());
-	    }
+	private void fillPersonalAndWorkContacts(final List<? extends PartyContact> contacts, List<String> personalContacts,
+			List<String> workContacts) {
+		for (final PartyContact partyContact : contacts) {
+			if (partyContact.getType() == PartyContactType.PERSONAL) {
+				personalContacts.add(partyContact.getPresentationValue());
+			} else if (partyContact.getType() == PartyContactType.WORK) {
+				workContacts.add(partyContact.getPresentationValue());
+			}
+		}
 	}
 
-	if (person.hasEmployee()) {
-	    final Unit currentWorkingPlace = person.getEmployee().getCurrentWorkingPlace();
-	    if (currentWorkingPlace != null) {
-		setEmployeeUnit(currentWorkingPlace.getName());
-	    }
-	    Campus currentCampus = person.getEmployee().getCurrentCampus();
-	    if (currentCampus != null) {
-		setCampus(currentCampus.getName());
-	    }
+	public String getName() {
+		return name;
 	}
-    }
 
-    private void fillPersonalAndWorkContacts(final List<? extends PartyContact> contacts, List<String> personalContacts,
-	    List<String> workContacts) {
-	for (final PartyContact partyContact : contacts) {
-	    if (partyContact.getType() == PartyContactType.PERSONAL) {
-		personalContacts.add(partyContact.getPresentationValue());
-	    } else if (partyContact.getType() == PartyContactType.WORK) {
-		workContacts.add(partyContact.getPresentationValue());
-	    }
+	public void setName(String name) {
+		this.name = name;
 	}
-    }
 
-    public String getName() {
-	return name;
-    }
+	public String getWebAddress() {
+		return webAddress;
+	}
 
-    public void setName(String name) {
-	this.name = name;
-    }
+	public void setWebAddress(String webAddress) {
+		this.webAddress = webAddress;
+	}
 
-    public String getWebAddress() {
-	return webAddress;
-    }
+	public String getEmail() {
+		return email;
+	}
 
-    public void setWebAddress(String webAddress) {
-	this.webAddress = webAddress;
-    }
+	public void setEmail(String email) {
+		this.email = email;
+	}
 
-    public String getEmail() {
-	return email;
-    }
+	public List<String> getPersonCategories() {
+		return personCategories;
+	}
 
-    public void setEmail(String email) {
-	this.email = email;
-    }
+	public void setPersonCategories(List<String> personCategories) {
+		this.personCategories = personCategories;
+	}
 
-    public List<String> getPersonCategories() {
-	return personCategories;
-    }
+	public String getTeacherDepartment() {
+		return teacherDepartment;
+	}
 
-    public void setPersonCategories(List<String> personCategories) {
-	this.personCategories = personCategories;
-    }
+	public void setTeacherDepartment(String teacherDepartment) {
+		this.teacherDepartment = teacherDepartment;
+	}
 
-    public String getTeacherDepartment() {
-	return teacherDepartment;
-    }
+	public String getEmployeeUnit() {
+		return employeeUnit;
+	}
 
-    public void setTeacherDepartment(String teacherDepartment) {
-	this.teacherDepartment = teacherDepartment;
-    }
+	public void setEmployeeUnit(String employeeUnit) {
+		this.employeeUnit = employeeUnit;
+	}
 
-    public String getEmployeeUnit() {
-	return employeeUnit;
-    }
+	public List<String> getStudentDegrees() {
+		return studentDegrees;
+	}
 
-    public void setEmployeeUnit(String employeeUnit) {
-	this.employeeUnit = employeeUnit;
-    }
+	public void setStudentDegrees(List<String> studentDegrees) {
+		this.studentDegrees = studentDegrees;
+	}
 
-    public List<String> getStudentDegrees() {
-	return studentDegrees;
-    }
+	public List<String> getPersonalWebAdresses() {
+		return personalWebAdresses;
+	}
 
-    public void setStudentDegrees(List<String> studentDegrees) {
-	this.studentDegrees = studentDegrees;
-    }
+	public void setPersonalWebAdresses(List<String> personalWebAdresses) {
+		this.personalWebAdresses = personalWebAdresses;
+	}
 
-    public List<String> getPersonalWebAdresses() {
-	return personalWebAdresses;
-    }
+	public List<String> getWorkWebAdresses() {
+		return workWebAdresses;
+	}
 
-    public void setPersonalWebAdresses(List<String> personalWebAdresses) {
-	this.personalWebAdresses = personalWebAdresses;
-    }
+	public void setWorkWebAdresses(List<String> workWebAdresses) {
+		this.workWebAdresses = workWebAdresses;
+	}
 
-    public List<String> getWorkWebAdresses() {
-	return workWebAdresses;
-    }
+	public List<String> getPersonalEmails() {
+		return personalEmails;
+	}
 
-    public void setWorkWebAdresses(List<String> workWebAdresses) {
-	this.workWebAdresses = workWebAdresses;
-    }
+	public void setPersonalEmails(List<String> personalEmails) {
+		this.personalEmails = personalEmails;
+	}
 
-    public List<String> getPersonalEmails() {
-	return personalEmails;
-    }
+	public List<String> getWorkEmails() {
+		return workEmails;
+	}
 
-    public void setPersonalEmails(List<String> personalEmails) {
-	this.personalEmails = personalEmails;
-    }
+	public void setWorkEmails(List<String> workEmails) {
+		this.workEmails = workEmails;
+	}
 
-    public List<String> getWorkEmails() {
-	return workEmails;
-    }
+	public String getCampus() {
+		return campus;
+	}
 
-    public void setWorkEmails(List<String> workEmails) {
-	this.workEmails = workEmails;
-    }
+	public void setCampus(String campus) {
+		this.campus = campus;
+	}
 
-    public String getCampus() {
-	return campus;
-    }
+	public void setEnrolledCoursesBeans(List<EnrolledCourseBean> enrolledCoursesBeans) {
+		this.enrolledCoursesBeans = enrolledCoursesBeans;
+	}
 
-    public void setCampus(String campus) {
-	this.campus = campus;
-    }
+	public List<EnrolledCourseBean> getEnrolledCoursesBeans() {
+		return enrolledCoursesBeans;
+	}
 
-    public void setEnrolledCoursesBeans(List<EnrolledCourseBean> enrolledCoursesBeans) {
-	this.enrolledCoursesBeans = enrolledCoursesBeans;
-    }
+	public void setLessonsSchedule(List<EnrolledLessonBean> lessonsSchedule) {
+		this.lessonsSchedule = lessonsSchedule;
+	}
 
-    public List<EnrolledCourseBean> getEnrolledCoursesBeans() {
-	return enrolledCoursesBeans;
-    }
-
-    public void setLessonsSchedule(List<EnrolledLessonBean> lessonsSchedule) {
-	this.lessonsSchedule = lessonsSchedule;
-    }
-
-    public List<EnrolledLessonBean> getLessonsSchedule() {
-	return lessonsSchedule;
-    }
+	public List<EnrolledLessonBean> getLessonsSchedule() {
+		return lessonsSchedule;
+	}
 }

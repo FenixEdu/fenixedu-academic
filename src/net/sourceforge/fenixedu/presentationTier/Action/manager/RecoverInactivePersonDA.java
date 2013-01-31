@@ -11,8 +11,8 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.SetPersonRoles;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.Person.FindPersonFactory;
+import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
@@ -23,35 +23,35 @@ import org.apache.struts.action.ActionMapping;
 
 public class RecoverInactivePersonDA extends FenixDispatchAction {
 
-    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
-	return mapping.findForward("showSearchForm");
-    }
-
-    public ActionForward search(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-	    throws FenixFilterException, FenixServiceException {
-	final FindPersonFactory findPersonFactory = (FindPersonFactory) executeFactoryMethod();
-	for (final Iterator<Person> personIterator = findPersonFactory.getPeople().iterator(); personIterator.hasNext();) {
-	    final Person person = personIterator.next();
-	    if (!person.getPersonRolesSet().isEmpty()) {
-		personIterator.remove();
-	    }
+	public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+		return mapping.findForward("showSearchForm");
 	}
-	request.setAttribute("findPersonFactory", findPersonFactory);
-	return prepare(mapping, form, request, response);
-    }
 
-    public ActionForward activate(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-	    throws FenixFilterException, FenixServiceException {
-	final String personIDString = request.getParameter("personID");
-	if (personIDString != null && StringUtils.isNumeric(personIDString)) {
-	    final Integer personID = Integer.valueOf(personIDString);
-	    final Person person = (Person) rootDomainObject.readPartyByOID(personID);
-	    final Set<Role> roles = new HashSet<Role>();
-	    roles.add(Role.getRoleByRoleType(RoleType.PERSON));
-
-	    SetPersonRoles.run(person, roles);
+	public ActionForward search(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+			throws FenixFilterException, FenixServiceException {
+		final FindPersonFactory findPersonFactory = (FindPersonFactory) executeFactoryMethod();
+		for (final Iterator<Person> personIterator = findPersonFactory.getPeople().iterator(); personIterator.hasNext();) {
+			final Person person = personIterator.next();
+			if (!person.getPersonRolesSet().isEmpty()) {
+				personIterator.remove();
+			}
+		}
+		request.setAttribute("findPersonFactory", findPersonFactory);
+		return prepare(mapping, form, request, response);
 	}
-	return prepare(mapping, form, request, response);
-    }
+
+	public ActionForward activate(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+			throws FenixFilterException, FenixServiceException {
+		final String personIDString = request.getParameter("personID");
+		if (personIDString != null && StringUtils.isNumeric(personIDString)) {
+			final Integer personID = Integer.valueOf(personIDString);
+			final Person person = (Person) rootDomainObject.readPartyByOID(personID);
+			final Set<Role> roles = new HashSet<Role>();
+			roles.add(Role.getRoleByRoleType(RoleType.PERSON));
+
+			SetPersonRoles.run(person, roles);
+		}
+		return prepare(mapping, form, request, response);
+	}
 
 }

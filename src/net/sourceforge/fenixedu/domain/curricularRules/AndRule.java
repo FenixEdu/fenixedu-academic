@@ -13,34 +13,34 @@ import net.sourceforge.fenixedu.domain.util.LogicOperator;
 
 public class AndRule extends AndRule_Base {
 
-    public AndRule(CurricularRule... curricularRules) {
-	initCompositeRule(curricularRules);
-	setCompositeRuleType(LogicOperator.AND);
-    }
-
-    @Override
-    public List<GenericPair<Object, Boolean>> getLabel() {
-	return getLabel("label.operator.and");
-    }
-
-    @Override
-    public RuleResult evaluate(IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, EnrolmentContext enrolmentContext) {
-	RuleResult result = RuleResult.createTrue(sourceDegreeModuleToEvaluate.getDegreeModule());
-	for (final CurricularRule curricularRule : getCurricularRules()) {
-	    result = result.and(curricularRule.evaluate(sourceDegreeModuleToEvaluate, enrolmentContext));
+	public AndRule(CurricularRule... curricularRules) {
+		initCompositeRule(curricularRules);
+		setCompositeRuleType(LogicOperator.AND);
 	}
-	return result;
-    }
 
-    @Override
-    public RuleResult verify(VerifyRuleLevel verifyRuleLevel, EnrolmentContext enrolmentContext,
-	    DegreeModule degreeModuleToVerify, CourseGroup parentCourseGroup) {
-	RuleResult result = RuleResult.createTrue(degreeModuleToVerify);
-	for (final CurricularRule curricularRule : getCurricularRules()) {
-	    result = result
-		    .and(curricularRule.verify(verifyRuleLevel, enrolmentContext, degreeModuleToVerify, parentCourseGroup));
+	@Override
+	public List<GenericPair<Object, Boolean>> getLabel() {
+		return getLabel("label.operator.and");
 	}
-	return result;
-    }
+
+	@Override
+	public RuleResult evaluate(IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, EnrolmentContext enrolmentContext) {
+		RuleResult result = RuleResult.createTrue(sourceDegreeModuleToEvaluate.getDegreeModule());
+		for (final CurricularRule curricularRule : getCurricularRules()) {
+			result = result.and(curricularRule.evaluate(sourceDegreeModuleToEvaluate, enrolmentContext));
+		}
+		return result;
+	}
+
+	@Override
+	public RuleResult verify(VerifyRuleLevel verifyRuleLevel, EnrolmentContext enrolmentContext,
+			DegreeModule degreeModuleToVerify, CourseGroup parentCourseGroup) {
+		RuleResult result = RuleResult.createTrue(degreeModuleToVerify);
+		for (final CurricularRule curricularRule : getCurricularRules()) {
+			result =
+					result.and(curricularRule.verify(verifyRuleLevel, enrolmentContext, degreeModuleToVerify, parentCourseGroup));
+		}
+		return result;
+	}
 
 }

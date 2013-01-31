@@ -49,181 +49,193 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
  * @author <a href="mailto:naat@ist.utl.pt">Nadir Tarmahomed </a>
  * 
  */
-@Mapping(module = "masterDegreeAdministrativeOffice", path = "/createGuideFromTransactions", input = "/createGuideFromTransactionsForm.do?method=chooseContributor&page=0", attribute = "createGuideFromTransactionsForm", formBean = "createGuideFromTransactionsForm", scope = "request", parameter = "method")
+@Mapping(
+		module = "masterDegreeAdministrativeOffice",
+		path = "/createGuideFromTransactions",
+		input = "/createGuideFromTransactionsForm.do?method=chooseContributor&page=0",
+		attribute = "createGuideFromTransactionsForm",
+		formBean = "createGuideFromTransactionsForm",
+		scope = "request",
+		parameter = "method")
 @Forwards(value = {
-	@Forward(name = "createSuccess", path = "createGuideFromTransactionsSuccess", tileProperties = @Tile(title = "teste41")),
-	@Forward(name = "confirmCreate", path = "confirmCreateGuideFromTransactions", tileProperties = @Tile(title = "teste42")),
-	@Forward(name = "chooseContributor", path = "chooseContributorForCreateGuideFromTransactions", tileProperties = @Tile(title = "teste43")) })
-@Exceptions(value = { @ExceptionHandling(type = net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException.class, key = "resources.Action.exceptions.NonExistingActionException", handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class, scope = "request") })
+		@Forward(name = "createSuccess", path = "createGuideFromTransactionsSuccess", tileProperties = @Tile(title = "teste41")),
+		@Forward(name = "confirmCreate", path = "confirmCreateGuideFromTransactions", tileProperties = @Tile(title = "teste42")),
+		@Forward(name = "chooseContributor", path = "chooseContributorForCreateGuideFromTransactions", tileProperties = @Tile(
+				title = "teste43")) })
+@Exceptions(value = { @ExceptionHandling(
+		type = net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException.class,
+		key = "resources.Action.exceptions.NonExistingActionException",
+		handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class,
+		scope = "request") })
 public class CreateGuideFromTransactionsDispatchAction extends FenixDispatchAction {
 
-    public ActionForward chooseContributor(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
+	public ActionForward chooseContributor(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
 
-	return mapping.findForward("chooseContributor");
+		return mapping.findForward("chooseContributor");
 
-    }
-
-    public ActionForward confirmCreate(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-
-	DynaActionForm createGuideFromTransactionsForm = (DynaActionForm) form;
-	IUserView userView = UserView.getUser();
-
-	Integer contributorNumber = (Integer) createGuideFromTransactionsForm.get("contributorNumber");
-	Integer gratuitySituationId = (Integer) createGuideFromTransactionsForm.get("gratuitySituationId");
-	Integer studentId = (Integer) createGuideFromTransactionsForm.get("studentId");
-	// Read Contributor
-	InfoContributor infoContributor = readContributor(mapping, userView, contributorNumber);
-	request.setAttribute(PresentationConstants.CONTRIBUTOR, infoContributor);
-
-	// Read Registration
-	InfoStudent infoStudent = readStudent(mapping, userView, studentId);
-	request.setAttribute(PresentationConstants.STUDENT, infoStudent);
-
-	// Read Transactions
-	List infoTransactions = null;
-
-	try {
-	    infoTransactions = ReadAllTransactionsByGratuitySituationID.run(gratuitySituationId);
-
-	} catch (FenixServiceException e) {
-	    throw new FenixActionException(e);
 	}
 
-	// Remove Transactions with Guide
-	Iterator it = infoTransactions.iterator();
-	InfoTransaction infoTransaction = null;
-	List infoTransactionsWithoutGuides = new ArrayList();
-	while (it.hasNext()) {
-	    infoTransaction = (InfoTransaction) it.next();
-	    if (infoTransaction instanceof InfoPaymentTransaction) {
-		InfoPaymentTransaction infoPaymentTransaction = (InfoPaymentTransaction) infoTransaction;
-		if (infoPaymentTransaction.getInfoGuideEntry() == null) {
-		    infoTransactionsWithoutGuides.add(infoTransaction);
+	public ActionForward confirmCreate(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+
+		DynaActionForm createGuideFromTransactionsForm = (DynaActionForm) form;
+		IUserView userView = UserView.getUser();
+
+		Integer contributorNumber = (Integer) createGuideFromTransactionsForm.get("contributorNumber");
+		Integer gratuitySituationId = (Integer) createGuideFromTransactionsForm.get("gratuitySituationId");
+		Integer studentId = (Integer) createGuideFromTransactionsForm.get("studentId");
+		// Read Contributor
+		InfoContributor infoContributor = readContributor(mapping, userView, contributorNumber);
+		request.setAttribute(PresentationConstants.CONTRIBUTOR, infoContributor);
+
+		// Read Registration
+		InfoStudent infoStudent = readStudent(mapping, userView, studentId);
+		request.setAttribute(PresentationConstants.STUDENT, infoStudent);
+
+		// Read Transactions
+		List infoTransactions = null;
+
+		try {
+			infoTransactions = ReadAllTransactionsByGratuitySituationID.run(gratuitySituationId);
+
+		} catch (FenixServiceException e) {
+			throw new FenixActionException(e);
 		}
-	    }
+
+		// Remove Transactions with Guide
+		Iterator it = infoTransactions.iterator();
+		InfoTransaction infoTransaction = null;
+		List infoTransactionsWithoutGuides = new ArrayList();
+		while (it.hasNext()) {
+			infoTransaction = (InfoTransaction) it.next();
+			if (infoTransaction instanceof InfoPaymentTransaction) {
+				InfoPaymentTransaction infoPaymentTransaction = (InfoPaymentTransaction) infoTransaction;
+				if (infoPaymentTransaction.getInfoGuideEntry() == null) {
+					infoTransactionsWithoutGuides.add(infoTransaction);
+				}
+			}
+		}
+
+		request.setAttribute(PresentationConstants.TRANSACTION_LIST, infoTransactionsWithoutGuides);
+
+		return mapping.findForward("confirmCreate");
+
 	}
 
-	request.setAttribute(PresentationConstants.TRANSACTION_LIST, infoTransactionsWithoutGuides);
+	public ActionForward create(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
 
-	return mapping.findForward("confirmCreate");
+		DynaActionForm createGuideFromTransactionsForm = (DynaActionForm) form;
+		IUserView userView = UserView.getUser();
 
-    }
+		Integer contributorNumber = (Integer) createGuideFromTransactionsForm.get("contributorNumber");
+		Integer gratuitySituationId = (Integer) createGuideFromTransactionsForm.get("gratuitySituationId");
+		Integer studentId = (Integer) createGuideFromTransactionsForm.get("studentId");
+		Integer[] transactionsWithoutGuide = (Integer[]) createGuideFromTransactionsForm.get("transactionsWithoutGuide");
 
-    public ActionForward create(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-	    throws Exception {
+		// Read Contributor
+		InfoContributor infoContributor = readContributor(mapping, userView, contributorNumber);
 
-	DynaActionForm createGuideFromTransactionsForm = (DynaActionForm) form;
-	IUserView userView = UserView.getUser();
+		// Read Registration
+		InfoStudent infoStudent = readStudent(mapping, userView, studentId);
 
-	Integer contributorNumber = (Integer) createGuideFromTransactionsForm.get("contributorNumber");
-	Integer gratuitySituationId = (Integer) createGuideFromTransactionsForm.get("gratuitySituationId");
-	Integer studentId = (Integer) createGuideFromTransactionsForm.get("studentId");
-	Integer[] transactionsWithoutGuide = (Integer[]) createGuideFromTransactionsForm.get("transactionsWithoutGuide");
+		// Read Gratuity Situation
+		InfoGratuitySituation infoGratuitySituation = readGratuitySituation(userView, gratuitySituationId);
 
-	// Read Contributor
-	InfoContributor infoContributor = readContributor(mapping, userView, contributorNumber);
+		InfoGuide infoGuide = new InfoGuide();
+		infoGuide.setCreationDate(Calendar.getInstance().getTime());
+		infoGuide.setGuideRequester(GuideRequester.STUDENT);
+		infoGuide.setInfoContributor(infoContributor);
+		infoGuide.setInfoExecutionDegree(infoGratuitySituation.getInfoGratuityValues().getInfoExecutionDegree());
+		infoGuide.setInfoPerson(infoStudent.getInfoPerson());
+		infoGuide.setVersion(new Integer(1));
+		infoGuide.setYear(new Integer(Calendar.getInstance().get(Calendar.YEAR)));
 
-	// Read Registration
-	InfoStudent infoStudent = readStudent(mapping, userView, studentId);
+		try {
+			infoGuide = CreateGuideFromTransactions.run(infoGuide, "", GuideState.PAYED, Arrays.asList(transactionsWithoutGuide));
 
-	// Read Gratuity Situation
-	InfoGratuitySituation infoGratuitySituation = readGratuitySituation(userView, gratuitySituationId);
+		} catch (FenixServiceException e) {
+			throw new FenixActionException(e);
+		}
 
-	InfoGuide infoGuide = new InfoGuide();
-	infoGuide.setCreationDate(Calendar.getInstance().getTime());
-	infoGuide.setGuideRequester(GuideRequester.STUDENT);
-	infoGuide.setInfoContributor(infoContributor);
-	infoGuide.setInfoExecutionDegree(infoGratuitySituation.getInfoGratuityValues().getInfoExecutionDegree());
-	infoGuide.setInfoPerson(infoStudent.getInfoPerson());
-	infoGuide.setVersion(new Integer(1));
-	infoGuide.setYear(new Integer(Calendar.getInstance().get(Calendar.YEAR)));
+		request.setAttribute(PresentationConstants.GUIDE, infoGuide);
 
-	try {
-	    infoGuide = CreateGuideFromTransactions.run(infoGuide, "", GuideState.PAYED, Arrays.asList(transactionsWithoutGuide));
+		return mapping.findForward("createSuccess");
 
-	} catch (FenixServiceException e) {
-	    throw new FenixActionException(e);
 	}
 
-	request.setAttribute(PresentationConstants.GUIDE, infoGuide);
+	/**
+	 * @param errorMapping
+	 * @param userView
+	 * @param contributorNumber
+	 * @return
+	 * @throws NonExistingActionException
+	 * @throws FenixActionException
+	 */
+	private InfoContributor readContributor(ActionMapping errorMapping, IUserView userView, Integer contributorNumber)
+			throws NonExistingActionException, FenixActionException, FenixFilterException {
 
-	return mapping.findForward("createSuccess");
+		InfoContributor infoContributor = null;
+		Object argsContributor[] = { contributorNumber };
+		try {
+			infoContributor = (InfoContributor) ServiceUtils.executeService("ReadContributor", argsContributor);
 
-    }
+		} catch (ExcepcaoInexistente e) {
+			throw new NonExistingActionException("error.masterDegree.administrativeOffice.nonExistingContributorSimple",
+					errorMapping.findForward("chooseContributor"));
+		} catch (FenixServiceException e) {
+			throw new FenixActionException(e);
+		}
 
-    /**
-     * @param errorMapping
-     * @param userView
-     * @param contributorNumber
-     * @return
-     * @throws NonExistingActionException
-     * @throws FenixActionException
-     */
-    private InfoContributor readContributor(ActionMapping errorMapping, IUserView userView, Integer contributorNumber)
-	    throws NonExistingActionException, FenixActionException, FenixFilterException {
-
-	InfoContributor infoContributor = null;
-	Object argsContributor[] = { contributorNumber };
-	try {
-	    infoContributor = (InfoContributor) ServiceUtils.executeService("ReadContributor", argsContributor);
-
-	} catch (ExcepcaoInexistente e) {
-	    throw new NonExistingActionException("error.masterDegree.administrativeOffice.nonExistingContributorSimple",
-		    errorMapping.findForward("chooseContributor"));
-	} catch (FenixServiceException e) {
-	    throw new FenixActionException(e);
+		return infoContributor;
 	}
 
-	return infoContributor;
-    }
+	/**
+	 * @param userView
+	 * @param gratuitySituationId
+	 * @return
+	 * @throws FenixActionException
+	 */
+	private InfoGratuitySituation readGratuitySituation(IUserView userView, Integer gratuitySituationId)
+			throws FenixActionException, FenixFilterException {
+		InfoGratuitySituation infoGratuitySituation = null;
 
-    /**
-     * @param userView
-     * @param gratuitySituationId
-     * @return
-     * @throws FenixActionException
-     */
-    private InfoGratuitySituation readGratuitySituation(IUserView userView, Integer gratuitySituationId)
-	    throws FenixActionException, FenixFilterException {
-	InfoGratuitySituation infoGratuitySituation = null;
+		try {
+			infoGratuitySituation = ReadGratuitySituationById.run(gratuitySituationId);
 
-	try {
-	    infoGratuitySituation = ReadGratuitySituationById.run(gratuitySituationId);
-
-	} catch (ExcepcaoInexistente e) {
-	    throw new FenixActionException(e);
-	} catch (FenixServiceException e) {
-	    throw new FenixActionException(e);
-	}
-	return infoGratuitySituation;
-    }
-
-    /**
-     * @param mapping
-     * @param userView
-     * @param studentId
-     * @return
-     * @throws FenixActionException
-     * @throws NonExistingActionException
-     */
-    private InfoStudent readStudent(ActionMapping mapping, IUserView userView, Integer studentId) throws FenixActionException,
-	    NonExistingActionException, FenixFilterException {
-	InfoStudent infoStudent = null;
-
-	try {
-	    infoStudent = (InfoStudent) ReadStudentById.run(studentId);
-
-	} catch (FenixServiceException e) {
-	    throw new FenixActionException(e);
+		} catch (ExcepcaoInexistente e) {
+			throw new FenixActionException(e);
+		} catch (FenixServiceException e) {
+			throw new FenixActionException(e);
+		}
+		return infoGratuitySituation;
 	}
 
-	if (infoStudent == null) {
-	    throw new NonExistingActionException("error.exception.masterDegree.nonExistentStudent",
-		    mapping.findForward("chooseContributor"));
+	/**
+	 * @param mapping
+	 * @param userView
+	 * @param studentId
+	 * @return
+	 * @throws FenixActionException
+	 * @throws NonExistingActionException
+	 */
+	private InfoStudent readStudent(ActionMapping mapping, IUserView userView, Integer studentId) throws FenixActionException,
+			NonExistingActionException, FenixFilterException {
+		InfoStudent infoStudent = null;
+
+		try {
+			infoStudent = (InfoStudent) ReadStudentById.run(studentId);
+
+		} catch (FenixServiceException e) {
+			throw new FenixActionException(e);
+		}
+
+		if (infoStudent == null) {
+			throw new NonExistingActionException("error.exception.masterDegree.nonExistentStudent",
+					mapping.findForward("chooseContributor"));
+		}
+		return infoStudent;
 	}
-	return infoStudent;
-    }
 
 }

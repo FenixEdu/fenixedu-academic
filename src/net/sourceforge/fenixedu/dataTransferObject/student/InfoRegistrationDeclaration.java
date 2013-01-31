@@ -14,73 +14,73 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
  */
 public class InfoRegistrationDeclaration extends InfoObject {
 
-    private String degreeName;
+	private String degreeName;
 
-    private InfoExecutionYear infoExecutionYear;
+	private InfoExecutionYear infoExecutionYear;
 
-    private InfoPerson infoPerson;
+	private InfoPerson infoPerson;
 
-    /**
+	/**
      *  
      */
-    public InfoRegistrationDeclaration() {
-    }
+	public InfoRegistrationDeclaration() {
+	}
 
-    /**
-     * 
-     * @param infoStudentCurricularPlan
-     * @param infoExecutionYear
-     * @param infoPerson
-     */
-    public InfoRegistrationDeclaration(String degreeName, InfoExecutionYear infoExecutionYear, InfoPerson infoPerson) {
+	/**
+	 * 
+	 * @param infoStudentCurricularPlan
+	 * @param infoExecutionYear
+	 * @param infoPerson
+	 */
+	public InfoRegistrationDeclaration(String degreeName, InfoExecutionYear infoExecutionYear, InfoPerson infoPerson) {
 
-	setDegreeName(degreeName);
-	setInfoExecutionYear(infoExecutionYear);
-	setInfoPerson(infoPerson);
-    }
+		setDegreeName(degreeName);
+		setInfoExecutionYear(infoExecutionYear);
+		setInfoPerson(infoPerson);
+	}
 
-    /**
-     * @return Returns the infoExecutionYear.
-     */
-    public InfoExecutionYear getInfoExecutionYear() {
-	return infoExecutionYear;
-    }
+	/**
+	 * @return Returns the infoExecutionYear.
+	 */
+	public InfoExecutionYear getInfoExecutionYear() {
+		return infoExecutionYear;
+	}
 
-    /**
-     * @param infoExecutionYear
-     *            The infoExecutionYear to set.
-     */
-    public void setInfoExecutionYear(InfoExecutionYear infoExecutionYear) {
-	this.infoExecutionYear = infoExecutionYear;
-    }
+	/**
+	 * @param infoExecutionYear
+	 *            The infoExecutionYear to set.
+	 */
+	public void setInfoExecutionYear(InfoExecutionYear infoExecutionYear) {
+		this.infoExecutionYear = infoExecutionYear;
+	}
 
-    /**
-     * @return Returns the infoPerson.
-     */
-    public InfoPerson getInfoPerson() {
-	return infoPerson;
-    }
+	/**
+	 * @return Returns the infoPerson.
+	 */
+	public InfoPerson getInfoPerson() {
+		return infoPerson;
+	}
 
-    /**
-     * @param infoPerson
-     *            The infoPerson to set.
-     */
-    public void setInfoPerson(InfoPerson infoPerson) {
-	this.infoPerson = infoPerson;
-    }
+	/**
+	 * @param infoPerson
+	 *            The infoPerson to set.
+	 */
+	public void setInfoPerson(InfoPerson infoPerson) {
+		this.infoPerson = infoPerson;
+	}
 
-    /**
-     * @return Returns the infoStudentCurricularPlan.
-     */
-    public String getDegreeName() {
-	return degreeName;
-    }
+	/**
+	 * @return Returns the infoStudentCurricularPlan.
+	 */
+	public String getDegreeName() {
+		return degreeName;
+	}
 
-    /**
-     * @param infoStudentCurricularPlan
-     *            The infoStudentCurricularPlan to set.
-     */
-    public void setDegreeName(String degreeName) {
-	this.degreeName = degreeName;
-    }
+	/**
+	 * @param infoStudentCurricularPlan
+	 *            The infoStudentCurricularPlan to set.
+	 */
+	public void setDegreeName(String degreeName) {
+		this.degreeName = degreeName;
+	}
 }

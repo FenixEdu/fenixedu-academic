@@ -12,20 +12,20 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadTeachersByExecutionCourseResponsibility extends FenixService {
 
-    @Service
-    public static List run(InfoExecutionCourse infoExecutionCourse) {
-	return run(infoExecutionCourse.getIdInternal());
-    }
-
-    @Service
-    public static List run(Integer executionCourseID) {
-	final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseID);
-
-	final List<InfoTeacher> result = new ArrayList<InfoTeacher>();
-	for (final Professorship professorship : executionCourse.responsibleFors()) {
-	    result.add(InfoTeacher.newInfoFromDomain(professorship.getTeacher()));
+	@Service
+	public static List run(InfoExecutionCourse infoExecutionCourse) {
+		return run(infoExecutionCourse.getIdInternal());
 	}
-	return result;
-    }
+
+	@Service
+	public static List run(Integer executionCourseID) {
+		final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseID);
+
+		final List<InfoTeacher> result = new ArrayList<InfoTeacher>();
+		for (final Professorship professorship : executionCourse.responsibleFors()) {
+			result.add(InfoTeacher.newInfoFromDomain(professorship.getTeacher()));
+		}
+		return result;
+	}
 
 }

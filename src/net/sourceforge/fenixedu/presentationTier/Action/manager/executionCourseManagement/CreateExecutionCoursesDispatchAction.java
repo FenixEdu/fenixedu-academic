@@ -32,46 +32,46 @@ import pt.ist.fenixWebFramework.security.UserView;
  */
 public class CreateExecutionCoursesDispatchAction extends FenixDispatchAction {
 
-    public ActionForward chooseDegreeType(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
+	public ActionForward chooseDegreeType(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) {
 
-	return mapping.findForward("chooseDegreeType");
+		return mapping.findForward("chooseDegreeType");
 
-    }
+	}
 
-    public ActionForward chooseDegreeCurricularPlans(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+	public ActionForward chooseDegreeCurricularPlans(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
-	IUserView userView = UserView.getUser();
+		IUserView userView = UserView.getUser();
 
-	DynaActionForm actionForm = (DynaActionForm) form;
-	String degreeType = (String) actionForm.get("degreeType");
+		DynaActionForm actionForm = (DynaActionForm) form;
+		String degreeType = (String) actionForm.get("degreeType");
 
-	Collection<InfoDegreeCurricularPlan> degreeCurricularPlans = (Collection<InfoDegreeCurricularPlan>) ReadActiveDegreeCurricularPlansByDegreeType
-		.run(DegreeType.valueOf(degreeType));
+		Collection<InfoDegreeCurricularPlan> degreeCurricularPlans =
+				ReadActiveDegreeCurricularPlansByDegreeType.run(DegreeType.valueOf(degreeType));
 
-	List executionPeriods = (List) ReadNotClosedExecutionPeriods.run();
+		List executionPeriods = ReadNotClosedExecutionPeriods.run();
 
-	request.setAttribute("degreeCurricularPlans", degreeCurricularPlans);
-	request.setAttribute("executionPeriods", executionPeriods);
+		request.setAttribute("degreeCurricularPlans", degreeCurricularPlans);
+		request.setAttribute("executionPeriods", executionPeriods);
 
-	return mapping.findForward("chooseDegreeCurricularPlans");
+		return mapping.findForward("chooseDegreeCurricularPlans");
 
-    }
+	}
 
-    public ActionForward createExecutionCourses(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+	public ActionForward createExecutionCourses(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
-	IUserView userView = UserView.getUser();
+		IUserView userView = UserView.getUser();
 
-	DynaActionForm actionForm = (DynaActionForm) form;
-	Integer[] degreeCurricularPlansIDs = (Integer[]) actionForm.get("degreeCurricularPlansIDs");
-	Integer executionPeriodID = (Integer) actionForm.get("executionPeriodID");
+		DynaActionForm actionForm = (DynaActionForm) form;
+		Integer[] degreeCurricularPlansIDs = (Integer[]) actionForm.get("degreeCurricularPlansIDs");
+		Integer executionPeriodID = (Integer) actionForm.get("executionPeriodID");
 
-	CreateExecutionCoursesForDegreeCurricularPlansAndExecutionPeriod.run(degreeCurricularPlansIDs, executionPeriodID);
+		CreateExecutionCoursesForDegreeCurricularPlansAndExecutionPeriod.run(degreeCurricularPlansIDs, executionPeriodID);
 
-	return mapping.findForward("createExecutionCoursesSuccess");
+		return mapping.findForward("createExecutionCoursesSuccess");
 
-    }
+	}
 
 }

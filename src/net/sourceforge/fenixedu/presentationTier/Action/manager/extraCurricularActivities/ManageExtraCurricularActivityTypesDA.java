@@ -13,21 +13,15 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(path = "/manageExtraCurricularActivities", module = "manager")
-@Forwards( { @Forward(name = "index", path = "/manager/extraCurricularActivities/index.jsp"),
-	@Forward(name = "tableInputStatus", path = "/manager/ectsComparabilityTables/tableInputStatus.jsp") })
+@Forwards({ @Forward(name = "index", path = "/manager/extraCurricularActivities/index.jsp"),
+		@Forward(name = "tableInputStatus", path = "/manager/ectsComparabilityTables/tableInputStatus.jsp") })
 public class ManageExtraCurricularActivityTypesDA extends FenixDispatchAction {
-    public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) {
-	RenderUtils.invalidateViewState();
-	request.setAttribute("types", rootDomainObject.getExtraCurricularActivityTypeSet());
-	return mapping.findForward("index");
-    }
+	public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) {
+		RenderUtils.invalidateViewState();
+		request.setAttribute("types", rootDomainObject.getExtraCurricularActivityTypeSet());
+		return mapping.findForward("index");
+	}
 }

@@ -13,20 +13,20 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadNotClosedPublicExecutionPeriodsByExecutionYear extends FenixService {
 
-    @Service
-    public static List run(InfoExecutionYear infoExecutionYear) throws FenixServiceException {
+	@Service
+	public static List run(InfoExecutionYear infoExecutionYear) throws FenixServiceException {
 
-	final ExecutionYear executionYear;
-	if (infoExecutionYear == null) {
-	    executionYear = ExecutionYear.readCurrentExecutionYear();
-	} else {
-	    executionYear = rootDomainObject.readExecutionYearByOID(infoExecutionYear.getIdInternal());
-	}
+		final ExecutionYear executionYear;
+		if (infoExecutionYear == null) {
+			executionYear = ExecutionYear.readCurrentExecutionYear();
+		} else {
+			executionYear = rootDomainObject.readExecutionYearByOID(infoExecutionYear.getIdInternal());
+		}
 
-	final List<InfoExecutionPeriod> result = new ArrayList<InfoExecutionPeriod>();
-	for (final ExecutionSemester executionSemester : executionYear.readNotClosedPublicExecutionPeriods()) {
-	    result.add(InfoExecutionPeriod.newInfoFromDomain(executionSemester));
+		final List<InfoExecutionPeriod> result = new ArrayList<InfoExecutionPeriod>();
+		for (final ExecutionSemester executionSemester : executionYear.readNotClosedPublicExecutionPeriods()) {
+			result.add(InfoExecutionPeriod.newInfoFromDomain(executionSemester));
+		}
+		return result;
 	}
-	return result;
-    }
 }

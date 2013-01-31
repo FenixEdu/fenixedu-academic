@@ -14,17 +14,18 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadCostCenterByNumber extends FenixService {
 
-    @Service
-    public static InfoGrantCostCenter run(String costContractNumber) throws FenixServiceException {
-	// When creating a New Contract its needed to verify if the costContract
-	// exists
-	// chosen for orientator really exists
-	InfoGrantCostCenter infoGrantCostCenter = new InfoGrantCostCenter();
-	GrantCostCenter costCenter = GrantCostCenter.readGrantCostCenterByNumber(costContractNumber);
-	if (costCenter == null)
-	    throw new GrantOrientationTeacherNotFoundException();
-	infoGrantCostCenter = InfoGrantCostCenter.newInfoFromDomain(costCenter);
+	@Service
+	public static InfoGrantCostCenter run(String costContractNumber) throws FenixServiceException {
+		// When creating a New Contract its needed to verify if the costContract
+		// exists
+		// chosen for orientator really exists
+		InfoGrantCostCenter infoGrantCostCenter = new InfoGrantCostCenter();
+		GrantCostCenter costCenter = GrantCostCenter.readGrantCostCenterByNumber(costContractNumber);
+		if (costCenter == null) {
+			throw new GrantOrientationTeacherNotFoundException();
+		}
+		infoGrantCostCenter = InfoGrantCostCenter.newInfoFromDomain(costCenter);
 
-	return infoGrantCostCenter;
-    }
+		return infoGrantCostCenter;
+	}
 }

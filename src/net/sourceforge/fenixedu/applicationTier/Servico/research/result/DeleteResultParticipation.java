@@ -8,10 +8,10 @@ import net.sourceforge.fenixedu.util.researcher.ResearchResultMetaDataManager;
 import pt.ist.fenixWebFramework.services.Service;
 
 public class DeleteResultParticipation extends FenixService {
-    @Service
-    public static void run(ResultParticipation participation) throws FenixServiceException {
-	ResearchResult result = participation.getResult();
-	result.removeParticipation(participation);
-	ResearchResultMetaDataManager.updateMetaDataInStorageFor(result);
-    }
+	@Service
+	public static void run(ResultParticipation participation) throws FenixServiceException {
+		ResearchResult result = participation.getResult();
+		result.removeParticipation(participation);
+		ResearchResultMetaDataManager.updateMetaDataInStorageFor(result);
+	}
 }

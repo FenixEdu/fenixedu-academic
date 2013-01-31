@@ -12,111 +12,111 @@ import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 
 public class ExecutionDegreeListBean implements Serializable {
 
-    /**
-     * Serial version id.
-     */
-    private static final long serialVersionUID = 1L;
+	/**
+	 * Serial version id.
+	 */
+	private static final long serialVersionUID = 1L;
 
-    private Degree degree;
+	private Degree degree;
 
-    private DegreeCurricularPlan degreeCurricularPlan;
+	private DegreeCurricularPlan degreeCurricularPlan;
 
-    private ExecutionDegree executionDegree;
+	private ExecutionDegree executionDegree;
 
-    private ExecutionYear executionYear;
+	private ExecutionYear executionYear;
 
-    private CurricularCourse curricularCourse;
+	private CurricularCourse curricularCourse;
 
-    private ExecutionSemester executionSemester;
+	private ExecutionSemester executionSemester;
 
-    private AcademicInterval academicInterval;
+	private AcademicInterval academicInterval;
 
-    public ExecutionDegreeListBean() {
-	super();
+	public ExecutionDegreeListBean() {
+		super();
 
-	degree = null;
-	degreeCurricularPlan = null;
-	executionYear = null;
-	curricularCourse = null;
-	executionDegree = null;
+		degree = null;
+		degreeCurricularPlan = null;
+		executionYear = null;
+		curricularCourse = null;
+		executionDegree = null;
 
-    }
+	}
 
-    public ExecutionDegreeListBean(Degree degree) {
-	this();
+	public ExecutionDegreeListBean(Degree degree) {
+		this();
 
-	setDegree(degree);
-    }
+		setDegree(degree);
+	}
 
-    public ExecutionDegreeListBean(DegreeCurricularPlan degreeCurricularPlan) {
-	this(degreeCurricularPlan == null ? null : degreeCurricularPlan.getDegree());
+	public ExecutionDegreeListBean(DegreeCurricularPlan degreeCurricularPlan) {
+		this(degreeCurricularPlan == null ? null : degreeCurricularPlan.getDegree());
 
-	setDegreeCurricularPlan(degreeCurricularPlan);
-    }
+		setDegreeCurricularPlan(degreeCurricularPlan);
+	}
 
-    public ExecutionDegreeListBean(ExecutionDegree executionDegree) {
-	this(executionDegree == null ? null : executionDegree.getDegreeCurricularPlan());
+	public ExecutionDegreeListBean(ExecutionDegree executionDegree) {
+		this(executionDegree == null ? null : executionDegree.getDegreeCurricularPlan());
 
-	setExecutionDegree(executionDegree);
-    }
+		setExecutionDegree(executionDegree);
+	}
 
-    public Degree getDegree() {
-	return degree;
-    }
+	public Degree getDegree() {
+		return degree;
+	}
 
-    public void setDegree(Degree degree) {
-	this.degree = degree;
-    }
+	public void setDegree(Degree degree) {
+		this.degree = degree;
+	}
 
-    public DegreeCurricularPlan getDegreeCurricularPlan() {
-	return degreeCurricularPlan;
-    }
+	public DegreeCurricularPlan getDegreeCurricularPlan() {
+		return degreeCurricularPlan;
+	}
 
-    public void setDegreeCurricularPlan(DegreeCurricularPlan degreeCurricularPlan) {
-	this.degreeCurricularPlan = degreeCurricularPlan;
-    }
+	public void setDegreeCurricularPlan(DegreeCurricularPlan degreeCurricularPlan) {
+		this.degreeCurricularPlan = degreeCurricularPlan;
+	}
 
-    public ExecutionDegree getExecutionDegree() {
-	return executionDegree;
-    }
+	public ExecutionDegree getExecutionDegree() {
+		return executionDegree;
+	}
 
-    public void setExecutionDegree(ExecutionDegree executionDegree) {
-	this.executionDegree = executionDegree;
-    }
+	public void setExecutionDegree(ExecutionDegree executionDegree) {
+		this.executionDegree = executionDegree;
+	}
 
-    @Deprecated
-    public ExecutionYear getExecutionYear() {
-	return executionYear;
-    }
+	@Deprecated
+	public ExecutionYear getExecutionYear() {
+		return executionYear;
+	}
 
-    @Deprecated
-    public void setExecutionYear(ExecutionYear executionYear) {
-	this.executionYear = executionYear;
-    }
+	@Deprecated
+	public void setExecutionYear(ExecutionYear executionYear) {
+		this.executionYear = executionYear;
+	}
 
-    public CurricularCourse getCurricularCourse() {
-	return curricularCourse;
-    }
+	public CurricularCourse getCurricularCourse() {
+		return curricularCourse;
+	}
 
-    public void setCurricularCourse(CurricularCourse curricularCourse) {
-	this.curricularCourse = curricularCourse;
-    }
+	public void setCurricularCourse(CurricularCourse curricularCourse) {
+		this.curricularCourse = curricularCourse;
+	}
 
-    @Deprecated
-    public ExecutionSemester getExecutionPeriod() {
-	return executionSemester;
-    }
+	@Deprecated
+	public ExecutionSemester getExecutionPeriod() {
+		return executionSemester;
+	}
 
-    @Deprecated
-    public void setExecutionPeriod(ExecutionSemester executionSemester) {
-	this.executionSemester = executionSemester;
-    }
+	@Deprecated
+	public void setExecutionPeriod(ExecutionSemester executionSemester) {
+		this.executionSemester = executionSemester;
+	}
 
-    public AcademicInterval getAcademicInterval() {
-	return academicInterval;
-    }
+	public AcademicInterval getAcademicInterval() {
+		return academicInterval;
+	}
 
-    public void setAcademicInterval(AcademicInterval academicInterval) {
-	this.academicInterval = academicInterval;
-    }
+	public void setAcademicInterval(AcademicInterval academicInterval) {
+		this.academicInterval = academicInterval;
+	}
 }

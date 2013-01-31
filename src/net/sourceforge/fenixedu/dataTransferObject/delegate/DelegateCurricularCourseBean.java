@@ -16,119 +16,120 @@ import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
 
 public class DelegateCurricularCourseBean implements Serializable {
-    private CurricularCourse curricularCourse;
+	private CurricularCourse curricularCourse;
 
-    private ExecutionYear executionYear;
+	private ExecutionYear executionYear;
 
-    private ExecutionSemester executionSemester;
+	private ExecutionSemester executionSemester;
 
-    private List<Student> enrolledStudents;
+	private List<Student> enrolledStudents;
 
-    private Integer curricularYear;
+	private Integer curricularYear;
 
-    static final public Comparator CURRICULAR_COURSE_COMPARATOR_BY_CURRICULAR_YEAR_AND_CURRICULAR_SEMESTER = new ComparatorChain();
-    static {
-	((ComparatorChain) CURRICULAR_COURSE_COMPARATOR_BY_CURRICULAR_YEAR_AND_CURRICULAR_SEMESTER)
-		.addComparator(new BeanComparator("curricularYear"));
-	((ComparatorChain) CURRICULAR_COURSE_COMPARATOR_BY_CURRICULAR_YEAR_AND_CURRICULAR_SEMESTER)
-		.addComparator(new BeanComparator("curricularSemester"));
-    }
-
-    public DelegateCurricularCourseBean(CurricularCourse curricularCourse, ExecutionYear executionYear, Integer curricularYear,
-	    ExecutionSemester executionSemester) {
-	setCurricularCourse(curricularCourse);
-	setExecutionYear(executionYear);
-	setCurricularYear(curricularYear);
-	setExecutionPeriod(executionSemester);
-    }
-
-    public CurricularCourse getCurricularCourse() {
-	return (curricularCourse);
-    }
-
-    public void setCurricularCourse(CurricularCourse curricularCourse) {
-	this.curricularCourse = curricularCourse;
-    }
-
-    public ExecutionYear getExecutionYear() {
-	return (executionYear);
-    }
-
-    public void setExecutionYear(ExecutionYear executionYear) {
-	this.executionYear = executionYear;
-    }
-
-    public ExecutionSemester getExecutionPeriod() {
-	return (executionSemester);
-    }
-
-    public void setExecutionPeriod(ExecutionSemester executionSemester) {
-	this.executionSemester = executionSemester;
-    }
-
-    public List<Student> getEnrolledStudents() {
-	List<Student> result = new ArrayList<Student>();
-	for (Student studentDR : this.enrolledStudents) {
-	    result.add(studentDR);
+	static final public Comparator CURRICULAR_COURSE_COMPARATOR_BY_CURRICULAR_YEAR_AND_CURRICULAR_SEMESTER =
+			new ComparatorChain();
+	static {
+		((ComparatorChain) CURRICULAR_COURSE_COMPARATOR_BY_CURRICULAR_YEAR_AND_CURRICULAR_SEMESTER)
+				.addComparator(new BeanComparator("curricularYear"));
+		((ComparatorChain) CURRICULAR_COURSE_COMPARATOR_BY_CURRICULAR_YEAR_AND_CURRICULAR_SEMESTER)
+				.addComparator(new BeanComparator("curricularSemester"));
 	}
-	return result;
-    }
 
-    public void setEnrolledStudents(List<Student> students) {
-	this.enrolledStudents = new ArrayList<Student>();
-	for (Student student : students) {
-	    this.enrolledStudents.add(student);
+	public DelegateCurricularCourseBean(CurricularCourse curricularCourse, ExecutionYear executionYear, Integer curricularYear,
+			ExecutionSemester executionSemester) {
+		setCurricularCourse(curricularCourse);
+		setExecutionYear(executionYear);
+		setCurricularYear(curricularYear);
+		setExecutionPeriod(executionSemester);
 	}
-    }
 
-    public void calculateEnrolledStudents() {
-	List<Student> enrolledStudents = new ArrayList<Student>();
-	for (Enrolment enrolment : getCurricularCourse().getEnrolmentsByExecutionPeriod(getExecutionPeriod())) {
-	    enrolledStudents.add(enrolment.getRegistration().getStudent());
-
+	public CurricularCourse getCurricularCourse() {
+		return (curricularCourse);
 	}
-	Collections.sort(enrolledStudents, Student.NUMBER_COMPARATOR);
-	setEnrolledStudents(enrolledStudents);
-    }
 
-    public Integer getSemester() {
-	return getCurricularSemester();
-    }
-
-    public Integer getCurricularSemester() {
-	return getExecutionPeriod().getSemester();
-    }
-
-    public Integer getCurricularYear() {
-	return curricularYear;
-    }
-
-    public void setCurricularYear(Integer curricularYear) {
-	this.curricularYear = curricularYear;
-    }
-
-    public Integer getEnrolledStudentsNumber() {
-	if (this.enrolledStudents != null) {
-	    return this.enrolledStudents.size();
+	public void setCurricularCourse(CurricularCourse curricularCourse) {
+		this.curricularCourse = curricularCourse;
 	}
-	return 0;
-    }
 
-    @Override
-    public boolean equals(Object obj) {
-	return obj instanceof DelegateCurricularCourseBean ? equals((DelegateCurricularCourseBean) obj) : false;
-    }
+	public ExecutionYear getExecutionYear() {
+		return (executionYear);
+	}
 
-    public boolean equals(DelegateCurricularCourseBean delegateCurricularCourseBean) {
-	return getCurricularCourse().equals(delegateCurricularCourseBean.getCurricularCourse())
-		&& getCurricularYear().equals(delegateCurricularCourseBean.getCurricularYear())
-		&& getExecutionPeriod().equals(delegateCurricularCourseBean.getExecutionPeriod())
-		&& getExecutionYear().equals(delegateCurricularCourseBean.getExecutionYear());
-    }
+	public void setExecutionYear(ExecutionYear executionYear) {
+		this.executionYear = executionYear;
+	}
 
-    @Override
-    public int hashCode() {
-	return getCurricularCourse().hashCode() + getCurricularYear().hashCode() + getExecutionPeriod().hashCode()
-		+ getExecutionYear().hashCode();
-    }
+	public ExecutionSemester getExecutionPeriod() {
+		return (executionSemester);
+	}
+
+	public void setExecutionPeriod(ExecutionSemester executionSemester) {
+		this.executionSemester = executionSemester;
+	}
+
+	public List<Student> getEnrolledStudents() {
+		List<Student> result = new ArrayList<Student>();
+		for (Student studentDR : this.enrolledStudents) {
+			result.add(studentDR);
+		}
+		return result;
+	}
+
+	public void setEnrolledStudents(List<Student> students) {
+		this.enrolledStudents = new ArrayList<Student>();
+		for (Student student : students) {
+			this.enrolledStudents.add(student);
+		}
+	}
+
+	public void calculateEnrolledStudents() {
+		List<Student> enrolledStudents = new ArrayList<Student>();
+		for (Enrolment enrolment : getCurricularCourse().getEnrolmentsByExecutionPeriod(getExecutionPeriod())) {
+			enrolledStudents.add(enrolment.getRegistration().getStudent());
+
+		}
+		Collections.sort(enrolledStudents, Student.NUMBER_COMPARATOR);
+		setEnrolledStudents(enrolledStudents);
+	}
+
+	public Integer getSemester() {
+		return getCurricularSemester();
+	}
+
+	public Integer getCurricularSemester() {
+		return getExecutionPeriod().getSemester();
+	}
+
+	public Integer getCurricularYear() {
+		return curricularYear;
+	}
+
+	public void setCurricularYear(Integer curricularYear) {
+		this.curricularYear = curricularYear;
+	}
+
+	public Integer getEnrolledStudentsNumber() {
+		if (this.enrolledStudents != null) {
+			return this.enrolledStudents.size();
+		}
+		return 0;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		return obj instanceof DelegateCurricularCourseBean ? equals((DelegateCurricularCourseBean) obj) : false;
+	}
+
+	public boolean equals(DelegateCurricularCourseBean delegateCurricularCourseBean) {
+		return getCurricularCourse().equals(delegateCurricularCourseBean.getCurricularCourse())
+				&& getCurricularYear().equals(delegateCurricularCourseBean.getCurricularYear())
+				&& getExecutionPeriod().equals(delegateCurricularCourseBean.getExecutionPeriod())
+				&& getExecutionYear().equals(delegateCurricularCourseBean.getExecutionYear());
+	}
+
+	@Override
+	public int hashCode() {
+		return getCurricularCourse().hashCode() + getCurricularYear().hashCode() + getExecutionPeriod().hashCode()
+				+ getExecutionYear().hashCode();
+	}
 }

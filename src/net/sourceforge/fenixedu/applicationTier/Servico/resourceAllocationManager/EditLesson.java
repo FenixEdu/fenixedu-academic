@@ -19,22 +19,22 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class EditLesson extends FenixService {
 
-    @Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
-    @Service
-    public static void run(InfoLesson aulaAntiga, DiaSemana weekDay, Calendar begin, Calendar end, FrequencyType frequency,
-	    InfoRoomOccupationEditor infoRoomOccupation, InfoShift infoShift, YearMonthDay newBeginDate, YearMonthDay newEndDate,
-	    Boolean createLessonInstances) throws FenixServiceException {
+	@Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
+	@Service
+	public static void run(InfoLesson aulaAntiga, DiaSemana weekDay, Calendar begin, Calendar end, FrequencyType frequency,
+			InfoRoomOccupationEditor infoRoomOccupation, InfoShift infoShift, YearMonthDay newBeginDate, YearMonthDay newEndDate,
+			Boolean createLessonInstances) throws FenixServiceException {
 
-	Lesson aula = rootDomainObject.readLessonByOID(aulaAntiga.getIdInternal());
+		Lesson aula = rootDomainObject.readLessonByOID(aulaAntiga.getIdInternal());
 
-	if (aula != null) {
+		if (aula != null) {
 
-	    AllocatableSpace newRoom = null;
-	    if (infoRoomOccupation != null && infoRoomOccupation.getInfoRoom() != null) {
-		newRoom = AllocatableSpace.findAllocatableSpaceForEducationByName(infoRoomOccupation.getInfoRoom().getNome());
-	    }
+			AllocatableSpace newRoom = null;
+			if (infoRoomOccupation != null && infoRoomOccupation.getInfoRoom() != null) {
+				newRoom = AllocatableSpace.findAllocatableSpaceForEducationByName(infoRoomOccupation.getInfoRoom().getNome());
+			}
 
-	    aula.edit(newBeginDate, newEndDate, weekDay, begin, end, frequency, createLessonInstances, newRoom);
+			aula.edit(newBeginDate, newEndDate, weekDay, begin, end, frequency, createLessonInstances, newRoom);
+		}
 	}
-    }
 }

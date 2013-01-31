@@ -39,185 +39,184 @@ import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 
 public class ManageEnrolementPeriodsDA extends FenixDispatchAction {
 
-    static List<Class<? extends EnrolmentPeriod>> VALID_ENROLMENT_PERIODS = Arrays.<Class<? extends EnrolmentPeriod>> asList(
-	    EnrolmentPeriodInCurricularCourses.class,
+	static List<Class<? extends EnrolmentPeriod>> VALID_ENROLMENT_PERIODS = Arrays.<Class<? extends EnrolmentPeriod>> asList(
+			EnrolmentPeriodInCurricularCourses.class,
 
-	    EnrolmentPeriodInSpecialSeasonEvaluations.class,
+			EnrolmentPeriodInSpecialSeasonEvaluations.class,
 
-	    EnrolmentPeriodInClasses.class,
+			EnrolmentPeriodInClasses.class,
 
-	    EnrolmentPeriodInImprovementOfApprovedEnrolment.class,
+			EnrolmentPeriodInImprovementOfApprovedEnrolment.class,
 
-	    EnrolmentPeriodInCurricularCoursesSpecialSeason.class,
+			EnrolmentPeriodInCurricularCoursesSpecialSeason.class,
 
-	    EnrolmentPeriodInCurricularCoursesFlunkedSeason.class,
+			EnrolmentPeriodInCurricularCoursesFlunkedSeason.class,
 
-	    ReingressionPeriod.class);
+			ReingressionPeriod.class);
 
-    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-	    throws Exception {
+	public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
 
-	setExecutionSemesters(request);
+		setExecutionSemesters(request);
 
-	final String executionPeriodIDString = ((DynaActionForm) form).getString("executionPeriodID");
-	if (isValidObjectID(executionPeriodIDString)) {
-	    final ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(new Integer(
-		    executionPeriodIDString));
-	    request.setAttribute("executionSemester", executionSemester);
-	    setEnrolmentPeriods(request, getExecutionSemester(executionPeriodIDString));
+		final String executionPeriodIDString = ((DynaActionForm) form).getString("executionPeriodID");
+		if (isValidObjectID(executionPeriodIDString)) {
+			final ExecutionSemester executionSemester =
+					rootDomainObject.readExecutionSemesterByOID(new Integer(executionPeriodIDString));
+			request.setAttribute("executionSemester", executionSemester);
+			setEnrolmentPeriods(request, getExecutionSemester(executionPeriodIDString));
+		}
+
+		return mapping.findForward("showEnrolementPeriods");
 	}
 
-	return mapping.findForward("showEnrolementPeriods");
-    }
+	public ActionForward prepareEditEnrolmentInstructions(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
 
-    public ActionForward prepareEditEnrolmentInstructions(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
+		final ExecutionSemester executionSemester = getDomainObject(request, "executionSemesterOID");
+		EnrolmentInstructions.createIfNecessary(executionSemester);
+		request.setAttribute("executionSemester", executionSemester);
 
-	final ExecutionSemester executionSemester = getDomainObject(request, "executionSemesterOID");
-	EnrolmentInstructions.createIfNecessary(executionSemester);
-	request.setAttribute("executionSemester", executionSemester);
-
-	return mapping.findForward("editEnrolmentInstructions");
-    }
-
-    public ActionForward prepareChangePeriodValues(final ActionMapping mapping, final ActionForm form,
-	    final HttpServletRequest request, final HttpServletResponse response) {
-	ExecutionSemester semester = getDomainObject(request, "executionSemesterId");
-	EnrolmentPeriod enrolmentPeriod = getDomainObject(request, "enrolmentPeriodId");
-	EnrolmentPeriodManagementBean periodManagementBean = new EnrolmentPeriodManagementBean(enrolmentPeriod, semester);
-
-	request.setAttribute("executionSemester", semester);
-	request.setAttribute("enrolmentPeriod", enrolmentPeriod);
-	request.setAttribute("enrolmentPeriodManagementBean", periodManagementBean);
-
-	return mapping.findForward("changePeriodValues");
-
-    }
-
-    public ActionForward changePeriodValues(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-
-	final DynaActionForm actionForm = (DynaActionForm) form;
-
-	final String enrolmentPeriodIDString = (String) actionForm.get("enrolmentPeriodID");
-	final String startDateString = (String) actionForm.get("startDate");
-	final String endDateString = (String) actionForm.get("endDate");
-
-	final String startTimeString = (String) actionForm.get("startTime");
-	final String endTimeString = (String) actionForm.get("endTime");
-
-	EnrolmentPeriodManagementBean periodManagementBean = getRenderedObject("enrolmentPeriodManagementBean");
-
-	ChangeEnrolmentPeriodValues.run(periodManagementBean);
-
-	return prepare(mapping, form, request, response);
-    }
-
-    public ActionForward prepareCreatePeriod(final ActionMapping mapping, final ActionForm form, HttpServletRequest request,
-	    final HttpServletResponse response) {
-
-	ExecutionSemester semester = getDomainObject(request, "executionSemesterId");
-	EnrolmentPeriodManagementBean periodManagementBean = new EnrolmentPeriodManagementBean(semester);
-	
-	request.setAttribute("executionSemester", semester);
-	request.setAttribute("enrolmentPeriodManagementBean", periodManagementBean);
-
-	return mapping.findForward("createPeriod");
-    }
-
-    public ActionForward createPeriods(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-
-	EnrolmentPeriodManagementBean bean = (EnrolmentPeriodManagementBean) getRenderedObject("enrolmentPeriodManagementBean");
-
-	CreateEnrolmentPeriods.run(bean);
-
-	return prepare(mapping, form, request, response);
-    }
-
-    public ActionForward createPeriodsPostback(final ActionMapping mapping, final ActionForm form,
-	    final HttpServletRequest request, final HttpServletResponse response) {
-
-	ExecutionSemester semester = getDomainObject(request, "executionSemesterId");
-	EnrolmentPeriodManagementBean periodManagementBean = getRenderedObject("enrolmentPeriodManagementBean");
-
-	request.setAttribute("executionSemester", semester);
-	request.setAttribute("enrolmentPeriodManagementBean", periodManagementBean);
-
-	RenderUtils.invalidateViewState();
-	return mapping.findForward("createPeriod");
-    }
-
-    public ActionForward createPeriodsInvalid(final ActionMapping mapping, final ActionForm form,
-	    final HttpServletRequest request, final HttpServletResponse response) {
-
-	ExecutionSemester semester = getDomainObject(request, "executionSemesterId");
-	EnrolmentPeriodManagementBean periodManagementBean = getRenderedObject("enrolmentPeriodManagementBean");
-
-	request.setAttribute("executionSemester", semester);
-	request.setAttribute("enrolmentPeriodManagementBean", periodManagementBean);
-
-	return mapping.findForward("createPeriod");
-    }
-
-    private void setEnrolmentPeriods(final HttpServletRequest request, final ExecutionSemester executionSemester) {
-	final List<EnrolmentPeriod> enrolmentPeriods = filterEnrolmentPeriods(executionSemester);
-	sortEnrolmentPeriods(enrolmentPeriods, executionSemester);
-	request.setAttribute("enrolmentPeriods", enrolmentPeriods);
-    }
-
-
-    private List<EnrolmentPeriod> filterEnrolmentPeriods(ExecutionSemester executionSemester) {
-	final List<EnrolmentPeriod> enrolmentPeriods = new ArrayList<EnrolmentPeriod>();
-
-	for (final EnrolmentPeriod period : executionSemester.getEnrolmentPeriod()) {
-	    if (VALID_ENROLMENT_PERIODS.contains(period.getClass())) {
-		enrolmentPeriods.add(period);
-	    }
+		return mapping.findForward("editEnrolmentInstructions");
 	}
-	return enrolmentPeriods;
-    }
 
-    private ExecutionSemester getExecutionSemester(final String executionPeriodIDString) {
-	return rootDomainObject.readExecutionSemesterByOID(Integer.valueOf(executionPeriodIDString));
-    }
+	public ActionForward prepareChangePeriodValues(final ActionMapping mapping, final ActionForm form,
+			final HttpServletRequest request, final HttpServletResponse response) {
+		ExecutionSemester semester = getDomainObject(request, "executionSemesterId");
+		EnrolmentPeriod enrolmentPeriod = getDomainObject(request, "enrolmentPeriodId");
+		EnrolmentPeriodManagementBean periodManagementBean = new EnrolmentPeriodManagementBean(enrolmentPeriod, semester);
 
-    private void setExecutionSemesters(final HttpServletRequest request) {
-	final List<ExecutionSemester> executionSemesters = new ArrayList<ExecutionSemester>(
-		rootDomainObject.getExecutionPeriods());
-	Collections.sort(executionSemesters, new ReverseComparator(ExecutionSemester.COMPARATOR_BY_SEMESTER_AND_YEAR));
-	request.setAttribute("executionSemesters", executionSemesters);
-    }
+		request.setAttribute("executionSemester", semester);
+		request.setAttribute("enrolmentPeriod", enrolmentPeriod);
+		request.setAttribute("enrolmentPeriodManagementBean", periodManagementBean);
 
-    private void sortEnrolmentPeriods(final List<EnrolmentPeriod> enrolmentPeriods, final ExecutionSemester executionSemester) {
-	final ComparatorChain comparatorChain = new ComparatorChain();
+		return mapping.findForward("changePeriodValues");
 
-	comparatorChain.addComparator(new Comparator<EnrolmentPeriod>() {
-	    @Override
-	    public int compare(EnrolmentPeriod o1, EnrolmentPeriod o2) {
-		return o1.getDegreeCurricularPlan().getDegreeType().compareTo(o2.getDegreeCurricularPlan().getDegreeType());
-	    }
-	});
+	}
 
-	comparatorChain.addComparator(new Comparator<EnrolmentPeriod>() {
-	    @Override
-	    public int compare(EnrolmentPeriod o1, EnrolmentPeriod o2) {
-		return o1.getDegreeCurricularPlan().getDegree().getNameFor(executionSemester.getAcademicInterval())
-			.compareTo(o2.getDegreeCurricularPlan().getDegree().getNameFor(executionSemester.getAcademicInterval()));
-	    }
-	});
+	public ActionForward changePeriodValues(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
 
-	comparatorChain.addComparator(EnrolmentPeriod.COMPARATOR_BY_ID);
+		final DynaActionForm actionForm = (DynaActionForm) form;
 
-	Collections.sort(enrolmentPeriods, comparatorChain);
-    }
+		final String enrolmentPeriodIDString = (String) actionForm.get("enrolmentPeriodID");
+		final String startDateString = (String) actionForm.get("startDate");
+		final String endDateString = (String) actionForm.get("endDate");
 
-    private boolean isValidObjectID(final String objectIDString) {
-	return objectIDString != null && objectIDString.length() > 0 && StringUtils.isNumeric(objectIDString);
-    }
+		final String startTimeString = (String) actionForm.get("startTime");
+		final String endTimeString = (String) actionForm.get("endTime");
 
-    private Date getDate(String date, String time) throws ParseException {
-	return DateFormatUtil.parse("yyyy/MM/ddHH:mm", date + time);
-    }
+		EnrolmentPeriodManagementBean periodManagementBean = getRenderedObject("enrolmentPeriodManagementBean");
+
+		ChangeEnrolmentPeriodValues.run(periodManagementBean);
+
+		return prepare(mapping, form, request, response);
+	}
+
+	public ActionForward prepareCreatePeriod(final ActionMapping mapping, final ActionForm form, HttpServletRequest request,
+			final HttpServletResponse response) {
+
+		ExecutionSemester semester = getDomainObject(request, "executionSemesterId");
+		EnrolmentPeriodManagementBean periodManagementBean = new EnrolmentPeriodManagementBean(semester);
+
+		request.setAttribute("executionSemester", semester);
+		request.setAttribute("enrolmentPeriodManagementBean", periodManagementBean);
+
+		return mapping.findForward("createPeriod");
+	}
+
+	public ActionForward createPeriods(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+
+		EnrolmentPeriodManagementBean bean = (EnrolmentPeriodManagementBean) getRenderedObject("enrolmentPeriodManagementBean");
+
+		CreateEnrolmentPeriods.run(bean);
+
+		return prepare(mapping, form, request, response);
+	}
+
+	public ActionForward createPeriodsPostback(final ActionMapping mapping, final ActionForm form,
+			final HttpServletRequest request, final HttpServletResponse response) {
+
+		ExecutionSemester semester = getDomainObject(request, "executionSemesterId");
+		EnrolmentPeriodManagementBean periodManagementBean = getRenderedObject("enrolmentPeriodManagementBean");
+
+		request.setAttribute("executionSemester", semester);
+		request.setAttribute("enrolmentPeriodManagementBean", periodManagementBean);
+
+		RenderUtils.invalidateViewState();
+		return mapping.findForward("createPeriod");
+	}
+
+	public ActionForward createPeriodsInvalid(final ActionMapping mapping, final ActionForm form,
+			final HttpServletRequest request, final HttpServletResponse response) {
+
+		ExecutionSemester semester = getDomainObject(request, "executionSemesterId");
+		EnrolmentPeriodManagementBean periodManagementBean = getRenderedObject("enrolmentPeriodManagementBean");
+
+		request.setAttribute("executionSemester", semester);
+		request.setAttribute("enrolmentPeriodManagementBean", periodManagementBean);
+
+		return mapping.findForward("createPeriod");
+	}
+
+	private void setEnrolmentPeriods(final HttpServletRequest request, final ExecutionSemester executionSemester) {
+		final List<EnrolmentPeriod> enrolmentPeriods = filterEnrolmentPeriods(executionSemester);
+		sortEnrolmentPeriods(enrolmentPeriods, executionSemester);
+		request.setAttribute("enrolmentPeriods", enrolmentPeriods);
+	}
+
+	private List<EnrolmentPeriod> filterEnrolmentPeriods(ExecutionSemester executionSemester) {
+		final List<EnrolmentPeriod> enrolmentPeriods = new ArrayList<EnrolmentPeriod>();
+
+		for (final EnrolmentPeriod period : executionSemester.getEnrolmentPeriod()) {
+			if (VALID_ENROLMENT_PERIODS.contains(period.getClass())) {
+				enrolmentPeriods.add(period);
+			}
+		}
+		return enrolmentPeriods;
+	}
+
+	private ExecutionSemester getExecutionSemester(final String executionPeriodIDString) {
+		return rootDomainObject.readExecutionSemesterByOID(Integer.valueOf(executionPeriodIDString));
+	}
+
+	private void setExecutionSemesters(final HttpServletRequest request) {
+		final List<ExecutionSemester> executionSemesters =
+				new ArrayList<ExecutionSemester>(rootDomainObject.getExecutionPeriods());
+		Collections.sort(executionSemesters, new ReverseComparator(ExecutionSemester.COMPARATOR_BY_SEMESTER_AND_YEAR));
+		request.setAttribute("executionSemesters", executionSemesters);
+	}
+
+	private void sortEnrolmentPeriods(final List<EnrolmentPeriod> enrolmentPeriods, final ExecutionSemester executionSemester) {
+		final ComparatorChain comparatorChain = new ComparatorChain();
+
+		comparatorChain.addComparator(new Comparator<EnrolmentPeriod>() {
+			@Override
+			public int compare(EnrolmentPeriod o1, EnrolmentPeriod o2) {
+				return o1.getDegreeCurricularPlan().getDegreeType().compareTo(o2.getDegreeCurricularPlan().getDegreeType());
+			}
+		});
+
+		comparatorChain.addComparator(new Comparator<EnrolmentPeriod>() {
+			@Override
+			public int compare(EnrolmentPeriod o1, EnrolmentPeriod o2) {
+				return o1.getDegreeCurricularPlan().getDegree().getNameFor(executionSemester.getAcademicInterval())
+						.compareTo(o2.getDegreeCurricularPlan().getDegree().getNameFor(executionSemester.getAcademicInterval()));
+			}
+		});
+
+		comparatorChain.addComparator(EnrolmentPeriod.COMPARATOR_BY_ID);
+
+		Collections.sort(enrolmentPeriods, comparatorChain);
+	}
+
+	private boolean isValidObjectID(final String objectIDString) {
+		return objectIDString != null && objectIDString.length() > 0 && StringUtils.isNumeric(objectIDString);
+	}
+
+	private Date getDate(String date, String time) throws ParseException {
+		return DateFormatUtil.parse("yyyy/MM/ddHH:mm", date + time);
+	}
 
 }

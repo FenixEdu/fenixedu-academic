@@ -32,222 +32,221 @@ import net.sourceforge.fenixedu.util.Money;
 
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-
 public class StandaloneEnrolmentGratuityPR extends StandaloneEnrolmentGratuityPR_Base {
 
-    protected StandaloneEnrolmentGratuityPR() {
-	super();
-    }
-
-    public StandaloneEnrolmentGratuityPR(DateTime startDate, DateTime endDate, ServiceAgreementTemplate serviceAgreementTemplate,
-	    BigDecimal ectsForYear, BigDecimal gratuityFactor, BigDecimal ectsFactor) {
-	this();
-	init(startDate, endDate, serviceAgreementTemplate, ectsForYear, gratuityFactor, ectsFactor);
-    }
-
-    private void init(DateTime startDate, DateTime endDate, ServiceAgreementTemplate serviceAgreementTemplate,
-	    BigDecimal ectsForYear, BigDecimal gratuityFactor, BigDecimal ectsFactor) {
-
-	super.init(EntryType.STANDALONE_ENROLMENT_GRATUITY_FEE, EventType.STANDALONE_ENROLMENT_GRATUITY, startDate, endDate,
-		serviceAgreementTemplate);
-
-	checkParameters(ectsForYear, gratuityFactor, ectsFactor);
-
-	super.setEctsForYear(ectsForYear);
-	super.setGratuityFactor(gratuityFactor);
-	super.setEctsFactor(ectsFactor);
-
-    }
-
-    private void checkParameters(BigDecimal ectsForYear, BigDecimal gratuityFactor, BigDecimal ectsFactor) {
-
-	check(ectsForYear, "error.accounting.postingRules.gratuity.StandaloneEnrolmentGratuityPR.ectsForYear.cannot.be.null");
-
-	check(gratuityFactor, "error.accounting.postingRules.gratuity.StandaloneEnrolmentGratuityPR.gratuity.cannot.be.null");
-
-	check(ectsFactor, "error.accounting.postingRules.gratuity.StandaloneEnrolmentGratuityPR.ectsFactor.cannot.be.null");
-
-    }
-
-    @Override
-    public List<EntryDTO> calculateEntries(Event event, DateTime when) {
-	return Collections.singletonList(new EntryDTO(getEntryType(), event, calculateTotalAmountToPay(event, when), event
-		.getPayedAmount(), event.calculateAmountToPay(when), event.getDescriptionForEntryType(getEntryType()), event
-		.calculateAmountToPay(when)));
-    }
-
-    @Override
-    protected Money doCalculationForAmountToPay(Event event, DateTime when, boolean applyDiscount) {
-	final GratuityEvent gratuityEvent = (GratuityEvent) event;
-
-	Money result = Money.ZERO;
-	for (final Map.Entry<DegreeCurricularPlan, BigDecimal> entry : groupEctsByDegreeCurricularPlan(gratuityEvent).entrySet()) {
-	    result = result.add(calculateAmountForDegreeCurricularPlan(entry.getKey(), entry.getValue(), gratuityEvent));
+	protected StandaloneEnrolmentGratuityPR() {
+		super();
 	}
 
-	return result;
-    }
-
-    @Override
-    protected Money subtractFromExemptions(Event event, DateTime when, boolean applyDiscount, Money amountToPay) {
-	final GratuityEvent gratuityEvent = (GratuityEvent) event;
-
-	if (!gratuityEvent.hasGratuityExemption()) {
-	    return amountToPay;
+	public StandaloneEnrolmentGratuityPR(DateTime startDate, DateTime endDate, ServiceAgreementTemplate serviceAgreementTemplate,
+			BigDecimal ectsForYear, BigDecimal gratuityFactor, BigDecimal ectsFactor) {
+		this();
+		init(startDate, endDate, serviceAgreementTemplate, ectsForYear, gratuityFactor, ectsFactor);
 	}
 
-	GratuityExemption gratuityExemption = gratuityEvent.getGratuityExemption();
+	private void init(DateTime startDate, DateTime endDate, ServiceAgreementTemplate serviceAgreementTemplate,
+			BigDecimal ectsForYear, BigDecimal gratuityFactor, BigDecimal ectsFactor) {
 
-	if (gratuityExemption.isValueExemption()) {
-	    amountToPay = amountToPay.subtract(((ValueGratuityExemption) gratuityExemption).getValue());
-	} else {
-	    PercentageGratuityExemption percentageGratuityExemption = (PercentageGratuityExemption) gratuityExemption;
-	    BigDecimal percentage = percentageGratuityExemption.getPercentage();
-	    Money toRemove = amountToPay.multiply(percentage);
-	    amountToPay = amountToPay.subtract(toRemove);
+		super.init(EntryType.STANDALONE_ENROLMENT_GRATUITY_FEE, EventType.STANDALONE_ENROLMENT_GRATUITY, startDate, endDate,
+				serviceAgreementTemplate);
+
+		checkParameters(ectsForYear, gratuityFactor, ectsFactor);
+
+		super.setEctsForYear(ectsForYear);
+		super.setGratuityFactor(gratuityFactor);
+		super.setEctsFactor(ectsFactor);
+
 	}
 
-	return amountToPay.isNegative() ? Money.ZERO : amountToPay;
-    }
+	private void checkParameters(BigDecimal ectsForYear, BigDecimal gratuityFactor, BigDecimal ectsFactor) {
 
-    /**
-     * <pre>
-     * Formula for students in empty degrees: GratuityFactor x TotalGratuity x (EctsFactor + EnroledEcts / TotalEctsForYear)
-     * Formula for students enroled in normal degrees: TotalGratuity x (EnroledEcts / TotalEctsForYear)
-     * </pre>
-     * 
-     * @param degreeCurricularPlan
-     * @param enroledEcts
-     * @param gratuityEvent
-     * @return
-     */
-    private Money calculateAmountForDegreeCurricularPlan(DegreeCurricularPlan degreeCurricularPlan, BigDecimal enroledEcts,
-	    GratuityEvent gratuityEvent) {
+		check(ectsForYear, "error.accounting.postingRules.gratuity.StandaloneEnrolmentGratuityPR.ectsForYear.cannot.be.null");
 
-	final IGratuityPR gratuityPR = (IGratuityPR) degreeCurricularPlan.getServiceAgreementTemplate().findPostingRuleBy(
-		EventType.GRATUITY, gratuityEvent.getStartDate(), gratuityEvent.getEndDate());
+		check(gratuityFactor, "error.accounting.postingRules.gratuity.StandaloneEnrolmentGratuityPR.gratuity.cannot.be.null");
 
-	final Money degreeGratuityAmount = gratuityPR.getDefaultGratuityAmount(gratuityEvent.getExecutionYear());
-	final BigDecimal creditsProporcion = enroledEcts.divide(getEctsForYear());
+		check(ectsFactor, "error.accounting.postingRules.gratuity.StandaloneEnrolmentGratuityPR.ectsFactor.cannot.be.null");
 
-	if (hasAnyActiveDegreeRegistration(gratuityEvent)) {
-	    return degreeGratuityAmount.multiply(creditsProporcion);
-
-	} else if (gratuityEvent.getDegree().isEmpty() || gratuityEvent.getDegree().isDEA()) {
-	    return degreeGratuityAmount.multiply(getGratuityFactor()).multiply(getEctsFactor().add(creditsProporcion));
-
-	} else {
-	    return degreeGratuityAmount.multiply(creditsProporcion);
-	}
-    }
-
-    private boolean hasAnyActiveDegreeRegistration(final GratuityEvent gratuityEvent) {
-
-	final Student student = gratuityEvent.getStudentCurricularPlan().getRegistration().getStudent();
-
-	for (final Registration registration : student.getRegistrations()) {
-
-	    if (registration.getDegree().isEmpty()) {
-		continue;
-	    }
-
-	    if (registration.isDegreeAdministrativeOffice() && registration.hasAnyEnrolmentsIn(gratuityEvent.getExecutionYear())) {
-		return true;
-	    }
 	}
 
-	return false;
-    }
-
-    private Map<DegreeCurricularPlan, BigDecimal> groupEctsByDegreeCurricularPlan(GratuityEvent gratuityEvent) {
-
-	final Map<DegreeCurricularPlan, BigDecimal> result = new HashMap<DegreeCurricularPlan, BigDecimal>();
-
-	for (final Enrolment enrolment : getEnrolmentsToCalculateGratuity(gratuityEvent)) {
-	    addEctsToDegree(result, enrolment.getDegreeCurricularPlanOfDegreeModule(), enrolment.getEctsCreditsForCurriculum());
+	@Override
+	public List<EntryDTO> calculateEntries(Event event, DateTime when) {
+		return Collections.singletonList(new EntryDTO(getEntryType(), event, calculateTotalAmountToPay(event, when), event
+				.getPayedAmount(), event.calculateAmountToPay(when), event.getDescriptionForEntryType(getEntryType()), event
+				.calculateAmountToPay(when)));
 	}
 
-	return result;
+	@Override
+	protected Money doCalculationForAmountToPay(Event event, DateTime when, boolean applyDiscount) {
+		final GratuityEvent gratuityEvent = (GratuityEvent) event;
 
-    }
+		Money result = Money.ZERO;
+		for (final Map.Entry<DegreeCurricularPlan, BigDecimal> entry : groupEctsByDegreeCurricularPlan(gratuityEvent).entrySet()) {
+			result = result.add(calculateAmountForDegreeCurricularPlan(entry.getKey(), entry.getValue(), gratuityEvent));
+		}
 
-    private Set<Enrolment> getEnrolmentsToCalculateGratuity(GratuityEvent gratuityEvent) {
-
-	if (!gratuityEvent.getDegree().isEmpty()) {
-	    if (!gratuityEvent.getStudentCurricularPlan().hasStandaloneCurriculumGroup()) {
-		return Collections.emptySet();
-	    }
-
-	    return gratuityEvent.getStudentCurricularPlan().getStandaloneCurriculumGroup().getEnrolmentsBy(
-		    gratuityEvent.getExecutionYear());
-	} else {
-	    return gratuityEvent.getStudentCurricularPlan().getRoot().getEnrolmentsBy(gratuityEvent.getExecutionYear());
-	}
-    }
-
-    private void addEctsToDegree(final Map<DegreeCurricularPlan, BigDecimal> result, DegreeCurricularPlan degree, BigDecimal ects) {
-	if (result.containsKey(degree)) {
-	    result.put(degree, result.get(degree).add(ects));
-	} else {
-	    result.put(degree, ects);
-	}
-    }
-
-    @Override
-    protected Set<AccountingTransaction> internalProcess(User user, Collection<EntryDTO> entryDTOs, Event event, Account fromAccount,
-	    Account toAccount, AccountingTransactionDetailDTO transactionDetail) {
-
-	if (entryDTOs.size() != 1) {
-	    throw new DomainException(
-		    "error.accounting.postingRules.gratuity.StandaloneEnrolmentGratuityPR.invalid.number.of.entryDTOs");
+		return result;
 	}
 
-	checkIfCanAddAmount(entryDTOs.iterator().next().getAmountToPay(), event, transactionDetail.getWhenRegistered());
+	@Override
+	protected Money subtractFromExemptions(Event event, DateTime when, boolean applyDiscount, Money amountToPay) {
+		final GratuityEvent gratuityEvent = (GratuityEvent) event;
 
-	return Collections.singleton(makeAccountingTransaction(user, event, fromAccount, toAccount, getEntryType(), entryDTOs
-		.iterator().next().getAmountToPay(), transactionDetail));
-    }
+		if (!gratuityEvent.hasGratuityExemption()) {
+			return amountToPay;
+		}
 
-    private void checkIfCanAddAmount(Money amountToPay, Event event, DateTime whenRegistered) {
-	final Money totalFinalAmount = event.getPayedAmount().add(amountToPay);
+		GratuityExemption gratuityExemption = gratuityEvent.getGratuityExemption();
 
-	if (totalFinalAmount.lessThan(calculateTotalAmountToPay(event, whenRegistered))) {
-	    throw new DomainExceptionWithLabelFormatter(
-		    "error.accounting.postingRules.gratuity.StandaloneEnrolmentGratuityPR.amount.being.payed.must.be.equal.to.amount.in.debt",
-		    event.getDescriptionForEntryType(getEntryType()));
+		if (gratuityExemption.isValueExemption()) {
+			amountToPay = amountToPay.subtract(((ValueGratuityExemption) gratuityExemption).getValue());
+		} else {
+			PercentageGratuityExemption percentageGratuityExemption = (PercentageGratuityExemption) gratuityExemption;
+			BigDecimal percentage = percentageGratuityExemption.getPercentage();
+			Money toRemove = amountToPay.multiply(percentage);
+			amountToPay = amountToPay.subtract(toRemove);
+		}
+
+		return amountToPay.isNegative() ? Money.ZERO : amountToPay;
 	}
-    }
 
-    @Override
-    public String getFormulaDescription() {
-	return MessageFormat.format(super.getFormulaDescription(), getGratuityFactor().toPlainString(), getEctsFactor()
-		.toPlainString(), getEctsForYear().toPlainString());
-    }
+	/**
+	 * <pre>
+	 * Formula for students in empty degrees: GratuityFactor x TotalGratuity x (EctsFactor + EnroledEcts / TotalEctsForYear)
+	 * Formula for students enroled in normal degrees: TotalGratuity x (EnroledEcts / TotalEctsForYear)
+	 * </pre>
+	 * 
+	 * @param degreeCurricularPlan
+	 * @param enroledEcts
+	 * @param gratuityEvent
+	 * @return
+	 */
+	private Money calculateAmountForDegreeCurricularPlan(DegreeCurricularPlan degreeCurricularPlan, BigDecimal enroledEcts,
+			GratuityEvent gratuityEvent) {
 
-    public StandaloneEnrolmentGratuityPR edit(final BigDecimal ectsForYear, final BigDecimal gratuityFactor,
-	    final BigDecimal ectsFactor) {
-	deactivate();
-	return new StandaloneEnrolmentGratuityPR(new DateTime().minus(1000), null, getServiceAgreementTemplate(), ectsForYear,
-		gratuityFactor, ectsFactor);
-    }
+		final IGratuityPR gratuityPR =
+				(IGratuityPR) degreeCurricularPlan.getServiceAgreementTemplate().findPostingRuleBy(EventType.GRATUITY,
+						gratuityEvent.getStartDate(), gratuityEvent.getEndDate());
 
-    @Override
-    public void setEctsForYear(BigDecimal ectsForYear) {
-	throw new DomainException(
-		"error.net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity.StandaloneEnrolmentGratuityPR.cannot.modify.ectsForYear");
-    }
+		final Money degreeGratuityAmount = gratuityPR.getDefaultGratuityAmount(gratuityEvent.getExecutionYear());
+		final BigDecimal creditsProporcion = enroledEcts.divide(getEctsForYear());
 
-    @Override
-    public void setGratuityFactor(BigDecimal gratuityFactor) {
-	throw new DomainException(
-		"error.net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity.StandaloneEnrolmentGratuityPR.cannot.modify.gratuityFactor");
-    }
+		if (hasAnyActiveDegreeRegistration(gratuityEvent)) {
+			return degreeGratuityAmount.multiply(creditsProporcion);
 
-    @Override
-    public void setEctsFactor(BigDecimal ectsFactor) {
-	throw new DomainException(
-		"error.net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity.StandaloneEnrolmentGratuityPR.cannot.modify.ectsFactor");
-    }
+		} else if (gratuityEvent.getDegree().isEmpty() || gratuityEvent.getDegree().isDEA()) {
+			return degreeGratuityAmount.multiply(getGratuityFactor()).multiply(getEctsFactor().add(creditsProporcion));
+
+		} else {
+			return degreeGratuityAmount.multiply(creditsProporcion);
+		}
+	}
+
+	private boolean hasAnyActiveDegreeRegistration(final GratuityEvent gratuityEvent) {
+
+		final Student student = gratuityEvent.getStudentCurricularPlan().getRegistration().getStudent();
+
+		for (final Registration registration : student.getRegistrations()) {
+
+			if (registration.getDegree().isEmpty()) {
+				continue;
+			}
+
+			if (registration.isDegreeAdministrativeOffice() && registration.hasAnyEnrolmentsIn(gratuityEvent.getExecutionYear())) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	private Map<DegreeCurricularPlan, BigDecimal> groupEctsByDegreeCurricularPlan(GratuityEvent gratuityEvent) {
+
+		final Map<DegreeCurricularPlan, BigDecimal> result = new HashMap<DegreeCurricularPlan, BigDecimal>();
+
+		for (final Enrolment enrolment : getEnrolmentsToCalculateGratuity(gratuityEvent)) {
+			addEctsToDegree(result, enrolment.getDegreeCurricularPlanOfDegreeModule(), enrolment.getEctsCreditsForCurriculum());
+		}
+
+		return result;
+
+	}
+
+	private Set<Enrolment> getEnrolmentsToCalculateGratuity(GratuityEvent gratuityEvent) {
+
+		if (!gratuityEvent.getDegree().isEmpty()) {
+			if (!gratuityEvent.getStudentCurricularPlan().hasStandaloneCurriculumGroup()) {
+				return Collections.emptySet();
+			}
+
+			return gratuityEvent.getStudentCurricularPlan().getStandaloneCurriculumGroup()
+					.getEnrolmentsBy(gratuityEvent.getExecutionYear());
+		} else {
+			return gratuityEvent.getStudentCurricularPlan().getRoot().getEnrolmentsBy(gratuityEvent.getExecutionYear());
+		}
+	}
+
+	private void addEctsToDegree(final Map<DegreeCurricularPlan, BigDecimal> result, DegreeCurricularPlan degree, BigDecimal ects) {
+		if (result.containsKey(degree)) {
+			result.put(degree, result.get(degree).add(ects));
+		} else {
+			result.put(degree, ects);
+		}
+	}
+
+	@Override
+	protected Set<AccountingTransaction> internalProcess(User user, Collection<EntryDTO> entryDTOs, Event event,
+			Account fromAccount, Account toAccount, AccountingTransactionDetailDTO transactionDetail) {
+
+		if (entryDTOs.size() != 1) {
+			throw new DomainException(
+					"error.accounting.postingRules.gratuity.StandaloneEnrolmentGratuityPR.invalid.number.of.entryDTOs");
+		}
+
+		checkIfCanAddAmount(entryDTOs.iterator().next().getAmountToPay(), event, transactionDetail.getWhenRegistered());
+
+		return Collections.singleton(makeAccountingTransaction(user, event, fromAccount, toAccount, getEntryType(), entryDTOs
+				.iterator().next().getAmountToPay(), transactionDetail));
+	}
+
+	private void checkIfCanAddAmount(Money amountToPay, Event event, DateTime whenRegistered) {
+		final Money totalFinalAmount = event.getPayedAmount().add(amountToPay);
+
+		if (totalFinalAmount.lessThan(calculateTotalAmountToPay(event, whenRegistered))) {
+			throw new DomainExceptionWithLabelFormatter(
+					"error.accounting.postingRules.gratuity.StandaloneEnrolmentGratuityPR.amount.being.payed.must.be.equal.to.amount.in.debt",
+					event.getDescriptionForEntryType(getEntryType()));
+		}
+	}
+
+	@Override
+	public String getFormulaDescription() {
+		return MessageFormat.format(super.getFormulaDescription(), getGratuityFactor().toPlainString(), getEctsFactor()
+				.toPlainString(), getEctsForYear().toPlainString());
+	}
+
+	public StandaloneEnrolmentGratuityPR edit(final BigDecimal ectsForYear, final BigDecimal gratuityFactor,
+			final BigDecimal ectsFactor) {
+		deactivate();
+		return new StandaloneEnrolmentGratuityPR(new DateTime().minus(1000), null, getServiceAgreementTemplate(), ectsForYear,
+				gratuityFactor, ectsFactor);
+	}
+
+	@Override
+	public void setEctsForYear(BigDecimal ectsForYear) {
+		throw new DomainException(
+				"error.net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity.StandaloneEnrolmentGratuityPR.cannot.modify.ectsForYear");
+	}
+
+	@Override
+	public void setGratuityFactor(BigDecimal gratuityFactor) {
+		throw new DomainException(
+				"error.net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity.StandaloneEnrolmentGratuityPR.cannot.modify.gratuityFactor");
+	}
+
+	@Override
+	public void setEctsFactor(BigDecimal ectsFactor) {
+		throw new DomainException(
+				"error.net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity.StandaloneEnrolmentGratuityPR.cannot.modify.ectsFactor");
+	}
 
 }

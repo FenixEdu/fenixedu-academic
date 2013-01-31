@@ -19,28 +19,29 @@ import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
 
 public class ReadCandidateEnrolmentsByCandidateID extends FenixService {
 
-    public List run(Integer candidateID) throws FenixServiceException {
-	List result = new ArrayList();
+	public List run(Integer candidateID) throws FenixServiceException {
+		List result = new ArrayList();
 
-	MasterDegreeCandidate masterDegreeCandidate = rootDomainObject.readMasterDegreeCandidateByOID(candidateID);
+		MasterDegreeCandidate masterDegreeCandidate = rootDomainObject.readMasterDegreeCandidateByOID(candidateID);
 
-	if (masterDegreeCandidate == null) {
-	    throw new NonExistingServiceException();
+		if (masterDegreeCandidate == null) {
+			throw new NonExistingServiceException();
+		}
+
+		List candidateEnrolments = masterDegreeCandidate.getCandidateEnrolments();
+
+		if (candidateEnrolments == null) {
+			throw new NonExistingServiceException();
+		}
+
+		for (final Iterator candidateEnrolmentIterator = candidateEnrolments.iterator(); candidateEnrolmentIterator.hasNext();) {
+			CandidateEnrolment candidateEnrolmentTemp = (CandidateEnrolment) candidateEnrolmentIterator.next();
+			InfoCandidateEnrolment infoCandidateEnrolment =
+					InfoCandidateEnrolmentWithCurricularCourseAndMasterDegreeCandidateAndExecutionDegreeAndDegreeCurricularPlanAndDegree
+							.newInfoFromDomain(candidateEnrolmentTemp);
+			result.add(infoCandidateEnrolment);
+		}
+
+		return result;
 	}
-
-	List candidateEnrolments = masterDegreeCandidate.getCandidateEnrolments();
-
-	if (candidateEnrolments == null) {
-	    throw new NonExistingServiceException();
-	}
-
-	for (final Iterator candidateEnrolmentIterator = candidateEnrolments.iterator(); candidateEnrolmentIterator.hasNext();) {
-	    CandidateEnrolment candidateEnrolmentTemp = (CandidateEnrolment) candidateEnrolmentIterator.next();
-	    InfoCandidateEnrolment infoCandidateEnrolment = InfoCandidateEnrolmentWithCurricularCourseAndMasterDegreeCandidateAndExecutionDegreeAndDegreeCurricularPlanAndDegree
-		    .newInfoFromDomain(candidateEnrolmentTemp);
-	    result.add(infoCandidateEnrolment);
-	}
-
-	return result;
-    }
 }

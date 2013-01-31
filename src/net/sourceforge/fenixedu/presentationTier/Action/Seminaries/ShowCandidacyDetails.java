@@ -37,63 +37,65 @@ import org.apache.struts.action.ActionMapping;
  * 
  */
 public class ShowCandidacyDetails extends FenixAction {
-    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-	    throws FenixActionException {
-	IUserView userView = getUserView(request);
-	String candidacyIDString = request.getParameter("objectCode");
-	Integer candidacyID;
-	if (candidacyIDString == null)
-	    throw new FenixActionException(mapping.findForward("invalidQueryString"));
-	try {
-	    candidacyID = new Integer(candidacyIDString);
-	} catch (Exception ex) {
-	    throw new FenixActionException(mapping.findForward("invalidQueryString"));
+	@Override
+	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+			throws FenixActionException {
+		IUserView userView = getUserView(request);
+		String candidacyIDString = request.getParameter("objectCode");
+		Integer candidacyID;
+		if (candidacyIDString == null) {
+			throw new FenixActionException(mapping.findForward("invalidQueryString"));
+		}
+		try {
+			candidacyID = new Integer(candidacyIDString);
+		} catch (Exception ex) {
+			throw new FenixActionException(mapping.findForward("invalidQueryString"));
+		}
+		InfoCandidacy candidacy = null;
+		InfoStudent student = null;
+		InfoCurricularCourse curricularCourse = null;
+		InfoTheme theme = null;
+		InfoModality modality = null;
+		String motivation = null;
+		InfoSeminary seminary = null;
+		List casesChoices = null;
+		List cases = new LinkedList();
+
+		ActionForward destiny = null;
+		try {
+			Object[] argsReadCandidacy = { candidacyID };
+			candidacy =
+					(InfoCandidacy) ServiceManagerServiceFactory.executeService("Seminaries.GetCandidacyById", argsReadCandidacy);
+
+			student = candidacy.getInfoStudent();
+			curricularCourse = candidacy.getCurricularCourse();
+			theme = candidacy.getTheme();
+			modality = candidacy.getInfoModality();
+			motivation = candidacy.getMotivation();
+			casesChoices = candidacy.getCaseStudyChoices();
+			seminary = candidacy.getInfoSeminary();
+
+			//
+			for (Iterator iterator = casesChoices.iterator(); iterator.hasNext();) {
+				InfoCaseStudyChoice choice = (InfoCaseStudyChoice) iterator.next();
+
+				InfoCaseStudy infoCaseStudy = choice.getCaseStudy();
+				cases.add(infoCaseStudy);
+			}
+			//              
+
+		} catch (Exception e) {
+			throw new FenixActionException();
+		}
+
+		destiny = mapping.findForward("showCandidacyDetails");
+		request.setAttribute("cases", cases);
+		request.setAttribute("student", student);
+		request.setAttribute("curricularCourse", curricularCourse);
+		request.setAttribute("theme", theme);
+		request.setAttribute("motivation", motivation);
+		request.setAttribute("seminary", seminary);
+		request.setAttribute("modality", modality);
+		return destiny;
 	}
-	InfoCandidacy candidacy = null;
-	InfoStudent student = null;
-	InfoCurricularCourse curricularCourse = null;
-	InfoTheme theme = null;
-	InfoModality modality = null;
-	String motivation = null;
-	InfoSeminary seminary = null;
-	List casesChoices = null;
-	List cases = new LinkedList();
-
-	ActionForward destiny = null;
-	try {
-	    Object[] argsReadCandidacy = { candidacyID };
-	    candidacy = (InfoCandidacy) ServiceManagerServiceFactory.executeService("Seminaries.GetCandidacyById",
-		    argsReadCandidacy);
-
-	    student = candidacy.getInfoStudent();
-	    curricularCourse = candidacy.getCurricularCourse();
-	    theme = candidacy.getTheme();
-	    modality = candidacy.getInfoModality();
-	    motivation = candidacy.getMotivation();
-	    casesChoices = candidacy.getCaseStudyChoices();
-	    seminary = candidacy.getInfoSeminary();
-
-	    //
-	    for (Iterator iterator = casesChoices.iterator(); iterator.hasNext();) {
-		InfoCaseStudyChoice choice = (InfoCaseStudyChoice) iterator.next();
-
-		InfoCaseStudy infoCaseStudy = choice.getCaseStudy();
-		cases.add(infoCaseStudy);
-	    }
-	    //              
-
-	} catch (Exception e) {
-	    throw new FenixActionException();
-	}
-
-	destiny = mapping.findForward("showCandidacyDetails");
-	request.setAttribute("cases", cases);
-	request.setAttribute("student", student);
-	request.setAttribute("curricularCourse", curricularCourse);
-	request.setAttribute("theme", theme);
-	request.setAttribute("motivation", motivation);
-	request.setAttribute("seminary", seminary);
-	request.setAttribute("modality", modality);
-	return destiny;
-    }
 }

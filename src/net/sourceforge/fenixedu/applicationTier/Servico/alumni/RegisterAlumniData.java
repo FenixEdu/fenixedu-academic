@@ -25,159 +25,161 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class RegisterAlumniData extends AlumniNotificationService {
 
-    @Service
-    public static Alumni run(Alumni alumni, final UUID urlRequestToken) throws FenixServiceException {
+	@Service
+	public static Alumni run(Alumni alumni, final UUID urlRequestToken) throws FenixServiceException {
 
-	if (alumni == null) {
-	    throw new FenixServiceException("alumni.uuid.update.alumni.null");
+		if (alumni == null) {
+			throw new FenixServiceException("alumni.uuid.update.alumni.null");
+		}
+
+		alumni.setUrlRequestToken(urlRequestToken);
+		return alumni;
 	}
 
-	alumni.setUrlRequestToken(urlRequestToken);
-	return alumni;
-    }
+	@Service
+	public static Alumni run(Alumni alumni, final Boolean registered) throws FenixServiceException {
 
-    @Service
-    public static Alumni run(Alumni alumni, final Boolean registered) throws FenixServiceException {
-
-	alumni.setRegistered(registered);
-	if (registered) {
-	    sendRegistrationSuccessMail(alumni);
-	}
-	return alumni;
-    }
-
-    @Service
-    public static Alumni run(final Student student) {
-	return new AlumniManager().registerAlumni(student);
-    }
-
-    @Service
-    public static Alumni run(final Integer studentNumber, final String documentIdNumber, final String email) {
-
-	final Alumni alumni = new AlumniManager().registerAlumni(studentNumber, documentIdNumber, email);
-	sendPublicAccessMail(alumni, email);
-	return alumni;
-    }
-
-    @Service
-    public static void run(final AlumniPublicAccessBean alumniBean, Boolean isEmployed) throws FenixServiceException {
-	Person person = alumniBean.getAlumni().getStudent().getPerson();
-	if (person == null) {
-	    throw new FenixServiceException("alumni.partyContact.creation.person.null");
+		alumni.setRegistered(registered);
+		if (registered) {
+			sendRegistrationSuccessMail(alumni);
+		}
+		return alumni;
 	}
 
-	try {
-	    processAlumniPhone(alumniBean, person);
-	    processAlumniAddress(alumniBean, person);
-	    if (isEmployed) {
-		processAlumniJob(alumniBean);
-	    }
-	    alumniBean.getAlumni().setIsEmployed(isEmployed);
-	} catch (DomainException e) {
-	    throw new FenixServiceException(e.getMessage());
+	@Service
+	public static Alumni run(final Student student) {
+		return new AlumniManager().registerAlumni(student);
 	}
 
-    }
+	@Service
+	public static Alumni run(final Integer studentNumber, final String documentIdNumber, final String email) {
 
-    @Service
-    public static void run(final AlumniIdentityCheckRequestBean bean) {
-
-	final Alumni alumni = new AlumniManager().checkAlumniIdentity(bean.getDocumentIdNumber(), bean.getContactEmail());
-	if (!alumni.hasAnyPendingIdentityRequests()) {
-
-	    AlumniIdentityCheckRequest identityRequest = new AlumniIdentityCheckRequest(bean.getContactEmail(),
-		    bean.getDocumentIdNumber(), bean.getFullName(), bean.getDateOfBirthYearMonthDay(), bean.getDistrictOfBirth(),
-		    bean.getDistrictSubdivisionOfBirth(), bean.getParishOfBirth(), bean.getSocialSecurityNumber(),
-		    bean.getNameOfFather(), bean.getNameOfMother(), bean.getRequestType());
-
-	    identityRequest.setAlumni(alumni);
-	    if (identityRequest.isValid()) {
-		identityRequest.validate(Boolean.TRUE);
-		sendIdentityCheckEmail(identityRequest, Boolean.TRUE);
-	    }
-
-	} else {
-	    throw new DomainException("alumni.has.pending.identity.requests");
+		final Alumni alumni = new AlumniManager().registerAlumni(studentNumber, documentIdNumber, email);
+		sendPublicAccessMail(alumni, email);
+		return alumni;
 	}
-    }
 
-    @Service
-    public static void run(final AlumniPasswordBean bean) {
+	@Service
+	public static void run(final AlumniPublicAccessBean alumniBean, Boolean isEmployed) throws FenixServiceException {
+		Person person = alumniBean.getAlumni().getStudent().getPerson();
+		if (person == null) {
+			throw new FenixServiceException("alumni.partyContact.creation.person.null");
+		}
 
-	bean.getAlumni().setRegistered(Boolean.TRUE);
-	if (!bean.getAlumni().hasAnyPendingIdentityRequests()) {
-
-	    final EmailAddress personalEmail = bean.getAlumni().getPersonalEmail();
-
-	    String email;
-
-	    if (personalEmail == null) {
-		email = bean.getAlumni().getStudent().getPerson().getEmailForSendingEmails();
-	    } else {
-		email = personalEmail.getValue();
-	    }
-
-	    AlumniIdentityCheckRequest identityRequest = new AlumniIdentityCheckRequest(email, bean.getAlumni().getStudent()
-		    .getPerson().getDocumentIdNumber(), bean.getFullName(), bean.getDateOfBirthYearMonthDay(),
-		    bean.getDistrictOfBirth(), bean.getDistrictSubdivisionOfBirth(), bean.getParishOfBirth(),
-		    bean.getSocialSecurityNumber(), bean.getNameOfFather(), bean.getNameOfMother(), bean.getRequestType());
-
-	    identityRequest.setAlumni(bean.getAlumni());
-	    if (identityRequest.isValid()) {
-		identityRequest.validate(Boolean.TRUE);
-		sendIdentityCheckEmail(identityRequest, Boolean.TRUE);
-	    }
-	}
-    }
-
-    private static void processAlumniJob(final AlumniPublicAccessBean alumniBean) {
-
-	if (alumniBean.getCurrentJob() == null) {
-	    final AlumniJobBean jobBean = alumniBean.getJobBean();
-	    new Job(jobBean.getAlumni().getStudent().getPerson(), jobBean.getEmployerName(), jobBean.getCity(),
-		    jobBean.getCountry(), jobBean.getChildBusinessArea(), jobBean.getParentBusinessArea(), jobBean.getPosition(),
-		    jobBean.getBeginDateAsLocalDate(), jobBean.getEndDateAsLocalDate(), jobBean.getApplicationType(),
-		    jobBean.getContractType(), jobBean.getSalary());
-	} else {
-	    final AlumniJobBean jobBean = alumniBean.getJobBean();
-	    alumniBean.getCurrentJob().setEmployerName(jobBean.getEmployerName());
-	    alumniBean.getCurrentJob().setCity(jobBean.getCity());
-	    alumniBean.getCurrentJob().setCountry(jobBean.getCountry());
-	    alumniBean.getCurrentJob().setBusinessArea(jobBean.getChildBusinessArea());
-	    alumniBean.getCurrentJob().setParentBusinessArea(jobBean.getParentBusinessArea());
-	    alumniBean.getCurrentJob().setPosition(jobBean.getPosition());
-	    alumniBean.getCurrentJob().setBeginDate(jobBean.getBeginDateAsLocalDate());
-	    alumniBean.getCurrentJob().setEndDate(jobBean.getEndDateAsLocalDate());
-	    alumniBean.getCurrentJob().setJobApplicationType(jobBean.getApplicationType());
-	    alumniBean.getCurrentJob().setContractType(jobBean.getContractType());
-	    alumniBean.getCurrentJob().setSalary(jobBean.getSalary());
+		try {
+			processAlumniPhone(alumniBean, person);
+			processAlumniAddress(alumniBean, person);
+			if (isEmployed) {
+				processAlumniJob(alumniBean);
+			}
+			alumniBean.getAlumni().setIsEmployed(isEmployed);
+		} catch (DomainException e) {
+			throw new FenixServiceException(e.getMessage());
+		}
 
 	}
-    }
 
-    private static void processAlumniAddress(final AlumniPublicAccessBean alumniBean, final Person person) {
+	@Service
+	public static void run(final AlumniIdentityCheckRequestBean bean) {
 
-	final AlumniAddressBean addressBean = alumniBean.getAddressBean();
-	if (alumniBean.getCurrentPhysicalAddress() == null) {
-	    PhysicalAddress.createPhysicalAddress(person,
-		    new PhysicalAddressData(addressBean.getAddress(), addressBean.getAreaCode(), addressBean.getAreaOfAreaCode(),
-			    null), PartyContactType.PERSONAL, false);
-	} else {
-	    PhysicalAddress address = alumniBean.getCurrentPhysicalAddress();
-	    address.setAddress(addressBean.getAddress());
-	    address.setAreaCode(addressBean.getAreaCode());
-	    address.setAreaOfAreaCode(addressBean.getAreaOfAreaCode());
-	    address.setCountryOfResidence(addressBean.getCountry());
+		final Alumni alumni = new AlumniManager().checkAlumniIdentity(bean.getDocumentIdNumber(), bean.getContactEmail());
+		if (!alumni.hasAnyPendingIdentityRequests()) {
+
+			AlumniIdentityCheckRequest identityRequest =
+					new AlumniIdentityCheckRequest(bean.getContactEmail(), bean.getDocumentIdNumber(), bean.getFullName(),
+							bean.getDateOfBirthYearMonthDay(), bean.getDistrictOfBirth(), bean.getDistrictSubdivisionOfBirth(),
+							bean.getParishOfBirth(), bean.getSocialSecurityNumber(), bean.getNameOfFather(),
+							bean.getNameOfMother(), bean.getRequestType());
+
+			identityRequest.setAlumni(alumni);
+			if (identityRequest.isValid()) {
+				identityRequest.validate(Boolean.TRUE);
+				sendIdentityCheckEmail(identityRequest, Boolean.TRUE);
+			}
+
+		} else {
+			throw new DomainException("alumni.has.pending.identity.requests");
+		}
 	}
-    }
 
-    private static void processAlumniPhone(final AlumniPublicAccessBean alumniBean, final Person person) {
+	@Service
+	public static void run(final AlumniPasswordBean bean) {
 
-	if (alumniBean.getCurrentPhone() == null) {
-	    Phone.createPhone(person, alumniBean.getPhone(), PartyContactType.PERSONAL, true);
-	} else {
-	    alumniBean.getCurrentPhone().setNumber(alumniBean.getPhone());
+		bean.getAlumni().setRegistered(Boolean.TRUE);
+		if (!bean.getAlumni().hasAnyPendingIdentityRequests()) {
+
+			final EmailAddress personalEmail = bean.getAlumni().getPersonalEmail();
+
+			String email;
+
+			if (personalEmail == null) {
+				email = bean.getAlumni().getStudent().getPerson().getEmailForSendingEmails();
+			} else {
+				email = personalEmail.getValue();
+			}
+
+			AlumniIdentityCheckRequest identityRequest =
+					new AlumniIdentityCheckRequest(email, bean.getAlumni().getStudent().getPerson().getDocumentIdNumber(),
+							bean.getFullName(), bean.getDateOfBirthYearMonthDay(), bean.getDistrictOfBirth(),
+							bean.getDistrictSubdivisionOfBirth(), bean.getParishOfBirth(), bean.getSocialSecurityNumber(),
+							bean.getNameOfFather(), bean.getNameOfMother(), bean.getRequestType());
+
+			identityRequest.setAlumni(bean.getAlumni());
+			if (identityRequest.isValid()) {
+				identityRequest.validate(Boolean.TRUE);
+				sendIdentityCheckEmail(identityRequest, Boolean.TRUE);
+			}
+		}
 	}
-    }
+
+	private static void processAlumniJob(final AlumniPublicAccessBean alumniBean) {
+
+		if (alumniBean.getCurrentJob() == null) {
+			final AlumniJobBean jobBean = alumniBean.getJobBean();
+			new Job(jobBean.getAlumni().getStudent().getPerson(), jobBean.getEmployerName(), jobBean.getCity(),
+					jobBean.getCountry(), jobBean.getChildBusinessArea(), jobBean.getParentBusinessArea(), jobBean.getPosition(),
+					jobBean.getBeginDateAsLocalDate(), jobBean.getEndDateAsLocalDate(), jobBean.getApplicationType(),
+					jobBean.getContractType(), jobBean.getSalary());
+		} else {
+			final AlumniJobBean jobBean = alumniBean.getJobBean();
+			alumniBean.getCurrentJob().setEmployerName(jobBean.getEmployerName());
+			alumniBean.getCurrentJob().setCity(jobBean.getCity());
+			alumniBean.getCurrentJob().setCountry(jobBean.getCountry());
+			alumniBean.getCurrentJob().setBusinessArea(jobBean.getChildBusinessArea());
+			alumniBean.getCurrentJob().setParentBusinessArea(jobBean.getParentBusinessArea());
+			alumniBean.getCurrentJob().setPosition(jobBean.getPosition());
+			alumniBean.getCurrentJob().setBeginDate(jobBean.getBeginDateAsLocalDate());
+			alumniBean.getCurrentJob().setEndDate(jobBean.getEndDateAsLocalDate());
+			alumniBean.getCurrentJob().setJobApplicationType(jobBean.getApplicationType());
+			alumniBean.getCurrentJob().setContractType(jobBean.getContractType());
+			alumniBean.getCurrentJob().setSalary(jobBean.getSalary());
+
+		}
+	}
+
+	private static void processAlumniAddress(final AlumniPublicAccessBean alumniBean, final Person person) {
+
+		final AlumniAddressBean addressBean = alumniBean.getAddressBean();
+		if (alumniBean.getCurrentPhysicalAddress() == null) {
+			PhysicalAddress.createPhysicalAddress(person,
+					new PhysicalAddressData(addressBean.getAddress(), addressBean.getAreaCode(), addressBean.getAreaOfAreaCode(),
+							null), PartyContactType.PERSONAL, false);
+		} else {
+			PhysicalAddress address = alumniBean.getCurrentPhysicalAddress();
+			address.setAddress(addressBean.getAddress());
+			address.setAreaCode(addressBean.getAreaCode());
+			address.setAreaOfAreaCode(addressBean.getAreaOfAreaCode());
+			address.setCountryOfResidence(addressBean.getCountry());
+		}
+	}
+
+	private static void processAlumniPhone(final AlumniPublicAccessBean alumniBean, final Person person) {
+
+		if (alumniBean.getCurrentPhone() == null) {
+			Phone.createPhone(person, alumniBean.getPhone(), PartyContactType.PERSONAL, true);
+		} else {
+			alumniBean.getCurrentPhone().setNumber(alumniBean.getPhone());
+		}
+	}
 
 }

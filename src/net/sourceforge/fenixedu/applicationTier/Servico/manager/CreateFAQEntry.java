@@ -16,18 +16,18 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class CreateFAQEntry extends FenixService {
 
-    @Checked("RolePredicates.MANAGER_PREDICATE")
-    @Service
-    public static void run(InfoFAQEntry infoFAQEntry) {
-	FAQSection parentFAQSection = null;
-	if (infoFAQEntry.getParentSection() != null && infoFAQEntry.getParentSection().getIdInternal() != null) {
-	    parentFAQSection = rootDomainObject.readFAQSectionByOID(infoFAQEntry.getParentSection().getIdInternal());
-	}
+	@Checked("RolePredicates.MANAGER_PREDICATE")
+	@Service
+	public static void run(InfoFAQEntry infoFAQEntry) {
+		FAQSection parentFAQSection = null;
+		if (infoFAQEntry.getParentSection() != null && infoFAQEntry.getParentSection().getIdInternal() != null) {
+			parentFAQSection = rootDomainObject.readFAQSectionByOID(infoFAQEntry.getParentSection().getIdInternal());
+		}
 
-	FAQEntry faqEntry = new FAQEntry();
-	faqEntry.setParentSection(parentFAQSection);
-	faqEntry.setQuestion(infoFAQEntry.getQuestion());
-	faqEntry.setAnswer(infoFAQEntry.getAnswer());
-    }
+		FAQEntry faqEntry = new FAQEntry();
+		faqEntry.setParentSection(parentFAQSection);
+		faqEntry.setQuestion(infoFAQEntry.getQuestion());
+		faqEntry.setAnswer(infoFAQEntry.getAnswer());
+	}
 
 }

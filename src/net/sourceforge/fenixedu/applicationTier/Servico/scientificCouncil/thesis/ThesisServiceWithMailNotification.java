@@ -21,65 +21,65 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 public abstract class ThesisServiceWithMailNotification extends FenixService {
 
-    public void run(Thesis thesis) throws FenixServiceException {
-	process(thesis);
-	sendEmail(thesis);
-    }
-
-    abstract void process(Thesis thesis);
-
-    private void sendEmail(Thesis thesis) {
-	Sender sender = PersonSender.newInstance(AccessControl.getPerson());
-	new Message(sender, null, getRecipients(thesis), getSubject(thesis), getMessage(thesis), "");
-    }
-
-    protected String getMessage(String key, Object... args) {
-	return getMessage(key, new Locale("pt"), args);
-    }
-
-    protected String getMessage(String key, Locale locale, Object... args) {
-	ResourceBundle bundle = ResourceBundle.getBundle("resources.MessagingResources", locale);
-
-	String message = bundle.getString(key);
-	return MessageFormat.format(message, args);
-    }
-
-    private Set<Recipient> getRecipients(Thesis thesis) {
-	Set<Recipient> recipients = new HashSet<Recipient>();
-	for (Person person : getReceivers(thesis)) {
-	    recipients.add(Recipient.newInstance(new PersonGroup(person)));
-	}
-	return recipients;
-    }
-
-    protected abstract String getSubject(Thesis thesis);
-
-    protected abstract String getMessage(Thesis thesis);
-
-    protected abstract Collection<Person> getReceivers(Thesis thesis);
-
-    //
-    // Utility methods
-    //
-
-    protected static Set<Person> personSet(Person... persons) {
-	Set<Person> result = new HashSet<Person>();
-
-	for (Person person : persons) {
-	    if (person != null) {
-		result.add(person);
-	    }
+	public void run(Thesis thesis) throws FenixServiceException {
+		process(thesis);
+		sendEmail(thesis);
 	}
 
-	return result;
-    }
+	abstract void process(Thesis thesis);
 
-    protected static Person getPerson(ThesisEvaluationParticipant participant) {
-	if (participant == null) {
-	    return null;
-	} else {
-	    return participant.getPerson();
+	private void sendEmail(Thesis thesis) {
+		Sender sender = PersonSender.newInstance(AccessControl.getPerson());
+		new Message(sender, null, getRecipients(thesis), getSubject(thesis), getMessage(thesis), "");
 	}
-    }
+
+	protected String getMessage(String key, Object... args) {
+		return getMessage(key, new Locale("pt"), args);
+	}
+
+	protected String getMessage(String key, Locale locale, Object... args) {
+		ResourceBundle bundle = ResourceBundle.getBundle("resources.MessagingResources", locale);
+
+		String message = bundle.getString(key);
+		return MessageFormat.format(message, args);
+	}
+
+	private Set<Recipient> getRecipients(Thesis thesis) {
+		Set<Recipient> recipients = new HashSet<Recipient>();
+		for (Person person : getReceivers(thesis)) {
+			recipients.add(Recipient.newInstance(new PersonGroup(person)));
+		}
+		return recipients;
+	}
+
+	protected abstract String getSubject(Thesis thesis);
+
+	protected abstract String getMessage(Thesis thesis);
+
+	protected abstract Collection<Person> getReceivers(Thesis thesis);
+
+	//
+	// Utility methods
+	//
+
+	protected static Set<Person> personSet(Person... persons) {
+		Set<Person> result = new HashSet<Person>();
+
+		for (Person person : persons) {
+			if (person != null) {
+				result.add(person);
+			}
+		}
+
+		return result;
+	}
+
+	protected static Person getPerson(ThesisEvaluationParticipant participant) {
+		if (participant == null) {
+			return null;
+		} else {
+			return participant.getPerson();
+		}
+	}
 
 }

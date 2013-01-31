@@ -12,22 +12,24 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class AcademicIntervalProviderForListsContextBean implements DataProvider {
 
-    public Object provide(Object source, Object currentValue) {
-	final SortedSet<AcademicInterval> academicIntervals = new TreeSet<AcademicInterval>(
-		AcademicInterval.REVERSE_COMPARATOR_BY_BEGIN_DATE);
+	@Override
+	public Object provide(Object source, Object currentValue) {
+		final SortedSet<AcademicInterval> academicIntervals =
+				new TreeSet<AcademicInterval>(AcademicInterval.REVERSE_COMPARATOR_BY_BEGIN_DATE);
 
-	final ExecutionDegreeListBean executionDegreeBean = (ExecutionDegreeListBean) source;
-	if (executionDegreeBean.getDegreeCurricularPlan() != null) {
+		final ExecutionDegreeListBean executionDegreeBean = (ExecutionDegreeListBean) source;
+		if (executionDegreeBean.getDegreeCurricularPlan() != null) {
 
-	    for (ExecutionDegree exeDegree : executionDegreeBean.getDegreeCurricularPlan().getExecutionDegrees()) {
-		academicIntervals.add(exeDegree.getAcademicInterval());
-	    }
+			for (ExecutionDegree exeDegree : executionDegreeBean.getDegreeCurricularPlan().getExecutionDegrees()) {
+				academicIntervals.add(exeDegree.getAcademicInterval());
+			}
+		}
+
+		return academicIntervals;
 	}
 
-	return academicIntervals;
-    }
-
-    public Converter getConverter() {
-	return new AcademicIntervalConverter();
-    }
+	@Override
+	public Converter getConverter() {
+		return new AcademicIntervalConverter();
+	}
 }

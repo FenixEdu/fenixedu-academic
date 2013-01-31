@@ -10,65 +10,66 @@ import org.joda.time.LocalDate;
 
 public class RegistrationFormalizationBean implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    private PhdProgramCandidacyProcess process;
-    private LocalDate whenStartedStudies;
+	private PhdProgramCandidacyProcess process;
+	private LocalDate whenStartedStudies;
 
-    private boolean selectRegistration;
-    private Registration registration;
+	private boolean selectRegistration;
+	private Registration registration;
 
-    public RegistrationFormalizationBean() {
-    }
-
-    public RegistrationFormalizationBean(PhdProgramCandidacyProcess process) {
-	this.process = process;
-    }
-
-    public LocalDate getWhenStartedStudies() {
-	return whenStartedStudies;
-    }
-
-    public void setWhenStartedStudies(LocalDate whenStartedStudies) {
-	this.whenStartedStudies = whenStartedStudies;
-    }
-
-    public Registration getRegistration() {
-	return registration;
-    }
-
-    public void setRegistration(Registration registration) {
-	this.registration = registration;
-    }
-
-    public boolean isSelectRegistration() {
-	return selectRegistration;
-    }
-
-    public void setSelectRegistration(boolean selectRegistration) {
-	this.selectRegistration = selectRegistration;
-    }
-
-    public Collection<Registration> getAvailableRegistrationsToAssociate() {
-	if (!process.getPerson().hasStudent()) {
-	    return Collections.emptySet();
+	public RegistrationFormalizationBean() {
 	}
 
-	if (!process.getIndividualProgramProcess().getPhdConfigurationIndividualProgramProcess().isMigratedProcess()) {
-	    final Registration registration = process.getPerson().getStudent().getActiveRegistrationFor(
-		    process.getPhdProgramLastActiveDegreeCurricularPlan());
-
-	    if (registration != null) {
-		return Collections.singleton(registration);
-	    }
-	} else {
-	    return process.getPerson().getStudent().getRegistrations();
+	public RegistrationFormalizationBean(PhdProgramCandidacyProcess process) {
+		this.process = process;
 	}
 
-	return Collections.emptySet();
-    }
+	public LocalDate getWhenStartedStudies() {
+		return whenStartedStudies;
+	}
 
-    public boolean hasRegistration() {
-	return registration != null;
-    }
+	public void setWhenStartedStudies(LocalDate whenStartedStudies) {
+		this.whenStartedStudies = whenStartedStudies;
+	}
+
+	public Registration getRegistration() {
+		return registration;
+	}
+
+	public void setRegistration(Registration registration) {
+		this.registration = registration;
+	}
+
+	public boolean isSelectRegistration() {
+		return selectRegistration;
+	}
+
+	public void setSelectRegistration(boolean selectRegistration) {
+		this.selectRegistration = selectRegistration;
+	}
+
+	public Collection<Registration> getAvailableRegistrationsToAssociate() {
+		if (!process.getPerson().hasStudent()) {
+			return Collections.emptySet();
+		}
+
+		if (!process.getIndividualProgramProcess().getPhdConfigurationIndividualProgramProcess().isMigratedProcess()) {
+			final Registration registration =
+					process.getPerson().getStudent()
+							.getActiveRegistrationFor(process.getPhdProgramLastActiveDegreeCurricularPlan());
+
+			if (registration != null) {
+				return Collections.singleton(registration);
+			}
+		} else {
+			return process.getPerson().getStudent().getRegistrations();
+		}
+
+		return Collections.emptySet();
+	}
+
+	public boolean hasRegistration() {
+		return registration != null;
+	}
 }

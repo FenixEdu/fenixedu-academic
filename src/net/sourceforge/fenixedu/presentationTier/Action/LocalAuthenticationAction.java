@@ -20,31 +20,31 @@ import pt.ist.fenixWebFramework.FenixWebFramework;
 
 public class LocalAuthenticationAction extends BaseAuthenticationAction {
 
-    @Override
-    protected IUserView doAuthentication(ActionForm form, HttpServletRequest request, String remoteHostName)
-	    throws FenixFilterException, FenixServiceException {
+	@Override
+	protected IUserView doAuthentication(ActionForm form, HttpServletRequest request, String remoteHostName)
+			throws FenixFilterException, FenixServiceException {
 
-	final String serverName = request.getServerName();
-	final CasConfig casConfig = FenixWebFramework.getConfig().getCasConfig(serverName);
-	if (casConfig != null && casConfig.isCasEnabled()) {
-	    throw new ExcepcaoAutenticacao("errors.noAuthorization");
+		final String serverName = request.getServerName();
+		final CasConfig casConfig = FenixWebFramework.getConfig().getCasConfig(serverName);
+		if (casConfig != null && casConfig.isCasEnabled()) {
+			throw new ExcepcaoAutenticacao("errors.noAuthorization");
+		}
+
+		final DynaActionForm authenticationForm = (DynaActionForm) form;
+		final String username = (String) authenticationForm.get("username");
+		final String password = (String) authenticationForm.get("password");
+		final String requestURL = request.getRequestURL().toString();
+
+		return new Authenticate().run(username, password, requestURL, remoteHostName);
 	}
 
-	final DynaActionForm authenticationForm = (DynaActionForm) form;
-	final String username = (String) authenticationForm.get("username");
-	final String password = (String) authenticationForm.get("password");
-	final String requestURL = request.getRequestURL().toString();
-
-	return new Authenticate().run(username, password, requestURL, remoteHostName);
-    }
-
-    @Override
-    protected ActionForward getAuthenticationFailedForward(final ActionMapping mapping, final HttpServletRequest request,
-	    final String actionKey, final String messageKey) {
-	final ActionErrors actionErrors = new ActionErrors();
-	actionErrors.add(actionKey, new ActionError(messageKey));
-	saveErrors(request, actionErrors);
-	return mapping.getInputForward();
-    }
+	@Override
+	protected ActionForward getAuthenticationFailedForward(final ActionMapping mapping, final HttpServletRequest request,
+			final String actionKey, final String messageKey) {
+		final ActionErrors actionErrors = new ActionErrors();
+		actionErrors.add(actionKey, new ActionError(messageKey));
+		saveErrors(request, actionErrors);
+		return mapping.getInputForward();
+	}
 
 }

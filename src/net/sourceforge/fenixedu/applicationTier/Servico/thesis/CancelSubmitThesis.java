@@ -7,9 +7,9 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class CancelSubmitThesis extends FenixService {
 
-    @Service
-    public static void run(DegreeCurricularPlan degreeCurricularPlan, Thesis thesis) {
-	thesis.cancelSubmit();
-    }
+	@Service
+	public static void run(DegreeCurricularPlan degreeCurricularPlan, Thesis thesis) {
+		thesis.cancelSubmit();
+	}
 
 }

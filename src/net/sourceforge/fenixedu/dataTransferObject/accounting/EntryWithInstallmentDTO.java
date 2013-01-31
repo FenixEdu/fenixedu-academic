@@ -10,25 +10,25 @@ import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 public class EntryWithInstallmentDTO extends EntryDTO implements Serializable {
 
-    private Installment installment;
+	private Installment installment;
 
-    public EntryWithInstallmentDTO(EntryType entryType, Event event, Money totalAmount, LabelFormatter description,
-	    Installment installment) {
-	super(entryType, event, totalAmount, Money.valueOf(0), totalAmount, description, totalAmount);
-	setInstallment(installment);
-    }
+	public EntryWithInstallmentDTO(EntryType entryType, Event event, Money totalAmount, LabelFormatter description,
+			Installment installment) {
+		super(entryType, event, totalAmount, Money.valueOf(0), totalAmount, description, totalAmount);
+		setInstallment(installment);
+	}
 
-    public EntryWithInstallmentDTO(EntryType entryType, Event event, Money amountToPay, Installment installment) {
-	super(entryType, event, amountToPay);
-	setInstallment(installment);
-    }
+	public EntryWithInstallmentDTO(EntryType entryType, Event event, Money amountToPay, Installment installment) {
+		super(entryType, event, amountToPay);
+		setInstallment(installment);
+	}
 
-    public Installment getInstallment() {
-	return this.installment;
-    }
+	public Installment getInstallment() {
+		return this.installment;
+	}
 
-    public void setInstallment(Installment installment) {
-	this.installment = installment;
-    }
+	public void setInstallment(Installment installment) {
+		this.installment = installment;
+	}
 
 }

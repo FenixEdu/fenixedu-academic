@@ -12,29 +12,29 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 
 public class DeleteTutorship extends TutorshipManagement {
 
-    public List<TutorshipErrorBean> run(Integer executionDegreeID, String tutorId, List<Tutorship> tutorsToDelete)
-	    throws FenixServiceException {
+	public List<TutorshipErrorBean> run(Integer executionDegreeID, String tutorId, List<Tutorship> tutorsToDelete)
+			throws FenixServiceException {
 
-	final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeID);
-	final DegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
+		final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeID);
+		final DegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
 
-	List<TutorshipErrorBean> studentsWithErrors = new ArrayList<TutorshipErrorBean>();
+		List<TutorshipErrorBean> studentsWithErrors = new ArrayList<TutorshipErrorBean>();
 
-	for (Tutorship tutorship : tutorsToDelete) {
-	    Registration registration = tutorship.getStudentCurricularPlan().getRegistration();
-	    Integer studentNumber = registration.getNumber();
+		for (Tutorship tutorship : tutorsToDelete) {
+			Registration registration = tutorship.getStudentCurricularPlan().getRegistration();
+			Integer studentNumber = registration.getNumber();
 
-	    try {
-		validateStudentRegistration(registration, executionDegree, degreeCurricularPlan, studentNumber);
+			try {
+				validateStudentRegistration(registration, executionDegree, degreeCurricularPlan, studentNumber);
 
-		tutorship.delete();
+				tutorship.delete();
 
-	    } catch (FenixServiceException ex) {
-		studentsWithErrors.add(new TutorshipErrorBean(ex.getMessage(), ex.getArgs()));
-	    }
+			} catch (FenixServiceException ex) {
+				studentsWithErrors.add(new TutorshipErrorBean(ex.getMessage(), ex.getArgs()));
+			}
+		}
+
+		return studentsWithErrors;
 	}
-
-	return studentsWithErrors;
-    }
 
 }

@@ -12,144 +12,144 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 public class TeacherPersonalExpectation extends TeacherPersonalExpectation_Base {
 
-    private TeacherPersonalExpectation() {
-	super();
-	setRootDomainObject(RootDomainObject.getInstance());
-    }
-
-    public TeacherPersonalExpectation(TeacherPersonalExpectationBean infoTeacherPersonalExpectation) {
-	this();
-	ExecutionYear executionYear = infoTeacherPersonalExpectation.getExecutionYear();
-	Teacher teacher = infoTeacherPersonalExpectation.getTeacher();
-
-	if (executionYear != null && teacher != null) {
-	    if (teacher.getTeacherPersonalExpectationByExecutionYear(executionYear) != null) {
-		throw new DomainException("error.exception.personalExpectation.already.exists");
-	    }
+	private TeacherPersonalExpectation() {
+		super();
+		setRootDomainObject(RootDomainObject.getInstance());
 	}
 
-	setExecutionYear(executionYear);
-	setTeacher(teacher);
+	public TeacherPersonalExpectation(TeacherPersonalExpectationBean infoTeacherPersonalExpectation) {
+		this();
+		ExecutionYear executionYear = infoTeacherPersonalExpectation.getExecutionYear();
+		Teacher teacher = infoTeacherPersonalExpectation.getTeacher();
 
-	if (!isAllowedToEditExpectation()) {
-	    throw new DomainException("error.exception.personalExpectation.definitionPeriodForExecutionYearAlreadyExpired");
+		if (executionYear != null && teacher != null) {
+			if (teacher.getTeacherPersonalExpectationByExecutionYear(executionYear) != null) {
+				throw new DomainException("error.exception.personalExpectation.already.exists");
+			}
+		}
+
+		setExecutionYear(executionYear);
+		setTeacher(teacher);
+
+		if (!isAllowedToEditExpectation()) {
+			throw new DomainException("error.exception.personalExpectation.definitionPeriodForExecutionYearAlreadyExpired");
+		}
+
+		setProperties(infoTeacherPersonalExpectation);
 	}
 
-	setProperties(infoTeacherPersonalExpectation);
-    }
-
-    @Override
-    public void setTutorComment(String tutorComment) {
-	if (isAllowedToEditEvaluation()) {
-	    super.setTutorComment(tutorComment);
-	} else {
-	    throw new DomainException("error.exception.personalExpectation.evaluationPeriodForExecutionYearAlreadyExpired");
+	@Override
+	public void setTutorComment(String tutorComment) {
+		if (isAllowedToEditEvaluation()) {
+			super.setTutorComment(tutorComment);
+		} else {
+			throw new DomainException("error.exception.personalExpectation.evaluationPeriodForExecutionYearAlreadyExpired");
+		}
 	}
-    }
 
-    @Override
-    public void setTeacher(Teacher teacher) {
-	if (teacher == null) {
-	    throw new DomainException("error.TeacherPersonalExpectation.empty.teacher");
+	@Override
+	public void setTeacher(Teacher teacher) {
+		if (teacher == null) {
+			throw new DomainException("error.TeacherPersonalExpectation.empty.teacher");
+		}
+		super.setTeacher(teacher);
 	}
-	super.setTeacher(teacher);
-    }
 
-    @Override
-    public void setExecutionYear(ExecutionYear executionYear) {
-	if (executionYear == null) {
-	    throw new DomainException("error.TeacherPersonalExpectation.empty.executionYear");
+	@Override
+	public void setExecutionYear(ExecutionYear executionYear) {
+		if (executionYear == null) {
+			throw new DomainException("error.TeacherPersonalExpectation.empty.executionYear");
+		}
+		super.setExecutionYear(executionYear);
 	}
-	super.setExecutionYear(executionYear);
-    }
 
-    @Override
-    public void setAutoEvaluation(String autoEvaluation) {
-	if (isAllowedToEditAutoEvaluation()) {
-	    super.setAutoEvaluation(autoEvaluation);
-	} else {
-	    throw new DomainException("error.label.notAbleToEditAutoEvaluation");
+	@Override
+	public void setAutoEvaluation(String autoEvaluation) {
+		if (isAllowedToEditAutoEvaluation()) {
+			super.setAutoEvaluation(autoEvaluation);
+		} else {
+			throw new DomainException("error.label.notAbleToEditAutoEvaluation");
+		}
 	}
-    }
 
-    public String getUtlOrgans() {
-	return getUniversityOrgans();
-    }
-
-    public void setUtlOrgans(String utlOrgans) {
-	setUniversityOrgans(utlOrgans);
-    }
-
-    public String getIstOrgans() {
-	return getInstitutionOrgans();
-    }
-
-    public void setIstOrgans(String istOrgans) {
-	setInstitutionOrgans(istOrgans);
-    }
-
-    public boolean isAllowedToEditExpectation() {
-	Department department = getTeacher().getCurrentWorkingDepartment();
-	if (department != null) {
-	    TeacherExpectationDefinitionPeriod period = department
-		    .getTeacherExpectationDefinitionPeriodForExecutionYear(getExecutionYear());
-	    return (period == null) ? false : period.isPeriodOpen();
+	public String getUtlOrgans() {
+		return getUniversityOrgans();
 	}
-	return false;
-    }
 
-    public boolean isAllowedToEditAutoEvaluation() {
-	Department department = getTeacher().getCurrentWorkingDepartment();
-	if (department != null) {
-	    TeacherAutoEvaluationDefinitionPeriod period = department
-		    .getTeacherAutoEvaluationDefinitionPeriodForExecutionYear(getExecutionYear());
-	    return (period == null) ? false : period.isPeriodOpen();
+	public void setUtlOrgans(String utlOrgans) {
+		setUniversityOrgans(utlOrgans);
 	}
-	return false;
-    }
 
-    public boolean isAllowedToEditEvaluation() {
-	Department department = getTeacher().getCurrentWorkingDepartment();
-	if (department != null) {
-	    TeacherPersonalExpectationsEvaluationPeriod period = department
-		    .getTeacherPersonalExpectationsEvaluationPeriodByExecutionYear(getExecutionYear());
-	    return (period == null) ? false : period.isPeriodOpen();
+	public String getIstOrgans() {
+		return getInstitutionOrgans();
 	}
-	return false;
-    }
 
-    private void setProperties(TeacherPersonalExpectationBean infoTeacherPersonalExpectation) {
-	setEducationMainFocus(infoTeacherPersonalExpectation.getEducationMainFocus());
-	setGraduations(infoTeacherPersonalExpectation.getGraduations());
-	setGraduationsDescription(infoTeacherPersonalExpectation.getGraduationsDescription());
-	setCientificPosGraduations(infoTeacherPersonalExpectation.getCientificPosGraduations());
-	setCientificPosGraduationsDescription(infoTeacherPersonalExpectation.getCientificPosGraduationsDescription());
-	setProfessionalPosGraduations(infoTeacherPersonalExpectation.getProfessionalPosGraduations());
-	setProfessionalPosGraduationsDescription(infoTeacherPersonalExpectation.getProfessionalPosGraduationsDescription());
-	setSeminaries(infoTeacherPersonalExpectation.getSeminaries());
-	setSeminariesDescription(infoTeacherPersonalExpectation.getSeminariesDescription());
-	setResearchAndDevProjects(infoTeacherPersonalExpectation.getResearchAndDevProjects());
-	setJornalArticlePublications(infoTeacherPersonalExpectation.getJornalArticlePublications());
-	setBookPublications(infoTeacherPersonalExpectation.getBookPublications());
-	setConferencePublications(infoTeacherPersonalExpectation.getConferencePublications());
-	setTechnicalReportPublications(infoTeacherPersonalExpectation.getTechnicalReportPublications());
-	setPatentPublications(infoTeacherPersonalExpectation.getPatentPublications());
-	setOtherPublications(infoTeacherPersonalExpectation.getOtherPublications());
-	setOtherPublicationsDescription(infoTeacherPersonalExpectation.getOtherPublicationsDescription());
-	setResearchAndDevMainFocus(infoTeacherPersonalExpectation.getResearchAndDevMainFocus());
-	setPhdOrientations(infoTeacherPersonalExpectation.getPhdOrientations());
-	setMasterDegreeOrientations(infoTeacherPersonalExpectation.getMasterDegreeOrientations());
-	setFinalDegreeWorkOrientations(infoTeacherPersonalExpectation.getFinalDegreeWorkOrientations());
-	setOrientationsMainFocus(infoTeacherPersonalExpectation.getOrientationsMainFocus());
-	setUniversityServiceMainFocus(infoTeacherPersonalExpectation.getUniversityServiceMainFocus());
-	setDepartmentOrgans(infoTeacherPersonalExpectation.getDepartmentOrgans());
-	setIstOrgans(infoTeacherPersonalExpectation.getInstitutionOrgans());
-	setUtlOrgans(infoTeacherPersonalExpectation.getUniversityOrgans());
-	setProfessionalActivityMainFocus(infoTeacherPersonalExpectation.getProfessionalActivityMainFocus());
-	setCientificComunityService(infoTeacherPersonalExpectation.getCientificComunityService());
-	setSocietyService(infoTeacherPersonalExpectation.getSocietyService());
-	setConsulting(infoTeacherPersonalExpectation.getConsulting());
-	setCompanySocialOrgans(infoTeacherPersonalExpectation.getCompanySocialOrgans());
-	setCompanyPositions(infoTeacherPersonalExpectation.getCompanyPositions());
-    }
+	public void setIstOrgans(String istOrgans) {
+		setInstitutionOrgans(istOrgans);
+	}
+
+	public boolean isAllowedToEditExpectation() {
+		Department department = getTeacher().getCurrentWorkingDepartment();
+		if (department != null) {
+			TeacherExpectationDefinitionPeriod period =
+					department.getTeacherExpectationDefinitionPeriodForExecutionYear(getExecutionYear());
+			return (period == null) ? false : period.isPeriodOpen();
+		}
+		return false;
+	}
+
+	public boolean isAllowedToEditAutoEvaluation() {
+		Department department = getTeacher().getCurrentWorkingDepartment();
+		if (department != null) {
+			TeacherAutoEvaluationDefinitionPeriod period =
+					department.getTeacherAutoEvaluationDefinitionPeriodForExecutionYear(getExecutionYear());
+			return (period == null) ? false : period.isPeriodOpen();
+		}
+		return false;
+	}
+
+	public boolean isAllowedToEditEvaluation() {
+		Department department = getTeacher().getCurrentWorkingDepartment();
+		if (department != null) {
+			TeacherPersonalExpectationsEvaluationPeriod period =
+					department.getTeacherPersonalExpectationsEvaluationPeriodByExecutionYear(getExecutionYear());
+			return (period == null) ? false : period.isPeriodOpen();
+		}
+		return false;
+	}
+
+	private void setProperties(TeacherPersonalExpectationBean infoTeacherPersonalExpectation) {
+		setEducationMainFocus(infoTeacherPersonalExpectation.getEducationMainFocus());
+		setGraduations(infoTeacherPersonalExpectation.getGraduations());
+		setGraduationsDescription(infoTeacherPersonalExpectation.getGraduationsDescription());
+		setCientificPosGraduations(infoTeacherPersonalExpectation.getCientificPosGraduations());
+		setCientificPosGraduationsDescription(infoTeacherPersonalExpectation.getCientificPosGraduationsDescription());
+		setProfessionalPosGraduations(infoTeacherPersonalExpectation.getProfessionalPosGraduations());
+		setProfessionalPosGraduationsDescription(infoTeacherPersonalExpectation.getProfessionalPosGraduationsDescription());
+		setSeminaries(infoTeacherPersonalExpectation.getSeminaries());
+		setSeminariesDescription(infoTeacherPersonalExpectation.getSeminariesDescription());
+		setResearchAndDevProjects(infoTeacherPersonalExpectation.getResearchAndDevProjects());
+		setJornalArticlePublications(infoTeacherPersonalExpectation.getJornalArticlePublications());
+		setBookPublications(infoTeacherPersonalExpectation.getBookPublications());
+		setConferencePublications(infoTeacherPersonalExpectation.getConferencePublications());
+		setTechnicalReportPublications(infoTeacherPersonalExpectation.getTechnicalReportPublications());
+		setPatentPublications(infoTeacherPersonalExpectation.getPatentPublications());
+		setOtherPublications(infoTeacherPersonalExpectation.getOtherPublications());
+		setOtherPublicationsDescription(infoTeacherPersonalExpectation.getOtherPublicationsDescription());
+		setResearchAndDevMainFocus(infoTeacherPersonalExpectation.getResearchAndDevMainFocus());
+		setPhdOrientations(infoTeacherPersonalExpectation.getPhdOrientations());
+		setMasterDegreeOrientations(infoTeacherPersonalExpectation.getMasterDegreeOrientations());
+		setFinalDegreeWorkOrientations(infoTeacherPersonalExpectation.getFinalDegreeWorkOrientations());
+		setOrientationsMainFocus(infoTeacherPersonalExpectation.getOrientationsMainFocus());
+		setUniversityServiceMainFocus(infoTeacherPersonalExpectation.getUniversityServiceMainFocus());
+		setDepartmentOrgans(infoTeacherPersonalExpectation.getDepartmentOrgans());
+		setIstOrgans(infoTeacherPersonalExpectation.getInstitutionOrgans());
+		setUtlOrgans(infoTeacherPersonalExpectation.getUniversityOrgans());
+		setProfessionalActivityMainFocus(infoTeacherPersonalExpectation.getProfessionalActivityMainFocus());
+		setCientificComunityService(infoTeacherPersonalExpectation.getCientificComunityService());
+		setSocietyService(infoTeacherPersonalExpectation.getSocietyService());
+		setConsulting(infoTeacherPersonalExpectation.getConsulting());
+		setCompanySocialOrgans(infoTeacherPersonalExpectation.getCompanySocialOrgans());
+		setCompanyPositions(infoTeacherPersonalExpectation.getCompanyPositions());
+	}
 }

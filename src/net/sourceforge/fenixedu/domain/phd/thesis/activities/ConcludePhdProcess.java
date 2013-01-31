@@ -11,36 +11,36 @@ import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcess;
 
 public class ConcludePhdProcess extends PhdThesisActivity {
 
-    @Override
-    protected void activityPreConditions(PhdThesisProcess process, IUserView userView) {
-	if (!process.isAllowedToManageProcess(userView)) {
-	    throw new PreConditionNotValidException();
+	@Override
+	protected void activityPreConditions(PhdThesisProcess process, IUserView userView) {
+		if (!process.isAllowedToManageProcess(userView)) {
+			throw new PreConditionNotValidException();
+		}
+
+		if (!process.isConcluded()) {
+			throw new PreConditionNotValidException();
+		}
+
+		if (process.getIndividualProgramProcess().hasRegistration()
+				&& !process.getIndividualProgramProcess().getRegistration().isRegistrationConclusionProcessed()) {
+			throw new PreConditionNotValidException();
+		}
 	}
 
-	if (!process.isConcluded()) {
-	    throw new PreConditionNotValidException();
+	@Override
+	protected PhdThesisProcess executeActivity(PhdThesisProcess process, IUserView userView, Object object) {
+		PhdConclusionProcessBean bean = (PhdConclusionProcessBean) object;
+		PhdConclusionProcess.create(bean, userView.getPerson());
+
+		PhdIndividualProgramProcess individualProgramProcess = process.getIndividualProgramProcess();
+
+		if (!PhdIndividualProgramProcessState.CONCLUDED.equals(individualProgramProcess.getActiveState())) {
+			individualProgramProcess.createState(PhdIndividualProgramProcessState.CONCLUDED, userView.getPerson(), "");
+		}
+
+		process.getPerson().addPersonRoleByRoleType(RoleType.ALUMNI);
+
+		return process;
 	}
-
-	if (process.getIndividualProgramProcess().hasRegistration()
-		&& !process.getIndividualProgramProcess().getRegistration().isRegistrationConclusionProcessed()) {
-	    throw new PreConditionNotValidException();
-	}
-    }
-
-    @Override
-    protected PhdThesisProcess executeActivity(PhdThesisProcess process, IUserView userView, Object object) {
-	PhdConclusionProcessBean bean = (PhdConclusionProcessBean) object;
-	PhdConclusionProcess.create(bean, userView.getPerson());
-
-	PhdIndividualProgramProcess individualProgramProcess = process.getIndividualProgramProcess();
-
-	if (!PhdIndividualProgramProcessState.CONCLUDED.equals(individualProgramProcess.getActiveState())) {
-	    individualProgramProcess.createState(PhdIndividualProgramProcessState.CONCLUDED, userView.getPerson(), "");
-	}
-
-	process.getPerson().addPersonRoleByRoleType(RoleType.ALUMNI);
-
-	return process;
-    }
 
 }

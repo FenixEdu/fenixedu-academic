@@ -9,12 +9,14 @@ import pt.ist.fenixWebFramework.renderers.converters.EnumConverter;
 
 public class InsuranceExemptionJustificationProvider implements DataProvider {
 
-    public Object provide(Object source, Object currentValue) {
-	return Arrays.asList(InsuranceExemptionJustificationType.values());
-    }
+	@Override
+	public Object provide(Object source, Object currentValue) {
+		return Arrays.asList(InsuranceExemptionJustificationType.values());
+	}
 
-    public Converter getConverter() {
-	return new EnumConverter();
-    }
+	@Override
+	public Converter getConverter() {
+		return new EnumConverter();
+	}
 
 }

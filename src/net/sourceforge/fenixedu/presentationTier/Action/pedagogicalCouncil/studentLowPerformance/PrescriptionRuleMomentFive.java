@@ -7,28 +7,28 @@ import net.sourceforge.fenixedu.domain.PrescriptionEnum;
 
 class PrescriptionRuleMomentFive extends PrescriptionRuleGenericMoment {
 
-    public PrescriptionRuleMomentFive() {
-	super();
-    }
+	public PrescriptionRuleMomentFive() {
+		super();
+	}
 
-    @Override
-    public BigDecimal getMinimumEcts() {
-	return new BigDecimal(55);
-    }
+	@Override
+	public BigDecimal getMinimumEcts() {
+		return new BigDecimal(55);
+	}
 
-    @Override
-    public PrescriptionEnum getPrescriptionEnum() {
-	return PrescriptionEnum.MOMENT5;
-    }
+	@Override
+	public PrescriptionEnum getPrescriptionEnum() {
+		return PrescriptionEnum.MOMENT5;
+	}
 
-    @Override
-    public int getNumberOfEntriesStudentInSecretary() {
-	return 3;
-    }
+	@Override
+	public int getNumberOfEntriesStudentInSecretary() {
+		return 3;
+	}
 
-    @Override
-    public ExecutionYear getRegistrationStart() {
-	return ExecutionYear.readCurrentExecutionYear().getPreviousExecutionYear().getPreviousExecutionYear();
-    }
+	@Override
+	public ExecutionYear getRegistrationStart() {
+		return ExecutionYear.readCurrentExecutionYear().getPreviousExecutionYear().getPreviousExecutionYear();
+	}
 
 }

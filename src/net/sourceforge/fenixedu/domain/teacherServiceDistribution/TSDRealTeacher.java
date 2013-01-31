@@ -14,147 +14,147 @@ import net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonContract
 
 public class TSDRealTeacher extends TSDRealTeacher_Base {
 
-    private TSDRealTeacher() {
-	super();
-    }
-
-    public TSDRealTeacher(Teacher teacher) {
-	this();
-
-	if (teacher == null) {
-	    throw new DomainException("Teacher.required");
+	private TSDRealTeacher() {
+		super();
 	}
 
-	this.setTeacher(teacher);
-	this.setProfessionalCategory(teacher.getCategory());
-	this.setExtraCreditsName("");
-	this.setExtraCreditsValue(0d);
-	this.setUsingExtraCredits(false);
-    }
+	public TSDRealTeacher(Teacher teacher) {
+		this();
 
-    @Override
-    public String getName() {
-	return getTeacher().getPerson().getName();
-    }
+		if (teacher == null) {
+			throw new DomainException("Teacher.required");
+		}
 
-    @Override
-    public Department getDepartment() {
-	List<ExecutionSemester> executionSemesters = getTeacherServiceDistributions().get(0).getTSDProcessPhase().getTSDProcess()
-		.getExecutionPeriods();
-
-	for (ExecutionSemester period : executionSemesters) {
-	    Department department = getTeacher().getLastWorkingDepartment(period.getBeginDateYearMonthDay(),
-		    period.getEndDateYearMonthDay());
-	    if (department != null) {
-		return department;
-	    }
-	}
-	return null;
-    }
-
-    @Override
-    public Double getRealHoursByShiftTypeAndExecutionCourses(ShiftType shiftType, List<ExecutionCourse> executionCourseList) {
-	Double hoursLastYear = 0d;
-	Teacher teacher = getTeacher();
-
-	for (ExecutionCourse executionCourse : executionCourseList) {
-	    hoursLastYear += teacher.getHoursLecturedOnExecutionCourseByShiftType(executionCourse, shiftType);
+		this.setTeacher(teacher);
+		this.setProfessionalCategory(teacher.getCategory());
+		this.setExtraCreditsName("");
+		this.setExtraCreditsValue(0d);
+		this.setUsingExtraCredits(false);
 	}
 
-	return hoursLastYear;
-    }
-
-    @Override
-    public Double getRequiredHours(final List<ExecutionSemester> executionPeriodList) {
-	Double requiredHours = 0.0;
-
-	for (ExecutionSemester executionSemester : executionPeriodList) {
-	    requiredHours += getTeacher().getMandatoryLessonHours(executionSemester);
+	@Override
+	public String getName() {
+		return getTeacher().getPerson().getName();
 	}
 
-	return requiredHours;
-    }
+	@Override
+	public Department getDepartment() {
+		List<ExecutionSemester> executionSemesters =
+				getTeacherServiceDistributions().get(0).getTSDProcessPhase().getTSDProcess().getExecutionPeriods();
 
-    @Override
-    public void delete() {
-	removeTeacher();
-	super.delete();
-    }
-
-    @Override
-    public Double getServiceExemptionCredits(List<ExecutionSemester> executionPeriodList) {
-	Double serviceExemptionCredits = 0d;
-
-	for (ExecutionSemester executionSemester : executionPeriodList) {
-	    serviceExemptionCredits += new Double(getTeacher().getServiceExemptionCredits(executionSemester));
+		for (ExecutionSemester period : executionSemesters) {
+			Department department =
+					getTeacher().getLastWorkingDepartment(period.getBeginDateYearMonthDay(), period.getEndDateYearMonthDay());
+			if (department != null) {
+				return department;
+			}
+		}
+		return null;
 	}
 
-	return serviceExemptionCredits;
-    }
+	@Override
+	public Double getRealHoursByShiftTypeAndExecutionCourses(ShiftType shiftType, List<ExecutionCourse> executionCourseList) {
+		Double hoursLastYear = 0d;
+		Teacher teacher = getTeacher();
 
-    @Override
-    public Double getManagementFunctionsCredits(List<ExecutionSemester> executionPeriodList) {
-	Double managementFunctionsCredits = 0d;
+		for (ExecutionCourse executionCourse : executionCourseList) {
+			hoursLastYear += teacher.getHoursLecturedOnExecutionCourseByShiftType(executionCourse, shiftType);
+		}
 
-	for (ExecutionSemester executionSemester : executionPeriodList) {
-	    managementFunctionsCredits += getTeacher().getManagementFunctionsCredits(executionSemester);
-	}
-	return managementFunctionsCredits;
-    }
-
-    @Override
-    public List<PersonContractSituation> getServiceExemptions(List<ExecutionSemester> executionPeriodList) {
-	List<PersonContractSituation> teacherServiceExemptionList = new ArrayList<PersonContractSituation>();
-
-	for (ExecutionSemester executionSemester : executionPeriodList) {
-	    teacherServiceExemptionList.addAll(getTeacher().getValidTeacherServiceExemptions(executionSemester));
+		return hoursLastYear;
 	}
 
-	return teacherServiceExemptionList;
-    }
+	@Override
+	public Double getRequiredHours(final List<ExecutionSemester> executionPeriodList) {
+		Double requiredHours = 0.0;
 
-    @Override
-    public List<PersonFunction> getManagementFunctions(List<ExecutionSemester> executionPeriodList) {
-	List<PersonFunction> personFunctionList = new ArrayList<PersonFunction>();
+		for (ExecutionSemester executionSemester : executionPeriodList) {
+			requiredHours += getTeacher().getMandatoryLessonHours(executionSemester);
+		}
 
-	for (ExecutionSemester executionSemester : executionPeriodList) {
-	    List<PersonFunction> teacherFunctionList = getTeacher().getManagementFunctions(executionSemester);
-	    personFunctionList.addAll(teacherFunctionList);
+		return requiredHours;
 	}
-	return personFunctionList;
-    }
 
-    @Override
-    public Double getTotalHoursLecturedPlusExtraCredits(List<ExecutionSemester> executionPeriodList) {
-	return getTotalHoursLectured(executionPeriodList)
-		+ (getUsingExtraCredits() ? getExtraCreditsValue(executionPeriodList) : 0d);
-    }
-
-    @Override
-    public String getEmailUserId() {
-	String email = getTeacher().getPerson().getEmail();
-	String results[] = email.split("@");
-
-	if (results.length > 0) {
-	    return results[0];
-	} else {
-	    return getAcronym();
+	@Override
+	public void delete() {
+		removeTeacher();
+		super.delete();
 	}
-    }
 
-    @Override
-    public String getShortName() {
-	return getTeacher().getPerson().getFirstAndLastName();
-    }
+	@Override
+	public Double getServiceExemptionCredits(List<ExecutionSemester> executionPeriodList) {
+		Double serviceExemptionCredits = 0d;
 
-    @Override
-    public String getDistinctName() {
-	return getShortName() + "(" + getTeacher().getPerson().getIstUsername() + ")";
-    }
+		for (ExecutionSemester executionSemester : executionPeriodList) {
+			serviceExemptionCredits += new Double(getTeacher().getServiceExemptionCredits(executionSemester));
+		}
 
-    @Override
-    public String getTeacherId() {
-	return getTeacher().getPerson().getIstUsername();
-    }
+		return serviceExemptionCredits;
+	}
+
+	@Override
+	public Double getManagementFunctionsCredits(List<ExecutionSemester> executionPeriodList) {
+		Double managementFunctionsCredits = 0d;
+
+		for (ExecutionSemester executionSemester : executionPeriodList) {
+			managementFunctionsCredits += getTeacher().getManagementFunctionsCredits(executionSemester);
+		}
+		return managementFunctionsCredits;
+	}
+
+	@Override
+	public List<PersonContractSituation> getServiceExemptions(List<ExecutionSemester> executionPeriodList) {
+		List<PersonContractSituation> teacherServiceExemptionList = new ArrayList<PersonContractSituation>();
+
+		for (ExecutionSemester executionSemester : executionPeriodList) {
+			teacherServiceExemptionList.addAll(getTeacher().getValidTeacherServiceExemptions(executionSemester));
+		}
+
+		return teacherServiceExemptionList;
+	}
+
+	@Override
+	public List<PersonFunction> getManagementFunctions(List<ExecutionSemester> executionPeriodList) {
+		List<PersonFunction> personFunctionList = new ArrayList<PersonFunction>();
+
+		for (ExecutionSemester executionSemester : executionPeriodList) {
+			List<PersonFunction> teacherFunctionList = getTeacher().getManagementFunctions(executionSemester);
+			personFunctionList.addAll(teacherFunctionList);
+		}
+		return personFunctionList;
+	}
+
+	@Override
+	public Double getTotalHoursLecturedPlusExtraCredits(List<ExecutionSemester> executionPeriodList) {
+		return getTotalHoursLectured(executionPeriodList)
+				+ (getUsingExtraCredits() ? getExtraCreditsValue(executionPeriodList) : 0d);
+	}
+
+	@Override
+	public String getEmailUserId() {
+		String email = getTeacher().getPerson().getEmail();
+		String results[] = email.split("@");
+
+		if (results.length > 0) {
+			return results[0];
+		} else {
+			return getAcronym();
+		}
+	}
+
+	@Override
+	public String getShortName() {
+		return getTeacher().getPerson().getFirstAndLastName();
+	}
+
+	@Override
+	public String getDistinctName() {
+		return getShortName() + "(" + getTeacher().getPerson().getIstUsername() + ")";
+	}
+
+	@Override
+	public String getTeacherId() {
+		return getTeacher().getPerson().getIstUsername();
+	}
 
 }

@@ -13,20 +13,20 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class ReadCandidates extends FenixService {
 
-    @Service
-    public static List run(String[] candidateList) throws FenixServiceException {
+	@Service
+	public static List run(String[] candidateList) throws FenixServiceException {
 
-	List result = new ArrayList();
+		List result = new ArrayList();
 
-	// Read the admited candidates
-	int size = candidateList.length;
-	int i = 0;
-	for (i = 0; i < size; i++) {
+		// Read the admited candidates
+		int size = candidateList.length;
+		int i = 0;
+		for (i = 0; i < size; i++) {
 
-	    result.add(InfoMasterDegreeCandidateWithInfoPerson.newInfoFromDomain(rootDomainObject
-		    .readMasterDegreeCandidateByOID(new Integer(candidateList[i]))));
+			result.add(InfoMasterDegreeCandidateWithInfoPerson.newInfoFromDomain(rootDomainObject
+					.readMasterDegreeCandidateByOID(new Integer(candidateList[i]))));
+		}
+
+		return result;
 	}
-
-	return result;
-    }
 }

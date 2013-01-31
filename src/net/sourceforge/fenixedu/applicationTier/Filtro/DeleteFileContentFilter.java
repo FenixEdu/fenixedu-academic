@@ -9,26 +9,26 @@ import pt.utl.ist.berserk.ServiceResponse;
 
 public class DeleteFileContentFilter extends Filtro {
 
-    @Override
-    public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
-	FileContent fileContent = getFileContent(request, response);
-	Site site = fileContent.getSite();
+	@Override
+	public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
+		FileContent fileContent = getFileContent(request, response);
+		Site site = fileContent.getSite();
 
-	if (site != null) {
-	    IGroup owner = site.getOwner();
+		if (site != null) {
+			IGroup owner = site.getOwner();
 
-	    if (owner == null) {
-		throw new NotAuthorizedFilterException();
-	    }
+			if (owner == null) {
+				throw new NotAuthorizedFilterException();
+			}
 
-	    if (!owner.allows(getRemoteUser(request))) {
-		throw new NotAuthorizedFilterException();
-	    }
+			if (!owner.allows(getRemoteUser(request))) {
+				throw new NotAuthorizedFilterException();
+			}
+		}
+
 	}
 
-    }
-
-    protected FileContent getFileContent(ServiceRequest request, ServiceResponse response) {
-	return (FileContent) request.getServiceParameters().getParameter(0);
-    }
+	protected FileContent getFileContent(ServiceRequest request, ServiceResponse response) {
+		return (FileContent) request.getServiceParameters().getParameter(0);
+	}
 }

@@ -6,8 +6,8 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class CloseLogin extends FenixService {
 
-    @Service
-    public static void run(Login login) {
-	login.closeLoginIfNecessary();
-    }
+	@Service
+	public static void run(Login login) {
+		login.closeLoginIfNecessary();
+	}
 }

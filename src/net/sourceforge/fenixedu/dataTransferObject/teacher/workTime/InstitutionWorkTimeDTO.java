@@ -15,31 +15,31 @@ import net.sourceforge.fenixedu.util.WeekDay;
 
 public class InstitutionWorkTimeDTO extends InfoObject {
 
-    private WeekDay weekDay;
-    private Date startTime;
-    private Date endTime;
+	private WeekDay weekDay;
+	private Date startTime;
+	private Date endTime;
 
-    public Date getEndTime() {
-	return endTime;
-    }
+	public Date getEndTime() {
+		return endTime;
+	}
 
-    public void setEndTime(Date endTime) {
-	this.endTime = endTime;
-    }
+	public void setEndTime(Date endTime) {
+		this.endTime = endTime;
+	}
 
-    public Date getStartTime() {
-	return startTime;
-    }
+	public Date getStartTime() {
+		return startTime;
+	}
 
-    public void setStartTime(Date startTime) {
-	this.startTime = startTime;
-    }
+	public void setStartTime(Date startTime) {
+		this.startTime = startTime;
+	}
 
-    public WeekDay getWeekDay() {
-	return weekDay;
-    }
+	public WeekDay getWeekDay() {
+		return weekDay;
+	}
 
-    public void setWeekDay(WeekDay weekDay) {
-	this.weekDay = weekDay;
-    }
+	public void setWeekDay(WeekDay weekDay) {
+		this.weekDay = weekDay;
+	}
 }

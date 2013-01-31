@@ -17,62 +17,62 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 public class DegreeChangeIndividualCandidacyEvent extends DegreeChangeIndividualCandidacyEvent_Base {
 
-    private static final List<EventType> COMPATIBLE_TYPES = Arrays.asList(
+	private static final List<EventType> COMPATIBLE_TYPES = Arrays.asList(
 
-    EventType.DEGREE_TRANSFER_INDIVIDUAL_CANDIDACY,
+	EventType.DEGREE_TRANSFER_INDIVIDUAL_CANDIDACY,
 
-    EventType.DEGREE_CHANGE_INDIVIDUAL_CANDIDACY);
+	EventType.DEGREE_CHANGE_INDIVIDUAL_CANDIDACY);
 
-    private DegreeChangeIndividualCandidacyEvent() {
-	super();
-    }
-
-    public DegreeChangeIndividualCandidacyEvent(final DegreeChangeIndividualCandidacy candidacy, final Person person) {
-	this();
-	super.init(candidacy, EventType.DEGREE_CHANGE_INDIVIDUAL_CANDIDACY, person);
-
-	attachAvailablePaymentCode(person);
-    }
-
-    @Override
-    protected AdministrativeOffice readAdministrativeOffice() {
-	return AdministrativeOffice.readByAdministrativeOfficeType(AdministrativeOfficeType.DEGREE);
-    }
-
-    @Override
-    protected void checkConditionsToTransferPaymentsAndCancel(Event targetEvent) {
-
-	if (!COMPATIBLE_TYPES.contains(targetEvent.getEventType())) {
-	    throw new DomainException("error.accounting.Event.events.must.be.compatible");
+	private DegreeChangeIndividualCandidacyEvent() {
+		super();
 	}
 
-	if (isCancelled()) {
-	    throw new DomainException("error.accounting.Event.cannot.transfer.payments.from.cancelled.events");
+	public DegreeChangeIndividualCandidacyEvent(final DegreeChangeIndividualCandidacy candidacy, final Person person) {
+		this();
+		super.init(candidacy, EventType.DEGREE_CHANGE_INDIVIDUAL_CANDIDACY, person);
+
+		attachAvailablePaymentCode(person);
 	}
 
-	if (this == targetEvent) {
-	    throw new DomainException(
-		    "error.net.sourceforge.fenixedu.domain.accounting.Event.target.event.must.be.different.from.source");
+	@Override
+	protected AdministrativeOffice readAdministrativeOffice() {
+		return AdministrativeOffice.readByAdministrativeOfficeType(AdministrativeOfficeType.DEGREE);
 	}
-    }
 
-    @Override
-    public Set<EntryType> getPossibleEntryTypesForDeposit() {
-	return Collections.singleton(EntryType.DEGREE_CHANGE_INDIVIDUAL_CANDIDACY_FEE);
-    }
+	@Override
+	protected void checkConditionsToTransferPaymentsAndCancel(Event targetEvent) {
 
-    @Override
-    public DegreeChangeIndividualCandidacy getIndividualCandidacy() {
-	return (DegreeChangeIndividualCandidacy) super.getIndividualCandidacy();
-    }
+		if (!COMPATIBLE_TYPES.contains(targetEvent.getEventType())) {
+			throw new DomainException("error.accounting.Event.events.must.be.compatible");
+		}
 
-    public Degree getCandidacyDegree() {
-	return getIndividualCandidacy().getSelectedDegree();
-    }
+		if (isCancelled()) {
+			throw new DomainException("error.accounting.Event.cannot.transfer.payments.from.cancelled.events");
+		}
 
-    @Override
-    protected EntryType getEntryType() {
-	return EntryType.DEGREE_CHANGE_INDIVIDUAL_CANDIDACY_FEE;
-    }
+		if (this == targetEvent) {
+			throw new DomainException(
+					"error.net.sourceforge.fenixedu.domain.accounting.Event.target.event.must.be.different.from.source");
+		}
+	}
+
+	@Override
+	public Set<EntryType> getPossibleEntryTypesForDeposit() {
+		return Collections.singleton(EntryType.DEGREE_CHANGE_INDIVIDUAL_CANDIDACY_FEE);
+	}
+
+	@Override
+	public DegreeChangeIndividualCandidacy getIndividualCandidacy() {
+		return (DegreeChangeIndividualCandidacy) super.getIndividualCandidacy();
+	}
+
+	public Degree getCandidacyDegree() {
+		return getIndividualCandidacy().getSelectedDegree();
+	}
+
+	@Override
+	protected EntryType getEntryType() {
+		return EntryType.DEGREE_CHANGE_INDIVIDUAL_CANDIDACY_FEE;
+	}
 
 }

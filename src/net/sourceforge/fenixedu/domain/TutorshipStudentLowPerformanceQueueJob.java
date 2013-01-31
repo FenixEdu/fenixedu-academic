@@ -24,220 +24,221 @@ import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
 
 public class TutorshipStudentLowPerformanceQueueJob extends TutorshipStudentLowPerformanceQueueJob_Base {
 
-    public TutorshipStudentLowPerformanceQueueJob() {
-	super();
-    }
+	public TutorshipStudentLowPerformanceQueueJob() {
+		super();
+	}
 
-    public TutorshipStudentLowPerformanceQueueJob(PrescriptionEnum prescriptionEnum) {
-	super();
-	setPrescriptionEnum(prescriptionEnum);
-    }
+	public TutorshipStudentLowPerformanceQueueJob(PrescriptionEnum prescriptionEnum) {
+		super();
+		setPrescriptionEnum(prescriptionEnum);
+	}
 
-    @Override
-    public QueueJobResult execute() throws Exception {
+	@Override
+	public QueueJobResult execute() throws Exception {
 
-	final List<StudentLowPerformanceBean> studentLowPerformanceBeans = calcstudentsLowPerformanceBean(AbstractPrescriptionRule
-		.readPrescriptionRules(getPrescriptionEnum()));
+		final List<StudentLowPerformanceBean> studentLowPerformanceBeans =
+				calcstudentsLowPerformanceBean(AbstractPrescriptionRule.readPrescriptionRules(getPrescriptionEnum()));
 
-	Spreadsheet spreadsheet = createSpreadsheet(studentLowPerformanceBeans);
-	ByteArrayOutputStream byteArrayOS = new ByteArrayOutputStream();
-	spreadsheet.exportToXLSSheet(byteArrayOS);
+		Spreadsheet spreadsheet = createSpreadsheet(studentLowPerformanceBeans);
+		ByteArrayOutputStream byteArrayOS = new ByteArrayOutputStream();
+		spreadsheet.exportToXLSSheet(byteArrayOS);
 
-	final QueueJobResult queueJobResult = new QueueJobResult();
+		final QueueJobResult queueJobResult = new QueueJobResult();
 
-	queueJobResult.setContentType("application/txt");
-	queueJobResult.setContent(byteArrayOS.toByteArray());
+		queueJobResult.setContentType("application/txt");
+		queueJobResult.setContent(byteArrayOS.toByteArray());
 
-	return queueJobResult;
-
-    }
-
-    @Override
-    public String getFilename() {
-	return "Students_" + new DateTime().toString("yyyy-MM-dd") + ".xls";
-    }
-
-    private List<StudentLowPerformanceBean> calcstudentsLowPerformanceBean(List<AbstractPrescriptionRule> prescriptionRules) {
-	LinkedList<StudentLowPerformanceBean> studentLowPerformanceBeans = new LinkedList<StudentLowPerformanceBean>();
-
-	final List<AbstractPrescriptionRule> abstractPrescriptionRules = AbstractPrescriptionRule
-		.readPrescriptionRules(getPrescriptionEnum());
-	for (AbstractPrescriptionRule abstractPrescriptionRule : prescriptionRules) {
-
-	    for (Registration registration : abstractPrescriptionRule.getRegistrationStart().getStudents()) {
-		if (isValidRegistration(registration)) {
-		    StudentLowPerformanceBean s = calcStudentCycleLowPerformanceBean(registration, abstractPrescriptionRules);
-		    if (s != null) {
-			studentLowPerformanceBeans.add(s);
-		    }
-		}
-
-		else if (!registration.isBolonha() && isValidSourceLink(registration)) {
-		    for (Registration destinationRegistration : registration.getDestinyRegistrations()) {
-			if ((destinationRegistration.getDegreeType() != DegreeType.BOLONHA_DEGREE)
-				&& (destinationRegistration.getDegreeType() != DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE)) {
-			    continue;
-			}
-			if (!isValidRegistration(destinationRegistration)) {
-			    continue;
-			}
-			StudentLowPerformanceBean s = calcStudentCycleLowPerformanceBean(destinationRegistration,
-				abstractPrescriptionRules);
-			if (s != null) {
-			    studentLowPerformanceBeans.add(s);
-			}
-		    }
-		}
-	    }
+		return queueJobResult;
 
 	}
-	return studentLowPerformanceBeans;
-    }
 
-    private StudentLowPerformanceBean calcStudentCycleLowPerformanceBean(Registration registration,
-	    List<AbstractPrescriptionRule> prescriptionRules) {
+	@Override
+	public String getFilename() {
+		return "Students_" + new DateTime().toString("yyyy-MM-dd") + ".xls";
+	}
 
-	int numberOfEntriesStudentInSecretary = 0;
+	private List<StudentLowPerformanceBean> calcstudentsLowPerformanceBean(List<AbstractPrescriptionRule> prescriptionRules) {
+		LinkedList<StudentLowPerformanceBean> studentLowPerformanceBeans = new LinkedList<StudentLowPerformanceBean>();
 
-	List<Registration> fullRegistrationPath = getFullRegistrationPath(registration);
+		final List<AbstractPrescriptionRule> abstractPrescriptionRules =
+				AbstractPrescriptionRule.readPrescriptionRules(getPrescriptionEnum());
+		for (AbstractPrescriptionRule abstractPrescriptionRule : prescriptionRules) {
+
+			for (Registration registration : abstractPrescriptionRule.getRegistrationStart().getStudents()) {
+				if (isValidRegistration(registration)) {
+					StudentLowPerformanceBean s = calcStudentCycleLowPerformanceBean(registration, abstractPrescriptionRules);
+					if (s != null) {
+						studentLowPerformanceBeans.add(s);
+					}
+				}
+
+				else if (!registration.isBolonha() && isValidSourceLink(registration)) {
+					for (Registration destinationRegistration : registration.getDestinyRegistrations()) {
+						if ((destinationRegistration.getDegreeType() != DegreeType.BOLONHA_DEGREE)
+								&& (destinationRegistration.getDegreeType() != DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE)) {
+							continue;
+						}
+						if (!isValidRegistration(destinationRegistration)) {
+							continue;
+						}
+						StudentLowPerformanceBean s =
+								calcStudentCycleLowPerformanceBean(destinationRegistration, abstractPrescriptionRules);
+						if (s != null) {
+							studentLowPerformanceBeans.add(s);
+						}
+					}
+				}
+			}
+
+		}
+		return studentLowPerformanceBeans;
+	}
+
+	private StudentLowPerformanceBean calcStudentCycleLowPerformanceBean(Registration registration,
+			List<AbstractPrescriptionRule> prescriptionRules) {
+
+		int numberOfEntriesStudentInSecretary = 0;
+
+		List<Registration> fullRegistrationPath = getFullRegistrationPath(registration);
+
+		// Historic Student
+		for (Registration reg : fullRegistrationPath) {
+			numberOfEntriesStudentInSecretary += getNumberOfEntriesStudentInSecretary(reg);
+		}
+
+		BigDecimal sumEcts = registration.getCurriculum().getSumEctsCredits();
+
+		if (isLowPerformanceStudent(registration, sumEcts, numberOfEntriesStudentInSecretary, prescriptionRules)) {
+			Student student = registration.getStudent();
+			String studentState = workingStudent(student);
+			studentState += parcialStudent(registration);
+			studentState += flunkedStudent(fullRegistrationPath);
+			return new StudentLowPerformanceBean(student, sumEcts, registration.getDegree(), numberOfEntriesStudentInSecretary,
+					student.getPerson().getDefaultEmailAddressValue(), studentState, fullRegistrationPath.get(0).getStartDate()
+							.toString("yyyy-MM-dd"));
+		}
+		return null;
+	}
+
+	private int getNumberOfEntriesStudentInSecretary(Registration registration) {
+		int numberOfEntriesStudentInSecretary = 0;
+		for (ExecutionYear execYear : ExecutionYear.readExecutionYears(registration.getStartExecutionYear(),
+				ExecutionYear.readCurrentExecutionYear())) {
+			RegistrationState registrationState = registration.getLastRegistrationState(execYear);
+			if (registrationState != null && registrationState.isActive()) {
+				numberOfEntriesStudentInSecretary += 1;
+			}
+		}
+		return numberOfEntriesStudentInSecretary;
+
+	}
+
+	private boolean isLowPerformanceStudent(Registration registration, BigDecimal ects, int numberOfEntriesStudentInSecretary,
+			List<AbstractPrescriptionRule> prescriptionRules) {
+		for (AbstractPrescriptionRule prescriptionRule : prescriptionRules) {
+			if ((prescriptionRule.isPrescript(registration, ects, numberOfEntriesStudentInSecretary))) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private String workingStudent(Student student) {
+		return student.isWorkingStudent() ? "Trabalhor Estudante" + ";" : "";
+	}
+
+	private String parcialStudent(Registration registration) {
+		return (registration.isPartialRegime(ExecutionYear.readCurrentExecutionYear()) ? "Estudante Parcial" + ";" : "");
+	}
+
+	private String flunkedStudent(List<Registration> registrations) {
+		for (Registration registration : registrations) {
+			for (RegistrationState registrationState : registration.getRegistrationStates()) {
+				if (registrationState.getStateType() == RegistrationStateType.FLUNKED) {
+					return "Prescrito" + ";";
+				}
+			}
+		}
+		return "";
+	}
+
+	private Spreadsheet createSpreadsheet(List<StudentLowPerformanceBean> studentLowPerformanceBeans) throws IOException {
+		Spreadsheet spreadsheet = new Spreadsheet(getFilename());
+
+		spreadsheet.setHeader("Nome");
+		spreadsheet.setHeader("Número");
+		spreadsheet.setHeader("Nome do Curso");
+		spreadsheet.setHeader("Ciclo");
+		spreadsheet.setHeader("Créditos Alcançados");
+		spreadsheet.setHeader("Regime");
+		spreadsheet.setHeader("Email");
+		spreadsheet.setHeader("Número de Inscrições");
+		spreadsheet.setHeader("Início da Matrícula");
+		spreadsheet.setHeader("Tutor");
+		spreadsheet.setHeader("Email do Tutor");
+
+		for (StudentLowPerformanceBean studentLowPerformanceBean : studentLowPerformanceBeans) {
+			final Row row = spreadsheet.addRow();
+			row.setCell(studentLowPerformanceBean.getStudent().getName());
+			row.setCell(studentLowPerformanceBean.getStudent().getNumber().toString());
+			row.setCell(studentLowPerformanceBean.getDegree().getName());
+			row.setCell(studentLowPerformanceBean.getDegree().getDegreeType().getLocalizedName());
+			row.setCell(studentLowPerformanceBean.getSumEcts().toString());
+			row.setCell(studentLowPerformanceBean.getRegime());
+			row.setCell(studentLowPerformanceBean.getEmail());
+			row.setCell(studentLowPerformanceBean.getNumberOfEntriesStudentInSecretary());
+			row.setCell(studentLowPerformanceBean.getRegistrationStart());
+			List<Tutorship> tutorships = studentLowPerformanceBean.getStudent().getActiveTutorships();
+			if (!tutorships.isEmpty()) {
+				row.setCell(tutorships.iterator().next().getTeacher().getPerson().getPresentationName());
+				row.setCell(tutorships.iterator().next().getTeacher().getPerson().getInstitutionalOrDefaultEmailAddressValue());
+			} else {
+				row.setCell("");
+				row.setCell("");
+			}
+		}
+
+		return spreadsheet;
+	}
 
 	// Historic Student
-	for (Registration reg : fullRegistrationPath) {
-	    numberOfEntriesStudentInSecretary += getNumberOfEntriesStudentInSecretary(reg);
-	}
+	protected static List<Registration> getFullRegistrationPath(final Registration current) {
+		if (current.getDegreeType() == DegreeType.BOLONHA_DEGREE
+				|| current.getDegreeType() == DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE) {
+			List<Registration> path = new ArrayList<Registration>();
+			path.add(current);
+			Registration source;
+			if (current.hasSourceRegistration()
+					&& (!(source = current.getSourceRegistration()).isBolonha() || isValidSourceLink(source))) {
+				path.addAll(getFullRegistrationPath(source));
+			}
 
-	BigDecimal sumEcts = registration.getCurriculum().getSumEctsCredits();
-
-	if (isLowPerformanceStudent(registration, sumEcts, numberOfEntriesStudentInSecretary, prescriptionRules)) {
-	    Student student = registration.getStudent();
-	    String studentState = workingStudent(student);
-	    studentState += parcialStudent(registration);
-	    studentState += flunkedStudent(fullRegistrationPath);
-	    return new StudentLowPerformanceBean(student, sumEcts, registration.getDegree(), numberOfEntriesStudentInSecretary,
-		    student.getPerson().getDefaultEmailAddressValue(), studentState, fullRegistrationPath.get(0).getStartDate()
-			    .toString("yyyy-MM-dd"));
-	}
-	return null;
-    }
-
-    private int getNumberOfEntriesStudentInSecretary(Registration registration) {
-	int numberOfEntriesStudentInSecretary = 0;
-	for (ExecutionYear execYear : ExecutionYear.readExecutionYears(registration.getStartExecutionYear(),
-		ExecutionYear.readCurrentExecutionYear())) {
-	    RegistrationState registrationState = registration.getLastRegistrationState(execYear);
-	    if (registrationState != null && registrationState.isActive()) {
-		numberOfEntriesStudentInSecretary += 1;
-	    }
-	}
-	return numberOfEntriesStudentInSecretary;
-
-    }
-
-    private boolean isLowPerformanceStudent(Registration registration, BigDecimal ects, int numberOfEntriesStudentInSecretary,
-	    List<AbstractPrescriptionRule> prescriptionRules) {
-	for (AbstractPrescriptionRule prescriptionRule : prescriptionRules) {
-	    if ((prescriptionRule.isPrescript(registration, ects, numberOfEntriesStudentInSecretary))) {
-		return true;
-	    }
-	}
-	return false;
-    }
-
-    private String workingStudent(Student student) {
-	return student.isWorkingStudent() ? "Trabalhor Estudante" + ";" : "";
-    }
-
-    private String parcialStudent(Registration registration) {
-	return (registration.isPartialRegime(ExecutionYear.readCurrentExecutionYear()) ? "Estudante Parcial" + ";" : "");
-    }
-
-    private String flunkedStudent(List<Registration> registrations) {
-	for (Registration registration : registrations) {
-	    for (RegistrationState registrationState : registration.getRegistrationStates())
-		if (registrationState.getStateType() == RegistrationStateType.FLUNKED) {
-		    return "Prescrito" + ";";
+			Collections.sort(path, Registration.COMPARATOR_BY_START_DATE);
+			return path;
+		} else {
+			return Collections.singletonList(current);
 		}
 	}
-	return "";
-    }
 
-    private Spreadsheet createSpreadsheet(List<StudentLowPerformanceBean> studentLowPerformanceBeans) throws IOException {
-	Spreadsheet spreadsheet = new Spreadsheet(getFilename());
-
-	spreadsheet.setHeader("Nome");
-	spreadsheet.setHeader("Número");
-	spreadsheet.setHeader("Nome do Curso");
-	spreadsheet.setHeader("Ciclo");
-	spreadsheet.setHeader("Créditos Alcançados");
-	spreadsheet.setHeader("Regime");
-	spreadsheet.setHeader("Email");
-	spreadsheet.setHeader("Número de Inscrições");
-	spreadsheet.setHeader("Início da Matrícula");
-	spreadsheet.setHeader("Tutor");
-	spreadsheet.setHeader("Email do Tutor");
-
-	for (StudentLowPerformanceBean studentLowPerformanceBean : studentLowPerformanceBeans) {
-	    final Row row = spreadsheet.addRow();
-	    row.setCell(studentLowPerformanceBean.getStudent().getName());
-	    row.setCell(studentLowPerformanceBean.getStudent().getNumber().toString());
-	    row.setCell(studentLowPerformanceBean.getDegree().getName());
-	    row.setCell(studentLowPerformanceBean.getDegree().getDegreeType().getLocalizedName());
-	    row.setCell(studentLowPerformanceBean.getSumEcts().toString());
-	    row.setCell(studentLowPerformanceBean.getRegime());
-	    row.setCell(studentLowPerformanceBean.getEmail());
-	    row.setCell(studentLowPerformanceBean.getNumberOfEntriesStudentInSecretary());
-	    row.setCell(studentLowPerformanceBean.getRegistrationStart());
-	    List<Tutorship> tutorships = studentLowPerformanceBean.getStudent().getActiveTutorships();
-	    if (!tutorships.isEmpty()) {
-		row.setCell(tutorships.iterator().next().getTeacher().getPerson().getPresentationName());
-		row.setCell(tutorships.iterator().next().getTeacher().getPerson().getInstitutionalOrDefaultEmailAddressValue());
-	    } else {
-		row.setCell("");
-		row.setCell("");
-	    }
+	protected static boolean isValidSourceLink(Registration source) {
+		return source.getActiveStateType().equals(RegistrationStateType.TRANSITED)
+				|| source.getActiveStateType().equals(RegistrationStateType.FLUNKED)
+				|| source.getActiveStateType().equals(RegistrationStateType.INTERNAL_ABANDON)
+				|| source.getActiveStateType().equals(RegistrationStateType.EXTERNAL_ABANDON)
+				|| source.getActiveStateType().equals(RegistrationStateType.INTERRUPTED);
 	}
 
-	return spreadsheet;
-    }
-
-    // Historic Student
-    protected static List<Registration> getFullRegistrationPath(final Registration current) {
-	if (current.getDegreeType() == DegreeType.BOLONHA_DEGREE
-		|| current.getDegreeType() == DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE) {
-	    List<Registration> path = new ArrayList<Registration>();
-	    path.add(current);
-	    Registration source;
-	    if (current.hasSourceRegistration()
-		    && (!(source = current.getSourceRegistration()).isBolonha() || isValidSourceLink(source))) {
-		path.addAll(getFullRegistrationPath(source));
-	    }
-
-	    Collections.sort(path, Registration.COMPARATOR_BY_START_DATE);
-	    return path;
-	} else {
-	    return Collections.singletonList(current);
+	private boolean isValidRegistration(Registration registration) {
+		return registration.isBolonha() && registration.isActive()
+				&& (registration.getDegreeType().isFirstCycle() || registration.getDegreeType().isSecondCycle())
+				&& !registration.getDegreeType().isEmpty();
 	}
-    }
 
-    protected static boolean isValidSourceLink(Registration source) {
-	return source.getActiveStateType().equals(RegistrationStateType.TRANSITED)
-		|| source.getActiveStateType().equals(RegistrationStateType.FLUNKED)
-		|| source.getActiveStateType().equals(RegistrationStateType.INTERNAL_ABANDON)
-		|| source.getActiveStateType().equals(RegistrationStateType.EXTERNAL_ABANDON)
-		|| source.getActiveStateType().equals(RegistrationStateType.INTERRUPTED);
-    }
-
-    private boolean isValidRegistration(Registration registration) {
-	return registration.isBolonha() && registration.isActive()
-		&& (registration.getDegreeType().isFirstCycle() || registration.getDegreeType().isSecondCycle())
-		&& !registration.getDegreeType().isEmpty();
-    }
-
-    @Service
-    public static TutorshipStudentLowPerformanceQueueJob createTutorshipStudentLowPerformanceQueueJob(
-	    PrescriptionEnum prescriptionEnum) {
-	final TutorshipStudentLowPerformanceQueueJob tutorshipStudentLowPerformanceQueueJob = new TutorshipStudentLowPerformanceQueueJob(
-		prescriptionEnum);
-	return tutorshipStudentLowPerformanceQueueJob;
-    }
+	@Service
+	public static TutorshipStudentLowPerformanceQueueJob createTutorshipStudentLowPerformanceQueueJob(
+			PrescriptionEnum prescriptionEnum) {
+		final TutorshipStudentLowPerformanceQueueJob tutorshipStudentLowPerformanceQueueJob =
+				new TutorshipStudentLowPerformanceQueueJob(prescriptionEnum);
+		return tutorshipStudentLowPerformanceQueueJob;
+	}
 }

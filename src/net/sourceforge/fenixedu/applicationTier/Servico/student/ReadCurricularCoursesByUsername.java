@@ -5,7 +5,6 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.student;
 
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -28,23 +27,22 @@ import net.sourceforge.fenixedu.presentationTier.Action.Seminaries.Exceptions.BD
  */
 public class ReadCurricularCoursesByUsername extends FenixService {
 
-    public List run(String username) throws BDException, NonExistingServiceException {
-	List curricularCourses = new LinkedList();
+	public List run(String username) throws BDException, NonExistingServiceException {
+		List curricularCourses = new LinkedList();
 
-	Registration registration = Registration.readByUsername(username);
-	if (registration == null) {
-	    throw new NonExistingServiceException();
-	}
-	List<StudentCurricularPlan> curricularPlans = registration.getStudentCurricularPlans();
-	for (Iterator iterator = curricularPlans.iterator(); iterator.hasNext();) {
-	    StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) iterator.next();
-	    for (Iterator curricularCoursesIterator = studentCurricularPlan.getDegreeCurricularPlan().getCurricularCourses()
-		    .iterator(); curricularCoursesIterator.hasNext();) {
-		CurricularCourse curricularCourse = (CurricularCourse) curricularCoursesIterator.next();
-		curricularCourses.add(InfoCurricularCourse.newInfoFromDomain(curricularCourse));
-	    }
-	}
+		Registration registration = Registration.readByUsername(username);
+		if (registration == null) {
+			throw new NonExistingServiceException();
+		}
+		List<StudentCurricularPlan> curricularPlans = registration.getStudentCurricularPlans();
+		for (Object element : curricularPlans) {
+			StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) element;
+			for (Object element2 : studentCurricularPlan.getDegreeCurricularPlan().getCurricularCourses()) {
+				CurricularCourse curricularCourse = (CurricularCourse) element2;
+				curricularCourses.add(InfoCurricularCourse.newInfoFromDomain(curricularCourse));
+			}
+		}
 
-	return curricularCourses;
-    }
+		return curricularCourses;
+	}
 }

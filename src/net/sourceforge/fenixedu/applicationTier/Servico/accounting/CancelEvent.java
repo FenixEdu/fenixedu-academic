@@ -8,9 +8,9 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class CancelEvent extends FenixService {
 
-    @Checked("AcademicPredicates.MANAGE_PAYMENTS")
-    @Service
-    public static void run(final Event event, final Person responsible, final String justification) {
-	event.cancel(responsible, justification);
-    }
+	@Checked("AcademicPredicates.MANAGE_PAYMENTS")
+	@Service
+	public static void run(final Event event, final Person responsible, final String justification) {
+		event.cancel(responsible, justification);
+	}
 }

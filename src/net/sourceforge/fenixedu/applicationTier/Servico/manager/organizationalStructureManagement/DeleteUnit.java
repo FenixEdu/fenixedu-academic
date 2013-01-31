@@ -12,14 +12,14 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class DeleteUnit extends FenixService {
 
-    @Checked("RolePredicates.MANAGER_PREDICATE")
-    @Service
-    public static void run(Integer unitID) throws FenixServiceException {
-	Unit unit = (Unit) rootDomainObject.readPartyByOID(unitID);
-	if (unit == null) {
-	    throw new FenixServiceException("error.noUnit");
+	@Checked("RolePredicates.MANAGER_PREDICATE")
+	@Service
+	public static void run(Integer unitID) throws FenixServiceException {
+		Unit unit = (Unit) rootDomainObject.readPartyByOID(unitID);
+		if (unit == null) {
+			throw new FenixServiceException("error.noUnit");
+		}
+		unit.delete();
 	}
-	unit.delete();
-    }
 
 }

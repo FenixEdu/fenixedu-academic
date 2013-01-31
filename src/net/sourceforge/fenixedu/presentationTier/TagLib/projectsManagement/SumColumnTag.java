@@ -20,45 +20,48 @@ import net.sourceforge.fenixedu.util.projectsManagement.FormatDouble;
  * 
  */
 public class SumColumnTag extends TagSupport {
-    private int column;
+	private int column;
 
-    private String id;
+	private String id;
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see javax.servlet.jsp.tagext.Tag#doStartTag()
-     */
-    public int doStartTag() {
-	List lines = (List) pageContext.findAttribute(id);
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see javax.servlet.jsp.tagext.Tag#doStartTag()
+	 */
+	@Override
+	public int doStartTag() {
+		List lines = (List) pageContext.findAttribute(id);
 
-	double sum = 0;
+		double sum = 0;
 
-	for (int i = 0; i < lines.size(); i++) {
-	    IReportLine line = (IReportLine) lines.get(i);
-	    sum += line.getValue(column).doubleValue();
+		for (int i = 0; i < lines.size(); i++) {
+			IReportLine line = (IReportLine) lines.get(i);
+			sum += line.getValue(column).doubleValue();
+		}
+		try {
+			pageContext.getOut().print(FormatDouble.convertDoubleToString(sum));
+		} catch (IOException e) {
+		}
+
+		return SKIP_BODY;
 	}
-	try {
-	    pageContext.getOut().print(FormatDouble.convertDoubleToString(sum));
-	} catch (IOException e) {
+
+	public int getColumn() {
+		return column;
 	}
 
-	return SKIP_BODY;
-    }
+	public void setColumn(int column) {
+		this.column = column;
+	}
 
-    public int getColumn() {
-	return column;
-    }
+	@Override
+	public String getId() {
+		return id;
+	}
 
-    public void setColumn(int column) {
-	this.column = column;
-    }
-
-    public String getId() {
-	return id;
-    }
-
-    public void setId(String id) {
-	this.id = id;
-    }
+	@Override
+	public void setId(String id) {
+		this.id = id;
+	}
 }

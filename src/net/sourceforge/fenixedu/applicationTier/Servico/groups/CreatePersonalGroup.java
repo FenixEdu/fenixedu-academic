@@ -9,24 +9,24 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class CreatePersonalGroup extends FenixService {
 
-    @Service
-    public static PersonalGroup run(Person person, String name, String description, Group group) throws FenixServiceException {
-	PersonalGroup personalGroup = new PersonalGroup();
+	@Service
+	public static PersonalGroup run(Person person, String name, String description, Group group) throws FenixServiceException {
+		PersonalGroup personalGroup = new PersonalGroup();
 
-	if (person == null) {
-	    throw new FenixServiceException("Person can not be null");
+		if (person == null) {
+			throw new FenixServiceException("Person can not be null");
+		}
+
+		if (group == null) {
+			throw new FenixServiceException("Group can not be null");
+		}
+
+		personalGroup.setName(name);
+		personalGroup.setDescription(description);
+		personalGroup.setGroup(group);
+		personalGroup.setPerson(person);
+
+		return personalGroup;
 	}
-
-	if (group == null) {
-	    throw new FenixServiceException("Group can not be null");
-	}
-
-	personalGroup.setName(name);
-	personalGroup.setDescription(description);
-	personalGroup.setGroup(group);
-	personalGroup.setPerson(person);
-
-	return personalGroup;
-    }
 
 }

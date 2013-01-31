@@ -7,27 +7,27 @@ import pt.ist.fenixWebFramework.renderers.validators.HtmlValidator;
 
 public class RequiredAutoCompleteSelectionValidator extends HtmlValidator {
 
-    public RequiredAutoCompleteSelectionValidator() {
-	super();
-	setMessage("renderers.validator.autoComplete.required");
-    }
-
-    public RequiredAutoCompleteSelectionValidator(HtmlChainValidator htmlChainValidator) {
-	super(htmlChainValidator);
-
-	setMessage("renderers.validator.autoComplete.required");
-    }
-
-    @Override
-    public void performValidation() {
-	HtmlSimpleValueComponent component = (HtmlSimpleValueComponent) getComponent();
-
-	String value = component.getValue();
-	if (value == null || value.length() == 0 || value.equals(AutoCompleteInputRenderer.TYPING_VALUE)) {
-	    setValid(false);
-	} else {
-	    setValid(true);
+	public RequiredAutoCompleteSelectionValidator() {
+		super();
+		setMessage("renderers.validator.autoComplete.required");
 	}
-    }
+
+	public RequiredAutoCompleteSelectionValidator(HtmlChainValidator htmlChainValidator) {
+		super(htmlChainValidator);
+
+		setMessage("renderers.validator.autoComplete.required");
+	}
+
+	@Override
+	public void performValidation() {
+		HtmlSimpleValueComponent component = (HtmlSimpleValueComponent) getComponent();
+
+		String value = component.getValue();
+		if (value == null || value.length() == 0 || value.equals(AutoCompleteInputRenderer.TYPING_VALUE)) {
+			setValid(false);
+		} else {
+			setValid(true);
+		}
+	}
 
 }

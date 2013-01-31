@@ -12,80 +12,80 @@ import org.joda.time.LocalDate;
 
 public class PhdEventExemptionBean implements Serializable {
 
-    static private final long serialVersionUID = 1L;
+	static private final long serialVersionUID = 1L;
 
-    private PhdEvent event;
+	private PhdEvent event;
 
-    private PhdEventExemptionJustificationType justificationType;
+	private PhdEventExemptionJustificationType justificationType;
 
-    private Money value;
+	private Money value;
 
-    private LocalDate dispatchDate;
+	private LocalDate dispatchDate;
 
-    private String reason;
-    
-    private List<Party> providers;
+	private String reason;
 
-    private Party provider;
-    
-    public PhdEventExemptionBean(final PhdEvent event) {
-	setEvent(event);
-    }
+	private List<Party> providers;
 
-    public PhdEvent getEvent() {
-	return event;
-    }
+	private Party provider;
 
-    public void setEvent(PhdEvent event) {
-	this.event = event;
-    }
+	public PhdEventExemptionBean(final PhdEvent event) {
+		setEvent(event);
+	}
 
-    public PhdEventExemptionJustificationType getJustificationType() {
-	return justificationType;
-    }
+	public PhdEvent getEvent() {
+		return event;
+	}
 
-    public void setJustificationType(PhdEventExemptionJustificationType justificationType) {
-	this.justificationType = justificationType;
-    }
+	public void setEvent(PhdEvent event) {
+		this.event = event;
+	}
 
-    public Money getValue() {
-	return value;
-    }
+	public PhdEventExemptionJustificationType getJustificationType() {
+		return justificationType;
+	}
 
-    public void setValue(Money value) {
-	this.value = value;
-    }
+	public void setJustificationType(PhdEventExemptionJustificationType justificationType) {
+		this.justificationType = justificationType;
+	}
 
-    public LocalDate getDispatchDate() {
-	return dispatchDate;
-    }
+	public Money getValue() {
+		return value;
+	}
 
-    public void setDispatchDate(LocalDate dispatchDate) {
-	this.dispatchDate = dispatchDate;
-    }
+	public void setValue(Money value) {
+		this.value = value;
+	}
 
-    public String getReason() {
-	return reason;
-    }
+	public LocalDate getDispatchDate() {
+		return dispatchDate;
+	}
 
-    public void setReason(String reason) {
-	this.reason = reason;
-    }
+	public void setDispatchDate(LocalDate dispatchDate) {
+		this.dispatchDate = dispatchDate;
+	}
 
-    public List<Party> getProviders() {
-	return providers;
-    }
+	public String getReason() {
+		return reason;
+	}
 
-    public void setProviders(List<Party> providers) {
-	this.providers = providers;
-    }
+	public void setReason(String reason) {
+		this.reason = reason;
+	}
 
-    public Party getProvider() {
-	return provider;
-    }
+	public List<Party> getProviders() {
+		return providers;
+	}
 
-    public void setProvider(Party provider) {
-	this.provider = provider;
-    }
+	public void setProviders(List<Party> providers) {
+		this.providers = providers;
+	}
+
+	public Party getProvider() {
+		return provider;
+	}
+
+	public void setProvider(Party provider) {
+		this.provider = provider;
+	}
 
 }

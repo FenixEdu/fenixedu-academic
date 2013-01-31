@@ -16,64 +16,55 @@ import net.sourceforge.fenixedu.util.HostAccessControl;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(module = "external", path = "/consultRoles", scope = "request", parameter = "method")
 public class ConsultRolesAction extends FenixAction {
 
-    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-	    throws Exception {
-	final String host = HostAccessControl.getRemoteAddress(request);
-	final String ip = request.getRemoteAddr();
-	final String password = request.getParameter("password");
-	final String userUId = request.getParameter("userUId");
+	@Override
+	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+		final String host = HostAccessControl.getRemoteAddress(request);
+		final String ip = request.getRemoteAddr();
+		final String password = request.getParameter("password");
+		final String userUId = request.getParameter("userUId");
 
-	String message = "ko";
+		String message = "ko";
 
-	try {
+		try {
 
-	    final Set<Role> roles = (Set<Role>) ConsultRoles.run(host, ip, password, userUId);
-	    final StringBuilder stringBuilder = new StringBuilder();
-	    if (roles == null) {
-		stringBuilder.append("User does not exist");
-	    } else {
-		stringBuilder.append("ok");
-		for (final Role role : roles) {
-		    stringBuilder.append('\n');
-		    stringBuilder.append(role.getRoleType().getName());
+			final Set<Role> roles = ConsultRoles.run(host, ip, password, userUId);
+			final StringBuilder stringBuilder = new StringBuilder();
+			if (roles == null) {
+				stringBuilder.append("User does not exist");
+			} else {
+				stringBuilder.append("ok");
+				for (final Role role : roles) {
+					stringBuilder.append('\n');
+					stringBuilder.append(role.getRoleType().getName());
+				}
+				stringBuilder.append('\n');
+			}
+			message = stringBuilder.toString();
+		} catch (NotAuthorizedException ex) {
+			message = "Not authorized";
+		} catch (Throwable ex) {
+			message = ex.getMessage();
+			ex.printStackTrace();
+		} finally {
+			writeResponse(response, message);
 		}
-		stringBuilder.append('\n');
-	    }
-	    message = stringBuilder.toString();
-	} catch (NotAuthorizedException ex) {
-	    message = "Not authorized";
-	} catch (Throwable ex) {
-	    message = ex.getMessage();
-	    ex.printStackTrace();
-	} finally {
-	    writeResponse(response, message);
+
+		return null;
 	}
 
-	return null;
-    }
-
-    private void writeResponse(final HttpServletResponse response, final String message) throws IOException {
-	final ServletOutputStream servletOutputStream = response.getOutputStream();
-	response.setContentType("text/html");
-	servletOutputStream.print(message);
-	servletOutputStream.flush();
-	response.flushBuffer();
-    }
+	private void writeResponse(final HttpServletResponse response, final String message) throws IOException {
+		final ServletOutputStream servletOutputStream = response.getOutputStream();
+		response.setContentType("text/html");
+		servletOutputStream.print(message);
+		servletOutputStream.flush();
+		response.flushBuffer();
+	}
 
 }

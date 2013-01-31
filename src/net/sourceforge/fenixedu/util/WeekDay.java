@@ -11,61 +11,61 @@ import org.joda.time.DateTime;
  */
 
 public enum WeekDay {
-    MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY, SUNDAY;
+	MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY, SUNDAY;
 
-    public String getName() {
-	return name();
-    }
-
-    public static WeekDay getWeekDay(final DiaSemana weekDay) {
-	switch (weekDay.getDiaSemana()) {
-	case DiaSemana.DOMINGO:
-	    return WeekDay.SUNDAY;
-	case DiaSemana.SEGUNDA_FEIRA:
-	    return WeekDay.MONDAY;
-	case DiaSemana.TERCA_FEIRA:
-	    return WeekDay.TUESDAY;
-	case DiaSemana.QUARTA_FEIRA:
-	    return WeekDay.WEDNESDAY;
-	case DiaSemana.QUINTA_FEIRA:
-	    return WeekDay.THURSDAY;
-	case DiaSemana.SEXTA_FEIRA:
-	    return WeekDay.FRIDAY;
-	case DiaSemana.SABADO:
-	    return WeekDay.SATURDAY;
-	default:
-	    return null;
+	public String getName() {
+		return name();
 	}
-    }
 
-    public static WeekDay fromJodaTimeToWeekDay(final DateTime date) {
-	final int dayOfWeek = date.dayOfWeek().get();
-	switch (dayOfWeek) {
-	case 1:
-	    return WeekDay.MONDAY;
-	case 2:
-	    return WeekDay.TUESDAY;
-	case 3:
-	    return WeekDay.WEDNESDAY;
-	case 4:
-	    return WeekDay.THURSDAY;
-	case 5:
-	    return WeekDay.FRIDAY;
-	case 6:
-	    return WeekDay.SATURDAY;
-	case 7:
-	    return WeekDay.SUNDAY;
-	default:
-	    return null;
+	public static WeekDay getWeekDay(final DiaSemana weekDay) {
+		switch (weekDay.getDiaSemana()) {
+		case DiaSemana.DOMINGO:
+			return WeekDay.SUNDAY;
+		case DiaSemana.SEGUNDA_FEIRA:
+			return WeekDay.MONDAY;
+		case DiaSemana.TERCA_FEIRA:
+			return WeekDay.TUESDAY;
+		case DiaSemana.QUARTA_FEIRA:
+			return WeekDay.WEDNESDAY;
+		case DiaSemana.QUINTA_FEIRA:
+			return WeekDay.THURSDAY;
+		case DiaSemana.SEXTA_FEIRA:
+			return WeekDay.FRIDAY;
+		case DiaSemana.SABADO:
+			return WeekDay.SATURDAY;
+		default:
+			return null;
+		}
 	}
-    }
 
-    public String getLabel() {
-	return BundleUtil.getStringFromResourceBundle("resources.EnumerationResources", name());
-    }
+	public static WeekDay fromJodaTimeToWeekDay(final DateTime date) {
+		final int dayOfWeek = date.dayOfWeek().get();
+		switch (dayOfWeek) {
+		case 1:
+			return WeekDay.MONDAY;
+		case 2:
+			return WeekDay.TUESDAY;
+		case 3:
+			return WeekDay.WEDNESDAY;
+		case 4:
+			return WeekDay.THURSDAY;
+		case 5:
+			return WeekDay.FRIDAY;
+		case 6:
+			return WeekDay.SATURDAY;
+		case 7:
+			return WeekDay.SUNDAY;
+		default:
+			return null;
+		}
+	}
 
-    public String getLabelShort() {
-	return BundleUtil.getStringFromResourceBundle("resources.EnumerationResources", name() + ".short");
-    }
+	public String getLabel() {
+		return BundleUtil.getStringFromResourceBundle("resources.EnumerationResources", name());
+	}
+
+	public String getLabelShort() {
+		return BundleUtil.getStringFromResourceBundle("resources.EnumerationResources", name() + ".short");
+	}
 
 }

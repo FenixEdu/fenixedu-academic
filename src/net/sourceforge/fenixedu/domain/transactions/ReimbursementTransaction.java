@@ -13,32 +13,32 @@ import net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuideEntr
  */
 public class ReimbursementTransaction extends ReimbursementTransaction_Base {
 
-    public ReimbursementTransaction() {
+	public ReimbursementTransaction() {
 
-    }
+	}
 
-    /**
-     * @param value
-     * @param transactionDate
-     * @param remarks
-     * @param paymentType
-     * @param transactionType
-     * @param wasInternalBalance
-     * @param responsiblePerson
-     * @param personAccount
-     * @param reimbursementGuideEntry
-     */
-    public ReimbursementTransaction(Double value, Timestamp transactionDate, String remarks, PaymentType paymentType,
-	    TransactionType transactionType, Boolean wasInternalBalance, Person responsiblePerson, PersonAccount personAccount,
-	    ReimbursementGuideEntry reimbursementGuideEntry) {
-	setValue(value);
-	setTransactionDate(transactionDate);
-	setRemarks(remarks);
-	setPaymentType(paymentType);
-	setTransactionType(transactionType);
-	setWasInternalBalance(wasInternalBalance);
-	setResponsiblePerson(responsiblePerson);
-	setPersonAccount(personAccount);
-	setReimbursementGuideEntry(reimbursementGuideEntry);
-    }
+	/**
+	 * @param value
+	 * @param transactionDate
+	 * @param remarks
+	 * @param paymentType
+	 * @param transactionType
+	 * @param wasInternalBalance
+	 * @param responsiblePerson
+	 * @param personAccount
+	 * @param reimbursementGuideEntry
+	 */
+	public ReimbursementTransaction(Double value, Timestamp transactionDate, String remarks, PaymentType paymentType,
+			TransactionType transactionType, Boolean wasInternalBalance, Person responsiblePerson, PersonAccount personAccount,
+			ReimbursementGuideEntry reimbursementGuideEntry) {
+		setValue(value);
+		setTransactionDate(transactionDate);
+		setRemarks(remarks);
+		setPaymentType(paymentType);
+		setTransactionType(transactionType);
+		setWasInternalBalance(wasInternalBalance);
+		setResponsiblePerson(responsiblePerson);
+		setPersonAccount(personAccount);
+		setReimbursementGuideEntry(reimbursementGuideEntry);
+	}
 }

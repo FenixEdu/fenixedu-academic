@@ -18,15 +18,15 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class ReadDepartmentByUser extends FenixService {
 
-    @Service
-    public static InfoDepartment run(String username) throws FenixServiceException {
-	InfoDepartment infoDepartment = null;
+	@Service
+	public static InfoDepartment run(String username) throws FenixServiceException {
+		InfoDepartment infoDepartment = null;
 
-	final Person person = Person.readPersonByUsername(username);
-	final List<Department> departmentList = person.getManageableDepartmentCredits();
-	if (!departmentList.isEmpty()) {
-	    infoDepartment = InfoDepartment.newInfoFromDomain((Department) departmentList.get(0));
+		final Person person = Person.readPersonByUsername(username);
+		final List<Department> departmentList = person.getManageableDepartmentCredits();
+		if (!departmentList.isEmpty()) {
+			infoDepartment = InfoDepartment.newInfoFromDomain(departmentList.get(0));
+		}
+		return infoDepartment;
 	}
-	return infoDepartment;
-    }
 }

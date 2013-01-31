@@ -16,87 +16,87 @@ import pt.utl.ist.fenix.tools.util.Pair;
 
 public class TSDCourseDTOEntry extends DataTranferObject {
 
-    public static final Comparator<TSDCourseDTOEntry> COMPARATOR_BY_NAME = new Comparator<TSDCourseDTOEntry>() {
+	public static final Comparator<TSDCourseDTOEntry> COMPARATOR_BY_NAME = new Comparator<TSDCourseDTOEntry>() {
 
-	@Override
-	public int compare(TSDCourseDTOEntry o1, TSDCourseDTOEntry o2) {
-	    return o1.getTSDCourse().getName().compareTo(o2.getTSDCourse().getName());
+		@Override
+		public int compare(TSDCourseDTOEntry o1, TSDCourseDTOEntry o2) {
+			return o1.getTSDCourse().getName().compareTo(o2.getTSDCourse().getName());
+		}
+
+	};
+
+	private TSDCourse tsdCourse;
+	private List<ExecutionSemester> executionPeriodList = null;
+
+	public TSDCourseDTOEntry(TSDCourse _tsdCourse, List<ExecutionSemester> executionPeriodList) {
+		this.tsdCourse = _tsdCourse;
+		this.executionPeriodList = executionPeriodList;
 	}
 
-    };
+	public List<TSDProfessorshipDTOEntry> getTSDProfessorshipDTOEntries() {
+		List<TSDProfessorshipDTOEntry> tsdProfessorshipDTOEntryList = new ArrayList<TSDProfessorshipDTOEntry>();
 
-    private TSDCourse tsdCourse;
-    private List<ExecutionSemester> executionPeriodList = null;
+		for (TSDTeacher teacher : tsdCourse.getAssociatedTSDTeachers()) {
+			tsdProfessorshipDTOEntryList.add(new TSDProfessorshipDTOEntry(tsdCourse.getTSDProfessorshipByTSDTeacher(teacher),
+					executionPeriodList));
+		}
 
-    public TSDCourseDTOEntry(TSDCourse _tsdCourse, List<ExecutionSemester> executionPeriodList) {
-	this.tsdCourse = _tsdCourse;
-	this.executionPeriodList = executionPeriodList;
-    }
-
-    public List<TSDProfessorshipDTOEntry> getTSDProfessorshipDTOEntries() {
-	List<TSDProfessorshipDTOEntry> tsdProfessorshipDTOEntryList = new ArrayList<TSDProfessorshipDTOEntry>();
-
-	for (TSDTeacher teacher : tsdCourse.getAssociatedTSDTeachers()) {
-	    tsdProfessorshipDTOEntryList.add(new TSDProfessorshipDTOEntry(tsdCourse.getTSDProfessorshipByTSDTeacher(teacher),
-		    executionPeriodList));
+		return tsdProfessorshipDTOEntryList;
 	}
 
-	return tsdProfessorshipDTOEntryList;
-    }
-
-    public TSDCourse getTSDCourse() {
-	return tsdCourse;
-    }
-
-    public List<Pair<String, List<String>>> getCurricularCoursesInformation() {
-	List<Pair<String, List<String>>> curricularCourseInformation = new ArrayList<Pair<String, List<String>>>();
-
-	List<CurricularCourse> tsdCurricularCourseList = tsdCourse.getAssociatedCurricularCourses();
-
-	for (CurricularCourse tsdCurricularCourse : tsdCurricularCourseList) {
-	    Set<String> curricularYearsSet = buildCurricularYearsSet(tsdCurricularCourse, tsdCourse.getExecutionPeriod());
-
-	    List<String> curricularYearsList = new ArrayList<String>();
-	    curricularYearsList.addAll(curricularYearsSet);
-
-	    curricularCourseInformation.add(new Pair<String, List<String>>(tsdCurricularCourse.getDegreeCurricularPlan()
-		    .getDegree().getSigla(), curricularYearsList));
-
+	public TSDCourse getTSDCourse() {
+		return tsdCourse;
 	}
 
-	return curricularCourseInformation;
-    }
+	public List<Pair<String, List<String>>> getCurricularCoursesInformation() {
+		List<Pair<String, List<String>>> curricularCourseInformation = new ArrayList<Pair<String, List<String>>>();
 
-    public String getAcronym() {
-	CurricularCourse tsdCurricularCourse = null;
-	if (!tsdCourse.getAssociatedCurricularCourses().isEmpty()) {
-	    tsdCurricularCourse = tsdCourse.getAssociatedCurricularCourses().get(0);
+		List<CurricularCourse> tsdCurricularCourseList = tsdCourse.getAssociatedCurricularCourses();
+
+		for (CurricularCourse tsdCurricularCourse : tsdCurricularCourseList) {
+			Set<String> curricularYearsSet = buildCurricularYearsSet(tsdCurricularCourse, tsdCourse.getExecutionPeriod());
+
+			List<String> curricularYearsList = new ArrayList<String>();
+			curricularYearsList.addAll(curricularYearsSet);
+
+			curricularCourseInformation.add(new Pair<String, List<String>>(tsdCurricularCourse.getDegreeCurricularPlan()
+					.getDegree().getSigla(), curricularYearsList));
+
+		}
+
+		return curricularCourseInformation;
 	}
 
-	if (tsdCurricularCourse != null) {
-	    return tsdCurricularCourse.getAcronym();
-	} else {
-	    return tsdCourse.getCompetenceName();
-	}
-    }
+	public String getAcronym() {
+		CurricularCourse tsdCurricularCourse = null;
+		if (!tsdCourse.getAssociatedCurricularCourses().isEmpty()) {
+			tsdCurricularCourse = tsdCourse.getAssociatedCurricularCourses().get(0);
+		}
 
-    private Set<String> buildCurricularYearsSet(CurricularCourse tsdCurricularCourseEntry, ExecutionSemester executionPeriodEntry) {
-	Set<String> curricularYearsSet = new LinkedHashSet<String>();
-
-	for (Integer year : getCurricularIntYears(tsdCurricularCourseEntry)) {
-	    curricularYearsSet.add(year.toString());
-	}
-	return curricularYearsSet;
-    }
-
-    private List<Integer> getCurricularIntYears(CurricularCourse course) {
-	List<Integer> curricularYearList = new ArrayList<Integer>();
-
-	for (DegreeModuleScope degreeModuleScope : course.getDegreeModuleScopes()) {
-	    curricularYearList.add(degreeModuleScope.getCurricularYear());
+		if (tsdCurricularCourse != null) {
+			return tsdCurricularCourse.getAcronym();
+		} else {
+			return tsdCourse.getCompetenceName();
+		}
 	}
 
-	return curricularYearList;
-    }
+	private Set<String> buildCurricularYearsSet(CurricularCourse tsdCurricularCourseEntry, ExecutionSemester executionPeriodEntry) {
+		Set<String> curricularYearsSet = new LinkedHashSet<String>();
+
+		for (Integer year : getCurricularIntYears(tsdCurricularCourseEntry)) {
+			curricularYearsSet.add(year.toString());
+		}
+		return curricularYearsSet;
+	}
+
+	private List<Integer> getCurricularIntYears(CurricularCourse course) {
+		List<Integer> curricularYearList = new ArrayList<Integer>();
+
+		for (DegreeModuleScope degreeModuleScope : course.getDegreeModuleScopes()) {
+			curricularYearList.add(degreeModuleScope.getCurricularYear());
+		}
+
+		return curricularYearList;
+	}
 
 }

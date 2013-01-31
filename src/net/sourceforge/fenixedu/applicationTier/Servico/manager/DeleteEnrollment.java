@@ -20,27 +20,27 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class DeleteEnrollment extends FenixService {
 
-    @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
-    @Service
-    public static void run(final Integer studentNumber, final DegreeType degreeType, final Integer enrollmentId) {
-	for (Registration registration : Registration.readByNumberAndDegreeType(studentNumber, degreeType)) {
-	    final Enrolment enrollment = registration.findEnrolmentByEnrolmentID(enrollmentId);
-	    if (enrollment != null) {
-		for (EnrolmentEvaluation evaluation : enrollment.getEvaluations()) {
-		    evaluation.setEnrolmentEvaluationState(EnrolmentEvaluationState.TEMPORARY_OBJ);
+	@Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
+	@Service
+	public static void run(final Integer studentNumber, final DegreeType degreeType, final Integer enrollmentId) {
+		for (Registration registration : Registration.readByNumberAndDegreeType(studentNumber, degreeType)) {
+			final Enrolment enrollment = registration.findEnrolmentByEnrolmentID(enrollmentId);
+			if (enrollment != null) {
+				for (EnrolmentEvaluation evaluation : enrollment.getEvaluations()) {
+					evaluation.setEnrolmentEvaluationState(EnrolmentEvaluationState.TEMPORARY_OBJ);
+				}
+
+				final CurriculumGroup parentCurriculumGroup = enrollment.getCurriculumGroup();
+
+				enrollment.delete();
+
+				if (parentCurriculumGroup != null && parentCurriculumGroup.canBeDeleted()) {
+					parentCurriculumGroup.delete();
+				}
+
+				return;
+			}
 		}
-
-		final CurriculumGroup parentCurriculumGroup = enrollment.getCurriculumGroup();
-
-		enrollment.delete();
-
-		if (parentCurriculumGroup != null && parentCurriculumGroup.canBeDeleted()) {
-		    parentCurriculumGroup.delete();
-		}
-
-		return;
-	    }
 	}
-    }
 
 }

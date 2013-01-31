@@ -17,41 +17,41 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
  */
 public class InfoSiteExternalActivities extends DataTranferObject implements ISiteComponent {
 
-    private List infoExternalActivities;
+	private List infoExternalActivities;
 
-    private InfoTeacher infoTeacher;
+	private InfoTeacher infoTeacher;
 
-    public InfoSiteExternalActivities() {
-    }
+	public InfoSiteExternalActivities() {
+	}
 
-    /**
-     * @return Returns the infoExternalActivities.
-     */
-    public List getInfoExternalActivities() {
-	return infoExternalActivities;
-    }
+	/**
+	 * @return Returns the infoExternalActivities.
+	 */
+	public List getInfoExternalActivities() {
+		return infoExternalActivities;
+	}
 
-    /**
-     * @param infoExternalActivities
-     *            The infoExternalActivities to set.
-     */
-    public void setInfoExternalActivities(List infoExternalActivities) {
-	this.infoExternalActivities = infoExternalActivities;
-    }
+	/**
+	 * @param infoExternalActivities
+	 *            The infoExternalActivities to set.
+	 */
+	public void setInfoExternalActivities(List infoExternalActivities) {
+		this.infoExternalActivities = infoExternalActivities;
+	}
 
-    /**
-     * @return Returns the infoTeacher.
-     */
-    public InfoTeacher getInfoTeacher() {
-	return infoTeacher;
-    }
+	/**
+	 * @return Returns the infoTeacher.
+	 */
+	public InfoTeacher getInfoTeacher() {
+		return infoTeacher;
+	}
 
-    /**
-     * @param infoTeacher
-     *            The infoTeacher to set.
-     */
-    public void setInfoTeacher(InfoTeacher infoTeacher) {
-	this.infoTeacher = infoTeacher;
-    }
+	/**
+	 * @param infoTeacher
+	 *            The infoTeacher to set.
+	 */
+	public void setInfoTeacher(InfoTeacher infoTeacher) {
+		this.infoTeacher = infoTeacher;
+	}
 
 }

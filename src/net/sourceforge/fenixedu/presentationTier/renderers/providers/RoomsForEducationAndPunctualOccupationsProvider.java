@@ -10,13 +10,15 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class RoomsForEducationAndPunctualOccupationsProvider implements DataProvider {
 
-    public Object provide(Object source, Object currentValue) {
-	Set<AllocatableSpace> rooms = new TreeSet<AllocatableSpace>(AllocatableSpace.ROOM_COMPARATOR_BY_NAME);
-	rooms.addAll(AllocatableSpace.getAllActiveAllocatableSpacesForEducationAndPunctualOccupations());
-	return rooms;
-    }
+	@Override
+	public Object provide(Object source, Object currentValue) {
+		Set<AllocatableSpace> rooms = new TreeSet<AllocatableSpace>(AllocatableSpace.ROOM_COMPARATOR_BY_NAME);
+		rooms.addAll(AllocatableSpace.getAllActiveAllocatableSpacesForEducationAndPunctualOccupations());
+		return rooms;
+	}
 
-    public Converter getConverter() {
-	return new DomainObjectKeyConverter();
-    }
+	@Override
+	public Converter getConverter() {
+		return new DomainObjectKeyConverter();
+	}
 }

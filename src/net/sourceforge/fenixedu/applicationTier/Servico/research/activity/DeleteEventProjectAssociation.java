@@ -8,14 +8,14 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class DeleteEventProjectAssociation extends FenixService {
 
-    @Checked("ResultPredicates.author")
-    @Service
-    public static void run(Integer associationId) throws FenixServiceException {
-	ProjectEventAssociation association = rootDomainObject.readProjectEventAssociationByOID(associationId);
-	if (association == null) {
-	    throw new FenixServiceException();
+	@Checked("ResultPredicates.author")
+	@Service
+	public static void run(Integer associationId) throws FenixServiceException {
+		ProjectEventAssociation association = rootDomainObject.readProjectEventAssociationByOID(associationId);
+		if (association == null) {
+			throw new FenixServiceException();
+		}
+		association.delete();
 	}
-	association.delete();
-    }
 
 }

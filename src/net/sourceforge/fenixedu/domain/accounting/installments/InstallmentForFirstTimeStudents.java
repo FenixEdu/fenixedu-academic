@@ -20,111 +20,111 @@ import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 
 public class InstallmentForFirstTimeStudents extends InstallmentForFirstTimeStudents_Base {
 
-    protected InstallmentForFirstTimeStudents() {
-	super();
-    }
-
-    public InstallmentForFirstTimeStudents(final PaymentPlan paymentPlan, final Money amount, final YearMonthDay startDate,
-	    final YearMonthDay endDate, final BigDecimal penaltyPercentage, final Integer maxMonthsToApplyPenalty,
-	    final Integer numberOfDaysToStartApplyingPenalty) {
-	this();
-	init(paymentPlan, amount, startDate, endDate, penaltyPercentage, maxMonthsToApplyPenalty,
-		numberOfDaysToStartApplyingPenalty);
-    }
-
-    protected void init(final PaymentPlan paymentPlan, final Money amount, final YearMonthDay startDate,
-	    final YearMonthDay endDate, final BigDecimal penaltyPercentage, final Integer maxMonthsToApplyPenalty,
-	    final Integer numberOfDaysToStartApplyingPenalty) {
-
-	super.init(paymentPlan, amount, startDate, endDate, penaltyPercentage);
-	checkParameters(maxMonthsToApplyPenalty, numberOfDaysToStartApplyingPenalty);
-
-	super.setMaxMonthsToApplyPenalty(maxMonthsToApplyPenalty);
-	super.setNumberOfDaysToStartApplyingPenalty(numberOfDaysToStartApplyingPenalty);
-    }
-
-    private void checkParameters(final Integer maxMonthsToApplyPenalty, final Integer numberOfDaysToStartApplyingPenalty) {
-
-	if (maxMonthsToApplyPenalty == null) {
-	    throw new DomainException(
-		    "error.accounting.installments.InstallmentForFirstTimeStudents.maxMonthsToApplyPenalty.cannot.be.null");
+	protected InstallmentForFirstTimeStudents() {
+		super();
 	}
 
-	if (maxMonthsToApplyPenalty <= 0) {
-	    throw new DomainException(
-		    "error.accounting.installments.InstallmentForFirstTimeStudents.maxMonthsToApplyPenalty.cannot.be.null");
+	public InstallmentForFirstTimeStudents(final PaymentPlan paymentPlan, final Money amount, final YearMonthDay startDate,
+			final YearMonthDay endDate, final BigDecimal penaltyPercentage, final Integer maxMonthsToApplyPenalty,
+			final Integer numberOfDaysToStartApplyingPenalty) {
+		this();
+		init(paymentPlan, amount, startDate, endDate, penaltyPercentage, maxMonthsToApplyPenalty,
+				numberOfDaysToStartApplyingPenalty);
 	}
 
-	if (numberOfDaysToStartApplyingPenalty == null) {
-	    throw new DomainException(
-		    "error.accounting.installments.InstallmentForFirstTimeStudents.numberOfDaysToStartApplyingPenalty.cannot.be.null");
+	protected void init(final PaymentPlan paymentPlan, final Money amount, final YearMonthDay startDate,
+			final YearMonthDay endDate, final BigDecimal penaltyPercentage, final Integer maxMonthsToApplyPenalty,
+			final Integer numberOfDaysToStartApplyingPenalty) {
+
+		super.init(paymentPlan, amount, startDate, endDate, penaltyPercentage);
+		checkParameters(maxMonthsToApplyPenalty, numberOfDaysToStartApplyingPenalty);
+
+		super.setMaxMonthsToApplyPenalty(maxMonthsToApplyPenalty);
+		super.setNumberOfDaysToStartApplyingPenalty(numberOfDaysToStartApplyingPenalty);
 	}
 
-	if (numberOfDaysToStartApplyingPenalty <= 0) {
-	    throw new DomainException(
-		    "error.accounting.installments.InstallmentForFirstTimeStudents.numberOfDaysToStartApplyingPenalty.must.be.greater.than.zero");
+	private void checkParameters(final Integer maxMonthsToApplyPenalty, final Integer numberOfDaysToStartApplyingPenalty) {
+
+		if (maxMonthsToApplyPenalty == null) {
+			throw new DomainException(
+					"error.accounting.installments.InstallmentForFirstTimeStudents.maxMonthsToApplyPenalty.cannot.be.null");
+		}
+
+		if (maxMonthsToApplyPenalty <= 0) {
+			throw new DomainException(
+					"error.accounting.installments.InstallmentForFirstTimeStudents.maxMonthsToApplyPenalty.cannot.be.null");
+		}
+
+		if (numberOfDaysToStartApplyingPenalty == null) {
+			throw new DomainException(
+					"error.accounting.installments.InstallmentForFirstTimeStudents.numberOfDaysToStartApplyingPenalty.cannot.be.null");
+		}
+
+		if (numberOfDaysToStartApplyingPenalty <= 0) {
+			throw new DomainException(
+					"error.accounting.installments.InstallmentForFirstTimeStudents.numberOfDaysToStartApplyingPenalty.must.be.greater.than.zero");
+		}
+
 	}
 
-    }
-
-    @Override
-    public YearMonthDay getWhenStartToApplyPenalty() {
-	throw new DomainException("error.InstallmentForFirstTimeStudents.unsupported.operation");
-    }
-
-    @Override
-    protected Money calculatePenaltyAmount(final Event event, final DateTime when, final BigDecimal discountPercentage) {
-	if (when.toDateMidnight().compareTo(getWhenStartToApplyPenalty(event, when)) >= 0) {
-	    return new Money(calculateMonthPenalty(event, discountPercentage).multiply(
-		    new BigDecimal(getNumberOfMonthsToChargePenalty(event, when))));
-	} else {
-	    return Money.ZERO;
+	@Override
+	public YearMonthDay getWhenStartToApplyPenalty() {
+		throw new DomainException("error.InstallmentForFirstTimeStudents.unsupported.operation");
 	}
-    }
 
-    private DateMidnight getWhenStartToApplyPenalty(final Event event, final DateTime when) {
-	final GratuityEvent gratuityEvent = (GratuityEvent) event;
-	final DateMidnight startDate = gratuityEvent.getRegistration().getStartDate().toDateMidnight();
-	return startDate.plusDays(getNumberOfDaysToStartApplyingPenalty()).plusMonths(1).withDayOfMonth(1);
-    }
+	@Override
+	protected Money calculatePenaltyAmount(final Event event, final DateTime when, final BigDecimal discountPercentage) {
+		if (when.toDateMidnight().compareTo(getWhenStartToApplyPenalty(event, when)) >= 0) {
+			return new Money(calculateMonthPenalty(event, discountPercentage).multiply(
+					new BigDecimal(getNumberOfMonthsToChargePenalty(event, when))));
+		} else {
+			return Money.ZERO;
+		}
+	}
 
-    private int getNumberOfMonthsToChargePenalty(final Event event, final DateTime when) {
-	final int numberOfMonths = (new Period(getWhenStartToApplyPenalty(event, when), when.toDateMidnight()).getMonths() + 1);
-	return numberOfMonths < getMaxMonthsToApplyPenalty() ? numberOfMonths : getMaxMonthsToApplyPenalty();
-    }
+	private DateMidnight getWhenStartToApplyPenalty(final Event event, final DateTime when) {
+		final GratuityEvent gratuityEvent = (GratuityEvent) event;
+		final DateMidnight startDate = gratuityEvent.getRegistration().getStartDate().toDateMidnight();
+		return startDate.plusDays(getNumberOfDaysToStartApplyingPenalty()).plusMonths(1).withDayOfMonth(1);
+	}
 
-    @Override
-    public LabelFormatter getDescription() {
-	return new LabelFormatter().appendLabel("application", "label.InstallmentForFirstTimeStudents.description",
-		getInstallmentOrder().toString(), getStartDate().toString(DateFormatUtil.DEFAULT_DATE_FORMAT), getEndDate()
-			.toString(DateFormatUtil.DEFAULT_DATE_FORMAT), getPenaltyPercentage().multiply(BigDecimal.valueOf(100))
-			.toString(), getNumberOfDaysToStartApplyingPenalty().toString());
+	private int getNumberOfMonthsToChargePenalty(final Event event, final DateTime when) {
+		final int numberOfMonths = (new Period(getWhenStartToApplyPenalty(event, when), when.toDateMidnight()).getMonths() + 1);
+		return numberOfMonths < getMaxMonthsToApplyPenalty() ? numberOfMonths : getMaxMonthsToApplyPenalty();
+	}
 
-    }
+	@Override
+	public LabelFormatter getDescription() {
+		return new LabelFormatter().appendLabel("application", "label.InstallmentForFirstTimeStudents.description",
+				getInstallmentOrder().toString(), getStartDate().toString(DateFormatUtil.DEFAULT_DATE_FORMAT), getEndDate()
+						.toString(DateFormatUtil.DEFAULT_DATE_FORMAT), getPenaltyPercentage().multiply(BigDecimal.valueOf(100))
+						.toString(), getNumberOfDaysToStartApplyingPenalty().toString());
 
-    @Override
-    public boolean isForFirstTimeStudents() {
-	return true;
-    }
+	}
 
-    @Override
-    public LocalDate getEndDate(final Event event) {
-	final GratuityEvent gratuityEvent = (GratuityEvent) event;
-	final LocalDate startDate = gratuityEvent.getRegistration().getStartDate().toLocalDate();
+	@Override
+	public boolean isForFirstTimeStudents() {
+		return true;
+	}
 
-	return startDate.plusDays(getNumberOfDaysToStartApplyingPenalty());
-    }
+	@Override
+	public LocalDate getEndDate(final Event event) {
+		final GratuityEvent gratuityEvent = (GratuityEvent) event;
+		final LocalDate startDate = gratuityEvent.getRegistration().getStartDate().toLocalDate();
 
-    @Override
-    public void edit(InstallmentBean bean) {
-	Integer numberOfDaysToStartApplyingPenalty = bean.getNumberOfDaysToStartApplyingPenalty();
-	Integer maxMonthsToApplyPenalty = bean.getMaxMonthsToApplyPenalty();
+		return startDate.plusDays(getNumberOfDaysToStartApplyingPenalty());
+	}
 
-	checkParameters(maxMonthsToApplyPenalty, numberOfDaysToStartApplyingPenalty);
+	@Override
+	public void edit(InstallmentBean bean) {
+		Integer numberOfDaysToStartApplyingPenalty = bean.getNumberOfDaysToStartApplyingPenalty();
+		Integer maxMonthsToApplyPenalty = bean.getMaxMonthsToApplyPenalty();
 
-	super.setNumberOfDaysToStartApplyingPenalty(numberOfDaysToStartApplyingPenalty);
+		checkParameters(maxMonthsToApplyPenalty, numberOfDaysToStartApplyingPenalty);
 
-	super.edit(bean);
-    }
+		super.setNumberOfDaysToStartApplyingPenalty(numberOfDaysToStartApplyingPenalty);
+
+		super.edit(bean);
+	}
 
 }

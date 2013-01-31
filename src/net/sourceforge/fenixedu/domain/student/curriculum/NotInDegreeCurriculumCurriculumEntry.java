@@ -13,57 +13,60 @@ import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class NotInDegreeCurriculumCurriculumEntry extends CurriculumEntry {
 
-    private final Enrolment enrolmentDomainReference;
+	private final Enrolment enrolmentDomainReference;
 
-    public NotInDegreeCurriculumCurriculumEntry(final Enrolment enrolment) {
-	super();
-	this.enrolmentDomainReference = enrolment;
-    }
+	public NotInDegreeCurriculumCurriculumEntry(final Enrolment enrolment) {
+		super();
+		this.enrolmentDomainReference = enrolment;
+	}
 
-    @Override
-    public boolean isNotInDegreeCurriculumEnrolmentEntry() {
-	return true;
-    }
+	@Override
+	public boolean isNotInDegreeCurriculumEnrolmentEntry() {
+		return true;
+	}
 
-    public Enrolment getEnrolment() {
-	return enrolmentDomainReference;
-    }
+	public Enrolment getEnrolment() {
+		return enrolmentDomainReference;
+	}
 
-    public BigDecimal getEctsCreditsForCurriculum() {
-	return BigDecimal.valueOf(getEnrolment().getEctsCredits());
-    }
+	@Override
+	public BigDecimal getEctsCreditsForCurriculum() {
+		return BigDecimal.valueOf(getEnrolment().getEctsCredits());
+	}
 
-    public BigDecimal getWeigthForCurriculum() {
-	return BigDecimal.valueOf(getEnrolment().getWeigth());
-    }
+	@Override
+	public BigDecimal getWeigthForCurriculum() {
+		return BigDecimal.valueOf(getEnrolment().getWeigth());
+	}
 
-    @Override
-    public Grade getGrade() {
-	return getEnrolment().getGrade();
-    }
+	@Override
+	public Grade getGrade() {
+		return getEnrolment().getGrade();
+	}
 
-    @Override
-    final public ExecutionSemester getExecutionPeriod() {
-	return getEnrolment().getExecutionPeriod();
-    }
+	@Override
+	final public ExecutionSemester getExecutionPeriod() {
+		return getEnrolment().getExecutionPeriod();
+	}
 
-    public Integer getIdInternal() {
-	return getEnrolment().getIdInternal();
-    }
+	@Override
+	public Integer getIdInternal() {
+		return getEnrolment().getIdInternal();
+	}
 
-    @Override
-    public DateTime getCreationDateDateTime() {
-	return getEnrolment().getCreationDateDateTime();
-    }
+	@Override
+	public DateTime getCreationDateDateTime() {
+		return getEnrolment().getCreationDateDateTime();
+	}
 
-    @Override
-    public YearMonthDay getApprovementDate() {
-	return getEnrolment().getApprovementDate();
-    }
+	@Override
+	public YearMonthDay getApprovementDate() {
+		return getEnrolment().getApprovementDate();
+	}
 
-    @Override
-    public MultiLanguageString getName() {
-	return enrolmentDomainReference.getName();
-    }
+	@Override
+	public MultiLanguageString getName() {
+		return enrolmentDomainReference.getName();
+	}
 
 }

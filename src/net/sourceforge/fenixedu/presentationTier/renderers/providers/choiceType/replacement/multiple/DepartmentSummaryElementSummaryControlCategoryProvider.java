@@ -8,17 +8,17 @@ import pt.ist.fenixWebFramework.renderers.converters.EnumArrayConverter;
 
 public class DepartmentSummaryElementSummaryControlCategoryProvider implements DataProvider {
 
-    @Override
-    public Object provide(Object source, Object currentValue) {
-	return Arrays
-		.asList(net.sourceforge.fenixedu.dataTransferObject.directiveCouncil.DepartmentSummaryElement.SummaryControlCategory
-			.values());
-    }
+	@Override
+	public Object provide(Object source, Object currentValue) {
+		return Arrays
+				.asList(net.sourceforge.fenixedu.dataTransferObject.directiveCouncil.DepartmentSummaryElement.SummaryControlCategory
+						.values());
+	}
 
-    @Override
-    public Converter getConverter() {
-	return new EnumArrayConverter(
-		net.sourceforge.fenixedu.dataTransferObject.directiveCouncil.DepartmentSummaryElement.SummaryControlCategory.class);
-    }
+	@Override
+	public Converter getConverter() {
+		return new EnumArrayConverter(
+				net.sourceforge.fenixedu.dataTransferObject.directiveCouncil.DepartmentSummaryElement.SummaryControlCategory.class);
+	}
 
 }

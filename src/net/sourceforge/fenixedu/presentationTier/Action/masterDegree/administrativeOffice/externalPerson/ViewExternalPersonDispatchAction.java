@@ -33,38 +33,42 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(module = "masterDegreeAdministrativeOffice", path = "/viewExternalPerson", scope = "request", parameter = "method")
 @Forwards(value = { @Forward(name = "start", path = "df.page.viewExternalPerson", tileProperties = @Tile(title = "teste28")) })
-@Exceptions(value = { @ExceptionHandling(type = net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException.class, key = "resources.Action.exceptions.ExistingActionException", handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class, scope = "request") })
+@Exceptions(value = { @ExceptionHandling(
+		type = net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException.class,
+		key = "resources.Action.exceptions.ExistingActionException",
+		handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class,
+		scope = "request") })
 public class ViewExternalPersonDispatchAction extends FenixDispatchAction {
 
-    public ActionForward view(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-	    throws Exception {
+	public ActionForward view(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
 
-	IUserView userView = UserView.getUser();
+		IUserView userView = UserView.getUser();
 
-	Integer externalPersonId = new Integer(this.getFromRequest("id", request));
+		Integer externalPersonId = new Integer(this.getFromRequest("id", request));
 
-	InfoExternalPerson infoExternalPerson = null;
+		InfoExternalPerson infoExternalPerson = null;
 
-	try {
-	    infoExternalPerson = (InfoExternalPerson) ReadExternalPersonByID.run(externalPersonId);
-	} catch (NonExistingServiceException e) {
-	    throw new FenixActionException(e);
-	} catch (FenixServiceException e) {
-	    throw new FenixActionException(e);
+		try {
+			infoExternalPerson = (InfoExternalPerson) ReadExternalPersonByID.run(externalPersonId);
+		} catch (NonExistingServiceException e) {
+			throw new FenixActionException(e);
+		} catch (FenixServiceException e) {
+			throw new FenixActionException(e);
+		}
+
+		request.setAttribute(PresentationConstants.EXTERNAL_PERSON, infoExternalPerson);
+
+		return mapping.findForward("start");
+
 	}
 
-	request.setAttribute(PresentationConstants.EXTERNAL_PERSON, infoExternalPerson);
-
-	return mapping.findForward("start");
-
-    }
-
-    private String getFromRequest(String parameter, HttpServletRequest request) {
-	String parameterString = request.getParameter(parameter);
-	if (parameterString == null) {
-	    parameterString = (String) request.getAttribute(parameter);
+	private String getFromRequest(String parameter, HttpServletRequest request) {
+		String parameterString = request.getParameter(parameter);
+		if (parameterString == null) {
+			parameterString = (String) request.getAttribute(parameter);
+		}
+		return parameterString;
 	}
-	return parameterString;
-    }
 
 }

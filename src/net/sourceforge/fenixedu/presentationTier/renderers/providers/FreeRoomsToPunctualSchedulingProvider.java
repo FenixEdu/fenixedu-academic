@@ -22,39 +22,42 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class FreeRoomsToPunctualSchedulingProvider implements DataProvider {
 
-    public Object provide(Object source, Object currentValue) {
+	@Override
+	public Object provide(Object source, Object currentValue) {
 
-	Set<AllocatableSpace> result = new TreeSet<AllocatableSpace>(AllocatableSpace.ROOM_COMPARATOR_BY_NAME);
-	RoomsPunctualSchedulingBean bean = (RoomsPunctualSchedulingBean) source;
+		Set<AllocatableSpace> result = new TreeSet<AllocatableSpace>(AllocatableSpace.ROOM_COMPARATOR_BY_NAME);
+		RoomsPunctualSchedulingBean bean = (RoomsPunctualSchedulingBean) source;
 
-	List<AllocatableSpace> selectedRooms = bean.getRooms();
-	FrequencyType frequency = bean.getFrequency();
-	YearMonthDay beginDate = bean.getBegin();
-	YearMonthDay endDate = bean.getEnd();
-	Partial beginTime = bean.getBeginTime();
-	Partial endTime = bean.getEndTime();
-	Boolean markSaturday = bean.getMarkSaturday();
-	Boolean markSunday = bean.getMarkSunday();
-	DiaSemana diaSemana = new DiaSemana(DiaSemana.getDiaSemana(beginDate));
+		List<AllocatableSpace> selectedRooms = bean.getRooms();
+		FrequencyType frequency = bean.getFrequency();
+		YearMonthDay beginDate = bean.getBegin();
+		YearMonthDay endDate = bean.getEnd();
+		Partial beginTime = bean.getBeginTime();
+		Partial endTime = bean.getEndTime();
+		Boolean markSaturday = bean.getMarkSaturday();
+		Boolean markSunday = bean.getMarkSunday();
+		DiaSemana diaSemana = new DiaSemana(DiaSemana.getDiaSemana(beginDate));
 
-	HourMinuteSecond startTimeHMS = new HourMinuteSecond(beginTime.get(DateTimeFieldType.hourOfDay()),
-		beginTime.get(DateTimeFieldType.minuteOfHour()), 0);
-	HourMinuteSecond endTimeHMS = new HourMinuteSecond(endTime.get(DateTimeFieldType.hourOfDay()),
-		endTime.get(DateTimeFieldType.minuteOfHour()), 0);
+		HourMinuteSecond startTimeHMS =
+				new HourMinuteSecond(beginTime.get(DateTimeFieldType.hourOfDay()),
+						beginTime.get(DateTimeFieldType.minuteOfHour()), 0);
+		HourMinuteSecond endTimeHMS =
+				new HourMinuteSecond(endTime.get(DateTimeFieldType.hourOfDay()), endTime.get(DateTimeFieldType.minuteOfHour()), 0);
 
-	Person person = AccessControl.getPerson();
-	for (AllocatableSpace room : AllocatableSpace.getAllActiveAllocatableSpacesForEducationAndPunctualOccupations(person)) {
-	    if (!selectedRooms.contains(room)) {
-		if (room.isFree(beginDate, endDate, startTimeHMS, endTimeHMS, diaSemana, frequency, markSaturday, markSunday)) {
-		    result.add(room);
+		Person person = AccessControl.getPerson();
+		for (AllocatableSpace room : AllocatableSpace.getAllActiveAllocatableSpacesForEducationAndPunctualOccupations(person)) {
+			if (!selectedRooms.contains(room)) {
+				if (room.isFree(beginDate, endDate, startTimeHMS, endTimeHMS, diaSemana, frequency, markSaturday, markSunday)) {
+					result.add(room);
+				}
+			}
 		}
-	    }
+
+		return result;
 	}
 
-	return result;
-    }
-
-    public Converter getConverter() {
-	return new DomainObjectKeyConverter();
-    }
+	@Override
+	public Converter getConverter() {
+		return new DomainObjectKeyConverter();
+	}
 }

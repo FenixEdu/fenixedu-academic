@@ -34,137 +34,138 @@ import dml.runtime.RelationAdapter;
 
 public class InsuranceEvent extends InsuranceEvent_Base implements IInsuranceEvent {
 
-    static {
-	PersonAccountingEvent.addListener(new RelationAdapter<Event, Party>() {
-	    @Override
-	    public void beforeAdd(Event event, Party party) {
-		if (event instanceof InsuranceEvent) {
-		    Person person = (Person) party;
-		    final InsuranceEvent insuranceEvent = ((InsuranceEvent) event);
-		    if (person.hasAdministrativeOfficeFeeInsuranceEventFor(insuranceEvent.getExecutionYear())
-			    || person.hasInsuranceEventFor(insuranceEvent.getExecutionYear())) {
+	static {
+		PersonAccountingEvent.addListener(new RelationAdapter<Event, Party>() {
+			@Override
+			public void beforeAdd(Event event, Party party) {
+				if (event instanceof InsuranceEvent) {
+					Person person = (Person) party;
+					final InsuranceEvent insuranceEvent = ((InsuranceEvent) event);
+					if (person.hasAdministrativeOfficeFeeInsuranceEventFor(insuranceEvent.getExecutionYear())
+							|| person.hasInsuranceEventFor(insuranceEvent.getExecutionYear())) {
+						throw new DomainException(
+								"error.accounting.events.insurance.InsuranceEvent.person.already.has.insurance.event.for.execution.year");
+
+					}
+				}
+			}
+		});
+	}
+
+	private InsuranceEvent() {
+		super();
+	}
+
+	public InsuranceEvent(Person person, ExecutionYear executionYear) {
+		this();
+		init(EventType.INSURANCE, person, executionYear);
+	}
+
+	@Override
+	protected void init(final EventType eventType, final Person person, final ExecutionYear executionYear) {
+		checkRulesToCreate(person, executionYear);
+		super.init(eventType, person, executionYear);
+	}
+
+	private void checkRulesToCreate(final Person person, final ExecutionYear executionYear) {
+		if (person.hasInsuranceEventOrAdministrativeOfficeFeeInsuranceEventFor(executionYear)) {
 			throw new DomainException(
-				"error.accounting.events.insurance.InsuranceEvent.person.already.has.insurance.event.for.execution.year");
-
-		    }
+					"error.accounting.events.insurance.InsuranceEvent.person.already.has.insurance.event.for.execution.year");
 		}
-	    }
-	});
-    }
-
-    private InsuranceEvent() {
-	super();
-    }
-
-    public InsuranceEvent(Person person, ExecutionYear executionYear) {
-	this();
-	init(EventType.INSURANCE, person, executionYear);
-    }
-
-    protected void init(final EventType eventType, final Person person, final ExecutionYear executionYear) {
-	checkRulesToCreate(person, executionYear);
-	super.init(eventType, person, executionYear);
-    }
-
-    private void checkRulesToCreate(final Person person, final ExecutionYear executionYear) {
-	if (person.hasInsuranceEventOrAdministrativeOfficeFeeInsuranceEventFor(executionYear)) {
-	    throw new DomainException(
-		    "error.accounting.events.insurance.InsuranceEvent.person.already.has.insurance.event.for.execution.year");
-	}
-    }
-
-    @Override
-    public LabelFormatter getDescriptionForEntryType(EntryType entryType) {
-	final LabelFormatter labelFormatter = new LabelFormatter();
-	labelFormatter.appendLabel(entryType.name(), "enum").appendLabel(" - ").appendLabel(getExecutionYear().getYear());
-
-	return labelFormatter;
-    }
-
-    @Override
-    public LabelFormatter getDescription() {
-	final LabelFormatter labelFormatter = super.getDescription();
-	labelFormatter.appendLabel(" - ").appendLabel(getExecutionYear().getYear());
-	return labelFormatter;
-    }
-
-    @Override
-    protected UnitServiceAgreementTemplate getServiceAgreementTemplate() {
-	return getInstitutionUnit().getUnitServiceAgreementTemplate();
-    }
-
-    @Override
-    public Account getToAccount() {
-	return getInstitutionUnit().getAccountBy(AccountType.INTERNAL);
-    }
-
-    @Override
-    protected Account getFromAccount() {
-	return getPerson().getAccountBy(AccountType.EXTERNAL);
-    }
-
-    private Unit getInstitutionUnit() {
-	return RootDomainObject.getInstance().getInstitutionUnit();
-    }
-
-    @Override
-    protected List<AccountingEventPaymentCode> updatePaymentCodes() {
-	final EntryDTO entryDTO = calculateEntries(new DateTime()).get(0);
-	getNonProcessedPaymentCodes().get(0).update(new YearMonthDay(), calculatePaymentCodeEndDate(), entryDTO.getAmountToPay(),
-		entryDTO.getAmountToPay());
-
-	return getNonProcessedPaymentCodes();
-
-    }
-
-    @Override
-    protected List<AccountingEventPaymentCode> createPaymentCodes() {
-	final EntryDTO entryDTO = calculateEntries(new DateTime()).get(0);
-
-	return Collections.singletonList(AccountingEventPaymentCode.create(PaymentCodeType.INSURANCE, new YearMonthDay(),
-		calculatePaymentCodeEndDate(), this, entryDTO.getAmountToPay(), entryDTO.getAmountToPay(), getPerson()));
-    }
-
-    private YearMonthDay calculatePaymentCodeEndDate() {
-	return calculateNextEndDate(new YearMonthDay());
-    }
-
-    @Override
-    public Set<EntryType> getPossibleEntryTypesForDeposit() {
-	final Set<EntryType> result = new HashSet<EntryType>();
-	result.add(EntryType.INSURANCE_FEE);
-
-	return result;
-    }
-
-    @Override
-    protected Set<Entry> internalProcess(User responsibleUser, AccountingEventPaymentCode paymentCode, Money amountToPay,
-	    SibsTransactionDetailDTO transactionDetail) {
-	return internalProcess(responsibleUser, Collections
-		.singletonList(new EntryDTO(EntryType.INSURANCE_FEE, this, amountToPay)), transactionDetail);
-    }
-
-    @Override
-    public boolean isExemptionAppliable() {
-	return true;
-    }
-
-    public boolean hasInsuranceExemption() {
-	return getInsuranceExemption() != null;
-    }
-
-    public Exemption getInsuranceExemption() {
-	for (final Exemption exemption : getExemptionsSet()) {
-	    if (exemption.isForInsurance()) {
-		return exemption;
-	    }
 	}
 
-	return null;
-    }
+	@Override
+	public LabelFormatter getDescriptionForEntryType(EntryType entryType) {
+		final LabelFormatter labelFormatter = new LabelFormatter();
+		labelFormatter.appendLabel(entryType.name(), "enum").appendLabel(" - ").appendLabel(getExecutionYear().getYear());
 
-    @Override
-    public boolean isInsuranceEvent() {
-	return true;
-    }
+		return labelFormatter;
+	}
+
+	@Override
+	public LabelFormatter getDescription() {
+		final LabelFormatter labelFormatter = super.getDescription();
+		labelFormatter.appendLabel(" - ").appendLabel(getExecutionYear().getYear());
+		return labelFormatter;
+	}
+
+	@Override
+	protected UnitServiceAgreementTemplate getServiceAgreementTemplate() {
+		return getInstitutionUnit().getUnitServiceAgreementTemplate();
+	}
+
+	@Override
+	public Account getToAccount() {
+		return getInstitutionUnit().getAccountBy(AccountType.INTERNAL);
+	}
+
+	@Override
+	protected Account getFromAccount() {
+		return getPerson().getAccountBy(AccountType.EXTERNAL);
+	}
+
+	private Unit getInstitutionUnit() {
+		return RootDomainObject.getInstance().getInstitutionUnit();
+	}
+
+	@Override
+	protected List<AccountingEventPaymentCode> updatePaymentCodes() {
+		final EntryDTO entryDTO = calculateEntries(new DateTime()).get(0);
+		getNonProcessedPaymentCodes().get(0).update(new YearMonthDay(), calculatePaymentCodeEndDate(), entryDTO.getAmountToPay(),
+				entryDTO.getAmountToPay());
+
+		return getNonProcessedPaymentCodes();
+
+	}
+
+	@Override
+	protected List<AccountingEventPaymentCode> createPaymentCodes() {
+		final EntryDTO entryDTO = calculateEntries(new DateTime()).get(0);
+
+		return Collections.singletonList(AccountingEventPaymentCode.create(PaymentCodeType.INSURANCE, new YearMonthDay(),
+				calculatePaymentCodeEndDate(), this, entryDTO.getAmountToPay(), entryDTO.getAmountToPay(), getPerson()));
+	}
+
+	private YearMonthDay calculatePaymentCodeEndDate() {
+		return calculateNextEndDate(new YearMonthDay());
+	}
+
+	@Override
+	public Set<EntryType> getPossibleEntryTypesForDeposit() {
+		final Set<EntryType> result = new HashSet<EntryType>();
+		result.add(EntryType.INSURANCE_FEE);
+
+		return result;
+	}
+
+	@Override
+	protected Set<Entry> internalProcess(User responsibleUser, AccountingEventPaymentCode paymentCode, Money amountToPay,
+			SibsTransactionDetailDTO transactionDetail) {
+		return internalProcess(responsibleUser,
+				Collections.singletonList(new EntryDTO(EntryType.INSURANCE_FEE, this, amountToPay)), transactionDetail);
+	}
+
+	@Override
+	public boolean isExemptionAppliable() {
+		return true;
+	}
+
+	public boolean hasInsuranceExemption() {
+		return getInsuranceExemption() != null;
+	}
+
+	public Exemption getInsuranceExemption() {
+		for (final Exemption exemption : getExemptionsSet()) {
+			if (exemption.isForInsurance()) {
+				return exemption;
+			}
+		}
+
+		return null;
+	}
+
+	@Override
+	public boolean isInsuranceEvent() {
+		return true;
+	}
 }

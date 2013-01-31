@@ -24,34 +24,35 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class ReadOldIquiriesSummaryByDegreeIDAndExecutionPeriodID extends FenixService {
 
-    @Service
-    public static List run(Integer degreeID, Integer executionPeriodID) throws FenixServiceException {
-	Degree degree = rootDomainObject.readDegreeByOID(degreeID);
-	ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(executionPeriodID);
+	@Service
+	public static List run(Integer degreeID, Integer executionPeriodID) throws FenixServiceException {
+		Degree degree = rootDomainObject.readDegreeByOID(degreeID);
+		ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(executionPeriodID);
 
-	if (degree == null) {
-	    throw new FenixServiceException("nullDegreeId");
-	}
-	if (executionSemester == null) {
-	    throw new FenixServiceException("nullExecutionPeriodId");
-	}
-
-	List<OldInquiriesSummary> oldInquiriesSummaryList = degree.getOldInquiriesSummariesByExecutionPeriod(executionSemester);
-
-	CollectionUtils.transform(oldInquiriesSummaryList, new Transformer() {
-
-	    public Object transform(Object oldInquiriesSummary) {
-		InfoOldInquiriesSummary iois = new InfoOldInquiriesSummary();
-		try {
-		    iois.copyFromDomain((OldInquiriesSummary) oldInquiriesSummary);
-
-		} catch (Exception ex) {
+		if (degree == null) {
+			throw new FenixServiceException("nullDegreeId");
+		}
+		if (executionSemester == null) {
+			throw new FenixServiceException("nullExecutionPeriodId");
 		}
 
-		return iois;
-	    }
-	});
+		List<OldInquiriesSummary> oldInquiriesSummaryList = degree.getOldInquiriesSummariesByExecutionPeriod(executionSemester);
 
-	return oldInquiriesSummaryList;
-    }
+		CollectionUtils.transform(oldInquiriesSummaryList, new Transformer() {
+
+			@Override
+			public Object transform(Object oldInquiriesSummary) {
+				InfoOldInquiriesSummary iois = new InfoOldInquiriesSummary();
+				try {
+					iois.copyFromDomain((OldInquiriesSummary) oldInquiriesSummary);
+
+				} catch (Exception ex) {
+				}
+
+				return iois;
+			}
+		});
+
+		return oldInquiriesSummaryList;
+	}
 }

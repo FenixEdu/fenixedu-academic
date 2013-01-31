@@ -14,31 +14,31 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class ChangePreferenceOrderOfFinalDegreeWorkStudentGroupCandidacy extends FenixService {
 
-    public ChangePreferenceOrderOfFinalDegreeWorkStudentGroupCandidacy() {
-	super();
-    }
-
-    @Checked("RolePredicates.STUDENT_PREDICATE")
-    @Service
-    public static Boolean run(FinalDegreeWorkGroup group, Integer groupProposalOID, Integer orderOfPreference) {
-	GroupProposal groupProposal = rootDomainObject.readGroupProposalByOID(groupProposalOID);
-	if (group != null && groupProposal != null) {
-	    for (int i = 0; i < group.getGroupProposals().size(); i++) {
-		GroupProposal otherGroupProposal = group.getGroupProposals().get(i);
-		if (otherGroupProposal != null && !groupProposal.getIdInternal().equals(otherGroupProposal.getIdInternal())) {
-		    int otherOrderOfPreference = otherGroupProposal.getOrderOfPreference().intValue();
-		    if (orderOfPreference.intValue() <= otherOrderOfPreference
-			    && groupProposal.getOrderOfPreference().intValue() > otherOrderOfPreference) {
-			otherGroupProposal.setOrderOfPreference(new Integer(otherOrderOfPreference + 1));
-		    } else if (orderOfPreference.intValue() >= otherOrderOfPreference
-			    && groupProposal.getOrderOfPreference().intValue() < otherOrderOfPreference) {
-			otherGroupProposal.setOrderOfPreference(new Integer(otherOrderOfPreference - 1));
-		    }
-		}
-	    }
-	    groupProposal.setOrderOfPreference(orderOfPreference);
+	public ChangePreferenceOrderOfFinalDegreeWorkStudentGroupCandidacy() {
+		super();
 	}
-	return true;
-    }
+
+	@Checked("RolePredicates.STUDENT_PREDICATE")
+	@Service
+	public static Boolean run(FinalDegreeWorkGroup group, Integer groupProposalOID, Integer orderOfPreference) {
+		GroupProposal groupProposal = rootDomainObject.readGroupProposalByOID(groupProposalOID);
+		if (group != null && groupProposal != null) {
+			for (int i = 0; i < group.getGroupProposals().size(); i++) {
+				GroupProposal otherGroupProposal = group.getGroupProposals().get(i);
+				if (otherGroupProposal != null && !groupProposal.getIdInternal().equals(otherGroupProposal.getIdInternal())) {
+					int otherOrderOfPreference = otherGroupProposal.getOrderOfPreference().intValue();
+					if (orderOfPreference.intValue() <= otherOrderOfPreference
+							&& groupProposal.getOrderOfPreference().intValue() > otherOrderOfPreference) {
+						otherGroupProposal.setOrderOfPreference(new Integer(otherOrderOfPreference + 1));
+					} else if (orderOfPreference.intValue() >= otherOrderOfPreference
+							&& groupProposal.getOrderOfPreference().intValue() < otherOrderOfPreference) {
+						otherGroupProposal.setOrderOfPreference(new Integer(otherOrderOfPreference - 1));
+					}
+				}
+			}
+			groupProposal.setOrderOfPreference(orderOfPreference);
+		}
+		return true;
+	}
 
 }

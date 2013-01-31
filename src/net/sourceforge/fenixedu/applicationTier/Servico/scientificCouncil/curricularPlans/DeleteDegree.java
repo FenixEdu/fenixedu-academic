@@ -10,20 +10,20 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class DeleteDegree extends FenixService {
 
-    @Checked("RolePredicates.SCIENTIFIC_COUNCIL_PREDICATE")
-    @Service
-    public static void run(Integer idInternal) throws FenixServiceException {
-	if (idInternal == null) {
-	    throw new InvalidArgumentsServiceException();
-	}
+	@Checked("RolePredicates.SCIENTIFIC_COUNCIL_PREDICATE")
+	@Service
+	public static void run(Integer idInternal) throws FenixServiceException {
+		if (idInternal == null) {
+			throw new InvalidArgumentsServiceException();
+		}
 
-	final Degree degreeToDelete = rootDomainObject.readDegreeByOID(idInternal);
+		final Degree degreeToDelete = rootDomainObject.readDegreeByOID(idInternal);
 
-	if (degreeToDelete == null) {
-	    throw new NonExistingServiceException();
-	} else {
-	    degreeToDelete.delete();
+		if (degreeToDelete == null) {
+			throw new NonExistingServiceException();
+		} else {
+			degreeToDelete.delete();
+		}
 	}
-    }
 
 }

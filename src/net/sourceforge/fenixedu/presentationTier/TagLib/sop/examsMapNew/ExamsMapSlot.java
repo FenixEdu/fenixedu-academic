@@ -14,39 +14,39 @@ import java.util.Locale;
  */
 public class ExamsMapSlot {
 
-    private Calendar day;
+	private Calendar day;
 
-    private List exams;
+	private List exams;
 
-    private Locale locale;
+	private Locale locale;
 
-    public Locale getLocale() {
-	return locale;
-    }
+	public Locale getLocale() {
+		return locale;
+	}
 
-    public void setLocale(Locale locale) {
-	this.locale = locale;
-    }
+	public void setLocale(Locale locale) {
+		this.locale = locale;
+	}
 
-    public ExamsMapSlot(Calendar day, List exams) {
-	setDay(day);
-	setExams(exams);
+	public ExamsMapSlot(Calendar day, List exams) {
+		setDay(day);
+		setExams(exams);
 
-    }
+	}
 
-    public Calendar getDay() {
-	return day;
-    }
+	public Calendar getDay() {
+		return day;
+	}
 
-    public List getExams() {
-	return exams;
-    }
+	public List getExams() {
+		return exams;
+	}
 
-    public void setDay(Calendar calendar) {
-	day = calendar;
-    }
+	public void setDay(Calendar calendar) {
+		day = calendar;
+	}
 
-    public void setExams(List list) {
-	exams = list;
-    }
+	public void setExams(List list) {
+		exams = list;
+	}
 }

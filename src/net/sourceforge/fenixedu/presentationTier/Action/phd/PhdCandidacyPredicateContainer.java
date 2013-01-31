@@ -9,74 +9,78 @@ import pt.utl.ist.fenix.tools.predicates.PredicateContainer;
 
 public enum PhdCandidacyPredicateContainer implements PredicateContainer<PhdIndividualProgramProcess> {
 
-    DELIVERED {
-	public Predicate<PhdIndividualProgramProcess> getPredicate() {
+	DELIVERED {
+		@Override
+		public Predicate<PhdIndividualProgramProcess> getPredicate() {
 
-	    final PhdCandidacyPredicate missingInformationFilter = new PhdCandidacyPredicate(
-		    PhdProgramCandidacyProcessState.STAND_BY_WITH_MISSING_INFORMATION);
-	    final PhdCandidacyPredicate completeInformationFilter = new PhdCandidacyPredicate(
-		    PhdProgramCandidacyProcessState.STAND_BY_WITH_COMPLETE_INFORMATION);
+			final PhdCandidacyPredicate missingInformationFilter =
+					new PhdCandidacyPredicate(PhdProgramCandidacyProcessState.STAND_BY_WITH_MISSING_INFORMATION);
+			final PhdCandidacyPredicate completeInformationFilter =
+					new PhdCandidacyPredicate(PhdProgramCandidacyProcessState.STAND_BY_WITH_COMPLETE_INFORMATION);
 
-	    return new OrPredicate<PhdIndividualProgramProcess>() {
-		{
-		    add(missingInformationFilter);
-		    add(completeInformationFilter);
+			return new OrPredicate<PhdIndividualProgramProcess>() {
+				{
+					add(missingInformationFilter);
+					add(completeInformationFilter);
+				}
+			};
 		}
-	    };
-	}
-    },
+	},
 
-    PENDING {
-	public Predicate<PhdIndividualProgramProcess> getPredicate() {
-	    return new PhdCandidacyPredicate(PhdProgramCandidacyProcessState.PENDING_FOR_COORDINATOR_OPINION);
-	}
-    },
-
-    APPROVED {
-	public Predicate<PhdIndividualProgramProcess> getPredicate() {
-	    final PhdCandidacyPredicate waitingScientificFilter = new PhdCandidacyPredicate(
-		    PhdProgramCandidacyProcessState.WAITING_FOR_SCIENTIFIC_COUNCIL_RATIFICATION);
-	    final PhdCandidacyPredicate ratifiedScientificFilter = new PhdCandidacyPredicate(
-		    PhdProgramCandidacyProcessState.RATIFIED_BY_SCIENTIFIC_COUNCIL);
-
-	    return new OrPredicate<PhdIndividualProgramProcess>() {
-		{
-		    add(waitingScientificFilter);
-		    add(ratifiedScientificFilter);
+	PENDING {
+		@Override
+		public Predicate<PhdIndividualProgramProcess> getPredicate() {
+			return new PhdCandidacyPredicate(PhdProgramCandidacyProcessState.PENDING_FOR_COORDINATOR_OPINION);
 		}
-	    };
-	}
-    },
+	},
 
-    CONCLUDED {
-	public Predicate<PhdIndividualProgramProcess> getPredicate() {
-	    return new PhdCandidacyPredicate(PhdProgramCandidacyProcessState.CONCLUDED) {
+	APPROVED {
+		@Override
+		public Predicate<PhdIndividualProgramProcess> getPredicate() {
+			final PhdCandidacyPredicate waitingScientificFilter =
+					new PhdCandidacyPredicate(PhdProgramCandidacyProcessState.WAITING_FOR_SCIENTIFIC_COUNCIL_RATIFICATION);
+			final PhdCandidacyPredicate ratifiedScientificFilter =
+					new PhdCandidacyPredicate(PhdProgramCandidacyProcessState.RATIFIED_BY_SCIENTIFIC_COUNCIL);
+
+			return new OrPredicate<PhdIndividualProgramProcess>() {
+				{
+					add(waitingScientificFilter);
+					add(ratifiedScientificFilter);
+				}
+			};
+		}
+	},
+
+	CONCLUDED {
+		@Override
+		public Predicate<PhdIndividualProgramProcess> getPredicate() {
+			return new PhdCandidacyPredicate(PhdProgramCandidacyProcessState.CONCLUDED) {
+
+				@Override
+				public boolean eval(PhdIndividualProgramProcess process) {
+					return !process.hasSeminarProcess() && !process.hasThesisProcess() && super.eval(process);
+				}
+			};
+		}
+	};
+
+	private static class PhdCandidacyPredicate extends
+			InlinePredicate<PhdIndividualProgramProcess, PhdProgramCandidacyProcessState> {
+		public PhdCandidacyPredicate(PhdProgramCandidacyProcessState candidacyState) {
+			super(candidacyState);
+		}
 
 		@Override
 		public boolean eval(PhdIndividualProgramProcess process) {
-		    return !process.hasSeminarProcess() && !process.hasThesisProcess() && super.eval(process);
+			return checkState(process) && checkValue(process);
 		}
-	    };
-	}
-    };
 
-    private static class PhdCandidacyPredicate extends
-	    InlinePredicate<PhdIndividualProgramProcess, PhdProgramCandidacyProcessState> {
-	public PhdCandidacyPredicate(PhdProgramCandidacyProcessState candidacyState) {
-	    super(candidacyState);
-	}
+		private boolean checkState(PhdIndividualProgramProcess process) {
+			return process.getActiveState().isActive();
+		}
 
-	@Override
-	public boolean eval(PhdIndividualProgramProcess process) {
-	    return checkState(process) && checkValue(process);
+		private boolean checkValue(PhdIndividualProgramProcess process) {
+			return process.getCandidacyProcess().getActiveState().equals(getValue());
+		}
 	}
-
-	private boolean checkState(PhdIndividualProgramProcess process) {
-	    return process.getActiveState().isActive();
-	}
-
-	private boolean checkValue(PhdIndividualProgramProcess process) {
-	    return process.getCandidacyProcess().getActiveState().equals(getValue());
-	}
-    }
 }

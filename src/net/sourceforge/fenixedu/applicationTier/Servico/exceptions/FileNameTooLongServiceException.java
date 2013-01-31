@@ -6,23 +6,24 @@ package net.sourceforge.fenixedu.applicationTier.Servico.exceptions;
  */
 public class FileNameTooLongServiceException extends FenixServiceException {
 
-    public FileNameTooLongServiceException() {
-    }
+	public FileNameTooLongServiceException() {
+	}
 
-    public FileNameTooLongServiceException(Throwable cause) {
-	super(cause);
-    }
+	public FileNameTooLongServiceException(Throwable cause) {
+		super(cause);
+	}
 
-    public FileNameTooLongServiceException(String message, Throwable cause) {
-	super(message, cause);
-    }
+	public FileNameTooLongServiceException(String message, Throwable cause) {
+		super(message, cause);
+	}
 
-    public String toString() {
-	String result = "[FileNameTooLongServiceException\n";
-	result += "message" + this.getMessage() + "\n";
-	result += "cause" + this.getCause() + "\n";
-	result += "]";
-	return result;
-    }
+	@Override
+	public String toString() {
+		String result = "[FileNameTooLongServiceException\n";
+		result += "message" + this.getMessage() + "\n";
+		result += "cause" + this.getCause() + "\n";
+		result += "]";
+		return result;
+	}
 
 }

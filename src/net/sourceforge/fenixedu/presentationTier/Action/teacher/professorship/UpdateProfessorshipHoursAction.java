@@ -25,25 +25,26 @@ import pt.ist.fenixWebFramework.security.UserView;
  */
 public class UpdateProfessorshipHoursAction extends Action {
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @seeorg.apache.struts.action.Action#execute(org.apache.struts.action.
-     * ActionMapping, org.apache.struts.action.ActionForm,
-     * javax.servlet.http.HttpServletRequest,
-     * javax.servlet.http.HttpServletResponse)
-     */
-    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-	    throws Exception {
-	DynaActionForm professorshipsHours = (DynaActionForm) form;
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @seeorg.apache.struts.action.Action#execute(org.apache.struts.action.
+	 * ActionMapping, org.apache.struts.action.ActionForm,
+	 * javax.servlet.http.HttpServletRequest,
+	 * javax.servlet.http.HttpServletResponse)
+	 */
+	@Override
+	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+		DynaActionForm professorshipsHours = (DynaActionForm) form;
 
-	HashMap hours = (HashMap) professorshipsHours.get("hours");
-	Integer teacherId = (Integer) professorshipsHours.get("teacherId");
-	Integer executionYearId = (Integer) professorshipsHours.get("executionYearId");
+		HashMap hours = (HashMap) professorshipsHours.get("hours");
+		Integer teacherId = (Integer) professorshipsHours.get("teacherId");
+		Integer executionYearId = (Integer) professorshipsHours.get("executionYearId");
 
-	IUserView userView = UserView.getUser();
-	UpdateProfessorshipsHours.run(teacherId, executionYearId, hours);
+		IUserView userView = UserView.getUser();
+		UpdateProfessorshipsHours.run(teacherId, executionYearId, hours);
 
-	return mapping.findForward("successfull-update");
-    }
+		return mapping.findForward("successfull-update");
+	}
 }

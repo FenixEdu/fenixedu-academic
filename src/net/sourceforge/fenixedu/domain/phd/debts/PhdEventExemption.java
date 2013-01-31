@@ -12,48 +12,48 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class PhdEventExemption extends PhdEventExemption_Base {
 
-    protected PhdEventExemption() {
-	super();
-    }
-
-    public PhdEventExemption(final Person responsible, final PhdEvent event, final Money value,
-	    final PhdEventExemptionJustificationType justificationType, final LocalDate dispatchDate, final String reason) {
-
-	this();
-	super.init(responsible, event, createJustification(justificationType, dispatchDate, reason));
-
-	check(value, "error.PhdEventExemption.invalid.amount");
-	setValue(value);
-
-	event.recalculateState(new DateTime());
-    }
-
-    private ExemptionJustification createJustification(PhdEventExemptionJustificationType justificationType,
-	    LocalDate dispatchDate, String reason) {
-	return new PhdEventExemptionJustification(this, justificationType, dispatchDate, reason);
-    }
-
-    @Override
-    public void delete() {
-	checkRulesToDelete();
-	super.delete();
-    }
-
-    private void checkRulesToDelete() {
-	if (getEvent().hasAnyPayments()) {
-	    throw new DomainException("error.PhdEventExemption.cannot.delete.event.has.payments");
+	protected PhdEventExemption() {
+		super();
 	}
-    }
 
-    @Service
-    static public PhdEventExemption create(final Person responsible, final PhdEvent event, final Money value,
-	    final PhdEventExemptionJustificationType justificationType, final LocalDate dispatchDate, final String reason) {
-	return new PhdEventExemption(responsible, event, value, justificationType, dispatchDate, reason);
-    }
+	public PhdEventExemption(final Person responsible, final PhdEvent event, final Money value,
+			final PhdEventExemptionJustificationType justificationType, final LocalDate dispatchDate, final String reason) {
 
-    @Override
-    public boolean isPhdEventExemption() {
-	return true;
-    }
+		this();
+		super.init(responsible, event, createJustification(justificationType, dispatchDate, reason));
+
+		check(value, "error.PhdEventExemption.invalid.amount");
+		setValue(value);
+
+		event.recalculateState(new DateTime());
+	}
+
+	private ExemptionJustification createJustification(PhdEventExemptionJustificationType justificationType,
+			LocalDate dispatchDate, String reason) {
+		return new PhdEventExemptionJustification(this, justificationType, dispatchDate, reason);
+	}
+
+	@Override
+	public void delete() {
+		checkRulesToDelete();
+		super.delete();
+	}
+
+	private void checkRulesToDelete() {
+		if (getEvent().hasAnyPayments()) {
+			throw new DomainException("error.PhdEventExemption.cannot.delete.event.has.payments");
+		}
+	}
+
+	@Service
+	static public PhdEventExemption create(final Person responsible, final PhdEvent event, final Money value,
+			final PhdEventExemptionJustificationType justificationType, final LocalDate dispatchDate, final String reason) {
+		return new PhdEventExemption(responsible, event, value, justificationType, dispatchDate, reason);
+	}
+
+	@Override
+	public boolean isPhdEventExemption() {
+		return true;
+	}
 
 }

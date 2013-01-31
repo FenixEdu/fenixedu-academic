@@ -8,10 +8,10 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class AddPersonToAccessGroup extends FenixService {
 
-    @Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
-    @Service
-    public static void run(ResourceAllocationAccessGroupType accessGroupType, String expression, boolean toAdd,
-	    ResourceAllocationRole role) {
-	role.addOrRemovePersonFromAccessGroup(expression, accessGroupType, toAdd);
-    }
+	@Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
+	@Service
+	public static void run(ResourceAllocationAccessGroupType accessGroupType, String expression, boolean toAdd,
+			ResourceAllocationRole role) {
+		role.addOrRemovePersonFromAccessGroup(expression, accessGroupType, toAdd);
+	}
 }

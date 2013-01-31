@@ -29,30 +29,30 @@ import pt.ist.fenixWebFramework.security.UserView;
  * @author Ricardo Rodrigues
  */
 public class TfcManagementAction extends FenixDispatchAction {
-    public ActionForward submit(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
-	return mapping.findForward("");
-    }
-
-    public ActionForward prepareTfcInformation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixActionException, FenixServiceException, FenixFilterException {
-
-	IUserView userView = UserView.getUser();
-
-	InfoTeacher infoTeacher = (InfoTeacher) ReadTeacherByUsername.run(userView.getUtilizador());
-
-	request.setAttribute("infoTeacher", infoTeacher);
-
-	Integer degreeCurricularPlanId = new Integer(48);
-
-	List branches = null;
-	try {
-	    branches = (List) ReadBranchesByDegreeCurricularPlan.run(degreeCurricularPlanId);
-	} catch (FenixServiceException fse) {
-	    throw new FenixActionException(fse);
+	public ActionForward submit(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+		return mapping.findForward("");
 	}
 
-	request.setAttribute("branchList", branches);
-	return mapping.findForward("submitTfcProposal");
+	public ActionForward prepareTfcInformation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws FenixActionException, FenixServiceException, FenixFilterException {
 
-    }
+		IUserView userView = UserView.getUser();
+
+		InfoTeacher infoTeacher = ReadTeacherByUsername.run(userView.getUtilizador());
+
+		request.setAttribute("infoTeacher", infoTeacher);
+
+		Integer degreeCurricularPlanId = new Integer(48);
+
+		List branches = null;
+		try {
+			branches = ReadBranchesByDegreeCurricularPlan.run(degreeCurricularPlanId);
+		} catch (FenixServiceException fse) {
+			throw new FenixActionException(fse);
+		}
+
+		request.setAttribute("branchList", branches);
+		return mapping.findForward("submitTfcProposal");
+
+	}
 }

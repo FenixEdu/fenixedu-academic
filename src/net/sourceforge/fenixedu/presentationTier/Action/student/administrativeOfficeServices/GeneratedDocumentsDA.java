@@ -16,29 +16,23 @@ import org.apache.struts.action.ActionMapping;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(path = "/generatedDocuments", module = "student", formBeanClass = FenixActionForm.class)
-@Forwards( {
+@Forwards({
 
 @Forward(name = "showAnnualIRSDocuments", path = "df.page.documents.showAnnualIrsDocuments")
 
 })
 public class GeneratedDocumentsDA extends FenixDispatchAction {
 
-    public ActionForward showAnnualIRSDocuments(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+	public ActionForward showAnnualIRSDocuments(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
-	request.setAttribute("person", AccessControl.getPerson());
+		request.setAttribute("person", AccessControl.getPerson());
 
-	request.setAttribute("annualIRSDocuments", AccessControl.getPerson().getAnnualIRSDocuments());
+		request.setAttribute("annualIRSDocuments", AccessControl.getPerson().getAnnualIRSDocuments());
 
-	return mapping.findForward("showAnnualIRSDocuments");
-    }
+		return mapping.findForward("showAnnualIRSDocuments");
+	}
 
 }

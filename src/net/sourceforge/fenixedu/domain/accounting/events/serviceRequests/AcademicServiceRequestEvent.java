@@ -12,61 +12,61 @@ import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest;
 
 abstract public class AcademicServiceRequestEvent extends AcademicServiceRequestEvent_Base {
 
-    protected AcademicServiceRequestEvent() {
-	super();
-    }
-
-    protected void init(final AdministrativeOffice administrativeOffice, final EventType eventType, final Person person,
-	    final AcademicServiceRequest academicServiceRequest) {
-	super.init(administrativeOffice, eventType, person);
-	checkParameters(academicServiceRequest);
-	super.setAcademicServiceRequest(academicServiceRequest);
-    }
-
-    final protected void checkParameters(final AcademicServiceRequest academicServiceRequest) {
-	if (academicServiceRequest == null) {
-	    throw new DomainException("AcademicServiceRequestEvent.academicServiceRequest.cannot.be.null");
+	protected AcademicServiceRequestEvent() {
+		super();
 	}
-    }
 
-    @Override
-    public void setAcademicServiceRequest(final AcademicServiceRequest academicServiceRequest) {
-	throw new DomainException("error.events.serviceRequests.AcademicServiceRequestEvent.cannot.modify.academicServiceRequest");
-    }
+	protected void init(final AdministrativeOffice administrativeOffice, final EventType eventType, final Person person,
+			final AcademicServiceRequest academicServiceRequest) {
+		super.init(administrativeOffice, eventType, person);
+		checkParameters(academicServiceRequest);
+		super.setAcademicServiceRequest(academicServiceRequest);
+	}
 
-    @Override
-    final public Account getToAccount() {
-	return getAdministrativeOffice().getUnit().getAccountBy(AccountType.INTERNAL);
-    }
+	final protected void checkParameters(final AcademicServiceRequest academicServiceRequest) {
+		if (academicServiceRequest == null) {
+			throw new DomainException("AcademicServiceRequestEvent.academicServiceRequest.cannot.be.null");
+		}
+	}
 
-    @Override
-    final protected Account getFromAccount() {
-	return getPerson().getAccountBy(AccountType.EXTERNAL);
-    }
+	@Override
+	public void setAcademicServiceRequest(final AcademicServiceRequest academicServiceRequest) {
+		throw new DomainException("error.events.serviceRequests.AcademicServiceRequestEvent.cannot.modify.academicServiceRequest");
+	}
 
-    @Override
-    public PostingRule getPostingRule() {
-	return getAdministrativeOffice().getServiceAgreementTemplate().findPostingRuleByEventTypeAndDate(getEventType(),
-		getWhenOccured());
-    }
+	@Override
+	final public Account getToAccount() {
+		return getAdministrativeOffice().getUnit().getAccountBy(AccountType.INTERNAL);
+	}
 
-    final protected ExecutionYear getExecutionYear() {
-	return getAcademicServiceRequest().getExecutionYear();
-    }
+	@Override
+	final protected Account getFromAccount() {
+		return getPerson().getAccountBy(AccountType.EXTERNAL);
+	}
 
-    final public boolean isUrgentRequest() {
-	return getAcademicServiceRequest().isUrgentRequest();
-    }
+	@Override
+	public PostingRule getPostingRule() {
+		return getAdministrativeOffice().getServiceAgreementTemplate().findPostingRuleByEventTypeAndDate(getEventType(),
+				getWhenOccured());
+	}
 
-    @Override
-    protected void disconnect() {
-	super.setAcademicServiceRequest(null);
-	super.disconnect();
-    }
+	final protected ExecutionYear getExecutionYear() {
+		return getAcademicServiceRequest().getExecutionYear();
+	}
 
-    @Override
-    public boolean isAcademicServiceRequestEvent() {
-	return true;
-    }
+	final public boolean isUrgentRequest() {
+		return getAcademicServiceRequest().isUrgentRequest();
+	}
+
+	@Override
+	protected void disconnect() {
+		super.setAcademicServiceRequest(null);
+		super.disconnect();
+	}
+
+	@Override
+	public boolean isAcademicServiceRequestEvent() {
+		return true;
+	}
 
 }

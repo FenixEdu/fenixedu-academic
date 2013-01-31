@@ -9,24 +9,24 @@ import org.joda.time.DateTime;
 
 public class ExternalProgramCertificateRequestPR extends ExternalProgramCertificateRequestPR_Base {
 
-    private ExternalProgramCertificateRequestPR() {
-	super();
-    }
+	private ExternalProgramCertificateRequestPR() {
+		super();
+	}
 
-    public ExternalProgramCertificateRequestPR(final ServiceAgreementTemplate serviceAgreementTemplate, final DateTime startDate,
-	    final DateTime endDate, final Money certificateAmount, final Money amountFirstPage, final Money amountPerPage) {
-	this();
-	super.init(EntryType.EXTERNAL_PROGRAM_CERTIFICATE_REQUEST_FEE, EventType.EXTERNAL_PROGRAM_CERTIFICATE_REQUEST, startDate,
-		endDate, serviceAgreementTemplate, certificateAmount, amountPerPage);
-	checkParameters(amountFirstPage);
-	super.setAmountFirstPage(amountFirstPage);
-    }
+	public ExternalProgramCertificateRequestPR(final ServiceAgreementTemplate serviceAgreementTemplate, final DateTime startDate,
+			final DateTime endDate, final Money certificateAmount, final Money amountFirstPage, final Money amountPerPage) {
+		this();
+		super.init(EntryType.EXTERNAL_PROGRAM_CERTIFICATE_REQUEST_FEE, EventType.EXTERNAL_PROGRAM_CERTIFICATE_REQUEST, startDate,
+				endDate, serviceAgreementTemplate, certificateAmount, amountPerPage);
+		checkParameters(amountFirstPage);
+		super.setAmountFirstPage(amountFirstPage);
+	}
 
-    @Override
-    public ExternalProgramCertificateRequestPR edit(final Money certificateAmount, final Money amountFirstPage,
-	    final Money amountPerPage) {
-	deactivate();
-	return new ExternalProgramCertificateRequestPR(getServiceAgreementTemplate(), new DateTime().minus(1000), null,
-		certificateAmount, amountFirstPage, amountPerPage);
-    }
+	@Override
+	public ExternalProgramCertificateRequestPR edit(final Money certificateAmount, final Money amountFirstPage,
+			final Money amountPerPage) {
+		deactivate();
+		return new ExternalProgramCertificateRequestPR(getServiceAgreementTemplate(), new DateTime().minus(1000), null,
+				certificateAmount, amountFirstPage, amountPerPage);
+	}
 }

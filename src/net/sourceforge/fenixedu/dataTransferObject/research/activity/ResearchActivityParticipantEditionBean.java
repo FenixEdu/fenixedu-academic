@@ -9,44 +9,44 @@ import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class ResearchActivityParticipantEditionBean implements Serializable {
 
-    private Participation participation;
-    private ResearchActivityParticipationRole role;
-    private MultiLanguageString roleMessage;
+	private Participation participation;
+	private ResearchActivityParticipationRole role;
+	private MultiLanguageString roleMessage;
 
-    public MultiLanguageString getRoleMessage() {
-	return roleMessage;
-    }
+	public MultiLanguageString getRoleMessage() {
+		return roleMessage;
+	}
 
-    public void setRoleMessage(MultiLanguageString roleMessage) {
-	this.roleMessage = roleMessage;
-    }
+	public void setRoleMessage(MultiLanguageString roleMessage) {
+		this.roleMessage = roleMessage;
+	}
 
-    public ResearchActivityParticipantEditionBean(Participation participation, ResearchActivityParticipationRole role,
-	    MultiLanguageString roleMessage) {
-	setParticipation(participation);
-	setRole(role);
-	setRoleMessage(roleMessage);
-    }
+	public ResearchActivityParticipantEditionBean(Participation participation, ResearchActivityParticipationRole role,
+			MultiLanguageString roleMessage) {
+		setParticipation(participation);
+		setRole(role);
+		setRoleMessage(roleMessage);
+	}
 
-    public Participation getParticipation() {
-	return participation;
-    }
+	public Participation getParticipation() {
+		return participation;
+	}
 
-    public void setParticipation(Participation participation) {
-	this.participation = participation;
-    }
+	public void setParticipation(Participation participation) {
+		this.participation = participation;
+	}
 
-    public ResearchActivityParticipationRole getRole() {
-	return role;
-    }
+	public ResearchActivityParticipationRole getRole() {
+		return role;
+	}
 
-    public void setRole(ResearchActivityParticipationRole role) {
-	this.role = role;
-    }
+	public void setRole(ResearchActivityParticipationRole role) {
+		this.role = role;
+	}
 
-    public List<ResearchActivityParticipationRole> getAllowedRoles() {
-	Participation participation = this.getParticipation();
-	return (participation == null) ? null : participation.getAllowedRoles();
-    }
+	public List<ResearchActivityParticipationRole> getAllowedRoles() {
+		Participation participation = this.getParticipation();
+		return (participation == null) ? null : participation.getAllowedRoles();
+	}
 
 }

@@ -10,17 +10,19 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class ErasmusIndividualCandidacyDegreesProvider implements DataProvider {
 
-    public Object provide(Object source, Object currentValue) {
-	List<Degree> degrees = Degree.readAllByDegreeType(DegreeType.BOLONHA_MASTER_DEGREE,
-		DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE);
+	@Override
+	public Object provide(Object source, Object currentValue) {
+		List<Degree> degrees =
+				Degree.readAllByDegreeType(DegreeType.BOLONHA_MASTER_DEGREE, DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE);
 
-	degrees.remove(Degree.readBySigla("MSCIT"));
+		degrees.remove(Degree.readBySigla("MSCIT"));
 
-	return degrees;
-    }
+		return degrees;
+	}
 
-    public Converter getConverter() {
-	return new DomainObjectKeyConverter();
-    }
+	@Override
+	public Converter getConverter() {
+		return new DomainObjectKeyConverter();
+	}
 
 }

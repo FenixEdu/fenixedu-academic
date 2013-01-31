@@ -24,32 +24,32 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class InsertCurriculum extends FenixService {
 
-    @Checked("RolePredicates.SCIENTIFIC_COUNCIL_PREDICATE")
-    @Service
-    public static Boolean run(Integer curricularCourseId, String program, String programEn, String operacionalObjectives,
-	    String operacionalObjectivesEn, String generalObjectives, String generalObjectivesEn, DateTime lastModification,
-	    Boolean basic) throws FenixServiceException {
+	@Checked("RolePredicates.SCIENTIFIC_COUNCIL_PREDICATE")
+	@Service
+	public static Boolean run(Integer curricularCourseId, String program, String programEn, String operacionalObjectives,
+			String operacionalObjectivesEn, String generalObjectives, String generalObjectivesEn, DateTime lastModification,
+			Boolean basic) throws FenixServiceException {
 
-	CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(curricularCourseId);
+		CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(curricularCourseId);
 
-	if (curricularCourse == null) {
-	    throw new InvalidArgumentsServiceException();
+		if (curricularCourse == null) {
+			throw new InvalidArgumentsServiceException();
+		}
+
+		Curriculum curriculumFromDB = curricularCourse.findLatestCurriculum();
+
+		if (curriculumFromDB != null) {
+			throw new InvalidArgumentsServiceException();
+		}
+
+		if (curricularCourse.getBasic().equals(basic)) {
+
+			curricularCourse.insertCurriculum(program, programEn, operacionalObjectives, operacionalObjectivesEn,
+					generalObjectives, generalObjectivesEn, lastModification);
+
+			return new Boolean(true);
+		}
+
+		return new Boolean(false);
 	}
-
-	Curriculum curriculumFromDB = curricularCourse.findLatestCurriculum();
-
-	if (curriculumFromDB != null) {
-	    throw new InvalidArgumentsServiceException();
-	}
-
-	if (curricularCourse.getBasic().equals(basic)) {
-
-	    curricularCourse.insertCurriculum(program, programEn, operacionalObjectives, operacionalObjectivesEn,
-		    generalObjectives, generalObjectivesEn, lastModification);
-
-	    return new Boolean(true);
-	}
-
-	return new Boolean(false);
-    }
 }

@@ -7,11 +7,13 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class NotClosedPublicExecutionPeriodsProvider implements DataProvider {
 
-    public Object provide(Object source, Object currentValue) {
-	return ExecutionSemester.readNotClosedPublicExecutionPeriods();
-    }
+	@Override
+	public Object provide(Object source, Object currentValue) {
+		return ExecutionSemester.readNotClosedPublicExecutionPeriods();
+	}
 
-    public Converter getConverter() {
-	return new DomainObjectKeyConverter();
-    }
+	@Override
+	public Converter getConverter() {
+		return new DomainObjectKeyConverter();
+	}
 }

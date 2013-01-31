@@ -9,28 +9,28 @@ import org.apache.commons.lang.StringUtils;
 
 public class PhdCandidacyRefereeLetterFile extends PhdCandidacyRefereeLetterFile_Base {
 
-    private PhdCandidacyRefereeLetterFile() {
-	super();
-    }
-
-    PhdCandidacyRefereeLetterFile(final PhdProgramCandidacyProcess candidacyProcess, final String filename, final byte[] content) {
-	this();
-	init(candidacyProcess, PhdIndividualProgramDocumentType.RECOMMENDATION_LETTER, null, content, filename, null);
-    }
-
-    @Override
-    protected void checkParameters(PhdProgramProcess candidacyProcess, PhdIndividualProgramDocumentType documentType,
-	    byte[] content, String filename, Person uploader) {
-
-	check(candidacyProcess, "error.phd.PhdProgramProcessDocument.candidacyProcess.cannot.be.null");
-	if (documentType == null || content == null || content.length == 0 || StringUtils.isEmpty(filename)) {
-	    throw new DomainException("error.phd.PhdProgramProcessDocument.documentType.and.file.cannot.be.null");
+	private PhdCandidacyRefereeLetterFile() {
+		super();
 	}
-    }
 
-    @Override
-    public void delete() {
-	removeLetter();
-	super.delete();
-    }
+	PhdCandidacyRefereeLetterFile(final PhdProgramCandidacyProcess candidacyProcess, final String filename, final byte[] content) {
+		this();
+		init(candidacyProcess, PhdIndividualProgramDocumentType.RECOMMENDATION_LETTER, null, content, filename, null);
+	}
+
+	@Override
+	protected void checkParameters(PhdProgramProcess candidacyProcess, PhdIndividualProgramDocumentType documentType,
+			byte[] content, String filename, Person uploader) {
+
+		check(candidacyProcess, "error.phd.PhdProgramProcessDocument.candidacyProcess.cannot.be.null");
+		if (documentType == null || content == null || content.length == 0 || StringUtils.isEmpty(filename)) {
+			throw new DomainException("error.phd.PhdProgramProcessDocument.documentType.and.file.cannot.be.null");
+		}
+	}
+
+	@Override
+	public void delete() {
+		removeLetter();
+		super.delete();
+	}
 }

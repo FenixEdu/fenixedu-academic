@@ -16,103 +16,103 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 
 public class DelegateCurricularCourseStudentsGroup extends LeafGroup {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    private final Integer curricularCourseId;
+	private final Integer curricularCourseId;
 
-    private final Integer executionYearId;
+	private final Integer executionYearId;
 
-    public DelegateCurricularCourseStudentsGroup(CurricularCourse curricularCourse, ExecutionYear executionYear) {
-	curricularCourseId = curricularCourse.getIdInternal();
-	executionYearId = executionYear.getIdInternal();
-    }
-
-    @Override
-    public Set<Person> getElements() {
-	Set<Person> people = new HashSet<Person>();
-
-	final CurricularCourse curricularCourse = getCurricularCourse();
-	final ExecutionYear executionYear = getExecutionYear();
-	for (Enrolment enrolment : curricularCourse.getEnrolmentsByExecutionYear(executionYear)) {
-	    Registration registration = enrolment.getRegistration();
-	    people.add(registration.getPerson());
-	}
-
-	return people;
-    }
-
-    @Override
-    protected Argument[] getExpressionArguments() {
-	return new Argument[] { new IdOperator(getCurricularCourse()), new IdOperator(getExecutionYear()) };
-    }
-
-    public static class Builder implements GroupBuilder {
-
-	@Override
-	public Group build(Object[] arguments) {
-	    try {
-		return new DelegateCurricularCourseStudentsGroup((CurricularCourse) arguments[0], (ExecutionYear) arguments[1]);
-	    } catch (ClassCastException e) {
-		throw new GroupDynamicExpressionException("accessControl.group.builder.executionCourse.notExecutionCourse",
-			arguments[0].toString());
-	    }
+	public DelegateCurricularCourseStudentsGroup(CurricularCourse curricularCourse, ExecutionYear executionYear) {
+		curricularCourseId = curricularCourse.getIdInternal();
+		executionYearId = executionYear.getIdInternal();
 	}
 
 	@Override
-	public int getMinArguments() {
-	    return 2;
+	public Set<Person> getElements() {
+		Set<Person> people = new HashSet<Person>();
+
+		final CurricularCourse curricularCourse = getCurricularCourse();
+		final ExecutionYear executionYear = getExecutionYear();
+		for (Enrolment enrolment : curricularCourse.getEnrolmentsByExecutionYear(executionYear)) {
+			Registration registration = enrolment.getRegistration();
+			people.add(registration.getPerson());
+		}
+
+		return people;
 	}
 
 	@Override
-	public int getMaxArguments() {
-	    return 2;
+	protected Argument[] getExpressionArguments() {
+		return new Argument[] { new IdOperator(getCurricularCourse()), new IdOperator(getExecutionYear()) };
 	}
 
-    }
+	public static class Builder implements GroupBuilder {
 
-    @Override
-    public boolean isMember(Person person) {
-	if (person.hasStudent()) {
-	    if (getElements().contains(person.getStudent())) {
+		@Override
+		public Group build(Object[] arguments) {
+			try {
+				return new DelegateCurricularCourseStudentsGroup((CurricularCourse) arguments[0], (ExecutionYear) arguments[1]);
+			} catch (ClassCastException e) {
+				throw new GroupDynamicExpressionException("accessControl.group.builder.executionCourse.notExecutionCourse",
+						arguments[0].toString());
+			}
+		}
+
+		@Override
+		public int getMinArguments() {
+			return 2;
+		}
+
+		@Override
+		public int getMaxArguments() {
+			return 2;
+		}
+
+	}
+
+	@Override
+	public boolean isMember(Person person) {
+		if (person.hasStudent()) {
+			if (getElements().contains(person.getStudent())) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	@Override
+	public String getName() {
+		return getCurricularCourse().getName() + " - " + getNumberOfEnrolledStudents() + " " + super.getName();
+	}
+
+	@Override
+	public boolean hasPresentationNameDynamic() {
 		return true;
-	    }
 	}
-	return false;
-    }
 
-    @Override
-    public String getName() {
-	return getCurricularCourse().getName() + " - " + getNumberOfEnrolledStudents() + " " + super.getName();
-    }
+	@Override
+	public String getPresentationNameBundle() {
+		return "resources.DelegateResources";
+	}
 
-    @Override
-    public boolean hasPresentationNameDynamic() {
-	return true;
-    }
+	@Override
+	public String getPresentationNameKey() {
+		return "label.enrolledStudents";
+	}
 
-    @Override
-    public String getPresentationNameBundle() {
-	return "resources.DelegateResources";
-    }
+	public ExecutionYear getExecutionYear() {
+		return executionYearId != null ? RootDomainObject.getInstance().readExecutionYearByOID(executionYearId) : null;
+	}
 
-    @Override
-    public String getPresentationNameKey() {
-	return "label.enrolledStudents";
-    }
+	public CurricularCourse getCurricularCourse() {
+		return (CurricularCourse) (curricularCourseId != null ? RootDomainObject.getInstance().readDegreeModuleByOID(
+				curricularCourseId) : null);
+	}
 
-    public ExecutionYear getExecutionYear() {
-	return executionYearId != null ? RootDomainObject.getInstance().readExecutionYearByOID(executionYearId) : null;
-    }
-
-    public CurricularCourse getCurricularCourse() {
-	return (CurricularCourse) (curricularCourseId != null ? RootDomainObject.getInstance().readDegreeModuleByOID(
-		curricularCourseId) : null);
-    }
-
-    private int getNumberOfEnrolledStudents() {
-	final CurricularCourse curricularCourse = getCurricularCourse();
-	final ExecutionYear executionYear = getExecutionYear();
-	return curricularCourse.getEnrolmentsByExecutionYear(executionYear).size();
-    }
+	private int getNumberOfEnrolledStudents() {
+		final CurricularCourse curricularCourse = getCurricularCourse();
+		final ExecutionYear executionYear = getExecutionYear();
+		return curricularCourse.getEnrolmentsByExecutionYear(executionYear).size();
+	}
 
 }

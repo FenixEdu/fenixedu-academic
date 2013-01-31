@@ -6,12 +6,12 @@ import net.sourceforge.fenixedu.domain.onlineTests.Test;
 
 public class ReadTest extends FenixService {
 
-    public Test run(Integer executionCourseId, Integer testId) throws FenixServiceException {
-	final Test test = rootDomainObject.readTestByOID(testId);
-	if (test == null) {
-	    throw new FenixServiceException();
+	public Test run(Integer executionCourseId, Integer testId) throws FenixServiceException {
+		final Test test = rootDomainObject.readTestByOID(testId);
+		if (test == null) {
+			throw new FenixServiceException();
+		}
+		return test;
 	}
-	return test;
-    }
 
 }

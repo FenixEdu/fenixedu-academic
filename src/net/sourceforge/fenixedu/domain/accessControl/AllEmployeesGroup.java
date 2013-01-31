@@ -13,46 +13,46 @@ import net.sourceforge.fenixedu.domain.teacher.CategoryType;
 
 public class AllEmployeesGroup extends Group {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    public AllEmployeesGroup() {
-    }
-
-    @Override
-    public Set<Person> getElements() {
-	final Set<Person> people = new HashSet<Person>();
-	for (final Person person : Role.getRoleByRoleType(RoleType.EMPLOYEE).getAssociatedPersons()) {
-	    if (isMember(person)) {
-		people.add(person);
-	    }
+	public AllEmployeesGroup() {
 	}
-	return people;
-    }
 
-    @Override
-    public boolean isMember(Person person) {
-	if (person != null) {
-	    PersonProfessionalData personProfessionalData = person.getPersonProfessionalData();
-	    if (personProfessionalData != null) {
-		GiafProfessionalData giafProfessionalDataByCategoryType = personProfessionalData
-			.getGiafProfessionalDataByCategoryType(CategoryType.EMPLOYEE);
-		if (giafProfessionalDataByCategoryType != null
-			&& !giafProfessionalDataByCategoryType.getContractSituation().getEndSituation()) {
-		    return true;
+	@Override
+	public Set<Person> getElements() {
+		final Set<Person> people = new HashSet<Person>();
+		for (final Person person : Role.getRoleByRoleType(RoleType.EMPLOYEE).getAssociatedPersons()) {
+			if (isMember(person)) {
+				people.add(person);
+			}
 		}
-	    }
+		return people;
 	}
-	return false;
-    }
 
-    @Override
-    protected Argument[] getExpressionArguments() {
-	return null;
-    }
+	@Override
+	public boolean isMember(Person person) {
+		if (person != null) {
+			PersonProfessionalData personProfessionalData = person.getPersonProfessionalData();
+			if (personProfessionalData != null) {
+				GiafProfessionalData giafProfessionalDataByCategoryType =
+						personProfessionalData.getGiafProfessionalDataByCategoryType(CategoryType.EMPLOYEE);
+				if (giafProfessionalDataByCategoryType != null
+						&& !giafProfessionalDataByCategoryType.getContractSituation().getEndSituation()) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
 
-    @Override
-    public String getPresentationNameKey() {
-	return super.getPresentationNameKey() + "." + RoleType.EMPLOYEE;
-    }
+	@Override
+	protected Argument[] getExpressionArguments() {
+		return null;
+	}
+
+	@Override
+	public String getPresentationNameKey() {
+		return super.getPresentationNameKey() + "." + RoleType.EMPLOYEE;
+	}
 
 }

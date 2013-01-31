@@ -23,23 +23,33 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
  * 
  */
-@Mapping(module = "masterDegreeAdministrativeOffice", path = "/listConcludedMasterDegreeProofs", scope = "request", parameter = "method")
-@Forwards(value = { @Forward(name = "showList", path = "/masterDegreeAdministrativeOffice/lists/listConcludedMasterDegreeProofs.jsp", tileProperties = @Tile(navLocal = "/masterDegreeAdministrativeOffice/lists/listsMenu.jsp", navGeral = "/masterDegreeAdministrativeOffice/commonNavGeralPosGraduacao.jsp", title = "private.postgraduateoffice.listings")) })
+@Mapping(
+		module = "masterDegreeAdministrativeOffice",
+		path = "/listConcludedMasterDegreeProofs",
+		scope = "request",
+		parameter = "method")
+@Forwards(value = { @Forward(
+		name = "showList",
+		path = "/masterDegreeAdministrativeOffice/lists/listConcludedMasterDegreeProofs.jsp",
+		tileProperties = @Tile(
+				navLocal = "/masterDegreeAdministrativeOffice/lists/listsMenu.jsp",
+				navGeral = "/masterDegreeAdministrativeOffice/commonNavGeralPosGraduacao.jsp",
+				title = "private.postgraduateoffice.listings")) })
 public class ListConcludedMasterDegreeProofsDispatchAction extends FenixDispatchAction {
 
-    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+	public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
 
-	ListMasterDegreeProofsBean bean = null;
+		ListMasterDegreeProofsBean bean = null;
 
-	if (RenderUtils.getViewState() != null) {
-	    bean = (ListMasterDegreeProofsBean) RenderUtils.getViewState().getMetaObject().getObject();
+		if (RenderUtils.getViewState() != null) {
+			bean = (ListMasterDegreeProofsBean) RenderUtils.getViewState().getMetaObject().getObject();
+		}
+
+		if (bean == null) {
+			bean = new ListMasterDegreeProofsBean();
+		}
+
+		request.setAttribute("chooseDegreeAndYearBean", bean);
+		return mapping.findForward("showList");
 	}
-
-	if (bean == null) {
-	    bean = new ListMasterDegreeProofsBean();
-	}
-
-	request.setAttribute("chooseDegreeAndYearBean", bean);
-	return mapping.findForward("showList");
-    }
 }

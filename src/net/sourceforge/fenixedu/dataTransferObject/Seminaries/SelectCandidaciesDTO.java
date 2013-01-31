@@ -14,45 +14,45 @@ import net.sourceforge.fenixedu.dataTransferObject.DataTranferObject;
  */
 public class SelectCandidaciesDTO extends DataTranferObject {
 
-    private List seminaries;
+	private List seminaries;
 
-    private List candidacies;
+	private List candidacies;
 
-    /**
-     * @return Returns the candidacies.
-     */
-    public List getCandidacies() {
-	return candidacies;
-    }
+	/**
+	 * @return Returns the candidacies.
+	 */
+	public List getCandidacies() {
+		return candidacies;
+	}
 
-    /**
-     * @param candidacies
-     *            The candidacies to set.
-     */
-    public void setCandidacies(List candidacies) {
-	this.candidacies = candidacies;
-    }
+	/**
+	 * @param candidacies
+	 *            The candidacies to set.
+	 */
+	public void setCandidacies(List candidacies) {
+		this.candidacies = candidacies;
+	}
 
-    /**
-     * @return Returns the seminaries.
-     */
-    public List getSeminaries() {
-	return seminaries;
-    }
+	/**
+	 * @return Returns the seminaries.
+	 */
+	public List getSeminaries() {
+		return seminaries;
+	}
 
-    /**
-     * @param seminaries
-     *            The seminaries to set.
-     */
-    public void setSeminaries(List seminaries) {
-	this.seminaries = seminaries;
-    }
+	/**
+	 * @param seminaries
+	 *            The seminaries to set.
+	 */
+	public void setSeminaries(List seminaries) {
+		this.seminaries = seminaries;
+	}
 
-    /**
+	/**
      *  
      */
-    public SelectCandidaciesDTO() {
+	public SelectCandidaciesDTO() {
 
-    }
+	}
 
 }

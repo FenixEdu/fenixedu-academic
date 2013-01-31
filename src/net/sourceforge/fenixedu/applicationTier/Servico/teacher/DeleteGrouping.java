@@ -15,21 +15,21 @@ import net.sourceforge.fenixedu.domain.Grouping;
  */
 public class DeleteGrouping extends FenixService {
 
-    public Boolean run(Integer executionCourseId, Integer groupPropertiesId) throws FenixServiceException {
+	public Boolean run(Integer executionCourseId, Integer groupPropertiesId) throws FenixServiceException {
 
-	if (groupPropertiesId == null) {
-	    return Boolean.FALSE;
+		if (groupPropertiesId == null) {
+			return Boolean.FALSE;
+		}
+
+		Grouping groupProperties = rootDomainObject.readGroupingByOID(groupPropertiesId);
+
+		if (groupProperties == null) {
+			throw new ExistingServiceException();
+		}
+
+		groupProperties.delete();
+
+		return Boolean.TRUE;
 	}
-
-	Grouping groupProperties = rootDomainObject.readGroupingByOID(groupPropertiesId);
-
-	if (groupProperties == null) {
-	    throw new ExistingServiceException();
-	}
-
-	groupProperties.delete();
-
-	return Boolean.TRUE;
-    }
 
 }

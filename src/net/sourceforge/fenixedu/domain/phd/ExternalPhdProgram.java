@@ -16,101 +16,101 @@ import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class ExternalPhdProgram extends ExternalPhdProgram_Base {
 
-    public ExternalPhdProgram() {
-	super();
+	public ExternalPhdProgram() {
+		super();
 
-	setRootDomainObject(RootDomainObject.getInstance());
-	setWhenCreated(new DateTime());
-    }
-
-    private ExternalPhdProgram(String name, String nameEn, String acronym,
-	    PhdIndividualProgramCollaborationType forCollaborationType) {
-	this();
-
-	check(name, nameEn, acronym, forCollaborationType);
-
-	MultiLanguageString nameI18N = new MultiLanguageString(Language.pt, name);
-	nameI18N.setContent(Language.en, nameEn);
-
-	setName(nameI18N);
-
-	setAcronym(acronym);
-	setForCollaborationType(forCollaborationType);
-    }
-
-    private void check(String name, String nameEn, String acronym, PhdIndividualProgramCollaborationType forCollaborationType) {
-	if (StringUtils.isEmpty(name)) {
-	    throw new DomainException("error.external.phd.program.name.is.empty");
+		setRootDomainObject(RootDomainObject.getInstance());
+		setWhenCreated(new DateTime());
 	}
 
-	if (StringUtils.isEmpty(nameEn)) {
-	    throw new DomainException("error.external.phd.program.name.en.is.empty");
+	private ExternalPhdProgram(String name, String nameEn, String acronym,
+			PhdIndividualProgramCollaborationType forCollaborationType) {
+		this();
+
+		check(name, nameEn, acronym, forCollaborationType);
+
+		MultiLanguageString nameI18N = new MultiLanguageString(Language.pt, name);
+		nameI18N.setContent(Language.en, nameEn);
+
+		setName(nameI18N);
+
+		setAcronym(acronym);
+		setForCollaborationType(forCollaborationType);
 	}
 
-	if (StringUtils.isEmpty(acronym)) {
-	    throw new DomainException("error.external.phd.program.acronym.is.empty");
+	private void check(String name, String nameEn, String acronym, PhdIndividualProgramCollaborationType forCollaborationType) {
+		if (StringUtils.isEmpty(name)) {
+			throw new DomainException("error.external.phd.program.name.is.empty");
+		}
+
+		if (StringUtils.isEmpty(nameEn)) {
+			throw new DomainException("error.external.phd.program.name.en.is.empty");
+		}
+
+		if (StringUtils.isEmpty(acronym)) {
+			throw new DomainException("error.external.phd.program.acronym.is.empty");
+		}
+
+		if (forCollaborationType == null) {
+			throw new DomainException("error.external.phd.program.for.collaboration.type.is.null");
+		}
 	}
 
-	if (forCollaborationType == null) {
-	    throw new DomainException("error.external.phd.program.for.collaboration.type.is.null");
-	}
-    }
-
-    public boolean isForCollaborationType(PhdIndividualProgramCollaborationType type) {
-	return getForCollaborationType() == type;
-    }
-
-    public static ExternalPhdProgram createExternalPhdProgram(String name, String nameEn, String acronym,
-	    PhdIndividualProgramCollaborationType forCollaborationType) {
-	if (readExternalPhdProgramByName(name) != null) {
-	    throw new DomainException("error.external.phd.program.with.same.name.exists");
+	public boolean isForCollaborationType(PhdIndividualProgramCollaborationType type) {
+		return getForCollaborationType() == type;
 	}
 
-	if (readExternalPhdProgramByAcronym(acronym) != null) {
-	    throw new DomainException("error.external.phd.program.with.same.acronym.exists");
+	public static ExternalPhdProgram createExternalPhdProgram(String name, String nameEn, String acronym,
+			PhdIndividualProgramCollaborationType forCollaborationType) {
+		if (readExternalPhdProgramByName(name) != null) {
+			throw new DomainException("error.external.phd.program.with.same.name.exists");
+		}
+
+		if (readExternalPhdProgramByAcronym(acronym) != null) {
+			throw new DomainException("error.external.phd.program.with.same.acronym.exists");
+		}
+
+		return new ExternalPhdProgram(name, nameEn, acronym, forCollaborationType);
 	}
 
-	return new ExternalPhdProgram(name, nameEn, acronym, forCollaborationType);
-    }
+	public static List<ExternalPhdProgram> readExternalPhdProgramsForCollaborationType(
+			final PhdIndividualProgramCollaborationType type) {
+		List<ExternalPhdProgram> phdProgramList = new ArrayList<ExternalPhdProgram>();
 
-    public static List<ExternalPhdProgram> readExternalPhdProgramsForCollaborationType(
-	    final PhdIndividualProgramCollaborationType type) {
-	List<ExternalPhdProgram> phdProgramList = new ArrayList<ExternalPhdProgram>();
+		CollectionUtils.select(RootDomainObject.getInstance().getExternalPhdPrograms(), new Predicate() {
 
-	CollectionUtils.select(RootDomainObject.getInstance().getExternalPhdPrograms(), new Predicate() {
+			@Override
+			public boolean evaluate(Object arg0) {
+				return ((ExternalPhdProgram) arg0).isForCollaborationType(type);
+			}
 
-	    @Override
-	    public boolean evaluate(Object arg0) {
-		return ((ExternalPhdProgram) arg0).isForCollaborationType(type);
-	    }
+		}, phdProgramList);
 
-	}, phdProgramList);
+		return phdProgramList;
+	}
 
-	return phdProgramList;
-    }
+	public static ExternalPhdProgram readExternalPhdProgramByName(final String name) {
+		return (ExternalPhdProgram) CollectionUtils.find(RootDomainObject.getInstance().getExternalPhdPrograms(),
+				new Predicate() {
 
-    public static ExternalPhdProgram readExternalPhdProgramByName(final String name) {
-	return (ExternalPhdProgram) CollectionUtils.find(RootDomainObject.getInstance().getExternalPhdPrograms(),
-		new Predicate() {
+					@Override
+					public boolean evaluate(Object object) {
+						return name.equals(((ExternalPhdProgram) object).getName().getContent());
+					}
 
-		    @Override
-		    public boolean evaluate(Object object) {
-			return name.equals(((ExternalPhdProgram) object).getName().getContent());
-		    }
+				});
+	}
 
-		});
-    }
+	public static ExternalPhdProgram readExternalPhdProgramByAcronym(final String acronym) {
+		return (ExternalPhdProgram) CollectionUtils.find(RootDomainObject.getInstance().getExternalPhdPrograms(),
+				new Predicate() {
 
-    public static ExternalPhdProgram readExternalPhdProgramByAcronym(final String acronym) {
-	return (ExternalPhdProgram) CollectionUtils.find(RootDomainObject.getInstance().getExternalPhdPrograms(),
-		new Predicate() {
+					@Override
+					public boolean evaluate(Object object) {
+						return acronym.equals(((ExternalPhdProgram) object).getAcronym());
+					}
 
-		    @Override
-		    public boolean evaluate(Object object) {
-			return acronym.equals(((ExternalPhdProgram) object).getAcronym());
-		    }
-
-		});
-    }
+				});
+	}
 
 }

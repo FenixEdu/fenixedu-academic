@@ -20,102 +20,101 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.security.UserView;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
-@Mapping(module = "teacher", path = "/resultTeacherManagement", attribute = "voidForm", formBean = "voidForm", scope = "request", parameter = "method")
-@Forwards(value = {
-		@Forward(name = "showTeacherCientificResults", path = "showTeacherCientificResults"),
+@Mapping(
+		module = "teacher",
+		path = "/resultTeacherManagement",
+		attribute = "voidForm",
+		formBean = "voidForm",
+		scope = "request",
+		parameter = "method")
+@Forwards(value = { @Forward(name = "showTeacherCientificResults", path = "showTeacherCientificResults"),
 		@Forward(name = "addTeacherDidaticResult", path = "addTeacherDidaticResult"),
 		@Forward(name = "addTeacherCientificResult", path = "addTeacherCientificResult"),
 		@Forward(name = "showTeacherDidaticResults", path = "showTeacherDidaticResults") })
 public class ResultTeacherManagementDispatchAction extends FenixDispatchAction {
 
-    public ActionForward readTeacherResults(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
+	public ActionForward readTeacherResults(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) {
 
-	Teacher teacher = getUserView(request).getPerson().getTeacher();
-	String type = request.getParameter("typeResult");
+		Teacher teacher = getUserView(request).getPerson().getTeacher();
+		String type = request.getParameter("typeResult");
 
-	List<ResearchResult> results = new ArrayList<ResearchResult>();
-	for (ResultTeacher resultTeacher : teacher.getTeacherResults()) {
-	    if (resultTeacher.getPublicationArea().getName().equals(type) && resultTeacher.getResult() != null)
-		results.add(resultTeacher.getResult());
+		List<ResearchResult> results = new ArrayList<ResearchResult>();
+		for (ResultTeacher resultTeacher : teacher.getTeacherResults()) {
+			if (resultTeacher.getPublicationArea().getName().equals(type) && resultTeacher.getResult() != null) {
+				results.add(resultTeacher.getResult());
+			}
+		}
+
+		request.setAttribute("teacherResults", results);
+
+		if (type.equalsIgnoreCase("Didatic")) {
+			return mapping.findForward("showTeacherDidaticResults");
+		} else {
+			return mapping.findForward("showTeacherCientificResults");
+		}
 	}
 
-	request.setAttribute("teacherResults", results);
+	public ActionForward readResultsParticipation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) {
 
-	if (type.equalsIgnoreCase("Didatic"))
-	    return mapping.findForward("showTeacherDidaticResults");
-	else
-	    return mapping.findForward("showTeacherCientificResults");
-    }
+		String type = request.getParameter("typeResult");
+		Teacher teacher = getUserView(request).getPerson().getTeacher();
 
-    public ActionForward readResultsParticipation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
+		List<ResearchResult> resultsInTeacherSheet = new ArrayList<ResearchResult>();
+		for (ResultTeacher resultTeacher : teacher.getTeacherResults()) {
+			resultsInTeacherSheet.add(resultTeacher.getResult());
+		}
 
-	String type = request.getParameter("typeResult");
-	Teacher teacher = getUserView(request).getPerson().getTeacher();
+		List<ResearchResult> resultsNotInTeacherSheet = new ArrayList<ResearchResult>();
+		for (ResultParticipation participation : teacher.getPerson().getResultParticipations()) {
+			if (!resultsInTeacherSheet.contains(participation.getResult())) {
+				resultsNotInTeacherSheet.add(participation.getResult());
+			}
+		}
 
-	List<ResearchResult> resultsInTeacherSheet = new ArrayList<ResearchResult>();
-	for (ResultTeacher resultTeacher : teacher.getTeacherResults()) {
-	    resultsInTeacherSheet.add(resultTeacher.getResult());
+		request.setAttribute("resultsNotInTeacherSheet", resultsNotInTeacherSheet);
+
+		if (type.equalsIgnoreCase("Didatic")) {
+			return mapping.findForward("addTeacherDidaticResult");
+		} else {
+			return mapping.findForward("addTeacherCientificResult");
+		}
 	}
 
-	List<ResearchResult> resultsNotInTeacherSheet = new ArrayList<ResearchResult>();
-	for (ResultParticipation participation : teacher.getPerson().getResultParticipations()) {
-	    if (!resultsInTeacherSheet.contains(participation.getResult())) {
-		resultsNotInTeacherSheet.add(participation.getResult());
-	    }
+	public ActionForward insertResultTeacher(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) {
+
+		IUserView userView = UserView.getUser();
+		String type = request.getParameter("typeResult");
+		Integer resultId = getRequestParameterAsInteger(request, "resultId");
+
+		try {
+
+			AddResultToTeacherInformationSheet.run(userView.getPerson().getTeacher(), resultId, type);
+		} catch (Exception ex) {
+			addActionMessage(request, ex.getMessage());
+		}
+
+		return readTeacherResults(mapping, form, request, response);
 	}
 
-	request.setAttribute("resultsNotInTeacherSheet", resultsNotInTeacherSheet);
+	public ActionForward deleteResultTeacher(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
 
-	if (type.equalsIgnoreCase("Didatic"))
-	    return mapping.findForward("addTeacherDidaticResult");
-	else
-	    return mapping.findForward("addTeacherCientificResult");
-    }
+		IUserView userView = UserView.getUser();
+		Integer resultId = getRequestParameterAsInteger(request, "resultId");
 
-    public ActionForward insertResultTeacher(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
+		try {
 
-	IUserView userView = UserView.getUser();
-	String type = request.getParameter("typeResult");
-	Integer resultId = getRequestParameterAsInteger(request, "resultId");
-
-	try {
-
-	    AddResultToTeacherInformationSheet.run(userView.getPerson().getTeacher(), resultId, type);
-	} catch (Exception ex) {
-	    addActionMessage(request, ex.getMessage());
+			RemoveResultFromTeacherInformationSheet.run(userView.getPerson().getTeacher(), resultId);
+		} catch (Exception ex) {
+			addActionMessage(request, ex.getMessage());
+		}
+		return readTeacherResults(mapping, form, request, response);
 	}
-
-	return readTeacherResults(mapping, form, request, response);
-    }
-
-    public ActionForward deleteResultTeacher(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-
-	IUserView userView = UserView.getUser();
-	Integer resultId = getRequestParameterAsInteger(request, "resultId");
-
-	try {
-
-	    RemoveResultFromTeacherInformationSheet.run(userView.getPerson().getTeacher(), resultId);
-	} catch (Exception ex) {
-	    addActionMessage(request, ex.getMessage());
-	}
-	return readTeacherResults(mapping, form, request, response);
-    }
 }

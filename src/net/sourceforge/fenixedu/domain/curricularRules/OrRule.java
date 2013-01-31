@@ -14,39 +14,39 @@ import net.sourceforge.fenixedu.domain.util.LogicOperator;
 
 public class OrRule extends OrRule_Base {
 
-    public OrRule(CurricularRule... curricularRules) {
-	initCompositeRule(curricularRules);
-	setCompositeRuleType(LogicOperator.OR);
-    }
-
-    @Override
-    public List<GenericPair<Object, Boolean>> getLabel() {
-	return getLabel("label.operator.or");
-    }
-
-    @Override
-    public RuleResult evaluate(IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, EnrolmentContext enrolmentContext) {
-	RuleResult resultOR = RuleResult.createFalse(EnrolmentResultType.NULL, sourceDegreeModuleToEvaluate.getDegreeModule());
-	for (final CurricularRule curricularRule : getCurricularRules()) {
-	    resultOR = resultOR.or(curricularRule.evaluate(sourceDegreeModuleToEvaluate, enrolmentContext));
-	    if (resultOR.isTrue() && resultOR.isValidated(sourceDegreeModuleToEvaluate.getDegreeModule())) {
-		return RuleResult.createTrue(sourceDegreeModuleToEvaluate.getDegreeModule());
-	    }
+	public OrRule(CurricularRule... curricularRules) {
+		initCompositeRule(curricularRules);
+		setCompositeRuleType(LogicOperator.OR);
 	}
-	return resultOR;
-    }
 
-    @Override
-    public RuleResult verify(VerifyRuleLevel verifyRuleLevel, EnrolmentContext enrolmentContext,
-	    DegreeModule degreeModuleToVerify, CourseGroup parentCourseGroup) {
-	RuleResult resultOR = RuleResult.createFalse(EnrolmentResultType.NULL, degreeModuleToVerify);
-	for (final CurricularRule curricularRule : getCurricularRules()) {
-	    resultOR = resultOR.or(curricularRule.verify(verifyRuleLevel, enrolmentContext, degreeModuleToVerify,
-		    parentCourseGroup));
-	    if (resultOR.isTrue() && resultOR.isValidated(degreeModuleToVerify)) {
-		return RuleResult.createTrue(degreeModuleToVerify);
-	    }
+	@Override
+	public List<GenericPair<Object, Boolean>> getLabel() {
+		return getLabel("label.operator.or");
 	}
-	return resultOR;
-    }
+
+	@Override
+	public RuleResult evaluate(IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, EnrolmentContext enrolmentContext) {
+		RuleResult resultOR = RuleResult.createFalse(EnrolmentResultType.NULL, sourceDegreeModuleToEvaluate.getDegreeModule());
+		for (final CurricularRule curricularRule : getCurricularRules()) {
+			resultOR = resultOR.or(curricularRule.evaluate(sourceDegreeModuleToEvaluate, enrolmentContext));
+			if (resultOR.isTrue() && resultOR.isValidated(sourceDegreeModuleToEvaluate.getDegreeModule())) {
+				return RuleResult.createTrue(sourceDegreeModuleToEvaluate.getDegreeModule());
+			}
+		}
+		return resultOR;
+	}
+
+	@Override
+	public RuleResult verify(VerifyRuleLevel verifyRuleLevel, EnrolmentContext enrolmentContext,
+			DegreeModule degreeModuleToVerify, CourseGroup parentCourseGroup) {
+		RuleResult resultOR = RuleResult.createFalse(EnrolmentResultType.NULL, degreeModuleToVerify);
+		for (final CurricularRule curricularRule : getCurricularRules()) {
+			resultOR =
+					resultOR.or(curricularRule.verify(verifyRuleLevel, enrolmentContext, degreeModuleToVerify, parentCourseGroup));
+			if (resultOR.isTrue() && resultOR.isValidated(degreeModuleToVerify)) {
+				return RuleResult.createTrue(degreeModuleToVerify);
+			}
+		}
+		return resultOR;
+	}
 }

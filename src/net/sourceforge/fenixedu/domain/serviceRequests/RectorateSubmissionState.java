@@ -1,9 +1,9 @@
 package net.sourceforge.fenixedu.domain.serviceRequests;
 
 public enum RectorateSubmissionState {
-    UNSENT, CLOSED, SENT, RECEIVED;
+	UNSENT, CLOSED, SENT, RECEIVED;
 
-    public String getName() {
-	return name();
-    }
+	public String getName() {
+		return name();
+	}
 }

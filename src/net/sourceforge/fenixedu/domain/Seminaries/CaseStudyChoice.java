@@ -16,27 +16,27 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
  */
 public class CaseStudyChoice extends CaseStudyChoice_Base {
 
-    public CaseStudyChoice() {
-	super();
-	setRootDomainObject(RootDomainObject.getInstance());
-    }
+	public CaseStudyChoice() {
+		super();
+		setRootDomainObject(RootDomainObject.getInstance());
+	}
 
-    public void delete() {
-	removeCaseStudy();
-	removeCandidacy();
+	public void delete() {
+		removeCaseStudy();
+		removeCandidacy();
 
-	removeRootDomainObject();
-	deleteDomainObject();
-    }
+		removeRootDomainObject();
+		deleteDomainObject();
+	}
 
-    @Deprecated
-    public Integer getOrder() {
-	return super.getPreferenceOrder();
-    }
+	@Deprecated
+	public Integer getOrder() {
+		return super.getPreferenceOrder();
+	}
 
-    @Deprecated
-    public void setOrder(Integer order) {
-	super.setPreferenceOrder(order);
-    }
+	@Deprecated
+	public void setOrder(Integer order) {
+		super.setPreferenceOrder(order);
+	}
 
 }

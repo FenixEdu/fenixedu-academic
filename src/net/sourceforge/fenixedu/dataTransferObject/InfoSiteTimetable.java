@@ -14,30 +14,30 @@ import java.util.List;
  */
 public class InfoSiteTimetable extends DataTranferObject implements ISiteComponent {
 
-    private List lessons;
+	private List lessons;
 
-    private InfoExecutionPeriod infoExecutionPeriod;
+	private InfoExecutionPeriod infoExecutionPeriod;
 
-    /**
-     * @return
-     */
-    public List getLessons() {
-	return lessons;
-    }
+	/**
+	 * @return
+	 */
+	public List getLessons() {
+		return lessons;
+	}
 
-    /**
-     * @param list
-     */
-    public void setLessons(List list) {
-	lessons = list;
-    }
+	/**
+	 * @param list
+	 */
+	public void setLessons(List list) {
+		lessons = list;
+	}
 
-    public InfoExecutionPeriod getInfoExecutionPeriod() {
-	return infoExecutionPeriod;
-    }
+	public InfoExecutionPeriod getInfoExecutionPeriod() {
+		return infoExecutionPeriod;
+	}
 
-    public void setInfoExecutionPeriod(InfoExecutionPeriod infoExecutionPeriod) {
-	this.infoExecutionPeriod = infoExecutionPeriod;
-    }
+	public void setInfoExecutionPeriod(InfoExecutionPeriod infoExecutionPeriod) {
+		this.infoExecutionPeriod = infoExecutionPeriod;
+	}
 
 }

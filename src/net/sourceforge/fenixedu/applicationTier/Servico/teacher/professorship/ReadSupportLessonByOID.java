@@ -15,13 +15,14 @@ import net.sourceforge.fenixedu.domain.SupportLesson;
  */
 public class ReadSupportLessonByOID extends ReadDomainObjectService {
 
-    protected InfoObject newInfoFromDomain(DomainObject domainObject) {
-	return InfoSupportLesson.newInfoFromDomain((SupportLesson) domainObject);
-    }
+	@Override
+	protected InfoObject newInfoFromDomain(DomainObject domainObject) {
+		return InfoSupportLesson.newInfoFromDomain((SupportLesson) domainObject);
+	}
 
-    @Override
-    protected DomainObject readDomainObject(Integer idInternal) {
-	return rootDomainObject.readSupportLessonByOID(idInternal);
-    }
+	@Override
+	protected DomainObject readDomainObject(Integer idInternal) {
+		return rootDomainObject.readSupportLessonByOID(idInternal);
+	}
 
 }

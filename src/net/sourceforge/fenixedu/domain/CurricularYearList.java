@@ -13,55 +13,57 @@ import com.google.common.collect.Lists;
  */
 public class CurricularYearList {
 
-    private final List<Integer> curricularYears;
+	private final List<Integer> curricularYears;
 
-    public CurricularYearList(Iterable<Integer> curricularYears) {
-	super();
-	if (curricularYears == null)
-	    throw new IllegalArgumentException("exception.null.values");
-	this.curricularYears = Lists.newArrayList(curricularYears);
-    }
-
-    @Override
-    public String toString() {
-	StringBuffer buffer = new StringBuffer();
-
-	for (Integer year : curricularYears) {
-	    if (buffer.length() > 0)
-		buffer.append(',');
-	    buffer.append(year);
+	public CurricularYearList(Iterable<Integer> curricularYears) {
+		super();
+		if (curricularYears == null) {
+			throw new IllegalArgumentException("exception.null.values");
+		}
+		this.curricularYears = Lists.newArrayList(curricularYears);
 	}
 
-	return buffer.toString();
-    }
+	@Override
+	public String toString() {
+		StringBuffer buffer = new StringBuffer();
 
-    private static Splitter SPLITTER = Splitter.on(',');
+		for (Integer year : curricularYears) {
+			if (buffer.length() > 0) {
+				buffer.append(',');
+			}
+			buffer.append(year);
+		}
 
-    public static CurricularYearList internalize(String data) {
+		return buffer.toString();
+	}
 
-	Iterable<Integer> years = Iterables.transform(SPLITTER.split(data), new Function<String, Integer>() {
+	private static Splitter SPLITTER = Splitter.on(',');
 
-	    @Override
-	    public Integer apply(String str) {
-		return Integer.parseInt(str);
-	    }
+	public static CurricularYearList internalize(String data) {
 
-	});
+		Iterable<Integer> years = Iterables.transform(SPLITTER.split(data), new Function<String, Integer>() {
 
-	return new CurricularYearList(years);
+			@Override
+			public Integer apply(String str) {
+				return Integer.parseInt(str);
+			}
 
-    }
+		});
 
-    public List<Integer> getYears() {
-	return curricularYears;
-    }
+		return new CurricularYearList(years);
 
-    /*
-     * The value -1 in the year list represents all the years of the selected
-     * degree
-     */
-    public boolean hasAll() {
-	return curricularYears.contains(-1);
-    }
+	}
+
+	public List<Integer> getYears() {
+		return curricularYears;
+	}
+
+	/*
+	 * The value -1 in the year list represents all the years of the selected
+	 * degree
+	 */
+	public boolean hasAll() {
+		return curricularYears.contains(-1);
+	}
 
 }

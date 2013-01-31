@@ -13,12 +13,12 @@ import org.apache.commons.lang.enums.ValuedEnum;
  */
 public abstract class FenixValuedEnum extends ValuedEnum implements Serializable {
 
-    /**
-     * @param arg0
-     * @param arg1
-     */
-    public FenixValuedEnum(String arg0, int arg1) {
-	super(arg0, arg1);
-    }
+	/**
+	 * @param arg0
+	 * @param arg1
+	 */
+	public FenixValuedEnum(String arg0, int arg1) {
+		super(arg0, arg1);
+	}
 
 }

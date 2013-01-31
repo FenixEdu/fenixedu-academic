@@ -27,94 +27,93 @@ import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
 
 import pt.ist.fenixWebFramework.security.UserView;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.FenixFramework;
 import dml.DomainClass;
 import dml.Slot;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
  * 
  */
-@Mapping(module = "manager", path = "/domainObjectStringPropertyFormatter", attribute = "stringPropertyFormatterForm", formBean = "stringPropertyFormatterForm", scope = "request", parameter = "method")
-@Forwards(value = { @Forward(name = "propertyFormatter", path = "/manager/domainObjectsManagement/chooseClassAndSlotToFormat.jsp") })
+@Mapping(
+		module = "manager",
+		path = "/domainObjectStringPropertyFormatter",
+		attribute = "stringPropertyFormatterForm",
+		formBean = "stringPropertyFormatterForm",
+		scope = "request",
+		parameter = "method")
+@Forwards(
+		value = { @Forward(name = "propertyFormatter", path = "/manager/domainObjectsManagement/chooseClassAndSlotToFormat.jsp") })
 public class DomainObjectStringPropertyFormatterDispatchAction extends FenixDispatchAction {
 
-    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+	public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
 
-	request.setAttribute("domainClasses", getClasses());
+		request.setAttribute("domainClasses", getClasses());
 
-	return mapping.findForward("propertyFormatter");
-    }
-
-    public ActionForward chooseClass(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
-
-	DynaActionForm actionForm = (DynaActionForm) form;
-	String domainObjectClass = (String) actionForm.get("domainObjectClass");
-
-	DomainClass domainObjectToFormat = FenixFramework.getDomainModel().findClass(domainObjectClass);
-
-	List<LabelValueBean> slots = new ArrayList<LabelValueBean>();
-	Iterator<Slot> slotsIter = domainObjectToFormat.getSlots();
-	while (slotsIter.hasNext()) {
-	    Slot slot = (Slot) slotsIter.next();
-	    if (slot.getType().equals("java.lang.String")) {
-		slots.add(new LabelValueBean(slot.getName(), slot.getName()));
-	    }
+		return mapping.findForward("propertyFormatter");
 	}
 
-	request.setAttribute("domainClasses", getClasses());
-	request.setAttribute("classSlots", slots);
+	public ActionForward chooseClass(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) {
 
-	return mapping.findForward("propertyFormatter");
-    }
+		DynaActionForm actionForm = (DynaActionForm) form;
+		String domainObjectClass = (String) actionForm.get("domainObjectClass");
 
-    public ActionForward formatProperty(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws ClassNotFoundException, FenixFilterException, FenixServiceException {
+		DomainClass domainObjectToFormat = FenixFramework.getDomainModel().findClass(domainObjectClass);
 
-	IUserView userView = UserView.getUser();
+		List<LabelValueBean> slots = new ArrayList<LabelValueBean>();
+		Iterator<Slot> slotsIter = domainObjectToFormat.getSlots();
+		while (slotsIter.hasNext()) {
+			Slot slot = slotsIter.next();
+			if (slot.getType().equals("java.lang.String")) {
+				slots.add(new LabelValueBean(slot.getName(), slot.getName()));
+			}
+		}
 
-	DynaActionForm actionForm = (DynaActionForm) form;
-	String domainObjectClass = (String) actionForm.get("domainObjectClass");
-	String slotName = (String) actionForm.get("slotName");
+		request.setAttribute("domainClasses", getClasses());
+		request.setAttribute("classSlots", slots);
 
-	DomainObjectStringPropertyFormatter.run(Class.forName(domainObjectClass), slotName);
-
-	ActionMessages actionMessages = new ActionMessages();
-	actionMessages.add("formatCompleted", new ActionMessage("label.property.format.ok", ""));
-	saveMessages(request, actionMessages);
-
-	request.setAttribute("domainClasses", getClasses());
-
-	return mapping.findForward("propertyFormatter");
-    }
-
-    private List<LabelValueBean> getClasses() {
-	List<LabelValueBean> classes = new ArrayList<LabelValueBean>();
-	for (Iterator<DomainClass> iter = FenixFramework.getDomainModel().getClasses(); iter.hasNext();) {
-	    DomainClass domainClass = (DomainClass) iter.next();
-	    classes.add(new LabelValueBean(domainClass.getName(), domainClass.getFullName()));
+		return mapping.findForward("propertyFormatter");
 	}
 
-	Collections.sort(classes, new Comparator<LabelValueBean>() {
-	    public int compare(LabelValueBean bean1, LabelValueBean bean2) {
-		return bean1.compareTo(bean2);
-	    }
-	});
+	public ActionForward formatProperty(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws ClassNotFoundException, FenixFilterException, FenixServiceException {
 
-	return classes;
-    }
+		IUserView userView = UserView.getUser();
+
+		DynaActionForm actionForm = (DynaActionForm) form;
+		String domainObjectClass = (String) actionForm.get("domainObjectClass");
+		String slotName = (String) actionForm.get("slotName");
+
+		DomainObjectStringPropertyFormatter.run(Class.forName(domainObjectClass), slotName);
+
+		ActionMessages actionMessages = new ActionMessages();
+		actionMessages.add("formatCompleted", new ActionMessage("label.property.format.ok", ""));
+		saveMessages(request, actionMessages);
+
+		request.setAttribute("domainClasses", getClasses());
+
+		return mapping.findForward("propertyFormatter");
+	}
+
+	private List<LabelValueBean> getClasses() {
+		List<LabelValueBean> classes = new ArrayList<LabelValueBean>();
+		for (Iterator<DomainClass> iter = FenixFramework.getDomainModel().getClasses(); iter.hasNext();) {
+			DomainClass domainClass = iter.next();
+			classes.add(new LabelValueBean(domainClass.getName(), domainClass.getFullName()));
+		}
+
+		Collections.sort(classes, new Comparator<LabelValueBean>() {
+			@Override
+			public int compare(LabelValueBean bean1, LabelValueBean bean2) {
+				return bean1.compareTo(bean2);
+			}
+		});
+
+		return classes;
+	}
 
 }

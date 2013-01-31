@@ -7,28 +7,28 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public enum CompetenceCourseLevel {
 
-    FIRST_CYCLE,
+	FIRST_CYCLE,
 
-    SECOND_CYCLE,
+	SECOND_CYCLE,
 
-    FORMATION,
+	FORMATION,
 
-    DOCTORATE,
+	DOCTORATE,
 
-    SPECIALIZATION,
+	SPECIALIZATION,
 
-    UNKNOWN;
+	UNKNOWN;
 
-    public String getName() {
-	return name();
-    }
+	public String getName() {
+		return name();
+	}
 
-    public String getLocalizedName() {
-	return getLocalizedName(Language.getLocale());
-    }
+	public String getLocalizedName() {
+		return getLocalizedName(Language.getLocale());
+	}
 
-    public String getLocalizedName(final Locale locale) {
-	return ResourceBundle.getBundle("resources.EnumerationResources", locale).getString(name());
-    }
+	public String getLocalizedName(final Locale locale) {
+		return ResourceBundle.getBundle("resources.EnumerationResources", locale).getString(name());
+	}
 
 }

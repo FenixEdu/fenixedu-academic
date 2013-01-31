@@ -29,100 +29,100 @@ import pt.ist.fenixWebFramework.security.UserView;
 
 public class CreateEditCompetenceCourseDispatchAction extends FenixDispatchAction {
 
-    public ActionForward prepareCreate(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixActionException, FenixFilterException {
-	IUserView userView = UserView.getUser();
+	public ActionForward prepareCreate(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws FenixActionException, FenixFilterException {
+		IUserView userView = UserView.getUser();
 
-	List<InfoDepartment> departmentList = null;
-	try {
-	    departmentList = ReadAllDepartments.run();
-	} catch (FenixServiceException fenixServiceException) {
-	    throw new FenixActionException(fenixServiceException.getMessage());
+		List<InfoDepartment> departmentList = null;
+		try {
+			departmentList = ReadAllDepartments.run();
+		} catch (FenixServiceException fenixServiceException) {
+			throw new FenixActionException(fenixServiceException.getMessage());
+		}
+
+		request.setAttribute("departments", departmentList);
+		return mapping.findForward("createCompetenceCourse");
 	}
 
-	request.setAttribute("departments", departmentList);
-	return mapping.findForward("createCompetenceCourse");
-    }
+	public ActionForward createCompetenceCourse(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws FenixActionException, FenixFilterException {
+		IUserView userView = UserView.getUser();
+		DynaActionForm actionForm = (DynaActionForm) form;
 
-    public ActionForward createCompetenceCourse(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixActionException, FenixFilterException {
-	IUserView userView = UserView.getUser();
-	DynaActionForm actionForm = (DynaActionForm) form;
+		String code = (String) actionForm.get("code");
+		String name = (String) actionForm.get("name");
+		Integer[] departmentIDs = (Integer[]) actionForm.get("departmentIDs");
 
-	String code = (String) actionForm.get("code");
-	String name = (String) actionForm.get("name");
-	Integer[] departmentIDs = (Integer[]) actionForm.get("departmentIDs");
+		InfoCompetenceCourse competenceCourse = null;
+		try {
+			competenceCourse = CreateEditCompetenceCourse.run(null, code, name, departmentIDs);
+		} catch (InvalidArgumentsServiceException invalidArgumentsServiceException) {
+			throw new FenixActionException(invalidArgumentsServiceException.getMessage());
+		} catch (FenixServiceException fenixServiceException) {
+			throw new FenixActionException(fenixServiceException.getMessage());
+		}
 
-	InfoCompetenceCourse competenceCourse = null;
-	try {
-	    competenceCourse = CreateEditCompetenceCourse.run(null, code, name, departmentIDs);
-	} catch (InvalidArgumentsServiceException invalidArgumentsServiceException) {
-	    throw new FenixActionException(invalidArgumentsServiceException.getMessage());
-	} catch (FenixServiceException fenixServiceException) {
-	    throw new FenixActionException(fenixServiceException.getMessage());
+		request.setAttribute("competenceCourse", competenceCourse);
+		return mapping.findForward("showCompetenceCourse");
 	}
 
-	request.setAttribute("competenceCourse", competenceCourse);
-	return mapping.findForward("showCompetenceCourse");
-    }
+	public ActionForward prepareEdit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws FenixActionException, FenixFilterException {
+		IUserView userView = UserView.getUser();
 
-    public ActionForward prepareEdit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixActionException, FenixFilterException {
-	IUserView userView = UserView.getUser();
+		Integer competenceCourseID = Integer.valueOf(request.getParameter("competenceCourse"));
 
-	Integer competenceCourseID = Integer.valueOf(request.getParameter("competenceCourse"));
+		InfoCompetenceCourse competenceCourse = null;
+		List<InfoDepartment> infoDepartments = null;
+		try {
+			competenceCourse = ReadCompetenceCourse.run(competenceCourseID);
+			infoDepartments = ReadAllDepartments.run();
+		} catch (NotExistingServiceException notExistingServiceException) {
 
-	InfoCompetenceCourse competenceCourse = null;
-	List<InfoDepartment> infoDepartments = null;
-	try {
-	    competenceCourse = ReadCompetenceCourse.run(competenceCourseID);
-	    infoDepartments = ReadAllDepartments.run();
-	} catch (NotExistingServiceException notExistingServiceException) {
+		} catch (FenixServiceException fenixServiceException) {
+			throw new FenixActionException(fenixServiceException.getMessage());
+		}
 
-	} catch (FenixServiceException fenixServiceException) {
-	    throw new FenixActionException(fenixServiceException.getMessage());
+		request.setAttribute("departments", infoDepartments);
+		request.setAttribute("competenceCourse", competenceCourse);
+
+		DynaActionForm actionForm = (DynaActionForm) form;
+		actionForm.set("competenceCourseID", competenceCourse.getIdInternal());
+		actionForm.set("code", competenceCourse.getCode());
+		actionForm.set("name", competenceCourse.getName());
+		List<Integer> departmentIDs = new ArrayList<Integer>();
+		for (InfoDepartment department : competenceCourse.getDepartments()) {
+			departmentIDs.add(department.getIdInternal());
+		}
+		Integer[] a = new Integer[departmentIDs.size()];
+		departmentIDs.toArray(a);
+		actionForm.set("departmentIDs", a);
+
+		return mapping.findForward("edit");
 	}
 
-	request.setAttribute("departments", infoDepartments);
-	request.setAttribute("competenceCourse", competenceCourse);
+	public ActionForward edit(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+			throws FenixActionException, FenixFilterException {
+		IUserView userView = UserView.getUser();
+		DynaActionForm actionForm = (DynaActionForm) form;
+		Integer competenceCourseID = (Integer) actionForm.get("competenceCourseID");
+		String code = (String) actionForm.get("code");
+		String name = (String) actionForm.get("name");
+		Integer[] departmentIDs = (Integer[]) actionForm.get("departmentIDs");
 
-	DynaActionForm actionForm = (DynaActionForm) form;
-	actionForm.set("competenceCourseID", competenceCourse.getIdInternal());
-	actionForm.set("code", competenceCourse.getCode());
-	actionForm.set("name", competenceCourse.getName());
-	List<Integer> departmentIDs = new ArrayList<Integer>();
-	for (InfoDepartment department : competenceCourse.getDepartments()) {
-	    departmentIDs.add(department.getIdInternal());
+		InfoCompetenceCourse competenceCourse = null;
+		try {
+			competenceCourse = CreateEditCompetenceCourse.run(competenceCourseID, code, name, departmentIDs);
+
+		} catch (InvalidArgumentsServiceException invalidArgumentsServiceException) {
+			throw new FenixActionException(invalidArgumentsServiceException.getMessage());
+		} catch (NonExistingServiceException nonExistingServiceException) {
+			throw new FenixActionException(nonExistingServiceException.getMessage());
+		} catch (FenixServiceException fenixServiceException) {
+			throw new FenixActionException(fenixServiceException.getMessage());
+		}
+
+		request.setAttribute("competenceCourse", competenceCourse);
+		return mapping.findForward("showCompetenceCourse");
 	}
-	Integer[] a = new Integer[departmentIDs.size()];
-	departmentIDs.toArray(a);
-	actionForm.set("departmentIDs", a);
-
-	return mapping.findForward("edit");
-    }
-
-    public ActionForward edit(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-	    throws FenixActionException, FenixFilterException {
-	IUserView userView = UserView.getUser();
-	DynaActionForm actionForm = (DynaActionForm) form;
-	Integer competenceCourseID = (Integer) actionForm.get("competenceCourseID");
-	String code = (String) actionForm.get("code");
-	String name = (String) actionForm.get("name");
-	Integer[] departmentIDs = (Integer[]) actionForm.get("departmentIDs");
-
-	InfoCompetenceCourse competenceCourse = null;
-	try {
-	    competenceCourse = CreateEditCompetenceCourse.run(competenceCourseID, code, name, departmentIDs);
-
-	} catch (InvalidArgumentsServiceException invalidArgumentsServiceException) {
-	    throw new FenixActionException(invalidArgumentsServiceException.getMessage());
-	} catch (NonExistingServiceException nonExistingServiceException) {
-	    throw new FenixActionException(nonExistingServiceException.getMessage());
-	} catch (FenixServiceException fenixServiceException) {
-	    throw new FenixActionException(fenixServiceException.getMessage());
-	}
-
-	request.setAttribute("competenceCourse", competenceCourse);
-	return mapping.findForward("showCompetenceCourse");
-    }
 }

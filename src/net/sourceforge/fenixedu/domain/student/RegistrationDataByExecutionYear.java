@@ -12,39 +12,40 @@ import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
  */
 public class RegistrationDataByExecutionYear extends RegistrationDataByExecutionYear_Base {
 
-    public RegistrationDataByExecutionYear() {
-	super();
-	setRootDomainObject(RootDomainObject.getInstance());
-    }
-
-    public RegistrationDataByExecutionYear(Registration registration) {
-	this();
-	setExecutionYear(ExecutionYear.readCurrentExecutionYear());
-	setRegistration(registration);
-    }
-
-    public RegistrationDataByExecutionYear(Registration registration, ExecutionYear executionYear) {
-	this();
-	setExecutionYear(executionYear);
-	setRegistration(registration);
-    }
-
-    public static class EnrolmentModelFactoryEditor extends ManageEnrolmentModelBean implements FactoryExecutor {
-	public EnrolmentModelFactoryEditor(final Registration registration) {
-	    super(registration);
+	public RegistrationDataByExecutionYear() {
+		super();
+		setRootDomainObject(RootDomainObject.getInstance());
 	}
 
-	public Object execute() {
-	    getRegistration().setEnrolmentModelForExecutionYear(getExecutionYear(), getEnrolmentModel());
-	    return null;
+	public RegistrationDataByExecutionYear(Registration registration) {
+		this();
+		setExecutionYear(ExecutionYear.readCurrentExecutionYear());
+		setRegistration(registration);
 	}
-    }
 
-    public void delete() {
-	removeExecutionYear();
-	removeRegistration();
-	removeRootDomainObject();
-	super.deleteDomainObject();
-    }
+	public RegistrationDataByExecutionYear(Registration registration, ExecutionYear executionYear) {
+		this();
+		setExecutionYear(executionYear);
+		setRegistration(registration);
+	}
+
+	public static class EnrolmentModelFactoryEditor extends ManageEnrolmentModelBean implements FactoryExecutor {
+		public EnrolmentModelFactoryEditor(final Registration registration) {
+			super(registration);
+		}
+
+		@Override
+		public Object execute() {
+			getRegistration().setEnrolmentModelForExecutionYear(getExecutionYear(), getEnrolmentModel());
+			return null;
+		}
+	}
+
+	public void delete() {
+		removeExecutionYear();
+		removeRegistration();
+		removeRootDomainObject();
+		super.deleteDomainObject();
+	}
 
 }

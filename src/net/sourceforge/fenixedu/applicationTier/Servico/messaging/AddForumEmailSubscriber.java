@@ -7,14 +7,14 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class AddForumEmailSubscriber extends FenixService {
 
-    public AddForumEmailSubscriber() {
-	super();
-    }
+	public AddForumEmailSubscriber() {
+		super();
+	}
 
-    @Service
-    public static void run(Forum forum, Person person) {
+	@Service
+	public static void run(Forum forum, Person person) {
 
-	forum.addEmailSubscriber(person);
-    }
+		forum.addEmailSubscriber(person);
+	}
 
 }

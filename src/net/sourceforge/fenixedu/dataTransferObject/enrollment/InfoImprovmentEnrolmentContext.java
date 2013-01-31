@@ -14,71 +14,71 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
  */
 public class InfoImprovmentEnrolmentContext extends DataTranferObject {
 
-    InfoExecutionPeriod infoExecutionPeriod;
+	InfoExecutionPeriod infoExecutionPeriod;
 
-    InfoStudent infoStudent;
+	InfoStudent infoStudent;
 
-    List improvmentsToEnroll;
+	List improvmentsToEnroll;
 
-    List alreadyEnrolled;
+	List alreadyEnrolled;
 
-    /**
-     * @return Returns the improvmentsToEnroll.
-     */
-    public List getImprovmentsToEnroll() {
-	return improvmentsToEnroll;
-    }
+	/**
+	 * @return Returns the improvmentsToEnroll.
+	 */
+	public List getImprovmentsToEnroll() {
+		return improvmentsToEnroll;
+	}
 
-    /**
-     * @param improvmentsToEnroll
-     *            The improvmentsToEnroll to set.
-     */
-    public void setImprovmentsToEnroll(List improvmentsToEnroll) {
-	this.improvmentsToEnroll = improvmentsToEnroll;
-    }
+	/**
+	 * @param improvmentsToEnroll
+	 *            The improvmentsToEnroll to set.
+	 */
+	public void setImprovmentsToEnroll(List improvmentsToEnroll) {
+		this.improvmentsToEnroll = improvmentsToEnroll;
+	}
 
-    /**
-     * @return Returns the infoExecutionPeriod.
-     */
-    public InfoExecutionPeriod getInfoExecutionPeriod() {
-	return infoExecutionPeriod;
-    }
+	/**
+	 * @return Returns the infoExecutionPeriod.
+	 */
+	public InfoExecutionPeriod getInfoExecutionPeriod() {
+		return infoExecutionPeriod;
+	}
 
-    /**
-     * @param infoExecutionPeriod
-     *            The infoExecutionPeriod to set.
-     */
-    public void setInfoExecutionPeriod(InfoExecutionPeriod infoExecutionPeriod) {
-	this.infoExecutionPeriod = infoExecutionPeriod;
-    }
+	/**
+	 * @param infoExecutionPeriod
+	 *            The infoExecutionPeriod to set.
+	 */
+	public void setInfoExecutionPeriod(InfoExecutionPeriod infoExecutionPeriod) {
+		this.infoExecutionPeriod = infoExecutionPeriod;
+	}
 
-    /**
-     * @return Returns the infoStudent.
-     */
-    public InfoStudent getInfoStudent() {
-	return infoStudent;
-    }
+	/**
+	 * @return Returns the infoStudent.
+	 */
+	public InfoStudent getInfoStudent() {
+		return infoStudent;
+	}
 
-    /**
-     * @param infoStudent
-     *            The infoStudent to set.
-     */
-    public void setInfoStudent(InfoStudent infoStudent) {
-	this.infoStudent = infoStudent;
-    }
+	/**
+	 * @param infoStudent
+	 *            The infoStudent to set.
+	 */
+	public void setInfoStudent(InfoStudent infoStudent) {
+		this.infoStudent = infoStudent;
+	}
 
-    /**
-     * @return Returns the alreadyEnrolled.
-     */
-    public List getAlreadyEnrolled() {
-	return alreadyEnrolled;
-    }
+	/**
+	 * @return Returns the alreadyEnrolled.
+	 */
+	public List getAlreadyEnrolled() {
+		return alreadyEnrolled;
+	}
 
-    /**
-     * @param alreadyEnrolled
-     *            The alreadyEnrolled to set.
-     */
-    public void setAlreadyEnrolled(List alreadyEnrolled) {
-	this.alreadyEnrolled = alreadyEnrolled;
-    }
+	/**
+	 * @param alreadyEnrolled
+	 *            The alreadyEnrolled to set.
+	 */
+	public void setAlreadyEnrolled(List alreadyEnrolled) {
+		this.alreadyEnrolled = alreadyEnrolled;
+	}
 }

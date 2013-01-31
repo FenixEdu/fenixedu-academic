@@ -12,21 +12,22 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.AcademicalInstitu
 
 public class SearchOtherFormationInstitutions extends FenixService implements AutoCompleteSearchService {
 
-    public Collection run(Class type, String value, final int limit, Map<String, String> arguments) {
+	@Override
+	public Collection run(Class type, String value, final int limit, Map<String, String> arguments) {
 
-	value = value.toLowerCase();
-	List<DomainObject> result = new ArrayList<DomainObject>();
-	// TODO filter by foreign units only
-	for (AcademicalInstitutionUnit unit : AcademicalInstitutionUnit.readOtherAcademicUnits()) {
-	    if (unit.getName().toLowerCase().contains(value)) {
-		result.add(unit);
-	    }
+		value = value.toLowerCase();
+		List<DomainObject> result = new ArrayList<DomainObject>();
+		// TODO filter by foreign units only
+		for (AcademicalInstitutionUnit unit : AcademicalInstitutionUnit.readOtherAcademicUnits()) {
+			if (unit.getName().toLowerCase().contains(value)) {
+				result.add(unit);
+			}
 
-	    if (result.size() >= limit) {
-		break;
-	    }
+			if (result.size() >= limit) {
+				break;
+			}
+		}
+
+		return result;
 	}
-
-	return result;
-    }
 }

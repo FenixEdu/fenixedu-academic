@@ -11,29 +11,29 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public enum MaritalStatus implements IPresentableEnum {
 
-    SINGLE,
+	SINGLE,
 
-    MARRIED,
+	MARRIED,
 
-    DIVORCED,
+	DIVORCED,
 
-    WIDOWER,
+	WIDOWER,
 
-    SEPARATED,
+	SEPARATED,
 
-    CIVIL_UNION,
+	CIVIL_UNION,
 
-    // TODO: RAIDES Provider and beans exclude this value.
-    // This enum should be refactored to contain an "isActive"
-    UNKNOWN;
+	// TODO: RAIDES Provider and beans exclude this value.
+	// This enum should be refactored to contain an "isActive"
+	UNKNOWN;
 
-    public String getPresentationName() {
-	return BundleUtil.getStringFromResourceBundle("resources/EnumerationResources", name());
-    }
+	public String getPresentationName() {
+		return BundleUtil.getStringFromResourceBundle("resources/EnumerationResources", name());
+	}
 
-    @Override
-    public String getLocalizedName() {
-	final ResourceBundle bundle = ResourceBundle.getBundle("resources.EnumerationResources", Language.getLocale());
-	return bundle.getString(this.getClass().getName() + "." + name());
-    }
+	@Override
+	public String getLocalizedName() {
+		final ResourceBundle bundle = ResourceBundle.getBundle("resources.EnumerationResources", Language.getLocale());
+		return bundle.getString(this.getClass().getName() + "." + name());
+	}
 }

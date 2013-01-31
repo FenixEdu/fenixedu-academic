@@ -11,43 +11,43 @@ import java.util.List;
  * 
  */
 public class InfoSitePrograms extends DataTranferObject implements ISiteComponent {
-    private List infoCurriculums;
+	private List infoCurriculums;
 
-    private List infoCurricularCourses;
+	private List infoCurricularCourses;
 
-    /**
-     * @return
-     */
-    public List getInfoCurricularCourses() {
-	return infoCurricularCourses;
-    }
+	/**
+	 * @return
+	 */
+	public List getInfoCurricularCourses() {
+		return infoCurricularCourses;
+	}
 
-    /**
-     * @return
-     */
-    public List getInfoCurriculums() {
-	return infoCurriculums;
-    }
+	/**
+	 * @return
+	 */
+	public List getInfoCurriculums() {
+		return infoCurriculums;
+	}
 
-    /**
-     * @param list
-     */
-    public void setInfoCurricularCourses(List list) {
-	infoCurricularCourses = list;
-    }
+	/**
+	 * @param list
+	 */
+	public void setInfoCurricularCourses(List list) {
+		infoCurricularCourses = list;
+	}
 
-    /**
-     * @param list
-     */
-    public void setInfoCurriculums(List list) {
-	infoCurriculums = list;
-    }
+	/**
+	 * @param list
+	 */
+	public void setInfoCurriculums(List list) {
+		infoCurriculums = list;
+	}
 
-    /**
+	/**
      *  
      */
-    public InfoSitePrograms() {
-	super();
+	public InfoSitePrograms() {
+		super();
 
-    }
+	}
 }

@@ -29,70 +29,73 @@ import pt.ist.fenixWebFramework.security.UserView;
  * 
  */
 public class SearchTeachersInformationAction extends SearchAction {
-    /*
-     * (non-Javadoc)
-     * 
-     * @see
-     * presentationTier.Action.framework.SearchAction#materializeSearchCriteria
-     * (presentationTier.mapping.framework.SearchActionMapping,
-     * javax.servlet.http.HttpServletRequest,
-     * org.apache.struts.action.ActionForm)
-     */
-    @Override
-    protected void materializeSearchCriteria(SearchActionMapping mapping, HttpServletRequest request, ActionForm form)
-	    throws Exception {
-	IUserView userView = UserView.getUser();
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * presentationTier.Action.framework.SearchAction#materializeSearchCriteria
+	 * (presentationTier.mapping.framework.SearchActionMapping,
+	 * javax.servlet.http.HttpServletRequest,
+	 * org.apache.struts.action.ActionForm)
+	 */
+	@Override
+	protected void materializeSearchCriteria(SearchActionMapping mapping, HttpServletRequest request, ActionForm form)
+			throws Exception {
+		IUserView userView = UserView.getUser();
 
-	if (!request.getParameter("executionDegreeId").equals("all")) {
-	    Integer executionDegreeId = new Integer(request.getParameter("executionDegreeId"));
+		if (!request.getParameter("executionDegreeId").equals("all")) {
+			Integer executionDegreeId = new Integer(request.getParameter("executionDegreeId"));
 
-	    InfoExecutionDegree infoExecutionDegree = ReadExecutionDegreeByOID.run(executionDegreeId);
-	    request.setAttribute("infoExecutionDegree", infoExecutionDegree);
-	}
-	String basic = request.getParameter("basic");
-	if (basic != null && basic.length() > 0)
-	    request.setAttribute("basic", basic);
+			InfoExecutionDegree infoExecutionDegree = ReadExecutionDegreeByOID.run(executionDegreeId);
+			request.setAttribute("infoExecutionDegree", infoExecutionDegree);
+		}
+		String basic = request.getParameter("basic");
+		if (basic != null && basic.length() > 0) {
+			request.setAttribute("basic", basic);
+		}
 
-	request.setAttribute("executionYear", request.getParameter("executionYear"));
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see
-     * presentationTier.Action.framework.SearchAction#getSearchServiceArgs(javax
-     * .servlet.http.HttpServletRequest, org.apache.struts.action.ActionForm)
-     */
-    @Override
-    protected Object[] getSearchServiceArgs(HttpServletRequest request, ActionForm form) throws Exception {
-	Integer executionDegreeId = null;
-
-	if (!request.getParameter("executionDegreeId").equals("all"))
-	    executionDegreeId = new Integer(request.getParameter("executionDegreeId"));
-
-	Boolean basic = null;
-	if ((request.getParameter("basic") != null) && request.getParameter("basic").equals("true")) {
-	    basic = Boolean.TRUE;
-	}
-	if ((request.getParameter("basic") != null) && request.getParameter("basic").equals("false")) {
-	    basic = Boolean.FALSE;
+		request.setAttribute("executionYear", request.getParameter("executionYear"));
 	}
 
-	String executionYear = request.getParameter("executionYear");
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * presentationTier.Action.framework.SearchAction#getSearchServiceArgs(javax
+	 * .servlet.http.HttpServletRequest, org.apache.struts.action.ActionForm)
+	 */
+	@Override
+	protected Object[] getSearchServiceArgs(HttpServletRequest request, ActionForm form) throws Exception {
+		Integer executionDegreeId = null;
 
-	return new Object[] { executionDegreeId, basic, executionYear };
-    }
+		if (!request.getParameter("executionDegreeId").equals("all")) {
+			executionDegreeId = new Integer(request.getParameter("executionDegreeId"));
+		}
 
-    @Override
-    protected void prepareFormConstants(ActionMapping mapping, HttpServletRequest request, ActionForm form) throws Exception {
-	final ExecutionYear executionYear = StringUtils.isEmpty(request.getParameter("executionYear")) ? ExecutionYear
-		.readCurrentExecutionYear() : ExecutionYear.readExecutionYearByName(request.getParameter("executionYear"));
+		Boolean basic = null;
+		if ((request.getParameter("basic") != null) && request.getParameter("basic").equals("true")) {
+			basic = Boolean.TRUE;
+		}
+		if ((request.getParameter("basic") != null) && request.getParameter("basic").equals("false")) {
+			basic = Boolean.FALSE;
+		}
 
-	final List<ExecutionDegree> executionDegrees = ExecutionDegree.getAllByExecutionYear(executionYear);
-	Collections.sort(executionDegrees, ExecutionDegree.COMPARATOR_BY_DEGREE_NAME);
+		String executionYear = request.getParameter("executionYear");
 
-	request.setAttribute("executionYear", executionYear.getYear());
-	request.setAttribute("executionDegrees", executionDegrees);
-	request.setAttribute("showNextSelects", "true");
-    }
+		return new Object[] { executionDegreeId, basic, executionYear };
+	}
+
+	@Override
+	protected void prepareFormConstants(ActionMapping mapping, HttpServletRequest request, ActionForm form) throws Exception {
+		final ExecutionYear executionYear =
+				StringUtils.isEmpty(request.getParameter("executionYear")) ? ExecutionYear.readCurrentExecutionYear() : ExecutionYear
+						.readExecutionYearByName(request.getParameter("executionYear"));
+
+		final List<ExecutionDegree> executionDegrees = ExecutionDegree.getAllByExecutionYear(executionYear);
+		Collections.sort(executionDegrees, ExecutionDegree.COMPARATOR_BY_DEGREE_NAME);
+
+		request.setAttribute("executionYear", executionYear.getYear());
+		request.setAttribute("executionDegrees", executionDegrees);
+		request.setAttribute("showNextSelects", "true");
+	}
 }

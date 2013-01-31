@@ -21,26 +21,26 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class ReadOpenExecutionPeriodsByTeacherExecutionCourses extends FenixService {
 
-    @Service
-    public static List run(IUserView userView) throws FenixServiceException {
+	@Service
+	public static List run(IUserView userView) throws FenixServiceException {
 
-	final List<InfoExecutionPeriod> result = new ArrayList<InfoExecutionPeriod>();
-	final Person person = userView.getPerson();
-	final List<ExecutionSemester> executionSemesters = new ArrayList<ExecutionSemester>();
+		final List<InfoExecutionPeriod> result = new ArrayList<InfoExecutionPeriod>();
+		final Person person = userView.getPerson();
+		final List<ExecutionSemester> executionSemesters = new ArrayList<ExecutionSemester>();
 
-	for (final Professorship professorship : person.getProfessorshipsSet()) {
-	    final ExecutionSemester executionSemester = professorship.getExecutionCourse().getExecutionPeriod();
-	    final PeriodState periodState = executionSemester.getState();
-	    if (!executionSemesters.contains(executionSemester)
-		    && (periodState.getStateCode().equals("C") || periodState.getStateCode().equals("O"))) {
-		executionSemesters.add(executionSemester);
-	    }
+		for (final Professorship professorship : person.getProfessorshipsSet()) {
+			final ExecutionSemester executionSemester = professorship.getExecutionCourse().getExecutionPeriod();
+			final PeriodState periodState = executionSemester.getState();
+			if (!executionSemesters.contains(executionSemester)
+					&& (periodState.getStateCode().equals("C") || periodState.getStateCode().equals("O"))) {
+				executionSemesters.add(executionSemester);
+			}
+		}
+
+		for (final ExecutionSemester executionSemester : executionSemesters) {
+			result.add(InfoExecutionPeriod.newInfoFromDomain(executionSemester));
+		}
+		return result;
 	}
-
-	for (final ExecutionSemester executionSemester : executionSemesters) {
-	    result.add(InfoExecutionPeriod.newInfoFromDomain(executionSemester));
-	}
-	return result;
-    }
 
 }

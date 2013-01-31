@@ -11,114 +11,116 @@ import org.joda.time.YearMonthDay;
 
 public class DelegateElectionVotingPeriod extends DelegateElectionVotingPeriod_Base {
 
-    private DelegateElectionVotingPeriod() {
-	super();
-    }
-
-    public DelegateElectionVotingPeriod(YearMonthDay startDate, YearMonthDay endDate) {
-	this();
-	setStartDate(startDate);
-	setEndDate(endDate);
-    }
-
-    public boolean hasVotedStudent(Student student) {
-
-	for (DelegateElectionVote vote : getVotes()) {
-	    if (vote.hasStudent() && vote.getStudent().equals(student)) {
-		return true;
-	    }
+	private DelegateElectionVotingPeriod() {
+		super();
 	}
-	return false;
-    }
 
-    public int getBlankVotesElection() {
-	int nrBlankVotes = 0;
-	for (DelegateElectionVote vote : getVotes()) {
-	    if (vote instanceof DelegateElectionBlankVote) {
-		nrBlankVotes++;
-	    }
+	public DelegateElectionVotingPeriod(YearMonthDay startDate, YearMonthDay endDate) {
+		this();
+		setStartDate(startDate);
+		setEndDate(endDate);
 	}
-	return nrBlankVotes;
-    }
 
-    public int getNrVotesByStudent(Student student) {
-	int nrVotes = 0;
-	for (DelegateElectionVote vote : getVotes()) {
-	    if (vote instanceof DelegateElectionVote) {
-		if (vote.hasStudent() && vote.getStudent().equals(student)) {
-		    nrVotes++;
+	public boolean hasVotedStudent(Student student) {
+
+		for (DelegateElectionVote vote : getVotes()) {
+			if (vote.hasStudent() && vote.getStudent().equals(student)) {
+				return true;
+			}
 		}
-	    }
-	}
-	return nrVotes;
-    }
-
-    public int getTotalPercentageElection(Student student) {
-
-	int votesNumberStudent = getNrVotesByStudent(student);
-	double relativePercentage = ((double) votesNumberStudent / (double) getVotesCount());
-	return (int) (((int) (relativePercentage * 100) / 100.0) * 100);
-    }
-
-    public List<DelegateElectionResultsByStudentDTO> getDelegateElectionResults() {
-	Map<Student, DelegateElectionResultsByStudentDTO> votingResultsMap = new HashMap<Student, DelegateElectionResultsByStudentDTO>();
-
-	Student student = null;
-	int totalVoteCount = 0;
-	int studentVotesCount = 0;
-	DelegateElection election = getDelegateElection();
-	int totalStudentsCount = election.getCandidatesCount() + election.getStudentsCount();
-
-	for (DelegateElectionVote vote : getVotes()) {
-	    totalVoteCount++;
-	    if (!vote.hasStudent())
-		continue;
-	    student = vote.getStudent();
-	    if (votingResultsMap.containsKey(student)) {
-		DelegateElectionResultsByStudentDTO votingResults = votingResultsMap.get(student);
-		studentVotesCount = votingResults.getVotesNumber() + 1;
-		votingResults.setVotesNumber(studentVotesCount);
-	    } else {
-		votingResultsMap.put(student, new DelegateElectionResultsByStudentDTO(election, student));
-	    }
+		return false;
 	}
 
-	List<DelegateElectionResultsByStudentDTO> votingResultsBeanList = new ArrayList<DelegateElectionResultsByStudentDTO>(
-		votingResultsMap.values());
-	for (DelegateElectionResultsByStudentDTO results : votingResultsBeanList) {
-	    results.calculateResults(totalStudentsCount, totalVoteCount);
+	public int getBlankVotesElection() {
+		int nrBlankVotes = 0;
+		for (DelegateElectionVote vote : getVotes()) {
+			if (vote instanceof DelegateElectionBlankVote) {
+				nrBlankVotes++;
+			}
+		}
+		return nrBlankVotes;
 	}
 
-	return votingResultsBeanList;
-    }
-
-    @Override
-    public void delete() {
-	removeDelegateElection();
-	super.delete();
-    }
-
-    @Override
-    public boolean isFirstRoundElections() {
-	return isRoundElections(1);
-
-    }
-
-    @Override
-    public boolean isSecondRoundElections() {
-	return isRoundElections(2);
-    }
-
-    @Override
-    public boolean isOpenRoundElections() {
-	return isPastPeriod() && hasAnyVotes();
-    }
-
-    private boolean isRoundElections(int votingPeriod) {
-	if (getDelegateElection().getVotingPeriodCount() == votingPeriod) {
-	    return true;
+	public int getNrVotesByStudent(Student student) {
+		int nrVotes = 0;
+		for (DelegateElectionVote vote : getVotes()) {
+			if (vote instanceof DelegateElectionVote) {
+				if (vote.hasStudent() && vote.getStudent().equals(student)) {
+					nrVotes++;
+				}
+			}
+		}
+		return nrVotes;
 	}
-	return false;
-    }
+
+	public int getTotalPercentageElection(Student student) {
+
+		int votesNumberStudent = getNrVotesByStudent(student);
+		double relativePercentage = ((double) votesNumberStudent / (double) getVotesCount());
+		return (int) (((int) (relativePercentage * 100) / 100.0) * 100);
+	}
+
+	public List<DelegateElectionResultsByStudentDTO> getDelegateElectionResults() {
+		Map<Student, DelegateElectionResultsByStudentDTO> votingResultsMap =
+				new HashMap<Student, DelegateElectionResultsByStudentDTO>();
+
+		Student student = null;
+		int totalVoteCount = 0;
+		int studentVotesCount = 0;
+		DelegateElection election = getDelegateElection();
+		int totalStudentsCount = election.getCandidatesCount() + election.getStudentsCount();
+
+		for (DelegateElectionVote vote : getVotes()) {
+			totalVoteCount++;
+			if (!vote.hasStudent()) {
+				continue;
+			}
+			student = vote.getStudent();
+			if (votingResultsMap.containsKey(student)) {
+				DelegateElectionResultsByStudentDTO votingResults = votingResultsMap.get(student);
+				studentVotesCount = votingResults.getVotesNumber() + 1;
+				votingResults.setVotesNumber(studentVotesCount);
+			} else {
+				votingResultsMap.put(student, new DelegateElectionResultsByStudentDTO(election, student));
+			}
+		}
+
+		List<DelegateElectionResultsByStudentDTO> votingResultsBeanList =
+				new ArrayList<DelegateElectionResultsByStudentDTO>(votingResultsMap.values());
+		for (DelegateElectionResultsByStudentDTO results : votingResultsBeanList) {
+			results.calculateResults(totalStudentsCount, totalVoteCount);
+		}
+
+		return votingResultsBeanList;
+	}
+
+	@Override
+	public void delete() {
+		removeDelegateElection();
+		super.delete();
+	}
+
+	@Override
+	public boolean isFirstRoundElections() {
+		return isRoundElections(1);
+
+	}
+
+	@Override
+	public boolean isSecondRoundElections() {
+		return isRoundElections(2);
+	}
+
+	@Override
+	public boolean isOpenRoundElections() {
+		return isPastPeriod() && hasAnyVotes();
+	}
+
+	private boolean isRoundElections(int votingPeriod) {
+		if (getDelegateElection().getVotingPeriodCount() == votingPeriod) {
+			return true;
+		}
+		return false;
+	}
 
 }

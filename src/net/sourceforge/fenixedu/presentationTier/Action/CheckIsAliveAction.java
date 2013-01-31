@@ -12,27 +12,28 @@ import org.apache.struts.action.ActionMapping;
 
 public class CheckIsAliveAction extends FenixAction {
 
-    public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
+	@Override
+	public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
 
-	final Boolean result = (Boolean) CheckIsAliveService.run();
+		final Boolean result = CheckIsAliveService.run();
 
-	if (result != null && result.booleanValue()) {
-	    request.setAttribute("isAlive", "ok");
-	} else {
-	    request.setAttribute("isAlive", "ko");
+		if (result != null && result.booleanValue()) {
+			request.setAttribute("isAlive", "ok");
+		} else {
+			request.setAttribute("isAlive", "ko");
+		}
+
+		final String timeout = request.getParameter("timeout");
+		if (timeout != null && !timeout.isEmpty()) {
+			final long t = Long.parseLong(timeout);
+			final Thread thread = Thread.currentThread();
+			System.out.println("Thread: " + thread.hashCode() + " will sleep for: " + t + "ms.");
+			Thread.sleep(t);
+			System.out.println("Thread: " + thread.hashCode() + " has woken up.");
+		}
+
+		return mapping.findForward("Success");
 	}
-
-	final String timeout = request.getParameter("timeout");
-	if (timeout != null && !timeout.isEmpty()) {
-	    final long t = Long.parseLong(timeout);
-	    final Thread thread = Thread.currentThread();
-	    System.out.println("Thread: " + thread.hashCode() + " will sleep for: " + t + "ms.");
-	    Thread.sleep(t);
-	    System.out.println("Thread: " + thread.hashCode() + " has woken up.");
-	}
-
-	return mapping.findForward("Success");
-    }
 
 }

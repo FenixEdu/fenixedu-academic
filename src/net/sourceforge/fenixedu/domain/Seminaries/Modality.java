@@ -18,14 +18,14 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
  */
 public class Modality extends Modality_Base {
 
-    public Modality() {
-	super();
+	public Modality() {
+		super();
 
-	setRootDomainObject(RootDomainObject.getInstance());
-    }
+		setRootDomainObject(RootDomainObject.getInstance());
+	}
 
-    public static List<Modality> getAllModalities() {
-	return RootDomainObject.getInstance().getModalitys();
-    }
+	public static List<Modality> getAllModalities() {
+		return RootDomainObject.getInstance().getModalitys();
+	}
 
 }

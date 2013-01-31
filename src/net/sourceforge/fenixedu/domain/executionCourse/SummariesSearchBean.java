@@ -12,106 +12,106 @@ import net.sourceforge.fenixedu.domain.Summary;
 
 public class SummariesSearchBean implements Serializable {
 
-    private final ExecutionCourse executionCourseDomainReference;
+	private final ExecutionCourse executionCourseDomainReference;
 
-    private ShiftType shiftType;
-    private Shift shiftDomainReference;
-    private Professorship professorshipDomainReference;
-    private Boolean showOtherProfessors;
-    private Boolean ascendant = false;
+	private ShiftType shiftType;
+	private Shift shiftDomainReference;
+	private Professorship professorshipDomainReference;
+	private Boolean showOtherProfessors;
+	private Boolean ascendant = false;
 
-    public SummariesSearchBean(final ExecutionCourse executionCourse) {
-	this.executionCourseDomainReference = executionCourse;
-    }
-
-    public ExecutionCourse getExecutionCourse() {
-	return executionCourseDomainReference;
-    }
-
-    public Professorship getProfessorship() {
-	return professorshipDomainReference;
-    }
-
-    public void setProfessorship(final Professorship professorship) {
-	professorshipDomainReference = professorship;
-    }
-
-    public Shift getShift() {
-	return shiftDomainReference;
-    }
-
-    public void setShift(final Shift shift) {
-	shiftDomainReference = shift;
-    }
-
-    public ShiftType getShiftType() {
-	return shiftType;
-    }
-
-    public void setShiftType(ShiftType shiftType) {
-	this.shiftType = shiftType;
-    }
-
-    public Boolean getShowOtherProfessors() {
-	return showOtherProfessors;
-    }
-
-    public void setShowOtherProfessors(final Boolean showOtherProfessors) {
-	this.showOtherProfessors = showOtherProfessors;
-    }
-
-    public SortedSet<Summary> search() {
-
-	final SortedSet<Summary> summaries;
-	if (isAscendant()) {
-	    summaries = new TreeSet<Summary>(Summary.COMPARATOR_BY_DATE_AND_HOUR_ASC);
-	} else {
-	    summaries = new TreeSet<Summary>(Summary.COMPARATOR_BY_DATE_AND_HOUR);
+	public SummariesSearchBean(final ExecutionCourse executionCourse) {
+		this.executionCourseDomainReference = executionCourse;
 	}
 
-	for (final Summary summary : getExecutionCourse().getAssociatedSummariesSet()) {
-	    final Shift shift = summary.getShift();
-	    if (getShift() == null || getShift() == shift) {
-		if (getShiftType() == null || getShiftType() == summary.getSummaryType()) {
-		    final Professorship professorship = summary.getProfessorship();
-		    if (getProfessorship() == null && showOtherProfessors == null) {
-			summaries.add(summary);
-		    } else if (professorship == null && showOtherProfessors != null && showOtherProfessors.booleanValue()) {
-			summaries.add(summary);
-		    } else if (showOtherProfessors == null
-			    && ((getProfessorship() == null && professorship != null) || getProfessorship() == professorship)) {
-			summaries.add(summary);
-		    }
+	public ExecutionCourse getExecutionCourse() {
+		return executionCourseDomainReference;
+	}
+
+	public Professorship getProfessorship() {
+		return professorshipDomainReference;
+	}
+
+	public void setProfessorship(final Professorship professorship) {
+		professorshipDomainReference = professorship;
+	}
+
+	public Shift getShift() {
+		return shiftDomainReference;
+	}
+
+	public void setShift(final Shift shift) {
+		shiftDomainReference = shift;
+	}
+
+	public ShiftType getShiftType() {
+		return shiftType;
+	}
+
+	public void setShiftType(ShiftType shiftType) {
+		this.shiftType = shiftType;
+	}
+
+	public Boolean getShowOtherProfessors() {
+		return showOtherProfessors;
+	}
+
+	public void setShowOtherProfessors(final Boolean showOtherProfessors) {
+		this.showOtherProfessors = showOtherProfessors;
+	}
+
+	public SortedSet<Summary> search() {
+
+		final SortedSet<Summary> summaries;
+		if (isAscendant()) {
+			summaries = new TreeSet<Summary>(Summary.COMPARATOR_BY_DATE_AND_HOUR_ASC);
+		} else {
+			summaries = new TreeSet<Summary>(Summary.COMPARATOR_BY_DATE_AND_HOUR);
 		}
-	    }
+
+		for (final Summary summary : getExecutionCourse().getAssociatedSummariesSet()) {
+			final Shift shift = summary.getShift();
+			if (getShift() == null || getShift() == shift) {
+				if (getShiftType() == null || getShiftType() == summary.getSummaryType()) {
+					final Professorship professorship = summary.getProfessorship();
+					if (getProfessorship() == null && showOtherProfessors == null) {
+						summaries.add(summary);
+					} else if (professorship == null && showOtherProfessors != null && showOtherProfessors.booleanValue()) {
+						summaries.add(summary);
+					} else if (showOtherProfessors == null
+							&& ((getProfessorship() == null && professorship != null) || getProfessorship() == professorship)) {
+						summaries.add(summary);
+					}
+				}
+			}
+		}
+		return summaries;
 	}
-	return summaries;
-    }
 
-    public SortedSet<Summary> getSummaries() {
-	return search();
-    }
-
-    public SortedSet<Summary> getSummariesInverted() {
-	final SortedSet<Summary> summaries = new TreeSet<Summary>(Summary.COMPARATOR_BY_DATE_AND_HOUR_ASC);
-	summaries.addAll(search());
-	return summaries;
-    }
-
-    public SortedSet<ShiftType> getShiftTypes() {
-	final SortedSet<ShiftType> shiftTypes = new TreeSet<ShiftType>();
-	for (final Shift shift : getExecutionCourse().getAssociatedShifts()) {
-	    shiftTypes.addAll(shift.getTypes());
+	public SortedSet<Summary> getSummaries() {
+		return search();
 	}
-	return shiftTypes;
-    }
 
-    public void setAscendant(Boolean descendant) {
-	this.ascendant = descendant;
-    }
+	public SortedSet<Summary> getSummariesInverted() {
+		final SortedSet<Summary> summaries = new TreeSet<Summary>(Summary.COMPARATOR_BY_DATE_AND_HOUR_ASC);
+		summaries.addAll(search());
+		return summaries;
+	}
 
-    public Boolean isAscendant() {
-	return ascendant;
-    }
+	public SortedSet<ShiftType> getShiftTypes() {
+		final SortedSet<ShiftType> shiftTypes = new TreeSet<ShiftType>();
+		for (final Shift shift : getExecutionCourse().getAssociatedShifts()) {
+			shiftTypes.addAll(shift.getTypes());
+		}
+		return shiftTypes;
+	}
+
+	public void setAscendant(Boolean descendant) {
+		this.ascendant = descendant;
+	}
+
+	public Boolean isAscendant() {
+		return ascendant;
+	}
 
 }

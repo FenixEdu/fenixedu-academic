@@ -22,66 +22,68 @@ import org.apache.commons.beanutils.BeanComparator;
  */
 public class MasterDegreeThesisDataVersion extends MasterDegreeThesisDataVersion_Base {
 
-    final static Comparator<MasterDegreeThesisDataVersion> LAST_MODIFICATION_COMPARATOR = new BeanComparator("lastModification");
+	final static Comparator<MasterDegreeThesisDataVersion> LAST_MODIFICATION_COMPARATOR = new BeanComparator("lastModification");
 
-    public MasterDegreeThesisDataVersion() {
-	super();
-	setRootDomainObject(RootDomainObject.getInstance());
-    }
-
-    public MasterDegreeThesisDataVersion(MasterDegreeThesis masterDegreeThesis, Employee responsibleEmployee,
-	    String dissertationTitle, Date lastModification, State currentState) {
-	this();
-	this.setMasterDegreeThesis(masterDegreeThesis);
-	this.setResponsibleEmployee(responsibleEmployee);
-	this.setDissertationTitle(dissertationTitle);
-	this.setLastModification(lastModification);
-	this.setCurrentState(currentState);
-    }
-
-    public static MasterDegreeThesisDataVersion readActiveByDissertationTitle(String dissertationTitle) {
-	for (MasterDegreeThesisDataVersion masterDegreeThesisDataVersion : RootDomainObject.getInstance()
-		.getMasterDegreeThesisDataVersions()) {
-	    if (masterDegreeThesisDataVersion.getCurrentState().getState().equals(State.ACTIVE)
-		    && masterDegreeThesisDataVersion.getDissertationTitle().equals(dissertationTitle)) {
-		return masterDegreeThesisDataVersion;
-	    }
-	}
-	return null;
-    }
-
-    public String getGuidersNames() {
-	final List<String> names = new ArrayList<String>();
-
-	for (final Teacher teacher : getGuiders()) {
-	    names.add(teacher.getPerson().getName());
+	public MasterDegreeThesisDataVersion() {
+		super();
+		setRootDomainObject(RootDomainObject.getInstance());
 	}
 
-	for (final ExternalContract contract : getExternalGuiders()) {
-	    names.add(contract.getPerson().getName());
+	public MasterDegreeThesisDataVersion(MasterDegreeThesis masterDegreeThesis, Employee responsibleEmployee,
+			String dissertationTitle, Date lastModification, State currentState) {
+		this();
+		this.setMasterDegreeThesis(masterDegreeThesis);
+		this.setResponsibleEmployee(responsibleEmployee);
+		this.setDissertationTitle(dissertationTitle);
+		this.setLastModification(lastModification);
+		this.setCurrentState(currentState);
 	}
 
-	StringBuilder result = new StringBuilder();
-	for (Iterator<String> iter = names.iterator(); iter.hasNext();) {
-	    result.append((String) iter.next());
-	    if (iter.hasNext()) {
-		result.append(", ");
-	    }
+	public static MasterDegreeThesisDataVersion readActiveByDissertationTitle(String dissertationTitle) {
+		for (MasterDegreeThesisDataVersion masterDegreeThesisDataVersion : RootDomainObject.getInstance()
+				.getMasterDegreeThesisDataVersions()) {
+			if (masterDegreeThesisDataVersion.getCurrentState().getState().equals(State.ACTIVE)
+					&& masterDegreeThesisDataVersion.getDissertationTitle().equals(dissertationTitle)) {
+				return masterDegreeThesisDataVersion;
+			}
+		}
+		return null;
 	}
-	return result.toString();
-    }
+
+	public String getGuidersNames() {
+		final List<String> names = new ArrayList<String>();
+
+		for (final Teacher teacher : getGuiders()) {
+			names.add(teacher.getPerson().getName());
+		}
+
+		for (final ExternalContract contract : getExternalGuiders()) {
+			names.add(contract.getPerson().getName());
+		}
+
+		StringBuilder result = new StringBuilder();
+		for (Iterator<String> iter = names.iterator(); iter.hasNext();) {
+			result.append(iter.next());
+			if (iter.hasNext()) {
+				result.append(", ");
+			}
+		}
+		return result.toString();
+	}
 
 	@Deprecated
-	public java.util.Date getLastModification(){
+	public java.util.Date getLastModification() {
 		org.joda.time.DateTime dt = getLastModificationDateTime();
 		return (dt == null) ? null : new java.util.Date(dt.getMillis());
 	}
 
 	@Deprecated
-	public void setLastModification(java.util.Date date){
-		if(date == null) setLastModificationDateTime(null);
-		else setLastModificationDateTime(new org.joda.time.DateTime(date.getTime()));
+	public void setLastModification(java.util.Date date) {
+		if (date == null) {
+			setLastModificationDateTime(null);
+		} else {
+			setLastModificationDateTime(new org.joda.time.DateTime(date.getTime()));
+		}
 	}
-
 
 }

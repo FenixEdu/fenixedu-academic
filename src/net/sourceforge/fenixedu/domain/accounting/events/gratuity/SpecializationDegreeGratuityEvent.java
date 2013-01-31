@@ -26,91 +26,91 @@ import org.joda.time.YearMonthDay;
 
 public class SpecializationDegreeGratuityEvent extends SpecializationDegreeGratuityEvent_Base {
 
-    protected SpecializationDegreeGratuityEvent() {
-	super();
-    }
-
-    public SpecializationDegreeGratuityEvent(AdministrativeOffice administrativeOffice, Person person,
-	    StudentCurricularPlan studentCurricularPlan, ExecutionYear executionYear) {
-	this();
-
-	checkRulesToCreate(studentCurricularPlan);
-
-	init(administrativeOffice, person, studentCurricularPlan, executionYear);
-    }
-
-    private void checkRulesToCreate(StudentCurricularPlan studentCurricularPlan) {
-	if (studentCurricularPlan.getDegreeType() != DegreeType.BOLONHA_SPECIALIZATION_DEGREE) {
-	    throw new DomainException(
-		    "error.net.sourceforge.fenixedu.domain.accounting.events.gratuity.SpecializationDegreeGratuityEvent.invalid.degreeType");
-	}
-    }
-
-    @Override
-    public boolean canApplyExemption(final GratuityExemptionJustificationType justificationType) {
-	if (isCustomEnrolmentModel()) {
-	    return justificationType == GratuityExemptionJustificationType.OTHER_INSTITUTION
-		    || justificationType == GratuityExemptionJustificationType.DIRECTIVE_COUNCIL_AUTHORIZATION;
-
+	protected SpecializationDegreeGratuityEvent() {
+		super();
 	}
 
-	return true;
-    }
+	public SpecializationDegreeGratuityEvent(AdministrativeOffice administrativeOffice, Person person,
+			StudentCurricularPlan studentCurricularPlan, ExecutionYear executionYear) {
+		this();
 
-    @Override
-    protected List<AccountingEventPaymentCode> updatePaymentCodes() {
-	final EntryDTO entryDTO = calculateEntries(new DateTime()).get(0);
+		checkRulesToCreate(studentCurricularPlan);
 
-	if (!getNonProcessedPaymentCodes().isEmpty()) {
-	    getNonProcessedPaymentCodes().get(0).update(new YearMonthDay(), calculatePaymentCodeEndDate(),
-		    entryDTO.getAmountToPay(), entryDTO.getAmountToPay());
+		init(administrativeOffice, person, studentCurricularPlan, executionYear);
 	}
 
-	return getNonProcessedPaymentCodes();
-    }
+	private void checkRulesToCreate(StudentCurricularPlan studentCurricularPlan) {
+		if (studentCurricularPlan.getDegreeType() != DegreeType.BOLONHA_SPECIALIZATION_DEGREE) {
+			throw new DomainException(
+					"error.net.sourceforge.fenixedu.domain.accounting.events.gratuity.SpecializationDegreeGratuityEvent.invalid.degreeType");
+		}
+	}
 
-    @Override
-    protected List<AccountingEventPaymentCode> createPaymentCodes() {
-	final EntryDTO entryDTO = calculateEntries(new DateTime()).get(0);
+	@Override
+	public boolean canApplyExemption(final GratuityExemptionJustificationType justificationType) {
+		if (isCustomEnrolmentModel()) {
+			return justificationType == GratuityExemptionJustificationType.OTHER_INSTITUTION
+					|| justificationType == GratuityExemptionJustificationType.DIRECTIVE_COUNCIL_AUTHORIZATION;
 
-	return Collections.singletonList(AccountingEventPaymentCode.create(PaymentCodeType.TOTAL_GRATUITY, new YearMonthDay(),
-		calculatePaymentCodeEndDate(), this, entryDTO.getAmountToPay(), entryDTO.getAmountToPay(), getStudent()
-			.getPerson()));
-    }
+		}
 
-    private Student getStudent() {
-	return getStudentCurricularPlan().getRegistration().getStudent();
-    }
+		return true;
+	}
 
-    private YearMonthDay calculatePaymentCodeEndDate() {
-	return calculateNextEndDate(new YearMonthDay());
-    }
+	@Override
+	protected List<AccountingEventPaymentCode> updatePaymentCodes() {
+		final EntryDTO entryDTO = calculateEntries(new DateTime()).get(0);
 
-    @Override
-    public boolean isExemptionAppliable() {
-	return true;
-    }
+		if (!getNonProcessedPaymentCodes().isEmpty()) {
+			getNonProcessedPaymentCodes().get(0).update(new YearMonthDay(), calculatePaymentCodeEndDate(),
+					entryDTO.getAmountToPay(), entryDTO.getAmountToPay());
+		}
 
-    @Override
-    protected Set<Entry> internalProcess(User responsibleUser, AccountingEventPaymentCode paymentCode, Money amountToPay,
-	    SibsTransactionDetailDTO transactionDetail) {
-	return internalProcess(responsibleUser, Collections
-		.singletonList(new EntryDTO(EntryType.GRATUITY_FEE, this, amountToPay)), transactionDetail);
-    }
+		return getNonProcessedPaymentCodes();
+	}
 
-    @Override
-    public boolean isOtherPartiesPaymentsSupported() {
-	return true;
-    }
+	@Override
+	protected List<AccountingEventPaymentCode> createPaymentCodes() {
+		final EntryDTO entryDTO = calculateEntries(new DateTime()).get(0);
 
-    static public Set<AccountingTransaction> readPaymentsFor(final YearMonthDay startDate, final YearMonthDay endDate) {
-	return readPaymentsFor(SpecializationDegreeGratuityEvent.class, startDate, endDate);
+		return Collections.singletonList(AccountingEventPaymentCode.create(PaymentCodeType.TOTAL_GRATUITY, new YearMonthDay(),
+				calculatePaymentCodeEndDate(), this, entryDTO.getAmountToPay(), entryDTO.getAmountToPay(), getStudent()
+						.getPerson()));
+	}
 
-    }
+	private Student getStudent() {
+		return getStudentCurricularPlan().getRegistration().getStudent();
+	}
 
-    @Override
-    public Set<EntryType> getPossibleEntryTypesForDeposit() {
-	return Collections.singleton(EntryType.GRATUITY_FEE);
-    }
+	private YearMonthDay calculatePaymentCodeEndDate() {
+		return calculateNextEndDate(new YearMonthDay());
+	}
+
+	@Override
+	public boolean isExemptionAppliable() {
+		return true;
+	}
+
+	@Override
+	protected Set<Entry> internalProcess(User responsibleUser, AccountingEventPaymentCode paymentCode, Money amountToPay,
+			SibsTransactionDetailDTO transactionDetail) {
+		return internalProcess(responsibleUser,
+				Collections.singletonList(new EntryDTO(EntryType.GRATUITY_FEE, this, amountToPay)), transactionDetail);
+	}
+
+	@Override
+	public boolean isOtherPartiesPaymentsSupported() {
+		return true;
+	}
+
+	static public Set<AccountingTransaction> readPaymentsFor(final YearMonthDay startDate, final YearMonthDay endDate) {
+		return readPaymentsFor(SpecializationDegreeGratuityEvent.class, startDate, endDate);
+
+	}
+
+	@Override
+	public Set<EntryType> getPossibleEntryTypesForDeposit() {
+		return Collections.singleton(EntryType.GRATUITY_FEE);
+	}
 
 }

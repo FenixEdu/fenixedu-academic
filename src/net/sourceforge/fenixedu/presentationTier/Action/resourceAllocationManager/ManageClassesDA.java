@@ -41,108 +41,110 @@ import pt.ist.fenixWebFramework.security.UserView;
  */
 public class ManageClassesDA extends FenixExecutionDegreeAndCurricularYearContextDispatchAction {
 
-    public ActionForward listClasses(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-	AcademicInterval academicInterval = AcademicInterval.getAcademicIntervalFromResumedString((String) request
-		.getAttribute(PresentationConstants.ACADEMIC_INTERVAL));
-	InfoCurricularYear infoCurricularYear = (InfoCurricularYear) request.getAttribute(PresentationConstants.CURRICULAR_YEAR);
-	InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) request
-		.getAttribute(PresentationConstants.EXECUTION_DEGREE);
+	public ActionForward listClasses(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		AcademicInterval academicInterval =
+				AcademicInterval.getAcademicIntervalFromResumedString((String) request
+						.getAttribute(PresentationConstants.ACADEMIC_INTERVAL));
+		InfoCurricularYear infoCurricularYear = (InfoCurricularYear) request.getAttribute(PresentationConstants.CURRICULAR_YEAR);
+		InfoExecutionDegree infoExecutionDegree =
+				(InfoExecutionDegree) request.getAttribute(PresentationConstants.EXECUTION_DEGREE);
 
-	final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(infoExecutionDegree.getIdInternal());
+		final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(infoExecutionDegree.getIdInternal());
 
-	final Set<SchoolClass> classes;
-	Integer curricularYear = infoCurricularYear.getYear();
-	if (curricularYear != null) {
-	    classes = executionDegree.findSchoolClassesByAcademicIntervalAndCurricularYear(academicInterval, curricularYear);
-	} else {
-	    classes = executionDegree.findSchoolClassesByAcademicInterval(academicInterval);
+		final Set<SchoolClass> classes;
+		Integer curricularYear = infoCurricularYear.getYear();
+		if (curricularYear != null) {
+			classes = executionDegree.findSchoolClassesByAcademicIntervalAndCurricularYear(academicInterval, curricularYear);
+		} else {
+			classes = executionDegree.findSchoolClassesByAcademicInterval(academicInterval);
+		}
+
+		final List<InfoClass> infoClassesList = new ArrayList<InfoClass>();
+
+		for (final SchoolClass schoolClass : classes) {
+			InfoClass infoClass = InfoClass.newInfoFromDomain(schoolClass);
+			infoClassesList.add(infoClass);
+		}
+
+		if (infoClassesList != null && !infoClassesList.isEmpty()) {
+			BeanComparator nameComparator = new BeanComparator("nome");
+			Collections.sort(infoClassesList, nameComparator);
+
+			request.setAttribute(PresentationConstants.CLASSES, infoClassesList);
+		}
+		request.setAttribute("executionDegreeD", executionDegree);
+
+		return mapping.findForward("ShowClassList");
 	}
 
-	final List<InfoClass> infoClassesList = new ArrayList<InfoClass>();
+	public ActionForward create(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
 
-	for (final SchoolClass schoolClass : classes) {
-	    InfoClass infoClass = InfoClass.newInfoFromDomain(schoolClass);
-	    infoClassesList.add(infoClass);
+		DynaValidatorForm classForm = (DynaValidatorForm) form;
+		String className = (String) classForm.get("className");
+		IUserView userView = UserView.getUser();
+
+		InfoCurricularYear infoCurricularYear = (InfoCurricularYear) request.getAttribute(PresentationConstants.CURRICULAR_YEAR);
+		InfoExecutionDegree infoExecutionDegree =
+				(InfoExecutionDegree) request.getAttribute(PresentationConstants.EXECUTION_DEGREE);
+		AcademicInterval academicInterval =
+				AcademicInterval.getAcademicIntervalFromResumedString((String) request
+						.getAttribute(PresentationConstants.ACADEMIC_INTERVAL));
+
+		Integer curricularYear = infoCurricularYear.getYear();
+
+		try {
+			CriarTurma.run(className, curricularYear, infoExecutionDegree, academicInterval);
+
+		} catch (DomainException e) {
+			throw new ExistingActionException("A SchoolClass", e);
+		}
+
+		return listClasses(mapping, form, request, response);
 	}
 
-	if (infoClassesList != null && !infoClassesList.isEmpty()) {
-	    BeanComparator nameComparator = new BeanComparator("nome");
-	    Collections.sort(infoClassesList, nameComparator);
+	/**
+	 * Delete class.
+	 */
+	public ActionForward delete(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
 
-	    request.setAttribute(PresentationConstants.CLASSES, infoClassesList);
-	}
-	request.setAttribute("executionDegreeD", executionDegree);
+		ContextUtils.setClassContext(request);
 
-	return mapping.findForward("ShowClassList");
-    }
+		InfoClass infoClass = (InfoClass) request.getAttribute(PresentationConstants.CLASS_VIEW);
 
-    public ActionForward create(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-	    throws Exception {
+		IUserView userView = UserView.getUser();
 
-	DynaValidatorForm classForm = (DynaValidatorForm) form;
-	String className = (String) classForm.get("className");
-	IUserView userView = UserView.getUser();
+		ApagarTurma.run(infoClass);
 
-	InfoCurricularYear infoCurricularYear = (InfoCurricularYear) request.getAttribute(PresentationConstants.CURRICULAR_YEAR);
-	InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) request
-		.getAttribute(PresentationConstants.EXECUTION_DEGREE);
-	AcademicInterval academicInterval = AcademicInterval.getAcademicIntervalFromResumedString((String) request
-		.getAttribute(PresentationConstants.ACADEMIC_INTERVAL));
+		request.removeAttribute(PresentationConstants.CLASS_VIEW);
 
-	Integer curricularYear = infoCurricularYear.getYear();
-
-	try {
-	    CriarTurma.run(className, curricularYear, infoExecutionDegree, academicInterval);
-
-	} catch (DomainException e) {
-	    throw new ExistingActionException("A SchoolClass", e);
+		return listClasses(mapping, form, request, response);
 	}
 
-	return listClasses(mapping, form, request, response);
-    }
+	public ActionForward deleteClasses(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
 
-    /**
-     * Delete class.
-     */
-    public ActionForward delete(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-	    throws Exception {
+		DynaActionForm deleteClassesForm = (DynaActionForm) form;
+		String[] selectedClasses = (String[]) deleteClassesForm.get("selectedItems");
 
-	ContextUtils.setClassContext(request);
+		if (selectedClasses.length == 0) {
+			ActionErrors actionErrors = new ActionErrors();
+			actionErrors.add("errors.classes.notSelected", new ActionError("errors.classes.notSelected"));
+			saveErrors(request, actionErrors);
+			return mapping.getInputForward();
 
-	InfoClass infoClass = (InfoClass) request.getAttribute(PresentationConstants.CLASS_VIEW);
+		}
+		List classOIDs = new ArrayList();
+		for (String selectedClasse : selectedClasses) {
+			classOIDs.add(new Integer(selectedClasse));
+		}
 
-	IUserView userView = UserView.getUser();
+		DeleteClasses.run(classOIDs);
 
-	ApagarTurma.run(infoClass);
-
-	request.removeAttribute(PresentationConstants.CLASS_VIEW);
-
-	return listClasses(mapping, form, request, response);
-    }
-
-    public ActionForward deleteClasses(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-
-	DynaActionForm deleteClassesForm = (DynaActionForm) form;
-	String[] selectedClasses = (String[]) deleteClassesForm.get("selectedItems");
-
-	if (selectedClasses.length == 0) {
-	    ActionErrors actionErrors = new ActionErrors();
-	    actionErrors.add("errors.classes.notSelected", new ActionError("errors.classes.notSelected"));
-	    saveErrors(request, actionErrors);
-	    return mapping.getInputForward();
+		return mapping.findForward("ShowShiftList");
 
 	}
-	List classOIDs = new ArrayList();
-	for (int i = 0; i < selectedClasses.length; i++) {
-	    classOIDs.add(new Integer(selectedClasses[i]));
-	}
-
-	DeleteClasses.run(classOIDs);
-
-	return mapping.findForward("ShowShiftList");
-
-    }
 
 }

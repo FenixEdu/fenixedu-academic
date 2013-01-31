@@ -12,24 +12,24 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadExecutionDegreesByExecutionYear extends FenixService {
 
-    @Service
-    public static List run(InfoExecutionYear infoExecutionYear) {
+	@Service
+	public static List run(InfoExecutionYear infoExecutionYear) {
 
-	final List infoExecutionDegreeList = new ArrayList();
-	final List<ExecutionDegree> executionDegrees = readExecutionDegrees(infoExecutionYear);
+		final List infoExecutionDegreeList = new ArrayList();
+		final List<ExecutionDegree> executionDegrees = readExecutionDegrees(infoExecutionYear);
 
-	for (ExecutionDegree executionDegree : executionDegrees) {
-	    final InfoExecutionDegree infoExecutionDegree = InfoExecutionDegree.newInfoFromDomain(executionDegree);
-	    infoExecutionDegreeList.add(infoExecutionDegree);
+		for (ExecutionDegree executionDegree : executionDegrees) {
+			final InfoExecutionDegree infoExecutionDegree = InfoExecutionDegree.newInfoFromDomain(executionDegree);
+			infoExecutionDegreeList.add(infoExecutionDegree);
+		}
+		return infoExecutionDegreeList;
 	}
-	return infoExecutionDegreeList;
-    }
 
-    private static List<ExecutionDegree> readExecutionDegrees(final InfoExecutionYear infoExecutionYear) {
-	if (infoExecutionYear == null) {
-	    return ExecutionDegree.getAllByExecutionYear(ExecutionYear.readCurrentExecutionYear().getYear());
+	private static List<ExecutionDegree> readExecutionDegrees(final InfoExecutionYear infoExecutionYear) {
+		if (infoExecutionYear == null) {
+			return ExecutionDegree.getAllByExecutionYear(ExecutionYear.readCurrentExecutionYear().getYear());
+		}
+		return ExecutionDegree.getAllByExecutionYear(infoExecutionYear.getYear());
 	}
-	return ExecutionDegree.getAllByExecutionYear(infoExecutionYear.getYear());
-    }
 
 }

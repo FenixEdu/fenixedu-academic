@@ -41,71 +41,82 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
  * 
  */
 
-@Mapping(module = "masterDegreeAdministrativeOffice", path = "/editInstitution", input = "/editInstitution.do?page=0&method=prepare", attribute = "editInstitutionForm", formBean = "editInstitutionForm", scope = "request", parameter = "method")
+@Mapping(
+		module = "masterDegreeAdministrativeOffice",
+		path = "/editInstitution",
+		input = "/editInstitution.do?page=0&method=prepare",
+		attribute = "editInstitutionForm",
+		formBean = "editInstitutionForm",
+		scope = "request",
+		parameter = "method")
 @Forwards(value = { @Forward(name = "error", path = "df.page.editInstitution"),
-	@Forward(name = "start", path = "df.page.editInstitution"),
-	@Forward(name = "errorLocationAlreadyExists", path = "/editInstitution.do?page=0&method=prepare"),
-	@Forward(name = "success", path = "df.page.editInstitution_success") })
-@Exceptions(value = { @ExceptionHandling(type = net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException.class, key = "resources.Action.exceptions.ExistingActionException", handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class, scope = "request") })
+		@Forward(name = "start", path = "df.page.editInstitution"),
+		@Forward(name = "errorLocationAlreadyExists", path = "/editInstitution.do?page=0&method=prepare"),
+		@Forward(name = "success", path = "df.page.editInstitution_success") })
+@Exceptions(value = { @ExceptionHandling(
+		type = net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException.class,
+		key = "resources.Action.exceptions.ExistingActionException",
+		handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class,
+		scope = "request") })
 public class EditInstitutionDispatchAction extends FenixDispatchAction {
 
-    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-	    throws Exception {
-	IUserView userView = UserView.getUser();
-	ActionErrors actionErrors = new ActionErrors();
+	public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+		IUserView userView = UserView.getUser();
+		ActionErrors actionErrors = new ActionErrors();
 
-	try {
-	    List infoInstitutions = (List) ReadAllInstitutions.run();
+		try {
+			List infoInstitutions = (List) ReadAllInstitutions.run();
 
-	    if (infoInstitutions != null) {
-		if (infoInstitutions.isEmpty() == false) {
-		    Collections.sort(infoInstitutions, new BeanComparator("name"));
-		    List infoInstitutionsValueBeanList = new ArrayList();
-		    Iterator it = infoInstitutions.iterator();
-		    Unit infoInstitution = null;
+			if (infoInstitutions != null) {
+				if (infoInstitutions.isEmpty() == false) {
+					Collections.sort(infoInstitutions, new BeanComparator("name"));
+					List infoInstitutionsValueBeanList = new ArrayList();
+					Iterator it = infoInstitutions.iterator();
+					Unit infoInstitution = null;
 
-		    while (it.hasNext()) {
-			infoInstitution = (Unit) it.next();
-			infoInstitutionsValueBeanList.add(new LabelValueBean(infoInstitution.getName(), infoInstitution
-				.getIdInternal().toString()));
-		    }
+					while (it.hasNext()) {
+						infoInstitution = (Unit) it.next();
+						infoInstitutionsValueBeanList.add(new LabelValueBean(infoInstitution.getName(), infoInstitution
+								.getIdInternal().toString()));
+					}
 
-		    request.setAttribute(PresentationConstants.WORK_LOCATIONS_LIST, infoInstitutionsValueBeanList);
+					request.setAttribute(PresentationConstants.WORK_LOCATIONS_LIST, infoInstitutionsValueBeanList);
+				}
+			}
+
+			if ((infoInstitutions == null) || (infoInstitutions.isEmpty())) {
+				actionErrors.add("label.masterDegree.administrativeOffice.nonExistingInstitutions", new ActionError(
+						"label.masterDegree.administrativeOffice.nonExistingInstitutions"));
+
+				saveErrors(request, actionErrors);
+				return mapping.findForward("error");
+			}
+		} catch (FenixServiceException e) {
+			throw new FenixActionException(e.getMessage(), mapping.findForward("error"));
 		}
-	    }
 
-	    if ((infoInstitutions == null) || (infoInstitutions.isEmpty())) {
-		actionErrors.add("label.masterDegree.administrativeOffice.nonExistingInstitutions", new ActionError(
-			"label.masterDegree.administrativeOffice.nonExistingInstitutions"));
-
-		saveErrors(request, actionErrors);
-		return mapping.findForward("error");
-	    }
-	} catch (FenixServiceException e) {
-	    throw new FenixActionException(e.getMessage(), mapping.findForward("error"));
+		return mapping.findForward("start");
 	}
 
-	return mapping.findForward("start");
-    }
+	public ActionForward edit(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+		IUserView userView = UserView.getUser();
 
-    public ActionForward edit(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-	    throws Exception {
-	IUserView userView = UserView.getUser();
+		DynaActionForm editInstitutionForm = (DynaActionForm) form;
 
-	DynaActionForm editInstitutionForm = (DynaActionForm) form;
+		Integer oldInstitutionId = (Integer) editInstitutionForm.get("institutionId");
+		String newInstitutionName = (String) editInstitutionForm.get("name");
 
-	Integer oldInstitutionId = (Integer) editInstitutionForm.get("institutionId");
-	String newInstitutionName = (String) editInstitutionForm.get("name");
+		try {
+			EditInstitution.run(oldInstitutionId, newInstitutionName);
+		} catch (ExistingServiceException e) {
+			throw new ExistingActionException(e.getMessage(), mapping.findForward("errorLocationAlreadyExists"));
+		} catch (FenixServiceException e) {
+			throw new FenixActionException(e.getMessage(), mapping.findForward("error"));
+		}
 
-	try {
-	    EditInstitution.run(oldInstitutionId, newInstitutionName);
-	} catch (ExistingServiceException e) {
-	    throw new ExistingActionException(e.getMessage(), mapping.findForward("errorLocationAlreadyExists"));
-	} catch (FenixServiceException e) {
-	    throw new FenixActionException(e.getMessage(), mapping.findForward("error"));
+		return mapping.findForward("success");
 	}
-
-	return mapping.findForward("success");
-    }
 
 }

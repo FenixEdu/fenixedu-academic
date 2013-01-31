@@ -9,14 +9,14 @@ import pt.ist.fenixWebFramework.renderers.converters.EnumArrayConverter;
 
 public class PartyClassificationProvider implements DataProvider {
 
-    @Override
-    public Object provide(Object source, Object currentValue) {
-	return Arrays.asList(PartyClassification.values());
-    }
+	@Override
+	public Object provide(Object source, Object currentValue) {
+		return Arrays.asList(PartyClassification.values());
+	}
 
-    @Override
-    public Converter getConverter() {
-	return new EnumArrayConverter(PartyClassification.class);
-    }
+	@Override
+	public Converter getConverter() {
+		return new EnumArrayConverter(PartyClassification.class);
+	}
 
 }

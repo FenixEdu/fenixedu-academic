@@ -10,39 +10,39 @@ import net.sourceforge.fenixedu.domain.phd.PhdProgramProcessState;
 
 public class ActivatePhdProgramProcessInCandidacyState extends PhdIndividualProgramProcessActivity {
 
-    @Override
-    protected void processPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
-	// remove restrictions
-    }
-
-    @Override
-    public void activityPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
-	if (!process.isAllowedToManageProcessState(userView)) {
-	    throw new PreConditionNotValidException();
+	@Override
+	protected void processPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
+		// remove restrictions
 	}
 
-    }
+	@Override
+	public void activityPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
+		if (!process.isAllowedToManageProcessState(userView)) {
+			throw new PreConditionNotValidException();
+		}
 
-    @Override
-    protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView, Object object) {
-	final PhdIndividualProgramProcessBean bean = (PhdIndividualProgramProcessBean) object;
-
-	/*
-	 * 1 - Check if there's no registration 2 - Check if last active state
-	 * was candidacy
-	 */
-	if (process.hasRegistration()) {
-	    throw new DomainException("error.PhdIndividualProgramProcess.set.candidacy.state.has.registration");
 	}
 
-	if (!process.getLastActiveState().getType().equals(PhdIndividualProgramProcessState.CANDIDACY)) {
-	    throw new DomainException(
-		    "error.PhdIndividualProgramProcess.set.candidacy.state.previous.active.state.is.not.candidacy");
+	@Override
+	protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView, Object object) {
+		final PhdIndividualProgramProcessBean bean = (PhdIndividualProgramProcessBean) object;
+
+		/*
+		 * 1 - Check if there's no registration 2 - Check if last active state
+		 * was candidacy
+		 */
+		if (process.hasRegistration()) {
+			throw new DomainException("error.PhdIndividualProgramProcess.set.candidacy.state.has.registration");
+		}
+
+		if (!process.getLastActiveState().getType().equals(PhdIndividualProgramProcessState.CANDIDACY)) {
+			throw new DomainException(
+					"error.PhdIndividualProgramProcess.set.candidacy.state.previous.active.state.is.not.candidacy");
+		}
+
+		PhdProgramProcessState.createWithGivenStateDate(process, process.getLastActiveState().getType(), userView.getPerson(),
+				"", bean.getStateDate().toDateTimeAtStartOfDay());
+
+		return process;
 	}
-
-	PhdProgramProcessState.createWithGivenStateDate(process, process.getLastActiveState().getType(), userView.getPerson(),
-		"", bean.getStateDate().toDateTimeAtStartOfDay());
-
-	return process;
-    }
 }

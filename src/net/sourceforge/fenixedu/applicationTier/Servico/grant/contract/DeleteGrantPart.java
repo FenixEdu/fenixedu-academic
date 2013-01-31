@@ -6,14 +6,15 @@ import net.sourceforge.fenixedu.domain.grant.contract.GrantPart;
 
 public class DeleteGrantPart extends DeleteDomainObjectService {
 
-    protected void deleteDomainObject(DomainObject domainObject) {
-	GrantPart grantPart = (GrantPart) domainObject;
-	grantPart.delete();
-    }
+	@Override
+	protected void deleteDomainObject(DomainObject domainObject) {
+		GrantPart grantPart = (GrantPart) domainObject;
+		grantPart.delete();
+	}
 
-    @Override
-    protected DomainObject readDomainObject(Integer idInternal) {
-	return rootDomainObject.readGrantPartByOID(idInternal);
-    }
+	@Override
+	protected DomainObject readDomainObject(Integer idInternal) {
+		return rootDomainObject.readGrantPartByOID(idInternal);
+	}
 
 }

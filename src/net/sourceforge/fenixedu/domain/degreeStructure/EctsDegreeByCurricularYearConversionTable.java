@@ -9,46 +9,45 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class EctsDegreeByCurricularYearConversionTable extends EctsDegreeByCurricularYearConversionTable_Base {
 
-    protected EctsDegreeByCurricularYearConversionTable(Degree degree, AcademicInterval year, CurricularYear curricularYear,
-	    EctsComparabilityTable table) {
-	super();
-	init(year, curricularYear, table);
-	setDegree(degree);
-    }
-
-    @Override
-    protected RootDomainObject getRootDomainObject() {
-	return getDegree().getRootDomainObject();
-    }
-
-    @Override
-    public DomainObject getTargetEntity() {
-	return getDegree();
-    }
-
-    @Service
-    public static void createConversionTable(Degree degree, AcademicInterval year, CurricularYear curricularYear,
-	    String[] table) {
-	EctsDegreeByCurricularYearConversionTable conversion = EctsTableIndex.readOrCreateByYear(year).getEnrolmentTableBy(degree,
-		curricularYear);
-	EctsComparabilityTable ectsTable = EctsComparabilityTable.fromStringArray(table);
-	if (conversion != null) {
-	    conversion.delete();
+	protected EctsDegreeByCurricularYearConversionTable(Degree degree, AcademicInterval year, CurricularYear curricularYear,
+			EctsComparabilityTable table) {
+		super();
+		init(year, curricularYear, table);
+		setDegree(degree);
 	}
-	if (ectsTable != null) {
-	    new EctsDegreeByCurricularYearConversionTable(degree, year, curricularYear, ectsTable);
+
+	@Override
+	protected RootDomainObject getRootDomainObject() {
+		return getDegree().getRootDomainObject();
 	}
-    }
 
-    @Override
-    public CycleType getCycle() {
-	throw new UnsupportedOperationException();
-    }
+	@Override
+	public DomainObject getTargetEntity() {
+		return getDegree();
+	}
 
-    @Override
-    public void delete() {
-	removeDegree();
-	super.delete();
-    }
+	@Service
+	public static void createConversionTable(Degree degree, AcademicInterval year, CurricularYear curricularYear, String[] table) {
+		EctsDegreeByCurricularYearConversionTable conversion =
+				EctsTableIndex.readOrCreateByYear(year).getEnrolmentTableBy(degree, curricularYear);
+		EctsComparabilityTable ectsTable = EctsComparabilityTable.fromStringArray(table);
+		if (conversion != null) {
+			conversion.delete();
+		}
+		if (ectsTable != null) {
+			new EctsDegreeByCurricularYearConversionTable(degree, year, curricularYear, ectsTable);
+		}
+	}
+
+	@Override
+	public CycleType getCycle() {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public void delete() {
+		removeDegree();
+		super.delete();
+	}
 
 }

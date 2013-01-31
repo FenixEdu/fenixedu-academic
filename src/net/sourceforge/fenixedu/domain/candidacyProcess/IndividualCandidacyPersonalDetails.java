@@ -16,204 +16,207 @@ import org.apache.commons.collections.comparators.ComparatorChain;
 import org.joda.time.YearMonthDay;
 
 public abstract class IndividualCandidacyPersonalDetails extends IndividualCandidacyPersonalDetails_Base {
-    static final public Comparator<IndividualCandidacyPersonalDetails> COMPARATOR_BY_NAME = new Comparator<IndividualCandidacyPersonalDetails>() {
+	static final public Comparator<IndividualCandidacyPersonalDetails> COMPARATOR_BY_NAME =
+			new Comparator<IndividualCandidacyPersonalDetails>() {
+				@Override
+				public int compare(IndividualCandidacyPersonalDetails o1, IndividualCandidacyPersonalDetails o2) {
+					return o1.getName().compareTo(o2.getName());
+				}
+			};
+
+	static final public Comparator<IndividualCandidacyPersonalDetails> COMPARATOR_BY_NAME_AND_ID =
+			new Comparator<IndividualCandidacyPersonalDetails>() {
+				@Override
+				public int compare(final IndividualCandidacyPersonalDetails o1, final IndividualCandidacyPersonalDetails o2) {
+					final ComparatorChain comparatorChain = new ComparatorChain();
+					comparatorChain.addComparator(COMPARATOR_BY_NAME);
+					comparatorChain.addComparator(COMPARATOR_BY_ID);
+
+					return comparatorChain.compare(o1, o2);
+				}
+			};
+
+	public IndividualCandidacyPersonalDetails() {
+		super();
+	}
+
 	@Override
-	public int compare(IndividualCandidacyPersonalDetails o1, IndividualCandidacyPersonalDetails o2) {
-	    return o1.getName().compareTo(o2.getName());
+	protected RootDomainObject getRootDomainObject() {
+		return getCandidacy().getRootDomainObject();
 	}
-    };
 
-    static final public Comparator<IndividualCandidacyPersonalDetails> COMPARATOR_BY_NAME_AND_ID = new Comparator<IndividualCandidacyPersonalDetails>() {
-	public int compare(final IndividualCandidacyPersonalDetails o1, final IndividualCandidacyPersonalDetails o2) {
-	    final ComparatorChain comparatorChain = new ComparatorChain();
-	    comparatorChain.addComparator(COMPARATOR_BY_NAME);
-	    comparatorChain.addComparator(COMPARATOR_BY_ID);
+	public abstract boolean isInternal();
 
-	    return comparatorChain.compare(o1, o2);
+	public abstract void edit(PersonBean personBean);
+
+	public abstract void editPublic(PersonBean personBean);
+
+	public abstract void ensurePersonInternalization();
+
+	public static void createDetails(IndividualCandidacy candidacy, IndividualCandidacyProcessBean bean) {
+		if (bean.getInternalPersonCandidacy()) {
+			Person person = bean.getPersonBean().getPerson();
+			bean.getPersonBean().setPerson(person);
+			new IndividualCandidacyInternalPersonDetails(candidacy, person);
+		} else {
+			new IndividualCandidacyExternalPersonDetails(candidacy, bean);
+		}
 	}
-    };
 
-    public IndividualCandidacyPersonalDetails() {
-	super();
-    }
-
-    @Override
-    protected RootDomainObject getRootDomainObject() {
-	return getCandidacy().getRootDomainObject();
-    }
-
-    public abstract boolean isInternal();
-
-    public abstract void edit(PersonBean personBean);
-
-    public abstract void editPublic(PersonBean personBean);
-
-    public abstract void ensurePersonInternalization();
-
-    public static void createDetails(IndividualCandidacy candidacy, IndividualCandidacyProcessBean bean) {
-	if (bean.getInternalPersonCandidacy()) {
-	    Person person = bean.getPersonBean().getPerson();
-	    bean.getPersonBean().setPerson(person);
-	    new IndividualCandidacyInternalPersonDetails(candidacy, person);
-	} else {
-	    new IndividualCandidacyExternalPersonDetails(candidacy, bean);
+	public boolean hasStudent() {
+		return getStudent() != null;
 	}
-    }
 
-    public boolean hasStudent() {
-	return getStudent() != null;
-    }
+	public abstract Student getStudent();
 
-    public abstract Student getStudent();
+	public abstract String getName();
 
-    public abstract String getName();
+	public abstract void setName(String name);
 
-    public abstract void setName(String name);
+	public abstract Gender getGender();
 
-    public abstract Gender getGender();
+	public abstract void setGender(Gender gender);
 
-    public abstract void setGender(Gender gender);
+	public abstract String getProfession();
 
-    public abstract String getProfession();
+	public abstract void setProfession(String profession);
 
-    public abstract void setProfession(String profession);
+	public abstract MaritalStatus getMaritalStatus();
 
-    public abstract MaritalStatus getMaritalStatus();
+	public abstract void setMaritalStatus(MaritalStatus status);
 
-    public abstract void setMaritalStatus(MaritalStatus status);
+	public abstract YearMonthDay getDateOfBirthYearMonthDay();
 
-    public abstract YearMonthDay getDateOfBirthYearMonthDay();
+	public abstract void setDateOfBirthYearMonthDay(YearMonthDay birthday);
 
-    public abstract void setDateOfBirthYearMonthDay(YearMonthDay birthday);
+	/*
+	 * FIXME ANIL : Change to get/setNationality()
+	 */
+	public abstract Country getCountry();
 
-    /*
-     * FIXME ANIL : Change to get/setNationality()
-     */
-    public abstract Country getCountry();
+	public abstract void setCountry(Country country);
 
-    public abstract void setCountry(Country country);
+	/**
+	 * Return the Social Security Number
+	 * 
+	 * This method, in the context of candidacies, is used to obtain VAT which
+	 * is not Social Security Number
+	 * 
+	 * @see #getFiscalCode()
+	 */
+	/*
+	 * 08/05/2009 - After all social security number and fiscal code are the
+	 * same thing.
+	 */
+	public abstract String getSocialSecurityNumber();
 
-    /**
-     * Return the Social Security Number
-     * 
-     * This method, in the context of candidacies, is used to obtain VAT which
-     * is not Social Security Number
-     * 
-     * @see #getFiscalCode()
-     */
-    /*
-     * 08/05/2009 - After all social security number and fiscal code are the
-     * same thing.
-     */
-    public abstract String getSocialSecurityNumber();
+	public abstract void setSocialSecurityNumber(String number);
 
-    public abstract void setSocialSecurityNumber(String number);
+	/**
+	 * Returns the VAT (fiscal code) associated to a candidate
+	 * 
+	 */
+	/*
+	 * 08/05/2009 - Use Social Security Number instead
+	 */
+	@Deprecated
+	public abstract String getFiscalCode();
 
-    /**
-     * Returns the VAT (fiscal code) associated to a candidate
-     * 
-     */
-    /*
-     * 08/05/2009 - Use Social Security Number instead
-     */
-    @Deprecated
-    public abstract String getFiscalCode();
+	@Deprecated
+	public abstract void setFiscalCode(String value);
 
-    @Deprecated
-    public abstract void setFiscalCode(String value);
+	/*
+	 * -- PERSON IDENTIFICATION DOCUMENT
+	 */
+	public abstract String getDocumentIdNumber();
 
-    /*
-     * -- PERSON IDENTIFICATION DOCUMENT
-     */
-    public abstract String getDocumentIdNumber();
+	public abstract void setDocumentIdNumber(String documentIdNumber);
 
-    public abstract void setDocumentIdNumber(String documentIdNumber);
+	public abstract IDDocumentType getIdDocumentType();
 
-    public abstract IDDocumentType getIdDocumentType();
+	public abstract void setIdDocumentType(IDDocumentType type);
 
-    public abstract void setIdDocumentType(IDDocumentType type);
+	public abstract YearMonthDay getEmissionDateOfDocumentIdYearMonthDay();
 
-    public abstract YearMonthDay getEmissionDateOfDocumentIdYearMonthDay();
+	public abstract void setEmissionDateOfDocumentIdYearMonthDay(YearMonthDay date);
 
-    public abstract void setEmissionDateOfDocumentIdYearMonthDay(YearMonthDay date);
+	public abstract YearMonthDay getExpirationDateOfDocumentIdYearMonthDay();
 
-    public abstract YearMonthDay getExpirationDateOfDocumentIdYearMonthDay();
+	public abstract void setExpirationDateOfDocumentIdYearMonthDay(YearMonthDay date);
 
-    public abstract void setExpirationDateOfDocumentIdYearMonthDay(YearMonthDay date);
+	public abstract String getEmissionLocationOfDocumentId();
 
-    public abstract String getEmissionLocationOfDocumentId();
+	public abstract void setEmissionLocationOfDocumentId(String location);
 
-    public abstract void setEmissionLocationOfDocumentId(String location);
+	/*
+	 * -- PERSON IDENTIFICATION DOCUMENT
+	 */
 
-    /*
-     * -- PERSON IDENTIFICATION DOCUMENT
-     */
+	/*
+	 * -- PERSON CONTACTS --
+	 * 
+	 * FIXME: See what contacts are filled in Administrative Office candidacy
+	 * submission
+	 */
 
-    /*
-     * -- PERSON CONTACTS --
-     * 
-     * FIXME: See what contacts are filled in Administrative Office candidacy
-     * submission
-     */
+	public abstract String getTelephoneContact();
 
-    public abstract String getTelephoneContact();
+	public abstract void setTelephoneContact(String telephoneContact);
 
-    public abstract void setTelephoneContact(String telephoneContact);
+	public abstract String getEmail();
 
-    public abstract String getEmail();
+	public abstract void setEmail(String email);
 
-    public abstract void setEmail(String email);
+	/*
+	 * -- END PERSON CONTACTS --
+	 */
 
-    /*
-     * -- END PERSON CONTACTS --
-     */
+	/*
+	 * 06/04/2009 - The next four methods will replace the method
+	 * getDefaultPhysicalAddress() The reason for partitioning is that
+	 * IndividualCandidacyExternalPersonDetails cannot be associated to a
+	 * PhysicalAddress because its not a Party
+	 */
 
-    /*
-     * 06/04/2009 - The next four methods will replace the method
-     * getDefaultPhysicalAddress() The reason for partitioning is that
-     * IndividualCandidacyExternalPersonDetails cannot be associated to a
-     * PhysicalAddress because its not a Party
-     */
+	public abstract Country getCountryOfResidence();
 
-    public abstract Country getCountryOfResidence();
+	public abstract void setCountryOfResidence(Country country);
 
-    public abstract void setCountryOfResidence(Country country);
+	public abstract String getAddress();
 
-    public abstract String getAddress();
+	public abstract void setAddress(String address);
 
-    public abstract void setAddress(String address);
+	public abstract String getArea();
 
-    public abstract String getArea();
+	public abstract void setArea(String area);
 
-    public abstract void setArea(String area);
+	public abstract String getAreaCode();
 
-    public abstract String getAreaCode();
+	public abstract void setAreaCode(String areaCode);
 
-    public abstract void setAreaCode(String areaCode);
+	public abstract String getAreaOfAreaCode();
 
-    public abstract String getAreaOfAreaCode();
+	public abstract void setAreaOfAreaCode(String areaOfAreaCode);
 
-    public abstract void setAreaOfAreaCode(String areaOfAreaCode);
+	/**
+	 * Returns the default address associated to a candidate
+	 * 
+	 * IndividualCandidacyExternalPersonDetails is not associated to Person. The
+	 * calls of this method should be replaced by the following methods:
+	 * 
+	 * @see #getAddress()
+	 * @see #getArea()
+	 * @see #getAreaCode()
+	 * @see #getAreaOfAreaCode()
+	 * 
+	 */
+	@Deprecated
+	public abstract PhysicalAddress getDefaultPhysicalAddress();
 
-    /**
-     * Returns the default address associated to a candidate
-     * 
-     * IndividualCandidacyExternalPersonDetails is not associated to Person. The
-     * calls of this method should be replaced by the following methods:
-     * 
-     * @see #getAddress()
-     * @see #getArea()
-     * @see #getAreaCode()
-     * @see #getAreaOfAreaCode()
-     * 
-     */
-    @Deprecated
-    public abstract PhysicalAddress getDefaultPhysicalAddress();
+	public abstract Boolean isEmployee();
 
-    public abstract Boolean isEmployee();
+	public abstract Boolean hasAnyRole();
 
-    public abstract Boolean hasAnyRole();
-
-    public abstract String getEidentifier();
+	public abstract String getEidentifier();
 
 }

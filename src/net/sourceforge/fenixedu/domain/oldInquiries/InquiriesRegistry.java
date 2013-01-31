@@ -23,105 +23,104 @@ import org.apache.commons.lang.NullArgumentException;
  */
 public class InquiriesRegistry extends InquiriesRegistry_Base {
 
-    public InquiriesRegistry() {
-	super();
-	setRootDomainObject(RootDomainObject.getInstance());
-    }
-
-    public InquiriesRegistry(ExecutionCourse executionCourse, ExecutionSemester executionSemester, Registration registration) {
-	this();
-	checkParameters(executionCourse, executionSemester, registration);
-	this.setExecutionCourse(executionCourse);
-	this.setExecutionPeriod(executionSemester);
-	this.setStudent(registration);
-	this.setState(executionCourse.getAvailableForInquiries() ? InquiriesRegistryState.ANSWER_LATER
-		: InquiriesRegistryState.UNAVAILABLE);
-    }
-
-    public InquiriesRegistry(ExecutionCourse executionCourse, CurricularCourse curricularCourse,
-	    ExecutionSemester executionSemester, Registration registration) {
-	this(executionCourse, executionSemester, registration);
-	if (curricularCourse == null) {
-	    throw new NullArgumentException("CurricularCourse should not be null!");
-	}
-	this.setCurricularCourse(curricularCourse);
-    }
-
-    private void checkParameters(ExecutionCourse executionCourse, ExecutionSemester executionSemester, Registration registration) {
-	if ((executionCourse == null) || (executionSemester == null) || (registration == null)) {
-	    throw new NullArgumentException("The executionCourse, executionPeriod and student should not be null!");
+	public InquiriesRegistry() {
+		super();
+		setRootDomainObject(RootDomainObject.getInstance());
 	}
 
-	for (final InquiriesRegistry inquiriesRegistry : registration.getAssociatedInquiriesRegistries()) {
-	    if (inquiriesRegistry.getExecutionCourse() == executionCourse
-		    && inquiriesRegistry.getExecutionPeriod() == executionSemester) {
-		throw new DomainException(
-			"Already exists an Inquiries Registry in this Registration for the given period and course!");
-	    }
-	}
-    }
-
-    public boolean isAnswered() {
-	return getState() == InquiriesRegistryState.ANSWERED;
-    }
-
-    public boolean isNotAnswered() {
-	return getState() == InquiriesRegistryState.NOT_ANSWERED;
-    }
-
-    public boolean isToAnswerLater() {
-	return !isNotAvailableToInquiries() && (getState() == null || getState() == InquiriesRegistryState.ANSWER_LATER);
-    }
-
-    public boolean isNotAvailableToInquiries() {
-	return !getExecutionCourse().getAvailableForInquiries();
-    }
-
-    public boolean isOpenToAnswer() {
-
-	if (isAnswered() || isNotAnswered()) {
-	    return false;
+	public InquiriesRegistry(ExecutionCourse executionCourse, ExecutionSemester executionSemester, Registration registration) {
+		this();
+		checkParameters(executionCourse, executionSemester, registration);
+		this.setExecutionCourse(executionCourse);
+		this.setExecutionPeriod(executionSemester);
+		this.setStudent(registration);
+		this.setState(executionCourse.getAvailableForInquiries() ? InquiriesRegistryState.ANSWER_LATER : InquiriesRegistryState.UNAVAILABLE);
 	}
 
-	if (isCreatedAfterWeeklySpentHoursSubmission()) {
-	    return false;
+	public InquiriesRegistry(ExecutionCourse executionCourse, CurricularCourse curricularCourse,
+			ExecutionSemester executionSemester, Registration registration) {
+		this(executionCourse, executionSemester, registration);
+		if (curricularCourse == null) {
+			throw new NullArgumentException("CurricularCourse should not be null!");
+		}
+		this.setCurricularCourse(curricularCourse);
 	}
 
-	//TODO remove this classes at the end of the new QUC model implementation
-	//	if (getStudent().getStudent().isWeeklySpentHoursSubmittedForOpenInquiriesResponsePeriod() && isNotAvailableToInquiries()) {
-	//	    return false;
-	//	}
+	private void checkParameters(ExecutionCourse executionCourse, ExecutionSemester executionSemester, Registration registration) {
+		if ((executionCourse == null) || (executionSemester == null) || (registration == null)) {
+			throw new NullArgumentException("The executionCourse, executionPeriod and student should not be null!");
+		}
 
-	return true;
-    }
-
-    public boolean isCreatedAfterWeeklySpentHoursSubmission() {
-	//TODO remove this classes at the end of the new QUC model implementation
-	//	return getStudent().getStudent().isWeeklySpentHoursSubmittedForOpenInquiriesResponsePeriod()
-	//		&& (getWeeklyHoursSpentPercentage() == null || getStudyDaysSpentInExamsSeason() == null);
-	return false;
-    }
-
-    public ExecutionDegree getExecutionDegree() {
-
-	final StudentCurricularPlan studentCurricularPlan = getStudent().getActiveStudentCurricularPlan();
-	if (studentCurricularPlan != null) {
-	    final DegreeCurricularPlan degreeCurricularPlan = studentCurricularPlan.getDegreeCurricularPlan();
-	    return degreeCurricularPlan.getExecutionDegreeByYear(getExecutionPeriod().getExecutionYear());
+		for (final InquiriesRegistry inquiriesRegistry : registration.getAssociatedInquiriesRegistries()) {
+			if (inquiriesRegistry.getExecutionCourse() == executionCourse
+					&& inquiriesRegistry.getExecutionPeriod() == executionSemester) {
+				throw new DomainException(
+						"Already exists an Inquiries Registry in this Registration for the given period and course!");
+			}
+		}
 	}
 
-	DegreeCurricularPlan lastDegreeCurricularPlan = getStudent().getLastDegreeCurricularPlan();
-	if (lastDegreeCurricularPlan != null) {
-	    return lastDegreeCurricularPlan.getExecutionDegreeByYear(getExecutionPeriod().getExecutionYear());
+	public boolean isAnswered() {
+		return getState() == InquiriesRegistryState.ANSWERED;
 	}
 
-	return null;
-    }
+	public boolean isNotAnswered() {
+		return getState() == InquiriesRegistryState.NOT_ANSWERED;
+	}
 
-    public InquiriesStudentExecutionPeriod getInquiriesStudentExecutionPeriod() {
-	return null;
-	//TODO remove this classes at the end of the new QUC model implementation
-	//	return getStudent().getStudent().getInquiriesStudentExecutionPeriod(getExecutionPeriod());
-    }
+	public boolean isToAnswerLater() {
+		return !isNotAvailableToInquiries() && (getState() == null || getState() == InquiriesRegistryState.ANSWER_LATER);
+	}
+
+	public boolean isNotAvailableToInquiries() {
+		return !getExecutionCourse().getAvailableForInquiries();
+	}
+
+	public boolean isOpenToAnswer() {
+
+		if (isAnswered() || isNotAnswered()) {
+			return false;
+		}
+
+		if (isCreatedAfterWeeklySpentHoursSubmission()) {
+			return false;
+		}
+
+		//TODO remove this classes at the end of the new QUC model implementation
+		//	if (getStudent().getStudent().isWeeklySpentHoursSubmittedForOpenInquiriesResponsePeriod() && isNotAvailableToInquiries()) {
+		//	    return false;
+		//	}
+
+		return true;
+	}
+
+	public boolean isCreatedAfterWeeklySpentHoursSubmission() {
+		//TODO remove this classes at the end of the new QUC model implementation
+		//	return getStudent().getStudent().isWeeklySpentHoursSubmittedForOpenInquiriesResponsePeriod()
+		//		&& (getWeeklyHoursSpentPercentage() == null || getStudyDaysSpentInExamsSeason() == null);
+		return false;
+	}
+
+	public ExecutionDegree getExecutionDegree() {
+
+		final StudentCurricularPlan studentCurricularPlan = getStudent().getActiveStudentCurricularPlan();
+		if (studentCurricularPlan != null) {
+			final DegreeCurricularPlan degreeCurricularPlan = studentCurricularPlan.getDegreeCurricularPlan();
+			return degreeCurricularPlan.getExecutionDegreeByYear(getExecutionPeriod().getExecutionYear());
+		}
+
+		DegreeCurricularPlan lastDegreeCurricularPlan = getStudent().getLastDegreeCurricularPlan();
+		if (lastDegreeCurricularPlan != null) {
+			return lastDegreeCurricularPlan.getExecutionDegreeByYear(getExecutionPeriod().getExecutionYear());
+		}
+
+		return null;
+	}
+
+	public InquiriesStudentExecutionPeriod getInquiriesStudentExecutionPeriod() {
+		return null;
+		//TODO remove this classes at the end of the new QUC model implementation
+		//	return getStudent().getStudent().getInquiriesStudentExecutionPeriod(getExecutionPeriod());
+	}
 
 }

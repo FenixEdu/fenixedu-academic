@@ -26,122 +26,129 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 @Mapping(path = "/careerWorkshopApplication", module = "directiveCouncil")
 @Forwards({
-	@Forward(name = "manageCareerWorkshops", path = "/directiveCouncil/careerWorkshop/manageCareerWorkshops.jsp", tileProperties = @Tile(title = "private.steeringcouncil.istcareerWorkshops.managingistcareerworkshops")),
-	@Forward(name = "setConfirmationPeriod", path = "/directiveCouncil/careerWorkshop/setConfirmationPeriod.jsp", tileProperties = @Tile(title = "private.steeringcouncil.istcareerWorkshops.managingistcareerworkshops")) })
+		@Forward(
+				name = "manageCareerWorkshops",
+				path = "/directiveCouncil/careerWorkshop/manageCareerWorkshops.jsp",
+				tileProperties = @Tile(title = "private.steeringcouncil.istcareerWorkshops.managingistcareerworkshops")),
+		@Forward(
+				name = "setConfirmationPeriod",
+				path = "/directiveCouncil/careerWorkshop/setConfirmationPeriod.jsp",
+				tileProperties = @Tile(title = "private.steeringcouncil.istcareerWorkshops.managingistcareerworkshops")) })
 public class ManageCareerWorkshopApplicationsDA extends FenixDispatchAction {
 
-    public ActionForward prepare(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
+	public ActionForward prepare(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
 
-	ManageCareerWorkshopApplicationsBean applicationsBean = new ManageCareerWorkshopApplicationsBean();
-	request.setAttribute("applicationsBean", applicationsBean);
+		ManageCareerWorkshopApplicationsBean applicationsBean = new ManageCareerWorkshopApplicationsBean();
+		request.setAttribute("applicationsBean", applicationsBean);
 
-	return actionMapping.findForward("manageCareerWorkshops");
-    }
-
-    public ActionForward addApplicationEvent(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-
-	ManageCareerWorkshopApplicationsBean applicationsBean = getRenderedObject("applicationsBean");
-	applicationsBean.addNewEvent();
-
-	request.setAttribute("applicationsBean", applicationsBean);
-	RenderUtils.invalidateViewState("applicationsBean");
-
-	return actionMapping.findForward("manageCareerWorkshops");
-    }
-
-    public ActionForward deleteApplicationEvent(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-
-	ManageCareerWorkshopApplicationsBean applicationsBean = new ManageCareerWorkshopApplicationsBean();
-	final String eventExternalId = request.getParameter("eventId");
-	CareerWorkshopApplicationEvent eventToDelete = AbstractDomainObject.fromExternalId(eventExternalId);
-	applicationsBean.deleteEvent(eventToDelete);
-
-	request.setAttribute("applicationsBean", applicationsBean);
-	RenderUtils.invalidateViewState("applicationsBean");
-
-	return actionMapping.findForward("manageCareerWorkshops");
-    }
-
-    public ActionForward downloadApplications(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-
-	final String eventExternalId = request.getParameter("eventId");
-	CareerWorkshopApplicationEvent eventToDownload = AbstractDomainObject.fromExternalId(eventExternalId);
-	CareerWorkshopSpreadsheet spreadsheet = eventToDownload.getApplications();
-	if (spreadsheet != null) {
-	    final ServletOutputStream writer = response.getOutputStream();
-	    try {
-		response.setContentLength(spreadsheet.getSize());
-		response.setContentType("application/csv");
-		response.addHeader("Content-Disposition", "attachment; filename=" + spreadsheet.getFilename());
-		writer.write(spreadsheet.getContents());
-		writer.flush();
-	    } finally {
-		writer.close();
-	    }
-	}
-	return null;
-    }
-
-    public ActionForward setConfirmationPeriod(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-
-	ManageCareerWorkshopApplicationsBean eventsBean = new ManageCareerWorkshopApplicationsBean();
-	final String eventExternalId = request.getParameter("eventId");
-	CareerWorkshopApplicationEvent affectedEvent = AbstractDomainObject.fromExternalId(eventExternalId);
-	eventsBean.setAffectedEvent(affectedEvent);
-	request.setAttribute("eventsBean", eventsBean);
-
-	return actionMapping.findForward("setConfirmationPeriod");
-    }
-
-    public ActionForward addConfirmationPeriod(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-
-	ManageCareerWorkshopApplicationsBean eventsBean = getRenderedObject("eventsBean");
-	eventsBean.addConfirmationPeriod();
-
-	request.setAttribute("applicationsBean", eventsBean);
-	RenderUtils.invalidateViewState("applicationsBean");
-
-	return actionMapping.findForward("manageCareerWorkshops");
-    }
-
-    public ActionForward downloadConfirmations(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-
-	final String eventExternalId = request.getParameter("eventId");
-	CareerWorkshopApplicationEvent application = AbstractDomainObject.fromExternalId(eventExternalId);
-	CareerWorkshopConfirmationSpreadsheet spreadsheet = application.getCareerWorkshopConfirmationEvent().getConfirmations();
-	if (spreadsheet != null) {
-	    final ServletOutputStream writer = response.getOutputStream();
-	    try {
-		response.setContentLength(spreadsheet.getSize());
-		response.setContentType("application/csv");
-		response.addHeader("Content-Disposition", "attachment; filename=" + spreadsheet.getFilename());
-		writer.write(spreadsheet.getContents());
-		writer.flush();
-	    } finally {
-		writer.close();
-	    }
-	}
-	return null;
-    }
-
-    public ActionForward purgeConfirmations(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-	final String eventExternalId = request.getParameter("eventId");
-	CareerWorkshopApplicationEvent application = AbstractDomainObject.fromExternalId(eventExternalId);
-	List<CareerWorkshopConfirmation> confirmations = new ArrayList<CareerWorkshopConfirmation>(application
-		.getCareerWorkshopConfirmationEvent().getCareerWorkshopConfirmations());
-	for (CareerWorkshopConfirmation confToDelete : confirmations) {
-	    confToDelete.delete();
+		return actionMapping.findForward("manageCareerWorkshops");
 	}
 
-	return prepare(actionMapping, actionForm, request, response);
-    }
+	public ActionForward addApplicationEvent(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+
+		ManageCareerWorkshopApplicationsBean applicationsBean = getRenderedObject("applicationsBean");
+		applicationsBean.addNewEvent();
+
+		request.setAttribute("applicationsBean", applicationsBean);
+		RenderUtils.invalidateViewState("applicationsBean");
+
+		return actionMapping.findForward("manageCareerWorkshops");
+	}
+
+	public ActionForward deleteApplicationEvent(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+
+		ManageCareerWorkshopApplicationsBean applicationsBean = new ManageCareerWorkshopApplicationsBean();
+		final String eventExternalId = request.getParameter("eventId");
+		CareerWorkshopApplicationEvent eventToDelete = AbstractDomainObject.fromExternalId(eventExternalId);
+		applicationsBean.deleteEvent(eventToDelete);
+
+		request.setAttribute("applicationsBean", applicationsBean);
+		RenderUtils.invalidateViewState("applicationsBean");
+
+		return actionMapping.findForward("manageCareerWorkshops");
+	}
+
+	public ActionForward downloadApplications(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+
+		final String eventExternalId = request.getParameter("eventId");
+		CareerWorkshopApplicationEvent eventToDownload = AbstractDomainObject.fromExternalId(eventExternalId);
+		CareerWorkshopSpreadsheet spreadsheet = eventToDownload.getApplications();
+		if (spreadsheet != null) {
+			final ServletOutputStream writer = response.getOutputStream();
+			try {
+				response.setContentLength(spreadsheet.getSize());
+				response.setContentType("application/csv");
+				response.addHeader("Content-Disposition", "attachment; filename=" + spreadsheet.getFilename());
+				writer.write(spreadsheet.getContents());
+				writer.flush();
+			} finally {
+				writer.close();
+			}
+		}
+		return null;
+	}
+
+	public ActionForward setConfirmationPeriod(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+
+		ManageCareerWorkshopApplicationsBean eventsBean = new ManageCareerWorkshopApplicationsBean();
+		final String eventExternalId = request.getParameter("eventId");
+		CareerWorkshopApplicationEvent affectedEvent = AbstractDomainObject.fromExternalId(eventExternalId);
+		eventsBean.setAffectedEvent(affectedEvent);
+		request.setAttribute("eventsBean", eventsBean);
+
+		return actionMapping.findForward("setConfirmationPeriod");
+	}
+
+	public ActionForward addConfirmationPeriod(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+
+		ManageCareerWorkshopApplicationsBean eventsBean = getRenderedObject("eventsBean");
+		eventsBean.addConfirmationPeriod();
+
+		request.setAttribute("applicationsBean", eventsBean);
+		RenderUtils.invalidateViewState("applicationsBean");
+
+		return actionMapping.findForward("manageCareerWorkshops");
+	}
+
+	public ActionForward downloadConfirmations(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+
+		final String eventExternalId = request.getParameter("eventId");
+		CareerWorkshopApplicationEvent application = AbstractDomainObject.fromExternalId(eventExternalId);
+		CareerWorkshopConfirmationSpreadsheet spreadsheet = application.getCareerWorkshopConfirmationEvent().getConfirmations();
+		if (spreadsheet != null) {
+			final ServletOutputStream writer = response.getOutputStream();
+			try {
+				response.setContentLength(spreadsheet.getSize());
+				response.setContentType("application/csv");
+				response.addHeader("Content-Disposition", "attachment; filename=" + spreadsheet.getFilename());
+				writer.write(spreadsheet.getContents());
+				writer.flush();
+			} finally {
+				writer.close();
+			}
+		}
+		return null;
+	}
+
+	public ActionForward purgeConfirmations(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		final String eventExternalId = request.getParameter("eventId");
+		CareerWorkshopApplicationEvent application = AbstractDomainObject.fromExternalId(eventExternalId);
+		List<CareerWorkshopConfirmation> confirmations =
+				new ArrayList<CareerWorkshopConfirmation>(application.getCareerWorkshopConfirmationEvent()
+						.getCareerWorkshopConfirmations());
+		for (CareerWorkshopConfirmation confToDelete : confirmations) {
+			confToDelete.delete();
+		}
+
+		return prepare(actionMapping, actionForm, request, response);
+	}
 
 }

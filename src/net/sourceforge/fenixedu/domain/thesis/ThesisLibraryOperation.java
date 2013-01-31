@@ -12,49 +12,50 @@ import org.joda.time.DateTime;
  */
 public abstract class ThesisLibraryOperation extends ThesisLibraryOperation_Base {
 
-    public ThesisLibraryOperation() {
-	super();
-    }
+	public ThesisLibraryOperation() {
+		super();
+	}
 
-    protected void init(Thesis thesis, Person performer) {
-	if (thesis.hasLastLibraryOperation())
-	    setPrevious(thesis.getLastLibraryOperation());
-	super.setThesis(thesis);
-	super.setPerformer(performer);
-	super.setOperation(new DateTime());
-    }
+	protected void init(Thesis thesis, Person performer) {
+		if (thesis.hasLastLibraryOperation()) {
+			setPrevious(thesis.getLastLibraryOperation());
+		}
+		super.setThesis(thesis);
+		super.setPerformer(performer);
+		super.setOperation(new DateTime());
+	}
 
-    public Integer getThesisId() {
-	return getThesis().getIdInternal();
-    }
+	public Integer getThesisId() {
+		return getThesis().getIdInternal();
+	}
 
-    public Integer getPerformerId() {
-	return getPerformer().getIdInternal();
-    }
+	public Integer getPerformerId() {
+		return getPerformer().getIdInternal();
+	}
 
-    public abstract ThesisLibraryState getState();
+	public abstract ThesisLibraryState getState();
 
-    public abstract String getLibraryReference();
+	public abstract String getLibraryReference();
 
-    public abstract String getPendingComment();
+	public abstract String getPendingComment();
 
-    @Override
-    protected RootDomainObject getRootDomainObject() {
-	return getThesis().getRootDomainObject();
-    }
+	@Override
+	protected RootDomainObject getRootDomainObject() {
+		return getThesis().getRootDomainObject();
+	}
 
-    @Override
-    public void setThesis(Thesis thesis) {
-	throw new UnsupportedOperationException();
-    }
+	@Override
+	public void setThesis(Thesis thesis) {
+		throw new UnsupportedOperationException();
+	}
 
-    @Override
-    public void setPerformer(Person performer) {
-	throw new UnsupportedOperationException();
-    }
+	@Override
+	public void setPerformer(Person performer) {
+		throw new UnsupportedOperationException();
+	}
 
-    @Override
-    public void setOperation(DateTime operation) {
-	throw new UnsupportedOperationException();
-    }
+	@Override
+	public void setOperation(DateTime operation) {
+		throw new UnsupportedOperationException();
+	}
 }

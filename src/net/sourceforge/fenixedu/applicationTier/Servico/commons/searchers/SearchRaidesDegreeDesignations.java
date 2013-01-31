@@ -15,77 +15,77 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class SearchRaidesDegreeDesignations extends FenixService implements AutoCompleteSearchService {
 
-    private static int DEFAULT_SIZE = 50;
+	private static int DEFAULT_SIZE = 50;
 
-    @Override
-    public Collection run(Class type, String value, final int limit, Map<String, String> arguments) {
+	@Override
+	public Collection run(Class type, String value, final int limit, Map<String, String> arguments) {
 
-	int maxLimit = getSize(arguments);
+		int maxLimit = getSize(arguments);
 
-	Unit unit = getFilterUnit(arguments);
-	SchoolLevelType schoolLevel = getFilterSchoolLevel(arguments);
+		Unit unit = getFilterUnit(arguments);
+		SchoolLevelType schoolLevel = getFilterSchoolLevel(arguments);
 
-	value = StringUtils.normalize(value);
-	List<DegreeDesignation> result = new ArrayList<DegreeDesignation>();
-	Collection<DegreeDesignation> possibleDesignations = null;
-	if (unit == null) {
-	    possibleDesignations = rootDomainObject.getDegreeDesignationsSet();
-	} else {
-	    possibleDesignations = unit.getDegreeDesignation();
+		value = StringUtils.normalize(value);
+		List<DegreeDesignation> result = new ArrayList<DegreeDesignation>();
+		Collection<DegreeDesignation> possibleDesignations = null;
+		if (unit == null) {
+			possibleDesignations = rootDomainObject.getDegreeDesignationsSet();
+		} else {
+			possibleDesignations = unit.getDegreeDesignation();
+		}
+
+		if (schoolLevel != null) {
+			possibleDesignations = filterDesignationsBySchoolLevel(possibleDesignations, schoolLevel);
+		}
+
+		for (DegreeDesignation degreeDesignation : possibleDesignations) {
+			String normalizedDesignation = StringUtils.normalize(degreeDesignation.getDescription());
+			if (normalizedDesignation.contains(value)) {
+				result.add(degreeDesignation);
+			}
+			if (result.size() >= maxLimit) {
+				break;
+			}
+		}
+		return result;
 	}
 
-	if (schoolLevel != null) {
-	    possibleDesignations = filterDesignationsBySchoolLevel(possibleDesignations, schoolLevel);
+	private Collection<DegreeDesignation> filterDesignationsBySchoolLevel(Collection<DegreeDesignation> possibleDesignations,
+			SchoolLevelType schoolLevel) {
+		List<DegreeDesignation> designationsToKeep = new ArrayList<DegreeDesignation>();
+		for (DegreeDesignation designation : possibleDesignations) {
+			if (schoolLevel.getEquivalentDegreeClassifications().contains(designation.getDegreeClassification().getCode())) {
+				designationsToKeep.add(designation);
+			}
+		}
+
+		return designationsToKeep;
 	}
 
-	for (DegreeDesignation degreeDesignation : possibleDesignations) {
-	    String normalizedDesignation = StringUtils.normalize(degreeDesignation.getDescription());
-	    if (normalizedDesignation.contains(value)) {
-		result.add(degreeDesignation);
-	    }
-	    if (result.size() >= maxLimit) {
-		break;
-	    }
-	}
-	return result;
-    }
+	private int getSize(Map<String, String> arguments) {
+		String size = arguments.get("size");
 
-    private Collection<DegreeDesignation> filterDesignationsBySchoolLevel(Collection<DegreeDesignation> possibleDesignations,
-	    SchoolLevelType schoolLevel) {
-	List<DegreeDesignation> designationsToKeep = new ArrayList<DegreeDesignation>();
-	for (DegreeDesignation designation : possibleDesignations) {
-	    if (schoolLevel.getEquivalentDegreeClassifications().contains(designation.getDegreeClassification().getCode())) {
-		designationsToKeep.add(designation);
-	    }
-	}
-	
-	return designationsToKeep;
-    }
-
-    private int getSize(Map<String, String> arguments) {
-	String size = arguments.get("size");
-
-	if (size == null) {
-	    return DEFAULT_SIZE;
-	} else {
-	    return Integer.parseInt(size);
-	}
-    }
-
-    private SchoolLevelType getFilterSchoolLevel(Map<String, String> arguments) {
-	String schoolLevelName = arguments.get("filterSchoolLevelName");
-	if ((schoolLevelName == null) || (schoolLevelName.equals("null"))) {
-	    return null;
-	}
-	return Enum.<SchoolLevelType> valueOf(SchoolLevelType.class, schoolLevelName);
-    }
-
-    private Unit getFilterUnit(Map<String, String> arguments) {
-	String filterUnitOID = arguments.get("filterUnitOID");
-	if ((filterUnitOID == null) || (filterUnitOID.equals("null"))) {
-	    return null;
+		if (size == null) {
+			return DEFAULT_SIZE;
+		} else {
+			return Integer.parseInt(size);
+		}
 	}
 
-	return (Unit) AbstractDomainObject.fromExternalId(filterUnitOID);
-    }
+	private SchoolLevelType getFilterSchoolLevel(Map<String, String> arguments) {
+		String schoolLevelName = arguments.get("filterSchoolLevelName");
+		if ((schoolLevelName == null) || (schoolLevelName.equals("null"))) {
+			return null;
+		}
+		return Enum.<SchoolLevelType> valueOf(SchoolLevelType.class, schoolLevelName);
+	}
+
+	private Unit getFilterUnit(Map<String, String> arguments) {
+		String filterUnitOID = arguments.get("filterUnitOID");
+		if ((filterUnitOID == null) || (filterUnitOID.equals("null"))) {
+			return null;
+		}
+
+		return (Unit) AbstractDomainObject.fromExternalId(filterUnitOID);
+	}
 }

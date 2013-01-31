@@ -16,17 +16,17 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class RemoveClasses extends FenixService {
 
-    @Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
-    @Service
-    public static Boolean run(InfoShift infoShift, List classOIDs) {
-	final Shift shift = rootDomainObject.readShiftByOID(infoShift.getIdInternal());
+	@Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
+	@Service
+	public static Boolean run(InfoShift infoShift, List classOIDs) {
+		final Shift shift = rootDomainObject.readShiftByOID(infoShift.getIdInternal());
 
-	for (int i = 0; i < classOIDs.size(); i++) {
-	    final SchoolClass schoolClass = rootDomainObject.readSchoolClassByOID((Integer) classOIDs.get(i));
-	    shift.getAssociatedClasses().remove(schoolClass);
-	    schoolClass.getAssociatedShifts().remove(shift);
+		for (int i = 0; i < classOIDs.size(); i++) {
+			final SchoolClass schoolClass = rootDomainObject.readSchoolClassByOID((Integer) classOIDs.get(i));
+			shift.getAssociatedClasses().remove(schoolClass);
+			schoolClass.getAssociatedShifts().remove(shift);
+		}
+		return Boolean.TRUE;
 	}
-	return Boolean.TRUE;
-    }
 
 }

@@ -4,12 +4,12 @@ import net.sourceforge.fenixedu.util.PrinterManager;
 
 public class FunctionalityPrinters extends FunctionalityPrinters_Base {
 
-    public FunctionalityPrinters() {
-	super();
-    }
+	public FunctionalityPrinters() {
+		super();
+	}
 
-    public String[] getPrinterNames() {
-	return PrinterManager.getFunctionPrinterNames(getKeyPrinters());
-    }
+	public String[] getPrinterNames() {
+		return PrinterManager.getFunctionPrinterNames(getKeyPrinters());
+	}
 
 }

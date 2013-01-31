@@ -17,62 +17,62 @@ import net.sourceforge.fenixedu.domain.Person;
  */
 public class EditCurriculumForCurricularCourse extends FenixService {
 
-    public Boolean run(Integer infoExecutionDegreeId, Integer oldCurriculumId, Integer curricularCourseCode,
-	    InfoCurriculum newInfoCurriculum, String username, String language) throws FenixServiceException {
-	Boolean result = new Boolean(false);
+	public Boolean run(Integer infoExecutionDegreeId, Integer oldCurriculumId, Integer curricularCourseCode,
+			InfoCurriculum newInfoCurriculum, String username, String language) throws FenixServiceException {
+		Boolean result = new Boolean(false);
 
-	if (oldCurriculumId == null) {
-	    throw new FenixServiceException("nullCurriculumCode");
+		if (oldCurriculumId == null) {
+			throw new FenixServiceException("nullCurriculumCode");
+		}
+		if (curricularCourseCode == null) {
+			throw new FenixServiceException("nullCurricularCourseCode");
+		}
+		if (newInfoCurriculum == null) {
+			throw new FenixServiceException("nullCurriculum");
+		}
+		if (username == null) {
+			throw new FenixServiceException("nullUsername");
+		}
+
+		CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(curricularCourseCode);
+		if (curricularCourse == null) {
+			throw new NonExistingServiceException("noCurricularCourse");
+		}
+
+		Person person = Person.readPersonByUsername(username);
+		if (person == null) {
+			throw new NonExistingServiceException("noPerson");
+		}
+
+		Curriculum oldCurriculum = rootDomainObject.readCurriculumByOID(oldCurriculumId);
+		if (oldCurriculum == null) {
+			oldCurriculum = new Curriculum();
+
+			oldCurriculum.setCurricularCourse(curricularCourse);
+			Calendar today = Calendar.getInstance();
+			oldCurriculum.setLastModificationDate(today.getTime());
+		}
+
+		ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
+
+		if (!oldCurriculum.getLastModificationDate().before(currentExecutionYear.getBeginDate())
+				&& !oldCurriculum.getLastModificationDate().after(currentExecutionYear.getEndDate())) {
+
+			oldCurriculum.edit(newInfoCurriculum.getGeneralObjectives(), newInfoCurriculum.getOperacionalObjectives(),
+					newInfoCurriculum.getProgram(), newInfoCurriculum.getGeneralObjectivesEn(),
+					newInfoCurriculum.getOperacionalObjectivesEn(), newInfoCurriculum.getProgramEn());
+
+		} else {
+			Curriculum newCurriculum = new Curriculum();
+			newCurriculum.setCurricularCourse(curricularCourse);
+
+			newCurriculum.edit(newInfoCurriculum.getGeneralObjectives(), newInfoCurriculum.getOperacionalObjectives(),
+					newInfoCurriculum.getProgram(), newInfoCurriculum.getGeneralObjectivesEn(),
+					newInfoCurriculum.getOperacionalObjectivesEn(), newInfoCurriculum.getProgramEn());
+
+		}
+		result = Boolean.TRUE;
+
+		return result;
 	}
-	if (curricularCourseCode == null) {
-	    throw new FenixServiceException("nullCurricularCourseCode");
-	}
-	if (newInfoCurriculum == null) {
-	    throw new FenixServiceException("nullCurriculum");
-	}
-	if (username == null) {
-	    throw new FenixServiceException("nullUsername");
-	}
-
-	CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(curricularCourseCode);
-	if (curricularCourse == null) {
-	    throw new NonExistingServiceException("noCurricularCourse");
-	}
-
-	Person person = Person.readPersonByUsername(username);
-	if (person == null) {
-	    throw new NonExistingServiceException("noPerson");
-	}
-
-	Curriculum oldCurriculum = rootDomainObject.readCurriculumByOID(oldCurriculumId);
-	if (oldCurriculum == null) {
-	    oldCurriculum = new Curriculum();
-
-	    oldCurriculum.setCurricularCourse(curricularCourse);
-	    Calendar today = Calendar.getInstance();
-	    oldCurriculum.setLastModificationDate(today.getTime());
-	}
-
-	ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
-
-	if (!oldCurriculum.getLastModificationDate().before(currentExecutionYear.getBeginDate())
-		&& !oldCurriculum.getLastModificationDate().after(currentExecutionYear.getEndDate())) {
-
-	    oldCurriculum.edit(newInfoCurriculum.getGeneralObjectives(), newInfoCurriculum.getOperacionalObjectives(),
-		    newInfoCurriculum.getProgram(), newInfoCurriculum.getGeneralObjectivesEn(), newInfoCurriculum
-			    .getOperacionalObjectivesEn(), newInfoCurriculum.getProgramEn());
-
-	} else {
-	    Curriculum newCurriculum = new Curriculum();
-	    newCurriculum.setCurricularCourse(curricularCourse);
-
-	    newCurriculum.edit(newInfoCurriculum.getGeneralObjectives(), newInfoCurriculum.getOperacionalObjectives(),
-		    newInfoCurriculum.getProgram(), newInfoCurriculum.getGeneralObjectivesEn(), newInfoCurriculum
-			    .getOperacionalObjectivesEn(), newInfoCurriculum.getProgramEn());
-
-	}
-	result = Boolean.TRUE;
-
-	return result;
-    }
 }

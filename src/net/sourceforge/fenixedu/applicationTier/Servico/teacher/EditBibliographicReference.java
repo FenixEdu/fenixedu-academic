@@ -11,17 +11,17 @@ import net.sourceforge.fenixedu.domain.BibliographicReference;
  */
 public class EditBibliographicReference extends FenixService {
 
-    public Boolean run(Integer bibliographicReferenceID, String newTitle, String newAuthors, String newReference, String newYear,
-	    Boolean optional) throws FenixServiceException {
+	public Boolean run(Integer bibliographicReferenceID, String newTitle, String newAuthors, String newReference, String newYear,
+			Boolean optional) throws FenixServiceException {
 
-	final BibliographicReference bibliographicReference = rootDomainObject
-		.readBibliographicReferenceByOID(bibliographicReferenceID);
-	if (bibliographicReference == null) {
-	    throw new InvalidArgumentsServiceException();
+		final BibliographicReference bibliographicReference =
+				rootDomainObject.readBibliographicReferenceByOID(bibliographicReferenceID);
+		if (bibliographicReference == null) {
+			throw new InvalidArgumentsServiceException();
+		}
+		bibliographicReference.edit(newTitle, newAuthors, newReference, newYear, optional);
+
+		return true;
 	}
-	bibliographicReference.edit(newTitle, newAuthors, newReference, newYear, optional);
-
-	return true;
-    }
 
 }

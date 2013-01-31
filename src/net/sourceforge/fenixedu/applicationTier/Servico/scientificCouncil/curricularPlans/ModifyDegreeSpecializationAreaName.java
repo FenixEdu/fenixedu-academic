@@ -10,23 +10,23 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class ModifyDegreeSpecializationAreaName extends FenixService {
 
-    /**
-     * Must ensure "REQUIRED" slots are filled
-     * 
-     * @param degree
-     * @param date
-     * @throws FenixServiceException
-     */
-    @Checked("RolePredicates.SCIENTIFIC_COUNCIL_PREDICATE")
-    @Service
-    public static void run(DegreeSpecializationArea specializationArea, Language language, String newName)
-	    throws FenixServiceException {
+	/**
+	 * Must ensure "REQUIRED" slots are filled
+	 * 
+	 * @param degree
+	 * @param date
+	 * @throws FenixServiceException
+	 */
+	@Checked("RolePredicates.SCIENTIFIC_COUNCIL_PREDICATE")
+	@Service
+	public static void run(DegreeSpecializationArea specializationArea, Language language, String newName)
+			throws FenixServiceException {
 
-	if (specializationArea == null || language == null || newName == null) {
-	    throw new InvalidArgumentsServiceException();
+		if (specializationArea == null || language == null || newName == null) {
+			throw new InvalidArgumentsServiceException();
+		}
+
+		specializationArea.getName().setContent(language, newName);
 	}
-
-	specializationArea.getName().setContent(language, newName);
-    }
 
 }

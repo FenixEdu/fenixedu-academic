@@ -12,126 +12,127 @@ import net.sourceforge.fenixedu.util.DiaSemana;
  * 
  */
 public class InfoSupportLesson extends InfoObject {
-    private DiaSemana weekDay;
+	private DiaSemana weekDay;
 
-    private Date startTime;
+	private Date startTime;
 
-    private Date endTime;
+	private Date endTime;
 
-    private String place;
+	private String place;
 
-    private InfoProfessorship infoProfessorship;
+	private InfoProfessorship infoProfessorship;
 
-    public InfoSupportLesson() {
-    }
-
-    public boolean equals(Object obj) {
-	boolean result = false;
-	if (obj instanceof InfoSupportLesson) {
-	    InfoSupportLesson infoSupportLessonsTimetable = (InfoSupportLesson) obj;
-	    if (elementsAreEqual(infoSupportLessonsTimetable.getInfoProfessorship(), this.getInfoProfessorship())
-		    && elementsAreEqual(infoSupportLessonsTimetable.getStartTime(), this.getStartTime())
-		    && elementsAreEqual(infoSupportLessonsTimetable.getEndTime(), this.getEndTime())
-		    && elementsAreEqual(infoSupportLessonsTimetable.getPlace(), this.getPlace())
-		    && elementsAreEqual(infoSupportLessonsTimetable.getWeekDay(), this.getWeekDay())) {
-		result = true;
-	    }
+	public InfoSupportLesson() {
 	}
-	return result;
-    }
 
-    private boolean elementsAreEqual(Object element1, Object element2) {
-	boolean result = false;
-	if ((element1 == null && element2 == null) || (element1 != null && element2 != null && element1.equals(element2))) {
-	    result = true;
+	@Override
+	public boolean equals(Object obj) {
+		boolean result = false;
+		if (obj instanceof InfoSupportLesson) {
+			InfoSupportLesson infoSupportLessonsTimetable = (InfoSupportLesson) obj;
+			if (elementsAreEqual(infoSupportLessonsTimetable.getInfoProfessorship(), this.getInfoProfessorship())
+					&& elementsAreEqual(infoSupportLessonsTimetable.getStartTime(), this.getStartTime())
+					&& elementsAreEqual(infoSupportLessonsTimetable.getEndTime(), this.getEndTime())
+					&& elementsAreEqual(infoSupportLessonsTimetable.getPlace(), this.getPlace())
+					&& elementsAreEqual(infoSupportLessonsTimetable.getWeekDay(), this.getWeekDay())) {
+				result = true;
+			}
+		}
+		return result;
 	}
-	return result;
-    }
 
-    /**
-     * @return
-     */
-    public String getPlace() {
-	return place;
-    }
+	private boolean elementsAreEqual(Object element1, Object element2) {
+		boolean result = false;
+		if ((element1 == null && element2 == null) || (element1 != null && element2 != null && element1.equals(element2))) {
+			result = true;
+		}
+		return result;
+	}
 
-    /**
-     * @param place
-     */
-    public void setPlace(String place) {
-	this.place = place;
-    }
+	/**
+	 * @return
+	 */
+	public String getPlace() {
+		return place;
+	}
 
-    /**
-     * @return
-     */
-    public Date getEndTime() {
-	return endTime;
-    }
+	/**
+	 * @param place
+	 */
+	public void setPlace(String place) {
+		this.place = place;
+	}
 
-    /**
-     * @param endTime
-     */
-    public void setEndTime(Date endTime) {
-	this.endTime = endTime;
-    }
+	/**
+	 * @return
+	 */
+	public Date getEndTime() {
+		return endTime;
+	}
 
-    /**
-     * @return
-     */
-    public Date getStartTime() {
-	return startTime;
-    }
+	/**
+	 * @param endTime
+	 */
+	public void setEndTime(Date endTime) {
+		this.endTime = endTime;
+	}
 
-    /**
-     * @param startTime
-     */
-    public void setStartTime(Date startTime) {
-	this.startTime = startTime;
-    }
+	/**
+	 * @return
+	 */
+	public Date getStartTime() {
+		return startTime;
+	}
 
-    /**
-     * @return
-     */
-    public DiaSemana getWeekDay() {
-	return weekDay;
-    }
+	/**
+	 * @param startTime
+	 */
+	public void setStartTime(Date startTime) {
+		this.startTime = startTime;
+	}
 
-    /**
-     * @param weekDay
-     */
-    public void setWeekDay(DiaSemana weekDay) {
-	this.weekDay = weekDay;
-    }
+	/**
+	 * @return
+	 */
+	public DiaSemana getWeekDay() {
+		return weekDay;
+	}
 
-    /**
-     * @return Returns the infoProfessorship.
-     */
-    public InfoProfessorship getInfoProfessorship() {
-	return this.infoProfessorship;
-    }
+	/**
+	 * @param weekDay
+	 */
+	public void setWeekDay(DiaSemana weekDay) {
+		this.weekDay = weekDay;
+	}
 
-    /**
-     * @param infoProfessorship
-     *            The infoProfessorship to set.
-     */
-    public void setInfoProfessorship(InfoProfessorship infoProfessorship) {
-	this.infoProfessorship = infoProfessorship;
-    }
+	/**
+	 * @return Returns the infoProfessorship.
+	 */
+	public InfoProfessorship getInfoProfessorship() {
+		return this.infoProfessorship;
+	}
 
-    public static InfoSupportLesson newInfoFromDomain(SupportLesson supportLesson) {
-	InfoSupportLesson infoSupportLesson = new InfoSupportLesson();
-	InfoProfessorship infoProfessorship = InfoProfessorship.newInfoFromDomain(supportLesson.getProfessorship());
+	/**
+	 * @param infoProfessorship
+	 *            The infoProfessorship to set.
+	 */
+	public void setInfoProfessorship(InfoProfessorship infoProfessorship) {
+		this.infoProfessorship = infoProfessorship;
+	}
 
-	infoSupportLesson.setEndTime(supportLesson.getEndTime());
-	infoSupportLesson.setIdInternal(supportLesson.getIdInternal());
-	infoSupportLesson.setPlace(supportLesson.getPlace());
-	infoSupportLesson.setStartTime(supportLesson.getStartTime());
-	infoSupportLesson.setWeekDay(supportLesson.getWeekDay());
+	public static InfoSupportLesson newInfoFromDomain(SupportLesson supportLesson) {
+		InfoSupportLesson infoSupportLesson = new InfoSupportLesson();
+		InfoProfessorship infoProfessorship = InfoProfessorship.newInfoFromDomain(supportLesson.getProfessorship());
 
-	infoSupportLesson.setInfoProfessorship(infoProfessorship);
+		infoSupportLesson.setEndTime(supportLesson.getEndTime());
+		infoSupportLesson.setIdInternal(supportLesson.getIdInternal());
+		infoSupportLesson.setPlace(supportLesson.getPlace());
+		infoSupportLesson.setStartTime(supportLesson.getStartTime());
+		infoSupportLesson.setWeekDay(supportLesson.getWeekDay());
 
-	return infoSupportLesson;
-    }
+		infoSupportLesson.setInfoProfessorship(infoProfessorship);
+
+		return infoSupportLesson;
+	}
 
 }

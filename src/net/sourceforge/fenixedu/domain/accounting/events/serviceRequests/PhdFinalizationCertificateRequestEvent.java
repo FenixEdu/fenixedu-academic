@@ -11,52 +11,52 @@ import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest;
 import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 public class PhdFinalizationCertificateRequestEvent extends PhdFinalizationCertificateRequestEvent_Base {
-    
-    protected PhdFinalizationCertificateRequestEvent() {
-        super();
-    }
-    
-    protected PhdFinalizationCertificateRequestEvent(AdministrativeOffice administrativeOffice, EventType eventType,
-	    Person person, PhdFinalizationCertificateRequest academicServiceRequest) {
-	this();
 
-	init(administrativeOffice, eventType, person, academicServiceRequest);
-    }
+	protected PhdFinalizationCertificateRequestEvent() {
+		super();
+	}
 
-    @Override
-    protected void init(AdministrativeOffice administrativeOffice, EventType eventType, Person person) {
-	throw new DomainException("invoke init(AdministrativeOffice, EventType, Person, PhdFinalizationCertificateRequest)");
-    }
+	protected PhdFinalizationCertificateRequestEvent(AdministrativeOffice administrativeOffice, EventType eventType,
+			Person person, PhdFinalizationCertificateRequest academicServiceRequest) {
+		this();
 
-    @Override
-    protected void init(AdministrativeOffice administrativeOffice, EventType eventType, Person person,
-	    AcademicServiceRequest academicServiceRequest) {
-	throw new DomainException("invoke init(AdministrativeOffice, EventType, Person, PhdFinalizationCertificateRequest)");
-    }
+		init(administrativeOffice, eventType, person, academicServiceRequest);
+	}
 
-    protected void init(AdministrativeOffice administrativeOffice, EventType eventType, Person person,
-            PhdFinalizationCertificateRequest academicServiceRequest) {
-	super.init(administrativeOffice, eventType, person, (PhdAcademicServiceRequest) academicServiceRequest);
-    }
+	@Override
+	protected void init(AdministrativeOffice administrativeOffice, EventType eventType, Person person) {
+		throw new DomainException("invoke init(AdministrativeOffice, EventType, Person, PhdFinalizationCertificateRequest)");
+	}
 
-    public static PhdFinalizationCertificateRequestEvent create(AdministrativeOffice administrativeOffice, Person person,
-	    PhdFinalizationCertificateRequest academicServiceRequest) {
-	return new PhdFinalizationCertificateRequestEvent(administrativeOffice, EventType.PHD_FINALIZATION_CERTIFICATE_REQUEST,
-		person, academicServiceRequest);
-    }
+	@Override
+	protected void init(AdministrativeOffice administrativeOffice, EventType eventType, Person person,
+			AcademicServiceRequest academicServiceRequest) {
+		throw new DomainException("invoke init(AdministrativeOffice, EventType, Person, PhdFinalizationCertificateRequest)");
+	}
 
-    @Override
-    public LabelFormatter getDescriptionForEntryType(EntryType entryType) {
-	final LabelFormatter result = super.getDescription();
-	fillDescription(result);
-	return result;
+	protected void init(AdministrativeOffice administrativeOffice, EventType eventType, Person person,
+			PhdFinalizationCertificateRequest academicServiceRequest) {
+		super.init(administrativeOffice, eventType, person, academicServiceRequest);
+	}
 
-    }
+	public static PhdFinalizationCertificateRequestEvent create(AdministrativeOffice administrativeOffice, Person person,
+			PhdFinalizationCertificateRequest academicServiceRequest) {
+		return new PhdFinalizationCertificateRequestEvent(administrativeOffice, EventType.PHD_FINALIZATION_CERTIFICATE_REQUEST,
+				person, academicServiceRequest);
+	}
 
-    private void fillDescription(final LabelFormatter labelFormatter) {
-	labelFormatter.appendLabel(" (");
-	final PhdAcademicServiceRequest request = (PhdAcademicServiceRequest) getAcademicServiceRequest();
-	labelFormatter.appendLabel(request.getPhdIndividualProgramProcess().getPhdProgram().getName().getPreferedContent());
-	labelFormatter.appendLabel(")");
-    }
+	@Override
+	public LabelFormatter getDescriptionForEntryType(EntryType entryType) {
+		final LabelFormatter result = super.getDescription();
+		fillDescription(result);
+		return result;
+
+	}
+
+	private void fillDescription(final LabelFormatter labelFormatter) {
+		labelFormatter.appendLabel(" (");
+		final PhdAcademicServiceRequest request = (PhdAcademicServiceRequest) getAcademicServiceRequest();
+		labelFormatter.appendLabel(request.getPhdIndividualProgramProcess().getPhdProgram().getName().getPreferedContent());
+		labelFormatter.appendLabel(")");
+	}
 }

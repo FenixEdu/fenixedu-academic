@@ -13,208 +13,208 @@ import net.sourceforge.fenixedu.util.MarkType;
  */
 public class InfoDegreeCurricularPlanEditor extends InfoObject {
 
-    private InfoDegree infoDegree;
+	private InfoDegree infoDegree;
 
-    private String name;
+	private String name;
 
-    private DegreeCurricularPlanState state;
+	private DegreeCurricularPlanState state;
 
-    private Date initialDate;
+	private Date initialDate;
 
-    private Date endDate;
+	private Date endDate;
 
-    private Integer degreeDuration;
+	private Integer degreeDuration;
 
-    private Integer minimalYearForOptionalCourses;
+	private Integer minimalYearForOptionalCourses;
 
-    private Double neededCredits;
+	private Double neededCredits;
 
-    private MarkType markType;
+	private MarkType markType;
 
-    private Integer numerusClausus;
+	private Integer numerusClausus;
 
-    private String description;
+	private String description;
 
-    private String descriptionEn;
+	private String descriptionEn;
 
-    private String anotation;
+	private String anotation;
 
-    private GradeScale gradeScale;
+	private GradeScale gradeScale;
 
-    public InfoDegreeCurricularPlanEditor() {
-    }
+	public InfoDegreeCurricularPlanEditor() {
+	}
 
-    /**
-     * @return Needed Credtis to Finish the Degree
-     */
-    public Double getNeededCredits() {
-	return neededCredits;
-    }
+	/**
+	 * @return Needed Credtis to Finish the Degree
+	 */
+	public Double getNeededCredits() {
+		return neededCredits;
+	}
 
-    /**
-     * @param neededCredits
-     */
-    public void setNeededCredits(Double neededCredits) {
-	this.neededCredits = neededCredits;
-    }
+	/**
+	 * @param neededCredits
+	 */
+	public void setNeededCredits(Double neededCredits) {
+		this.neededCredits = neededCredits;
+	}
 
-    /**
-     * @return Date
-     */
-    public Date getEndDate() {
-	return endDate;
-    }
+	/**
+	 * @return Date
+	 */
+	public Date getEndDate() {
+		return endDate;
+	}
 
-    /**
-     * @return InfoDegree
-     */
-    public InfoDegree getInfoDegree() {
-	return infoDegree;
-    }
+	/**
+	 * @return InfoDegree
+	 */
+	public InfoDegree getInfoDegree() {
+		return infoDegree;
+	}
 
-    /**
-     * @return Date
-     */
-    public Date getInitialDate() {
-	return initialDate;
-    }
+	/**
+	 * @return Date
+	 */
+	public Date getInitialDate() {
+		return initialDate;
+	}
 
-    /**
-     * @return String
-     */
-    public String getName() {
-	return name;
-    }
+	/**
+	 * @return String
+	 */
+	public String getName() {
+		return name;
+	}
 
-    public String getPresentationName() {
-	return getInfoDegree().getNome() + " " + getName();
-    }
+	public String getPresentationName() {
+		return getInfoDegree().getNome() + " " + getName();
+	}
 
-    /**
-     * @return DegreeCurricularPlanState
-     */
-    public DegreeCurricularPlanState getState() {
-	return state;
-    }
+	/**
+	 * @return DegreeCurricularPlanState
+	 */
+	public DegreeCurricularPlanState getState() {
+		return state;
+	}
 
-    /**
-     * Sets the endDate.
-     * 
-     * @param endDate
-     *            The endDate to set
-     */
-    public void setEndDate(Date endDate) {
-	this.endDate = endDate;
-    }
+	/**
+	 * Sets the endDate.
+	 * 
+	 * @param endDate
+	 *            The endDate to set
+	 */
+	public void setEndDate(Date endDate) {
+		this.endDate = endDate;
+	}
 
-    /**
-     * Sets the infoDegree.
-     * 
-     * @param infoDegree
-     *            The infoDegree to set
-     */
-    public void setInfoDegree(InfoDegree infoDegree) {
-	this.infoDegree = infoDegree;
-    }
+	/**
+	 * Sets the infoDegree.
+	 * 
+	 * @param infoDegree
+	 *            The infoDegree to set
+	 */
+	public void setInfoDegree(InfoDegree infoDegree) {
+		this.infoDegree = infoDegree;
+	}
 
-    /**
-     * Sets the initialDate.
-     * 
-     * @param initialDate
-     *            The initialDate to set
-     */
-    public void setInitialDate(Date initialDate) {
-	this.initialDate = initialDate;
-    }
+	/**
+	 * Sets the initialDate.
+	 * 
+	 * @param initialDate
+	 *            The initialDate to set
+	 */
+	public void setInitialDate(Date initialDate) {
+		this.initialDate = initialDate;
+	}
 
-    /**
-     * Sets the name.
-     * 
-     * @param name
-     *            The name to set
-     */
-    public void setName(String name) {
-	this.name = name;
-    }
+	/**
+	 * Sets the name.
+	 * 
+	 * @param name
+	 *            The name to set
+	 */
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    /**
-     * Sets the state.
-     * 
-     * @param state
-     *            The state to set
-     */
-    public void setState(DegreeCurricularPlanState state) {
-	this.state = state;
-    }
+	/**
+	 * Sets the state.
+	 * 
+	 * @param state
+	 *            The state to set
+	 */
+	public void setState(DegreeCurricularPlanState state) {
+		this.state = state;
+	}
 
-    public Integer getDegreeDuration() {
-	return degreeDuration;
-    }
+	public Integer getDegreeDuration() {
+		return degreeDuration;
+	}
 
-    public Integer getMinimalYearForOptionalCourses() {
-	return minimalYearForOptionalCourses;
-    }
+	public Integer getMinimalYearForOptionalCourses() {
+		return minimalYearForOptionalCourses;
+	}
 
-    public void setDegreeDuration(Integer integer) {
-	degreeDuration = integer;
-    }
+	public void setDegreeDuration(Integer integer) {
+		degreeDuration = integer;
+	}
 
-    public void setMinimalYearForOptionalCourses(Integer integer) {
-	minimalYearForOptionalCourses = integer;
-    }
+	public void setMinimalYearForOptionalCourses(Integer integer) {
+		minimalYearForOptionalCourses = integer;
+	}
 
-    public MarkType getMarkType() {
-	return markType;
-    }
+	public MarkType getMarkType() {
+		return markType;
+	}
 
-    public void setMarkType(MarkType type) {
-	markType = type;
-    }
+	public void setMarkType(MarkType type) {
+		markType = type;
+	}
 
-    /**
-     * @return
-     */
-    public Integer getNumerusClausus() {
-	return numerusClausus;
-    }
+	/**
+	 * @return
+	 */
+	public Integer getNumerusClausus() {
+		return numerusClausus;
+	}
 
-    /**
-     * @param integer
-     */
-    public void setNumerusClausus(Integer integer) {
-	numerusClausus = integer;
-    }
+	/**
+	 * @param integer
+	 */
+	public void setNumerusClausus(Integer integer) {
+		numerusClausus = integer;
+	}
 
-    public String getDescription() {
-	return description;
-    }
+	public String getDescription() {
+		return description;
+	}
 
-    public void setDescription(String description) {
-	this.description = description;
-    }
+	public void setDescription(String description) {
+		this.description = description;
+	}
 
-    public String getDescriptionEn() {
-	return descriptionEn;
-    }
+	public String getDescriptionEn() {
+		return descriptionEn;
+	}
 
-    public void setDescriptionEn(String descriptionEn) {
-	this.descriptionEn = descriptionEn;
-    }
+	public void setDescriptionEn(String descriptionEn) {
+		this.descriptionEn = descriptionEn;
+	}
 
-    public String getAnotation() {
-	return anotation;
-    }
+	public String getAnotation() {
+		return anotation;
+	}
 
-    public void setAnotation(String anotation) {
-	this.anotation = anotation;
-    }
+	public void setAnotation(String anotation) {
+		this.anotation = anotation;
+	}
 
-    public GradeScale getGradeScale() {
-	return this.gradeScale;
-    }
+	public GradeScale getGradeScale() {
+		return this.gradeScale;
+	}
 
-    public void setGradeScale(GradeScale gradeScale) {
-	this.gradeScale = gradeScale;
-    }
+	public void setGradeScale(GradeScale gradeScale) {
+		this.gradeScale = gradeScale;
+	}
 
 }

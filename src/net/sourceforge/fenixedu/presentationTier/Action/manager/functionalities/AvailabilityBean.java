@@ -8,32 +8,32 @@ import net.sourceforge.fenixedu.domain.functionalities.Module;
 
 public class AvailabilityBean implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    private Module module;
+	private Module module;
 
-    public AvailabilityBean(Module module) {
-	super();
+	public AvailabilityBean(Module module) {
+		super();
 
-	this.module = module;
-    }
-
-    private ExpressionGroupAvailability getGroupAvailability() {
-	return (ExpressionGroupAvailability) getModule().getAvailabilityPolicy();
-    }
-
-    public Container getModule() {
-	return this.module;
-    }
-
-    public String getExpression() {
-	ExpressionGroupAvailability groupAvailability = getGroupAvailability();
-
-	if (groupAvailability == null) {
-	    return null;
-	} else {
-	    return groupAvailability.getExpression();
+		this.module = module;
 	}
-    }
+
+	private ExpressionGroupAvailability getGroupAvailability() {
+		return (ExpressionGroupAvailability) getModule().getAvailabilityPolicy();
+	}
+
+	public Container getModule() {
+		return this.module;
+	}
+
+	public String getExpression() {
+		ExpressionGroupAvailability groupAvailability = getGroupAvailability();
+
+		if (groupAvailability == null) {
+			return null;
+		} else {
+			return groupAvailability.getExpression();
+		}
+	}
 
 }

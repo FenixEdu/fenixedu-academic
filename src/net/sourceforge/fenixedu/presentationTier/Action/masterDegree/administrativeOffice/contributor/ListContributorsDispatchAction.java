@@ -32,59 +32,59 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Mapping(path = "/visualizeContributors", module = "academicAdministration", formBean = "chooseContributorForm")
 @Forwards({ @Forward(name = "PrepareReady", path = "/academicAdminOffice/contributor/chooseContributor.jsp"),
-	@Forward(name = "ActionReady", path = "/academicAdminOffice/contributor/visualizeContributor.jsp"),
-	@Forward(name = "ChooseContributor", path = "/academicAdminOffice/contributor/selectContributorFromList.jsp") })
+		@Forward(name = "ActionReady", path = "/academicAdminOffice/contributor/visualizeContributor.jsp"),
+		@Forward(name = "ChooseContributor", path = "/academicAdminOffice/contributor/selectContributorFromList.jsp") })
 public class ListContributorsDispatchAction extends FenixDispatchAction {
 
-    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-	    throws Exception {
+	public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
 
-	DynaActionForm createContributorForm = (DynaActionForm) form;
+		DynaActionForm createContributorForm = (DynaActionForm) form;
 
-	// Clean the form
-	createContributorForm.set("contributorNumber", null);
+		// Clean the form
+		createContributorForm.set("contributorNumber", null);
 
-	setActionToRequest(request);
+		setActionToRequest(request);
 
-	return mapping.findForward("PrepareReady");
+		return mapping.findForward("PrepareReady");
 
-    }
-
-    protected void setActionToRequest(HttpServletRequest request) {
-	request.setAttribute(PresentationConstants.CONTRIBUTOR_ACTION, "label.action.contributor.visualize");
-    }
-
-    public ActionForward getContributors(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request,
-	    final HttpServletResponse response) throws Exception {
-
-	final Integer contributorNumber = getIntegerFromRequestOrForm(request, (DynaActionForm) form, "contributorNumber");
-	if (contributorNumber == null) {
-	    return prepare(mapping, form, request, response);
-	}
-	final InfoContributor infoContributor = InfoContributor.newInfoFromDomain(Party.readByContributorNumber(contributorNumber
-		.toString()));
-
-	if (infoContributor == null) {
-	    addActionMessage(request, "error.contributor.not.found", contributorNumber.toString());
-	    return prepare(mapping, form, request, response);
 	}
 
-	request.setAttribute(PresentationConstants.CONTRIBUTOR, infoContributor);
-	return mapping.findForward("ActionReady");
+	protected void setActionToRequest(HttpServletRequest request) {
+		request.setAttribute(PresentationConstants.CONTRIBUTOR_ACTION, "label.action.contributor.visualize");
+	}
 
-    }
+	public ActionForward getContributors(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request,
+			final HttpServletResponse response) throws Exception {
 
-    public ActionForward chooseContributor(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
+		final Integer contributorNumber = getIntegerFromRequestOrForm(request, (DynaActionForm) form, "contributorNumber");
+		if (contributorNumber == null) {
+			return prepare(mapping, form, request, response);
+		}
+		final InfoContributor infoContributor =
+				InfoContributor.newInfoFromDomain(Party.readByContributorNumber(contributorNumber.toString()));
 
-	List contributorList = (List) request.getAttribute(PresentationConstants.CONTRIBUTOR_LIST);
+		if (infoContributor == null) {
+			addActionMessage(request, "error.contributor.not.found", contributorNumber.toString());
+			return prepare(mapping, form, request, response);
+		}
 
-	Integer choosenContributorPosition = Integer.valueOf(request.getParameter("contributorPosition"));
+		request.setAttribute(PresentationConstants.CONTRIBUTOR, infoContributor);
+		return mapping.findForward("ActionReady");
 
-	InfoContributor infoContributor = (InfoContributor) contributorList.get(choosenContributorPosition.intValue());
+	}
 
-	request.setAttribute(PresentationConstants.CONTRIBUTOR, infoContributor);
-	return mapping.findForward("ActionReady");
+	public ActionForward chooseContributor(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
 
-    }
+		List contributorList = (List) request.getAttribute(PresentationConstants.CONTRIBUTOR_LIST);
+
+		Integer choosenContributorPosition = Integer.valueOf(request.getParameter("contributorPosition"));
+
+		InfoContributor infoContributor = (InfoContributor) contributorList.get(choosenContributorPosition.intValue());
+
+		request.setAttribute(PresentationConstants.CONTRIBUTOR, infoContributor);
+		return mapping.findForward("ActionReady");
+
+	}
 }

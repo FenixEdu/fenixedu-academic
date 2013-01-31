@@ -7,55 +7,55 @@ import net.sourceforge.fenixedu.domain.thesis.ThesisParticipationType;
 
 public class TeacherThesisCreditsInfoBean implements Serializable {
 
-    /**
-     * Serial version id.
-     */
-    private static final long serialVersionUID = 1L;
+	/**
+	 * Serial version id.
+	 */
+	private static final long serialVersionUID = 1L;
 
-    private Student student;
-    private String dissertationTitle;
-    private ThesisParticipationType teacherParticipationType;
-    private Integer creditsPercentage;
+	private Student student;
+	private String dissertationTitle;
+	private ThesisParticipationType teacherParticipationType;
+	private Integer creditsPercentage;
 
-    public TeacherThesisCreditsInfoBean(Student student, String dissertationTitle,
-	    ThesisParticipationType teacherParticipationType, Integer creditsPercentage) {
+	public TeacherThesisCreditsInfoBean(Student student, String dissertationTitle,
+			ThesisParticipationType teacherParticipationType, Integer creditsPercentage) {
 
-	setStudent(student);
-	setDissertationTitle(dissertationTitle);
-	setTeacherParticipationType(teacherParticipationType);
-	setCreditsPercentage(creditsPercentage);
-    }
+		setStudent(student);
+		setDissertationTitle(dissertationTitle);
+		setTeacherParticipationType(teacherParticipationType);
+		setCreditsPercentage(creditsPercentage);
+	}
 
-    public Student getStudent() {
-	return student;
-    }
+	public Student getStudent() {
+		return student;
+	}
 
-    public void setStudent(Student student) {
-	this.student = student;
-    }
+	public void setStudent(Student student) {
+		this.student = student;
+	}
 
-    public String getDissertationTitle() {
-	return dissertationTitle;
-    }
+	public String getDissertationTitle() {
+		return dissertationTitle;
+	}
 
-    public void setDissertationTitle(String dissertationTitle) {
-	this.dissertationTitle = dissertationTitle;
-    }
+	public void setDissertationTitle(String dissertationTitle) {
+		this.dissertationTitle = dissertationTitle;
+	}
 
-    public ThesisParticipationType getTeacherParticipationType() {
-	return teacherParticipationType;
-    }
+	public ThesisParticipationType getTeacherParticipationType() {
+		return teacherParticipationType;
+	}
 
-    public void setTeacherParticipationType(ThesisParticipationType teacherParticipationType) {
-	this.teacherParticipationType = teacherParticipationType;
-    }
+	public void setTeacherParticipationType(ThesisParticipationType teacherParticipationType) {
+		this.teacherParticipationType = teacherParticipationType;
+	}
 
-    public Integer getCreditsPercentage() {
-	return creditsPercentage;
-    }
+	public Integer getCreditsPercentage() {
+		return creditsPercentage;
+	}
 
-    public void setCreditsPercentage(Integer creditsPercentage) {
-	this.creditsPercentage = creditsPercentage;
-    }
+	public void setCreditsPercentage(Integer creditsPercentage) {
+		this.creditsPercentage = creditsPercentage;
+	}
 
 }

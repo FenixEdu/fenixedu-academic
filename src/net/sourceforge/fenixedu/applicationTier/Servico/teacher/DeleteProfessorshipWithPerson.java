@@ -18,51 +18,52 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class DeleteProfessorshipWithPerson extends AbstractModifyProfessorshipWithPerson {
 
-    private static boolean isSamePersonAsBeingRemoved(Person loggedPerson, Person selectedPerson) {
-	return loggedPerson == selectedPerson;
-    }
-
-    @Service
-    public static Boolean run(Person person, ExecutionCourse executionCourse) throws NotAuthorizedException {
-	try {
-
-	    final Person loggedPerson = AccessControl.getPerson();
-
-	    Professorship selectedProfessorship = null;
-	    selectedProfessorship = person.getProfessorshipByExecutionCourse(executionCourse);
-
-	    if ((loggedPerson == null) || (selectedProfessorship == null) || !loggedPerson.hasRole(RoleType.TEACHER)
-		    || isSamePersonAsBeingRemoved(loggedPerson, selectedProfessorship.getPerson())
-		    || selectedProfessorship.getResponsibleFor()) {
-		throw new NotAuthorizedException();
-	    }
-	} catch (RuntimeException e) {
-	    throw new NotAuthorizedException();
+	private static boolean isSamePersonAsBeingRemoved(Person loggedPerson, Person selectedPerson) {
+		return loggedPerson == selectedPerson;
 	}
 
-	Professorship professorshipToDelete = person.getProfessorshipByExecutionCourse(executionCourse);
+	@Service
+	public static Boolean run(Person person, ExecutionCourse executionCourse) throws NotAuthorizedException {
+		try {
 
-	List shiftProfessorshipList = professorshipToDelete.getAssociatedShiftProfessorship();
+			final Person loggedPerson = AccessControl.getPerson();
 
-	boolean hasCredits = false;
+			Professorship selectedProfessorship = null;
+			selectedProfessorship = person.getProfessorshipByExecutionCourse(executionCourse);
 
-	if (!shiftProfessorshipList.isEmpty()) {
-	    hasCredits = CollectionUtils.exists(shiftProfessorshipList, new Predicate() {
-
-		public boolean evaluate(Object arg0) {
-		    ShiftProfessorship shiftProfessorship = (ShiftProfessorship) arg0;
-		    return shiftProfessorship.getPercentage() != null && shiftProfessorship.getPercentage() != 0;
+			if ((loggedPerson == null) || (selectedProfessorship == null) || !loggedPerson.hasRole(RoleType.TEACHER)
+					|| isSamePersonAsBeingRemoved(loggedPerson, selectedProfessorship.getPerson())
+					|| selectedProfessorship.getResponsibleFor()) {
+				throw new NotAuthorizedException();
+			}
+		} catch (RuntimeException e) {
+			throw new NotAuthorizedException();
 		}
-	    });
-	}
 
-	if (!hasCredits && !professorshipToDelete.hasAnyStudentInquiriesTeachingResults()) {
-	    professorshipToDelete.delete();
-	} else {
-	    if (hasCredits) {
-		throw new DomainException("error.remove.professorship");
-	    }
+		Professorship professorshipToDelete = person.getProfessorshipByExecutionCourse(executionCourse);
+
+		List shiftProfessorshipList = professorshipToDelete.getAssociatedShiftProfessorship();
+
+		boolean hasCredits = false;
+
+		if (!shiftProfessorshipList.isEmpty()) {
+			hasCredits = CollectionUtils.exists(shiftProfessorshipList, new Predicate() {
+
+				@Override
+				public boolean evaluate(Object arg0) {
+					ShiftProfessorship shiftProfessorship = (ShiftProfessorship) arg0;
+					return shiftProfessorship.getPercentage() != null && shiftProfessorship.getPercentage() != 0;
+				}
+			});
+		}
+
+		if (!hasCredits && !professorshipToDelete.hasAnyStudentInquiriesTeachingResults()) {
+			professorshipToDelete.delete();
+		} else {
+			if (hasCredits) {
+				throw new DomainException("error.remove.professorship");
+			}
+		}
+		return Boolean.TRUE;
 	}
-	return Boolean.TRUE;
-    }
 }

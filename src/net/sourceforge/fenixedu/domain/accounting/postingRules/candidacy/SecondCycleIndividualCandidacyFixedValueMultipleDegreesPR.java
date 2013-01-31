@@ -9,29 +9,29 @@ import net.sourceforge.fenixedu.util.Money;
 import org.joda.time.DateTime;
 
 public class SecondCycleIndividualCandidacyFixedValueMultipleDegreesPR extends
-	SecondCycleIndividualCandidacyFixedValueMultipleDegreesPR_Base {
+		SecondCycleIndividualCandidacyFixedValueMultipleDegreesPR_Base {
 
-    public SecondCycleIndividualCandidacyFixedValueMultipleDegreesPR() {
-	super();
-    }
+	public SecondCycleIndividualCandidacyFixedValueMultipleDegreesPR() {
+		super();
+	}
 
-    public SecondCycleIndividualCandidacyFixedValueMultipleDegreesPR(final DateTime startDate, final DateTime endDate,
-	    final ServiceAgreementTemplate serviceAgreementTemplate, final Money fixedAmount) {
-	this();
-	init(EntryType.SECOND_CYCLE_INDIVIDUAL_CANDIDACY_FEE, EventType.SECOND_CYCLE_INDIVIDUAL_CANDIDACY, startDate, endDate,
-		serviceAgreementTemplate, fixedAmount);
-    }
+	public SecondCycleIndividualCandidacyFixedValueMultipleDegreesPR(final DateTime startDate, final DateTime endDate,
+			final ServiceAgreementTemplate serviceAgreementTemplate, final Money fixedAmount) {
+		this();
+		init(EntryType.SECOND_CYCLE_INDIVIDUAL_CANDIDACY_FEE, EventType.SECOND_CYCLE_INDIVIDUAL_CANDIDACY, startDate, endDate,
+				serviceAgreementTemplate, fixedAmount);
+	}
 
-    @Override
-    public SecondCycleIndividualCandidacyFixedValueMultipleDegreesPR edit(final Money fixedAmount) {
-	deactivate();
-	return new SecondCycleIndividualCandidacyFixedValueMultipleDegreesPR(new DateTime().minus(1000), null,
-		getServiceAgreementTemplate(), fixedAmount);
-    }
+	@Override
+	public SecondCycleIndividualCandidacyFixedValueMultipleDegreesPR edit(final Money fixedAmount) {
+		deactivate();
+		return new SecondCycleIndividualCandidacyFixedValueMultipleDegreesPR(new DateTime().minus(1000), null,
+				getServiceAgreementTemplate(), fixedAmount);
+	}
 
-    @Override
-    protected Money doCalculationForAmountToPay(Event event, DateTime when, boolean applyDiscount) {
-	return getFixedAmount();
-    }
+	@Override
+	protected Money doCalculationForAmountToPay(Event event, DateTime when, boolean applyDiscount) {
+		return getFixedAmount();
+	}
 
 }

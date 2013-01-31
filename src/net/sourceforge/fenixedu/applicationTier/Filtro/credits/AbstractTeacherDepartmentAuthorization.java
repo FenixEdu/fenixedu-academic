@@ -25,29 +25,30 @@ import pt.utl.ist.berserk.ServiceResponse;
  */
 public abstract class AbstractTeacherDepartmentAuthorization extends Filtro {
 
-    public void execute(ServiceRequest serviceRequest, ServiceResponse serviceResponse) throws Exception {
-	IUserView requester = (IUserView) serviceRequest.getRequester();
-	if ((requester == null) || !requester.hasRoleType(RoleType.DEPARTMENT_CREDITS_MANAGER)) {
-	    throw new NotAuthorizedException();
+	@Override
+	public void execute(ServiceRequest serviceRequest, ServiceResponse serviceResponse) throws Exception {
+		IUserView requester = (IUserView) serviceRequest.getRequester();
+		if ((requester == null) || !requester.hasRoleType(RoleType.DEPARTMENT_CREDITS_MANAGER)) {
+			throw new NotAuthorizedException();
+		}
+
+		Integer teacherId = getTeacherId(serviceRequest.getServiceParameters().parametersArray());
+		if (teacherId != null) {
+
+			final Person requesterPerson = requester.getPerson();
+
+			Teacher teacher = rootDomainObject.readTeacherByOID(teacherId);
+
+			Department teacherDepartment = teacher.getCurrentWorkingDepartment();
+
+			List departmentsWithAccessGranted = requesterPerson.getManageableDepartmentCredits();
+
+			if (!departmentsWithAccessGranted.contains(teacherDepartment)) {
+				throw new NotAuthorizedException();
+			}
+		}
+
 	}
 
-	Integer teacherId = getTeacherId(serviceRequest.getServiceParameters().parametersArray());
-	if (teacherId != null) {
-
-	    final Person requesterPerson = requester.getPerson();
-
-	    Teacher teacher = rootDomainObject.readTeacherByOID(teacherId);
-
-	    Department teacherDepartment = teacher.getCurrentWorkingDepartment();
-
-	    List departmentsWithAccessGranted = requesterPerson.getManageableDepartmentCredits();
-
-	    if (!departmentsWithAccessGranted.contains(teacherDepartment)) {
-		throw new NotAuthorizedException();
-	    }
-	}
-
-    }
-
-    protected abstract Integer getTeacherId(Object[] arguments) throws FenixServiceException;
+	protected abstract Integer getTeacherId(Object[] arguments) throws FenixServiceException;
 }

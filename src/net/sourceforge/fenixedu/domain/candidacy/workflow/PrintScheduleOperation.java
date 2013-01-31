@@ -9,33 +9,33 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 
 public class PrintScheduleOperation extends CandidacyOperation {
 
-    public PrintScheduleOperation(Set<RoleType> roleTypes, Candidacy candidacy) {
-	super(roleTypes, candidacy);
-    }
+	public PrintScheduleOperation(Set<RoleType> roleTypes, Candidacy candidacy) {
+		super(roleTypes, candidacy);
+	}
 
-    @Override
-    protected void internalExecute() {
-	// TODO Auto-generated method stub
+	@Override
+	protected void internalExecute() {
+		// TODO Auto-generated method stub
 
-    }
+	}
 
-    @Override
-    public CandidacyOperationType getType() {
-	return CandidacyOperationType.PRINT_SCHEDULE;
-    }
+	@Override
+	public CandidacyOperationType getType() {
+		return CandidacyOperationType.PRINT_SCHEDULE;
+	}
 
-    @Override
-    public boolean isInput() {
-	return false;
-    }
+	@Override
+	public boolean isInput() {
+		return false;
+	}
 
-    @Override
-    public boolean isVisible() {
-	return false;
-    }
+	@Override
+	public boolean isVisible() {
+		return false;
+	}
 
-    @Override
-    public boolean isAuthorized(Person person) {
-	return super.isAuthorized(person) && person == getCandidacy().getPerson();
-    }
+	@Override
+	public boolean isAuthorized(Person person) {
+		return super.isAuthorized(person) && person == getCandidacy().getPerson();
+	}
 }

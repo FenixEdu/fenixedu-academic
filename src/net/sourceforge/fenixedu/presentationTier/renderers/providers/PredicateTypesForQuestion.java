@@ -8,14 +8,16 @@ import pt.ist.fenixWebFramework.renderers.converters.EnumConverter;
 
 public class PredicateTypesForQuestion implements DataProvider {
 
-    public Object provide(Object source, Object currentValue) {
-	PredicateBean predicateBean = (PredicateBean) source;
-	NewQuestion question = (NewQuestion) predicateBean.getQuestion();
-	return question.getPredicates();
-    }
+	@Override
+	public Object provide(Object source, Object currentValue) {
+		PredicateBean predicateBean = (PredicateBean) source;
+		NewQuestion question = predicateBean.getQuestion();
+		return question.getPredicates();
+	}
 
-    public Converter getConverter() {
-	return new EnumConverter();
-    }
+	@Override
+	public Converter getConverter() {
+		return new EnumConverter();
+	}
 
 }

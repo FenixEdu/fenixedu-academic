@@ -15,49 +15,49 @@ import net.sourceforge.fenixedu.domain.accessControl.groups.language.Argument;
  */
 public class EveryoneGroup extends Group {
 
-    /**
-     * Serial version id.
-     */
-    private static final long serialVersionUID = 1L;
+	/**
+	 * Serial version id.
+	 */
+	private static final long serialVersionUID = 1L;
 
-    @Override
-    public String getPresentationNameBundle() {
-	return "resources.SiteResources";
-    }
+	@Override
+	public String getPresentationNameBundle() {
+		return "resources.SiteResources";
+	}
 
-    @Override
-    public String getPresentationNameKey() {
-	return "label.net.sourceforge.fenixedu.domain.accessControl.EveryoneGroup";
-    }
+	@Override
+	public String getPresentationNameKey() {
+		return "label.net.sourceforge.fenixedu.domain.accessControl.EveryoneGroup";
+	}
 
-    @Override
-    public Set<Person> getElements() {
-	return new HashSet<Person>(Person.readAllPersons());
-    }
+	@Override
+	public Set<Person> getElements() {
+		return new HashSet<Person>(Person.readAllPersons());
+	}
 
-    @Override
-    public boolean allows(IUserView userView) {
-	return true;
-    }
+	@Override
+	public boolean allows(IUserView userView) {
+		return true;
+	}
 
-    @Override
-    public boolean isMember(Person person) {
-	return true;
-    }
+	@Override
+	public boolean isMember(Person person) {
+		return true;
+	}
 
-    @Override
-    public boolean equals(Object object) {
-	return object != null && object instanceof EveryoneGroup;
-    }
+	@Override
+	public boolean equals(Object object) {
+		return object != null && object instanceof EveryoneGroup;
+	}
 
-    @Override
-    public int hashCode() {
-	return this.getClass().hashCode();
-    }
+	@Override
+	public int hashCode() {
+		return this.getClass().hashCode();
+	}
 
-    @Override
-    protected Argument[] getExpressionArguments() {
-	return new Argument[0];
-    }
+	@Override
+	protected Argument[] getExpressionArguments() {
+		return new Argument[0];
+	}
 
 }

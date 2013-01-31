@@ -17,101 +17,101 @@ import org.joda.time.YearMonthDay;
 
 abstract public class ConclusionProcess extends ConclusionProcess_Base {
 
-    private ConclusionProcessVersion getFirstVersion() {
-	return Collections.min(getVersions(), ConclusionProcessVersion.COMPARATOR_BY_CREATION_DATE_TIME_AND_ID);
-    }
+	private ConclusionProcessVersion getFirstVersion() {
+		return Collections.min(getVersions(), ConclusionProcessVersion.COMPARATOR_BY_CREATION_DATE_TIME_AND_ID);
+	}
 
-    public DateTime getCreationDateTime() {
-	return getFirstVersion().getCreationDateTime();
-    }
+	public DateTime getCreationDateTime() {
+		return getFirstVersion().getCreationDateTime();
+	}
 
-    public DateTime getLastModificationDateTime() {
-	return getLastVersion().getCreationDateTime();
-    }
+	public DateTime getLastModificationDateTime() {
+		return getLastVersion().getCreationDateTime();
+	}
 
-    public Person getResponsible() {
-	return getFirstVersion().getResponsible();
-    }
+	public Person getResponsible() {
+		return getFirstVersion().getResponsible();
+	}
 
-    public Person getLastResponsible() {
-	return getLastVersion().getResponsible();
-    }
+	public Person getLastResponsible() {
+		return getLastVersion().getResponsible();
+	}
 
-    public Integer getFinalAverage() {
-	return getLastVersion().getFinalAverage();
-    }
+	public Integer getFinalAverage() {
+		return getLastVersion().getFinalAverage();
+	}
 
-    public BigDecimal getAverage() {
-	return getLastVersion().getAverage();
-    }
+	public BigDecimal getAverage() {
+		return getLastVersion().getAverage();
+	}
 
-    public LocalDate getConclusionDate() {
-	return getLastVersion().getConclusionDate();
-    }
+	public LocalDate getConclusionDate() {
+		return getLastVersion().getConclusionDate();
+	}
 
-    @Deprecated
-    public YearMonthDay getConclusionYearMonthDay() {
-	return new YearMonthDay(getConclusionDate());
-    }
+	@Deprecated
+	public YearMonthDay getConclusionYearMonthDay() {
+		return new YearMonthDay(getConclusionDate());
+	}
 
-    public String getNotes() {
-	return getLastVersion().getNotes();
-    }
+	public String getNotes() {
+		return getLastVersion().getNotes();
+	}
 
-    public ExecutionYear getIngressionYear() {
-	return getLastVersion().getIngressionYear();
-    }
+	public ExecutionYear getIngressionYear() {
+		return getLastVersion().getIngressionYear();
+	}
 
-    public BigDecimal getCredits() {
-	return getLastVersion().getCredits();
-    }
+	public BigDecimal getCredits() {
+		return getLastVersion().getCredits();
+	}
 
-    abstract public void update(final Person responsible, final Integer finalAverage, final LocalDate conclusionDate,
-	    final String notes);
+	abstract public void update(final Person responsible, final Integer finalAverage, final LocalDate conclusionDate,
+			final String notes);
 
-    abstract public void update(final RegistrationConclusionBean bean);
+	abstract public void update(final RegistrationConclusionBean bean);
 
-    final protected void addVersions(final RegistrationConclusionBean bean) {
-	super.addVersions(new ConclusionProcessVersion(bean));
-	super.setLastVersion(Collections.max(getVersions(), ConclusionProcessVersion.COMPARATOR_BY_CREATION_DATE_TIME_AND_ID));
-	super.setConclusionYear(getLastVersion().getConclusionYear());
+	final protected void addVersions(final RegistrationConclusionBean bean) {
+		super.addVersions(new ConclusionProcessVersion(bean));
+		super.setLastVersion(Collections.max(getVersions(), ConclusionProcessVersion.COMPARATOR_BY_CREATION_DATE_TIME_AND_ID));
+		super.setConclusionYear(getLastVersion().getConclusionYear());
 
-	addSpecificVersionInfo();
-    }
+		addSpecificVersionInfo();
+	}
 
-    abstract protected void addSpecificVersionInfo();
+	abstract protected void addSpecificVersionInfo();
 
-    public boolean isCycleConclusionProcess() {
-	return false;
-    }
+	public boolean isCycleConclusionProcess() {
+		return false;
+	}
 
-    public boolean isRegistrationConclusionProcess() {
-	return false;
-    }
+	public boolean isRegistrationConclusionProcess() {
+		return false;
+	}
 
-    @Override
-    final public void addVersions(final ConclusionProcessVersion versions) {
-	throw new DomainException("error.ConclusionProcess.must.use.addVersions.with.bean");
-    }
+	@Override
+	final public void addVersions(final ConclusionProcessVersion versions) {
+		throw new DomainException("error.ConclusionProcess.must.use.addVersions.with.bean");
+	}
 
-    @Override
-    public void removeVersions(ConclusionProcessVersion versions) {
-	throw new DomainException("error.ConclusionProcess.method.not.allowed");
-    }
+	@Override
+	public void removeVersions(ConclusionProcessVersion versions) {
+		throw new DomainException("error.ConclusionProcess.method.not.allowed");
+	}
 
-    @Override
-    public void setLastVersion(ConclusionProcessVersion lastVersion) {
-	throw new DomainException("error.ConclusionProcess.method.not.allowed");
-    }
+	@Override
+	public void setLastVersion(ConclusionProcessVersion lastVersion) {
+		throw new DomainException("error.ConclusionProcess.method.not.allowed");
+	}
 
-    abstract public Registration getRegistration();
+	abstract public Registration getRegistration();
 
-    public Degree getDegree() {
-	return getRegistration().getDegree();
-    }
+	public Degree getDegree() {
+		return getRegistration().getDegree();
+	}
 
-    public DegreeType getDegreeType() {
-	return getDegree().getDegreeType();
-    }
+	public DegreeType getDegreeType() {
+		return getDegree().getDegreeType();
+	}
 
 }

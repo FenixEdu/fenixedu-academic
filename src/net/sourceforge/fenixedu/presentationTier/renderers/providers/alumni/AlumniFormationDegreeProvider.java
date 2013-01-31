@@ -7,14 +7,16 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class AlumniFormationDegreeProvider implements DataProvider {
 
-    public Object provide(Object source, Object currentValue) {
+	@Override
+	public Object provide(Object source, Object currentValue) {
 
-	AlumniFormation formation = (AlumniFormation) source;
-	return QualificationType.getbyFormationType(formation.getFormationType());
-    }
+		AlumniFormation formation = (AlumniFormation) source;
+		return QualificationType.getbyFormationType(formation.getFormationType());
+	}
 
-    public Converter getConverter() {
-	return null;
-    }
+	@Override
+	public Converter getConverter() {
+		return null;
+	}
 
 }

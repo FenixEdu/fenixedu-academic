@@ -11,28 +11,28 @@ import net.sourceforge.fenixedu.domain.accessControl.Group;
  */
 public interface GroupBuilder {
 
-    /**
-     * Creates a group from the given arguments
-     * 
-     * @param arguments
-     *            the arguments to pass to the group creation
-     * @return the created group
-     * 
-     * @exception net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.WrongNumberOfArgumentsException
-     *                if the number of arguments does not match the expectations
-     * 
-     * @exception net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.WrongTypeOfArgumentException
-     *                when one of the arguments does not have the expected type
-     */
-    Group build(Object[] arguments);
+	/**
+	 * Creates a group from the given arguments
+	 * 
+	 * @param arguments
+	 *            the arguments to pass to the group creation
+	 * @return the created group
+	 * 
+	 * @exception net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.WrongNumberOfArgumentsException
+	 *                if the number of arguments does not match the expectations
+	 * 
+	 * @exception net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.WrongTypeOfArgumentException
+	 *                when one of the arguments does not have the expected type
+	 */
+	Group build(Object[] arguments);
 
-    /**
-     * @return the minimum number of arguments accepted
-     */
-    int getMinArguments();
+	/**
+	 * @return the minimum number of arguments accepted
+	 */
+	int getMinArguments();
 
-    /**
-     * @return the maximum number of arguments accepted
-     */
-    int getMaxArguments();
+	/**
+	 * @return the maximum number of arguments accepted
+	 */
+	int getMaxArguments();
 }

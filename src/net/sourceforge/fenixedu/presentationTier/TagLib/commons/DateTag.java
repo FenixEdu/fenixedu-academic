@@ -19,55 +19,58 @@ import org.apache.struts.util.ResponseUtils;
  */
 public class DateTag extends TagSupport {
 
-    protected Calendar date = null;
+	protected Calendar date = null;
 
-    /**
+	/**
      *  
      */
-    public DateTag() {
-	super();
-
-    }
-
-    /**
-     * @return
-     */
-    public Calendar getDate() {
-	return date;
-    }
-
-    /**
-     * @param calendar
-     */
-    public void setDate(Calendar calendar) {
-	date = calendar;
-    }
-
-    public int doStartTag() throws JspException {
-	// Special case for name anchors
-	if (date != null) {
-	    StringBuilder results = new StringBuilder("");
-	    results.append(date.get(Calendar.DAY_OF_MONTH));
-	    results.append("/");
-	    results.append(date.get(Calendar.MONTH));
-	    results.append("/");
-	    results.append(date.get(Calendar.YEAR));
-	    ResponseUtils.write(pageContext, results.toString());
+	public DateTag() {
+		super();
 
 	}
 
-	return (SKIP_BODY);
-    }
+	/**
+	 * @return
+	 */
+	public Calendar getDate() {
+		return date;
+	}
 
-    public int doEndTag() {
-	return (EVAL_PAGE);
-    }
+	/**
+	 * @param calendar
+	 */
+	public void setDate(Calendar calendar) {
+		date = calendar;
+	}
 
-    public void release() {
-	super.release();
-    }
+	@Override
+	public int doStartTag() throws JspException {
+		// Special case for name anchors
+		if (date != null) {
+			StringBuilder results = new StringBuilder("");
+			results.append(date.get(Calendar.DAY_OF_MONTH));
+			results.append("/");
+			results.append(date.get(Calendar.MONTH));
+			results.append("/");
+			results.append(date.get(Calendar.YEAR));
+			ResponseUtils.write(pageContext, results.toString());
 
-    // Error Messages
-    protected static MessageResources messages = MessageResources.getMessageResources("ApplicationResources");
+		}
+
+		return (SKIP_BODY);
+	}
+
+	@Override
+	public int doEndTag() {
+		return (EVAL_PAGE);
+	}
+
+	@Override
+	public void release() {
+		super.release();
+	}
+
+	// Error Messages
+	protected static MessageResources messages = MessageResources.getMessageResources("ApplicationResources");
 
 }

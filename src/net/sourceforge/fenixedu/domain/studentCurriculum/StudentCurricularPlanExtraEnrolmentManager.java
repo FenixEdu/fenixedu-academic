@@ -18,85 +18,86 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 public class StudentCurricularPlanExtraEnrolmentManager extends StudentCurricularPlanEnrolment {
 
-    public StudentCurricularPlanExtraEnrolmentManager(final EnrolmentContext enrolmentContext) {
-	super(enrolmentContext);
-    }
-
-    @Override
-    protected void assertEnrolmentPreConditions() {
-	if (isResponsiblePersonManager()) {
-	    return;
+	public StudentCurricularPlanExtraEnrolmentManager(final EnrolmentContext enrolmentContext) {
+		super(enrolmentContext);
 	}
 
-	if (getRegistration().isRegistrationConclusionProcessed()) {
-	    checkUpdateRegistrationAfterConclusion();
-	}
-
-	checkEnrolingDegreeModules();
-    }
-
-    private void checkEnrolingDegreeModules() {
-	for (final IDegreeModuleToEvaluate degreeModuleToEvaluate : enrolmentContext.getDegreeModulesToEvaluate()) {
-	    if (degreeModuleToEvaluate.isEnroling()) {
-		if (!degreeModuleToEvaluate.getDegreeModule().isCurricularCourse()) {
-		    throw new DomainException(
-			    "error.StudentCurricularPlanExtraEnrolmentManager.can.only.enrol.in.curricularCourses");
+	@Override
+	protected void assertEnrolmentPreConditions() {
+		if (isResponsiblePersonManager()) {
+			return;
 		}
-		checkIDegreeModuleToEvaluate((CurricularCourse) degreeModuleToEvaluate.getDegreeModule());
-	    }
-	}
-    }
 
-    private void checkIDegreeModuleToEvaluate(final CurricularCourse curricularCourse) {
-	if (getStudentCurricularPlan().isApproved(curricularCourse, getExecutionSemester())) {
-	    throw new DomainException("error.already.aproved", curricularCourse.getName());
-	}
-
-	if (getStudentCurricularPlan().isEnroledInExecutionPeriod(curricularCourse, getExecutionSemester())) {
-	    throw new DomainException("error.already.enroled.in.executionPeriod", curricularCourse.getName(),
-		    getExecutionSemester().getQualifiedName());
-	}
-    }
-
-    @Override
-    protected void addEnroled() {
-	// nothing to be done
-    }
-
-    @Override
-    protected Map<IDegreeModuleToEvaluate, Set<ICurricularRule>> getRulesToEvaluate() {
-	final Map<IDegreeModuleToEvaluate, Set<ICurricularRule>> result = new HashMap<IDegreeModuleToEvaluate, Set<ICurricularRule>>();
-
-	for (final IDegreeModuleToEvaluate degreeModuleToEvaluate : enrolmentContext.getDegreeModulesToEvaluate()) {
-	    if (degreeModuleToEvaluate.isEnroling() && degreeModuleToEvaluate.getDegreeModule().isCurricularCourse()) {
-		result.put(degreeModuleToEvaluate, Collections.<ICurricularRule> emptySet());
-	    }
-	}
-	return result;
-    }
-
-    @Override
-    protected void performEnrolments(Map<EnrolmentResultType, List<IDegreeModuleToEvaluate>> degreeModulesToEnrolMap) {
-	for (final Entry<EnrolmentResultType, List<IDegreeModuleToEvaluate>> entry : degreeModulesToEnrolMap.entrySet()) {
-	    for (final IDegreeModuleToEvaluate degreeModuleToEvaluate : entry.getValue()) {
-		if (degreeModuleToEvaluate.isEnroling() && degreeModuleToEvaluate.getDegreeModule().isCurricularCourse()) {
-		    final CurricularCourse curricularCourse = (CurricularCourse) degreeModuleToEvaluate.getDegreeModule();
-
-		    checkIDegreeModuleToEvaluate(curricularCourse);
-		    new Enrolment(getStudentCurricularPlan(), degreeModuleToEvaluate.getCurriculumGroup(), curricularCourse,
-			    getExecutionSemester(), EnrollmentCondition.VALIDATED, getResponsiblePerson().getIstUsername());
+		if (getRegistration().isRegistrationConclusionProcessed()) {
+			checkUpdateRegistrationAfterConclusion();
 		}
-	    }
-	}
-    }
 
-    @Override
-    protected void unEnrol() {
-	for (final CurriculumModule curriculumModule : enrolmentContext.getToRemove()) {
-	    if (curriculumModule.isLeaf()) {
-		curriculumModule.delete();
-	    }
+		checkEnrolingDegreeModules();
 	}
-    }
+
+	private void checkEnrolingDegreeModules() {
+		for (final IDegreeModuleToEvaluate degreeModuleToEvaluate : enrolmentContext.getDegreeModulesToEvaluate()) {
+			if (degreeModuleToEvaluate.isEnroling()) {
+				if (!degreeModuleToEvaluate.getDegreeModule().isCurricularCourse()) {
+					throw new DomainException(
+							"error.StudentCurricularPlanExtraEnrolmentManager.can.only.enrol.in.curricularCourses");
+				}
+				checkIDegreeModuleToEvaluate((CurricularCourse) degreeModuleToEvaluate.getDegreeModule());
+			}
+		}
+	}
+
+	private void checkIDegreeModuleToEvaluate(final CurricularCourse curricularCourse) {
+		if (getStudentCurricularPlan().isApproved(curricularCourse, getExecutionSemester())) {
+			throw new DomainException("error.already.aproved", curricularCourse.getName());
+		}
+
+		if (getStudentCurricularPlan().isEnroledInExecutionPeriod(curricularCourse, getExecutionSemester())) {
+			throw new DomainException("error.already.enroled.in.executionPeriod", curricularCourse.getName(),
+					getExecutionSemester().getQualifiedName());
+		}
+	}
+
+	@Override
+	protected void addEnroled() {
+		// nothing to be done
+	}
+
+	@Override
+	protected Map<IDegreeModuleToEvaluate, Set<ICurricularRule>> getRulesToEvaluate() {
+		final Map<IDegreeModuleToEvaluate, Set<ICurricularRule>> result =
+				new HashMap<IDegreeModuleToEvaluate, Set<ICurricularRule>>();
+
+		for (final IDegreeModuleToEvaluate degreeModuleToEvaluate : enrolmentContext.getDegreeModulesToEvaluate()) {
+			if (degreeModuleToEvaluate.isEnroling() && degreeModuleToEvaluate.getDegreeModule().isCurricularCourse()) {
+				result.put(degreeModuleToEvaluate, Collections.<ICurricularRule> emptySet());
+			}
+		}
+		return result;
+	}
+
+	@Override
+	protected void performEnrolments(Map<EnrolmentResultType, List<IDegreeModuleToEvaluate>> degreeModulesToEnrolMap) {
+		for (final Entry<EnrolmentResultType, List<IDegreeModuleToEvaluate>> entry : degreeModulesToEnrolMap.entrySet()) {
+			for (final IDegreeModuleToEvaluate degreeModuleToEvaluate : entry.getValue()) {
+				if (degreeModuleToEvaluate.isEnroling() && degreeModuleToEvaluate.getDegreeModule().isCurricularCourse()) {
+					final CurricularCourse curricularCourse = (CurricularCourse) degreeModuleToEvaluate.getDegreeModule();
+
+					checkIDegreeModuleToEvaluate(curricularCourse);
+					new Enrolment(getStudentCurricularPlan(), degreeModuleToEvaluate.getCurriculumGroup(), curricularCourse,
+							getExecutionSemester(), EnrollmentCondition.VALIDATED, getResponsiblePerson().getIstUsername());
+				}
+			}
+		}
+	}
+
+	@Override
+	protected void unEnrol() {
+		for (final CurriculumModule curriculumModule : enrolmentContext.getToRemove()) {
+			if (curriculumModule.isLeaf()) {
+				curriculumModule.delete();
+			}
+		}
+	}
 
 }

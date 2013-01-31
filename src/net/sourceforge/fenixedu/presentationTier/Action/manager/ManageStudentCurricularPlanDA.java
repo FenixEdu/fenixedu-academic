@@ -39,153 +39,153 @@ import pt.ist.fenixWebFramework.security.UserView;
  */
 public class ManageStudentCurricularPlanDA extends FenixDispatchAction {
 
-    private static final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+	private static final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
-    public ActionForward show(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-	    throws Exception {
+	public ActionForward show(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
 
-	final DynaActionForm dynaActionForm = (DynaActionForm) form;
-	final String studentNumberString = (String) dynaActionForm.get("number");
-	final String degreeTypeString = (String) dynaActionForm.get("degreeType");
+		final DynaActionForm dynaActionForm = (DynaActionForm) form;
+		final String studentNumberString = (String) dynaActionForm.get("number");
+		final String degreeTypeString = (String) dynaActionForm.get("degreeType");
 
-	if (isPresent(studentNumberString) && isPresent(degreeTypeString)) {
-	    final DegreeType degreeType = DegreeType.valueOf(degreeTypeString);
-	    putStudentCurricularInformationInRequest(request, Integer.valueOf(studentNumberString), degreeType);
+		if (isPresent(studentNumberString) && isPresent(degreeTypeString)) {
+			final DegreeType degreeType = DegreeType.valueOf(degreeTypeString);
+			putStudentCurricularInformationInRequest(request, Integer.valueOf(studentNumberString), degreeType);
+		}
+
+		return mapping.findForward("show");
 	}
 
-	return mapping.findForward("show");
-    }
+	public ActionForward deleteStudentCurricularPlan(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
 
-    public ActionForward deleteStudentCurricularPlan(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
+		final String studentCurricularPlanIdString = request.getParameter("studentCurricularPlanId");
+		final Integer studentCurricularPlanId = new Integer(studentCurricularPlanIdString);
 
-	final String studentCurricularPlanIdString = request.getParameter("studentCurricularPlanId");
-	final Integer studentCurricularPlanId = new Integer(studentCurricularPlanIdString);
+		final IUserView userView = UserView.getUser();
 
-	final IUserView userView = UserView.getUser();
+		DeleteStudentCurricularPlan.run(studentCurricularPlanId);
 
-	DeleteStudentCurricularPlan.run(studentCurricularPlanId);
-
-	return show(mapping, form, request, response);
-    }
-
-    public ActionForward deleteEnrollment(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-
-	final String enrollmentIdString = request.getParameter("enrollmentId");
-	final String studentNumberString = request.getParameter("studentNumber");
-	final String degreeTypeString = request.getParameter("degreeType");
-	final Integer enrollmentId = Integer.valueOf(enrollmentIdString);
-	final Integer studentNumber = Integer.valueOf(studentNumberString);
-	final DegreeType degreeType = DegreeType.valueOf(degreeTypeString);
-
-	final IUserView userView = UserView.getUser();
-
-	DeleteEnrollment.run(studentNumber, degreeType, enrollmentId);
-
-	return show(mapping, form, request, response);
-    }
-
-    public ActionForward prepareCreateStudentCurricularPlan(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-
-	final DynaActionForm dynaActionForm = (DynaActionForm) form;
-	final String degreeTypeString = (String) dynaActionForm.get("degreeType");
-
-	if (isPresent(degreeTypeString)) {
-	    // putStudentCurricularPlanStateLabelListInRequest(request);
-
-	    final DegreeType degreeType = DegreeType.valueOf(degreeTypeString);
-
-	    final IUserView userView = UserView.getUser();
-
-	    final List infoDegreeCurricularPlans = (List) ReadDegreeCurricularPlansByDegreeType.run(degreeType);
-
-	    putDegreeCurricularPlansInRequest(request, infoDegreeCurricularPlans);
+		return show(mapping, form, request, response);
 	}
 
-	return mapping.findForward("createStudentCurricularPlan");
-    }
+	public ActionForward deleteEnrollment(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
 
-    public ActionForward createStudentCurricularPlan(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
+		final String enrollmentIdString = request.getParameter("enrollmentId");
+		final String studentNumberString = request.getParameter("studentNumber");
+		final String degreeTypeString = request.getParameter("degreeType");
+		final Integer enrollmentId = Integer.valueOf(enrollmentIdString);
+		final Integer studentNumber = Integer.valueOf(studentNumberString);
+		final DegreeType degreeType = DegreeType.valueOf(degreeTypeString);
 
-	final DynaActionForm dynaActionForm = (DynaActionForm) form;
-	final String studentNumberString = (String) dynaActionForm.get("number");
-	final String degreeTypeString = (String) dynaActionForm.get("degreeType");
-	final String studentCurricularPlanStateString = (String) dynaActionForm.get("studentCurricularPlanState");
-	final String degreeCurricularPlanIdString = (String) dynaActionForm.get("degreeCurricularPlanId");
-	final String startDateString = (String) dynaActionForm.get("startDate");
+		final IUserView userView = UserView.getUser();
 
-	if (isPresent(studentNumberString) && isPresent(degreeTypeString) && isPresent(studentCurricularPlanStateString)
-		&& isPresent(degreeCurricularPlanIdString) && isPresent(startDateString)) {
+		DeleteEnrollment.run(studentNumber, degreeType, enrollmentId);
 
-	    final Integer studentNumber = new Integer(studentNumberString);
-	    final DegreeType degreeType = DegreeType.valueOf(degreeTypeString);
-	    final StudentCurricularPlanState studentCurricularPlanState = StudentCurricularPlanState
-		    .valueOf(studentCurricularPlanStateString);
-	    final Integer degreeCurricularPlanId = new Integer(degreeCurricularPlanIdString);
-	    final Date startDate = simpleDateFormat.parse(startDateString);
-
-	    final IUserView userView = UserView.getUser();
-
-	    CreateStudentCurricularPlan.run(studentNumber, degreeType, studentCurricularPlanState, degreeCurricularPlanId,
-		    startDate);
+		return show(mapping, form, request, response);
 	}
 
-	return show(mapping, form, request, response);
-    }
+	public ActionForward prepareCreateStudentCurricularPlan(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
 
-    public ActionForward prepareTransferEnrollments(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-	show(mapping, form, request, response);
-	return mapping.findForward("transferEnrollments");
-    }
+		final DynaActionForm dynaActionForm = (DynaActionForm) form;
+		final String degreeTypeString = (String) dynaActionForm.get("degreeType");
 
-    public ActionForward transferEnrollments(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
+		if (isPresent(degreeTypeString)) {
+			// putStudentCurricularPlanStateLabelListInRequest(request);
 
-	final DynaActionForm dynaActionForm = (DynaActionForm) form;
-	final String selectedStudentCurricularPlanIdString = (String) dynaActionForm.get("selectedStudentCurricularPlanId");
-	final Integer selectedCurriculumGroupID = (Integer) dynaActionForm.get("selectedCurriculumGroupID");
-	final String[] enrollmentStringIDsToTransfer = (String[]) dynaActionForm.get("enrollmentIDsToTransfer");
+			final DegreeType degreeType = DegreeType.valueOf(degreeTypeString);
 
-	if (isPresent(selectedStudentCurricularPlanIdString) && enrollmentStringIDsToTransfer != null
-		&& enrollmentStringIDsToTransfer.length > 0) {
+			final IUserView userView = UserView.getUser();
 
-	    final Integer selectedStudentCurricularPlanId = new Integer(selectedStudentCurricularPlanIdString);
-	    final Integer[] enrollmentIDsToTransfer = new Integer[enrollmentStringIDsToTransfer.length];
-	    for (int i = 0; i < enrollmentStringIDsToTransfer.length; i++) {
-		final String enrollmentStringIDToTransfer = enrollmentStringIDsToTransfer[i];
-		enrollmentIDsToTransfer[i] = new Integer(enrollmentStringIDToTransfer);
-	    }
+			final List infoDegreeCurricularPlans = ReadDegreeCurricularPlansByDegreeType.run(degreeType);
 
-	    final IUserView userView = UserView.getUser();
+			putDegreeCurricularPlansInRequest(request, infoDegreeCurricularPlans);
+		}
 
-	    TransferEnrollments.run(selectedStudentCurricularPlanId, enrollmentIDsToTransfer, selectedCurriculumGroupID);
+		return mapping.findForward("createStudentCurricularPlan");
 	}
 
-	return show(mapping, form, request, response);
-    }
+	public ActionForward createStudentCurricularPlan(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
 
-    protected void putStudentCurricularInformationInRequest(final HttpServletRequest request, final Integer studentNumber,
-	    final DegreeType degreeType) throws FenixFilterException, FenixServiceException {
-	final IUserView userView = UserView.getUser();
+		final DynaActionForm dynaActionForm = (DynaActionForm) form;
+		final String studentNumberString = (String) dynaActionForm.get("number");
+		final String degreeTypeString = (String) dynaActionForm.get("degreeType");
+		final String studentCurricularPlanStateString = (String) dynaActionForm.get("studentCurricularPlanState");
+		final String degreeCurricularPlanIdString = (String) dynaActionForm.get("degreeCurricularPlanId");
+		final String startDateString = (String) dynaActionForm.get("startDate");
 
-	final List infoStudentCurricularPlans = (List) ReadStudentCurricularInformation.run(studentNumber, degreeType);
-	request.setAttribute("infoStudentCurricularPlans", infoStudentCurricularPlans);
-    }
+		if (isPresent(studentNumberString) && isPresent(degreeTypeString) && isPresent(studentCurricularPlanStateString)
+				&& isPresent(degreeCurricularPlanIdString) && isPresent(startDateString)) {
 
-    protected boolean isPresent(final String string) {
-	return string != null && string.length() > 0;
-    }
+			final Integer studentNumber = new Integer(studentNumberString);
+			final DegreeType degreeType = DegreeType.valueOf(degreeTypeString);
+			final StudentCurricularPlanState studentCurricularPlanState =
+					StudentCurricularPlanState.valueOf(studentCurricularPlanStateString);
+			final Integer degreeCurricularPlanId = new Integer(degreeCurricularPlanIdString);
+			final Date startDate = simpleDateFormat.parse(startDateString);
 
-    protected void putDegreeCurricularPlansInRequest(final HttpServletRequest request, final List infoDegreeCurricularPlans) {
-	final ComparatorChain comparatorChain = new ComparatorChain();
-	comparatorChain.addComparator(new BeanComparator("infoDegree.nome"));
-	comparatorChain.addComparator(new BeanComparator("initialDate"));
-	Collections.sort(infoDegreeCurricularPlans, comparatorChain);
-	request.setAttribute("degreeCurricularPlans", infoDegreeCurricularPlans);
-    }
+			final IUserView userView = UserView.getUser();
+
+			CreateStudentCurricularPlan.run(studentNumber, degreeType, studentCurricularPlanState, degreeCurricularPlanId,
+					startDate);
+		}
+
+		return show(mapping, form, request, response);
+	}
+
+	public ActionForward prepareTransferEnrollments(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		show(mapping, form, request, response);
+		return mapping.findForward("transferEnrollments");
+	}
+
+	public ActionForward transferEnrollments(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+
+		final DynaActionForm dynaActionForm = (DynaActionForm) form;
+		final String selectedStudentCurricularPlanIdString = (String) dynaActionForm.get("selectedStudentCurricularPlanId");
+		final Integer selectedCurriculumGroupID = (Integer) dynaActionForm.get("selectedCurriculumGroupID");
+		final String[] enrollmentStringIDsToTransfer = (String[]) dynaActionForm.get("enrollmentIDsToTransfer");
+
+		if (isPresent(selectedStudentCurricularPlanIdString) && enrollmentStringIDsToTransfer != null
+				&& enrollmentStringIDsToTransfer.length > 0) {
+
+			final Integer selectedStudentCurricularPlanId = new Integer(selectedStudentCurricularPlanIdString);
+			final Integer[] enrollmentIDsToTransfer = new Integer[enrollmentStringIDsToTransfer.length];
+			for (int i = 0; i < enrollmentStringIDsToTransfer.length; i++) {
+				final String enrollmentStringIDToTransfer = enrollmentStringIDsToTransfer[i];
+				enrollmentIDsToTransfer[i] = new Integer(enrollmentStringIDToTransfer);
+			}
+
+			final IUserView userView = UserView.getUser();
+
+			TransferEnrollments.run(selectedStudentCurricularPlanId, enrollmentIDsToTransfer, selectedCurriculumGroupID);
+		}
+
+		return show(mapping, form, request, response);
+	}
+
+	protected void putStudentCurricularInformationInRequest(final HttpServletRequest request, final Integer studentNumber,
+			final DegreeType degreeType) throws FenixFilterException, FenixServiceException {
+		final IUserView userView = UserView.getUser();
+
+		final List infoStudentCurricularPlans = ReadStudentCurricularInformation.run(studentNumber, degreeType);
+		request.setAttribute("infoStudentCurricularPlans", infoStudentCurricularPlans);
+	}
+
+	protected boolean isPresent(final String string) {
+		return string != null && string.length() > 0;
+	}
+
+	protected void putDegreeCurricularPlansInRequest(final HttpServletRequest request, final List infoDegreeCurricularPlans) {
+		final ComparatorChain comparatorChain = new ComparatorChain();
+		comparatorChain.addComparator(new BeanComparator("infoDegree.nome"));
+		comparatorChain.addComparator(new BeanComparator("initialDate"));
+		Collections.sort(infoDegreeCurricularPlans, comparatorChain);
+		request.setAttribute("degreeCurricularPlans", infoDegreeCurricularPlans);
+	}
 
 }

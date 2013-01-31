@@ -7,10 +7,10 @@ import net.sourceforge.fenixedu.presentationTier.Action.publico.ThesisFilterBean
 
 public class DepartmentDegreesWithDissertationProvider extends DegreesWithDissertationProvider {
 
-    @Override
-    protected Collection<Degree> getDegrees(Object source) {
-	ThesisFilterBean bean = (ThesisFilterBean) source;
-	return bean.getDegreeOptions();
-    }
+	@Override
+	protected Collection<Degree> getDegrees(Object source) {
+		ThesisFilterBean bean = (ThesisFilterBean) source;
+		return bean.getDegreeOptions();
+	}
 
 }

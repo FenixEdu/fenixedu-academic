@@ -7,10 +7,10 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class OpenEvent extends FenixService {
 
-    @Checked("AcademicPredicates.MANAGE_PAYMENTS")
-    @Service
-    public static void run(final Event event) {
-	event.open();
-    }
+	@Checked("AcademicPredicates.MANAGE_PAYMENTS")
+	@Service
+	public static void run(final Event event) {
+		event.open();
+	}
 
 }

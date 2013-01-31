@@ -11,25 +11,26 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class PhdGratuityFineExemption extends PhdGratuityFineExemption_Base {
 
-    public PhdGratuityFineExemption() {
-	super();
-    }
-
-    public PhdGratuityFineExemption(Person responsible, Event event, String justification) {
-	PhdEventExemptionJustification exemptionJustification = new PhdEventExemptionJustification(this,
-		PhdEventExemptionJustificationType.FINE_EXEMPTION, event.getWhenOccured().toLocalDate(), justification);
-	super.init(responsible, event, exemptionJustification);
-
-	setRootDomainObject(RootDomainObject.getInstance());
-	event.recalculateState(new DateTime());
-    }
-
-    @Service
-    public static PhdGratuityFineExemption createPhdGratuityFineExemption(Person responsible, PhdGratuityEvent event,
-	    String justification) {
-	if (event.hasExemptionsOfType(PhdGratuityFineExemption.class)) {
-	    throw new DomainException("error.already.has.fine.exemption");
+	public PhdGratuityFineExemption() {
+		super();
 	}
-	return new PhdGratuityFineExemption(responsible, event, justification);
-    }
+
+	public PhdGratuityFineExemption(Person responsible, Event event, String justification) {
+		PhdEventExemptionJustification exemptionJustification =
+				new PhdEventExemptionJustification(this, PhdEventExemptionJustificationType.FINE_EXEMPTION, event
+						.getWhenOccured().toLocalDate(), justification);
+		super.init(responsible, event, exemptionJustification);
+
+		setRootDomainObject(RootDomainObject.getInstance());
+		event.recalculateState(new DateTime());
+	}
+
+	@Service
+	public static PhdGratuityFineExemption createPhdGratuityFineExemption(Person responsible, PhdGratuityEvent event,
+			String justification) {
+		if (event.hasExemptionsOfType(PhdGratuityFineExemption.class)) {
+			throw new DomainException("error.already.has.fine.exemption");
+		}
+		return new PhdGratuityFineExemption(responsible, event, justification);
+	}
 }

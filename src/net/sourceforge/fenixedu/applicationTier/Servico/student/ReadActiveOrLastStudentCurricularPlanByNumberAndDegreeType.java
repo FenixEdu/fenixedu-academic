@@ -14,18 +14,18 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class ReadActiveOrLastStudentCurricularPlanByNumberAndDegreeType extends FenixService {
 
-    @Service
-    public static InfoStudentCurricularPlan run(Integer studentNumber, DegreeType degreeType) {
-	Registration registration = Registration.readStudentByNumberAndDegreeType(studentNumber, degreeType);
-	if (registration == null) {
-	    return null;
-	}
-	StudentCurricularPlan studentCurricularPlan = registration.getLastStudentCurricularPlan();
+	@Service
+	public static InfoStudentCurricularPlan run(Integer studentNumber, DegreeType degreeType) {
+		Registration registration = Registration.readStudentByNumberAndDegreeType(studentNumber, degreeType);
+		if (registration == null) {
+			return null;
+		}
+		StudentCurricularPlan studentCurricularPlan = registration.getLastStudentCurricularPlan();
 
-	if (studentCurricularPlan != null) {
-	    return InfoStudentCurricularPlan.newInfoFromDomain(studentCurricularPlan);
+		if (studentCurricularPlan != null) {
+			return InfoStudentCurricularPlan.newInfoFromDomain(studentCurricularPlan);
+		}
+		return null;
 	}
-	return null;
-    }
 
 }

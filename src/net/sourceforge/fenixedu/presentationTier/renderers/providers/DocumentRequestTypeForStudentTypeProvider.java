@@ -17,21 +17,21 @@ import pt.ist.fenixWebFramework.renderers.converters.EnumConverter;
  */
 public class DocumentRequestTypeForStudentTypeProvider implements DataProvider {
 
-    @Override
-    public Object provide(Object source, Object currentValue) {
-	final Collection<DocumentRequestType> result = new ArrayList<DocumentRequestType>();
-	for (DocumentRequestType request : DocumentRequestType.values()) {
-	    if (request.isStudentRequestable()) {
-		result.add(request);
-	    }
+	@Override
+	public Object provide(Object source, Object currentValue) {
+		final Collection<DocumentRequestType> result = new ArrayList<DocumentRequestType>();
+		for (DocumentRequestType request : DocumentRequestType.values()) {
+			if (request.isStudentRequestable()) {
+				result.add(request);
+			}
+		}
+
+		return result;
 	}
 
-	return result;
-    }
-
-    @Override
-    public Converter getConverter() {
-	return new EnumConverter();
-    }
+	@Override
+	public Converter getConverter() {
+		return new EnumConverter();
+	}
 
 }

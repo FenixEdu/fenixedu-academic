@@ -15,28 +15,29 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadAllDegreesByType extends FenixService {
 
-    @Service
-    public static List<InfoDegree> run(String degreeType) throws FenixServiceException {
-	return readDegreesByType(DegreeType.valueOf(degreeType));
-    }
+	@Service
+	public static List<InfoDegree> run(String degreeType) throws FenixServiceException {
+		return readDegreesByType(DegreeType.valueOf(degreeType));
+	}
 
-    @Service
-    public static List<InfoDegree> run(DegreeType degreeType) throws FenixServiceException {
-	return readDegreesByType(degreeType);
-    }
+	@Service
+	public static List<InfoDegree> run(DegreeType degreeType) throws FenixServiceException {
+		return readDegreesByType(degreeType);
+	}
 
-    private static List<InfoDegree> readDegreesByType(DegreeType degreeType) {
-	List<Degree> degreesList = Degree.readAllByDegreeType(degreeType);
-	List<InfoDegree> infoDegreesList = (List<InfoDegree>) CollectionUtils.collect(degreesList, new Transformer() {
+	private static List<InfoDegree> readDegreesByType(DegreeType degreeType) {
+		List<Degree> degreesList = Degree.readAllByDegreeType(degreeType);
+		List<InfoDegree> infoDegreesList = (List<InfoDegree>) CollectionUtils.collect(degreesList, new Transformer() {
 
-	    public Object transform(Object input) {
-		Degree degree = (Degree) input;
-		InfoDegree infoDegree = InfoDegree.newInfoFromDomain(degree);
-		return infoDegree;
-	    }
-	});
+			@Override
+			public Object transform(Object input) {
+				Degree degree = (Degree) input;
+				InfoDegree infoDegree = InfoDegree.newInfoFromDomain(degree);
+				return infoDegree;
+			}
+		});
 
-	return infoDegreesList;
-    }
+		return infoDegreesList;
+	}
 
 }

@@ -15,63 +15,65 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 
 public class InfoStudent extends InfoObject {
 
-    private final Registration registration;
+	private final Registration registration;
 
-    public InfoStudent(final Registration registration) {
-	this.registration = registration;
-    }
+	public InfoStudent(final Registration registration) {
+		this.registration = registration;
+	}
 
-    public InfoPerson getInfoPerson() {
-	return InfoPerson.newInfoFromDomain(getRegistration().getPerson());
-    }
+	public InfoPerson getInfoPerson() {
+		return InfoPerson.newInfoFromDomain(getRegistration().getPerson());
+	}
 
-    public Integer getNumber() {
-	return getRegistration().getNumber();
-    }
+	public Integer getNumber() {
+		return getRegistration().getNumber();
+	}
 
-    public DegreeType getDegreeType() {
-	return getRegistration().getDegreeType();
-    }
+	public DegreeType getDegreeType() {
+		return getRegistration().getDegreeType();
+	}
 
-    public Boolean getPayedTuition() {
-	return getRegistration().getPayedTuition();
-    }
+	public Boolean getPayedTuition() {
+		return getRegistration().getPayedTuition();
+	}
 
-    public boolean equals(Object obj) {
-	return obj instanceof InfoStudent && getRegistration() == ((InfoStudent) obj).getRegistration();
-    }
+	@Override
+	public boolean equals(Object obj) {
+		return obj instanceof InfoStudent && getRegistration() == ((InfoStudent) obj).getRegistration();
+	}
 
-    public String toString() {
-	return getRegistration().toString();
-    }
+	@Override
+	public String toString() {
+		return getRegistration().toString();
+	}
 
-    public static InfoStudent newInfoFromDomain(Registration registration) {
-	return registration == null ? null : new InfoStudent(registration);
-    }
+	public static InfoStudent newInfoFromDomain(Registration registration) {
+		return registration == null ? null : new InfoStudent(registration);
+	}
 
-    public Boolean getFlunked() {
-	return getRegistration().getFlunked();
-    }
+	public Boolean getFlunked() {
+		return getRegistration().getFlunked();
+	}
 
-    public Boolean getRequestedChangeDegree() {
-	return getRegistration().getRequestedChangeDegree();
-    }
+	public Boolean getRequestedChangeDegree() {
+		return getRegistration().getRequestedChangeDegree();
+	}
 
-    public Boolean getInterruptedStudies() {
-	return getRegistration().getInterruptedStudies();
-    }
+	public Boolean getInterruptedStudies() {
+		return getRegistration().getInterruptedStudies();
+	}
 
-    @Override
-    public Integer getIdInternal() {
-	return getRegistration().getIdInternal();
-    }
+	@Override
+	public Integer getIdInternal() {
+		return getRegistration().getIdInternal();
+	}
 
-    @Override
-    public void setIdInternal(Integer integer) {
-	throw new Error("Method should not be called!");
-    }
+	@Override
+	public void setIdInternal(Integer integer) {
+		throw new Error("Method should not be called!");
+	}
 
-    private Registration getRegistration() {
-	return registration;
-    }
+	private Registration getRegistration() {
+		return registration;
+	}
 }

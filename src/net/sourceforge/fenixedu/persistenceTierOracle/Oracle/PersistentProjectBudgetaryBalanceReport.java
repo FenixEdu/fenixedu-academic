@@ -22,41 +22,42 @@ import net.sourceforge.fenixedu.util.projectsManagement.ReportType;
  */
 public class PersistentProjectBudgetaryBalanceReport extends PersistentReport {
 
-    public List getCompleteReport(ReportType reportType, String projectCode, final BackendInstance instance) throws ExcepcaoPersistencia {
-	List result = new ArrayList();
+	public List getCompleteReport(ReportType reportType, String projectCode, final BackendInstance instance)
+			throws ExcepcaoPersistencia {
+		List result = new ArrayList();
 
-	try {
-	    PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance(instance);
-	    p.startTransaction();
-	    String tableOrView = getTableOrViewName(p, reportType);
+		try {
+			PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance(instance);
+			p.startTransaction();
+			String tableOrView = getTableOrViewName(p, reportType);
 
-	    StringBuilder stringBuffer = new StringBuilder();
-	    stringBuffer.append("select \"RUBRICA\", \"DESCRICAORUBRICA\", \"ORÇAMENTADO\", \"EXECUTADO\", \"SALDO\"from ");
-	    stringBuffer.append(tableOrView);
-	    stringBuffer.append(" where PROJECTO='");
-	    stringBuffer.append(projectCode);
-	    stringBuffer.append("'");
-	    String query = stringBuffer.toString();
+			StringBuilder stringBuffer = new StringBuilder();
+			stringBuffer.append("select \"RUBRICA\", \"DESCRICAORUBRICA\", \"ORÇAMENTADO\", \"EXECUTADO\", \"SALDO\"from ");
+			stringBuffer.append(tableOrView);
+			stringBuffer.append(" where PROJECTO='");
+			stringBuffer.append(projectCode);
+			stringBuffer.append("'");
+			String query = stringBuffer.toString();
 
-	    PreparedStatement stmt = p.prepareStatement(query);
-	    ResultSet rs = stmt.executeQuery(query);
-	    while (rs.next()) {
-		IProjectBudgetaryBalanceReportLine report = new ProjectBudgetaryBalanceReportLine();
-		report.setRubric(new Integer(rs.getInt("RUBRICA")));
-		report.setRubricDescription(rs.getString("DESCRICAORUBRICA"));
-		report.setBudget(new Double(rs.getDouble("ORÇAMENTADO")));
-		report.setExecuted(new Double(rs.getDouble("EXECUTADO")));
-		report.setBalance(new Double(rs.getDouble("SALDO")));
-		result.add(report);
-	    }
+			PreparedStatement stmt = p.prepareStatement(query);
+			ResultSet rs = stmt.executeQuery(query);
+			while (rs.next()) {
+				IProjectBudgetaryBalanceReportLine report = new ProjectBudgetaryBalanceReportLine();
+				report.setRubric(new Integer(rs.getInt("RUBRICA")));
+				report.setRubricDescription(rs.getString("DESCRICAORUBRICA"));
+				report.setBudget(new Double(rs.getDouble("ORÇAMENTADO")));
+				report.setExecuted(new Double(rs.getDouble("EXECUTADO")));
+				report.setBalance(new Double(rs.getDouble("SALDO")));
+				result.add(report);
+			}
 
-	    rs.close();
-	    p.commitTransaction();
-	} catch (SQLException e) {
-	    throw new ExcepcaoPersistencia();
+			rs.close();
+			p.commitTransaction();
+		} catch (SQLException e) {
+			throw new ExcepcaoPersistencia();
+		}
+
+		return result;
 	}
-
-	return result;
-    }
 
 }

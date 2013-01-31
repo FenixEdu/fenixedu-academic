@@ -13,37 +13,37 @@ import java.util.List;
  */
 public class InfoSiteRoomTimeTable extends DataTranferObject implements ISiteComponent {
 
-    // private List infoLessons;
-    private List infoShowOccupation;
+	// private List infoLessons;
+	private List infoShowOccupation;
 
-    private InfoRoom infoRoom;
+	private InfoRoom infoRoom;
 
-    /**
-     * @return
-     */
-    public List getInfoShowOccupation() {
-	return infoShowOccupation;
-    }
+	/**
+	 * @return
+	 */
+	public List getInfoShowOccupation() {
+		return infoShowOccupation;
+	}
 
-    /**
-     * @return
-     */
-    public InfoRoom getInfoRoom() {
-	return infoRoom;
-    }
+	/**
+	 * @return
+	 */
+	public InfoRoom getInfoRoom() {
+		return infoRoom;
+	}
 
-    /**
-     * @param list
-     */
-    public void setInfoShowOccupation(List list) {
-	infoShowOccupation = list;
-    }
+	/**
+	 * @param list
+	 */
+	public void setInfoShowOccupation(List list) {
+		infoShowOccupation = list;
+	}
 
-    /**
-     * @param list
-     */
-    public void setInfoRoom(InfoRoom list) {
-	infoRoom = list;
-    }
+	/**
+	 * @param list
+	 */
+	public void setInfoRoom(InfoRoom list) {
+		infoRoom = list;
+	}
 
 }

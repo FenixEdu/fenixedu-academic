@@ -27,27 +27,38 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
  * @author Pica
  * @author Barbosa
  */
-@Mapping(module = "facultyAdmOffice", path = "/searchGrantOwnerByNumber", input = "/searchGrantOwner.do?page=0&method=searchForm", attribute = "searchGrantOwnerByNumberForm", formBean = "searchGrantOwnerByNumberForm", scope = "request", parameter = "method")
+@Mapping(
+		module = "facultyAdmOffice",
+		path = "/searchGrantOwnerByNumber",
+		input = "/searchGrantOwner.do?page=0&method=searchForm",
+		attribute = "searchGrantOwnerByNumberForm",
+		formBean = "searchGrantOwnerByNumberForm",
+		scope = "request",
+		parameter = "method")
 @Forwards(value = {
-	@Forward(name = "search-succesfull", path = "/facultyAdmOffice/grant/owner/searchGrantOwnerResultForm.jsp", tileProperties = @Tile(title = "private.teachingstaffandresearcher.managementscholarship.scholarshipsearch")),
-	@Forward(name = "search-unSuccesfull", path = "/searchGrantOwner.do?page=0&method=searchForm", tileProperties = @Tile(title = "private.teachingstaffandresearcher.managementscholarship.scholarshipsearch")) })
+		@Forward(
+				name = "search-succesfull",
+				path = "/facultyAdmOffice/grant/owner/searchGrantOwnerResultForm.jsp",
+				tileProperties = @Tile(title = "private.teachingstaffandresearcher.managementscholarship.scholarshipsearch")),
+		@Forward(name = "search-unSuccesfull", path = "/searchGrantOwner.do?page=0&method=searchForm", tileProperties = @Tile(
+				title = "private.teachingstaffandresearcher.managementscholarship.scholarshipsearch")) })
 public class SearchGrantOwnerByNumberAction extends FenixDispatchAction {
-    public ActionForward searchGrantOwner(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-	List infoGrantOwnerList = null;
-	Integer grantOwnerNumber = null;
-	// Read attributes from FormBean
-	DynaValidatorForm searchGrantOwnerForm = (DynaValidatorForm) form;
-	grantOwnerNumber = new Integer((String) searchGrantOwnerForm.get("grantOwnerNumber"));
+	public ActionForward searchGrantOwner(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		List infoGrantOwnerList = null;
+		Integer grantOwnerNumber = null;
+		// Read attributes from FormBean
+		DynaValidatorForm searchGrantOwnerForm = (DynaValidatorForm) form;
+		grantOwnerNumber = new Integer((String) searchGrantOwnerForm.get("grantOwnerNumber"));
 
-	IUserView userView = UserView.getUser();
-	infoGrantOwnerList = SearchGrantOwner.run(null, null, null, grantOwnerNumber, null, null);
+		IUserView userView = UserView.getUser();
+		infoGrantOwnerList = SearchGrantOwner.run(null, null, null, grantOwnerNumber, null, null);
 
-	if (infoGrantOwnerList.isEmpty()) {
-	    return setError(request, mapping, "errors.grant.owner.not.found", "search-unSuccesfull", grantOwnerNumber);
+		if (infoGrantOwnerList.isEmpty()) {
+			return setError(request, mapping, "errors.grant.owner.not.found", "search-unSuccesfull", grantOwnerNumber);
+		}
+
+		request.setAttribute("infoGrantOwnerList", infoGrantOwnerList);
+		return mapping.findForward("search-succesfull");
 	}
-
-	request.setAttribute("infoGrantOwnerList", infoGrantOwnerList);
-	return mapping.findForward("search-succesfull");
-    }
 }

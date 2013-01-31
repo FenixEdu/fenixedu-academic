@@ -13,21 +13,21 @@ import pt.ist.fenixWebFramework.renderers.converters.EnumConverter;
 
 public class CycleTypesByRegistrationToCreateDocumentRequestProvider implements DataProvider {
 
-    @Override
-    public Converter getConverter() {
-	return new EnumConverter();
-    }
-
-    @Override
-    public Object provide(final Object source, final Object currentValue) {
-	final DocumentRequestCreateBean documentRequestCreateBean = (DocumentRequestCreateBean) source;
-	final StudentCurricularPlan scp = documentRequestCreateBean.getRegistration().getLastStudentCurricularPlan();
-
-	final List<CycleType> result = new ArrayList<CycleType>();
-	for (final CycleCurriculumGroup group : scp.getInternalCycleCurriculumGrops()) {
-	    result.add(group.getCycleType());
+	@Override
+	public Converter getConverter() {
+		return new EnumConverter();
 	}
-	return result;
-    }
+
+	@Override
+	public Object provide(final Object source, final Object currentValue) {
+		final DocumentRequestCreateBean documentRequestCreateBean = (DocumentRequestCreateBean) source;
+		final StudentCurricularPlan scp = documentRequestCreateBean.getRegistration().getLastStudentCurricularPlan();
+
+		final List<CycleType> result = new ArrayList<CycleType>();
+		for (final CycleCurriculumGroup group : scp.getInternalCycleCurriculumGrops()) {
+			result.add(group.getCycleType());
+		}
+		return result;
+	}
 
 }

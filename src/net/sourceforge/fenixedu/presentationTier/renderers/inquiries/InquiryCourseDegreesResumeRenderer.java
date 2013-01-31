@@ -17,49 +17,50 @@ import pt.ist.fenixWebFramework.renderers.components.HtmlText;
  */
 public class InquiryCourseDegreesResumeRenderer extends InquiryBlocksResumeRenderer {
 
-    protected void createFinalCells(HtmlTableRow tableRow, BlockResumeResult blockResumeResult) {
+	@Override
+	protected void createFinalCells(HtmlTableRow tableRow, BlockResumeResult blockResumeResult) {
 
-	HtmlTableCell linksCell = tableRow.createCell();
-	String resultsParameters = buildParametersForResults(blockResumeResult);
+		HtmlTableCell linksCell = tableRow.createCell();
+		String resultsParameters = buildParametersForResults(blockResumeResult);
 
-	HtmlInlineContainer container = new HtmlInlineContainer();
+		HtmlInlineContainer container = new HtmlInlineContainer();
 
-	HtmlLink resultsLink = new HtmlLink();
-	resultsLink.setModule("/publico");
-	resultsLink.setUrl("/viewCourseResults.do?" + resultsParameters);
-	resultsLink.setTarget("_blank");
-	resultsLink.setText("Resultados");
+		HtmlLink resultsLink = new HtmlLink();
+		resultsLink.setModule("/publico");
+		resultsLink.setUrl("/viewCourseResults.do?" + resultsParameters);
+		resultsLink.setTarget("_blank");
+		resultsLink.setText("Resultados");
 
-	String delegateParameters = buildParametersForDelegate(blockResumeResult);
-	HtmlLink delegateLink = new HtmlLink();
-	delegateLink.setModule("/publico");
-	delegateLink.setUrl("/viewQUCInquiryAnswers.do?method=showDelegateInquiry" + delegateParameters);
-	delegateLink.setTarget("_blank");
-	delegateLink.setText("Relatório do Delegado");
+		String delegateParameters = buildParametersForDelegate(blockResumeResult);
+		HtmlLink delegateLink = new HtmlLink();
+		delegateLink.setModule("/publico");
+		delegateLink.setUrl("/viewQUCInquiryAnswers.do?method=showDelegateInquiry" + delegateParameters);
+		delegateLink.setTarget("_blank");
+		delegateLink.setText("Relatório do Delegado");
 
-	container.addChild(resultsLink);
-	container.addChild(new HtmlText("&nbsp;|&nbsp;", false));
-	container.addChild(delegateLink);
+		container.addChild(resultsLink);
+		container.addChild(new HtmlText("&nbsp;|&nbsp;", false));
+		container.addChild(delegateLink);
 
-	linksCell.setBody(container);
-	linksCell.setClasses("col-actions");
-    }
+		linksCell.setBody(container);
+		linksCell.setClasses("col-actions");
+	}
 
-    private String buildParametersForResults(BlockResumeResult blocksResumeResult) {
-	CurricularCourseResumeResult courseResume = (CurricularCourseResumeResult) blocksResumeResult;
-	StringBuilder builder = new StringBuilder();
-	builder.append("degreeCurricularPlanOID=").append(
-		courseResume.getExecutionDegree().getDegreeCurricularPlan().getExternalId());
-	builder.append("&executionCourseOID=").append(courseResume.getExecutionCourse().getExternalId());
-	return builder.toString();
-    }
+	private String buildParametersForResults(BlockResumeResult blocksResumeResult) {
+		CurricularCourseResumeResult courseResume = (CurricularCourseResumeResult) blocksResumeResult;
+		StringBuilder builder = new StringBuilder();
+		builder.append("degreeCurricularPlanOID=").append(
+				courseResume.getExecutionDegree().getDegreeCurricularPlan().getExternalId());
+		builder.append("&executionCourseOID=").append(courseResume.getExecutionCourse().getExternalId());
+		return builder.toString();
+	}
 
-    private String buildParametersForDelegate(BlockResumeResult blocksResumeResult) {
-	CurricularCourseResumeResult courseResume = (CurricularCourseResumeResult) blocksResumeResult;
-	StringBuilder builder = new StringBuilder();
-	builder.append("&executionCourseOID=").append(courseResume.getExecutionCourse().getExternalId());
-	builder.append("&executionDegreeOID=").append(courseResume.getExecutionDegree().getExternalId());
-	return builder.toString();
-    }
+	private String buildParametersForDelegate(BlockResumeResult blocksResumeResult) {
+		CurricularCourseResumeResult courseResume = (CurricularCourseResumeResult) blocksResumeResult;
+		StringBuilder builder = new StringBuilder();
+		builder.append("&executionCourseOID=").append(courseResume.getExecutionCourse().getExternalId());
+		builder.append("&executionDegreeOID=").append(courseResume.getExecutionDegree().getExternalId());
+		return builder.toString();
+	}
 
 }

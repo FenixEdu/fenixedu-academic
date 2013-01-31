@@ -17,15 +17,15 @@ import net.sourceforge.fenixedu.domain.functionalities.Functionality;
  */
 public class MatchPathConflictException extends DomainException {
 
-    /**
-     * Serialization id.
-     */
-    private static final long serialVersionUID = 1L;
+	/**
+	 * Serialization id.
+	 */
+	private static final long serialVersionUID = 1L;
 
-    private static final String MESSAGE = "functionalities.functionality.matchPath.conflict";
+	private static final String MESSAGE = "functionalities.functionality.matchPath.conflict";
 
-    public MatchPathConflictException(String path) {
-	super(MESSAGE, path);
-    }
+	public MatchPathConflictException(String path) {
+		super(MESSAGE, path);
+	}
 
 }

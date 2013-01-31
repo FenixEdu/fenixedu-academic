@@ -9,10 +9,10 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 public class DegreesToCreateRegistration extends DegreesByEmployeeUnit {
 
-    @Override
-    protected Collection<Degree> getDegrees() {
-	return AcademicAuthorizationGroup.getDegreesForOperation(AccessControl.getPerson(),
-		AcademicOperationType.CREATE_REGISTRATION);
-    }
+	@Override
+	protected Collection<Degree> getDegrees() {
+		return AcademicAuthorizationGroup.getDegreesForOperation(AccessControl.getPerson(),
+				AcademicOperationType.CREATE_REGISTRATION);
+	}
 
 }

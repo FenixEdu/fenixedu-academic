@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.util.tests.Response;
  */
 public interface IQuestionCorrectionStrategy {
 
-    public StudentTestQuestion getMark(StudentTestQuestion studentTestQuestion);
+	public StudentTestQuestion getMark(StudentTestQuestion studentTestQuestion);
 
-    public String validResponse(StudentTestQuestion studentTestQuestion, Response response);
+	public String validResponse(StudentTestQuestion studentTestQuestion, Response response);
 }

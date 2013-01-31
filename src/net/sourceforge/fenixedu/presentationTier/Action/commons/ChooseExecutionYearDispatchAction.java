@@ -36,108 +36,110 @@ import org.apache.struts.util.LabelValueBean;
 
 public class ChooseExecutionYearDispatchAction extends FenixDispatchAction {
 
-    public ActionForward chooseDegreeFromList(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
+	public ActionForward chooseDegreeFromList(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
 
-	DegreeType degreeType = DegreeType.MASTER_DEGREE;
+		DegreeType degreeType = DegreeType.MASTER_DEGREE;
 
-	List result = null;
-	try {
-	    result = (List) ReadAllMasterDegrees.run(degreeType);
-	} catch (NonExistingServiceException e) {
-	    throw new NonExistingActionException("O Degree de Mestrado", e);
+		List result = null;
+		try {
+			result = ReadAllMasterDegrees.run(degreeType);
+		} catch (NonExistingServiceException e) {
+			throw new NonExistingActionException("O Degree de Mestrado", e);
+		}
+
+		request.setAttribute(PresentationConstants.MASTER_DEGREE_LIST, result);
+
+		return mapping.findForward("DisplayMasterDegreeList");
 	}
 
-	request.setAttribute(PresentationConstants.MASTER_DEGREE_LIST, result);
+	public ActionForward chooseMasterDegree(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
 
-	return mapping.findForward("DisplayMasterDegreeList");
-    }
+		// Get the Chosen Master Degree
+		Integer masterDegreeID = new Integer(request.getParameter("degreeID"));
+		if (masterDegreeID == null) {
+			masterDegreeID = (Integer) request.getAttribute("degreeID");
+		}
 
-    public ActionForward chooseMasterDegree(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
+		List result = null;
 
-	// Get the Chosen Master Degree
-	Integer masterDegreeID = new Integer(request.getParameter("degreeID"));
-	if (masterDegreeID == null) {
-	    masterDegreeID = (Integer) request.getAttribute("degreeID");
+		try {
+
+			result = ReadCPlanFromChosenMasterDegree.run(masterDegreeID);
+
+		} catch (NonExistingServiceException e) {
+			throw new NonExistingActionException("O plano curricular ", e);
+		}
+
+		request.setAttribute(PresentationConstants.MASTER_DEGREE_CURRICULAR_PLAN_LIST, result);
+
+		return mapping.findForward("MasterDegreeReady");
 	}
 
-	List result = null;
+	public ActionForward prepareChooseExecutionYear(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
 
-	try {
+		// Get the Chosen Master Degree
+		Integer curricularPlanID = new Integer(request.getParameter("curricularPlanID"));
+		if (curricularPlanID == null) {
+			curricularPlanID = (Integer) request.getAttribute("curricularPlanID");
+		}
+		List executionYearList = null;
+		Object args[] = { curricularPlanID };
+		try {
+			executionYearList =
+					(ArrayList) ServiceManagerServiceFactory.executeService("ReadExecutionDegreesByDegreeCurricularPlanID", args);
+		} catch (ExistingServiceException e) {
+			throw new ExistingActionException(e);
+		}
+		List executionYearsLabels = transformIntoLabels(executionYearList);
+		request.setAttribute(PresentationConstants.EXECUTION_YEAR_LIST, executionYearsLabels);
+		request.setAttribute(PresentationConstants.EXECUTION_DEGREE, curricularPlanID);
 
-	    result = (List) ReadCPlanFromChosenMasterDegree.run(masterDegreeID);
-
-	} catch (NonExistingServiceException e) {
-	    throw new NonExistingActionException("O plano curricular ", e);
+		return mapping.findForward("PrepareSuccess");
 	}
 
-	request.setAttribute(PresentationConstants.MASTER_DEGREE_CURRICULAR_PLAN_LIST, result);
+	private List transformIntoLabels(List executionYearList) {
+		List executionYearsLabels = new ArrayList();
+		CollectionUtils.collect(executionYearList, new Transformer() {
+			@Override
+			public Object transform(Object input) {
+				InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) input;
+				LabelValueBean labelValueBean =
+						new LabelValueBean(infoExecutionDegree.getInfoExecutionYear().getYear(), infoExecutionDegree
+								.getIdInternal().toString());
+				return labelValueBean;
+			}
+		}, executionYearsLabels);
+		Collections.sort(executionYearsLabels, new BeanComparator("label"));
+		Collections.reverse(executionYearsLabels);
 
-	return mapping.findForward("MasterDegreeReady");
-    }
-
-    public ActionForward prepareChooseExecutionYear(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-
-	// Get the Chosen Master Degree
-	Integer curricularPlanID = new Integer(request.getParameter("curricularPlanID"));
-	if (curricularPlanID == null) {
-	    curricularPlanID = (Integer) request.getAttribute("curricularPlanID");
-	}
-	List executionYearList = null;
-	Object args[] = { curricularPlanID };
-	try {
-	    executionYearList = (ArrayList) ServiceManagerServiceFactory.executeService(
-		    "ReadExecutionDegreesByDegreeCurricularPlanID", args);
-	} catch (ExistingServiceException e) {
-	    throw new ExistingActionException(e);
-	}
-	List executionYearsLabels = transformIntoLabels(executionYearList);
-	request.setAttribute(PresentationConstants.EXECUTION_YEAR_LIST, executionYearsLabels);
-	request.setAttribute(PresentationConstants.EXECUTION_DEGREE, curricularPlanID);
-
-	return mapping.findForward("PrepareSuccess");
-    }
-
-    private List transformIntoLabels(List executionYearList) {
-	List executionYearsLabels = new ArrayList();
-	CollectionUtils.collect(executionYearList, new Transformer() {
-	    public Object transform(Object input) {
-		InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) input;
-		LabelValueBean labelValueBean = new LabelValueBean(infoExecutionDegree.getInfoExecutionYear().getYear(),
-			infoExecutionDegree.getIdInternal().toString());
-		return labelValueBean;
-	    }
-	}, executionYearsLabels);
-	Collections.sort(executionYearsLabels, new BeanComparator("label"));
-	Collections.reverse(executionYearsLabels);
-
-	return executionYearsLabels;
-    }
-
-    public ActionForward chooseExecutionYear(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-
-	Integer curricularPlanID = new Integer(request.getParameter("degreeCurricularPlanID"));
-	Integer executionDegreeID = new Integer(request.getParameter("executionDegreeID"));
-
-	if (curricularPlanID == null) {
-	    curricularPlanID = (Integer) request.getAttribute("degreeCurricularPlanID");
-
+		return executionYearsLabels;
 	}
 
-	request.setAttribute(PresentationConstants.EXECUTION_DEGREE, request.getParameter("executionDegreeID"));
-	request.setAttribute("degreeCurricularPlanID", curricularPlanID);
-	
-	if(executionDegreeID != null) {
-	    ExecutionDegree executionDegree = (ExecutionDegree) RootDomainObject.readDomainObjectByOID(ExecutionDegree.class,
-		    executionDegreeID);
-	    ExecutionYear executionYear = executionDegree.getExecutionYear();
-	    request.setAttribute(PresentationConstants.EXECUTION_YEAR, executionYear.getName());
-	}
+	public ActionForward chooseExecutionYear(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
 
-	return mapping.findForward("ChooseSuccess");
-    }
+		Integer curricularPlanID = new Integer(request.getParameter("degreeCurricularPlanID"));
+		Integer executionDegreeID = new Integer(request.getParameter("executionDegreeID"));
+
+		if (curricularPlanID == null) {
+			curricularPlanID = (Integer) request.getAttribute("degreeCurricularPlanID");
+
+		}
+
+		request.setAttribute(PresentationConstants.EXECUTION_DEGREE, request.getParameter("executionDegreeID"));
+		request.setAttribute("degreeCurricularPlanID", curricularPlanID);
+
+		if (executionDegreeID != null) {
+			ExecutionDegree executionDegree =
+					(ExecutionDegree) RootDomainObject.readDomainObjectByOID(ExecutionDegree.class, executionDegreeID);
+			ExecutionYear executionYear = executionDegree.getExecutionYear();
+			request.setAttribute(PresentationConstants.EXECUTION_YEAR, executionYear.getName());
+		}
+
+		return mapping.findForward("ChooseSuccess");
+	}
 
 }

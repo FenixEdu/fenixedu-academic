@@ -14,17 +14,17 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadPersonCandidates extends FenixService {
 
-    @Checked("RolePredicates.MASTER_DEGREE_CANDIDATE_PREDICATE")
-    @Service
-    public static List<InfoMasterDegreeCandidate> run(final String username) throws FenixServiceException {
-	final Person person = Person.readPersonByUsername(username);
-	if (person == null) {
-	    throw new FenixServiceException("error.noPerson");
+	@Checked("RolePredicates.MASTER_DEGREE_CANDIDATE_PREDICATE")
+	@Service
+	public static List<InfoMasterDegreeCandidate> run(final String username) throws FenixServiceException {
+		final Person person = Person.readPersonByUsername(username);
+		if (person == null) {
+			throw new FenixServiceException("error.noPerson");
+		}
+		final List<InfoMasterDegreeCandidate> result = new ArrayList<InfoMasterDegreeCandidate>();
+		for (final MasterDegreeCandidate masterDegreeCandidate : person.getMasterDegreeCandidatesSet()) {
+			result.add(InfoMasterDegreeCandidateWithInfoPerson.newInfoFromDomain(masterDegreeCandidate));
+		}
+		return result;
 	}
-	final List<InfoMasterDegreeCandidate> result = new ArrayList<InfoMasterDegreeCandidate>();
-	for (final MasterDegreeCandidate masterDegreeCandidate : person.getMasterDegreeCandidatesSet()) {
-	    result.add(InfoMasterDegreeCandidateWithInfoPerson.newInfoFromDomain(masterDegreeCandidate));
-	}
-	return result;
-    }
 }

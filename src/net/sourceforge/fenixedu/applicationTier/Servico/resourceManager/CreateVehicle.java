@@ -12,11 +12,11 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class CreateVehicle extends FenixService {
 
-    @Checked("RolePredicates.RESOURCE_MANAGER_PREDICATE")
-    @Service
-    public static void run(String numberPlate, String make, String model, YearMonthDay acquisition, YearMonthDay cease,
-	    BigDecimal allocationCostMultiplier) {
+	@Checked("RolePredicates.RESOURCE_MANAGER_PREDICATE")
+	@Service
+	public static void run(String numberPlate, String make, String model, YearMonthDay acquisition, YearMonthDay cease,
+			BigDecimal allocationCostMultiplier) {
 
-	new Vehicle(numberPlate, make, model, acquisition, cease, allocationCostMultiplier);
-    }
+		new Vehicle(numberPlate, make, model, acquisition, cease, allocationCostMultiplier);
+	}
 }

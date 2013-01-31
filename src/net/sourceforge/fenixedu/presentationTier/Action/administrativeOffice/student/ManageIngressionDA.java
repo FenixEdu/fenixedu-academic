@@ -20,7 +20,6 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Input;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
@@ -31,50 +30,50 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
 @Forwards({ @Forward(name = "showEditIngression", path = "/academicAdminOffice/manageIngression.jsp") })
 public class ManageIngressionDA extends FenixDispatchAction {
 
-    private Registration getRegistration(final HttpServletRequest request) {
-	return rootDomainObject.readRegistrationByOID(getIntegerFromRequest(request, "registrationId"));
-    }
-
-    private RegistrationIngressionEditor getRegistrationIngressionEditor() {
-	return getRenderedObject();
-    }
-
-    @Input
-    public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) {
-	request.setAttribute("ingressionBean", new RegistrationIngressionEditor(getRegistration(request)));
-	return mapping.findForward("showEditIngression");
-    }
-
-    public ActionForward postBack(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) {
-
-	RegistrationIngressionEditor ingressionInformationBean = getRegistrationIngressionEditor();
-	if (!ingressionInformationBean.hasRegistrationAgreement()
-		|| ingressionInformationBean.getRegistrationAgreement().isNormal()) {
-	    ingressionInformationBean.setAgreementInformation(null);
+	private Registration getRegistration(final HttpServletRequest request) {
+		return rootDomainObject.readRegistrationByOID(getIntegerFromRequest(request, "registrationId"));
 	}
 
-	RenderUtils.invalidateViewState();
-	request.setAttribute("ingressionBean", ingressionInformationBean);
-	return mapping.findForward("showEditIngression");
-    }
-
-    public ActionForward editIngression(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-	try {
-	    executeFactoryMethod();
-	} catch (final DomainException e) {
-	    request.setAttribute("ingressionBean", getRegistrationIngressionEditor());
-	    RenderUtils.invalidateViewState();
-	    addActionMessage(request, e.getKey());
-	    return mapping.findForward("showEditIngression");
+	private RegistrationIngressionEditor getRegistrationIngressionEditor() {
+		return getRenderedObject();
 	}
 
-	addActionMessage(request, "message.registration.ingression.and.agreement.edit.success");
-	request.setAttribute("registrationId", getRegistrationIngressionEditor().getRegistration().getIdInternal());
+	@Input
+	public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) {
+		request.setAttribute("ingressionBean", new RegistrationIngressionEditor(getRegistration(request)));
+		return mapping.findForward("showEditIngression");
+	}
 
-	return prepare(mapping, actionForm, request, response);
-    }
+	public ActionForward postBack(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) {
+
+		RegistrationIngressionEditor ingressionInformationBean = getRegistrationIngressionEditor();
+		if (!ingressionInformationBean.hasRegistrationAgreement()
+				|| ingressionInformationBean.getRegistrationAgreement().isNormal()) {
+			ingressionInformationBean.setAgreementInformation(null);
+		}
+
+		RenderUtils.invalidateViewState();
+		request.setAttribute("ingressionBean", ingressionInformationBean);
+		return mapping.findForward("showEditIngression");
+	}
+
+	public ActionForward editIngression(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+		try {
+			executeFactoryMethod();
+		} catch (final DomainException e) {
+			request.setAttribute("ingressionBean", getRegistrationIngressionEditor());
+			RenderUtils.invalidateViewState();
+			addActionMessage(request, e.getKey());
+			return mapping.findForward("showEditIngression");
+		}
+
+		addActionMessage(request, "message.registration.ingression.and.agreement.edit.success");
+		request.setAttribute("registrationId", getRegistrationIngressionEditor().getRegistration().getIdInternal());
+
+		return prepare(mapping, actionForm, request, response);
+	}
 
 }

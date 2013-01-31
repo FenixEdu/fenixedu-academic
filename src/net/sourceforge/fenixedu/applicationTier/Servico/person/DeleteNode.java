@@ -6,8 +6,8 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class DeleteNode extends FenixService {
 
-    @Service
-    public static void run(Node node) {
-	node.delete();
-    }
+	@Service
+	public static void run(Node node) {
+		node.delete();
+	}
 }

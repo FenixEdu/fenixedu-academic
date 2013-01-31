@@ -10,34 +10,34 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
  */
 public abstract class ExecutionCourseGroup extends DomainBackedGroup<ExecutionCourse> {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    public ExecutionCourseGroup(ExecutionCourse executionCourse) {
-	super(executionCourse);
-    }
+	public ExecutionCourseGroup(ExecutionCourse executionCourse) {
+		super(executionCourse);
+	}
 
-    public ExecutionCourse getExecutionCourse() {
-	return getObject();
-    }
+	public ExecutionCourse getExecutionCourse() {
+		return getObject();
+	}
 
-    public boolean hasExecutionCourse() {
-	return getExecutionCourse() != null;
-    }
+	public boolean hasExecutionCourse() {
+		return getExecutionCourse() != null;
+	}
 
-    @Override
-    final public String getPresentationNameBundle() {
-	return "resources.SiteResources";
-    }
+	@Override
+	final public String getPresentationNameBundle() {
+		return "resources.SiteResources";
+	}
 
-    @Override
-    public String getPresentationNameKey() {
-	return "label.net.sourceforge.fenixedu.domain.accessControl." + this.getClass().getSimpleName();
-    }
+	@Override
+	public String getPresentationNameKey() {
+		return "label.net.sourceforge.fenixedu.domain.accessControl." + this.getClass().getSimpleName();
+	}
 
-    @Override
-    final public String[] getPresentationNameKeyArgs() {
-	final ExecutionCourse executionCourse = getExecutionCourse();
-	return executionCourse == null ? new String[0] : new String[] { getExecutionCourse().getNome() };
-    }
+	@Override
+	final public String[] getPresentationNameKeyArgs() {
+		final ExecutionCourse executionCourse = getExecutionCourse();
+		return executionCourse == null ? new String[0] : new String[] { getExecutionCourse().getNome() };
+	}
 
 }

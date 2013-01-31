@@ -8,9 +8,9 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class CreateSecondCycleIndividualCandidacyExemption {
 
-    @Checked("AcademicPredicates.MANAGE_STUDENT_PAYMENTS")
-    @Service
-    public static void run(final Person responsible, final SecondCycleIndividualCandidacyExemptionBean bean) {
-	new SecondCycleIndividualCandidacyExemption(responsible, bean.getEvent(), bean.getJustificationType());
-    }
+	@Checked("AcademicPredicates.MANAGE_STUDENT_PAYMENTS")
+	@Service
+	public static void run(final Person responsible, final SecondCycleIndividualCandidacyExemptionBean bean) {
+		new SecondCycleIndividualCandidacyExemption(responsible, bean.getEvent(), bean.getJustificationType());
+	}
 }

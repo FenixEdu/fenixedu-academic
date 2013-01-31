@@ -28,28 +28,28 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 @Mapping(module = "person", path = "/readQualifications", scope = "request")
 @Forwards(value = { @Forward(name = "show-form", path = "view-qualifications") })
 public class ReadQualificationsAction extends FenixAction {
-    /*
-     * (non-Javadoc)
-     * 
-     * @seeorg.apache.struts.action.Action#execute(org.apache.struts.action.
-     * ActionMapping, org.apache.struts.action.ActionForm,
-     * javax.servlet.http.HttpServletRequest,
-     * javax.servlet.http.HttpServletResponse)
-     */
-    @Override
-    public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @seeorg.apache.struts.action.Action#execute(org.apache.struts.action.
+	 * ActionMapping, org.apache.struts.action.ActionForm,
+	 * javax.servlet.http.HttpServletRequest,
+	 * javax.servlet.http.HttpServletResponse)
+	 */
+	@Override
+	public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
 
-	IUserView userView = UserView.getUser();
+		IUserView userView = UserView.getUser();
 
-	Object[] args = { userView.getUtilizador() };
+		Object[] args = { userView.getUtilizador() };
 
-	InfoSiteQualifications infoSiteQualifications = (InfoSiteQualifications) ServiceUtils.executeService(
-		"ReadQualifications", args);
+		InfoSiteQualifications infoSiteQualifications =
+				(InfoSiteQualifications) ServiceUtils.executeService("ReadQualifications", args);
 
-	request.setAttribute("infoSiteQualifications", infoSiteQualifications);
+		request.setAttribute("infoSiteQualifications", infoSiteQualifications);
 
-	return mapping.findForward("show-form");
-    }
+		return mapping.findForward("show-form");
+	}
 
 }

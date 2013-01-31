@@ -11,24 +11,24 @@ import net.sourceforge.fenixedu.domain.accounting.serviceAgreementTemplates.Degr
 
 public class FullGratuityPaymentPlan extends FullGratuityPaymentPlan_Base {
 
-    protected FullGratuityPaymentPlan() {
-	super();
-    }
+	protected FullGratuityPaymentPlan() {
+		super();
+	}
 
-    public FullGratuityPaymentPlan(final ExecutionYear executionYear,
-	    final DegreeCurricularPlanServiceAgreementTemplate serviceAgreementTemplate, final Boolean defaultPlan) {
-	this();
-	super.init(executionYear, serviceAgreementTemplate, defaultPlan);
-    }
+	public FullGratuityPaymentPlan(final ExecutionYear executionYear,
+			final DegreeCurricularPlanServiceAgreementTemplate serviceAgreementTemplate, final Boolean defaultPlan) {
+		this();
+		super.init(executionYear, serviceAgreementTemplate, defaultPlan);
+	}
 
-    public FullGratuityPaymentPlan(final ExecutionYear executionYear,
-	    final DegreeCurricularPlanServiceAgreementTemplate serviceAgreementTemplate) {
-	this(executionYear, serviceAgreementTemplate, false);
-    }
+	public FullGratuityPaymentPlan(final ExecutionYear executionYear,
+			final DegreeCurricularPlanServiceAgreementTemplate serviceAgreementTemplate) {
+		this(executionYear, serviceAgreementTemplate, false);
+	}
 
-    @Override
-    protected Collection<PaymentPlanRule> getSpecificPaymentPlanRules() {
-	return Collections.singleton(PaymentPlanRuleFactory.create(HasEnrolmentsForExecutionSemesterPaymentPlanRule.class));
-    }
+	@Override
+	protected Collection<PaymentPlanRule> getSpecificPaymentPlanRules() {
+		return Collections.singleton(PaymentPlanRuleFactory.create(HasEnrolmentsForExecutionSemesterPaymentPlanRule.class));
+	}
 
 }

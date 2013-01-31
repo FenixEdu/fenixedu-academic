@@ -8,27 +8,27 @@ import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 public class FillPersonalDataWelcomeForm extends Form {
 
-    public FillPersonalDataWelcomeForm() {
-	super();
-    }
+	public FillPersonalDataWelcomeForm() {
+		super();
+	}
 
-    @Override
-    public List<LabelFormatter> validate() {
-	return Collections.EMPTY_LIST;
-    }
+	@Override
+	public List<LabelFormatter> validate() {
+		return Collections.EMPTY_LIST;
+	}
 
-    @Override
-    public String getFormName() {
-	return "label.candidacy.workflow.fillPersonalDataWelcomeForm";
-    }
+	@Override
+	public String getFormName() {
+		return "label.candidacy.workflow.fillPersonalDataWelcomeForm";
+	}
 
-    @Override
-    public String getFormDescription() {
-	return "label.candidacy.workflow.fillPersonalDataWelcomeForm.description";
-    }
+	@Override
+	public String getFormDescription() {
+		return "label.candidacy.workflow.fillPersonalDataWelcomeForm.description";
+	}
 
-    @Override
-    public boolean isInput() {
-	return false;
-    }
+	@Override
+	public boolean isInput() {
+		return false;
+	}
 }

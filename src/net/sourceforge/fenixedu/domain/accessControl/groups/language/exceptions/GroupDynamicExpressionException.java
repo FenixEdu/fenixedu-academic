@@ -8,14 +8,14 @@ package net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions
  */
 public class GroupDynamicExpressionException extends GroupExpressionException {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    public GroupDynamicExpressionException(String key, String... args) {
-	super(key, args);
-    }
+	public GroupDynamicExpressionException(String key, String... args) {
+		super(key, args);
+	}
 
-    public GroupDynamicExpressionException(Throwable cause, String key, String... args) {
-	super(cause, key, args);
-    }
+	public GroupDynamicExpressionException(Throwable cause, String key, String... args) {
+		super(cause, key, args);
+	}
 
 }

@@ -16,28 +16,28 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Mapping(path = "/eventReports", module = "academicAdministration")
 @Forwards({ @Forward(name = "listReports", path = "/academicAdminOffice/accounting/reports/events/listReports.jsp"),
-	@Forward(name = "createReportRequest", path = "/academicAdminOffice/accounting/reports/events/createReportRequest.jsp"),
-	@Forward(name = "viewRequest", path = "/academicAdminOffice/accounting/reports/events/viewRequest.jsp") })
+		@Forward(name = "createReportRequest", path = "/academicAdminOffice/accounting/reports/events/createReportRequest.jsp"),
+		@Forward(name = "viewRequest", path = "/academicAdminOffice/accounting/reports/events/viewRequest.jsp") })
 public class EventReportsDAForAcademicOffice extends EventReportsDA {
 
-    @Override
-    protected List<EventReportQueueJob> readPendingOrCancelledJobs() {
-	return EventReportQueueJob.readPendingOrCancelledJobs(getOffices());
-    }
+	@Override
+	protected List<EventReportQueueJob> readPendingOrCancelledJobs() {
+		return EventReportQueueJob.readPendingOrCancelledJobs(getOffices());
+	}
 
-    @Override
-    protected List<EventReportQueueJob> readDoneReports() {
-	return EventReportQueueJob.readDoneReports(getOffices());
-    }
+	@Override
+	protected List<EventReportQueueJob> readDoneReports() {
+		return EventReportQueueJob.readDoneReports(getOffices());
+	}
 
-    @Override
-    protected EventReportQueueJobBean createEventReportQueueJobBean() {
-	return EventReportQueueJobBean.createBeanForAdministrativeOffice();
-    }
+	@Override
+	protected EventReportQueueJobBean createEventReportQueueJobBean() {
+		return EventReportQueueJobBean.createBeanForAdministrativeOffice();
+	}
 
-    private Set<AdministrativeOffice> getOffices() {
-	return AcademicAuthorizationGroup.getOfficesForOperation(AccessControl.getPerson(),
-		AcademicOperationType.MANAGE_EVENT_REPORTS);
-    }
+	private Set<AdministrativeOffice> getOffices() {
+		return AcademicAuthorizationGroup.getOfficesForOperation(AccessControl.getPerson(),
+				AcademicOperationType.MANAGE_EVENT_REPORTS);
+	}
 
 }

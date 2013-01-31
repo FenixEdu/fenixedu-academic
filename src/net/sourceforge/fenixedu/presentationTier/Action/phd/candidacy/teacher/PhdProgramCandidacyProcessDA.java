@@ -15,12 +15,6 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(path = "/phdProgramCandidacyProcess", module = "teacher")
 @Forwards(tileProperties = @Tile(navLocal = "/teacher/commons/navigationBarIndex.jsp"), value = {
@@ -30,20 +24,20 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
 })
 public class PhdProgramCandidacyProcessDA extends CommonPhdCandidacyDA {
 
-    @Override
-    public ActionForward manageCandidacyDocuments(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
+	@Override
+	public ActionForward manageCandidacyDocuments(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) {
 
-	final PhdProgramCandidacyProcess process = getProcess(request);
+		final PhdProgramCandidacyProcess process = getProcess(request);
 
-	if (process.hasFeedbackRequest()) {
+		if (process.hasFeedbackRequest()) {
 
-	    final PhdCandidacyFeedbackRequestElement element = process.getFeedbackRequest().getElement(getLoggedPerson(request));
-	    if (element != null) {
-		request.setAttribute("element", element);
-	    }
+			final PhdCandidacyFeedbackRequestElement element = process.getFeedbackRequest().getElement(getLoggedPerson(request));
+			if (element != null) {
+				request.setAttribute("element", element);
+			}
+		}
+
+		return super.manageCandidacyDocuments(mapping, form, request, response);
 	}
-
-	return super.manageCandidacyDocuments(mapping, form, request, response);
-    }
 }

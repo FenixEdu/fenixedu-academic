@@ -14,266 +14,266 @@ import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class PhdThesisProcessBean implements Serializable {
 
-    static private final long serialVersionUID = 1L;
+	static private final long serialVersionUID = 1L;
 
-    private PhdIndividualProgramProcess process;
-    private PhdThesisProcess thesisProcess;
+	private PhdIndividualProgramProcess process;
+	private PhdThesisProcess thesisProcess;
 
-    private boolean toNotify = true;
-    private String remarks;
-    private Boolean finalThesis;
-    private LocalDate whenJuryValidated;
-    private LocalDate whenJuryDesignated;
-    private LocalDate whenJuryRequested;
+	private boolean toNotify = true;
+	private String remarks;
+	private Boolean finalThesis;
+	private LocalDate whenJuryValidated;
+	private LocalDate whenJuryDesignated;
+	private LocalDate whenJuryRequested;
 
-    private LocalDate whenThesisDiscussionRequired;
+	private LocalDate whenThesisDiscussionRequired;
 
-    private List<PhdProgramDocumentUploadBean> documents;
+	private List<PhdProgramDocumentUploadBean> documents;
 
-    private ThesisJuryElement juryElement;
+	private ThesisJuryElement juryElement;
 
-    private DateTime scheduledDate;
-    private String scheduledPlace;
+	private DateTime scheduledDate;
+	private String scheduledPlace;
 
-    private String mailSubject, mailBody;
+	private String mailSubject, mailBody;
 
-    private LocalDate whenFinalThesisRatified;
+	private LocalDate whenFinalThesisRatified;
 
-    private PhdThesisFinalGrade finalGrade;
-    private LocalDate conclusionDate;
+	private PhdThesisFinalGrade finalGrade;
+	private LocalDate conclusionDate;
 
-    private Boolean generateAlert;
+	private Boolean generateAlert;
 
-    private PhdThesisProcessStateType processState;
+	private PhdThesisProcessStateType processState;
 
-    private PhdJuryElementsRatificationEntity phdJuryElementsRatificationEntity;
+	private PhdJuryElementsRatificationEntity phdJuryElementsRatificationEntity;
 
-    private String ratificationEntityCustomMessage;
+	private String ratificationEntityCustomMessage;
 
-    private LocalDate stateDate;
+	private LocalDate stateDate;
 
-    private MultiLanguageString presidentTitle;
+	private MultiLanguageString presidentTitle;
 
-    public PhdThesisProcessBean() {
-	this.documents = new ArrayList<PhdProgramDocumentUploadBean>();
-    }
-
-    public PhdThesisProcessBean(PhdIndividualProgramProcess process) {
-	this();
-
-	setGenerateAlert(process.getPhdConfigurationIndividualProgramProcess().getGenerateAlert());
-
-	this.process = process;
-	this.thesisProcess = process.getThesisProcess();
-
-	if (this.thesisProcess != null) {
-	    this.whenJuryValidated = this.thesisProcess.getWhenJuryValidated();
-	    this.whenJuryDesignated = this.thesisProcess.getWhenJuryDesignated();
-	    this.whenJuryRequested = this.thesisProcess.getWhenJuryRequired();
-	    this.whenThesisDiscussionRequired = this.thesisProcess.getWhenThesisDiscussionRequired();
-	    this.whenFinalThesisRatified = this.thesisProcess.getWhenFinalThesisRatified();
-	    this.phdJuryElementsRatificationEntity = this.thesisProcess.getPhdJuryElementsRatificationEntity();
-	    this.conclusionDate = this.thesisProcess.getConclusionDate();
-	    this.finalGrade = this.thesisProcess.getFinalGrade();
-	    this.phdJuryElementsRatificationEntity = this.thesisProcess.getPhdJuryElementsRatificationEntity();
-	    this.ratificationEntityCustomMessage = this.thesisProcess.getRatificationEntityCustomMessage();
-	    setPresidentTitle(this.thesisProcess.getPresidentTitle());
+	public PhdThesisProcessBean() {
+		this.documents = new ArrayList<PhdProgramDocumentUploadBean>();
 	}
-    }
 
-    public PhdIndividualProgramProcess getProcess() {
-	return process;
-    }
+	public PhdThesisProcessBean(PhdIndividualProgramProcess process) {
+		this();
 
-    public void setProcess(PhdIndividualProgramProcess process) {
-	this.process = process;
-    }
+		setGenerateAlert(process.getPhdConfigurationIndividualProgramProcess().getGenerateAlert());
 
-    public PhdThesisProcess getThesisProcess() {
-	return thesisProcess;
-    }
+		this.process = process;
+		this.thesisProcess = process.getThesisProcess();
 
-    public void setThesisProcess(PhdThesisProcess thesisProcess) {
-	this.thesisProcess = thesisProcess;
-    }
+		if (this.thesisProcess != null) {
+			this.whenJuryValidated = this.thesisProcess.getWhenJuryValidated();
+			this.whenJuryDesignated = this.thesisProcess.getWhenJuryDesignated();
+			this.whenJuryRequested = this.thesisProcess.getWhenJuryRequired();
+			this.whenThesisDiscussionRequired = this.thesisProcess.getWhenThesisDiscussionRequired();
+			this.whenFinalThesisRatified = this.thesisProcess.getWhenFinalThesisRatified();
+			this.phdJuryElementsRatificationEntity = this.thesisProcess.getPhdJuryElementsRatificationEntity();
+			this.conclusionDate = this.thesisProcess.getConclusionDate();
+			this.finalGrade = this.thesisProcess.getFinalGrade();
+			this.phdJuryElementsRatificationEntity = this.thesisProcess.getPhdJuryElementsRatificationEntity();
+			this.ratificationEntityCustomMessage = this.thesisProcess.getRatificationEntityCustomMessage();
+			setPresidentTitle(this.thesisProcess.getPresidentTitle());
+		}
+	}
 
-    public boolean isToNotify() {
-	return toNotify;
-    }
+	public PhdIndividualProgramProcess getProcess() {
+		return process;
+	}
 
-    public void setToNotify(boolean toNotify) {
-	this.toNotify = toNotify;
-    }
+	public void setProcess(PhdIndividualProgramProcess process) {
+		this.process = process;
+	}
 
-    public String getRemarks() {
-	return remarks;
-    }
+	public PhdThesisProcess getThesisProcess() {
+		return thesisProcess;
+	}
 
-    public void setRemarks(String remarks) {
-	this.remarks = remarks;
-    }
+	public void setThesisProcess(PhdThesisProcess thesisProcess) {
+		this.thesisProcess = thesisProcess;
+	}
 
-    public List<PhdProgramDocumentUploadBean> getDocuments() {
-	return documents;
-    }
+	public boolean isToNotify() {
+		return toNotify;
+	}
 
-    public void addDocument(PhdProgramDocumentUploadBean document) {
-	this.documents.add(document);
-    }
+	public void setToNotify(boolean toNotify) {
+		this.toNotify = toNotify;
+	}
 
-    public void setDocuments(List<PhdProgramDocumentUploadBean> documents) {
-	this.documents = documents;
-    }
+	public String getRemarks() {
+		return remarks;
+	}
 
-    public Boolean getFinalThesis() {
-	return finalThesis;
-    }
+	public void setRemarks(String remarks) {
+		this.remarks = remarks;
+	}
 
-    public void setFinalThesis(Boolean finalThesis) {
-	this.finalThesis = finalThesis;
-    }
+	public List<PhdProgramDocumentUploadBean> getDocuments() {
+		return documents;
+	}
 
-    public LocalDate getWhenJuryValidated() {
-	return whenJuryValidated;
-    }
+	public void addDocument(PhdProgramDocumentUploadBean document) {
+		this.documents.add(document);
+	}
 
-    public void setWhenJuryValidated(LocalDate whenJuryValidated) {
-	this.whenJuryValidated = whenJuryValidated;
-    }
+	public void setDocuments(List<PhdProgramDocumentUploadBean> documents) {
+		this.documents = documents;
+	}
 
-    public LocalDate getWhenJuryDesignated() {
-	return whenJuryDesignated;
-    }
+	public Boolean getFinalThesis() {
+		return finalThesis;
+	}
 
-    public void setWhenJuryDesignated(LocalDate whenJuryDesignated) {
-	this.whenJuryDesignated = whenJuryDesignated;
-    }
+	public void setFinalThesis(Boolean finalThesis) {
+		this.finalThesis = finalThesis;
+	}
 
-    public ThesisJuryElement getJuryElement() {
-	return juryElement;
-    }
+	public LocalDate getWhenJuryValidated() {
+		return whenJuryValidated;
+	}
 
-    public void setJuryElement(ThesisJuryElement juryElement) {
-	this.juryElement = juryElement;
-    }
+	public void setWhenJuryValidated(LocalDate whenJuryValidated) {
+		this.whenJuryValidated = whenJuryValidated;
+	}
 
-    public DateTime getScheduledDate() {
-	return scheduledDate;
-    }
+	public LocalDate getWhenJuryDesignated() {
+		return whenJuryDesignated;
+	}
 
-    public void setScheduledDate(DateTime scheduledDate) {
-	this.scheduledDate = scheduledDate;
-    }
+	public void setWhenJuryDesignated(LocalDate whenJuryDesignated) {
+		this.whenJuryDesignated = whenJuryDesignated;
+	}
 
-    public String getScheduledPlace() {
-	return scheduledPlace;
-    }
+	public ThesisJuryElement getJuryElement() {
+		return juryElement;
+	}
 
-    public void setScheduledPlace(String scheduledPlace) {
-	this.scheduledPlace = scheduledPlace;
-    }
+	public void setJuryElement(ThesisJuryElement juryElement) {
+		this.juryElement = juryElement;
+	}
 
-    public String getMailSubject() {
-	return mailSubject;
-    }
+	public DateTime getScheduledDate() {
+		return scheduledDate;
+	}
 
-    public void setMailSubject(String mailSubject) {
-	this.mailSubject = mailSubject;
-    }
+	public void setScheduledDate(DateTime scheduledDate) {
+		this.scheduledDate = scheduledDate;
+	}
 
-    public String getMailBody() {
-	return mailBody;
-    }
+	public String getScheduledPlace() {
+		return scheduledPlace;
+	}
 
-    public void setMailBody(String mailBody) {
-	this.mailBody = mailBody;
-    }
+	public void setScheduledPlace(String scheduledPlace) {
+		this.scheduledPlace = scheduledPlace;
+	}
 
-    public LocalDate getWhenFinalThesisRatified() {
-	return whenFinalThesisRatified;
-    }
+	public String getMailSubject() {
+		return mailSubject;
+	}
 
-    public void setWhenFinalThesisRatified(LocalDate whenFinalThesisRatified) {
-	this.whenFinalThesisRatified = whenFinalThesisRatified;
-    }
+	public void setMailSubject(String mailSubject) {
+		this.mailSubject = mailSubject;
+	}
 
-    public PhdThesisFinalGrade getFinalGrade() {
-	return finalGrade;
-    }
+	public String getMailBody() {
+		return mailBody;
+	}
 
-    public void setFinalGrade(PhdThesisFinalGrade finalGrade) {
-	this.finalGrade = finalGrade;
-    }
+	public void setMailBody(String mailBody) {
+		this.mailBody = mailBody;
+	}
 
-    public LocalDate getConclusionDate() {
-	return conclusionDate;
-    }
+	public LocalDate getWhenFinalThesisRatified() {
+		return whenFinalThesisRatified;
+	}
 
-    public void setConclusionDate(LocalDate conclusionDate) {
-	this.conclusionDate = conclusionDate;
-    }
+	public void setWhenFinalThesisRatified(LocalDate whenFinalThesisRatified) {
+		this.whenFinalThesisRatified = whenFinalThesisRatified;
+	}
 
-    public Boolean getGenerateAlert() {
-	return generateAlert;
-    }
+	public PhdThesisFinalGrade getFinalGrade() {
+		return finalGrade;
+	}
 
-    public void setGenerateAlert(Boolean generateAlert) {
-	this.generateAlert = generateAlert;
-    }
+	public void setFinalGrade(PhdThesisFinalGrade finalGrade) {
+		this.finalGrade = finalGrade;
+	}
 
-    public PhdThesisProcessStateType getProcessState() {
-	return processState;
-    }
+	public LocalDate getConclusionDate() {
+		return conclusionDate;
+	}
 
-    public void setProcessState(PhdThesisProcessStateType processState) {
-	this.processState = processState;
-    }
+	public void setConclusionDate(LocalDate conclusionDate) {
+		this.conclusionDate = conclusionDate;
+	}
 
-    public LocalDate getWhenThesisDiscussionRequired() {
-	return whenThesisDiscussionRequired;
-    }
+	public Boolean getGenerateAlert() {
+		return generateAlert;
+	}
 
-    public void setWhenThesisDiscussionRequired(LocalDate whenThesisDiscussionRequired) {
-	this.whenThesisDiscussionRequired = whenThesisDiscussionRequired;
-    }
+	public void setGenerateAlert(Boolean generateAlert) {
+		this.generateAlert = generateAlert;
+	}
 
-    public LocalDate getWhenJuryRequested() {
-	return whenJuryRequested;
-    }
+	public PhdThesisProcessStateType getProcessState() {
+		return processState;
+	}
 
-    public void setWhenJuryRequested(LocalDate whenJuryRequested) {
-	this.whenJuryRequested = whenJuryRequested;
-    }
+	public void setProcessState(PhdThesisProcessStateType processState) {
+		this.processState = processState;
+	}
 
-    public PhdJuryElementsRatificationEntity getPhdJuryElementsRatificationEntity() {
-	return phdJuryElementsRatificationEntity;
-    }
+	public LocalDate getWhenThesisDiscussionRequired() {
+		return whenThesisDiscussionRequired;
+	}
 
-    public void setPhdJuryElementsRatificationEntity(PhdJuryElementsRatificationEntity phdJuryElementsRatificationEntity) {
-	this.phdJuryElementsRatificationEntity = phdJuryElementsRatificationEntity;
-    }
+	public void setWhenThesisDiscussionRequired(LocalDate whenThesisDiscussionRequired) {
+		this.whenThesisDiscussionRequired = whenThesisDiscussionRequired;
+	}
 
-    public String getRatificationEntityCustomMessage() {
-	return ratificationEntityCustomMessage;
-    }
+	public LocalDate getWhenJuryRequested() {
+		return whenJuryRequested;
+	}
 
-    public void setRatificationEntityCustomMessage(String ratificationEntityCustomMessage) {
-	this.ratificationEntityCustomMessage = ratificationEntityCustomMessage;
-    }
+	public void setWhenJuryRequested(LocalDate whenJuryRequested) {
+		this.whenJuryRequested = whenJuryRequested;
+	}
 
-    public LocalDate getStateDate() {
-	return stateDate;
-    }
+	public PhdJuryElementsRatificationEntity getPhdJuryElementsRatificationEntity() {
+		return phdJuryElementsRatificationEntity;
+	}
 
-    public void setStateDate(LocalDate stateDate) {
-	this.stateDate = stateDate;
-    }
+	public void setPhdJuryElementsRatificationEntity(PhdJuryElementsRatificationEntity phdJuryElementsRatificationEntity) {
+		this.phdJuryElementsRatificationEntity = phdJuryElementsRatificationEntity;
+	}
 
-    public MultiLanguageString getPresidentTitle() {
-	return presidentTitle;
-    }
+	public String getRatificationEntityCustomMessage() {
+		return ratificationEntityCustomMessage;
+	}
 
-    public void setPresidentTitle(MultiLanguageString presidentTitle) {
-	this.presidentTitle = presidentTitle;
-    }
+	public void setRatificationEntityCustomMessage(String ratificationEntityCustomMessage) {
+		this.ratificationEntityCustomMessage = ratificationEntityCustomMessage;
+	}
+
+	public LocalDate getStateDate() {
+		return stateDate;
+	}
+
+	public void setStateDate(LocalDate stateDate) {
+		this.stateDate = stateDate;
+	}
+
+	public MultiLanguageString getPresidentTitle() {
+		return presidentTitle;
+	}
+
+	public void setPresidentTitle(MultiLanguageString presidentTitle) {
+		this.presidentTitle = presidentTitle;
+	}
 }

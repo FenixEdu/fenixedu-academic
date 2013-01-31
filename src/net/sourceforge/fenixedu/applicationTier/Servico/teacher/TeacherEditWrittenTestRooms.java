@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 
 public class TeacherEditWrittenTestRooms extends FenixService {
 
-    public void run(ExecutionCourse executionCourse, Teacher teacher, WrittenTest writtenTest, List<AllocatableSpace> rooms) {
-	writtenTest.teacherEditRooms(teacher, executionCourse.getExecutionPeriod(), rooms);
-    }
+	public void run(ExecutionCourse executionCourse, Teacher teacher, WrittenTest writtenTest, List<AllocatableSpace> rooms) {
+		writtenTest.teacherEditRooms(teacher, executionCourse.getExecutionPeriod(), rooms);
+	}
 }

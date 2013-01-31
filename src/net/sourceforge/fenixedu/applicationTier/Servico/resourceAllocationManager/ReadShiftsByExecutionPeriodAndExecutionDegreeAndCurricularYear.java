@@ -24,28 +24,28 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadShiftsByExecutionPeriodAndExecutionDegreeAndCurricularYear extends FenixService {
 
-    @Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
-    @Service
-    public static List<InfoShift> run(AcademicInterval academicInterval, InfoExecutionDegree infoExecutionDegree,
-	    InfoCurricularYear infoCurricularYear) {
+	@Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
+	@Service
+	public static List<InfoShift> run(AcademicInterval academicInterval, InfoExecutionDegree infoExecutionDegree,
+			InfoCurricularYear infoCurricularYear) {
 
-	final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(infoExecutionDegree.getIdInternal());
-	final DegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
-	final CurricularYear curricularYear = rootDomainObject.readCurricularYearByOID(infoCurricularYear.getIdInternal());
+		final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(infoExecutionDegree.getIdInternal());
+		final DegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
+		final CurricularYear curricularYear = rootDomainObject.readCurricularYearByOID(infoCurricularYear.getIdInternal());
 
-	final List<InfoShift> infoShifts = new ArrayList<InfoShift>();
-	final List<ExecutionCourse> executionCourses = ExecutionCourse
-		.filterByAcademicIntervalAndDegreeCurricularPlanAndCurricularYearAndName(academicInterval, degreeCurricularPlan,
-			curricularYear, "%");
-	for (final ExecutionCourse executionCourse : executionCourses) {
-	    for (final Shift shift : executionCourse.getAssociatedShifts()) {
-		final InfoShift infoShift = new InfoShift(shift);
-		infoShifts.add(infoShift);
-	    }
+		final List<InfoShift> infoShifts = new ArrayList<InfoShift>();
+		final List<ExecutionCourse> executionCourses =
+				ExecutionCourse.filterByAcademicIntervalAndDegreeCurricularPlanAndCurricularYearAndName(academicInterval,
+						degreeCurricularPlan, curricularYear, "%");
+		for (final ExecutionCourse executionCourse : executionCourses) {
+			for (final Shift shift : executionCourse.getAssociatedShifts()) {
+				final InfoShift infoShift = new InfoShift(shift);
+				infoShifts.add(infoShift);
+			}
+		}
+
+		return infoShifts;
+
 	}
-
-	return infoShifts;
-
-    }
 
 }

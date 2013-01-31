@@ -11,32 +11,33 @@ import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcessS
 
 public class RequestRatifyCandidacy extends PhdProgramCandidacyProcessActivity {
 
-    @Override
-    protected void activityPreConditions(PhdProgramCandidacyProcess process, IUserView userView) {
-	if (!process.isInState(PhdProgramCandidacyProcessState.PENDING_FOR_COORDINATOR_OPINION)) {
-	    throw new PreConditionNotValidException();
-	}
-    }
-
-    @Override
-    protected PhdProgramCandidacyProcess executeActivity(PhdProgramCandidacyProcess process, IUserView userView, Object object) {
-	final PhdProgramCandidacyProcessStateBean bean = (PhdProgramCandidacyProcessStateBean) object;
-
-	if (!process.getIndividualProgramProcess().getPhdConfigurationIndividualProgramProcess().isMigratedProcess()
-		&& process.getCandidacyReviewDocuments().isEmpty()) {
-	    throw new DomainException(
-		    "error.phd.candidacy.PhdProgramCandidacyProcess.RequestRatifyCandidacy.candidacy.review.document.is.required");
+	@Override
+	protected void activityPreConditions(PhdProgramCandidacyProcess process, IUserView userView) {
+		if (!process.isInState(PhdProgramCandidacyProcessState.PENDING_FOR_COORDINATOR_OPINION)) {
+			throw new PreConditionNotValidException();
+		}
 	}
 
-	process.createState(PhdProgramCandidacyProcessState.WAITING_FOR_SCIENTIFIC_COUNCIL_RATIFICATION, userView.getPerson(),
-		bean.getRemarks());
+	@Override
+	protected PhdProgramCandidacyProcess executeActivity(PhdProgramCandidacyProcess process, IUserView userView, Object object) {
+		final PhdProgramCandidacyProcessStateBean bean = (PhdProgramCandidacyProcessStateBean) object;
 
-	if (bean.getGenerateAlert()) {
-	    AlertService.alertAcademicOffice(process.getIndividualProgramProcess(), AcademicOperationType.VIEW_PHD_CANDIDACY_ALERTS,
-		    "message.phd.alert.candidacy.request.ratify.subject", "message.phd.alert.candidacy.request.ratify.body");
+		if (!process.getIndividualProgramProcess().getPhdConfigurationIndividualProgramProcess().isMigratedProcess()
+				&& process.getCandidacyReviewDocuments().isEmpty()) {
+			throw new DomainException(
+					"error.phd.candidacy.PhdProgramCandidacyProcess.RequestRatifyCandidacy.candidacy.review.document.is.required");
+		}
+
+		process.createState(PhdProgramCandidacyProcessState.WAITING_FOR_SCIENTIFIC_COUNCIL_RATIFICATION, userView.getPerson(),
+				bean.getRemarks());
+
+		if (bean.getGenerateAlert()) {
+			AlertService.alertAcademicOffice(process.getIndividualProgramProcess(),
+					AcademicOperationType.VIEW_PHD_CANDIDACY_ALERTS, "message.phd.alert.candidacy.request.ratify.subject",
+					"message.phd.alert.candidacy.request.ratify.body");
+		}
+
+		return process;
 	}
-
-	return process;
-    }
 
 }

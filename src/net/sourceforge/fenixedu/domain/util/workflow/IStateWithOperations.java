@@ -13,8 +13,8 @@ import net.sourceforge.fenixedu.domain.Person;
  */
 public interface IStateWithOperations extends IState {
 
-    public Collection<Operation> getOperationsForPerson(Person person);
+	public Collection<Operation> getOperationsForPerson(Person person);
 
-    public void onOperationFinished(Operation operation, Person person);
+	public void onOperationFinished(Operation operation, Person person);
 
 }

@@ -11,8 +11,8 @@ package net.sourceforge.fenixedu.domain;
  */
 public enum CareerType {
 
-    PROFESSIONAL,
+	PROFESSIONAL,
 
-    TEACHING;
+	TEACHING;
 
 }

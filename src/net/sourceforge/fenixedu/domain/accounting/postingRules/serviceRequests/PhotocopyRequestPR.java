@@ -13,31 +13,31 @@ import org.joda.time.DateTime;
 
 public class PhotocopyRequestPR extends PhotocopyRequestPR_Base {
 
-    protected PhotocopyRequestPR() {
-	super();
-    }
+	protected PhotocopyRequestPR() {
+		super();
+	}
 
-    public PhotocopyRequestPR(final ServiceAgreementTemplate serviceAgreementTemplate, final DateTime startDate,
-	    final DateTime endDate, final Money baseAmount, final Money amountPerPage) {
-	this();
-	super.init(EntryType.PHOTOCOPY_REQUEST_FEE, EventType.PHOTOCOPY_REQUEST, startDate, endDate, serviceAgreementTemplate,
-		baseAmount, amountPerPage);
-    }
+	public PhotocopyRequestPR(final ServiceAgreementTemplate serviceAgreementTemplate, final DateTime startDate,
+			final DateTime endDate, final Money baseAmount, final Money amountPerPage) {
+		this();
+		super.init(EntryType.PHOTOCOPY_REQUEST_FEE, EventType.PHOTOCOPY_REQUEST, startDate, endDate, serviceAgreementTemplate,
+				baseAmount, amountPerPage);
+	}
 
-    public PhotocopyRequestPR edit(final Money baseAmount, final Money amountPerUnit) {
-	deactivate();
-	return new PhotocopyRequestPR(getServiceAgreementTemplate(), new DateTime().minus(1000), null, baseAmount, amountPerUnit);
-    }
+	public PhotocopyRequestPR edit(final Money baseAmount, final Money amountPerUnit) {
+		deactivate();
+		return new PhotocopyRequestPR(getServiceAgreementTemplate(), new DateTime().minus(1000), null, baseAmount, amountPerUnit);
+	}
 
-    @Override
-    protected Money getAmountForPages(final Event event) {
-	final PhotocopyRequestEvent requestEvent = (PhotocopyRequestEvent) event;
-	final int extraPages = requestEvent.getNumberOfPages().intValue() - 1;
-	return getAmountPerPage().multiply(BigDecimal.valueOf(extraPages < 0 ? 0 : extraPages));
-    }
+	@Override
+	protected Money getAmountForPages(final Event event) {
+		final PhotocopyRequestEvent requestEvent = (PhotocopyRequestEvent) event;
+		final int extraPages = requestEvent.getNumberOfPages().intValue() - 1;
+		return getAmountPerPage().multiply(BigDecimal.valueOf(extraPages < 0 ? 0 : extraPages));
+	}
 
-    @Override
-    protected boolean isUrgent(final Event event) {
-	return ((PhotocopyRequestEvent) event).isUrgentRequest();
-    }
+	@Override
+	protected boolean isUrgent(final Event event) {
+		return ((PhotocopyRequestEvent) event).isUrgentRequest();
+	}
 }

@@ -12,43 +12,43 @@ import org.joda.time.LocalDate;
 
 public class RatifyFinalThesis extends PhdThesisActivity {
 
-    @Override
-    protected void activityPreConditions(PhdThesisProcess process, IUserView userView) {
+	@Override
+	protected void activityPreConditions(PhdThesisProcess process, IUserView userView) {
 
-	if (!process.isAllowedToManageProcess(userView)) {
-	    throw new PreConditionNotValidException();
+		if (!process.isAllowedToManageProcess(userView)) {
+			throw new PreConditionNotValidException();
+		}
+
+		if (process.getActiveState() != PhdThesisProcessStateType.WAITING_FOR_THESIS_RATIFICATION) {
+			throw new PreConditionNotValidException();
+		}
+
 	}
 
-	if (process.getActiveState() != PhdThesisProcessStateType.WAITING_FOR_THESIS_RATIFICATION) {
-	    throw new PreConditionNotValidException();
+	@Override
+	protected PhdThesisProcess executeActivity(PhdThesisProcess process, IUserView userView, Object object) {
+
+		final PhdThesisProcessBean bean = (PhdThesisProcessBean) object;
+
+		checkParameters(bean);
+		LocalDate whenFinalThesisRatified = bean.getWhenFinalThesisRatified();
+		process.setWhenFinalThesisRatified(whenFinalThesisRatified);
+
+		for (final PhdProgramDocumentUploadBean document : bean.getDocuments()) {
+			if (document.hasAnyInformation()) {
+				process.addDocument(document, userView.getPerson());
+			}
+		}
+
+		process.createState(PhdThesisProcessStateType.WAITING_FOR_FINAL_GRADE, userView.getPerson(), bean.getRemarks());
+
+		return process;
 	}
 
-    }
-
-    @Override
-    protected PhdThesisProcess executeActivity(PhdThesisProcess process, IUserView userView, Object object) {
-
-	final PhdThesisProcessBean bean = (PhdThesisProcessBean) object;
-
-	checkParameters(bean);
-	LocalDate whenFinalThesisRatified = bean.getWhenFinalThesisRatified();
-	process.setWhenFinalThesisRatified(whenFinalThesisRatified);
-
-	for (final PhdProgramDocumentUploadBean document : bean.getDocuments()) {
-	    if (document.hasAnyInformation()) {
-		process.addDocument(document, userView.getPerson());
-	    }
+	private void checkParameters(final PhdThesisProcessBean bean) {
+		if (bean.getWhenFinalThesisRatified() == null) {
+			throw new DomainException("error.RatifyFinalThesis.invalid.final.thesis.ratified.date");
+		}
 	}
-
-	process.createState(PhdThesisProcessStateType.WAITING_FOR_FINAL_GRADE, userView.getPerson(), bean.getRemarks());
-
-	return process;
-    }
-
-    private void checkParameters(final PhdThesisProcessBean bean) {
-	if (bean.getWhenFinalThesisRatified() == null) {
-	    throw new DomainException("error.RatifyFinalThesis.invalid.final.thesis.ratified.date");
-	}
-    }
 
 }

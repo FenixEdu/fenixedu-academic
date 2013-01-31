@@ -5,17 +5,17 @@ import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 
 public class HasEnrolmentsForExecutionSemesterPaymentPlanRule implements PaymentPlanRule {
 
-    HasEnrolmentsForExecutionSemesterPaymentPlanRule() {
-    }
-    
-    @Override
-    public boolean isEvaluatedInNotSpecificPaymentRules() {
-        return false;
-    }
+	HasEnrolmentsForExecutionSemesterPaymentPlanRule() {
+	}
 
-    @Override
-    public boolean isAppliableFor(StudentCurricularPlan studentCurricularPlan, ExecutionYear executionYear) {
-	return studentCurricularPlan.hasAnyEnrolmentForExecutionPeriod(executionYear.getFirstExecutionPeriod());
-    }
+	@Override
+	public boolean isEvaluatedInNotSpecificPaymentRules() {
+		return false;
+	}
+
+	@Override
+	public boolean isAppliableFor(StudentCurricularPlan studentCurricularPlan, ExecutionYear executionYear) {
+		return studentCurricularPlan.hasAnyEnrolmentForExecutionPeriod(executionYear.getFirstExecutionPeriod());
+	}
 
 }

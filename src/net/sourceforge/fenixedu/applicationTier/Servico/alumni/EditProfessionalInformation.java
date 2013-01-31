@@ -7,10 +7,10 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class EditProfessionalInformation extends FenixService {
 
-    @Service
-    public static void run(final AlumniJobBean jobBean) {
+	@Service
+	public static void run(final AlumniJobBean jobBean) {
 
-	Job job = rootDomainObject.readJobByOID(jobBean.getJobId());
-	job.edit(jobBean);	
-    }
+		Job job = rootDomainObject.readJobByOID(jobBean.getJobId());
+		job.edit(jobBean);
+	}
 }

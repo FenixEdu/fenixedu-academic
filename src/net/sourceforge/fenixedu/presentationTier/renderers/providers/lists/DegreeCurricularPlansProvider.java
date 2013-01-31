@@ -11,19 +11,23 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class DegreeCurricularPlansProvider implements DataProvider {
 
-    public Object provide(Object source, Object currentValue) {
-	final SortedSet<DegreeCurricularPlan> result = new TreeSet<DegreeCurricularPlan>(
-		DegreeCurricularPlan.DEGREE_CURRICULAR_PLAN_COMPARATOR_BY_DEGREE_TYPE_AND_EXECUTION_DEGREE_AND_DEGREE_CODE);
+	@Override
+	public Object provide(Object source, Object currentValue) {
+		final SortedSet<DegreeCurricularPlan> result =
+				new TreeSet<DegreeCurricularPlan>(
+						DegreeCurricularPlan.DEGREE_CURRICULAR_PLAN_COMPARATOR_BY_DEGREE_TYPE_AND_EXECUTION_DEGREE_AND_DEGREE_CODE);
 
-	ExecutionDegreeListBean executionDegreeListBean = (ExecutionDegreeListBean) source;
-	if (executionDegreeListBean.getDegree() != null)
-	    result.addAll(executionDegreeListBean.getDegree().getDegreeCurricularPlans());
+		ExecutionDegreeListBean executionDegreeListBean = (ExecutionDegreeListBean) source;
+		if (executionDegreeListBean.getDegree() != null) {
+			result.addAll(executionDegreeListBean.getDegree().getDegreeCurricularPlans());
+		}
 
-	return result;
-    }
+		return result;
+	}
 
-    public Converter getConverter() {
-	return new DomainObjectKeyConverter();
-    }
+	@Override
+	public Converter getConverter() {
+		return new DomainObjectKeyConverter();
+	}
 
 }

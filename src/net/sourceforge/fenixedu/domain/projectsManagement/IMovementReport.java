@@ -11,35 +11,35 @@ import java.util.List;
  * 
  */
 public interface IMovementReport {
-    public abstract String getParentDate();
+	public abstract String getParentDate();
 
-    public abstract void setParentDate(String parentDate);
+	public abstract void setParentDate(String parentDate);
 
-    public abstract String getParentDescription();
+	public abstract String getParentDescription();
 
-    public abstract void setParentDescription(String parentDescription);
+	public abstract void setParentDescription(String parentDescription);
 
-    public abstract String getParentMovementId();
+	public abstract String getParentMovementId();
 
-    public abstract void setParentMovementId(String parentMovementId);
+	public abstract void setParentMovementId(String parentMovementId);
 
-    public abstract String getParentProjectCode();
+	public abstract String getParentProjectCode();
 
-    public abstract void setParentProjectCode(String parentProjectCode);
+	public abstract void setParentProjectCode(String parentProjectCode);
 
-    public abstract Integer getParentRubricId();
+	public abstract Integer getParentRubricId();
 
-    public abstract void setParentRubricId(Integer parentRubricId);
+	public abstract void setParentRubricId(Integer parentRubricId);
 
-    public abstract String getParentType();
+	public abstract String getParentType();
 
-    public abstract void setParentType(String parentType);
+	public abstract void setParentType(String parentType);
 
-    public abstract Double getParentValue();
+	public abstract Double getParentValue();
 
-    public abstract void setParentValue(Double parentValue);
+	public abstract void setParentValue(Double parentValue);
 
-    public abstract List getMovements();
+	public abstract List getMovements();
 
-    public abstract void setMovements(List movements);
+	public abstract void setMovements(List movements);
 }

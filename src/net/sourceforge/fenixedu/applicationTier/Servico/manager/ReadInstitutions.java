@@ -21,19 +21,19 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadInstitutions extends FenixService {
 
-    @Checked("RolePredicates.MANAGER_PREDICATE")
-    @Service
-    public static List run() {
+	@Checked("RolePredicates.MANAGER_PREDICATE")
+	@Service
+	public static List run() {
 
-	List<Unit> institutions = UnitUtils.readAllExternalInstitutionUnits();
+		List<Unit> institutions = UnitUtils.readAllExternalInstitutionUnits();
 
-	List<InfoInstitution> infoInstitutions = new ArrayList<InfoInstitution>();
-	for (Unit institution : institutions) {
-	    InfoInstitution infoInstitution = new InfoInstitution();
-	    infoInstitution.copyFromDomain(institution);
-	    infoInstitutions.add(infoInstitution);
+		List<InfoInstitution> infoInstitutions = new ArrayList<InfoInstitution>();
+		for (Unit institution : institutions) {
+			InfoInstitution infoInstitution = new InfoInstitution();
+			infoInstitution.copyFromDomain(institution);
+			infoInstitutions.add(infoInstitution);
+		}
+
+		return infoInstitutions;
 	}
-
-	return infoInstitutions;
-    }
 }

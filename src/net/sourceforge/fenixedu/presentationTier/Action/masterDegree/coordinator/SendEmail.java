@@ -16,35 +16,29 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(module = "coordinator", path = "/sendEmail")
 public class SendEmail extends FenixDispatchAction {
 
-    private DegreeCurricularPlan getDegreeCurricularPlan(HttpServletRequest request) {
-	String parameter = request.getParameter("degreeCurricularPlanID");
+	private DegreeCurricularPlan getDegreeCurricularPlan(HttpServletRequest request) {
+		String parameter = request.getParameter("degreeCurricularPlanID");
 
-	if (parameter == null) {
-	    return null;
+		if (parameter == null) {
+			return null;
+		}
+
+		try {
+			Integer oid = new Integer(parameter);
+			return RootDomainObject.getInstance().readDegreeCurricularPlanByOID(oid);
+		} catch (NumberFormatException e) {
+			return null;
+		}
 	}
 
-	try {
-	    Integer oid = new Integer(parameter);
-	    return RootDomainObject.getInstance().readDegreeCurricularPlanByOID(oid);
-	} catch (NumberFormatException e) {
-	    return null;
+	public ActionForward sendEmail(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) {
+		Degree degree = getDegreeCurricularPlan(request).getDegree();
+		Sender sender = CoordinatorSender.newInstance(degree);
+		return EmailsDA.sendEmail(request, sender);
 	}
-    }
-
-    public ActionForward sendEmail(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) {
-	Degree degree = getDegreeCurricularPlan(request).getDegree();
-	Sender sender = CoordinatorSender.newInstance(degree);
-	return EmailsDA.sendEmail(request, sender);
-    }
 }

@@ -7,10 +7,10 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class DeleteFunctionalityParameter extends FenixService {
 
-    @Checked("RolePredicates.MANAGER_PREDICATE")
-    @Service
-    public static void run(FunctionalityParameter functionalityParameter) {
-	functionalityParameter.delete();
-    }
+	@Checked("RolePredicates.MANAGER_PREDICATE")
+	@Service
+	public static void run(FunctionalityParameter functionalityParameter) {
+		functionalityParameter.delete();
+	}
 
 }

@@ -11,24 +11,24 @@ import net.sourceforge.fenixedu.domain.Person;
  */
 public class AffiliatedTeacherDTO extends TeacherDTO {
 
-    private Person person;
+	private Person person;
 
-    public AffiliatedTeacherDTO(Person person) {
-	this.person = person;
-    }
+	public AffiliatedTeacherDTO(Person person) {
+		this.person = person;
+	}
 
-    @Override
-    public Person getTeacher() {
-	return person;
-    }
+	@Override
+	public Person getTeacher() {
+		return person;
+	}
 
-    @Override
-    public String getName() {
-	return person.getName();
-    }
+	@Override
+	public String getName() {
+		return person.getName();
+	}
 
-    @Override
-    public Integer getPersonID() {
-	return person.getIdInternal();
-    }
+	@Override
+	public Integer getPersonID() {
+		return person.getIdInternal();
+	}
 }

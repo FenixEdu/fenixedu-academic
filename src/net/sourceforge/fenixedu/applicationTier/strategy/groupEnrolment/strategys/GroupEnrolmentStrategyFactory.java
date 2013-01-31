@@ -14,38 +14,40 @@ import net.sourceforge.fenixedu.util.EnrolmentGroupPolicyType;
 
 public class GroupEnrolmentStrategyFactory implements IGroupEnrolmentStrategyFactory {
 
-    private static GroupEnrolmentStrategyFactory instance = null;
+	private static GroupEnrolmentStrategyFactory instance = null;
 
-    private GroupEnrolmentStrategyFactory() {
-    }
-
-    public static synchronized GroupEnrolmentStrategyFactory getInstance() {
-	if (instance == null) {
-	    instance = new GroupEnrolmentStrategyFactory();
+	private GroupEnrolmentStrategyFactory() {
 	}
-	return instance;
-    }
 
-    public static synchronized void resetInstance() {
-	if (instance != null) {
-	    instance = null;
+	public static synchronized GroupEnrolmentStrategyFactory getInstance() {
+		if (instance == null) {
+			instance = new GroupEnrolmentStrategyFactory();
+		}
+		return instance;
 	}
-    }
 
-    public IGroupEnrolmentStrategy getGroupEnrolmentStrategyInstance(Grouping grouping) {
-
-	IGroupEnrolmentStrategy strategyInstance = null;
-	EnrolmentGroupPolicyType policy = grouping.getEnrolmentPolicy();
-
-	if (policy == null)
-	    throw new IllegalArgumentException("Must initialize Group Properties!");
-
-	if (policy.equals(new EnrolmentGroupPolicyType(1))) {
-	    strategyInstance = new AtomicGroupEnrolmentStrategy();
-	} else if (policy.equals(new EnrolmentGroupPolicyType(2))) {
-	    strategyInstance = new IndividualGroupEnrolmentStrategy();
+	public static synchronized void resetInstance() {
+		if (instance != null) {
+			instance = null;
+		}
 	}
-	return strategyInstance;
-    }
+
+	@Override
+	public IGroupEnrolmentStrategy getGroupEnrolmentStrategyInstance(Grouping grouping) {
+
+		IGroupEnrolmentStrategy strategyInstance = null;
+		EnrolmentGroupPolicyType policy = grouping.getEnrolmentPolicy();
+
+		if (policy == null) {
+			throw new IllegalArgumentException("Must initialize Group Properties!");
+		}
+
+		if (policy.equals(new EnrolmentGroupPolicyType(1))) {
+			strategyInstance = new AtomicGroupEnrolmentStrategy();
+		} else if (policy.equals(new EnrolmentGroupPolicyType(2))) {
+			strategyInstance = new IndividualGroupEnrolmentStrategy();
+		}
+		return strategyInstance;
+	}
 
 }

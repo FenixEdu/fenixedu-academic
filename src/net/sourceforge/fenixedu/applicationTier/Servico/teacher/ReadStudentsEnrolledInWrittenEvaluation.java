@@ -25,48 +25,48 @@ import net.sourceforge.fenixedu.domain.WrittenTest;
 
 public class ReadStudentsEnrolledInWrittenEvaluation extends FenixService {
 
-    public SiteView run(Integer executionCourseID, Integer writtenEvaluationID) throws FenixServiceException {
+	public SiteView run(Integer executionCourseID, Integer writtenEvaluationID) throws FenixServiceException {
 
-	final WrittenEvaluation writtenEvaluation = (WrittenEvaluation) rootDomainObject.readEvaluationByOID(writtenEvaluationID);
-	if (writtenEvaluation == null) {
-	    throw new FenixServiceException("error.noWrittenEvaluation");
+		final WrittenEvaluation writtenEvaluation = (WrittenEvaluation) rootDomainObject.readEvaluationByOID(writtenEvaluationID);
+		if (writtenEvaluation == null) {
+			throw new FenixServiceException("error.noWrittenEvaluation");
+		}
+
+		final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseID);
+		final ExecutionCourseSite site = executionCourse.getSite();
+		if (site == null) {
+			throw new FenixServiceException("error.noSite");
+		}
+
+		final List<WrittenEvaluationEnrolment> writtenEvaluationEnrolmentList =
+				writtenEvaluation.getWrittenEvaluationEnrolments();
+
+		final List<InfoStudent> infoStudents = new ArrayList<InfoStudent>(writtenEvaluationEnrolmentList.size());
+		final List<InfoWrittenEvaluationEnrolment> infoWrittenEvaluationEnrolments =
+				new ArrayList<InfoWrittenEvaluationEnrolment>(writtenEvaluationEnrolmentList.size());
+
+		for (final WrittenEvaluationEnrolment writtenEvaluationEnrolment : writtenEvaluationEnrolmentList) {
+			infoStudents.add(InfoStudent.newInfoFromDomain(writtenEvaluationEnrolment.getStudent()));
+			infoWrittenEvaluationEnrolments.add(InfoWrittenEvaluationEnrolmentWithInfoStudentAndInfoRoom
+					.newInfoFromDomain(writtenEvaluationEnrolment));
+		}
+
+		ISiteComponent component = null;
+		if (writtenEvaluation instanceof Exam) {
+			final InfoExam infoExam = InfoExam.newInfoFromDomain((Exam) writtenEvaluation);
+			component = new InfoSiteTeacherStudentsEnrolledList(infoStudents, infoExam, infoWrittenEvaluationEnrolments);
+		} else if (writtenEvaluation instanceof WrittenTest) {
+			final InfoWrittenTest infoWrittenTest = InfoWrittenTest.newInfoFromDomain((WrittenTest) writtenEvaluation);
+			component = new InfoSiteTeacherStudentsEnrolledList(infoStudents, infoWrittenTest, infoWrittenEvaluationEnrolments);
+		} else {
+			throw new FenixServiceException("error.noWrittenEvaluation");
+		}
+
+		final TeacherAdministrationSiteComponentBuilder componentBuilder =
+				TeacherAdministrationSiteComponentBuilder.getInstance();
+		final ISiteComponent commonComponent = componentBuilder.getComponent(new InfoSiteCommon(), site, null, null, null);
+		final TeacherAdministrationSiteView siteView = new TeacherAdministrationSiteView(commonComponent, component);
+
+		return siteView;
 	}
-
-	final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseID);
-	final ExecutionCourseSite site = executionCourse.getSite();
-	if (site == null) {
-	    throw new FenixServiceException("error.noSite");
-	}
-
-	final List<WrittenEvaluationEnrolment> writtenEvaluationEnrolmentList = writtenEvaluation
-		.getWrittenEvaluationEnrolments();
-
-	final List<InfoStudent> infoStudents = new ArrayList<InfoStudent>(writtenEvaluationEnrolmentList.size());
-	final List<InfoWrittenEvaluationEnrolment> infoWrittenEvaluationEnrolments = new ArrayList<InfoWrittenEvaluationEnrolment>(
-		writtenEvaluationEnrolmentList.size());
-
-	for (final WrittenEvaluationEnrolment writtenEvaluationEnrolment : writtenEvaluationEnrolmentList) {
-	    infoStudents.add(InfoStudent.newInfoFromDomain(writtenEvaluationEnrolment.getStudent()));
-	    infoWrittenEvaluationEnrolments.add(InfoWrittenEvaluationEnrolmentWithInfoStudentAndInfoRoom
-		    .newInfoFromDomain(writtenEvaluationEnrolment));
-	}
-
-	ISiteComponent component = null;
-	if (writtenEvaluation instanceof Exam) {
-	    final InfoExam infoExam = InfoExam.newInfoFromDomain((Exam) writtenEvaluation);
-	    component = new InfoSiteTeacherStudentsEnrolledList(infoStudents, infoExam, infoWrittenEvaluationEnrolments);
-	} else if (writtenEvaluation instanceof WrittenTest) {
-	    final InfoWrittenTest infoWrittenTest = InfoWrittenTest.newInfoFromDomain((WrittenTest) writtenEvaluation);
-	    component = new InfoSiteTeacherStudentsEnrolledList(infoStudents, infoWrittenTest, infoWrittenEvaluationEnrolments);
-	} else {
-	    throw new FenixServiceException("error.noWrittenEvaluation");
-	}
-
-	final TeacherAdministrationSiteComponentBuilder componentBuilder = TeacherAdministrationSiteComponentBuilder
-		.getInstance();
-	final ISiteComponent commonComponent = componentBuilder.getComponent(new InfoSiteCommon(), site, null, null, null);
-	final TeacherAdministrationSiteView siteView = new TeacherAdministrationSiteView(commonComponent, component);
-
-	return siteView;
-    }
 }

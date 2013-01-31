@@ -14,14 +14,14 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class ReadCurricularCourseByID extends FenixService {
 
-    @Service
-    public static InfoCurricularCourse run(Integer curricularCourseID) throws FenixServiceException {
-	CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(curricularCourseID);
+	@Service
+	public static InfoCurricularCourse run(Integer curricularCourseID) throws FenixServiceException {
+		CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(curricularCourseID);
 
-	if (curricularCourse == null) {
-	    throw new NonExistingServiceException();
+		if (curricularCourse == null) {
+			throw new NonExistingServiceException();
+		}
+
+		return InfoCurricularCourse.newInfoFromDomain(curricularCourse);
 	}
-
-	return InfoCurricularCourse.newInfoFromDomain(curricularCourse);
-    }
 }

@@ -19,209 +19,209 @@ import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class InquiryGroupQuestionBean implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    private StudentInquiryRegistry studentInquiryRegistry;
-    private InquiryGroupQuestion inquiryGroupQuestion;
-    private SortedSet<InquiryQuestionDTO> inquiryQuestions;
-    private Integer order;
-    private boolean joinUp;
-    private boolean isVisible;
-    private String[] conditionValues;
+	private StudentInquiryRegistry studentInquiryRegistry;
+	private InquiryGroupQuestion inquiryGroupQuestion;
+	private SortedSet<InquiryQuestionDTO> inquiryQuestions;
+	private Integer order;
+	private boolean joinUp;
+	private boolean isVisible;
+	private String[] conditionValues;
 
-    public InquiryGroupQuestionBean(InquiryGroupQuestion groupQuestion, StudentInquiryRegistry studentInquiryRegistry) {
-	initGroup(groupQuestion);
-	setStudentInquiryRegistry(studentInquiryRegistry);
-	setConditionOptions(studentInquiryRegistry);
-	for (InquiryQuestion inquiryQuestion : groupQuestion.getInquiryQuestions()) {
-	    getInquiryQuestions().add(new InquiryQuestionDTO(inquiryQuestion, studentInquiryRegistry));
-	}
-    }
-
-    public InquiryGroupQuestionBean(InquiryGroupQuestion inquiryGroupQuestion, InquiryAnswer inquiryAnswer) {
-	initGroup(inquiryGroupQuestion);
-	setVisible(true);
-	for (InquiryQuestion inquiryQuestion : inquiryGroupQuestion.getInquiryQuestions()) {
-	    getInquiryQuestions().add(new InquiryQuestionDTO(inquiryQuestion, inquiryAnswer));
-	}
-    }
-
-    public InquiryGroupQuestionBean(InquiryGroupQuestion inquiryGroupQuestion) {
-	initGroup(inquiryGroupQuestion);
-	setVisible(true);
-	for (InquiryQuestion inquiryQuestion : inquiryGroupQuestion.getInquiryQuestions()) {
-	    getInquiryQuestions().add(new InquiryQuestionDTO(inquiryQuestion));
-	}
-    }
-
-    private void initGroup(InquiryGroupQuestion groupQuestion) {
-	setInquiryGroupQuestion(groupQuestion);
-	setInquiryQuestions(new TreeSet<InquiryQuestionDTO>(new BeanComparator("inquiryQuestion.questionOrder")));
-	setOrder(groupQuestion.getGroupOrder());
-	setJoinUp(false);
-    }
-
-    private void setConditionOptions(StudentInquiryRegistry studentInquiryRegistry) {
-	setVisible(getInquiryGroupQuestion().isVisible(studentInquiryRegistry));
-	setConditionValues(getInquiryGroupQuestion().getConditionValues(studentInquiryRegistry));
-    }
-
-    //TODO validação para parte curricular do aluno, qd depender de resultados de respostas tem q se adaptar isto
-    public String validate(Set<InquiryBlockDTO> inquiryBlocks) {
-	if (isVisible()) {
-	    Set<InquiryQuestionDTO> questions = getInquiryQuestions();
-	    boolean isGroupFilledIn = false;
-	    for (InquiryQuestionDTO inquiryQuestionDTO : questions) {
-		InquiryQuestion inquiryQuestion = inquiryQuestionDTO.getInquiryQuestion();
-		if (StringUtils.isEmpty(inquiryQuestionDTO.getResponseValue())) {
-		    if (inquiryQuestion.getRequired()) {
-			return Boolean.toString(false);
-		    }
-		    String questionConditionsValidation = validateQuestionConditions(inquiryQuestion, inquiryBlocks);
-		    if (questionConditionsValidation != null) {
-			return questionConditionsValidation;
-		    }
-		} else {
-		    isGroupFilledIn = true;
+	public InquiryGroupQuestionBean(InquiryGroupQuestion groupQuestion, StudentInquiryRegistry studentInquiryRegistry) {
+		initGroup(groupQuestion);
+		setStudentInquiryRegistry(studentInquiryRegistry);
+		setConditionOptions(studentInquiryRegistry);
+		for (InquiryQuestion inquiryQuestion : groupQuestion.getInquiryQuestions()) {
+			getInquiryQuestions().add(new InquiryQuestionDTO(inquiryQuestion, studentInquiryRegistry));
 		}
-	    }
-	    if (getInquiryGroupQuestion().getRequired() && !isGroupFilledIn) {
-		return Boolean.toString(false);
-	    }
-	    String groupConditionsValidation = validateGroupConditions(inquiryBlocks, isGroupFilledIn);
-	    if (groupConditionsValidation != null) {
-		return groupConditionsValidation;
-	    }
 	}
-	return Boolean.toString(true);
-    }
 
-    public String validateMandatoryConditions(Set<InquiryBlockDTO> inquiryBlocks) {
-	if (isVisible()) {
-	    boolean isGroupFilledIn = false;
-	    for (InquiryQuestionDTO inquiryQuestionDTO : getInquiryQuestions()) {
-		InquiryQuestion inquiryQuestion = inquiryQuestionDTO.getInquiryQuestion();
-		if (StringUtils.isEmpty(inquiryQuestionDTO.getResponseValue())) {
-		    String questionConditionsValidation = validateQuestionConditions(inquiryQuestion, inquiryBlocks);
-		    if (questionConditionsValidation != null) {
-			return questionConditionsValidation;
-		    }
-		} else {
-		    isGroupFilledIn = true;
+	public InquiryGroupQuestionBean(InquiryGroupQuestion inquiryGroupQuestion, InquiryAnswer inquiryAnswer) {
+		initGroup(inquiryGroupQuestion);
+		setVisible(true);
+		for (InquiryQuestion inquiryQuestion : inquiryGroupQuestion.getInquiryQuestions()) {
+			getInquiryQuestions().add(new InquiryQuestionDTO(inquiryQuestion, inquiryAnswer));
 		}
-	    }
-	    String groupQuestionsValidation = validateGroupConditions(inquiryBlocks, isGroupFilledIn);
-	    if (groupQuestionsValidation != null) {
-		return groupQuestionsValidation;
-	    }
 	}
-	return Boolean.toString(true);
-    }
 
-    private String validateQuestionConditions(InquiryQuestion inquiryQuestion, Set<InquiryBlockDTO> inquiryBlocks) {
-	for (QuestionCondition questionCondition : inquiryQuestion.getQuestionConditions()) {
-	    if (questionCondition instanceof MandatoryCondition) {
-		MandatoryCondition condition = (MandatoryCondition) questionCondition;
-		InquiryQuestionDTO inquiryDependentQuestionBean = getInquiryQuestionBean(condition.getInquiryDependentQuestion(),
-			inquiryBlocks);
-		boolean isMandatory = condition.getConditionValuesAsList().contains(inquiryDependentQuestionBean.getFinalValue());
-		if (isMandatory) {
-		    return getQuestionIdentifier(inquiryQuestion.getLabel());
+	public InquiryGroupQuestionBean(InquiryGroupQuestion inquiryGroupQuestion) {
+		initGroup(inquiryGroupQuestion);
+		setVisible(true);
+		for (InquiryQuestion inquiryQuestion : inquiryGroupQuestion.getInquiryQuestions()) {
+			getInquiryQuestions().add(new InquiryQuestionDTO(inquiryQuestion));
 		}
-	    }
 	}
-	return null;
-    }
 
-    private String validateGroupConditions(Set<InquiryBlockDTO> inquiryBlocks, boolean isGroupFilledIn) {
-	for (QuestionCondition questionCondition : getInquiryGroupQuestion().getQuestionConditions()) {
-	    if (questionCondition instanceof MandatoryCondition) {
-		MandatoryCondition condition = (MandatoryCondition) questionCondition;
-		InquiryQuestionDTO inquiryDependentQuestionBean = getInquiryQuestionBean(condition.getInquiryDependentQuestion(),
-			inquiryBlocks);
-		boolean isMandatory = condition.getConditionValuesAsList().contains(inquiryDependentQuestionBean.getFinalValue());
-		if (isMandatory && !isGroupFilledIn) {
-		    return getQuestionIdentifier(getInquiryGroupQuestion().getInquiryQuestionHeader().getTitle());
+	private void initGroup(InquiryGroupQuestion groupQuestion) {
+		setInquiryGroupQuestion(groupQuestion);
+		setInquiryQuestions(new TreeSet<InquiryQuestionDTO>(new BeanComparator("inquiryQuestion.questionOrder")));
+		setOrder(groupQuestion.getGroupOrder());
+		setJoinUp(false);
+	}
+
+	private void setConditionOptions(StudentInquiryRegistry studentInquiryRegistry) {
+		setVisible(getInquiryGroupQuestion().isVisible(studentInquiryRegistry));
+		setConditionValues(getInquiryGroupQuestion().getConditionValues(studentInquiryRegistry));
+	}
+
+	//TODO validação para parte curricular do aluno, qd depender de resultados de respostas tem q se adaptar isto
+	public String validate(Set<InquiryBlockDTO> inquiryBlocks) {
+		if (isVisible()) {
+			Set<InquiryQuestionDTO> questions = getInquiryQuestions();
+			boolean isGroupFilledIn = false;
+			for (InquiryQuestionDTO inquiryQuestionDTO : questions) {
+				InquiryQuestion inquiryQuestion = inquiryQuestionDTO.getInquiryQuestion();
+				if (StringUtils.isEmpty(inquiryQuestionDTO.getResponseValue())) {
+					if (inquiryQuestion.getRequired()) {
+						return Boolean.toString(false);
+					}
+					String questionConditionsValidation = validateQuestionConditions(inquiryQuestion, inquiryBlocks);
+					if (questionConditionsValidation != null) {
+						return questionConditionsValidation;
+					}
+				} else {
+					isGroupFilledIn = true;
+				}
+			}
+			if (getInquiryGroupQuestion().getRequired() && !isGroupFilledIn) {
+				return Boolean.toString(false);
+			}
+			String groupConditionsValidation = validateGroupConditions(inquiryBlocks, isGroupFilledIn);
+			if (groupConditionsValidation != null) {
+				return groupConditionsValidation;
+			}
 		}
-	    }
+		return Boolean.toString(true);
 	}
-	return null;
-    }
 
-    private String getQuestionIdentifier(MultiLanguageString label) {
-	if (label != null) {
-	    int endIndex = label.toString().indexOf(" ");
-	    return label.toString().substring(0, endIndex);
-	}
-	return StringUtils.EMPTY;
-    }
-
-    private InquiryQuestionDTO getInquiryQuestionBean(InquiryQuestion inquiryQuestion, Set<InquiryBlockDTO> inquiryBlocks) {
-	for (InquiryBlockDTO blockDTO : inquiryBlocks) {
-	    for (InquiryGroupQuestionBean groupQuestionBean : blockDTO.getInquiryGroups()) {
-		for (InquiryQuestionDTO inquiryQuestionDTO : groupQuestionBean.getInquiryQuestions()) {
-		    if (inquiryQuestionDTO.getInquiryQuestion() == inquiryQuestion) {
-			return inquiryQuestionDTO;
-		    }
+	public String validateMandatoryConditions(Set<InquiryBlockDTO> inquiryBlocks) {
+		if (isVisible()) {
+			boolean isGroupFilledIn = false;
+			for (InquiryQuestionDTO inquiryQuestionDTO : getInquiryQuestions()) {
+				InquiryQuestion inquiryQuestion = inquiryQuestionDTO.getInquiryQuestion();
+				if (StringUtils.isEmpty(inquiryQuestionDTO.getResponseValue())) {
+					String questionConditionsValidation = validateQuestionConditions(inquiryQuestion, inquiryBlocks);
+					if (questionConditionsValidation != null) {
+						return questionConditionsValidation;
+					}
+				} else {
+					isGroupFilledIn = true;
+				}
+			}
+			String groupQuestionsValidation = validateGroupConditions(inquiryBlocks, isGroupFilledIn);
+			if (groupQuestionsValidation != null) {
+				return groupQuestionsValidation;
+			}
 		}
-	    }
+		return Boolean.toString(true);
 	}
-	return null;
-    }
 
-    public SortedSet<InquiryQuestionDTO> getInquiryQuestions() {
-	return inquiryQuestions;
-    }
+	private String validateQuestionConditions(InquiryQuestion inquiryQuestion, Set<InquiryBlockDTO> inquiryBlocks) {
+		for (QuestionCondition questionCondition : inquiryQuestion.getQuestionConditions()) {
+			if (questionCondition instanceof MandatoryCondition) {
+				MandatoryCondition condition = (MandatoryCondition) questionCondition;
+				InquiryQuestionDTO inquiryDependentQuestionBean =
+						getInquiryQuestionBean(condition.getInquiryDependentQuestion(), inquiryBlocks);
+				boolean isMandatory = condition.getConditionValuesAsList().contains(inquiryDependentQuestionBean.getFinalValue());
+				if (isMandatory) {
+					return getQuestionIdentifier(inquiryQuestion.getLabel());
+				}
+			}
+		}
+		return null;
+	}
 
-    public void setInquiryQuestions(SortedSet<InquiryQuestionDTO> inquiryQuestions) {
-	this.inquiryQuestions = inquiryQuestions;
-    }
+	private String validateGroupConditions(Set<InquiryBlockDTO> inquiryBlocks, boolean isGroupFilledIn) {
+		for (QuestionCondition questionCondition : getInquiryGroupQuestion().getQuestionConditions()) {
+			if (questionCondition instanceof MandatoryCondition) {
+				MandatoryCondition condition = (MandatoryCondition) questionCondition;
+				InquiryQuestionDTO inquiryDependentQuestionBean =
+						getInquiryQuestionBean(condition.getInquiryDependentQuestion(), inquiryBlocks);
+				boolean isMandatory = condition.getConditionValuesAsList().contains(inquiryDependentQuestionBean.getFinalValue());
+				if (isMandatory && !isGroupFilledIn) {
+					return getQuestionIdentifier(getInquiryGroupQuestion().getInquiryQuestionHeader().getTitle());
+				}
+			}
+		}
+		return null;
+	}
 
-    public void setInquiryGroupQuestion(InquiryGroupQuestion inquiryGroupQuestion) {
-	this.inquiryGroupQuestion = inquiryGroupQuestion;
-    }
+	private String getQuestionIdentifier(MultiLanguageString label) {
+		if (label != null) {
+			int endIndex = label.toString().indexOf(" ");
+			return label.toString().substring(0, endIndex);
+		}
+		return StringUtils.EMPTY;
+	}
 
-    public InquiryGroupQuestion getInquiryGroupQuestion() {
-	return inquiryGroupQuestion;
-    }
+	private InquiryQuestionDTO getInquiryQuestionBean(InquiryQuestion inquiryQuestion, Set<InquiryBlockDTO> inquiryBlocks) {
+		for (InquiryBlockDTO blockDTO : inquiryBlocks) {
+			for (InquiryGroupQuestionBean groupQuestionBean : blockDTO.getInquiryGroups()) {
+				for (InquiryQuestionDTO inquiryQuestionDTO : groupQuestionBean.getInquiryQuestions()) {
+					if (inquiryQuestionDTO.getInquiryQuestion() == inquiryQuestion) {
+						return inquiryQuestionDTO;
+					}
+				}
+			}
+		}
+		return null;
+	}
 
-    public void setJoinUp(boolean joinUp) {
-	this.joinUp = joinUp;
-    }
+	public SortedSet<InquiryQuestionDTO> getInquiryQuestions() {
+		return inquiryQuestions;
+	}
 
-    public boolean isJoinUp() {
-	return joinUp;
-    }
+	public void setInquiryQuestions(SortedSet<InquiryQuestionDTO> inquiryQuestions) {
+		this.inquiryQuestions = inquiryQuestions;
+	}
 
-    public void setOrder(Integer order) {
-	this.order = order;
-    }
+	public void setInquiryGroupQuestion(InquiryGroupQuestion inquiryGroupQuestion) {
+		this.inquiryGroupQuestion = inquiryGroupQuestion;
+	}
 
-    public Integer getOrder() {
-	return order;
-    }
+	public InquiryGroupQuestion getInquiryGroupQuestion() {
+		return inquiryGroupQuestion;
+	}
 
-    public void setStudentInquiryRegistry(StudentInquiryRegistry studentInquiryRegistry) {
-	this.studentInquiryRegistry = studentInquiryRegistry;
-    }
+	public void setJoinUp(boolean joinUp) {
+		this.joinUp = joinUp;
+	}
 
-    public StudentInquiryRegistry getStudentInquiryRegistry() {
-	return studentInquiryRegistry;
-    }
+	public boolean isJoinUp() {
+		return joinUp;
+	}
 
-    public void setVisible(boolean isVisible) {
-	this.isVisible = isVisible;
-    }
+	public void setOrder(Integer order) {
+		this.order = order;
+	}
 
-    public boolean isVisible() {
-	return isVisible;
-    }
+	public Integer getOrder() {
+		return order;
+	}
 
-    public void setConditionValues(String[] conditionValues) {
-	this.conditionValues = conditionValues;
-    }
+	public void setStudentInquiryRegistry(StudentInquiryRegistry studentInquiryRegistry) {
+		this.studentInquiryRegistry = studentInquiryRegistry;
+	}
 
-    public String[] getConditionValues() {
-	return conditionValues;
-    }
+	public StudentInquiryRegistry getStudentInquiryRegistry() {
+		return studentInquiryRegistry;
+	}
+
+	public void setVisible(boolean isVisible) {
+		this.isVisible = isVisible;
+	}
+
+	public boolean isVisible() {
+		return isVisible;
+	}
+
+	public void setConditionValues(String[] conditionValues) {
+		this.conditionValues = conditionValues;
+	}
+
+	public String[] getConditionValues() {
+		return conditionValues;
+	}
 }

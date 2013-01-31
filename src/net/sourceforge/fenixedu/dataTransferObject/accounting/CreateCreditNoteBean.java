@@ -9,51 +9,51 @@ import net.sourceforge.fenixedu.domain.accounting.Receipt;
 
 public class CreateCreditNoteBean implements Serializable {
 
-    private List<CreditNoteEntryDTO> creditNoteEntryDTOs;
+	private List<CreditNoteEntryDTO> creditNoteEntryDTOs;
 
-    private Receipt receipt;
+	private Receipt receipt;
 
-    public CreateCreditNoteBean(final Receipt receipt) {
-	setReceipt(receipt);
-	setCreditNoteEntryDTOs(buildCreditNoteEntryDTOs(receipt));
-    }
-
-    public Receipt getReceipt() {
-	return this.receipt;
-    }
-
-    public void setReceipt(Receipt receipt) {
-	this.receipt = receipt;
-    }
-
-    public List<CreditNoteEntryDTO> getCreditNoteEntryDTOs() {
-	return creditNoteEntryDTOs;
-    }
-
-    public void setCreditNoteEntryDTOs(List<CreditNoteEntryDTO> creditNoteEntryDTOs) {
-	this.creditNoteEntryDTOs = creditNoteEntryDTOs;
-    }
-
-    private List<CreditNoteEntryDTO> buildCreditNoteEntryDTOs(final Receipt receipt) {
-	final List<CreditNoteEntryDTO> result = new ArrayList<CreditNoteEntryDTO>();
-	for (final Entry entry : receipt.getReimbursableEntries()) {
-	    result.add(new CreditNoteEntryDTO(entry));
+	public CreateCreditNoteBean(final Receipt receipt) {
+		setReceipt(receipt);
+		setCreditNoteEntryDTOs(buildCreditNoteEntryDTOs(receipt));
 	}
 
-	return result;
-
-    }
-
-    public List<CreditNoteEntryDTO> getSelectedEntries() {
-	final List<CreditNoteEntryDTO> result = new ArrayList<CreditNoteEntryDTO>();
-
-	for (final CreditNoteEntryDTO creditNoteEntryDTO : getCreditNoteEntryDTOs()) {
-	    if (creditNoteEntryDTO.isSelected()) {
-		result.add(creditNoteEntryDTO);
-	    }
+	public Receipt getReceipt() {
+		return this.receipt;
 	}
 
-	return result;
-    }
+	public void setReceipt(Receipt receipt) {
+		this.receipt = receipt;
+	}
+
+	public List<CreditNoteEntryDTO> getCreditNoteEntryDTOs() {
+		return creditNoteEntryDTOs;
+	}
+
+	public void setCreditNoteEntryDTOs(List<CreditNoteEntryDTO> creditNoteEntryDTOs) {
+		this.creditNoteEntryDTOs = creditNoteEntryDTOs;
+	}
+
+	private List<CreditNoteEntryDTO> buildCreditNoteEntryDTOs(final Receipt receipt) {
+		final List<CreditNoteEntryDTO> result = new ArrayList<CreditNoteEntryDTO>();
+		for (final Entry entry : receipt.getReimbursableEntries()) {
+			result.add(new CreditNoteEntryDTO(entry));
+		}
+
+		return result;
+
+	}
+
+	public List<CreditNoteEntryDTO> getSelectedEntries() {
+		final List<CreditNoteEntryDTO> result = new ArrayList<CreditNoteEntryDTO>();
+
+		for (final CreditNoteEntryDTO creditNoteEntryDTO : getCreditNoteEntryDTOs()) {
+			if (creditNoteEntryDTO.isSelected()) {
+				result.add(creditNoteEntryDTO);
+			}
+		}
+
+		return result;
+	}
 
 }

@@ -14,44 +14,44 @@ import net.sourceforge.fenixedu.domain.Coordinator;
  */
 public class InfoCoordinator extends InfoObject {
 
-    private final Coordinator coordinator;
+	private final Coordinator coordinator;
 
-    public Coordinator getCoordinator() {
-	return coordinator;
-    }
+	public Coordinator getCoordinator() {
+		return coordinator;
+	}
 
-    public InfoCoordinator(final Coordinator coordinator) {
-	this.coordinator = coordinator;
-    }
+	public InfoCoordinator(final Coordinator coordinator) {
+		this.coordinator = coordinator;
+	}
 
-    public InfoExecutionDegree getInfoExecutionDegree() {
-	return InfoExecutionDegree.newInfoFromDomain(getCoordinator().getExecutionDegree());
-    }
+	public InfoExecutionDegree getInfoExecutionDegree() {
+		return InfoExecutionDegree.newInfoFromDomain(getCoordinator().getExecutionDegree());
+	}
 
-    public InfoTeacher getInfoTeacher() {
-	return InfoTeacher.newInfoFromDomain(getCoordinator().getPerson().getTeacher());
-    }
+	public InfoTeacher getInfoTeacher() {
+		return InfoTeacher.newInfoFromDomain(getCoordinator().getPerson().getTeacher());
+	}
 
-    public InfoPerson getInfoPerson() {
-	return InfoPerson.newInfoFromDomain(getCoordinator().getPerson());
-    }
+	public InfoPerson getInfoPerson() {
+		return InfoPerson.newInfoFromDomain(getCoordinator().getPerson());
+	}
 
-    public Boolean getResponsible() {
-	return getCoordinator().getResponsible();
-    }
+	public Boolean getResponsible() {
+		return getCoordinator().getResponsible();
+	}
 
-    public static InfoCoordinator newInfoFromDomain(final Coordinator coordinator) {
-	return coordinator == null ? null : new InfoCoordinator(coordinator);
-    }
+	public static InfoCoordinator newInfoFromDomain(final Coordinator coordinator) {
+		return coordinator == null ? null : new InfoCoordinator(coordinator);
+	}
 
-    @Override
-    public Integer getIdInternal() {
-	return getCoordinator().getIdInternal();
-    }
+	@Override
+	public Integer getIdInternal() {
+		return getCoordinator().getIdInternal();
+	}
 
-    @Override
-    public void setIdInternal(Integer integer) {
-	throw new Error("Method should not be called!");
-    }
+	@Override
+	public void setIdInternal(Integer integer) {
+		throw new Error("Method should not be called!");
+	}
 
 }

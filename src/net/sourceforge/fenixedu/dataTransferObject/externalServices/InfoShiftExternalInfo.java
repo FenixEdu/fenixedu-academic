@@ -12,36 +12,36 @@ package net.sourceforge.fenixedu.dataTransferObject.externalServices;
  *         Created at 12:42:44 PM, Mar 10, 2005
  */
 public class InfoShiftExternalInfo {
-    private String type;
-    private String startingTime;
+	private String type;
+	private String startingTime;
 
-    /**
-     * @return Returns the startingTime.
-     */
-    public String getStartingTime() {
-	return this.startingTime;
-    }
+	/**
+	 * @return Returns the startingTime.
+	 */
+	public String getStartingTime() {
+		return this.startingTime;
+	}
 
-    /**
-     * @param startingTime
-     *            The startingTime to set.
-     */
-    public void setStartingTime(String startingTime) {
-	this.startingTime = startingTime;
-    }
+	/**
+	 * @param startingTime
+	 *            The startingTime to set.
+	 */
+	public void setStartingTime(String startingTime) {
+		this.startingTime = startingTime;
+	}
 
-    /**
-     * @return Returns the type.
-     */
-    public String getType() {
-	return this.type;
-    }
+	/**
+	 * @return Returns the type.
+	 */
+	public String getType() {
+		return this.type;
+	}
 
-    /**
-     * @param type
-     *            The type to set.
-     */
-    public void setType(String type) {
-	this.type = type;
-    }
+	/**
+	 * @param type
+	 *            The type to set.
+	 */
+	public void setType(String type) {
+		this.type = type;
+	}
 }

@@ -13,55 +13,54 @@ import net.sourceforge.fenixedu.domain.contents.Content;
  */
 public class GroupAvailability extends GroupAvailability_Base {
 
-    protected GroupAvailability() {
-	super();
-    }
-
-    /**
-     * Creates a <code>GroupAvailability</code> to the given accessible item
-     * that relies on the given group to determine the availability
-     * 
-     * @param item
-     *            the target item
-     * @param expression
-     *            the group expression
-     * 
-     * @exception GroupExpressionException
-     *                when the expression is not correct
-     */
-    public GroupAvailability(Content content, Group group) {
-	super();
-
-	setContent(content);
-	setTargetGroup(group);
-    }
-
-    /**
-     * Delegates the availability to the group obtained with {@link #getGroup()}
-     * . The functionality is available if the group allows the
-     * <tt>UserView</tt> specified in the context.
-     * 
-     * @return <code>getGroup().allows(context.getUserView())</code>
-     * 
-     * @see Group#isMember(Person)
-     * 
-     * @exception GroupDynamicExpressionException
-     *                when the evaluation of the expression group fails
-     */
-    @Override
-    public boolean isAvailable(FunctionalityContext context) {
-	try {
-	    return getTargetGroup().allows(context.getUserView());
-	} catch (GroupDynamicExpressionException e) {
-	    e.printStackTrace();
-	    throw e;
-	} catch (Exception e) {
-	    e.printStackTrace();
-	    throw new GroupDynamicExpressionException(e, "accessControl.group.expression.evaluation.error");
+	protected GroupAvailability() {
+		super();
 	}
-    }
 
-    public String getExpression() {
-	return getTargetGroup().getExpression();
-    }
+	/**
+	 * Creates a <code>GroupAvailability</code> to the given accessible item
+	 * that relies on the given group to determine the availability
+	 * 
+	 * @param item
+	 *            the target item
+	 * @param expression
+	 *            the group expression
+	 * 
+	 * @exception GroupExpressionException
+	 *                when the expression is not correct
+	 */
+	public GroupAvailability(Content content, Group group) {
+		super();
+
+		setContent(content);
+		setTargetGroup(group);
+	}
+
+	/**
+	 * Delegates the availability to the group obtained with {@link #getGroup()} . The functionality is available if the group
+	 * allows the <tt>UserView</tt> specified in the context.
+	 * 
+	 * @return <code>getGroup().allows(context.getUserView())</code>
+	 * 
+	 * @see Group#isMember(Person)
+	 * 
+	 * @exception GroupDynamicExpressionException
+	 *                when the evaluation of the expression group fails
+	 */
+	@Override
+	public boolean isAvailable(FunctionalityContext context) {
+		try {
+			return getTargetGroup().allows(context.getUserView());
+		} catch (GroupDynamicExpressionException e) {
+			e.printStackTrace();
+			throw e;
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new GroupDynamicExpressionException(e, "accessControl.group.expression.evaluation.error");
+		}
+	}
+
+	public String getExpression() {
+		return getTargetGroup().getExpression();
+	}
 }

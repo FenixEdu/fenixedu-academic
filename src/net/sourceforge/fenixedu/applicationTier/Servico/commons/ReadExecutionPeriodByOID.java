@@ -7,11 +7,11 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadExecutionPeriodByOID extends FenixService {
 
-    @Service
-    public static InfoExecutionPeriod run(final Integer executionPeriodID) {
-	final ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(executionPeriodID);
+	@Service
+	public static InfoExecutionPeriod run(final Integer executionPeriodID) {
+		final ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(executionPeriodID);
 
-	return InfoExecutionPeriod.newInfoFromDomain(executionSemester);
-    }
+		return InfoExecutionPeriod.newInfoFromDomain(executionSemester);
+	}
 
 }

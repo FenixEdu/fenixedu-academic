@@ -23,18 +23,18 @@ import net.sourceforge.fenixedu.presentationTier.Action.Seminaries.Exceptions.BD
  */
 public class GetAllCasesStudy extends FenixService {
 
-    public List run() throws BDException {
-	List infoCases = new LinkedList();
+	public List run() throws BDException {
+		List infoCases = new LinkedList();
 
-	List cases = CaseStudy.getAllCaseStudies();
+		List cases = CaseStudy.getAllCaseStudies();
 
-	for (Iterator iterator = cases.iterator(); iterator.hasNext();) {
-	    CaseStudy caseStudy = (CaseStudy) iterator.next();
+		for (Iterator iterator = cases.iterator(); iterator.hasNext();) {
+			CaseStudy caseStudy = (CaseStudy) iterator.next();
 
-	    infoCases.add(InfoCaseStudy.newInfoFromDomain(caseStudy));
+			infoCases.add(InfoCaseStudy.newInfoFromDomain(caseStudy));
+		}
+
+		return infoCases;
 	}
-
-	return infoCases;
-    }
 
 }

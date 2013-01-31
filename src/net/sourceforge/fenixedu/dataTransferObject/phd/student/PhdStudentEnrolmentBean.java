@@ -7,13 +7,13 @@ import net.sourceforge.fenixedu.domain.curricularRules.executors.ruleExecutors.C
 
 public class PhdStudentEnrolmentBean extends BolonhaStudentEnrollmentBean {
 
-    static private final long serialVersionUID = 1L;
+	static private final long serialVersionUID = 1L;
 
-    public PhdStudentEnrolmentBean(StudentCurricularPlan studentCurricularPlan, ExecutionSemester executionSemester,
-	    int[] curricularYears, CurricularRuleLevel curricularRuleLevel) {
+	public PhdStudentEnrolmentBean(StudentCurricularPlan studentCurricularPlan, ExecutionSemester executionSemester,
+			int[] curricularYears, CurricularRuleLevel curricularRuleLevel) {
 
-	super(studentCurricularPlan, executionSemester, new PhdStudentCurriculumGroupBean(studentCurricularPlan.getRoot(),
-		executionSemester, curricularYears), curricularRuleLevel);
-    }
+		super(studentCurricularPlan, executionSemester, new PhdStudentCurriculumGroupBean(studentCurricularPlan.getRoot(),
+				executionSemester, curricularYears), curricularRuleLevel);
+	}
 
 }

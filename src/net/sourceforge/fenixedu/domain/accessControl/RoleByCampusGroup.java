@@ -11,44 +11,44 @@ import net.sourceforge.fenixedu.domain.space.Campus;
 
 public abstract class RoleByCampusGroup extends Group {
 
-    private final RoleType roleType;
-    private final Campus campus;
+	private final RoleType roleType;
+	private final Campus campus;
 
-    public RoleByCampusGroup(RoleType type, Campus campus) {
-	this.roleType = type;
-	this.campus = campus;
-    }
-
-    public Campus getCampus() {
-	return campus;
-    }
-
-    @Override
-    public Set<Person> getElements() {
-	Set<Person> people = new HashSet<Person>();
-	Campus campus = getCampus();
-	for (Person person : Role.getRoleByRoleType(roleType).getAssociatedPersons()) {
-	    if (isPersonInCampus(person, campus) && isPersonAccepted(person)) {
-		people.add(person);
-	    }
+	public RoleByCampusGroup(RoleType type, Campus campus) {
+		this.roleType = type;
+		this.campus = campus;
 	}
-	return people;
-    }
 
-    protected abstract boolean isPersonInCampus(Person person, Campus campus);
+	public Campus getCampus() {
+		return campus;
+	}
 
-    protected boolean isPersonAccepted(Person person) {
-	return true;
-    }
+	@Override
+	public Set<Person> getElements() {
+		Set<Person> people = new HashSet<Person>();
+		Campus campus = getCampus();
+		for (Person person : Role.getRoleByRoleType(roleType).getAssociatedPersons()) {
+			if (isPersonInCampus(person, campus) && isPersonAccepted(person)) {
+				people.add(person);
+			}
+		}
+		return people;
+	}
 
-    @Override
-    protected Argument[] getExpressionArguments() {
-	return null;
-    }
+	protected abstract boolean isPersonInCampus(Person person, Campus campus);
 
-    @Override
-    public String[] getPresentationNameKeyArgs() {
-	return new String[] { getCampus().getName() };
-    }
+	protected boolean isPersonAccepted(Person person) {
+		return true;
+	}
+
+	@Override
+	protected Argument[] getExpressionArguments() {
+		return null;
+	}
+
+	@Override
+	public String[] getPresentationNameKeyArgs() {
+		return new String[] { getCampus().getName() };
+	}
 
 }

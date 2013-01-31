@@ -14,17 +14,19 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class VigilantGroupsProvider implements DataProvider {
 
-    public Object provide(Object source, Object currentValue) {
+	@Override
+	public Object provide(Object source, Object currentValue) {
 
-	VigilantBean bean = (VigilantBean) source;
-	List<VigilantGroup> groups = bean.getVigilantGroups();
+		VigilantBean bean = (VigilantBean) source;
+		List<VigilantGroup> groups = bean.getVigilantGroups();
 
-	Collections.sort(groups, new BeanComparator("name"));
-	return groups;
-    }
+		Collections.sort(groups, new BeanComparator("name"));
+		return groups;
+	}
 
-    public Converter getConverter() {
-	return new DomainObjectKeyConverter();
-    }
+	@Override
+	public Converter getConverter() {
+		return new DomainObjectKeyConverter();
+	}
 
 }

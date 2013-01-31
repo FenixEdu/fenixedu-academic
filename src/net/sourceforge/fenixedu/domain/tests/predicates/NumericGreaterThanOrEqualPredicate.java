@@ -8,38 +8,41 @@ import net.sourceforge.fenixedu.domain.tests.NewQuestion;
 import net.sourceforge.fenixedu.presentationTier.Action.teacher.tests.PredicateBean;
 
 public class NumericGreaterThanOrEqualPredicate extends AtomicPredicate implements Predicate {
-    private final double value;
+	private final double value;
 
-    public NumericGreaterThanOrEqualPredicate(double value) {
-	super();
+	public NumericGreaterThanOrEqualPredicate(double value) {
+		super();
 
-	this.value = value;
-    }
-
-    public NumericGreaterThanOrEqualPredicate(PredicateBean predicateBean) {
-	this(predicateBean.getValue());
-    }
-
-    public boolean evaluate(NewQuestion question, Person person) {
-	NewNumericQuestion numericQuestion = (NewNumericQuestion) question;
-
-	if (!numericQuestion.isAnswered(person)) {
-	    return false;
+		this.value = value;
 	}
 
-	return numericQuestion.getNumericAnswer(person) >= value;
-    }
+	public NumericGreaterThanOrEqualPredicate(PredicateBean predicateBean) {
+		this(predicateBean.getValue());
+	}
 
-    public double getValue() {
-	return value;
-    }
+	@Override
+	public boolean evaluate(NewQuestion question, Person person) {
+		NewNumericQuestion numericQuestion = (NewNumericQuestion) question;
 
-    public boolean uses(Object object) {
-	return false;
-    }
+		if (!numericQuestion.isAnswered(person)) {
+			return false;
+		}
 
-    public Predicate transform(HashMap<Object, Object> transformMap) {
-	return new NumericGreaterThanOrEqualPredicate(getValue());
-    }
+		return numericQuestion.getNumericAnswer(person) >= value;
+	}
+
+	public double getValue() {
+		return value;
+	}
+
+	@Override
+	public boolean uses(Object object) {
+		return false;
+	}
+
+	@Override
+	public Predicate transform(HashMap<Object, Object> transformMap) {
+		return new NumericGreaterThanOrEqualPredicate(getValue());
+	}
 
 }

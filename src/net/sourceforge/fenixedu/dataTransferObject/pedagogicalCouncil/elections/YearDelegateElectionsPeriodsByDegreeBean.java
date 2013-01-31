@@ -11,173 +11,174 @@ import net.sourceforge.fenixedu.domain.elections.DelegateElection;
 import net.sourceforge.fenixedu.domain.elections.YearDelegateElection;
 
 public class YearDelegateElectionsPeriodsByDegreeBean implements Serializable {
-    private ExecutionYear executionYear;
-    private Degree degree;
-    private List<YearDelegateElection> elections;
+	private ExecutionYear executionYear;
+	private Degree degree;
+	private List<YearDelegateElection> elections;
 
-    private List<DelegateElection> firstYearElections;
-    private List<DelegateElection> secondYearElections;
-    private List<DelegateElection> thirdYearElections;
-    private List<DelegateElection> fourthYearElections;
-    private List<DelegateElection> fifthYearElections;
+	private List<DelegateElection> firstYearElections;
+	private List<DelegateElection> secondYearElections;
+	private List<DelegateElection> thirdYearElections;
+	private List<DelegateElection> fourthYearElections;
+	private List<DelegateElection> fifthYearElections;
 
-    public YearDelegateElectionsPeriodsByDegreeBean(Degree degree, ExecutionYear executionYear,
-	    List<YearDelegateElection> elections) {
-	setDegree(degree);
-	setElections(elections);
-	setExecutionYear(executionYear);
+	public YearDelegateElectionsPeriodsByDegreeBean(Degree degree, ExecutionYear executionYear,
+			List<YearDelegateElection> elections) {
+		setDegree(degree);
+		setElections(elections);
+		setExecutionYear(executionYear);
 
-	for (int i = 1; i <= degree.getDegreeType().getYears(); i++)
-	    setElectionsByYear(i);
-    }
-
-    public Degree getDegree() {
-	return (degree);
-    }
-
-    public void setDegree(Degree degree) {
-	this.degree = degree;
-    }
-
-    public List<YearDelegateElection> getElections() {
-	List<YearDelegateElection> result = new ArrayList<YearDelegateElection>();
-	for (YearDelegateElection electionDR : this.elections) {
-	    result.add(electionDR);
+		for (int i = 1; i <= degree.getDegreeType().getYears(); i++) {
+			setElectionsByYear(i);
+		}
 	}
-	return result;
-    }
 
-    public void setElections(List<YearDelegateElection> elections) {
-	this.elections = new ArrayList<YearDelegateElection>();
-	for (YearDelegateElection election : elections) {
-	    this.elections.add(election);
+	public Degree getDegree() {
+		return (degree);
 	}
-    }
 
-    public ExecutionYear getExecutionYear() {
-	return (executionYear);
-    }
-
-    public void setExecutionYear(ExecutionYear executionYear) {
-	this.executionYear = executionYear;
-    }
-
-    private void setElectionsByYear(int year) {
-	switch (year) {
-	case 1:
-	    this.firstYearElections = getElectionsGivenYear(year);
-	    break;
-	case 2:
-	    this.secondYearElections = getElectionsGivenYear(year);
-	    break;
-	case 3:
-	    this.thirdYearElections = getElectionsGivenYear(year);
-	    break;
-	case 4:
-	    this.fourthYearElections = getElectionsGivenYear(year);
-	    break;
-	case 5:
-	    this.fifthYearElections = getElectionsGivenYear(year);
-	    break;
-	default:
-	    break;
+	public void setDegree(Degree degree) {
+		this.degree = degree;
 	}
-    }
 
-    public List<DelegateElection> getElectionsGivenYear(int year) {
-	List<DelegateElection> givenYearElections = new ArrayList<DelegateElection>();
-	for (DelegateElection election : getElections()) {
-	    if (((YearDelegateElection) election).getCurricularYear().getYear() == year) {
-		givenYearElections.add(election);
-	    }
+	public List<YearDelegateElection> getElections() {
+		List<YearDelegateElection> result = new ArrayList<YearDelegateElection>();
+		for (YearDelegateElection electionDR : this.elections) {
+			result.add(electionDR);
+		}
+		return result;
 	}
-	return givenYearElections;
-    }
 
-    public List<YearDelegateElection> getFirstYearElections() {
-	List<YearDelegateElection> result = new ArrayList<YearDelegateElection>();
-	for (DelegateElection electionDR : this.firstYearElections) {
-	    result.add((YearDelegateElection) electionDR);
+	public void setElections(List<YearDelegateElection> elections) {
+		this.elections = new ArrayList<YearDelegateElection>();
+		for (YearDelegateElection election : elections) {
+			this.elections.add(election);
+		}
 	}
-	return result;
-    }
 
-    public List<YearDelegateElection> getSecondYearElections() {
-	List<YearDelegateElection> result = new ArrayList<YearDelegateElection>();
-	for (DelegateElection electionDR : this.secondYearElections) {
-	    result.add((YearDelegateElection) electionDR);
+	public ExecutionYear getExecutionYear() {
+		return (executionYear);
 	}
-	return result;
-    }
 
-    public List<YearDelegateElection> getThirdYearElections() {
-	List<YearDelegateElection> result = new ArrayList<YearDelegateElection>();
-	for (DelegateElection electionDR : this.thirdYearElections) {
-	    result.add((YearDelegateElection) electionDR);
+	public void setExecutionYear(ExecutionYear executionYear) {
+		this.executionYear = executionYear;
 	}
-	return result;
-    }
 
-    public List<YearDelegateElection> getFourthYearElections() {
-	List<YearDelegateElection> result = new ArrayList<YearDelegateElection>();
-	for (DelegateElection electionDR : this.fourthYearElections) {
-	    result.add((YearDelegateElection) electionDR);
+	private void setElectionsByYear(int year) {
+		switch (year) {
+		case 1:
+			this.firstYearElections = getElectionsGivenYear(year);
+			break;
+		case 2:
+			this.secondYearElections = getElectionsGivenYear(year);
+			break;
+		case 3:
+			this.thirdYearElections = getElectionsGivenYear(year);
+			break;
+		case 4:
+			this.fourthYearElections = getElectionsGivenYear(year);
+			break;
+		case 5:
+			this.fifthYearElections = getElectionsGivenYear(year);
+			break;
+		default:
+			break;
+		}
 	}
-	return result;
-    }
 
-    public List<YearDelegateElection> getFifthYearElections() {
-	List<YearDelegateElection> result = new ArrayList<YearDelegateElection>();
-	for (DelegateElection electionDR : this.fifthYearElections) {
-	    result.add((YearDelegateElection) electionDR);
+	public List<DelegateElection> getElectionsGivenYear(int year) {
+		List<DelegateElection> givenYearElections = new ArrayList<DelegateElection>();
+		for (DelegateElection election : getElections()) {
+			if (((YearDelegateElection) election).getCurricularYear().getYear() == year) {
+				givenYearElections.add(election);
+			}
+		}
+		return givenYearElections;
 	}
-	return result;
-    }
 
-    // CANDIDACY PERIODS
-    public YearDelegateElection getFirstYearLastCandidacyPeriod() {
-	return (!getFirstYearElections().isEmpty() ? (YearDelegateElection) Collections.max(getFirstYearElections(),
-		DelegateElection.ELECTION_COMPARATOR_BY_CANDIDACY_START_DATE) : null);
-    }
+	public List<YearDelegateElection> getFirstYearElections() {
+		List<YearDelegateElection> result = new ArrayList<YearDelegateElection>();
+		for (DelegateElection electionDR : this.firstYearElections) {
+			result.add((YearDelegateElection) electionDR);
+		}
+		return result;
+	}
 
-    public YearDelegateElection getSecondYearLastCandidacyPeriod() {
-	return (!getSecondYearElections().isEmpty() ? (YearDelegateElection) Collections.max(getSecondYearElections(),
-		DelegateElection.ELECTION_COMPARATOR_BY_CANDIDACY_START_DATE) : null);
-    }
+	public List<YearDelegateElection> getSecondYearElections() {
+		List<YearDelegateElection> result = new ArrayList<YearDelegateElection>();
+		for (DelegateElection electionDR : this.secondYearElections) {
+			result.add((YearDelegateElection) electionDR);
+		}
+		return result;
+	}
 
-    public YearDelegateElection getThirdYearLastCandidacyPeriod() {
-	return (!getThirdYearElections().isEmpty() ? (YearDelegateElection) Collections.max(getThirdYearElections(),
-		DelegateElection.ELECTION_COMPARATOR_BY_CANDIDACY_START_DATE) : null);
-    }
+	public List<YearDelegateElection> getThirdYearElections() {
+		List<YearDelegateElection> result = new ArrayList<YearDelegateElection>();
+		for (DelegateElection electionDR : this.thirdYearElections) {
+			result.add((YearDelegateElection) electionDR);
+		}
+		return result;
+	}
 
-    public YearDelegateElection getFourthYearLastCandidacyPeriod() {
-	return (!getFourthYearElections().isEmpty() ? (YearDelegateElection) Collections.max(getFourthYearElections(),
-		DelegateElection.ELECTION_COMPARATOR_BY_CANDIDACY_START_DATE) : null);
-    }
+	public List<YearDelegateElection> getFourthYearElections() {
+		List<YearDelegateElection> result = new ArrayList<YearDelegateElection>();
+		for (DelegateElection electionDR : this.fourthYearElections) {
+			result.add((YearDelegateElection) electionDR);
+		}
+		return result;
+	}
 
-    public YearDelegateElection getFifthYearLastCandidacyPeriod() {
-	return (!getFifthYearElections().isEmpty() ? (YearDelegateElection) Collections.max(getFifthYearElections(),
-		DelegateElection.ELECTION_COMPARATOR_BY_CANDIDACY_START_DATE) : null);
-    }
+	public List<YearDelegateElection> getFifthYearElections() {
+		List<YearDelegateElection> result = new ArrayList<YearDelegateElection>();
+		for (DelegateElection electionDR : this.fifthYearElections) {
+			result.add((YearDelegateElection) electionDR);
+		}
+		return result;
+	}
 
-    // VOTING PERIODS
-    public YearDelegateElection getFirstYearVotingPeriod() {
-	return getFirstYearLastCandidacyPeriod();
-    }
+	// CANDIDACY PERIODS
+	public YearDelegateElection getFirstYearLastCandidacyPeriod() {
+		return (!getFirstYearElections().isEmpty() ? (YearDelegateElection) Collections.max(getFirstYearElections(),
+				DelegateElection.ELECTION_COMPARATOR_BY_CANDIDACY_START_DATE) : null);
+	}
 
-    public YearDelegateElection getSecondYearVotingPeriod() {
-	return getSecondYearLastCandidacyPeriod();
-    }
+	public YearDelegateElection getSecondYearLastCandidacyPeriod() {
+		return (!getSecondYearElections().isEmpty() ? (YearDelegateElection) Collections.max(getSecondYearElections(),
+				DelegateElection.ELECTION_COMPARATOR_BY_CANDIDACY_START_DATE) : null);
+	}
 
-    public YearDelegateElection getThirdYearVotingPeriod() {
-	return getThirdYearLastCandidacyPeriod();
-    }
+	public YearDelegateElection getThirdYearLastCandidacyPeriod() {
+		return (!getThirdYearElections().isEmpty() ? (YearDelegateElection) Collections.max(getThirdYearElections(),
+				DelegateElection.ELECTION_COMPARATOR_BY_CANDIDACY_START_DATE) : null);
+	}
 
-    public YearDelegateElection getFourthYearVotingPeriod() {
-	return getFourthYearLastCandidacyPeriod();
-    }
+	public YearDelegateElection getFourthYearLastCandidacyPeriod() {
+		return (!getFourthYearElections().isEmpty() ? (YearDelegateElection) Collections.max(getFourthYearElections(),
+				DelegateElection.ELECTION_COMPARATOR_BY_CANDIDACY_START_DATE) : null);
+	}
 
-    public YearDelegateElection getFifthYearVotingPeriod() {
-	return getFifthYearLastCandidacyPeriod();
-    }
+	public YearDelegateElection getFifthYearLastCandidacyPeriod() {
+		return (!getFifthYearElections().isEmpty() ? (YearDelegateElection) Collections.max(getFifthYearElections(),
+				DelegateElection.ELECTION_COMPARATOR_BY_CANDIDACY_START_DATE) : null);
+	}
+
+	// VOTING PERIODS
+	public YearDelegateElection getFirstYearVotingPeriod() {
+		return getFirstYearLastCandidacyPeriod();
+	}
+
+	public YearDelegateElection getSecondYearVotingPeriod() {
+		return getSecondYearLastCandidacyPeriod();
+	}
+
+	public YearDelegateElection getThirdYearVotingPeriod() {
+		return getThirdYearLastCandidacyPeriod();
+	}
+
+	public YearDelegateElection getFourthYearVotingPeriod() {
+		return getFourthYearLastCandidacyPeriod();
+	}
+
+	public YearDelegateElection getFifthYearVotingPeriod() {
+		return getFifthYearLastCandidacyPeriod();
+	}
 }

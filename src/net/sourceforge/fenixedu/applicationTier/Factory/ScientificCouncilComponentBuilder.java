@@ -34,152 +34,152 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class ScientificCouncilComponentBuilder {
 
-    private static ScientificCouncilComponentBuilder instance = null;
+	private static ScientificCouncilComponentBuilder instance = null;
 
-    public ScientificCouncilComponentBuilder() {
-    }
-
-    public static ScientificCouncilComponentBuilder getInstance() {
-	if (instance == null) {
-	    instance = new ScientificCouncilComponentBuilder();
-	}
-	return instance;
-    }
-
-    public ISiteComponent getComponent(ISiteComponent component, Integer degreeId, Integer curricularYear,
-	    Integer degreeCurricularPlanId) throws FenixServiceException {
-	if (component instanceof InfoSiteSCDegrees) {
-	    return getInfoSiteSCDegrees((InfoSiteSCDegrees) component);
-	} else if (component instanceof InfoSiteDegreeCurricularPlans) {
-	    return getInfoSiteDegreeCurricularPlans((InfoSiteDegreeCurricularPlans) component, degreeId);
-	} else if (component instanceof InfoSiteCurricularCourses) {
-	    return getInfoSiteCurricularCourses((InfoSiteCurricularCourses) component, degreeCurricularPlanId);
-	} else if (component instanceof InfoSiteBasicCurricularCourses) {
-	    return getInfoSiteBasicCurricularCourses((InfoSiteBasicCurricularCourses) component, degreeCurricularPlanId);
-	} else {
-	    return null;
+	public ScientificCouncilComponentBuilder() {
 	}
 
-    }
-
-    /**
-     * @param courses
-     * @param degreeCurricularPlanId
-     * @return
-     * @throws ExcepcaoPersistencia
-     */
-    private ISiteComponent getInfoSiteBasicCurricularCourses(InfoSiteBasicCurricularCourses component,
-	    Integer degreeCurricularPlanId) throws FenixServiceException {
-
-	DegreeCurricularPlan degreeCurricularPlan = RootDomainObject.getInstance().readDegreeCurricularPlanByOID(
-		degreeCurricularPlanId);
-	if (degreeCurricularPlan == null) {
-	    throw new InvalidArgumentsServiceException();
+	public static ScientificCouncilComponentBuilder getInstance() {
+		if (instance == null) {
+			instance = new ScientificCouncilComponentBuilder();
+		}
+		return instance;
 	}
 
-	List<CurricularCourse> nonBasicCurricularCourses = degreeCurricularPlan
-		.getCurricularCoursesByBasicAttribute(Boolean.FALSE);
-	List<CurricularCourse> basicCurricularCourses = degreeCurricularPlan.getCurricularCoursesByBasicAttribute(Boolean.TRUE);
+	public ISiteComponent getComponent(ISiteComponent component, Integer degreeId, Integer curricularYear,
+			Integer degreeCurricularPlanId) throws FenixServiceException {
+		if (component instanceof InfoSiteSCDegrees) {
+			return getInfoSiteSCDegrees((InfoSiteSCDegrees) component);
+		} else if (component instanceof InfoSiteDegreeCurricularPlans) {
+			return getInfoSiteDegreeCurricularPlans((InfoSiteDegreeCurricularPlans) component, degreeId);
+		} else if (component instanceof InfoSiteCurricularCourses) {
+			return getInfoSiteCurricularCourses((InfoSiteCurricularCourses) component, degreeCurricularPlanId);
+		} else if (component instanceof InfoSiteBasicCurricularCourses) {
+			return getInfoSiteBasicCurricularCourses((InfoSiteBasicCurricularCourses) component, degreeCurricularPlanId);
+		} else {
+			return null;
+		}
 
-	Iterator iter = nonBasicCurricularCourses.iterator();
-	Iterator iter1 = basicCurricularCourses.iterator();
-	List<InfoCurricularCourse> infoNonBasicCurricularCourses = new ArrayList<InfoCurricularCourse>();
-	List<InfoCurricularCourse> infoBasicCurricularCourses = new ArrayList<InfoCurricularCourse>();
-	while (iter.hasNext()) {
-	    CurricularCourse curricularCourse = (CurricularCourse) iter.next();
-	    InfoCurricularCourse infoCurricularCourse = InfoCurricularCourse.newInfoFromDomain(curricularCourse);
-	    infoNonBasicCurricularCourses.add(infoCurricularCourse);
-	}
-	while (iter1.hasNext()) {
-	    CurricularCourse curricularCourse = (CurricularCourse) iter1.next();
-	    InfoCurricularCourse infoCurricularCourse = InfoCurricularCourse.newInfoFromDomain(curricularCourse);
-	    infoBasicCurricularCourses.add(infoCurricularCourse);
 	}
 
-	component.setBasicCurricularCourses(infoBasicCurricularCourses);
-	component.setNonBasicCurricularCourses(infoNonBasicCurricularCourses);
-	component.setInfoDegreeCurricularPlan(InfoDegreeCurricularPlan.newInfoFromDomain(degreeCurricularPlan));
+	/**
+	 * @param courses
+	 * @param degreeCurricularPlanId
+	 * @return
+	 * @throws ExcepcaoPersistencia
+	 */
+	private ISiteComponent getInfoSiteBasicCurricularCourses(InfoSiteBasicCurricularCourses component,
+			Integer degreeCurricularPlanId) throws FenixServiceException {
 
-	return component;
-    }
+		DegreeCurricularPlan degreeCurricularPlan =
+				RootDomainObject.getInstance().readDegreeCurricularPlanByOID(degreeCurricularPlanId);
+		if (degreeCurricularPlan == null) {
+			throw new InvalidArgumentsServiceException();
+		}
 
-    /**
-     * @param courses
-     * @param degreeCurricularPlanId
-     * @return
-     * @throws ExcepcaoPersistencia
-     */
-    private ISiteComponent getInfoSiteCurricularCourses(InfoSiteCurricularCourses component, Integer degreeCurricularPlanId)
-	    throws FenixServiceException {
+		List<CurricularCourse> nonBasicCurricularCourses =
+				degreeCurricularPlan.getCurricularCoursesByBasicAttribute(Boolean.FALSE);
+		List<CurricularCourse> basicCurricularCourses = degreeCurricularPlan.getCurricularCoursesByBasicAttribute(Boolean.TRUE);
 
-	DegreeCurricularPlan degreeCurricularPlan = RootDomainObject.getInstance().readDegreeCurricularPlanByOID(
-		degreeCurricularPlanId);
-	if (degreeCurricularPlan == null) {
-	    throw new InvalidArgumentsServiceException();
+		Iterator iter = nonBasicCurricularCourses.iterator();
+		Iterator iter1 = basicCurricularCourses.iterator();
+		List<InfoCurricularCourse> infoNonBasicCurricularCourses = new ArrayList<InfoCurricularCourse>();
+		List<InfoCurricularCourse> infoBasicCurricularCourses = new ArrayList<InfoCurricularCourse>();
+		while (iter.hasNext()) {
+			CurricularCourse curricularCourse = (CurricularCourse) iter.next();
+			InfoCurricularCourse infoCurricularCourse = InfoCurricularCourse.newInfoFromDomain(curricularCourse);
+			infoNonBasicCurricularCourses.add(infoCurricularCourse);
+		}
+		while (iter1.hasNext()) {
+			CurricularCourse curricularCourse = (CurricularCourse) iter1.next();
+			InfoCurricularCourse infoCurricularCourse = InfoCurricularCourse.newInfoFromDomain(curricularCourse);
+			infoBasicCurricularCourses.add(infoCurricularCourse);
+		}
+
+		component.setBasicCurricularCourses(infoBasicCurricularCourses);
+		component.setNonBasicCurricularCourses(infoNonBasicCurricularCourses);
+		component.setInfoDegreeCurricularPlan(InfoDegreeCurricularPlan.newInfoFromDomain(degreeCurricularPlan));
+
+		return component;
 	}
 
-	List<CurricularCourse> curricularCourses = degreeCurricularPlan.getCurricularCourses();
+	/**
+	 * @param courses
+	 * @param degreeCurricularPlanId
+	 * @return
+	 * @throws ExcepcaoPersistencia
+	 */
+	private ISiteComponent getInfoSiteCurricularCourses(InfoSiteCurricularCourses component, Integer degreeCurricularPlanId)
+			throws FenixServiceException {
 
-	Iterator iter = curricularCourses.iterator();
-	List<InfoCurricularCourse> infoCurricularCourses = new ArrayList<InfoCurricularCourse>();
-	while (iter.hasNext()) {
-	    CurricularCourse curricularCourse = (CurricularCourse) iter.next();
-	    InfoCurricularCourse infoCurricularCourse = InfoCurricularCourse.newInfoFromDomain(curricularCourse);
-	    infoCurricularCourses.add(infoCurricularCourse);
-	}
-	component.setCurricularCourses(infoCurricularCourses);
+		DegreeCurricularPlan degreeCurricularPlan =
+				RootDomainObject.getInstance().readDegreeCurricularPlanByOID(degreeCurricularPlanId);
+		if (degreeCurricularPlan == null) {
+			throw new InvalidArgumentsServiceException();
+		}
 
-	return component;
-    }
+		List<CurricularCourse> curricularCourses = degreeCurricularPlan.getCurricularCourses();
 
-    /**
-     * @param courses
-     * @param degreeId
-     * @param curricularYear
-     * @return
-     * @throws ExcepcaoPersistencia
-     */
-    private ISiteComponent getInfoSiteDegreeCurricularPlans(InfoSiteDegreeCurricularPlans component, Integer degreeId)
-	    throws FenixServiceException {
+		Iterator iter = curricularCourses.iterator();
+		List<InfoCurricularCourse> infoCurricularCourses = new ArrayList<InfoCurricularCourse>();
+		while (iter.hasNext()) {
+			CurricularCourse curricularCourse = (CurricularCourse) iter.next();
+			InfoCurricularCourse infoCurricularCourse = InfoCurricularCourse.newInfoFromDomain(curricularCourse);
+			infoCurricularCourses.add(infoCurricularCourse);
+		}
+		component.setCurricularCourses(infoCurricularCourses);
 
-	Degree degree = RootDomainObject.getInstance().readDegreeByOID(degreeId);
-	if (degree == null) {
-	    throw new InvalidArgumentsServiceException();
-	}
-
-	List degreeCurricularPlans = degree.findDegreeCurricularPlansByState(DegreeCurricularPlanState.ACTIVE);
-
-	Iterator iter = degreeCurricularPlans.iterator();
-	List<InfoDegreeCurricularPlan> infoDegreeCurricularPlans = new ArrayList<InfoDegreeCurricularPlan>();
-	while (iter.hasNext()) {
-	    DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) iter.next();
-	    InfoDegreeCurricularPlan infoDegreeCurricularPlan = InfoDegreeCurricularPlan.newInfoFromDomain(degreeCurricularPlan);
-	    infoDegreeCurricularPlans.add(infoDegreeCurricularPlan);
-	}
-	component.setDegreeCurricularPlans(infoDegreeCurricularPlans);
-
-	return component;
-    }
-
-    /**
-     * @param component
-     * @return
-     * @throws ExcepcaoPersistencia
-     */
-    private ISiteComponent getInfoSiteSCDegrees(InfoSiteSCDegrees component) throws FenixServiceException {
-
-	List<Degree> degrees = Degree.readOldDegrees();
-	Iterator degreeIterator = degrees.iterator();
-	List<InfoDegree> infoDegrees = new ArrayList<InfoDegree>();
-	while (degreeIterator.hasNext()) {
-	    Degree degree = (Degree) degreeIterator.next();
-	    InfoDegree infoDegree = InfoDegree.newInfoFromDomain(degree);
-	    infoDegrees.add(infoDegree);
+		return component;
 	}
 
-	component.setDegrees(infoDegrees);
+	/**
+	 * @param courses
+	 * @param degreeId
+	 * @param curricularYear
+	 * @return
+	 * @throws ExcepcaoPersistencia
+	 */
+	private ISiteComponent getInfoSiteDegreeCurricularPlans(InfoSiteDegreeCurricularPlans component, Integer degreeId)
+			throws FenixServiceException {
 
-	return component;
-    }
+		Degree degree = RootDomainObject.getInstance().readDegreeByOID(degreeId);
+		if (degree == null) {
+			throw new InvalidArgumentsServiceException();
+		}
+
+		List degreeCurricularPlans = degree.findDegreeCurricularPlansByState(DegreeCurricularPlanState.ACTIVE);
+
+		Iterator iter = degreeCurricularPlans.iterator();
+		List<InfoDegreeCurricularPlan> infoDegreeCurricularPlans = new ArrayList<InfoDegreeCurricularPlan>();
+		while (iter.hasNext()) {
+			DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) iter.next();
+			InfoDegreeCurricularPlan infoDegreeCurricularPlan = InfoDegreeCurricularPlan.newInfoFromDomain(degreeCurricularPlan);
+			infoDegreeCurricularPlans.add(infoDegreeCurricularPlan);
+		}
+		component.setDegreeCurricularPlans(infoDegreeCurricularPlans);
+
+		return component;
+	}
+
+	/**
+	 * @param component
+	 * @return
+	 * @throws ExcepcaoPersistencia
+	 */
+	private ISiteComponent getInfoSiteSCDegrees(InfoSiteSCDegrees component) throws FenixServiceException {
+
+		List<Degree> degrees = Degree.readOldDegrees();
+		Iterator degreeIterator = degrees.iterator();
+		List<InfoDegree> infoDegrees = new ArrayList<InfoDegree>();
+		while (degreeIterator.hasNext()) {
+			Degree degree = (Degree) degreeIterator.next();
+			InfoDegree infoDegree = InfoDegree.newInfoFromDomain(degree);
+			infoDegrees.add(infoDegree);
+		}
+
+		component.setDegrees(infoDegrees);
+
+		return component;
+	}
 
 }

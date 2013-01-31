@@ -16,25 +16,27 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class DFATypeDegrees implements DataProvider {
 
-    public Object provide(Object source, Object currentValue) {
+	@Override
+	public Object provide(Object source, Object currentValue) {
 
-	DFACandidacyBean bean = (DFACandidacyBean) source;
+		DFACandidacyBean bean = (DFACandidacyBean) source;
 
-	final List<Degree> result = new ArrayList<Degree>();
-	DegreeType degreeType = bean.getDegreeType();
-	if (degreeType != null) {
-	    for (Degree degree : Degree.readNotEmptyDegrees()) {
-		if (degree.getDegreeType() == degreeType) {
-		    result.add(degree);
+		final List<Degree> result = new ArrayList<Degree>();
+		DegreeType degreeType = bean.getDegreeType();
+		if (degreeType != null) {
+			for (Degree degree : Degree.readNotEmptyDegrees()) {
+				if (degree.getDegreeType() == degreeType) {
+					result.add(degree);
+				}
+			}
 		}
-	    }
+		Collections.sort(result, new BeanComparator("name"));
+		return result;
 	}
-	Collections.sort(result, new BeanComparator("name"));
-	return result;
-    }
 
-    public Converter getConverter() {
-	return new DomainObjectKeyConverter();
-    }
+	@Override
+	public Converter getConverter() {
+		return new DomainObjectKeyConverter();
+	}
 
 }

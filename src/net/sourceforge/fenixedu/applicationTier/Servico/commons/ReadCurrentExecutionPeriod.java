@@ -6,8 +6,8 @@ import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadCurrentExecutionPeriod extends FenixService {
-    @Service
-    public static InfoExecutionPeriod run() {
-	return InfoExecutionPeriod.newInfoFromDomain(ExecutionSemester.readActualExecutionSemester());
-    }
+	@Service
+	public static InfoExecutionPeriod run() {
+		return InfoExecutionPeriod.newInfoFromDomain(ExecutionSemester.readActualExecutionSemester());
+	}
 }

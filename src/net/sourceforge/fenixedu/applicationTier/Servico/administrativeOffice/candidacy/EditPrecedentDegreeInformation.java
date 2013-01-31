@@ -13,9 +13,9 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class EditPrecedentDegreeInformation extends FenixService {
 
-    @Service
-    public static void run(PrecedentDegreeInformationBean precedentDegreeInformationBean) {
-	precedentDegreeInformationBean.getPrecedentDegreeInformation().edit(precedentDegreeInformationBean);
-    }
+	@Service
+	public static void run(PrecedentDegreeInformationBean precedentDegreeInformationBean) {
+		precedentDegreeInformationBean.getPrecedentDegreeInformation().edit(precedentDegreeInformationBean);
+	}
 
 }

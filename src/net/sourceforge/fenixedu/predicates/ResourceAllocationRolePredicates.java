@@ -16,95 +16,112 @@ import net.sourceforge.fenixedu.injectionCode.AccessControlPredicate;
 
 public class ResourceAllocationRolePredicates {
 
-    // Lesson Predicates
+	// Lesson Predicates
 
-    public static final AccessControlPredicate<Lesson> checkPermissionsToManageLessons = new AccessControlPredicate<Lesson>() {
-	public boolean evaluate(Lesson lesson) {
-	    ResourceAllocationRole.checkIfPersonHasPermissionToManageSchedulesAllocation(AccessControl.getPerson());
-	    return true;
-	}
-    };
+	public static final AccessControlPredicate<Lesson> checkPermissionsToManageLessons = new AccessControlPredicate<Lesson>() {
+		@Override
+		public boolean evaluate(Lesson lesson) {
+			ResourceAllocationRole.checkIfPersonHasPermissionToManageSchedulesAllocation(AccessControl.getPerson());
+			return true;
+		}
+	};
 
-    // Shift Predicates
+	// Shift Predicates
 
-    public static final AccessControlPredicate<Shift> checkPermissionsToManageShifts = new AccessControlPredicate<Shift>() {
-	public boolean evaluate(Shift shift) {
-	    ResourceAllocationRole.checkIfPersonHasPermissionToManageSchedulesAllocation(AccessControl.getPerson());
-	    return true;
-	}
-    };
+	public static final AccessControlPredicate<Shift> checkPermissionsToManageShifts = new AccessControlPredicate<Shift>() {
+		@Override
+		public boolean evaluate(Shift shift) {
+			ResourceAllocationRole.checkIfPersonHasPermissionToManageSchedulesAllocation(AccessControl.getPerson());
+			return true;
+		}
+	};
 
-    // SchoolClass Predicates
+	// SchoolClass Predicates
 
-    public static final AccessControlPredicate<SchoolClass> checkPermissionsToManageSchoolClass = new AccessControlPredicate<SchoolClass>() {
-	public boolean evaluate(SchoolClass schoolClass) {
-	    ResourceAllocationRole.checkIfPersonHasPermissionToManageSchedulesAllocation(AccessControl.getPerson());
-	    return true;
-	}
-    };
+	public static final AccessControlPredicate<SchoolClass> checkPermissionsToManageSchoolClass =
+			new AccessControlPredicate<SchoolClass>() {
+				@Override
+				public boolean evaluate(SchoolClass schoolClass) {
+					ResourceAllocationRole.checkIfPersonHasPermissionToManageSchedulesAllocation(AccessControl.getPerson());
+					return true;
+				}
+			};
 
-    // Lesson Instance Predicates
+	// Lesson Instance Predicates
 
-    public static final AccessControlPredicate<LessonInstance> checkPermissionsToManageLessonInstances = new AccessControlPredicate<LessonInstance>() {
-	public boolean evaluate(LessonInstance lessonInstance) {
-	    ResourceAllocationRole.checkIfPersonHasPermissionToManageSchedulesAllocation(AccessControl.getPerson());
-	    return true;
-	}
-    };
+	public static final AccessControlPredicate<LessonInstance> checkPermissionsToManageLessonInstances =
+			new AccessControlPredicate<LessonInstance>() {
+				@Override
+				public boolean evaluate(LessonInstance lessonInstance) {
+					ResourceAllocationRole.checkIfPersonHasPermissionToManageSchedulesAllocation(AccessControl.getPerson());
+					return true;
+				}
+			};
 
-    public static final AccessControlPredicate<LessonInstance> checkPermissionsToManageLessonInstancesWithTeacherCheck = new AccessControlPredicate<LessonInstance>() {
-	public boolean evaluate(LessonInstance lessonInstance) {
+	public static final AccessControlPredicate<LessonInstance> checkPermissionsToManageLessonInstancesWithTeacherCheck =
+			new AccessControlPredicate<LessonInstance>() {
+				@Override
+				public boolean evaluate(LessonInstance lessonInstance) {
 
-	    Person loggedPerson = AccessControl.getPerson();
+					Person loggedPerson = AccessControl.getPerson();
 
-	    if (loggedPerson.hasRole(RoleType.DEPARTMENT_ADMINISTRATIVE_OFFICE)) {
-		return true;
-	    }
+					if (loggedPerson.hasRole(RoleType.DEPARTMENT_ADMINISTRATIVE_OFFICE)) {
+						return true;
+					}
 
-	    ExecutionCourse executionCourse = lessonInstance.getLesson().getExecutionCourse();
-	    if (loggedPerson.getProfessorships().size() > 0 && loggedPerson.hasProfessorshipForExecutionCourse(executionCourse)) {
-		return true;
-	    }
+					ExecutionCourse executionCourse = lessonInstance.getLesson().getExecutionCourse();
+					if (loggedPerson.getProfessorships().size() > 0
+							&& loggedPerson.hasProfessorshipForExecutionCourse(executionCourse)) {
+						return true;
+					}
 
-	    ResourceAllocationRole.checkIfPersonHasPermissionToManageSchedulesAllocation(loggedPerson);
-	    return true;
-	}
-    };
+					ResourceAllocationRole.checkIfPersonHasPermissionToManageSchedulesAllocation(loggedPerson);
+					return true;
+				}
+			};
 
-    // Punctual Rooms Occupation Management Predicates
+	// Punctual Rooms Occupation Management Predicates
 
-    public static final AccessControlPredicate<PunctualRoomsOccupationRequest> checkPermissionsToManagePunctualRoomsOccupationRequests = new AccessControlPredicate<PunctualRoomsOccupationRequest>() {
-	public boolean evaluate(PunctualRoomsOccupationRequest request) {
+	public static final AccessControlPredicate<PunctualRoomsOccupationRequest> checkPermissionsToManagePunctualRoomsOccupationRequests =
+			new AccessControlPredicate<PunctualRoomsOccupationRequest>() {
+				@Override
+				public boolean evaluate(PunctualRoomsOccupationRequest request) {
 
-	    Person loggedPerson = AccessControl.getPerson();
+					Person loggedPerson = AccessControl.getPerson();
 
-	    if (loggedPerson.hasRole(RoleType.TEACHER) || loggedPerson.hasAnyProfessorships()) {
-		return true;
-	    }
+					if (loggedPerson.hasRole(RoleType.TEACHER) || loggedPerson.hasAnyProfessorships()) {
+						return true;
+					}
 
-	    ResourceAllocationRole.checkIfPersonHasPermissionToManageSchedulesAllocation(loggedPerson);
-	    return true;
-	}
-    };
+					ResourceAllocationRole.checkIfPersonHasPermissionToManageSchedulesAllocation(loggedPerson);
+					return true;
+				}
+			};
 
-    public static final AccessControlPredicate<PunctualRoomsOccupationComment> checkPermissionsToManagePunctualRoomsOccupationComments = new AccessControlPredicate<PunctualRoomsOccupationComment>() {
-	public boolean evaluate(PunctualRoomsOccupationComment comment) {
-	    return checkPermissionsToManagePunctualRoomsOccupationRequests.evaluate(comment.getRequest());
-	}
-    };
+	public static final AccessControlPredicate<PunctualRoomsOccupationComment> checkPermissionsToManagePunctualRoomsOccupationComments =
+			new AccessControlPredicate<PunctualRoomsOccupationComment>() {
+				@Override
+				public boolean evaluate(PunctualRoomsOccupationComment comment) {
+					return checkPermissionsToManagePunctualRoomsOccupationRequests.evaluate(comment.getRequest());
+				}
+			};
 
-    public static final AccessControlPredicate<PunctualRoomsOccupationStateInstant> checkPermissionsToManagePunctualRoomsOccupationStateInstants = new AccessControlPredicate<PunctualRoomsOccupationStateInstant>() {
-	public boolean evaluate(PunctualRoomsOccupationStateInstant stateInstant) {
-	    return checkPermissionsToManagePunctualRoomsOccupationRequests.evaluate(stateInstant.getRequest());
-	}
-    };
+	public static final AccessControlPredicate<PunctualRoomsOccupationStateInstant> checkPermissionsToManagePunctualRoomsOccupationStateInstants =
+			new AccessControlPredicate<PunctualRoomsOccupationStateInstant>() {
+				@Override
+				public boolean evaluate(PunctualRoomsOccupationStateInstant stateInstant) {
+					return checkPermissionsToManagePunctualRoomsOccupationRequests.evaluate(stateInstant.getRequest());
+				}
+			};
 
-    // Resource Allocation Access Groups Predicates
+	// Resource Allocation Access Groups Predicates
 
-    public static final AccessControlPredicate<ResourceAllocationRole> checkPermissionsToManageAccessGroups = new AccessControlPredicate<ResourceAllocationRole>() {
-	public boolean evaluate(ResourceAllocationRole role) {
-	    ResourceAllocationRole.checkIfPersonIsResourceAllocationSuperUser(AccessControl.getPerson());
-	    return true;
-	}
-    };
+	public static final AccessControlPredicate<ResourceAllocationRole> checkPermissionsToManageAccessGroups =
+			new AccessControlPredicate<ResourceAllocationRole>() {
+				@Override
+				public boolean evaluate(ResourceAllocationRole role) {
+					ResourceAllocationRole.checkIfPersonIsResourceAllocationSuperUser(AccessControl.getPerson());
+					return true;
+				}
+			};
 }

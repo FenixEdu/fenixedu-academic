@@ -14,55 +14,55 @@ import pt.ist.fenixWebFramework.security.accessControl.Checked;
 
 public class PercentageGratuityExemption extends PercentageGratuityExemption_Base {
 
-    public PercentageGratuityExemption(final Person responsible, final GratuityEvent gratuityEvent,
-	    final GratuityExemptionJustificationType gratuityExemptionJustificationType, final String reason,
-	    final YearMonthDay dispatchDate, final BigDecimal percentage) {
-	super();
-	init(responsible, gratuityExemptionJustificationType, reason, dispatchDate, gratuityEvent, percentage);
-    }
-
-    public PercentageGratuityExemption(final GratuityEvent gratuityEvent,
-	    final GratuityExemptionJustificationType gratuityExemptionJustificationType, final String reason,
-	    final YearMonthDay dispatchDate, final BigDecimal percentage) {
-	this(null, gratuityEvent, gratuityExemptionJustificationType, reason, dispatchDate, percentage);
-    }
-
-    protected void init(Person responsible, GratuityExemptionJustificationType exemptionType, String reason,
-	    YearMonthDay dispatchDate, GratuityEvent gratuityEvent, BigDecimal percentage) {
-
-	checkParameters(percentage);
-	super.setPercentage(percentage);
-
-	super.init(responsible, gratuityEvent, exemptionType, reason, dispatchDate);
-    }
-
-    private void checkParameters(BigDecimal percentage) {
-	if (percentage == null) {
-	    throw new DomainException("error.accounting.events.gratuity.PercentageGratuityExemption.percentage.cannot.be.null");
+	public PercentageGratuityExemption(final Person responsible, final GratuityEvent gratuityEvent,
+			final GratuityExemptionJustificationType gratuityExemptionJustificationType, final String reason,
+			final YearMonthDay dispatchDate, final BigDecimal percentage) {
+		super();
+		init(responsible, gratuityExemptionJustificationType, reason, dispatchDate, gratuityEvent, percentage);
 	}
-    }
 
-    @Checked("RolePredicates.MANAGER_PREDICATE")
-    @Override
-    public void setPercentage(BigDecimal percentage) {
-	super.setPercentage(percentage);
-	final DateTime now = new DateTime();
-	getGratuityEvent().forceChangeState(EventState.OPEN, now);
-	getGratuityEvent().recalculateState(now);
-    }
+	public PercentageGratuityExemption(final GratuityEvent gratuityEvent,
+			final GratuityExemptionJustificationType gratuityExemptionJustificationType, final String reason,
+			final YearMonthDay dispatchDate, final BigDecimal percentage) {
+		this(null, gratuityEvent, gratuityExemptionJustificationType, reason, dispatchDate, percentage);
+	}
 
-    @Override
-    public BigDecimal calculateDiscountPercentage(Money amount) {
-	return getPercentage();
-    }
+	protected void init(Person responsible, GratuityExemptionJustificationType exemptionType, String reason,
+			YearMonthDay dispatchDate, GratuityEvent gratuityEvent, BigDecimal percentage) {
 
-    public String getFormattedPercentage() {
-	return getPercentage().multiply(BigDecimal.valueOf(100)).toPlainString();
-    }
+		checkParameters(percentage);
+		super.setPercentage(percentage);
 
-    @Override
-    public boolean isPercentageExemption() {
-	return true;
-    }
+		super.init(responsible, gratuityEvent, exemptionType, reason, dispatchDate);
+	}
+
+	private void checkParameters(BigDecimal percentage) {
+		if (percentage == null) {
+			throw new DomainException("error.accounting.events.gratuity.PercentageGratuityExemption.percentage.cannot.be.null");
+		}
+	}
+
+	@Checked("RolePredicates.MANAGER_PREDICATE")
+	@Override
+	public void setPercentage(BigDecimal percentage) {
+		super.setPercentage(percentage);
+		final DateTime now = new DateTime();
+		getGratuityEvent().forceChangeState(EventState.OPEN, now);
+		getGratuityEvent().recalculateState(now);
+	}
+
+	@Override
+	public BigDecimal calculateDiscountPercentage(Money amount) {
+		return getPercentage();
+	}
+
+	public String getFormattedPercentage() {
+		return getPercentage().multiply(BigDecimal.valueOf(100)).toPlainString();
+	}
+
+	@Override
+	public boolean isPercentageExemption() {
+		return true;
+	}
 
 }

@@ -8,15 +8,15 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class CreateScientificJournal extends FenixService {
 
-    @Checked("ResultPredicates.author")
-    @Service
-    public static ScientificJournal run(String name, String issn, String publisher, ScopeType locationType) {
-	ScientificJournal journal = new ScientificJournal();
-	journal.setName(name);
-	journal.setLocationType(locationType);
-	journal.setIssn(issn);
-	journal.setPublisher(publisher);
+	@Checked("ResultPredicates.author")
+	@Service
+	public static ScientificJournal run(String name, String issn, String publisher, ScopeType locationType) {
+		ScientificJournal journal = new ScientificJournal();
+		journal.setName(name);
+		journal.setLocationType(locationType);
+		journal.setIssn(issn);
+		journal.setPublisher(publisher);
 
-	return journal;
-    }
+		return journal;
+	}
 }

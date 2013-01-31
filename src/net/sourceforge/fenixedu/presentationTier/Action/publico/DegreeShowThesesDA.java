@@ -12,55 +12,46 @@ import net.sourceforge.fenixedu.presentationTier.servlets.filters.functionalitie
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(module = "publico", path = "/showDegreeTheses", scope = "session", parameter = "method")
-@Forwards(value = {
-		@Forward(name = "showThesisDetails", path = "degree-showDegreeThesisDetails"),
+@Forwards(value = { @Forward(name = "showThesisDetails", path = "degree-showDegreeThesisDetails"),
 		@Forward(name = "showTheses", path = "degree-showDegreeTheses") })
 public class DegreeShowThesesDA extends PublicShowThesesDA {
 
-    @Override
-    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-	    throws Exception {
-	request.setAttribute("degree", getDegree(request));
-	return super.execute(mapping, form, request, response);
-    }
-
-    public Degree getDegree(HttpServletRequest request) throws FenixActionException {
-
-	FilterFunctionalityContext currentContext = (FilterFunctionalityContext) AbstractFunctionalityContext
-		.getCurrentContext(request);
-	DegreeSite selectedContainer = (DegreeSite) currentContext.getSelectedContainer();
-	Degree degree = selectedContainer.getDegree();
-
-	if (degree == null) {
-	    throw new FenixActionException();
+	@Override
+	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+		request.setAttribute("degree", getDegree(request));
+		return super.execute(mapping, form, request, response);
 	}
 
-	request.setAttribute("degreeID", degree.getIdInternal());
-	request.setAttribute("degree", degree);
+	public Degree getDegree(HttpServletRequest request) throws FenixActionException {
 
-	return degree;
-    }
+		FilterFunctionalityContext currentContext =
+				(FilterFunctionalityContext) AbstractFunctionalityContext.getCurrentContext(request);
+		DegreeSite selectedContainer = (DegreeSite) currentContext.getSelectedContainer();
+		Degree degree = selectedContainer.getDegree();
 
-    @Override
-    protected ThesisFilterBean getFilterBean(HttpServletRequest request) throws Exception {
-	ThesisFilterBean bean = super.getFilterBean(request);
-	bean.setDegree(getDegree(request));
-	bean.setDegreeOptions(Degree.readNotEmptyDegrees());
-	return bean;
-    }
+		if (degree == null) {
+			throw new FenixActionException();
+		}
+
+		request.setAttribute("degreeID", degree.getIdInternal());
+		request.setAttribute("degree", degree);
+
+		return degree;
+	}
+
+	@Override
+	protected ThesisFilterBean getFilterBean(HttpServletRequest request) throws Exception {
+		ThesisFilterBean bean = super.getFilterBean(request);
+		bean.setDegree(getDegree(request));
+		bean.setDegreeOptions(Degree.readNotEmptyDegrees());
+		return bean;
+	}
 
 }

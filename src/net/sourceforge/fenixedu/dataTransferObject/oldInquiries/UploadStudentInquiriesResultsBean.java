@@ -6,47 +6,47 @@ import org.joda.time.LocalDate;
 
 abstract public class UploadStudentInquiriesResultsBean {
 
-    protected transient InputStream file;
+	protected transient InputStream file;
 
-    protected String keyExecutionCourseHeader;
+	protected String keyExecutionCourseHeader;
 
-    protected String keyExecutionDegreeHeader;
+	protected String keyExecutionDegreeHeader;
 
-    protected LocalDate resultsDate;
+	protected LocalDate resultsDate;
 
-    public UploadStudentInquiriesResultsBean() {
-	super();
-    }
+	public UploadStudentInquiriesResultsBean() {
+		super();
+	}
 
-    public InputStream getFile() {
-	return file;
-    }
+	public InputStream getFile() {
+		return file;
+	}
 
-    public void setFile(InputStream file) {
-	this.file = file;
-    }
+	public void setFile(InputStream file) {
+		this.file = file;
+	}
 
-    public String getKeyExecutionCourseHeader() {
-	return keyExecutionCourseHeader;
-    }
+	public String getKeyExecutionCourseHeader() {
+		return keyExecutionCourseHeader;
+	}
 
-    public void setKeyExecutionCourseHeader(String keyExecutionCourseHeader) {
-	this.keyExecutionCourseHeader = keyExecutionCourseHeader;
-    }
+	public void setKeyExecutionCourseHeader(String keyExecutionCourseHeader) {
+		this.keyExecutionCourseHeader = keyExecutionCourseHeader;
+	}
 
-    public String getKeyExecutionDegreeHeader() {
-	return keyExecutionDegreeHeader;
-    }
+	public String getKeyExecutionDegreeHeader() {
+		return keyExecutionDegreeHeader;
+	}
 
-    public void setKeyExecutionDegreeHeader(String keyExecutionDegreeHeader) {
-	this.keyExecutionDegreeHeader = keyExecutionDegreeHeader;
-    }
+	public void setKeyExecutionDegreeHeader(String keyExecutionDegreeHeader) {
+		this.keyExecutionDegreeHeader = keyExecutionDegreeHeader;
+	}
 
-    public LocalDate getResultsDate() {
-	return resultsDate;
-    }
+	public LocalDate getResultsDate() {
+		return resultsDate;
+	}
 
-    public void setResultsDate(LocalDate resultsDate) {
-	this.resultsDate = resultsDate;
-    }
+	public void setResultsDate(LocalDate resultsDate) {
+		this.resultsDate = resultsDate;
+	}
 }

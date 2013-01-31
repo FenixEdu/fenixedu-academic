@@ -20,87 +20,88 @@ import net.sourceforge.fenixedu.domain.curriculum.IGrade;
  */
 
 public abstract class ComputeCourseStatistics extends FenixService {
-    public ComputeCourseStatistics() {
-	super();
-    }
-
-    protected void createCourseStatistics(CourseStatisticsDTO courseStatistics, List<Enrolment> enrolments) {
-	int firstEnrolledCount = 0;
-	int firstApprovedCount = 0;
-	List<IGrade> firstApprovedGrades = new ArrayList<IGrade>();
-
-	int restEnrolledCount = 0;
-	int restApprovedCount = 0;
-	List<IGrade> restApprovedGrades = new ArrayList<IGrade>();
-
-	int totalEnrolledCount = 0;
-	int totalApprovedCount = 0;
-	List<IGrade> totalApprovedGrades = new ArrayList<IGrade>();
-
-	for (Enrolment enrolment : enrolments) {
-
-	    totalEnrolledCount++;
-
-	    EnrolmentEvaluation evaluation = getBestEnrollmentEvaluation(enrolment);
-	    if (enrolment.isFirstTime()) {
-		firstEnrolledCount++;
-
-		if (evaluation != null && evaluation.getEnrollmentStateByGrade() == EnrollmentState.APROVED) {
-		    firstApprovedCount++;
-		    IGrade grade = evaluation.getGradeWrapper();
-		    firstApprovedGrades.add(grade);
-		    totalApprovedGrades.add(grade);
-		    totalApprovedCount++;
-		}
-	    } else {
-		restEnrolledCount++;
-		if (evaluation != null && evaluation.getEnrollmentStateByGrade() == EnrollmentState.APROVED) {
-		    restApprovedCount++;
-		    IGrade grade = evaluation.getGradeWrapper();
-		    restApprovedGrades.add(grade);
-		    totalApprovedGrades.add(grade);
-		    totalApprovedCount++;
-		}
-	    }
+	public ComputeCourseStatistics() {
+		super();
 	}
 
-	IGrade firstApprovedAverage = calculateApprovedAverage(firstApprovedGrades);
-	IGrade restApprovedAverage = calculateApprovedAverage(restApprovedGrades);
-	IGrade totalApprovedAverage = calculateApprovedAverage(totalApprovedGrades);
+	protected void createCourseStatistics(CourseStatisticsDTO courseStatistics, List<Enrolment> enrolments) {
+		int firstEnrolledCount = 0;
+		int firstApprovedCount = 0;
+		List<IGrade> firstApprovedGrades = new ArrayList<IGrade>();
 
-	courseStatistics.setFirstEnrolledCount(firstEnrolledCount);
-	courseStatistics.setFirstApprovedCount(firstApprovedCount);
-	courseStatistics.setFirstApprovedAverage(firstApprovedAverage);
+		int restEnrolledCount = 0;
+		int restApprovedCount = 0;
+		List<IGrade> restApprovedGrades = new ArrayList<IGrade>();
 
-	courseStatistics.setRestEnrolledCount(restEnrolledCount);
-	courseStatistics.setRestApprovedCount(restApprovedCount);
-	courseStatistics.setRestApprovedAverage(restApprovedAverage);
+		int totalEnrolledCount = 0;
+		int totalApprovedCount = 0;
+		List<IGrade> totalApprovedGrades = new ArrayList<IGrade>();
 
-	courseStatistics.setTotalEnrolledCount(totalEnrolledCount);
-	courseStatistics.setTotalApprovedCount(totalApprovedCount);
-	courseStatistics.setTotalApprovedAverage(totalApprovedAverage);
+		for (Enrolment enrolment : enrolments) {
 
-    }
+			totalEnrolledCount++;
 
-    protected GradeFactory gradeFactory = GradeFactory.getInstance();
+			EnrolmentEvaluation evaluation = getBestEnrollmentEvaluation(enrolment);
+			if (enrolment.isFirstTime()) {
+				firstEnrolledCount++;
 
-    private IGrade calculateApprovedAverage(List<IGrade> approvedGrades) {
-	if (approvedGrades.size() == 0)
-	    return null;
+				if (evaluation != null && evaluation.getEnrollmentStateByGrade() == EnrollmentState.APROVED) {
+					firstApprovedCount++;
+					IGrade grade = evaluation.getGradeWrapper();
+					firstApprovedGrades.add(grade);
+					totalApprovedGrades.add(grade);
+					totalApprovedCount++;
+				}
+			} else {
+				restEnrolledCount++;
+				if (evaluation != null && evaluation.getEnrollmentStateByGrade() == EnrollmentState.APROVED) {
+					restApprovedCount++;
+					IGrade grade = evaluation.getGradeWrapper();
+					restApprovedGrades.add(grade);
+					totalApprovedGrades.add(grade);
+					totalApprovedCount++;
+				}
+			}
+		}
 
-	// TODO: should query by chain of responsability to know how to compute
-	// this should be changed
-	return approvedGrades.get(0).getGradeType().average(approvedGrades);
-    }
+		IGrade firstApprovedAverage = calculateApprovedAverage(firstApprovedGrades);
+		IGrade restApprovedAverage = calculateApprovedAverage(restApprovedGrades);
+		IGrade totalApprovedAverage = calculateApprovedAverage(totalApprovedGrades);
 
-    protected EnrolmentEvaluation getBestEnrollmentEvaluation(Enrolment enrollment) {
-	EnrolmentEvaluation best = null;
+		courseStatistics.setFirstEnrolledCount(firstEnrolledCount);
+		courseStatistics.setFirstApprovedCount(firstApprovedCount);
+		courseStatistics.setFirstApprovedAverage(firstApprovedAverage);
 
-	for (EnrolmentEvaluation evaluation : enrollment.getEvaluations()) {
-	    if (best == null || best.getGradeWrapper().compareTo(evaluation.getGradeWrapper()) > 0) {
-		best = evaluation;
-	    }
+		courseStatistics.setRestEnrolledCount(restEnrolledCount);
+		courseStatistics.setRestApprovedCount(restApprovedCount);
+		courseStatistics.setRestApprovedAverage(restApprovedAverage);
+
+		courseStatistics.setTotalEnrolledCount(totalEnrolledCount);
+		courseStatistics.setTotalApprovedCount(totalApprovedCount);
+		courseStatistics.setTotalApprovedAverage(totalApprovedAverage);
+
 	}
-	return best;
-    }
+
+	protected GradeFactory gradeFactory = GradeFactory.getInstance();
+
+	private IGrade calculateApprovedAverage(List<IGrade> approvedGrades) {
+		if (approvedGrades.size() == 0) {
+			return null;
+		}
+
+		// TODO: should query by chain of responsability to know how to compute
+		// this should be changed
+		return approvedGrades.get(0).getGradeType().average(approvedGrades);
+	}
+
+	protected EnrolmentEvaluation getBestEnrollmentEvaluation(Enrolment enrollment) {
+		EnrolmentEvaluation best = null;
+
+		for (EnrolmentEvaluation evaluation : enrollment.getEvaluations()) {
+			if (best == null || best.getGradeWrapper().compareTo(evaluation.getGradeWrapper()) > 0) {
+				best = evaluation;
+			}
+		}
+		return best;
+	}
 }

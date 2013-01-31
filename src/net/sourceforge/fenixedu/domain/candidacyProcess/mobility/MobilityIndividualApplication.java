@@ -39,267 +39,268 @@ import org.joda.time.LocalDate;
 
 public class MobilityIndividualApplication extends MobilityIndividualApplication_Base {
 
-    public MobilityIndividualApplication() {
-	super();
-    }
-
-    MobilityIndividualApplication(final MobilityIndividualApplicationProcess process,
-	    final MobilityIndividualApplicationProcessBean bean) {
-	this();
-
-	bean.getPersonBean().setCreateLoginIdentificationAndUserIfNecessary(false);
-
-	Person person = init(bean, process);
-
-	createEramusStudentData(bean);
-
-	associateCurricularCourses(bean.getSelectedCurricularCourses());
-    }
-
-    private void associateCurricularCourses(Set<CurricularCourse> selectedCurricularCourses) {
-	for (CurricularCourse curricularCourse : selectedCurricularCourses) {
-	    addCurricularCourses(curricularCourse);
-	}
-    }
-
-    private void createEramusStudentData(MobilityIndividualApplicationProcessBean bean) {
-	setMobilityStudentData(new MobilityStudentData(this, bean.getMobilityStudentDataBean(), bean.determineMobilityQuota()));
-    }
-
-    @Override
-    protected void createDebt(final Person person) {
-
-    }
-
-    @Override
-    protected void checkParameters(final Person person, final IndividualCandidacyProcess process,
-	    final IndividualCandidacyProcessBean bean) {
-	MobilityIndividualApplicationProcess erasmusIndividualCandidacyProcess = (MobilityIndividualApplicationProcess) process;
-	MobilityIndividualApplicationProcessBean secondCandidacyProcessBean = (MobilityIndividualApplicationProcessBean) bean;
-	LocalDate candidacyDate = bean.getCandidacyDate();
-
-	checkParameters(person, erasmusIndividualCandidacyProcess, candidacyDate, null);
-    }
-
-    private void checkParameters(final Person person, final MobilityIndividualApplicationProcess process,
-	    final LocalDate candidacyDate, Object dummy) {
-
-	checkParameters(person, process, candidacyDate);
-
-	/*
-	 * 31/03/2009 - The candidacy may be submited externally hence may not
-	 * be associated to a person
-	 * 
-	 * 
-	 * if(person.hasValidSecondCycleIndividualCandidacy(process.
-	 * getCandidacyExecutionInterval())) { throw newDomainException(
-	 * "error.SecondCycleIndividualCandidacy.person.already.has.candidacy",
-	 * process .getCandidacyExecutionInterval().getName()); }
-	 */
-    }
-
-    void editDegreeAndCoursesInformation(MobilityIndividualApplicationProcessBean bean) {
-	Set<CurricularCourse> setOne = new HashSet<CurricularCourse>(this.getCurricularCourses());
-	setOne.addAll(bean.getSelectedCurricularCourses());
-
-	getMobilityStudentData().setSelectedOpening(bean.determineMobilityQuota());
-
-	for (CurricularCourse curricularCourse : setOne) {
-	    if (hasCurricularCourses(curricularCourse) && !bean.getSelectedCurricularCourses().contains(curricularCourse)) {
-		removeCurricularCourses(curricularCourse);
-	    } else if (!hasCurricularCourses(curricularCourse) && bean.getSelectedCurricularCourses().contains(curricularCourse)) {
-		addCurricularCourses(curricularCourse);
-	    }
-	}
-    }
-
-    public Degree getSelectedDegree() {
-	return getMobilityStudentData().getSelectedOpening().getDegree();
-    }
-
-    protected boolean hasSelectedDegree() {
-	return getSelectedDegree() != null;
-    }
-
-    @Override
-    public String getDescription() {
-	return getCandidacyProcess().getDisplayName() + (hasSelectedDegree() ? ": " + getSelectedDegree().getNameI18N() : "");
-    }
-
-    @Override
-    public MobilityIndividualApplicationProcess getCandidacyProcess() {
-	return (MobilityIndividualApplicationProcess) super.getCandidacyProcess();
-    }
-
-    public ApprovedLearningAgreementDocumentFile getMostRecentApprovedLearningAgreement() {
-	if (!hasAnyActiveApprovedLearningAgreements()) {
-	    return null;
+	public MobilityIndividualApplication() {
+		super();
 	}
 
-	List<ApprovedLearningAgreementDocumentFile> approvedLearningAgreement = new ArrayList<ApprovedLearningAgreementDocumentFile>(
-		getActiveApprovedLearningAgreements());
+	MobilityIndividualApplication(final MobilityIndividualApplicationProcess process,
+			final MobilityIndividualApplicationProcessBean bean) {
+		this();
 
-	Collections.sort(approvedLearningAgreement,
-		Collections.reverseOrder(ApprovedLearningAgreementDocumentFile.SUBMISSION_DATE_COMPARATOR));
+		bean.getPersonBean().setCreateLoginIdentificationAndUserIfNecessary(false);
 
-	return approvedLearningAgreement.get(0);
-    }
+		Person person = init(bean, process);
 
-    public boolean isMostRecentApprovedLearningAgreementNotViewed() {
-	if (!hasAnyActiveApprovedLearningAgreements()) {
-	    return false;
+		createEramusStudentData(bean);
+
+		associateCurricularCourses(bean.getSelectedCurricularCourses());
 	}
 
-	return !getMostRecentApprovedLearningAgreement().isApprovedLearningAgreementViewed();
-    }
-
-    boolean hasProcessWithAcceptNotification() {
-	return hasProcessWithAcceptNotificationAtDate(new DateTime());
-    }
-
-    boolean hasProcessWithAcceptNotificationAtDate(final DateTime dateTime) {
-	return getMostRecentApprovedLearningAgreement().getMostRecentSentEmailAcceptedStudentAction() != null
-		&& getMostRecentApprovedLearningAgreement().getMostRecentSentEmailAcceptedStudentAction().getWhenOccured()
-			.isBefore(dateTime);
-    }
-
-    public List<ApprovedLearningAgreementDocumentFile> getActiveApprovedLearningAgreements() {
-	List<ApprovedLearningAgreementDocumentFile> activeDocuments = new ArrayList<ApprovedLearningAgreementDocumentFile>();
-	CollectionUtils.select(getApprovedLearningAgreements(), new Predicate() {
-
-	    @Override
-	    public boolean evaluate(Object arg0) {
-		ApprovedLearningAgreementDocumentFile document = (ApprovedLearningAgreementDocumentFile) arg0;
-		return document.getCandidacyFileActive();
-	    }
-
-	}, activeDocuments);
-
-	return activeDocuments;
-    }
-
-    public boolean hasAnyActiveApprovedLearningAgreements() {
-	return !getActiveApprovedLearningAgreements().isEmpty();
-    }
-
-    @Override
-    public Registration createRegistration(final DegreeCurricularPlan degreeCurricularPlan, final CycleType cycleType,
-	    final Ingression ingression) {
-
-	if (hasRegistration()) {
-	    throw new DomainException("error.IndividualCandidacy.person.with.registration",
-		    degreeCurricularPlan.getPresentationName());
+	private void associateCurricularCourses(Set<CurricularCourse> selectedCurricularCourses) {
+		for (CurricularCourse curricularCourse : selectedCurricularCourses) {
+			addCurricularCourses(curricularCourse);
+		}
 	}
 
-	if (hasActiveRegistration(degreeCurricularPlan)) {
-	    final Registration registration = getStudent().getActiveRegistrationFor(degreeCurricularPlan);
-	    setRegistration(registration);
-
-	    ExecutionYear currentYear = ExecutionYear.readCurrentExecutionYear();
-	    PersonalIngressionData pid = getStudent().getPersonalIngressionDataByExecutionYear(currentYear);
-	    pid.setCountryOfResidence(getPersonalDetails().getCountryOfResidence());
-	    PrecedentDegreeInformation pdi = registration.getPrecedentDegreeInformation(currentYear);
-	    pdi.setSchoolLevel(getMobilityStudentData().getSchoolLevel());
-	    pdi.setOtherSchoolLevel(getMobilityStudentData().getOtherSchoolLevel());
-
-	    return registration;
+	private void createEramusStudentData(MobilityIndividualApplicationProcessBean bean) {
+		setMobilityStudentData(new MobilityStudentData(this, bean.getMobilityStudentDataBean(), bean.determineMobilityQuota()));
 	}
 
-	getPersonalDetails().ensurePersonInternalization();
-	return createRegistration(getPersonalDetails().getPerson(), degreeCurricularPlan, cycleType, ingression);
-    }
+	@Override
+	protected void createDebt(final Person person) {
 
-    @Override
-    protected Registration createRegistration(final Person person, final DegreeCurricularPlan degreeCurricularPlan,
-	    final CycleType cycleType, final Ingression ingression) {
-
-	final Registration registration = new Registration(person, degreeCurricularPlan, getMobilityProgram()
-		.getRegistrationAgreement(), cycleType, ((ExecutionYear) getCandidacyExecutionInterval()));
-
-	// Standalone group will be necessary for minor subjects
-	NoCourseGroupCurriculumGroup.create(NoCourseGroupCurriculumGroupType.STANDALONE, registration
-		.getActiveStudentCurricularPlan().getRoot());
-
-	registration.editStartDates(getStartDate(), registration.getHomologationDate(), registration.getStudiesStartDate());
-	setRegistration(registration);
-
-	createRaidesInformation(registration);
-	ExecutionYear applicationYear = (ExecutionYear) getCandidacyExecutionInterval();
-	PersonalIngressionData pid = getStudent().getPersonalIngressionDataByExecutionYear(applicationYear);
-	pid.setCountryOfResidence(getPersonalDetails().getCountryOfResidence());
-	PrecedentDegreeInformation pdi = registration.getPrecedentDegreeInformation(applicationYear);
-	pdi.setSchoolLevel(getMobilityStudentData().getSchoolLevel());
-	pdi.setOtherSchoolLevel(getMobilityStudentData().getOtherSchoolLevel());
-
-	return registration;
-    }
-
-    void enrol() {
-	final Registration registration = getRegistration();
-	final ExecutionYear executionYear = (ExecutionYear) getCandidacyExecutionInterval();
-	final ExecutionSemester semesterToEnrol = executionYear.getFirstExecutionPeriod();
-
-	Set<IDegreeModuleToEvaluate> degreeModulesToEnrol = new HashSet<IDegreeModuleToEvaluate>();
-	degreeModulesToEnrol.addAll(getModulesToEnrolForFirstSemester());
-
-	registration.getActiveStudentCurricularPlan().enrol(semesterToEnrol, degreeModulesToEnrol, Collections.EMPTY_LIST,
-		CurricularRuleLevel.ENROLMENT_NO_RULES);
-    }
-
-    public Collection<DegreeModuleToEnrol> getModulesToEnrolForFirstSemester() {
-	final Registration registration = getRegistration();
-	final ExecutionYear executionYear = (ExecutionYear) getCandidacyExecutionInterval();
-	final ExecutionSemester semesterToEnrol = executionYear.getFirstExecutionPeriod();
-	final StudentCurricularPlan studentCurricularPlan = registration.getActiveStudentCurricularPlan();
-	final DegreeCurricularPlan degreeCurricularPlan = registration.getLastDegreeCurricularPlan();
-
-	Set<DegreeModuleToEnrol> degreeModulesToEnrol = new HashSet<DegreeModuleToEnrol>();
-
-	for (CurricularCourse selectedCurricularCourse : getCurricularCourses()) {
-	    List<Context> contextList = selectedCurricularCourse.getParentContextsByExecutionSemester(semesterToEnrol);
-
-	    if (contextList.isEmpty()) {
-		continue;
-	    }
-
-	    Context selectedContext = contextList.get(0); // WTF?.. /facepalm
-
-	    CurriculumGroup curriculumGroup = null;
-	    if (selectedCurricularCourse.getDegreeCurricularPlan().equals(degreeCurricularPlan)) {
-		curriculumGroup = studentCurricularPlan.getRoot().findCurriculumGroupFor(selectedContext.getParentCourseGroup());
-	    } else {
-		// Enrol on standalone curriculum group
-		curriculumGroup = studentCurricularPlan.getStandaloneCurriculumGroup();
-	    }
-
-	    if (curriculumGroup == null) {
-		continue;
-	    }
-
-	    DegreeModuleToEnrol toEnrol = new DegreeModuleToEnrol(curriculumGroup, selectedContext, semesterToEnrol);
-	    degreeModulesToEnrol.add(toEnrol);
 	}
 
-	return degreeModulesToEnrol;
-    }
+	@Override
+	protected void checkParameters(final Person person, final IndividualCandidacyProcess process,
+			final IndividualCandidacyProcessBean bean) {
+		MobilityIndividualApplicationProcess erasmusIndividualCandidacyProcess = (MobilityIndividualApplicationProcess) process;
+		MobilityIndividualApplicationProcessBean secondCandidacyProcessBean = (MobilityIndividualApplicationProcessBean) bean;
+		LocalDate candidacyDate = bean.getCandidacyDate();
 
-    public void answerNationalIdCardAvoidanceOnSubmission(MobilityIndividualApplicationProcessBean bean) {
-	NationalIdCardAvoidanceQuestion question = bean.getNationalIdCardAvoidanceQuestion();
+		checkParameters(person, erasmusIndividualCandidacyProcess, candidacyDate, null);
+	}
 
-	this.setNationalIdCardAvoidanceQuestion(question);
-	this.setNationalIdCardAvoidanceAnswerDate(new DateTime());
-	this.setIdCardAvoidanceOtherReason(bean.getIdCardAvoidanceOtherReason());
-    }
+	private void checkParameters(final Person person, final MobilityIndividualApplicationProcess process,
+			final LocalDate candidacyDate, Object dummy) {
 
-    @Override
-    public boolean isErasmus() {
-	return true;
-    }
+		checkParameters(person, process, candidacyDate);
 
-    public MobilityProgram getMobilityProgram() {
-	MobilityQuota selectedOpening = getMobilityStudentData().getSelectedOpening();
+		/*
+		 * 31/03/2009 - The candidacy may be submited externally hence may not
+		 * be associated to a person
+		 * 
+		 * 
+		 * if(person.hasValidSecondCycleIndividualCandidacy(process.
+		 * getCandidacyExecutionInterval())) { throw newDomainException(
+		 * "error.SecondCycleIndividualCandidacy.person.already.has.candidacy",
+		 * process .getCandidacyExecutionInterval().getName()); }
+		 */
+	}
 
-	return selectedOpening.getMobilityAgreement().getMobilityProgram();
-    }
+	void editDegreeAndCoursesInformation(MobilityIndividualApplicationProcessBean bean) {
+		Set<CurricularCourse> setOne = new HashSet<CurricularCourse>(this.getCurricularCourses());
+		setOne.addAll(bean.getSelectedCurricularCourses());
+
+		getMobilityStudentData().setSelectedOpening(bean.determineMobilityQuota());
+
+		for (CurricularCourse curricularCourse : setOne) {
+			if (hasCurricularCourses(curricularCourse) && !bean.getSelectedCurricularCourses().contains(curricularCourse)) {
+				removeCurricularCourses(curricularCourse);
+			} else if (!hasCurricularCourses(curricularCourse) && bean.getSelectedCurricularCourses().contains(curricularCourse)) {
+				addCurricularCourses(curricularCourse);
+			}
+		}
+	}
+
+	public Degree getSelectedDegree() {
+		return getMobilityStudentData().getSelectedOpening().getDegree();
+	}
+
+	protected boolean hasSelectedDegree() {
+		return getSelectedDegree() != null;
+	}
+
+	@Override
+	public String getDescription() {
+		return getCandidacyProcess().getDisplayName() + (hasSelectedDegree() ? ": " + getSelectedDegree().getNameI18N() : "");
+	}
+
+	@Override
+	public MobilityIndividualApplicationProcess getCandidacyProcess() {
+		return (MobilityIndividualApplicationProcess) super.getCandidacyProcess();
+	}
+
+	public ApprovedLearningAgreementDocumentFile getMostRecentApprovedLearningAgreement() {
+		if (!hasAnyActiveApprovedLearningAgreements()) {
+			return null;
+		}
+
+		List<ApprovedLearningAgreementDocumentFile> approvedLearningAgreement =
+				new ArrayList<ApprovedLearningAgreementDocumentFile>(getActiveApprovedLearningAgreements());
+
+		Collections.sort(approvedLearningAgreement,
+				Collections.reverseOrder(ApprovedLearningAgreementDocumentFile.SUBMISSION_DATE_COMPARATOR));
+
+		return approvedLearningAgreement.get(0);
+	}
+
+	public boolean isMostRecentApprovedLearningAgreementNotViewed() {
+		if (!hasAnyActiveApprovedLearningAgreements()) {
+			return false;
+		}
+
+		return !getMostRecentApprovedLearningAgreement().isApprovedLearningAgreementViewed();
+	}
+
+	boolean hasProcessWithAcceptNotification() {
+		return hasProcessWithAcceptNotificationAtDate(new DateTime());
+	}
+
+	boolean hasProcessWithAcceptNotificationAtDate(final DateTime dateTime) {
+		return getMostRecentApprovedLearningAgreement().getMostRecentSentEmailAcceptedStudentAction() != null
+				&& getMostRecentApprovedLearningAgreement().getMostRecentSentEmailAcceptedStudentAction().getWhenOccured()
+						.isBefore(dateTime);
+	}
+
+	public List<ApprovedLearningAgreementDocumentFile> getActiveApprovedLearningAgreements() {
+		List<ApprovedLearningAgreementDocumentFile> activeDocuments = new ArrayList<ApprovedLearningAgreementDocumentFile>();
+		CollectionUtils.select(getApprovedLearningAgreements(), new Predicate() {
+
+			@Override
+			public boolean evaluate(Object arg0) {
+				ApprovedLearningAgreementDocumentFile document = (ApprovedLearningAgreementDocumentFile) arg0;
+				return document.getCandidacyFileActive();
+			}
+
+		}, activeDocuments);
+
+		return activeDocuments;
+	}
+
+	public boolean hasAnyActiveApprovedLearningAgreements() {
+		return !getActiveApprovedLearningAgreements().isEmpty();
+	}
+
+	@Override
+	public Registration createRegistration(final DegreeCurricularPlan degreeCurricularPlan, final CycleType cycleType,
+			final Ingression ingression) {
+
+		if (hasRegistration()) {
+			throw new DomainException("error.IndividualCandidacy.person.with.registration",
+					degreeCurricularPlan.getPresentationName());
+		}
+
+		if (hasActiveRegistration(degreeCurricularPlan)) {
+			final Registration registration = getStudent().getActiveRegistrationFor(degreeCurricularPlan);
+			setRegistration(registration);
+
+			ExecutionYear currentYear = ExecutionYear.readCurrentExecutionYear();
+			PersonalIngressionData pid = getStudent().getPersonalIngressionDataByExecutionYear(currentYear);
+			pid.setCountryOfResidence(getPersonalDetails().getCountryOfResidence());
+			PrecedentDegreeInformation pdi = registration.getPrecedentDegreeInformation(currentYear);
+			pdi.setSchoolLevel(getMobilityStudentData().getSchoolLevel());
+			pdi.setOtherSchoolLevel(getMobilityStudentData().getOtherSchoolLevel());
+
+			return registration;
+		}
+
+		getPersonalDetails().ensurePersonInternalization();
+		return createRegistration(getPersonalDetails().getPerson(), degreeCurricularPlan, cycleType, ingression);
+	}
+
+	@Override
+	protected Registration createRegistration(final Person person, final DegreeCurricularPlan degreeCurricularPlan,
+			final CycleType cycleType, final Ingression ingression) {
+
+		final Registration registration =
+				new Registration(person, degreeCurricularPlan, getMobilityProgram().getRegistrationAgreement(), cycleType,
+						((ExecutionYear) getCandidacyExecutionInterval()));
+
+		// Standalone group will be necessary for minor subjects
+		NoCourseGroupCurriculumGroup.create(NoCourseGroupCurriculumGroupType.STANDALONE, registration
+				.getActiveStudentCurricularPlan().getRoot());
+
+		registration.editStartDates(getStartDate(), registration.getHomologationDate(), registration.getStudiesStartDate());
+		setRegistration(registration);
+
+		createRaidesInformation(registration);
+		ExecutionYear applicationYear = (ExecutionYear) getCandidacyExecutionInterval();
+		PersonalIngressionData pid = getStudent().getPersonalIngressionDataByExecutionYear(applicationYear);
+		pid.setCountryOfResidence(getPersonalDetails().getCountryOfResidence());
+		PrecedentDegreeInformation pdi = registration.getPrecedentDegreeInformation(applicationYear);
+		pdi.setSchoolLevel(getMobilityStudentData().getSchoolLevel());
+		pdi.setOtherSchoolLevel(getMobilityStudentData().getOtherSchoolLevel());
+
+		return registration;
+	}
+
+	void enrol() {
+		final Registration registration = getRegistration();
+		final ExecutionYear executionYear = (ExecutionYear) getCandidacyExecutionInterval();
+		final ExecutionSemester semesterToEnrol = executionYear.getFirstExecutionPeriod();
+
+		Set<IDegreeModuleToEvaluate> degreeModulesToEnrol = new HashSet<IDegreeModuleToEvaluate>();
+		degreeModulesToEnrol.addAll(getModulesToEnrolForFirstSemester());
+
+		registration.getActiveStudentCurricularPlan().enrol(semesterToEnrol, degreeModulesToEnrol, Collections.EMPTY_LIST,
+				CurricularRuleLevel.ENROLMENT_NO_RULES);
+	}
+
+	public Collection<DegreeModuleToEnrol> getModulesToEnrolForFirstSemester() {
+		final Registration registration = getRegistration();
+		final ExecutionYear executionYear = (ExecutionYear) getCandidacyExecutionInterval();
+		final ExecutionSemester semesterToEnrol = executionYear.getFirstExecutionPeriod();
+		final StudentCurricularPlan studentCurricularPlan = registration.getActiveStudentCurricularPlan();
+		final DegreeCurricularPlan degreeCurricularPlan = registration.getLastDegreeCurricularPlan();
+
+		Set<DegreeModuleToEnrol> degreeModulesToEnrol = new HashSet<DegreeModuleToEnrol>();
+
+		for (CurricularCourse selectedCurricularCourse : getCurricularCourses()) {
+			List<Context> contextList = selectedCurricularCourse.getParentContextsByExecutionSemester(semesterToEnrol);
+
+			if (contextList.isEmpty()) {
+				continue;
+			}
+
+			Context selectedContext = contextList.get(0); // WTF?.. /facepalm
+
+			CurriculumGroup curriculumGroup = null;
+			if (selectedCurricularCourse.getDegreeCurricularPlan().equals(degreeCurricularPlan)) {
+				curriculumGroup = studentCurricularPlan.getRoot().findCurriculumGroupFor(selectedContext.getParentCourseGroup());
+			} else {
+				// Enrol on standalone curriculum group
+				curriculumGroup = studentCurricularPlan.getStandaloneCurriculumGroup();
+			}
+
+			if (curriculumGroup == null) {
+				continue;
+			}
+
+			DegreeModuleToEnrol toEnrol = new DegreeModuleToEnrol(curriculumGroup, selectedContext, semesterToEnrol);
+			degreeModulesToEnrol.add(toEnrol);
+		}
+
+		return degreeModulesToEnrol;
+	}
+
+	public void answerNationalIdCardAvoidanceOnSubmission(MobilityIndividualApplicationProcessBean bean) {
+		NationalIdCardAvoidanceQuestion question = bean.getNationalIdCardAvoidanceQuestion();
+
+		this.setNationalIdCardAvoidanceQuestion(question);
+		this.setNationalIdCardAvoidanceAnswerDate(new DateTime());
+		this.setIdCardAvoidanceOtherReason(bean.getIdCardAvoidanceOtherReason());
+	}
+
+	@Override
+	public boolean isErasmus() {
+		return true;
+	}
+
+	public MobilityProgram getMobilityProgram() {
+		MobilityQuota selectedOpening = getMobilityStudentData().getSelectedOpening();
+
+		return selectedOpening.getMobilityAgreement().getMobilityProgram();
+	}
 
 }

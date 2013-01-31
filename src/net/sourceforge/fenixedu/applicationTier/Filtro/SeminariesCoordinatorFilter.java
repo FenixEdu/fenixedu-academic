@@ -12,29 +12,29 @@ import pt.utl.ist.berserk.ServiceResponse;
 
 public class SeminariesCoordinatorFilter extends Filtro {
 
-    @Override
-    public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
-	IUserView id = getRemoteUser(request);
-	Integer SCPIDINternal = (Integer) request.getServiceParameters().getParameter(1);
+	@Override
+	public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
+		IUserView id = getRemoteUser(request);
+		Integer SCPIDINternal = (Integer) request.getServiceParameters().getParameter(1);
 
-	boolean seminaryCandidate = false;
-	if (SCPIDINternal != null) {
-	    seminaryCandidate = this.doesThisSCPBelongToASeminaryCandidate(SCPIDINternal);
+		boolean seminaryCandidate = false;
+		if (SCPIDINternal != null) {
+			seminaryCandidate = this.doesThisSCPBelongToASeminaryCandidate(SCPIDINternal);
+		}
+
+		if (((id != null && id.getRoleTypes() != null && !(id.hasRoleType(RoleType.SEMINARIES_COORDINATOR) && seminaryCandidate)))
+				|| (id == null) || (id.getRoleTypes() == null)) {
+			throw new NotAuthorizedFilterException();
+		}
 	}
 
-	if (((id != null && id.getRoleTypes() != null && !(id.hasRoleType(RoleType.SEMINARIES_COORDINATOR) && seminaryCandidate)))
-		|| (id == null) || (id.getRoleTypes() == null)) {
-	    throw new NotAuthorizedFilterException();
-	}
-    }
+	public boolean doesThisSCPBelongToASeminaryCandidate(Integer SCPIDInternal) {
+		StudentCurricularPlan scp = rootDomainObject.readStudentCurricularPlanByOID(SCPIDInternal);
+		if (scp != null) {
+			List<SeminaryCandidacy> candidacies = scp.getRegistration().getAssociatedCandidancies();
+			return !candidacies.isEmpty();
+		}
 
-    public boolean doesThisSCPBelongToASeminaryCandidate(Integer SCPIDInternal) {
-	StudentCurricularPlan scp = rootDomainObject.readStudentCurricularPlanByOID(SCPIDInternal);
-	if (scp != null) {
-	    List<SeminaryCandidacy> candidacies = scp.getRegistration().getAssociatedCandidancies();
-	    return !candidacies.isEmpty();
+		return false;
 	}
-
-	return false;
-    }
 }

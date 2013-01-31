@@ -9,109 +9,108 @@ import org.joda.time.LocalDate;
 
 public class PublicPresentationSeminarProcessBean implements Serializable {
 
-    private static final long serialVersionUID = -7837778662130742070L;
+	private static final long serialVersionUID = -7837778662130742070L;
 
-    private String remarks;
+	private String remarks;
 
-    private PhdProgramDocumentUploadBean document;
+	private PhdProgramDocumentUploadBean document;
 
-    private LocalDate presentationDate;
+	private LocalDate presentationDate;
 
-    private Boolean generateAlert;
+	private Boolean generateAlert;
 
-    private PublicPresentationSeminarProcess process;
-    
-    private PublicPresentationSeminarProcessStateType processState;
+	private PublicPresentationSeminarProcess process;
 
-    private LocalDate stateDate;
+	private PublicPresentationSeminarProcessStateType processState;
 
-    private LocalDate presentationRequestDate;
+	private LocalDate stateDate;
 
-    private PhdIndividualProgramProcess phdIndividualProgramProcess;
+	private LocalDate presentationRequestDate;
 
-    public PublicPresentationSeminarProcessBean() {
-	this.document = new PhdProgramDocumentUploadBean();
-    }
+	private PhdIndividualProgramProcess phdIndividualProgramProcess;
 
-    public PublicPresentationSeminarProcessBean(final PhdIndividualProgramProcess process) {
-	this();
-	setProcess(process.getSeminarProcess());
-	setGenerateAlert(process.getPhdConfigurationIndividualProgramProcess().getGenerateAlert());
+	public PublicPresentationSeminarProcessBean() {
+		this.document = new PhdProgramDocumentUploadBean();
+	}
 
-	setPresentationDate(process.getSeminarProcess() != null ? process.getSeminarProcess().getPresentationDate() : null);
-	setPresentationRequestDate(process.getSeminarProcess() != null ? process.getSeminarProcess().getPresentationRequestDate()
-		: null);
-    }
+	public PublicPresentationSeminarProcessBean(final PhdIndividualProgramProcess process) {
+		this();
+		setProcess(process.getSeminarProcess());
+		setGenerateAlert(process.getPhdConfigurationIndividualProgramProcess().getGenerateAlert());
 
-    public String getRemarks() {
-	return remarks;
-    }
+		setPresentationDate(process.getSeminarProcess() != null ? process.getSeminarProcess().getPresentationDate() : null);
+		setPresentationRequestDate(process.getSeminarProcess() != null ? process.getSeminarProcess().getPresentationRequestDate() : null);
+	}
 
-    public void setRemarks(String remarks) {
-	this.remarks = remarks;
-    }
+	public String getRemarks() {
+		return remarks;
+	}
 
-    public PhdProgramDocumentUploadBean getDocument() {
-	return document;
-    }
+	public void setRemarks(String remarks) {
+		this.remarks = remarks;
+	}
 
-    public void setDocument(PhdProgramDocumentUploadBean document) {
-	this.document = document;
-    }
+	public PhdProgramDocumentUploadBean getDocument() {
+		return document;
+	}
 
-    public LocalDate getPresentationDate() {
-	return presentationDate;
-    }
+	public void setDocument(PhdProgramDocumentUploadBean document) {
+		this.document = document;
+	}
 
-    public void setPresentationDate(LocalDate presentationDate) {
-	this.presentationDate = presentationDate;
-    }
+	public LocalDate getPresentationDate() {
+		return presentationDate;
+	}
 
-    public Boolean getGenerateAlert() {
-	return generateAlert;
-    }
+	public void setPresentationDate(LocalDate presentationDate) {
+		this.presentationDate = presentationDate;
+	}
 
-    public void setGenerateAlert(Boolean generateAlert) {
-	this.generateAlert = generateAlert;
-    }
+	public Boolean getGenerateAlert() {
+		return generateAlert;
+	}
 
-    public PublicPresentationSeminarProcess getProcess() {
-	return process;
-    }
+	public void setGenerateAlert(Boolean generateAlert) {
+		this.generateAlert = generateAlert;
+	}
 
-    public void setProcess(PublicPresentationSeminarProcess process) {
-	this.process = process;
-    }
+	public PublicPresentationSeminarProcess getProcess() {
+		return process;
+	}
 
-    public PublicPresentationSeminarProcessStateType getProcessState() {
-	return processState;
-    }
+	public void setProcess(PublicPresentationSeminarProcess process) {
+		this.process = process;
+	}
 
-    public void setProcessState(PublicPresentationSeminarProcessStateType processState) {
-	this.processState = processState;
-    }
-    
-    public LocalDate getStateDate() {
-	return stateDate;
-    }
-    
-    public void setStateDate(LocalDate stateDate) {
-	this.stateDate = stateDate;
-    }
+	public PublicPresentationSeminarProcessStateType getProcessState() {
+		return processState;
+	}
 
-    public LocalDate getPresentationRequestDate() {
-	return presentationRequestDate;
-    }
+	public void setProcessState(PublicPresentationSeminarProcessStateType processState) {
+		this.processState = processState;
+	}
 
-    public void setPresentationRequestDate(LocalDate presentationRequestDate) {
-	this.presentationRequestDate = presentationRequestDate;
-    }
+	public LocalDate getStateDate() {
+		return stateDate;
+	}
 
-    public PhdIndividualProgramProcess getPhdIndividualProgramProcess() {
-	return phdIndividualProgramProcess;
-    }
+	public void setStateDate(LocalDate stateDate) {
+		this.stateDate = stateDate;
+	}
 
-    public void setPhdIndividualProgramProcess(PhdIndividualProgramProcess phdIndividualProgramProcess) {
-	this.phdIndividualProgramProcess = phdIndividualProgramProcess;
-    }
+	public LocalDate getPresentationRequestDate() {
+		return presentationRequestDate;
+	}
+
+	public void setPresentationRequestDate(LocalDate presentationRequestDate) {
+		this.presentationRequestDate = presentationRequestDate;
+	}
+
+	public PhdIndividualProgramProcess getPhdIndividualProgramProcess() {
+		return phdIndividualProgramProcess;
+	}
+
+	public void setPhdIndividualProgramProcess(PhdIndividualProgramProcess phdIndividualProgramProcess) {
+		this.phdIndividualProgramProcess = phdIndividualProgramProcess;
+	}
 }

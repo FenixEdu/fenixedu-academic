@@ -11,18 +11,21 @@ import javax.faces.event.PhaseListener;
  */
 public class PhaseTracker implements PhaseListener {
 
-    /**
+	/**
      * 
      */
-    private static final long serialVersionUID = -3617760112695979158L;
+	private static final long serialVersionUID = -3617760112695979158L;
 
-    public PhaseId getPhaseId() {
-	return PhaseId.ANY_PHASE;
-    }
+	@Override
+	public PhaseId getPhaseId() {
+		return PhaseId.ANY_PHASE;
+	}
 
-    public void afterPhase(PhaseEvent phaseEvent) {
-    }
+	@Override
+	public void afterPhase(PhaseEvent phaseEvent) {
+	}
 
-    public void beforePhase(PhaseEvent phaseEvent) {
-    }
+	@Override
+	public void beforePhase(PhaseEvent phaseEvent) {
+	}
 }

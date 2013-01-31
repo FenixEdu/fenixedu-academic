@@ -34,61 +34,67 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
  * 
  */
 @Mapping(module = "masterDegreeAdministrativeOffice", path = "/listMasterDegreeThesis", scope = "request", parameter = "method")
-@Forwards(value = { @Forward(name = "showList", path = "/masterDegreeAdministrativeOffice/lists/listMasterDegreeThesis.jsp", tileProperties = @Tile(navLocal = "/masterDegreeAdministrativeOffice/lists/listsMenu.jsp", navGeral = "/masterDegreeAdministrativeOffice/commonNavGeralPosGraduacao.jsp", title = "private.postgraduateoffice.listings")) })
+@Forwards(value = { @Forward(
+		name = "showList",
+		path = "/masterDegreeAdministrativeOffice/lists/listMasterDegreeThesis.jsp",
+		tileProperties = @Tile(
+				navLocal = "/masterDegreeAdministrativeOffice/lists/listsMenu.jsp",
+				navGeral = "/masterDegreeAdministrativeOffice/commonNavGeralPosGraduacao.jsp",
+				title = "private.postgraduateoffice.listings")) })
 public class ListMasterDegreeThesisDispatchAction extends FenixDispatchAction {
 
-    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-	    throws FenixFilterException, FenixServiceException, IOException {
+	public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+			throws FenixFilterException, FenixServiceException, IOException {
 
-	ListMasterDegreeProofsBean bean = getRenderedObject();
-	if (bean == null) {
-	    bean = new ListMasterDegreeProofsBean();
-	} else {
-	    Collection<MasterDegreeThesis> masterDegreeThesisCollection = ReadActiveMasterDegreeThesis.run(bean.getThesisState(),
-		    bean.getYear(), bean.getDegree());
+		ListMasterDegreeProofsBean bean = getRenderedObject();
+		if (bean == null) {
+			bean = new ListMasterDegreeProofsBean();
+		} else {
+			Collection<MasterDegreeThesis> masterDegreeThesisCollection =
+					ReadActiveMasterDegreeThesis.run(bean.getThesisState(), bean.getYear(), bean.getDegree());
 
-	    if (bean.getGenerateFile()) {
+			if (bean.getGenerateFile()) {
+				request.setAttribute("chooseDegreeAndYearBean", bean);
+				return generateFile(response, masterDegreeThesisCollection);
+			}
+
+			request.setAttribute("masterDegreeThesisCollection", masterDegreeThesisCollection);
+		}
+
 		request.setAttribute("chooseDegreeAndYearBean", bean);
-		return generateFile(response, masterDegreeThesisCollection);
-	    }
-
-	    request.setAttribute("masterDegreeThesisCollection", masterDegreeThesisCollection);
+		return mapping.findForward("showList");
 	}
 
-	request.setAttribute("chooseDegreeAndYearBean", bean);
-	return mapping.findForward("showList");
-    }
+	private ActionForward generateFile(HttpServletResponse response, Collection<MasterDegreeThesis> masterDegreeThesisCollection)
+			throws IOException {
+		Formatter resultFormatter = new Formatter();
+		for (MasterDegreeThesis thesis : masterDegreeThesisCollection) {
+			resultFormatter.format("%d\t%s\tFénix\t", thesis.getStudentCurricularPlan().getRegistration().getNumber(), thesis
+					.getStudentCurricularPlan().getDegreeCurricularPlan().getDegree().getNome());
 
-    private ActionForward generateFile(HttpServletResponse response, Collection<MasterDegreeThesis> masterDegreeThesisCollection)
-	    throws IOException {
-	Formatter resultFormatter = new Formatter();
-	for (MasterDegreeThesis thesis : masterDegreeThesisCollection) {
-	    resultFormatter.format("%d\t%s\tFénix\t", thesis.getStudentCurricularPlan().getRegistration().getNumber(), thesis
-		    .getStudentCurricularPlan().getDegreeCurricularPlan().getDegree().getNome());
+			List<Teacher> guiders = thesis.getActiveMasterDegreeThesisDataVersion().getGuiders();
+			if (!guiders.isEmpty()) {
+				for (Teacher teacher : guiders) {
+					resultFormatter.format("%s\t", teacher.getPerson().getName());
+				}
+			} else {
+				List<ExternalContract> externalGuiders = thesis.getActiveMasterDegreeThesisDataVersion().getExternalGuiders();
+				if (!externalGuiders.isEmpty()) {
+					for (ExternalContract externalPerson : externalGuiders) {
+						resultFormatter.format("%s\t", externalPerson.getPerson().getName());
+					}
+				}
+			}
 
-	    List<Teacher> guiders = thesis.getActiveMasterDegreeThesisDataVersion().getGuiders();
-	    if (!guiders.isEmpty()) {
-		for (Teacher teacher : guiders) {
-		    resultFormatter.format("%s\t", teacher.getPerson().getName());
+			resultFormatter.format("%s\n", thesis.getActiveMasterDegreeThesisDataVersion().getDissertationTitle());
 		}
-	    } else {
-		List<ExternalContract> externalGuiders = thesis.getActiveMasterDegreeThesisDataVersion().getExternalGuiders();
-		if (!externalGuiders.isEmpty()) {
-		    for (ExternalContract externalPerson : externalGuiders) {
-			resultFormatter.format("%s\t", externalPerson.getPerson().getName());
-		    }
-		}
-	    }
 
-	    resultFormatter.format("%s\n", thesis.getActiveMasterDegreeThesisDataVersion().getDissertationTitle());
+		response.setHeader("Content-disposition", "attachment;filename=masterDegreeThesisList.txt");
+		response.setContentType("application/txt");
+		response.getWriter().write(resultFormatter.toString());
+		response.getWriter().close();
+
+		return null;
 	}
-
-	response.setHeader("Content-disposition", "attachment;filename=masterDegreeThesisList.txt");
-	response.setContentType("application/txt");
-	response.getWriter().write(resultFormatter.toString());
-	response.getWriter().close();
-
-	return null;
-    }
 
 }

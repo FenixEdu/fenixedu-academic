@@ -15,16 +15,16 @@ import pt.ist.fenixWebFramework.security.User;
  */
 public interface IUserView extends Serializable, User {
 
-    public Person getPerson();
+	public Person getPerson();
 
-    public String getUtilizador();
+	public String getUtilizador();
 
-    public String getFullName();
+	public String getFullName();
 
-    public Collection<RoleType> getRoleTypes();
+	public Collection<RoleType> getRoleTypes();
 
-    public DateTime getExpirationDate();
+	public DateTime getExpirationDate();
 
-    boolean hasRoleType(final RoleType roleType);
+	boolean hasRoleType(final RoleType roleType);
 
 }

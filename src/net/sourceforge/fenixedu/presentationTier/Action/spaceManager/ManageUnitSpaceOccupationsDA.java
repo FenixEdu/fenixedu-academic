@@ -29,114 +29,123 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(module = "SpaceManager", path = "/manageUnitSpaceOccupations", scope = "session", parameter = "method")
 @Forwards(value = {
-	@Forward(name = "prepareManageUnitSpaceOccupationInterval", path = "/spaceManager/manageUnitSpaceOccupationInterval.jsp", tileProperties = @Tile(  title = "private.spacemanagement.searchspaces")),
-	@Forward(name = "prepareManageUnitSpaceOccupations", path = "/spaceManager/manageUnitSpaceOccupations.jsp", tileProperties = @Tile(  title = "private.spacemanagement.searchspaces")) })
+		@Forward(
+				name = "prepareManageUnitSpaceOccupationInterval",
+				path = "/spaceManager/manageUnitSpaceOccupationInterval.jsp",
+				tileProperties = @Tile(title = "private.spacemanagement.searchspaces")),
+		@Forward(
+				name = "prepareManageUnitSpaceOccupations",
+				path = "/spaceManager/manageUnitSpaceOccupations.jsp",
+				tileProperties = @Tile(title = "private.spacemanagement.searchspaces")) })
 public class ManageUnitSpaceOccupationsDA extends FenixDispatchAction {
 
-    public ActionForward prepareManageUnitSpaceOccupations(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+	public ActionForward prepareManageUnitSpaceOccupations(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
-	readAndSetAllAttributes(request);
-	return mapping.findForward("prepareManageUnitSpaceOccupations");
-    }
-
-    public ActionForward prepareManageUnitOccupationInterval(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-
-	SpaceInformation spaceInformation = getSpaceInformationFromParameter(request);
-	setSpaceInformation(request, spaceInformation);
-	Unit responsibleUnit = getUnit(request);
-	request.setAttribute("unit", responsibleUnit);
-	return mapping.findForward("prepareManageUnitSpaceOccupationInterval");
-    }
-
-    public ActionForward prepareAddExternalUnit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-
-	SpaceInformation spaceInformation = getSpaceInformationFromParameter(request);
-	setSpaceInformation(request, spaceInformation);
-	Unit responsibleUnit = getExternalResponsibleUnit(request);
-	if (responsibleUnit == null) {
-	    ActionMessages actionMessages = new ActionMessages();
-	    actionMessages.add("", new ActionMessage("error.unit.space.occupation.empty.external.unit"));
-	    saveMessages(request, actionMessages);
-	    return prepareManageUnitSpaceOccupations(mapping, form, request, response);
-	}
-	request.setAttribute("unit", responsibleUnit);
-	return mapping.findForward("prepareManageUnitSpaceOccupationInterval");
-    }
-
-    public ActionForward deleteUnitSpaceOccupation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-
-	UnitSpaceOccupation unitSpaceOccupation = getUnitSpaceOccupation(request);
-
-	try {
-	    DeleteUnitSpaceOccupation.run(unitSpaceOccupation);
-	} catch (DomainException domainException) {
-	    saveMessages(request, domainException);
+		readAndSetAllAttributes(request);
+		return mapping.findForward("prepareManageUnitSpaceOccupations");
 	}
 
-	return prepareManageUnitSpaceOccupations(mapping, form, request, response);
-    }
+	public ActionForward prepareManageUnitOccupationInterval(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
-    public ActionForward prepareEditUnitSpaceOccupation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+		SpaceInformation spaceInformation = getSpaceInformationFromParameter(request);
+		setSpaceInformation(request, spaceInformation);
+		Unit responsibleUnit = getUnit(request);
+		request.setAttribute("unit", responsibleUnit);
+		return mapping.findForward("prepareManageUnitSpaceOccupationInterval");
+	}
 
-	SpaceInformation spaceInformation = getSpaceInformationFromParameter(request);
-	setSpaceInformation(request, spaceInformation);
-	UnitSpaceOccupation unitSpaceOccupation = getUnitSpaceOccupation(request);
-	request.setAttribute("unitSpaceOccupation", unitSpaceOccupation);
-	request.setAttribute("unit", unitSpaceOccupation.getUnit());
-	return mapping.findForward("prepareManageUnitSpaceOccupationInterval");
-    }
+	public ActionForward prepareAddExternalUnit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
-    private SpaceInformation getSpaceInformationFromParameter(final HttpServletRequest request) {
-	final String spaceInformationIDString = request.getParameterMap().containsKey("spaceInformationID") ? request
-		.getParameter("spaceInformationID") : (String) request.getAttribute("spaceInformationID");
-	final Integer spaceInformationID = spaceInformationIDString != null ? Integer.valueOf(spaceInformationIDString) : null;
-	return rootDomainObject.readSpaceInformationByOID(spaceInformationID);
-    }
+		SpaceInformation spaceInformation = getSpaceInformationFromParameter(request);
+		setSpaceInformation(request, spaceInformation);
+		Unit responsibleUnit = getExternalResponsibleUnit(request);
+		if (responsibleUnit == null) {
+			ActionMessages actionMessages = new ActionMessages();
+			actionMessages.add("", new ActionMessage("error.unit.space.occupation.empty.external.unit"));
+			saveMessages(request, actionMessages);
+			return prepareManageUnitSpaceOccupations(mapping, form, request, response);
+		}
+		request.setAttribute("unit", responsibleUnit);
+		return mapping.findForward("prepareManageUnitSpaceOccupationInterval");
+	}
 
-    private void readAndSetAllAttributes(HttpServletRequest request) throws FenixFilterException, FenixServiceException {
+	public ActionForward deleteUnitSpaceOccupation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
-	SpaceInformation spaceInformation = getSpaceInformationFromParameter(request);
-	request.setAttribute("selectedSpaceInformation", spaceInformation);
-	request.setAttribute("selectedSpace", spaceInformation.getSpace());
-	request.setAttribute("initialUnit", UnitUtils.readInstitutionUnit());
-	request.setAttribute("searchExternalPartyBean", new SearchPartyBean());
-    }
+		UnitSpaceOccupation unitSpaceOccupation = getUnitSpaceOccupation(request);
 
-    private Unit getUnit(final HttpServletRequest request) {
-	final String unitIDString = request.getParameterMap().containsKey("unitID") ? request.getParameter("unitID")
-		: (String) request.getAttribute("unitID");
-	final Integer unitID = unitIDString != null ? Integer.valueOf(unitIDString) : null;
-	return (Unit) rootDomainObject.readPartyByOID(unitID);
-    }
+		try {
+			DeleteUnitSpaceOccupation.run(unitSpaceOccupation);
+		} catch (DomainException domainException) {
+			saveMessages(request, domainException);
+		}
 
-    private UnitSpaceOccupation getUnitSpaceOccupation(final HttpServletRequest request) {
-	final String unitSpaceOccupationIDString = request.getParameterMap().containsKey("unitSpaceOccupationID") ? request
-		.getParameter("unitSpaceOccupationID") : (String) request.getAttribute("unitSpaceOccupationID");
-	final Integer unitSpaceOccupationID = unitSpaceOccupationIDString != null ? Integer.valueOf(unitSpaceOccupationIDString)
-		: null;
-	return (UnitSpaceOccupation) rootDomainObject.readResourceAllocationByOID(unitSpaceOccupationID);
-    }
+		return prepareManageUnitSpaceOccupations(mapping, form, request, response);
+	}
 
-    private void setSpaceInformation(HttpServletRequest request, final SpaceInformation spaceInformation) {
-	request.setAttribute("selectedSpaceInformation", spaceInformation);
-	request.setAttribute("selectedSpace", spaceInformation.getSpace());
-    }
+	public ActionForward prepareEditUnitSpaceOccupation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
-    private Unit getExternalResponsibleUnit(HttpServletRequest request) {
-	IViewState viewState = RenderUtils.getViewState();
-	SearchPartyBean bean = (SearchPartyBean) viewState.getMetaObject().getObject();
-	return (Unit) bean.getParty();
-    }
+		SpaceInformation spaceInformation = getSpaceInformationFromParameter(request);
+		setSpaceInformation(request, spaceInformation);
+		UnitSpaceOccupation unitSpaceOccupation = getUnitSpaceOccupation(request);
+		request.setAttribute("unitSpaceOccupation", unitSpaceOccupation);
+		request.setAttribute("unit", unitSpaceOccupation.getUnit());
+		return mapping.findForward("prepareManageUnitSpaceOccupationInterval");
+	}
 
-    private void saveMessages(HttpServletRequest request, DomainException e) {
-	ActionMessages actionMessages = new ActionMessages();
-	actionMessages.add("", new ActionMessage(e.getMessage(), e.getArgs()));
-	saveMessages(request, actionMessages);
-    }
+	private SpaceInformation getSpaceInformationFromParameter(final HttpServletRequest request) {
+		final String spaceInformationIDString =
+				request.getParameterMap().containsKey("spaceInformationID") ? request.getParameter("spaceInformationID") : (String) request
+						.getAttribute("spaceInformationID");
+		final Integer spaceInformationID = spaceInformationIDString != null ? Integer.valueOf(spaceInformationIDString) : null;
+		return rootDomainObject.readSpaceInformationByOID(spaceInformationID);
+	}
+
+	private void readAndSetAllAttributes(HttpServletRequest request) throws FenixFilterException, FenixServiceException {
+
+		SpaceInformation spaceInformation = getSpaceInformationFromParameter(request);
+		request.setAttribute("selectedSpaceInformation", spaceInformation);
+		request.setAttribute("selectedSpace", spaceInformation.getSpace());
+		request.setAttribute("initialUnit", UnitUtils.readInstitutionUnit());
+		request.setAttribute("searchExternalPartyBean", new SearchPartyBean());
+	}
+
+	private Unit getUnit(final HttpServletRequest request) {
+		final String unitIDString =
+				request.getParameterMap().containsKey("unitID") ? request.getParameter("unitID") : (String) request
+						.getAttribute("unitID");
+		final Integer unitID = unitIDString != null ? Integer.valueOf(unitIDString) : null;
+		return (Unit) rootDomainObject.readPartyByOID(unitID);
+	}
+
+	private UnitSpaceOccupation getUnitSpaceOccupation(final HttpServletRequest request) {
+		final String unitSpaceOccupationIDString =
+				request.getParameterMap().containsKey("unitSpaceOccupationID") ? request.getParameter("unitSpaceOccupationID") : (String) request
+						.getAttribute("unitSpaceOccupationID");
+		final Integer unitSpaceOccupationID =
+				unitSpaceOccupationIDString != null ? Integer.valueOf(unitSpaceOccupationIDString) : null;
+		return (UnitSpaceOccupation) rootDomainObject.readResourceAllocationByOID(unitSpaceOccupationID);
+	}
+
+	private void setSpaceInformation(HttpServletRequest request, final SpaceInformation spaceInformation) {
+		request.setAttribute("selectedSpaceInformation", spaceInformation);
+		request.setAttribute("selectedSpace", spaceInformation.getSpace());
+	}
+
+	private Unit getExternalResponsibleUnit(HttpServletRequest request) {
+		IViewState viewState = RenderUtils.getViewState();
+		SearchPartyBean bean = (SearchPartyBean) viewState.getMetaObject().getObject();
+		return (Unit) bean.getParty();
+	}
+
+	private void saveMessages(HttpServletRequest request, DomainException e) {
+		ActionMessages actionMessages = new ActionMessages();
+		actionMessages.add("", new ActionMessage(e.getMessage(), e.getArgs()));
+		saveMessages(request, actionMessages);
+	}
 
 }

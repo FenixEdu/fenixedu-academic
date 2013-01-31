@@ -15,104 +15,110 @@ import pt.utl.ist.fenix.tools.file.VirtualPath;
 
 public class ResearchResultDocumentFile extends ResearchResultDocumentFile_Base {
 
-    public enum FileResultPermittedGroupType {
-	PUBLIC, INSTITUTION, RESEARCHER;
+	public enum FileResultPermittedGroupType {
+		PUBLIC, INSTITUTION, RESEARCHER;
 
-	public static FileResultPermittedGroupType getDefaultType() {
-	    return PUBLIC;
+		public static FileResultPermittedGroupType getDefaultType() {
+			return PUBLIC;
+		}
 	}
-    }
 
-    private ResearchResultDocumentFile() {
-	super();
-    }
+	private ResearchResultDocumentFile() {
+		super();
+	}
 
-    ResearchResultDocumentFile(final VirtualPath path, Collection<FileSetMetaData> metadata, byte[] content, ResearchResult result, String filename, String displayName,
-	    FileResultPermittedGroupType permittedGroupType, Group permittedGroup) {
-	this();
-	checkParameters(result, filename, displayName, permittedGroupType);
-	super.setResult(result);
-	super.setFileResultPermittedGroupType(permittedGroupType);
+	ResearchResultDocumentFile(final VirtualPath path, Collection<FileSetMetaData> metadata, byte[] content,
+			ResearchResult result, String filename, String displayName, FileResultPermittedGroupType permittedGroupType,
+			Group permittedGroup) {
+		this();
+		checkParameters(result, filename, displayName, permittedGroupType);
+		super.setResult(result);
+		super.setFileResultPermittedGroupType(permittedGroupType);
 //	init(filename, displayName, mimeType, checksum, checksumAlgorithm, size, externalStorageIdentification, permittedGroup);
-	init(path, filename, displayName, metadata, content, permittedGroup);
-    }
-
-    @Checked("ResultPredicates.documentFileWritePredicate")
-    public void setEdit(String displayName, FileResultPermittedGroupType fileResultPermittedGroupType) {
-	super.setDisplayName(displayName);
-	changeFilePermission(fileResultPermittedGroupType);
-	this.getResult().setModifiedByAndDate();
-    }
-
-    public final void delete() {
-	super.setResult(null);
-	super.delete();
-    }
-
-    @Override
-    protected Boolean deletItemOnDelete() {
-        return Boolean.FALSE;
-    }
-
-    public final static Group getPermittedGroup(FileResultPermittedGroupType permissionType) {
-	switch (permissionType) {
-	case INSTITUTION:
-	    return new RoleGroup(Role.getRoleByRoleType(RoleType.PERSON));
-
-	case PUBLIC:
-	    return null;
-
-	case RESEARCHER:
-	    return new RoleGroup(Role.getRoleByRoleType(RoleType.RESEARCHER));
-
-	default:
-	    return null;
+		init(path, filename, displayName, metadata, content, permittedGroup);
 	}
-    }
 
-    public final static ResearchResultDocumentFile readByOID(Integer oid) {
-	final ResearchResultDocumentFile documentFile = (ResearchResultDocumentFile) RootDomainObject.getInstance()
-		.readFileByOID(oid);
-
-	if (documentFile == null)
-	    throw new DomainException("error.researcher.ResultDocumentFile.null");
-
-	return documentFile;
-    }
-
-    private void checkParameters(ResearchResult result, String filename, String displayName,
-	    FileResultPermittedGroupType permittedGroupType) {
-	if (result == null)
-	    throw new DomainException("error.researcher.ResultDocumentFile.result.null");
-	if (filename == null || filename.equals(""))
-	    throw new DomainException("error.researcher.ResultDocumentFile.filename.null");
-	if (displayName == null || displayName.equals(""))
-	    throw new DomainException("error.researcher.ResultDocumentFile.displayName.null");
-	if (permittedGroupType == null) {
-	    throw new DomainException("error.researcher.ResultDocumentFile.permittedGroupType.null");
+	@Checked("ResultPredicates.documentFileWritePredicate")
+	public void setEdit(String displayName, FileResultPermittedGroupType fileResultPermittedGroupType) {
+		super.setDisplayName(displayName);
+		changeFilePermission(fileResultPermittedGroupType);
+		this.getResult().setModifiedByAndDate();
 	}
-    }
 
-    private void changeFilePermission(FileResultPermittedGroupType fileResultPermittedGroupType) {
-	final Group group = getPermittedGroup(fileResultPermittedGroupType);
-	super.setFileResultPermittedGroupType(fileResultPermittedGroupType);
-	super.setPermittedGroup(group);
-	FileManagerFactory.getFactoryInstance().getContentFileManager().changeFilePermissions(getExternalStorageIdentification(),
-		(group != null) ? true : false);
-    }
+	@Override
+	public final void delete() {
+		super.setResult(null);
+		super.delete();
+	}
 
-    public void moveFileToNewResearchResultType(ResearchResult result) {
-	super.setResult(result);
-    }
+	@Override
+	protected Boolean deletItemOnDelete() {
+		return Boolean.FALSE;
+	}
 
-    @Override
-    public void setResult(ResearchResult result) {
-	throw new DomainException("error.researcher.ResultDocumentFile.call", "setResult");
-    }
+	public final static Group getPermittedGroup(FileResultPermittedGroupType permissionType) {
+		switch (permissionType) {
+		case INSTITUTION:
+			return new RoleGroup(Role.getRoleByRoleType(RoleType.PERSON));
 
-    @Override
-    public void removeResult() {
-	throw new DomainException("error.researcher.ResultDocumentFile.call", "removeResult");
-    }
+		case PUBLIC:
+			return null;
+
+		case RESEARCHER:
+			return new RoleGroup(Role.getRoleByRoleType(RoleType.RESEARCHER));
+
+		default:
+			return null;
+		}
+	}
+
+	public final static ResearchResultDocumentFile readByOID(Integer oid) {
+		final ResearchResultDocumentFile documentFile =
+				(ResearchResultDocumentFile) RootDomainObject.getInstance().readFileByOID(oid);
+
+		if (documentFile == null) {
+			throw new DomainException("error.researcher.ResultDocumentFile.null");
+		}
+
+		return documentFile;
+	}
+
+	private void checkParameters(ResearchResult result, String filename, String displayName,
+			FileResultPermittedGroupType permittedGroupType) {
+		if (result == null) {
+			throw new DomainException("error.researcher.ResultDocumentFile.result.null");
+		}
+		if (filename == null || filename.equals("")) {
+			throw new DomainException("error.researcher.ResultDocumentFile.filename.null");
+		}
+		if (displayName == null || displayName.equals("")) {
+			throw new DomainException("error.researcher.ResultDocumentFile.displayName.null");
+		}
+		if (permittedGroupType == null) {
+			throw new DomainException("error.researcher.ResultDocumentFile.permittedGroupType.null");
+		}
+	}
+
+	private void changeFilePermission(FileResultPermittedGroupType fileResultPermittedGroupType) {
+		final Group group = getPermittedGroup(fileResultPermittedGroupType);
+		super.setFileResultPermittedGroupType(fileResultPermittedGroupType);
+		super.setPermittedGroup(group);
+		FileManagerFactory.getFactoryInstance().getContentFileManager()
+				.changeFilePermissions(getExternalStorageIdentification(), (group != null) ? true : false);
+	}
+
+	public void moveFileToNewResearchResultType(ResearchResult result) {
+		super.setResult(result);
+	}
+
+	@Override
+	public void setResult(ResearchResult result) {
+		throw new DomainException("error.researcher.ResultDocumentFile.call", "setResult");
+	}
+
+	@Override
+	public void removeResult() {
+		throw new DomainException("error.researcher.ResultDocumentFile.call", "removeResult");
+	}
 
 }

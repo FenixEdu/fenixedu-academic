@@ -21,74 +21,75 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class RemoveStudentFromFinalDegreeWorkStudentGroup extends FenixService {
 
-    public RemoveStudentFromFinalDegreeWorkStudentGroup() {
-	super();
-    }
-
-    @Checked("RolePredicates.STUDENT_PREDICATE")
-    @Service
-    public static Boolean run(String username, Integer groupOID, Integer studentToRemoveID) throws FenixServiceException {
-	FinalDegreeWorkGroup group = rootDomainObject.readFinalDegreeWorkGroupByOID(groupOID);
-	Registration registration = Registration.readByUsername(username);
-
-	if (group == null || registration == null || group.getGroupStudents() == null
-		|| registration.getIdInternal().equals(studentToRemoveID)) {
-	    return false;
+	public RemoveStudentFromFinalDegreeWorkStudentGroup() {
+		super();
 	}
 
-	if (!group.getGroupProposals().isEmpty()) {
-	    throw new GroupProposalCandidaciesExistException();
-	}
+	@Checked("RolePredicates.STUDENT_PREDICATE")
+	@Service
+	public static Boolean run(String username, Integer groupOID, Integer studentToRemoveID) throws FenixServiceException {
+		FinalDegreeWorkGroup group = rootDomainObject.readFinalDegreeWorkGroupByOID(groupOID);
+		Registration registration = Registration.readByUsername(username);
 
-	PREDICATE_FILTER_STUDENT_ID predicate = new PREDICATE_FILTER_STUDENT_ID(studentToRemoveID);
-	for (GroupStudent groupStudent : group.getGroupStudents()) {
-	    if (!predicate.evaluate(groupStudent)) {
-		groupStudent.delete();
-	    }
-	}
-	return true;
-    }
+		if (group == null || registration == null || group.getGroupStudents() == null
+				|| registration.getIdInternal().equals(studentToRemoveID)) {
+			return false;
+		}
 
-    private static class PREDICATE_FILTER_STUDENT_ID implements Predicate {
-	Integer studentID;
+		if (!group.getGroupProposals().isEmpty()) {
+			throw new GroupProposalCandidaciesExistException();
+		}
 
-	public boolean evaluate(Object arg0) {
-	    GroupStudent groupStudent = (GroupStudent) arg0;
-	    if (groupStudent != null && groupStudent.getRegistration() != null && studentID != null
-		    && !studentID.equals(groupStudent.getRegistration().getIdInternal())) {
+		PREDICATE_FILTER_STUDENT_ID predicate = new PREDICATE_FILTER_STUDENT_ID(studentToRemoveID);
+		for (GroupStudent groupStudent : group.getGroupStudents()) {
+			if (!predicate.evaluate(groupStudent)) {
+				groupStudent.delete();
+			}
+		}
 		return true;
-	    }
-	    return false;
-
 	}
 
-	public PREDICATE_FILTER_STUDENT_ID(Integer studentID) {
-	    super();
-	    this.studentID = studentID;
-	}
-    }
+	private static class PREDICATE_FILTER_STUDENT_ID implements Predicate {
+		Integer studentID;
 
-    public static class GroupProposalCandidaciesExistException extends FenixServiceException {
+		@Override
+		public boolean evaluate(Object arg0) {
+			GroupStudent groupStudent = (GroupStudent) arg0;
+			if (groupStudent != null && groupStudent.getRegistration() != null && studentID != null
+					&& !studentID.equals(groupStudent.getRegistration().getIdInternal())) {
+				return true;
+			}
+			return false;
 
-	public GroupProposalCandidaciesExistException() {
-	    super();
-	}
+		}
 
-	public GroupProposalCandidaciesExistException(int errorType) {
-	    super(errorType);
-	}
-
-	public GroupProposalCandidaciesExistException(String s) {
-	    super(s);
-	}
-
-	public GroupProposalCandidaciesExistException(Throwable cause) {
-	    super(cause);
+		public PREDICATE_FILTER_STUDENT_ID(Integer studentID) {
+			super();
+			this.studentID = studentID;
+		}
 	}
 
-	public GroupProposalCandidaciesExistException(String message, Throwable cause) {
-	    super(message, cause);
+	public static class GroupProposalCandidaciesExistException extends FenixServiceException {
+
+		public GroupProposalCandidaciesExistException() {
+			super();
+		}
+
+		public GroupProposalCandidaciesExistException(int errorType) {
+			super(errorType);
+		}
+
+		public GroupProposalCandidaciesExistException(String s) {
+			super(s);
+		}
+
+		public GroupProposalCandidaciesExistException(Throwable cause) {
+			super(cause);
+		}
+
+		public GroupProposalCandidaciesExistException(String message, Throwable cause) {
+			super(message, cause);
+		}
 	}
-    }
 
 }

@@ -14,12 +14,12 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class CriarTurno extends FenixService {
 
-    @Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
-    @Service
-    public static InfoShift run(InfoShiftEditor infoTurno) {
-	final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(infoTurno.getInfoDisciplinaExecucao()
-		.getIdInternal());
-	final Shift newShift = new Shift(executionCourse, infoTurno.getTipos(), infoTurno.getLotacao());
-	return InfoShift.newInfoFromDomain(newShift);
-    }
+	@Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
+	@Service
+	public static InfoShift run(InfoShiftEditor infoTurno) {
+		final ExecutionCourse executionCourse =
+				rootDomainObject.readExecutionCourseByOID(infoTurno.getInfoDisciplinaExecucao().getIdInternal());
+		final Shift newShift = new Shift(executionCourse, infoTurno.getTipos(), infoTurno.getLotacao());
+		return InfoShift.newInfoFromDomain(newShift);
+	}
 }

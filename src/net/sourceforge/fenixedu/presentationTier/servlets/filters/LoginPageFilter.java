@@ -19,17 +19,20 @@ import net.sourceforge.fenixedu.presentationTier.Action.utils.RequestUtils;
  */
 public class LoginPageFilter implements Filter {
 
-    public void init(FilterConfig filterConfig) {
-    }
+	@Override
+	public void init(FilterConfig filterConfig) {
+	}
 
-    public void destroy() {
-    }
+	@Override
+	public void destroy() {
+	}
 
-    public void doFilter(final ServletRequest req, final ServletResponse res, final FilterChain chain) throws IOException,
-	    ServletException {
-	final HttpServletRequest request = (HttpServletRequest) req;
-	final HttpServletResponse response = (HttpServletResponse) res;
-	RequestUtils.sendLoginRedirect(request, response);
-    }
+	@Override
+	public void doFilter(final ServletRequest req, final ServletResponse res, final FilterChain chain) throws IOException,
+			ServletException {
+		final HttpServletRequest request = (HttpServletRequest) req;
+		final HttpServletResponse response = (HttpServletResponse) res;
+		RequestUtils.sendLoginRedirect(request, response);
+	}
 
 }

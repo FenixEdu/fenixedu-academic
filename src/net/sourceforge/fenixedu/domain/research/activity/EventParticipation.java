@@ -9,83 +9,83 @@ import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class EventParticipation extends EventParticipation_Base {
 
-    public EventParticipation(Party party, ResearchActivityParticipationRole role, ResearchEvent event,
-	    MultiLanguageString roleMessage) {
-	super();
-	if (alreadyHasParticipation(party, role, event)) {
-	    throw new DomainException("error.researcher.ResearchActivityParticipation.participation.exists");
+	public EventParticipation(Party party, ResearchActivityParticipationRole role, ResearchEvent event,
+			MultiLanguageString roleMessage) {
+		super();
+		if (alreadyHasParticipation(party, role, event)) {
+			throw new DomainException("error.researcher.ResearchActivityParticipation.participation.exists");
+		}
+		super.setParty(party);
+		super.setRole(role);
+		super.setEvent(event);
+		super.setRoleMessage(roleMessage);
 	}
-	super.setParty(party);
-	super.setRole(role);
-	super.setEvent(event);
-	super.setRoleMessage(roleMessage);
-    }
 
-    private boolean alreadyHasParticipation(Party party, ResearchActivityParticipationRole role, ResearchEvent event) {
-	for (EventParticipation participation : party.getEventParticipations()) {
-	    if (participation.match(party, role, event)) {
-		return true;
-	    }
+	private boolean alreadyHasParticipation(Party party, ResearchActivityParticipationRole role, ResearchEvent event) {
+		for (EventParticipation participation : party.getEventParticipations()) {
+			if (participation.match(party, role, event)) {
+				return true;
+			}
+		}
+		return false;
 	}
-	return false;
-    }
 
-    public boolean match(Party party, ResearchActivityParticipationRole role, ResearchEvent event) {
-	return this.getParty().equals(party) && this.getRole().equals(role) && this.getEvent().equals(event);
-    }
-
-    @Override
-    public void setEvent(ResearchEvent event) {
-	if (alreadyHasParticipation(getParty(), getRole(), event)) {
-	    throw new DomainException("error.researcher.ResearchActivityParticipation.participation.exists");
+	public boolean match(Party party, ResearchActivityParticipationRole role, ResearchEvent event) {
+		return this.getParty().equals(party) && this.getRole().equals(role) && this.getEvent().equals(event);
 	}
-	super.setEvent(event);
-    }
 
-    @Override
-    public void setParty(Party party) {
-	if (alreadyHasParticipation(party, getRole(), getEvent())) {
-	    throw new DomainException("error.researcher.ResearchActivityParticipation.participation.exists");
+	@Override
+	public void setEvent(ResearchEvent event) {
+		if (alreadyHasParticipation(getParty(), getRole(), event)) {
+			throw new DomainException("error.researcher.ResearchActivityParticipation.participation.exists");
+		}
+		super.setEvent(event);
 	}
-	super.setParty(party);
-    }
 
-    @Override
-    public void setRole(ResearchActivityParticipationRole role) {
-	if (alreadyHasParticipation(getParty(), role, getEvent())) {
-	    throw new DomainException("error.researcher.ResearchActivityParticipation.participation.exists");
+	@Override
+	public void setParty(Party party) {
+		if (alreadyHasParticipation(party, getRole(), getEvent())) {
+			throw new DomainException("error.researcher.ResearchActivityParticipation.participation.exists");
+		}
+		super.setParty(party);
 	}
-	super.setRole(role);
-    }
 
-    @Override
-    public List<ResearchActivityParticipationRole> getAllowedRoles() {
-	return ResearchActivityParticipationRole.getAllEventParticipationRoles();
-    }
+	@Override
+	public void setRole(ResearchActivityParticipationRole role) {
+		if (alreadyHasParticipation(getParty(), role, getEvent())) {
+			throw new DomainException("error.researcher.ResearchActivityParticipation.participation.exists");
+		}
+		super.setRole(role);
+	}
 
-    @Override
-    public String getParticipationName() {
-	return this.getEvent().getName();
-    }
+	@Override
+	public List<ResearchActivityParticipationRole> getAllowedRoles() {
+		return ResearchActivityParticipationRole.getAllEventParticipationRoles();
+	}
 
-    @Override
-    public boolean isLastParticipation() {
-	return this.getEvent().getParticipationsFor(this.getParty()).size() == 1;
-    }
+	@Override
+	public String getParticipationName() {
+		return this.getEvent().getName();
+	}
 
-    @Override
-    public void delete() {
-	removeEvent();
-	super.delete();
-    }
+	@Override
+	public boolean isLastParticipation() {
+		return this.getEvent().getParticipationsFor(this.getParty()).size() == 1;
+	}
 
-    @Override
-    public Integer getCivilYear() {
-	return null;
-    }
+	@Override
+	public void delete() {
+		removeEvent();
+		super.delete();
+	}
 
-    @Override
-    public boolean scopeMatches(ScopeType type) {
-	return this.getEvent().getLocationType().equals(type);
-    }
+	@Override
+	public Integer getCivilYear() {
+		return null;
+	}
+
+	@Override
+	public boolean scopeMatches(ScopeType type) {
+		return this.getEvent().getLocationType().equals(type);
+	}
 }

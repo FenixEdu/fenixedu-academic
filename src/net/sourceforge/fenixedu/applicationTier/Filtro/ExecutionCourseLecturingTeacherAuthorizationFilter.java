@@ -22,66 +22,68 @@ import pt.utl.ist.berserk.ServiceResponse;
  */
 public class ExecutionCourseLecturingTeacherAuthorizationFilter extends AuthorizationByRoleFilter {
 
-    public ExecutionCourseLecturingTeacherAuthorizationFilter() {
+	public ExecutionCourseLecturingTeacherAuthorizationFilter() {
 
-    }
-
-    protected RoleType getRoleType() {
-	return RoleType.TEACHER;
-    }
-
-    public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
-	IUserView id = getRemoteUser(request);
-	Object[] arguments = getServiceCallArguments(request);
-
-	try {
-	    if ((id == null) || (id.getRoleTypes() == null) || !lecturesExecutionCourse(id, arguments)) {
-		throw new NotAuthorizedFilterException();
-	    }
-	} catch (RuntimeException e) {
-	    throw new NotAuthorizedFilterException();
-	}
-    }
-
-    private boolean lecturesExecutionCourse(IUserView id, Object[] arguments) {
-	final ExecutionCourse executionCourse = getExecutionCourse(arguments[0]);
-	if (executionCourse == null) {
-	    return false;
 	}
 
-	final Person person = id.getPerson();
-	if (person == null) {
-	    return false;
+	@Override
+	protected RoleType getRoleType() {
+		return RoleType.TEACHER;
 	}
-	for (final Professorship professorship : executionCourse.getProfessorships()) {
-	    if (professorship.getPerson() == id.getPerson()) {
-		return true;
-	    }
+
+	@Override
+	public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
+		IUserView id = getRemoteUser(request);
+		Object[] arguments = getServiceCallArguments(request);
+
+		try {
+			if ((id == null) || (id.getRoleTypes() == null) || !lecturesExecutionCourse(id, arguments)) {
+				throw new NotAuthorizedFilterException();
+			}
+		} catch (RuntimeException e) {
+			throw new NotAuthorizedFilterException();
+		}
 	}
-	return false;
-    }
 
-    private ExecutionCourse getExecutionCourse(Object argument) {
-	if (argument == null) {
-	    return null;
+	private boolean lecturesExecutionCourse(IUserView id, Object[] arguments) {
+		final ExecutionCourse executionCourse = getExecutionCourse(arguments[0]);
+		if (executionCourse == null) {
+			return false;
+		}
 
-	} else if (argument instanceof ExecutionCourse) {
-	    return (ExecutionCourse) argument;
-
-	} else if (argument instanceof InfoExecutionCourse) {
-	    final InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) argument;
-	    return rootDomainObject.readExecutionCourseByOID(infoExecutionCourse.getIdInternal());
-
-	} else if (argument instanceof Integer) {
-	    final Integer executionCourseID = (Integer) argument;
-	    return rootDomainObject.readExecutionCourseByOID(executionCourseID);
-
-	} else if (argument instanceof SummariesManagementBean) {
-	    return ((SummariesManagementBean) argument).getExecutionCourse();
-
-	} else {
-	    return null;
+		final Person person = id.getPerson();
+		if (person == null) {
+			return false;
+		}
+		for (final Professorship professorship : executionCourse.getProfessorships()) {
+			if (professorship.getPerson() == id.getPerson()) {
+				return true;
+			}
+		}
+		return false;
 	}
-    }
+
+	private ExecutionCourse getExecutionCourse(Object argument) {
+		if (argument == null) {
+			return null;
+
+		} else if (argument instanceof ExecutionCourse) {
+			return (ExecutionCourse) argument;
+
+		} else if (argument instanceof InfoExecutionCourse) {
+			final InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) argument;
+			return rootDomainObject.readExecutionCourseByOID(infoExecutionCourse.getIdInternal());
+
+		} else if (argument instanceof Integer) {
+			final Integer executionCourseID = (Integer) argument;
+			return rootDomainObject.readExecutionCourseByOID(executionCourseID);
+
+		} else if (argument instanceof SummariesManagementBean) {
+			return ((SummariesManagementBean) argument).getExecutionCourse();
+
+		} else {
+			return null;
+		}
+	}
 
 }

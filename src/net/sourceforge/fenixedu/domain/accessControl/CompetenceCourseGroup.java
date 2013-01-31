@@ -26,107 +26,107 @@ import net.sourceforge.fenixedu.domain.student.Student;
  */
 public class CompetenceCourseGroup extends ExecutionCourseGroup {
 
-    /**
-     * Serial version id.
-     */
-    private static final long serialVersionUID = 1L;
+	/**
+	 * Serial version id.
+	 */
+	private static final long serialVersionUID = 1L;
 
-    public CompetenceCourseGroup(ExecutionCourse executionCourse) {
-	super(executionCourse);
-    }
-
-    @Override
-    public Set<Person> getElements() {
-	HashSet<Person> elements = new HashSet<Person>();
-	if (hasExecutionCourse()) {
-	    for (Person person : Person.readAllPersons()) {
-		if (isMember(person)) {
-		    elements.add(person);
-		}
-	    }
+	public CompetenceCourseGroup(ExecutionCourse executionCourse) {
+		super(executionCourse);
 	}
-	return elements;
-    }
 
-    @Override
-    public boolean isMember(Person person) {
-	if (person != null && person.hasStudent() && hasExecutionCourse()) {
-	    final Student student = person.getStudent();
-	    if (student.readAttendByExecutionCourse(getExecutionCourse()) != null) {
-		return true;
-	    }
-
-	    final Set<CompetenceCourse> competenceCourses = getExecutionCourse().getCompetenceCourses();
-	    for (final Registration registration : person.getStudent().getRegistrationsSet()) {
-		for (final StudentCurricularPlan studentCurricularPlan : registration.getStudentCurricularPlansSet()) {
-		    for (Enrolment enrolment : studentCurricularPlan.getEnrolments()) {
-			final CurricularCourse curricularCourse = enrolment.getCurricularCourse();
-			if (curricularCourse.hasCompetenceCourse()) {
-			    final CompetenceCourse competenceCourse = curricularCourse.getCompetenceCourse();
-			    if (competenceCourses.contains(competenceCourse)) {
-				return true;
-			    }
+	@Override
+	public Set<Person> getElements() {
+		HashSet<Person> elements = new HashSet<Person>();
+		if (hasExecutionCourse()) {
+			for (Person person : Person.readAllPersons()) {
+				if (isMember(person)) {
+					elements.add(person);
+				}
 			}
-		    }
 		}
-	    }
+		return elements;
 	}
-	return isDegreeCoordinator(person);
-    }
 
-    private boolean isDegreeCoordinator(final Person person) {
-	if (person != null && person.hasAnyCoordinators()) {
-	    final ExecutionCourse executionCourse = getExecutionCourse();
-	    if (executionCourse != null) {
-		final Set<ExecutionDegree> executionDegrees = executionCourse.getExecutionDegrees();
-		for (final Coordinator coordinator : person.getCoordinatorsSet()) {
-		    final ExecutionDegree executionDegree = coordinator.getExecutionDegree();
-		    if (executionDegrees.contains(executionDegree)) {
-			return true;
-		    }
+	@Override
+	public boolean isMember(Person person) {
+		if (person != null && person.hasStudent() && hasExecutionCourse()) {
+			final Student student = person.getStudent();
+			if (student.readAttendByExecutionCourse(getExecutionCourse()) != null) {
+				return true;
+			}
+
+			final Set<CompetenceCourse> competenceCourses = getExecutionCourse().getCompetenceCourses();
+			for (final Registration registration : person.getStudent().getRegistrationsSet()) {
+				for (final StudentCurricularPlan studentCurricularPlan : registration.getStudentCurricularPlansSet()) {
+					for (Enrolment enrolment : studentCurricularPlan.getEnrolments()) {
+						final CurricularCourse curricularCourse = enrolment.getCurricularCourse();
+						if (curricularCourse.hasCompetenceCourse()) {
+							final CompetenceCourse competenceCourse = curricularCourse.getCompetenceCourse();
+							if (competenceCourses.contains(competenceCourse)) {
+								return true;
+							}
+						}
+					}
+				}
+			}
 		}
-	    }
+		return isDegreeCoordinator(person);
 	}
-	return false;
-    }
 
-    @Override
-    public boolean equals(Object object) {
-	return object != null && object instanceof CompetenceCourseGroup;
-    }
-
-    @Override
-    public int hashCode() {
-	return this.getClass().hashCode();
-    }
-
-    @Override
-    protected Argument[] getExpressionArguments() {
-	return new Argument[] { new IdOperator(getObject()) };
-    }
-
-    public static class Builder implements GroupBuilder {
-
-	@Override
-	public Group build(Object[] arguments) {
-	    try {
-		return new CompetenceCourseGroup((ExecutionCourse) arguments[0]);
-	    } catch (ClassCastException e) {
-		throw new GroupDynamicExpressionException("accessControl.group.builder.executionCourse.notExecutionCourse",
-			arguments[0].toString());
-	    }
+	private boolean isDegreeCoordinator(final Person person) {
+		if (person != null && person.hasAnyCoordinators()) {
+			final ExecutionCourse executionCourse = getExecutionCourse();
+			if (executionCourse != null) {
+				final Set<ExecutionDegree> executionDegrees = executionCourse.getExecutionDegrees();
+				for (final Coordinator coordinator : person.getCoordinatorsSet()) {
+					final ExecutionDegree executionDegree = coordinator.getExecutionDegree();
+					if (executionDegrees.contains(executionDegree)) {
+						return true;
+					}
+				}
+			}
+		}
+		return false;
 	}
 
 	@Override
-	public int getMinArguments() {
-	    return 1;
+	public boolean equals(Object object) {
+		return object != null && object instanceof CompetenceCourseGroup;
 	}
 
 	@Override
-	public int getMaxArguments() {
-	    return 1;
+	public int hashCode() {
+		return this.getClass().hashCode();
 	}
 
-    }
+	@Override
+	protected Argument[] getExpressionArguments() {
+		return new Argument[] { new IdOperator(getObject()) };
+	}
+
+	public static class Builder implements GroupBuilder {
+
+		@Override
+		public Group build(Object[] arguments) {
+			try {
+				return new CompetenceCourseGroup((ExecutionCourse) arguments[0]);
+			} catch (ClassCastException e) {
+				throw new GroupDynamicExpressionException("accessControl.group.builder.executionCourse.notExecutionCourse",
+						arguments[0].toString());
+			}
+		}
+
+		@Override
+		public int getMinArguments() {
+			return 1;
+		}
+
+		@Override
+		public int getMaxArguments() {
+			return 1;
+		}
+
+	}
 
 }

@@ -10,48 +10,48 @@ import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 public class EquivalencePlanRequestEvent extends EquivalencePlanRequestEvent_Base {
 
-    protected EquivalencePlanRequestEvent() {
-	super();
-    }
-
-    public EquivalencePlanRequestEvent(final AdministrativeOffice administrativeOffice, final Person person,
-	    final EquivalencePlanRequest academicServiceRequest) {
-	this();
-	super.init(administrativeOffice, EventType.EQUIVALENCE_PLAN_REQUEST, person, academicServiceRequest);
-    }
-
-    @Override
-    public EquivalencePlanRequest getAcademicServiceRequest() {
-	return (EquivalencePlanRequest) super.getAcademicServiceRequest();
-    }
-
-    private Registration getRegistration() {
-	return getAcademicServiceRequest().getRegistration();
-    }
-
-    @Override
-    public LabelFormatter getDescriptionForEntryType(EntryType entryType) {
-	final LabelFormatter labelFormatter = new LabelFormatter();
-
-	labelFormatter.appendLabel(entryType.name(), LabelFormatter.ENUMERATION_RESOURCES);
-	labelFormatter.appendLabel(" (");
-	labelFormatter.appendLabel("label.in", LabelFormatter.APPLICATION_RESOURCES);
-	labelFormatter.appendLabel(" ");
-	labelFormatter.appendLabel(getRegistration().getLastDegreeCurricularPlan().getName());
-	labelFormatter.appendLabel(")");
-	if (getAcademicServiceRequest().hasExecutionYear()) {
-	    labelFormatter.appendLabel(" - " + getExecutionYear().getYear());
+	protected EquivalencePlanRequestEvent() {
+		super();
 	}
 
-	return labelFormatter;
-    }
+	public EquivalencePlanRequestEvent(final AdministrativeOffice administrativeOffice, final Person person,
+			final EquivalencePlanRequest academicServiceRequest) {
+		this();
+		super.init(administrativeOffice, EventType.EQUIVALENCE_PLAN_REQUEST, person, academicServiceRequest);
+	}
 
-    public Integer getNumberOfEquivalences() {
-	return getAcademicServiceRequest().getNumberOfEquivalences();
-    }
+	@Override
+	public EquivalencePlanRequest getAcademicServiceRequest() {
+		return (EquivalencePlanRequest) super.getAcademicServiceRequest();
+	}
 
-    @Override
-    public boolean isExemptionAppliable() {
-	return true;
-    }
+	private Registration getRegistration() {
+		return getAcademicServiceRequest().getRegistration();
+	}
+
+	@Override
+	public LabelFormatter getDescriptionForEntryType(EntryType entryType) {
+		final LabelFormatter labelFormatter = new LabelFormatter();
+
+		labelFormatter.appendLabel(entryType.name(), LabelFormatter.ENUMERATION_RESOURCES);
+		labelFormatter.appendLabel(" (");
+		labelFormatter.appendLabel("label.in", LabelFormatter.APPLICATION_RESOURCES);
+		labelFormatter.appendLabel(" ");
+		labelFormatter.appendLabel(getRegistration().getLastDegreeCurricularPlan().getName());
+		labelFormatter.appendLabel(")");
+		if (getAcademicServiceRequest().hasExecutionYear()) {
+			labelFormatter.appendLabel(" - " + getExecutionYear().getYear());
+		}
+
+		return labelFormatter;
+	}
+
+	public Integer getNumberOfEquivalences() {
+		return getAcademicServiceRequest().getNumberOfEquivalences();
+	}
+
+	@Override
+	public boolean isExemptionAppliable() {
+		return true;
+	}
 }

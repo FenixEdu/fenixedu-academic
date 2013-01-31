@@ -2,22 +2,22 @@ package net.sourceforge.fenixedu.domain.masterDegree;
 
 public enum DocumentReason {
 
-    FAMILY_ALLOWANCE,
+	FAMILY_ALLOWANCE,
 
-    MILITARY_PURPOSE,
+	MILITARY_PURPOSE,
 
-    BLOOD_PRICE_PENSION,
+	BLOOD_PRICE_PENSION,
 
-    IRS,
+	IRS,
 
-    ADSE,
+	ADSE,
 
-    SCHOLARSHIP,
+	SCHOLARSHIP,
 
-    PUBLIC_CONTEST;
+	PUBLIC_CONTEST;
 
-    public String getName() {
-	return name();
-    }
+	public String getName() {
+		return name();
+	}
 
 }

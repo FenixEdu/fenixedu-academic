@@ -3,28 +3,28 @@ package net.sourceforge.fenixedu.presentationTier.renderers.providers.accounting
 import java.util.Collections;
 
 import net.sourceforge.fenixedu.dataTransferObject.accounting.events.AccountingEventCreateBean;
-
 import pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyConverter;
-
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class ExecutionPeriodsForAccountingEventCreationProvider implements DataProvider {
 
-    public Object provide(Object source, Object currentValue) {
+	@Override
+	public Object provide(Object source, Object currentValue) {
 
-	final AccountingEventCreateBean accountingEventCreateBean = (AccountingEventCreateBean) source;
+		final AccountingEventCreateBean accountingEventCreateBean = (AccountingEventCreateBean) source;
 
-	if (accountingEventCreateBean.getExecutionYear() != null) {
-	    return accountingEventCreateBean.getExecutionYear().getExecutionPeriods();
+		if (accountingEventCreateBean.getExecutionYear() != null) {
+			return accountingEventCreateBean.getExecutionYear().getExecutionPeriods();
+		}
+
+		return Collections.EMPTY_LIST;
+
 	}
 
-	return Collections.EMPTY_LIST;
-
-    }
-
-    public Converter getConverter() {
-	return new DomainObjectKeyConverter();
-    }
+	@Override
+	public Converter getConverter() {
+		return new DomainObjectKeyConverter();
+	}
 
 }

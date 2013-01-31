@@ -11,76 +11,76 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 
 public class PersistentGroupMembersBean implements Serializable {
 
-    /**
-     * Default serial id.
-     */
-    private static final long serialVersionUID = 1L;
+	/**
+	 * Default serial id.
+	 */
+	private static final long serialVersionUID = 1L;
 
-    private Unit unit;
-    private List<Person> people;
-    private PersistentGroupMembers group;
+	private Unit unit;
+	private List<Person> people;
+	private PersistentGroupMembers group;
 
-    private String name;
-    private PersistentGroupMembersType type;
-    private Person person;
+	private String name;
+	private PersistentGroupMembersType type;
+	private Person person;
 
-    private void init(PersistentGroupMembers group, Unit unit) {
-	this.unit = unit;
-	this.group = group;
-	this.people = new ArrayList<Person>();
-    }
+	private void init(PersistentGroupMembers group, Unit unit) {
+		this.unit = unit;
+		this.group = group;
+		this.people = new ArrayList<Person>();
+	}
 
-    public PersistentGroupMembersBean(PersistentGroupMembers group) {
-	init(group, group.getUnit());
+	public PersistentGroupMembersBean(PersistentGroupMembers group) {
+		init(group, group.getUnit());
 
-	setName(group.getName());
-	setPeople(group.getPersons());
-    }
+		setName(group.getName());
+		setPeople(group.getPersons());
+	}
 
-    public PersistentGroupMembersBean(Unit unit, PersistentGroupMembersType type) {
-	init(null, unit);
-	this.type = type;
-    }
+	public PersistentGroupMembersBean(Unit unit, PersistentGroupMembersType type) {
+		init(null, unit);
+		this.type = type;
+	}
 
-    public PersistentGroupMembersType getType() {
-	return type;
-    }
+	public PersistentGroupMembersType getType() {
+		return type;
+	}
 
-    public PersistentGroupMembers getGroup() {
-	return group;
-    }
+	public PersistentGroupMembers getGroup() {
+		return group;
+	}
 
-    public Unit getUnit() {
-	return this.unit;
-    }
+	public Unit getUnit() {
+		return this.unit;
+	}
 
-    public String getName() {
-	return name;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public void setName(String name) {
-	this.name = name;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    public List<Person> getPeople() {
-	return this.people;
-    }
+	public List<Person> getPeople() {
+		return this.people;
+	}
 
-    public void setPeople(List<Person> people) {
-	this.people.clear();
-	this.people.addAll(people);
-    }
+	public void setPeople(List<Person> people) {
+		this.people.clear();
+		this.people.addAll(people);
+	}
 
-    public void addPeople(List<Person> people) {
-	this.people.addAll(people);
-    }
+	public void addPeople(List<Person> people) {
+		this.people.addAll(people);
+	}
 
-    public void setIstId(Person istId) {
-	this.person = istId;
-    }
+	public void setIstId(Person istId) {
+		this.person = istId;
+	}
 
-    public Person getIstId() {
-	return person;
-    }
+	public Person getIstId() {
+		return person;
+	}
 
 }

@@ -27,68 +27,72 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Mapping(path = "/editContributor", module = "academicAdministration", formBean = "createContributorForm")
 @Forwards({ @Forward(name = "EditReady", path = "/academicAdminOffice/contributor/editContributor.jsp"),
-	@Forward(name = "EditSuccess", path = "/academicAdminOffice/contributor/editContributorSuccess.jsp") })
-@Exceptions(value = { @ExceptionHandling(type = net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException.class, key = "resources.Action.exceptions.ExistingActionException", handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class, scope = "request") })
+		@Forward(name = "EditSuccess", path = "/academicAdminOffice/contributor/editContributorSuccess.jsp") })
+@Exceptions(value = { @ExceptionHandling(
+		type = net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException.class,
+		key = "resources.Action.exceptions.ExistingActionException",
+		handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class,
+		scope = "request") })
 public class EditContributorDispatchAction extends FenixDispatchAction {
 
-    public ActionForward prepareEdit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
+	public ActionForward prepareEdit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
 
-	DynaActionForm editContributorForm = (DynaActionForm) form;
+		DynaActionForm editContributorForm = (DynaActionForm) form;
 
-	InfoContributor infoContributor = getInfoContributor(request, editContributorForm);
+		InfoContributor infoContributor = getInfoContributor(request, editContributorForm);
 
-	editContributorForm.set("contributorNumber", String.valueOf(infoContributor.getContributorNumber()));
-	editContributorForm.set("contributorName", infoContributor.getContributorName());
-	editContributorForm.set("contributorAddress", infoContributor.getContributorAddress());
-	editContributorForm.set("areaCode", infoContributor.getAreaCode());
-	editContributorForm.set("areaOfAreaCode", infoContributor.getAreaOfAreaCode());
-	editContributorForm.set("area", infoContributor.getArea());
-	editContributorForm.set("parishOfResidence", infoContributor.getParishOfResidence());
-	editContributorForm.set("districtSubdivisionOfResidence", infoContributor.getDistrictSubdivisionOfResidence());
-	editContributorForm.set("districtOfResidence", infoContributor.getDistrictOfResidence());
-	editContributorForm.set("contributorId", infoContributor.getIdInternal());
+		editContributorForm.set("contributorNumber", String.valueOf(infoContributor.getContributorNumber()));
+		editContributorForm.set("contributorName", infoContributor.getContributorName());
+		editContributorForm.set("contributorAddress", infoContributor.getContributorAddress());
+		editContributorForm.set("areaCode", infoContributor.getAreaCode());
+		editContributorForm.set("areaOfAreaCode", infoContributor.getAreaOfAreaCode());
+		editContributorForm.set("area", infoContributor.getArea());
+		editContributorForm.set("parishOfResidence", infoContributor.getParishOfResidence());
+		editContributorForm.set("districtSubdivisionOfResidence", infoContributor.getDistrictSubdivisionOfResidence());
+		editContributorForm.set("districtOfResidence", infoContributor.getDistrictOfResidence());
+		editContributorForm.set("contributorId", infoContributor.getIdInternal());
 
-	return mapping.findForward("EditReady");
+		return mapping.findForward("EditReady");
 
-    }
-
-    private InfoContributor getInfoContributor(HttpServletRequest request, DynaActionForm form) {
-	final InfoContributor infoContributor = (InfoContributor) request.getAttribute(PresentationConstants.CONTRIBUTOR);
-	return infoContributor != null ? infoContributor : InfoContributor.newInfoFromDomain((Party) readDomainObject(request,
-		Party.class, getIntegerFromRequestOrForm(request, form, "contributorId")));
-    }
-
-    public ActionForward edit(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-	    throws Exception {
-
-	DynaActionForm editContributorForm = (DynaActionForm) form;
-
-	InfoContributor infoContributor = getInfoContributor(request, editContributorForm);
-
-	// Get the Information
-	String contributorNumberString = (String) editContributorForm.get("contributorNumber");
-	Integer contributorNumber = Integer.valueOf(contributorNumberString);
-	String contributorName = (String) editContributorForm.get("contributorName");
-	String contributorAddress = (String) editContributorForm.get("contributorAddress");
-	String areaCode = (String) editContributorForm.get("areaCode");
-	String areaOfAreaCode = (String) editContributorForm.get("areaOfAreaCode");
-	String area = (String) editContributorForm.get("area");
-	String parishOfResidence = (String) editContributorForm.get("parishOfResidence");
-	String districtSubdivisionOfResidence = (String) editContributorForm.get("districtSubdivisionOfResidence");
-	String districtOfResidence = (String) editContributorForm.get("districtOfResidence");
-
-	InfoContributor newInfoContributor = null;
-	try {
-	    infoContributor.editContributor(contributorNumber, contributorName, contributorAddress, areaCode, areaOfAreaCode,
-		    area, parishOfResidence, districtSubdivisionOfResidence, districtOfResidence);
-	} catch (ExistingServiceException e) {
-	    throw new ExistingActionException("O Contribuinte", e);
 	}
 
-	request.setAttribute(PresentationConstants.CONTRIBUTOR, newInfoContributor);
-	return mapping.findForward("EditSuccess");
+	private InfoContributor getInfoContributor(HttpServletRequest request, DynaActionForm form) {
+		final InfoContributor infoContributor = (InfoContributor) request.getAttribute(PresentationConstants.CONTRIBUTOR);
+		return infoContributor != null ? infoContributor : InfoContributor.newInfoFromDomain((Party) readDomainObject(request,
+				Party.class, getIntegerFromRequestOrForm(request, form, "contributorId")));
+	}
 
-    }
+	public ActionForward edit(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+
+		DynaActionForm editContributorForm = (DynaActionForm) form;
+
+		InfoContributor infoContributor = getInfoContributor(request, editContributorForm);
+
+		// Get the Information
+		String contributorNumberString = (String) editContributorForm.get("contributorNumber");
+		Integer contributorNumber = Integer.valueOf(contributorNumberString);
+		String contributorName = (String) editContributorForm.get("contributorName");
+		String contributorAddress = (String) editContributorForm.get("contributorAddress");
+		String areaCode = (String) editContributorForm.get("areaCode");
+		String areaOfAreaCode = (String) editContributorForm.get("areaOfAreaCode");
+		String area = (String) editContributorForm.get("area");
+		String parishOfResidence = (String) editContributorForm.get("parishOfResidence");
+		String districtSubdivisionOfResidence = (String) editContributorForm.get("districtSubdivisionOfResidence");
+		String districtOfResidence = (String) editContributorForm.get("districtOfResidence");
+
+		InfoContributor newInfoContributor = null;
+		try {
+			infoContributor.editContributor(contributorNumber, contributorName, contributorAddress, areaCode, areaOfAreaCode,
+					area, parishOfResidence, districtSubdivisionOfResidence, districtOfResidence);
+		} catch (ExistingServiceException e) {
+			throw new ExistingActionException("O Contribuinte", e);
+		}
+
+		request.setAttribute(PresentationConstants.CONTRIBUTOR, newInfoContributor);
+		return mapping.findForward("EditSuccess");
+
+	}
 
 }

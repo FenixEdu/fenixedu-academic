@@ -12,13 +12,13 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class CreateEnrolmentPeriods {
 
-    @Service
-    static public void create(final Collection<DegreeCurricularPlan> degreeCurricularPlans, final ExecutionSemester semester,
-	    final DateTime startDate, final DateTime endDate) {
+	@Service
+	static public void create(final Collection<DegreeCurricularPlan> degreeCurricularPlans, final ExecutionSemester semester,
+			final DateTime startDate, final DateTime endDate) {
 
-	for (final DegreeCurricularPlan degreeCurricularPlan : degreeCurricularPlans) {
-	    new EnrolmentPeriodInCurricularCourses(degreeCurricularPlan, semester, startDate, endDate);
+		for (final DegreeCurricularPlan degreeCurricularPlan : degreeCurricularPlans) {
+			new EnrolmentPeriodInCurricularCourses(degreeCurricularPlan, semester, startDate, endDate);
+		}
+
 	}
-
-    }
 }

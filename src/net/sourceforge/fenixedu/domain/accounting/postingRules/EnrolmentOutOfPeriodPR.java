@@ -24,101 +24,101 @@ import org.joda.time.DateTime;
 
 public class EnrolmentOutOfPeriodPR extends EnrolmentOutOfPeriodPR_Base {
 
-    protected EnrolmentOutOfPeriodPR() {
-	super();
-    }
-
-    public EnrolmentOutOfPeriodPR(DateTime startDate, DateTime endDate, ServiceAgreementTemplate serviceAgreementTemplate,
-	    Money baseAmount, Money amountPerDay, Money maxAmount) {
-	this();
-	init(EntryType.ENROLMENT_OUT_OF_PERIOD_PENALTY, EventType.ENROLMENT_OUT_OF_PERIOD, startDate, endDate,
-		serviceAgreementTemplate, baseAmount, amountPerDay, maxAmount);
-    }
-
-    private void init(EntryType entryType, EventType eventType, DateTime startDate, DateTime endDate,
-	    ServiceAgreementTemplate serviceAgreementTemplate, Money baseAmount, Money amountPerDay, Money maxAmount) {
-
-	checkParameters(baseAmount, amountPerDay, maxAmount);
-	super.init(entryType, eventType, startDate, endDate, serviceAgreementTemplate);
-	super.setBaseAmount(baseAmount);
-	super.setAmountPerDay(amountPerDay);
-	super.setMaxAmount(maxAmount);
-
-    }
-
-    private void checkParameters(Money baseAmount, Money amountPerDay, Money maxAmount) {
-
-	if (baseAmount == null || baseAmount.isZero()) {
-	    throw new DomainException(
-		    "error.net.sourceforge.fenixedu.domain.accounting.postingRules.EnrolmentOutOfPeriodPR.baseAmount.cannot.be.null.and.must.be.greater.than.zero");
+	protected EnrolmentOutOfPeriodPR() {
+		super();
 	}
 
-	if (amountPerDay == null || amountPerDay.isZero()) {
-	    throw new DomainException(
-		    "error.net.sourceforge.fenixedu.domain.accounting.postingRules.EnrolmentOutOfPeriodPR.amountPerDay.cannot.be.null.and.must.be.greater.than.zero");
+	public EnrolmentOutOfPeriodPR(DateTime startDate, DateTime endDate, ServiceAgreementTemplate serviceAgreementTemplate,
+			Money baseAmount, Money amountPerDay, Money maxAmount) {
+		this();
+		init(EntryType.ENROLMENT_OUT_OF_PERIOD_PENALTY, EventType.ENROLMENT_OUT_OF_PERIOD, startDate, endDate,
+				serviceAgreementTemplate, baseAmount, amountPerDay, maxAmount);
 	}
 
-	if (maxAmount == null || maxAmount.isZero()) {
-	    throw new DomainException(
-		    "error.net.sourceforge.fenixedu.domain.accounting.postingRules.EnrolmentOutOfPeriodPR.maxAmount.cannot.be.null.and.must.be.greater.than.zero");
+	private void init(EntryType entryType, EventType eventType, DateTime startDate, DateTime endDate,
+			ServiceAgreementTemplate serviceAgreementTemplate, Money baseAmount, Money amountPerDay, Money maxAmount) {
+
+		checkParameters(baseAmount, amountPerDay, maxAmount);
+		super.init(entryType, eventType, startDate, endDate, serviceAgreementTemplate);
+		super.setBaseAmount(baseAmount);
+		super.setAmountPerDay(amountPerDay);
+		super.setMaxAmount(maxAmount);
+
 	}
 
-    }
+	private void checkParameters(Money baseAmount, Money amountPerDay, Money maxAmount) {
 
-    @Override
-    public List<EntryDTO> calculateEntries(Event event, DateTime when) {
-	return Collections.singletonList(new EntryDTO(getEntryType(), event, calculateTotalAmountToPay(event, when), event
-		.getPayedAmount(), event.calculateAmountToPay(when), event.getDescriptionForEntryType(getEntryType()), event
-		.calculateAmountToPay(when)));
-    }
+		if (baseAmount == null || baseAmount.isZero()) {
+			throw new DomainException(
+					"error.net.sourceforge.fenixedu.domain.accounting.postingRules.EnrolmentOutOfPeriodPR.baseAmount.cannot.be.null.and.must.be.greater.than.zero");
+		}
 
-    @Override
-    protected Money doCalculationForAmountToPay(Event event, DateTime when, boolean applyDiscount) {
-	final Money result = getBaseAmount().add(getAmountPerDay().multiply(new BigDecimal(calculatNumberOfDays(event))));
-	return result.greaterThan(getMaxAmount()) ? getMaxAmount() : result;
-    }
+		if (amountPerDay == null || amountPerDay.isZero()) {
+			throw new DomainException(
+					"error.net.sourceforge.fenixedu.domain.accounting.postingRules.EnrolmentOutOfPeriodPR.amountPerDay.cannot.be.null.and.must.be.greater.than.zero");
+		}
 
-    @Override
-    protected Money subtractFromExemptions(Event event, DateTime when, boolean applyDiscount, Money amountToPay) {
-	return amountToPay;
-    }
+		if (maxAmount == null || maxAmount.isZero()) {
+			throw new DomainException(
+					"error.net.sourceforge.fenixedu.domain.accounting.postingRules.EnrolmentOutOfPeriodPR.maxAmount.cannot.be.null.and.must.be.greater.than.zero");
+		}
 
-    private Integer calculatNumberOfDays(Event event) {
-	final EnrolmentOutOfPeriodEvent enrolmentOutOfPeriodEvent = ((EnrolmentOutOfPeriodEvent) event);
-	final Integer result = enrolmentOutOfPeriodEvent.getNumberOfDelayDays() - 1;
-
-	return result < 0 ? 0 : result;
-    }
-
-    @Override
-    protected Set<AccountingTransaction> internalProcess(User user, Collection<EntryDTO> entryDTOs, Event event,
-	    Account fromAccount, Account toAccount, AccountingTransactionDetailDTO transactionDetail) {
-	if (entryDTOs.size() != 1) {
-	    throw new DomainException("error.accounting.postingRules.EnrolmentOutOfPeriodPR.invalid.number.of.entryDTOs");
 	}
 
-	final EntryDTO entryDTO = entryDTOs.iterator().next();
-	checkIfCanAddAmount(entryDTO.getAmountToPay(), event, transactionDetail.getWhenRegistered());
-
-	return Collections.singleton(makeAccountingTransaction(user, event, fromAccount, toAccount, entryDTO.getEntryType(),
-		entryDTO.getAmountToPay(), transactionDetail));
-
-    }
-
-    private void checkIfCanAddAmount(Money amountToPay, Event event, DateTime whenRegistered) {
-	if (amountToPay.compareTo(calculateTotalAmountToPay(event, whenRegistered)) < 0) {
-	    throw new DomainExceptionWithLabelFormatter(
-		    "error.accounting.postingRules.EnrolmentOutOfPeriodPR.amount.being.payed.must.match.amount.to.pay",
-		    event.getDescriptionForEntryType(getEntryType()));
+	@Override
+	public List<EntryDTO> calculateEntries(Event event, DateTime when) {
+		return Collections.singletonList(new EntryDTO(getEntryType(), event, calculateTotalAmountToPay(event, when), event
+				.getPayedAmount(), event.calculateAmountToPay(when), event.getDescriptionForEntryType(getEntryType()), event
+				.calculateAmountToPay(when)));
 	}
 
-    }
+	@Override
+	protected Money doCalculationForAmountToPay(Event event, DateTime when, boolean applyDiscount) {
+		final Money result = getBaseAmount().add(getAmountPerDay().multiply(new BigDecimal(calculatNumberOfDays(event))));
+		return result.greaterThan(getMaxAmount()) ? getMaxAmount() : result;
+	}
 
-    public EnrolmentOutOfPeriodPR edit(final Money baseAmount, final Money amountPerDay, final Money maxAmount) {
+	@Override
+	protected Money subtractFromExemptions(Event event, DateTime when, boolean applyDiscount, Money amountToPay) {
+		return amountToPay;
+	}
 
-	deactivate();
-	return new EnrolmentOutOfPeriodPR(new DateTime().minus(1000), null, getServiceAgreementTemplate(), baseAmount,
-		amountPerDay, maxAmount);
-    }
+	private Integer calculatNumberOfDays(Event event) {
+		final EnrolmentOutOfPeriodEvent enrolmentOutOfPeriodEvent = ((EnrolmentOutOfPeriodEvent) event);
+		final Integer result = enrolmentOutOfPeriodEvent.getNumberOfDelayDays() - 1;
+
+		return result < 0 ? 0 : result;
+	}
+
+	@Override
+	protected Set<AccountingTransaction> internalProcess(User user, Collection<EntryDTO> entryDTOs, Event event,
+			Account fromAccount, Account toAccount, AccountingTransactionDetailDTO transactionDetail) {
+		if (entryDTOs.size() != 1) {
+			throw new DomainException("error.accounting.postingRules.EnrolmentOutOfPeriodPR.invalid.number.of.entryDTOs");
+		}
+
+		final EntryDTO entryDTO = entryDTOs.iterator().next();
+		checkIfCanAddAmount(entryDTO.getAmountToPay(), event, transactionDetail.getWhenRegistered());
+
+		return Collections.singleton(makeAccountingTransaction(user, event, fromAccount, toAccount, entryDTO.getEntryType(),
+				entryDTO.getAmountToPay(), transactionDetail));
+
+	}
+
+	private void checkIfCanAddAmount(Money amountToPay, Event event, DateTime whenRegistered) {
+		if (amountToPay.compareTo(calculateTotalAmountToPay(event, whenRegistered)) < 0) {
+			throw new DomainExceptionWithLabelFormatter(
+					"error.accounting.postingRules.EnrolmentOutOfPeriodPR.amount.being.payed.must.match.amount.to.pay",
+					event.getDescriptionForEntryType(getEntryType()));
+		}
+
+	}
+
+	public EnrolmentOutOfPeriodPR edit(final Money baseAmount, final Money amountPerDay, final Money maxAmount) {
+
+		deactivate();
+		return new EnrolmentOutOfPeriodPR(new DateTime().minus(1000), null, getServiceAgreementTemplate(), baseAmount,
+				amountPerDay, maxAmount);
+	}
 
 }

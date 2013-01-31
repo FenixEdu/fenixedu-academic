@@ -13,70 +13,73 @@ import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.operators.IdOperator;
 
 public class CurricularCourseStudentsByExecutionPeriodGroup extends LeafGroup {
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    private final CurricularCourse curricularCourseReference;
+	private final CurricularCourse curricularCourseReference;
 
-    private final ExecutionSemester executionPeriodReference;
+	private final ExecutionSemester executionPeriodReference;
 
-    public CurricularCourseStudentsByExecutionPeriodGroup(CurricularCourse curricularCourse, ExecutionSemester executionSemester) {
-	this.curricularCourseReference = curricularCourse;
-	this.executionPeriodReference = executionSemester;
-    }
-
-    public CurricularCourse getCurricularCourse() {
-	return this.curricularCourseReference;
-    }
-
-    public ExecutionSemester getExecutionPeriod() {
-	return this.executionPeriodReference;
-    }
-
-    @Override
-    public Set<Person> getElements() {
-	Set<Person> elements = super.buildSet();
-	List<Enrolment> enrolments = getCurricularCourse().getEnrolmentsByExecutionPeriod(getExecutionPeriod());
-
-	for (Enrolment enrolment : enrolments) {
-	    elements.add(enrolment.getStudentCurricularPlan().getRegistration().getPerson());
+	public CurricularCourseStudentsByExecutionPeriodGroup(CurricularCourse curricularCourse, ExecutionSemester executionSemester) {
+		this.curricularCourseReference = curricularCourse;
+		this.executionPeriodReference = executionSemester;
 	}
 
-	return super.freezeSet(elements);
-    }
-
-    @Override
-    protected Argument[] getExpressionArguments() {
-	return new Argument[] { new IdOperator(getCurricularCourse()), new IdOperator(getExecutionPeriod()) };
-    }
-
-    public static class Builder implements GroupBuilder {
-
-	public Group build(Object[] arguments) {
-	    CurricularCourse course;
-	    ExecutionSemester period;
-
-	    try {
-		course = (CurricularCourse) arguments[0];
-	    } catch (ClassCastException e) {
-		throw new WrongTypeOfArgumentException(0, CurricularCourse.class, arguments[0].getClass());
-	    }
-
-	    try {
-		period = (ExecutionSemester) arguments[1];
-	    } catch (ClassCastException e) {
-		throw new WrongTypeOfArgumentException(1, ExecutionSemester.class, arguments[1].getClass());
-	    }
-
-	    return new CurricularCourseStudentsByExecutionPeriodGroup(course, period);
+	public CurricularCourse getCurricularCourse() {
+		return this.curricularCourseReference;
 	}
 
-	public int getMinArguments() {
-	    return 2;
+	public ExecutionSemester getExecutionPeriod() {
+		return this.executionPeriodReference;
 	}
 
-	public int getMaxArguments() {
-	    return 2;
+	@Override
+	public Set<Person> getElements() {
+		Set<Person> elements = super.buildSet();
+		List<Enrolment> enrolments = getCurricularCourse().getEnrolmentsByExecutionPeriod(getExecutionPeriod());
+
+		for (Enrolment enrolment : enrolments) {
+			elements.add(enrolment.getStudentCurricularPlan().getRegistration().getPerson());
+		}
+
+		return super.freezeSet(elements);
 	}
 
-    }
+	@Override
+	protected Argument[] getExpressionArguments() {
+		return new Argument[] { new IdOperator(getCurricularCourse()), new IdOperator(getExecutionPeriod()) };
+	}
+
+	public static class Builder implements GroupBuilder {
+
+		@Override
+		public Group build(Object[] arguments) {
+			CurricularCourse course;
+			ExecutionSemester period;
+
+			try {
+				course = (CurricularCourse) arguments[0];
+			} catch (ClassCastException e) {
+				throw new WrongTypeOfArgumentException(0, CurricularCourse.class, arguments[0].getClass());
+			}
+
+			try {
+				period = (ExecutionSemester) arguments[1];
+			} catch (ClassCastException e) {
+				throw new WrongTypeOfArgumentException(1, ExecutionSemester.class, arguments[1].getClass());
+			}
+
+			return new CurricularCourseStudentsByExecutionPeriodGroup(course, period);
+		}
+
+		@Override
+		public int getMinArguments() {
+			return 2;
+		}
+
+		@Override
+		public int getMaxArguments() {
+			return 2;
+		}
+
+	}
 }

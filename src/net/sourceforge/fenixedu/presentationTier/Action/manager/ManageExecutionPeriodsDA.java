@@ -22,71 +22,62 @@ import net.sourceforge.fenixedu.util.PeriodState;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
  * @author Luis Crus & Sara Ribeiro
  */
 @Mapping(module = "operator", path = "/manageExecutionPeriods", scope = "request", parameter = "method")
-@Forwards(value = {
-		@Forward(name = "Manage", path = "/manager/manageExecutionPeriods_bd.jsp"),
+@Forwards(value = { @Forward(name = "Manage", path = "/manager/manageExecutionPeriods_bd.jsp"),
 		@Forward(name = "EditExecutionPeriod", path = "/manager/editExecutionPeriodDates.jsp") })
 public class ManageExecutionPeriodsDA extends FenixDispatchAction {
 
-    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-	    throws Exception {
+	public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
 
-	List infoExecutionPeriods = ReadExecutionPeriods.run();
+		List infoExecutionPeriods = ReadExecutionPeriods.run();
 
-	if (infoExecutionPeriods != null && !infoExecutionPeriods.isEmpty()) {
+		if (infoExecutionPeriods != null && !infoExecutionPeriods.isEmpty()) {
 
-	    Collections.sort(infoExecutionPeriods);
+			Collections.sort(infoExecutionPeriods);
 
-	    if (infoExecutionPeriods != null && !infoExecutionPeriods.isEmpty()) {
-		request.setAttribute(PresentationConstants.LIST_EXECUTION_PERIODS, infoExecutionPeriods);
-	    }
+			if (infoExecutionPeriods != null && !infoExecutionPeriods.isEmpty()) {
+				request.setAttribute(PresentationConstants.LIST_EXECUTION_PERIODS, infoExecutionPeriods);
+			}
 
+		}
+
+		return mapping.findForward("Manage");
 	}
 
-	return mapping.findForward("Manage");
-    }
+	public ActionForward alterExecutionPeriodState(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
 
-    public ActionForward alterExecutionPeriodState(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
+		final String year = request.getParameter("year");
+		final Integer semester = new Integer(request.getParameter("semester"));
+		final String periodStateToSet = request.getParameter("periodState");
+		final PeriodState periodState = new PeriodState(periodStateToSet);
 
-	final String year = request.getParameter("year");
-	final Integer semester = new Integer(request.getParameter("semester"));
-	final String periodStateToSet = request.getParameter("periodState");
-	final PeriodState periodState = new PeriodState(periodStateToSet);
+		try {
+			AlterExecutionPeriodState.run(year, semester, periodState);
+		} catch (InvalidArgumentsServiceException ex) {
+			throw new FenixActionException("errors.nonExisting.executionPeriod", ex);
+		}
 
-	try {
-	    AlterExecutionPeriodState.run(year, semester, periodState);
-	} catch (InvalidArgumentsServiceException ex) {
-	    throw new FenixActionException("errors.nonExisting.executionPeriod", ex);
+		return prepare(mapping, form, request, response);
 	}
 
-	return prepare(mapping, form, request, response);
-    }
+	public ActionForward edit(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
 
-    public ActionForward edit(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-	    throws Exception {
-
-	final String idInternal = request.getParameter("executionPeriodID");
-	ExecutionSemester executionSemester = (ExecutionSemester) rootDomainObject.readExecutionIntervalByOID(Integer
-		.valueOf(idInternal));
-	request.setAttribute("executionPeriod", executionSemester);
-	return mapping.findForward("EditExecutionPeriod");
-    }
+		final String idInternal = request.getParameter("executionPeriodID");
+		ExecutionSemester executionSemester =
+				(ExecutionSemester) rootDomainObject.readExecutionIntervalByOID(Integer.valueOf(idInternal));
+		request.setAttribute("executionPeriod", executionSemester);
+		return mapping.findForward("EditExecutionPeriod");
+	}
 
 }

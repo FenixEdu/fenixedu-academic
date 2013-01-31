@@ -14,19 +14,19 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadAllGrantPartsByGrantSubsidy extends FenixService {
 
-    @Checked("RolePredicates.GRANT_OWNER_MANAGER_PREDICATE")
-    @Service
-    public static List run(Integer grantSubsidyId) throws FenixServiceException {
-	List<InfoGrantPart> result = new ArrayList<InfoGrantPart>();
+	@Checked("RolePredicates.GRANT_OWNER_MANAGER_PREDICATE")
+	@Service
+	public static List run(Integer grantSubsidyId) throws FenixServiceException {
+		List<InfoGrantPart> result = new ArrayList<InfoGrantPart>();
 
-	GrantSubsidy grantSubsidy = rootDomainObject.readGrantSubsidyByOID(grantSubsidyId);
-	List<GrantPart> grantParts = grantSubsidy.getAssociatedGrantParts();
+		GrantSubsidy grantSubsidy = rootDomainObject.readGrantSubsidyByOID(grantSubsidyId);
+		List<GrantPart> grantParts = grantSubsidy.getAssociatedGrantParts();
 
-	for (GrantPart grantPart : grantParts) {
-	    result.add(InfoGrantPartWithSubsidyAndTeacherAndPaymentEntity.newInfoFromDomain(grantPart));
+		for (GrantPart grantPart : grantParts) {
+			result.add(InfoGrantPartWithSubsidyAndTeacherAndPaymentEntity.newInfoFromDomain(grantPart));
+		}
+
+		return result;
 	}
-
-	return result;
-    }
 
 }

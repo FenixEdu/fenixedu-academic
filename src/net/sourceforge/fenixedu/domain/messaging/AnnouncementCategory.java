@@ -6,16 +6,16 @@ import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class AnnouncementCategory extends AnnouncementCategory_Base {
 
-    public AnnouncementCategory() {
-	super();
-	setRootDomainObject(RootDomainObject.getInstance());
-    }
+	public AnnouncementCategory() {
+		super();
+		setRootDomainObject(RootDomainObject.getInstance());
+	}
 
-    public AnnouncementCategory(String namePt, String nameEn, AnnouncementCategoryType type) {
-	this();
-	this.setName(new MultiLanguageString(Language.pt, namePt));
-	this.getName().setContent(Language.en, nameEn);
-	this.setType(type);
-    }
+	public AnnouncementCategory(String namePt, String nameEn, AnnouncementCategoryType type) {
+		this();
+		this.setName(new MultiLanguageString(Language.pt, namePt));
+		this.getName().setContent(Language.en, nameEn);
+		this.setType(type);
+	}
 
 }

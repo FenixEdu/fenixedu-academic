@@ -6,54 +6,55 @@ import net.sourceforge.fenixedu.domain.Person;
 
 public class ParticipatorBean implements Serializable {
 
-    private String personName;
+	private String personName;
 
-    private Person person;
+	private Person person;
 
-    // private boolean other = false;
+	// private boolean other = false;
 
-    public ParticipatorBean(Person person) {
-	setPerson(person);
-	setPersonName(person.getName());
-    }
+	public ParticipatorBean(Person person) {
+		setPerson(person);
+		setPersonName(person.getName());
+	}
 
-    public ParticipatorBean(String name) {
-	setPerson(null);
-	setPersonName(name);
-	// setOther(true);
-    }
+	public ParticipatorBean(String name) {
+		setPerson(null);
+		setPersonName(name);
+		// setOther(true);
+	}
 
-    public Person getPerson() {
-	return this.person;
-    }
+	public Person getPerson() {
+		return this.person;
+	}
 
-    public void setPerson(Person person) {
-	this.person = person;
-    }
+	public void setPerson(Person person) {
+		this.person = person;
+	}
 
-    public String getPersonName() {
-	return personName;
-    }
+	public String getPersonName() {
+		return personName;
+	}
 
-    public void setPersonName(String personName) {
-	this.personName = personName;
-    }
+	public void setPersonName(String personName) {
+		this.personName = personName;
+	}
 
-    // public boolean isOther() {
-    // return other;
-    // }
-    //
-    // public void setOther(boolean other) {
-    // this.other = other;
-    // }
+	// public boolean isOther() {
+	// return other;
+	// }
+	//
+	// public void setOther(boolean other) {
+	// this.other = other;
+	// }
 
-    @Override
-    public boolean equals(Object obj) {
-	if (obj == null || !(obj instanceof ParticipatorBean))
-	    return false;
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null || !(obj instanceof ParticipatorBean)) {
+			return false;
+		}
 
-	ParticipatorBean bean = (ParticipatorBean) obj;
-	return ((bean.getPerson() == null && this.getPerson() == null) || (bean.getPerson() != null && this.getPerson() != null && bean
-		.getPerson().equals(this.getPerson())));
-    }
+		ParticipatorBean bean = (ParticipatorBean) obj;
+		return ((bean.getPerson() == null && this.getPerson() == null) || (bean.getPerson() != null && this.getPerson() != null && bean
+				.getPerson().equals(this.getPerson())));
+	}
 }

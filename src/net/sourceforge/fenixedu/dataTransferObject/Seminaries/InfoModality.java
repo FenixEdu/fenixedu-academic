@@ -17,54 +17,54 @@ import net.sourceforge.fenixedu.domain.Seminaries.Modality;
  */
 public class InfoModality extends InfoObject {
 
-    private String description;
+	private String description;
 
-    private String name;
+	private String name;
 
-    /**
-     * @return
-     */
-    public String getDescription() {
-	return description;
-    }
-
-    /**
-     * @return
-     */
-    public String getName() {
-	return name;
-    }
-
-    /**
-     * @param string
-     */
-    public void setDescription(String string) {
-	description = string;
-    }
-
-    /**
-     * @param string
-     */
-    public void setName(String string) {
-	name = string;
-    }
-
-    public void copyFromDomain(Modality modality) {
-	super.copyFromDomain(modality);
-	if (modality != null) {
-	    setDescription(modality.getDescription());
-	    setName(modality.getName());
+	/**
+	 * @return
+	 */
+	public String getDescription() {
+		return description;
 	}
-    }
 
-    public static InfoModality newInfoFromDomain(Modality modality) {
-	InfoModality infoModality = null;
-
-	if (modality != null) {
-	    infoModality = new InfoModality();
-	    infoModality.copyFromDomain(modality);
+	/**
+	 * @return
+	 */
+	public String getName() {
+		return name;
 	}
-	return infoModality;
-    }
+
+	/**
+	 * @param string
+	 */
+	public void setDescription(String string) {
+		description = string;
+	}
+
+	/**
+	 * @param string
+	 */
+	public void setName(String string) {
+		name = string;
+	}
+
+	public void copyFromDomain(Modality modality) {
+		super.copyFromDomain(modality);
+		if (modality != null) {
+			setDescription(modality.getDescription());
+			setName(modality.getName());
+		}
+	}
+
+	public static InfoModality newInfoFromDomain(Modality modality) {
+		InfoModality infoModality = null;
+
+		if (modality != null) {
+			infoModality = new InfoModality();
+			infoModality.copyFromDomain(modality);
+		}
+		return infoModality;
+	}
 
 }

@@ -31,262 +31,262 @@ import org.apache.commons.lang.StringUtils;
 import org.joda.time.LocalDate;
 
 public class PhdRegistryDiplomaRequest extends PhdRegistryDiplomaRequest_Base implements IRegistryDiplomaRequest,
-	IRectorateSubmissionBatchDocumentEntry {
+		IRectorateSubmissionBatchDocumentEntry {
 
-    protected PhdRegistryDiplomaRequest() {
-	super();
-    }
-
-    protected PhdRegistryDiplomaRequest(final PhdDocumentRequestCreateBean bean) {
-	this();
-	init(bean);
-    }
-
-    @Override
-    protected void init(PhdAcademicServiceRequestCreateBean bean) {
-	throw new DomainException("invoke init(PhdDocumentRequestCreateBean)");
-    }
-
-    @Override
-    protected void init(final PhdDocumentRequestCreateBean bean) {
-	checkParameters(bean);
-	super.init(bean);
-
-	if (!isFree()) {
-	    PhdRegistryDiplomaRequestEvent.create(getAdministrativeOffice(), getPhdIndividualProgramProcess().getPerson(), this);
+	protected PhdRegistryDiplomaRequest() {
+		super();
 	}
 
-	setDiplomaSupplement(PhdDiplomaSupplementRequest.create(bean));
-    }
-
-    private void checkParameters(final PhdDocumentRequestCreateBean bean) {
-	PhdIndividualProgramProcess process = bean.getPhdIndividualProgramProcess();
-	if (process.hasRegistryDiplomaRequest()) {
-	    throw new PhdDomainOperationException("error.registryDiploma.alreadyRequested");
+	protected PhdRegistryDiplomaRequest(final PhdDocumentRequestCreateBean bean) {
+		this();
+		init(bean);
 	}
 
-	if (!process.isBolonha()) {
-	    return;
+	@Override
+	protected void init(PhdAcademicServiceRequestCreateBean bean) {
+		throw new DomainException("invoke init(PhdDocumentRequestCreateBean)");
 	}
 
-	if (process.hasDiplomaRequest()) {
-	    throw new PhdDomainOperationException("error.registryDiploma.alreadyHasDiplomaRequest");
-	}
+	@Override
+	protected void init(final PhdDocumentRequestCreateBean bean) {
+		checkParameters(bean);
+		super.init(bean);
 
-    }
-
-    @Override
-    public boolean isPayedUponCreation() {
-	return true;
-    }
-
-    @Override
-    public boolean isToPrint() {
-	return false;
-    }
-
-    @Override
-    public boolean isPossibleToSendToOtherEntity() {
-	return true;
-    }
-
-    @Override
-    public boolean isManagedWithRectorateSubmissionBatch() {
-	return true;
-    }
-
-    @Override
-    public EventType getEventType() {
-	return EventType.BOLONHA_PHD_REGISTRY_DIPLOMA_REQUEST;
-    }
-
-    @Override
-    public boolean hasPersonalInfo() {
-	return true;
-    }
-
-    @Override
-    public CycleType getRequestedCycle() {
-	return CycleType.THIRD_CYCLE;
-    }
-
-    @Override
-    public DocumentRequestType getDocumentRequestType() {
-	return DocumentRequestType.REGISTRY_DIPLOMA_REQUEST;
-    }
-
-    @Override
-    public String getDocumentTemplateKey() {
-	return this.getClass().getName();
-    }
-
-    @Override
-    public String getFinalAverage(final Locale locale) {
-	PhdThesisFinalGrade finalGrade = getPhdIndividualProgramProcess().getFinalGrade();
-	return finalGrade.getLocalizedName(locale);
-    }
-
-    @Override
-    public String getQualifiedAverageGrade(final Locale locale) {
-	String qualifiedAverageGrade;
-
-	PhdThesisFinalGrade grade = getPhdIndividualProgramProcess().getFinalGrade();
-
-	switch (grade) {
-	case APPROVED:
-	case PRE_BOLONHA_APPROVED:
-	    qualifiedAverageGrade = "sufficient";
-	    break;
-	case APPROVED_WITH_PLUS:
-	case PRE_BOLONHA_APPROVED_WITH_PLUS:
-	    qualifiedAverageGrade = "good";
-	    break;
-	case APPROVED_WITH_PLUS_PLUS:
-	case PRE_BOLONHA_APPROVED_WITH_PLUS_PLUS:
-	    qualifiedAverageGrade = "verygood";
-	    break;
-	default:
-	    throw new DomainException("docs.academicAdministrativeOffice.RegistryDiploma.unknown.grade");
-	}
-
-	return "diploma.supplement.qualifiedgrade." + qualifiedAverageGrade;
-    }
-
-    @Override
-    public LocalDate getConclusionDate() {
-	return getPhdIndividualProgramProcess().getConclusionDate();
-    }
-
-    @Override
-    public ExecutionYear getConclusionYear() {
-	return getPhdIndividualProgramProcess().getConclusionYear();
-    }
-
-    @Override
-    public String getGraduateTitle(Locale locale) {
-	return getPhdIndividualProgramProcess().getGraduateTitle(locale);
-    }
-
-    @Override
-    protected void internalChangeState(AcademicServiceRequestBean academicServiceRequestBean) {
-	try {
-	    verifyIsToProcessAndHasPersonalInfo(academicServiceRequestBean);
-	    verifyIsToDeliveredAndIsPayed(academicServiceRequestBean);
-	} catch (DomainException e) {
-	    throw new PhdDomainOperationException(e.getKey(), e, e.getArgs());
-	}
-
-	super.internalChangeState(academicServiceRequestBean);
-	if (academicServiceRequestBean.isToProcess()) {
-	    if (!getPhdIndividualProgramProcess().isConclusionProcessed()) {
-		throw new PhdDomainOperationException("error.registryDiploma.registrationNotSubmitedToConclusionProcess");
-	    }
-
-	    if (isPayable() && !isPayed()) {
-		throw new PhdDomainOperationException("AcademicServiceRequest.hasnt.been.payed");
-	    }
-
-	    if (getRegistryCode() == null) {
-
-		PhdDiplomaRequest diplomaRequest = getPhdIndividualProgramProcess().getDiplomaRequest();
-
-		if (diplomaRequest != null && diplomaRequest.hasRegistryCode()) {
-		    diplomaRequest.getRegistryCode().addDocumentRequest(this);
-		} else {
-		    getRootDomainObject().getInstitutionUnit().getRegistryCodeGenerator().createRegistryFor(this);
+		if (!isFree()) {
+			PhdRegistryDiplomaRequestEvent.create(getAdministrativeOffice(), getPhdIndividualProgramProcess().getPerson(), this);
 		}
 
-		getAdministrativeOffice().getCurrentRectorateSubmissionBatch().addDocumentRequest(this);
-	    }
-
-	    if (getLastGeneratedDocument() == null) {
-		generateDocument();
-	    }
-
-	    getDiplomaSupplement().process();
-	} else if (academicServiceRequestBean.isToConclude()) {
-	    if (getDiplomaSupplement().isConcludedSituationAccepted()) {
-		getDiplomaSupplement().conclude();
-	    }
-	} else if (academicServiceRequestBean.isToCancelOrReject()) {
-	    if (hasEvent()) {
-		getEvent().cancel(academicServiceRequestBean.getResponsible());
-	    }
-
-	    if (academicServiceRequestBean.isToCancel()) {
-		getDiplomaSupplement().cancel(academicServiceRequestBean.getJustification());
-	    }
-
-	    if (academicServiceRequestBean.isToReject()) {
-		getDiplomaSupplement().reject(academicServiceRequestBean.getJustification());
-	    }
+		setDiplomaSupplement(PhdDiplomaSupplementRequest.create(bean));
 	}
-    }
 
-    @Override
-    public String getDescription() {
-	return getDescription(getAcademicServiceRequestType(), getDocumentRequestType().getQualifiedName() + "."
-		+ DegreeType.BOLONHA_ADVANCED_SPECIALIZATION_DIPLOMA.name());
-    }
+	private void checkParameters(final PhdDocumentRequestCreateBean bean) {
+		PhdIndividualProgramProcess process = bean.getPhdIndividualProgramProcess();
+		if (process.hasRegistryDiplomaRequest()) {
+			throw new PhdDomainOperationException("error.registryDiploma.alreadyRequested");
+		}
 
-    public static PhdRegistryDiplomaRequest create(final PhdDocumentRequestCreateBean bean) {
-	return new PhdRegistryDiplomaRequest(bean);
-    }
+		if (!process.isBolonha()) {
+			return;
+		}
 
-    @Override
-    public byte[] generateDocument() {
-	try {
-	    final List<AdministrativeOfficeDocument> documents = AdministrativeOfficeDocument.AdministrativeOfficeDocumentCreator
-		    .create(this);
+		if (process.hasDiplomaRequest()) {
+			throw new PhdDomainOperationException("error.registryDiploma.alreadyHasDiplomaRequest");
+		}
 
-	    String latexThesisTitle = getPhdIndividualProgramProcess().getLatexThesisTitle();
-
-	    for (AdministrativeOfficeDocument administrativeOfficeDocument : documents) {
-		administrativeOfficeDocument.addParameter("useLatex", !StringUtils.isEmpty(latexThesisTitle));
-	    }
-
-	    final AdministrativeOfficeDocument[] array = {};
-	    byte[] data = ReportsUtils.exportMultipleToPdfAsByteArray(documents.toArray(array));
-
-	    if (!StringUtils.isEmpty(latexThesisTitle)) {
-		LatexStringRendererService latexService = new LatexStringRendererService();
-		byte[] renderedThesisTitle = latexService.render(latexThesisTitle, LatexFontSize.NORMALSIZE);
-		Integer xOffset = getHorizontalOffset() != null ? getHorizontalOffset() : 0;
-		Integer yOffset = getVerticalOffset() != null ? getVerticalOffset() : 0;
-
-		data = ReportsUtils.stampPdfAt(data, renderedThesisTitle, 0 + xOffset, -365 + yOffset);
-	    }
-
-	    DocumentRequestGeneratedDocument.store(this, documents.iterator().next().getReportFileName() + ".pdf", data);
-	    return data;
-	} catch (JRException e) {
-	    e.printStackTrace();
-	    throw new DomainException("error.phdDiplomaRequest.errorGeneratingDocument");
-	} catch (LatexStringRendererException e) {
-	    throw new DomainException("error.phdDiplomaRequest.latex.service", e);
 	}
-    }
 
-    @Override
-    public String getProgrammeTypeDescription() {
-	return ResourceBundle.getBundle("resources.PhdResources", Locale.getDefault()).getString("label.php.program");
-    }
+	@Override
+	public boolean isPayedUponCreation() {
+		return true;
+	}
 
-    @Override
-    public String getViewStudentProgrammeLink() {
-	return "/phdIndividualProgramProcess.do?method=viewProcess&amp;processId="
-		+ getPhdIndividualProgramProcess().getExternalId();
-    }
+	@Override
+	public boolean isToPrint() {
+		return false;
+	}
 
-    @Override
-    public String getReceivedActionLink() {
-	return String
-		.format("/phdAcademicServiceRequestManagement.do?method=prepareReceiveOnRectorate&amp;phdAcademicServiceRequestId=%s&amp;batchOid=%s",
-			getExternalId(), getRectorateSubmissionBatch().getExternalId());
-    }
+	@Override
+	public boolean isPossibleToSendToOtherEntity() {
+		return true;
+	}
 
-    @Override
-    public boolean isProgrammeLinkVisible() {
-	return getPhdIndividualProgramProcess().isCurrentUserAllowedToManageProcess();
-    }
+	@Override
+	public boolean isManagedWithRectorateSubmissionBatch() {
+		return true;
+	}
+
+	@Override
+	public EventType getEventType() {
+		return EventType.BOLONHA_PHD_REGISTRY_DIPLOMA_REQUEST;
+	}
+
+	@Override
+	public boolean hasPersonalInfo() {
+		return true;
+	}
+
+	@Override
+	public CycleType getRequestedCycle() {
+		return CycleType.THIRD_CYCLE;
+	}
+
+	@Override
+	public DocumentRequestType getDocumentRequestType() {
+		return DocumentRequestType.REGISTRY_DIPLOMA_REQUEST;
+	}
+
+	@Override
+	public String getDocumentTemplateKey() {
+		return this.getClass().getName();
+	}
+
+	@Override
+	public String getFinalAverage(final Locale locale) {
+		PhdThesisFinalGrade finalGrade = getPhdIndividualProgramProcess().getFinalGrade();
+		return finalGrade.getLocalizedName(locale);
+	}
+
+	@Override
+	public String getQualifiedAverageGrade(final Locale locale) {
+		String qualifiedAverageGrade;
+
+		PhdThesisFinalGrade grade = getPhdIndividualProgramProcess().getFinalGrade();
+
+		switch (grade) {
+		case APPROVED:
+		case PRE_BOLONHA_APPROVED:
+			qualifiedAverageGrade = "sufficient";
+			break;
+		case APPROVED_WITH_PLUS:
+		case PRE_BOLONHA_APPROVED_WITH_PLUS:
+			qualifiedAverageGrade = "good";
+			break;
+		case APPROVED_WITH_PLUS_PLUS:
+		case PRE_BOLONHA_APPROVED_WITH_PLUS_PLUS:
+			qualifiedAverageGrade = "verygood";
+			break;
+		default:
+			throw new DomainException("docs.academicAdministrativeOffice.RegistryDiploma.unknown.grade");
+		}
+
+		return "diploma.supplement.qualifiedgrade." + qualifiedAverageGrade;
+	}
+
+	@Override
+	public LocalDate getConclusionDate() {
+		return getPhdIndividualProgramProcess().getConclusionDate();
+	}
+
+	@Override
+	public ExecutionYear getConclusionYear() {
+		return getPhdIndividualProgramProcess().getConclusionYear();
+	}
+
+	@Override
+	public String getGraduateTitle(Locale locale) {
+		return getPhdIndividualProgramProcess().getGraduateTitle(locale);
+	}
+
+	@Override
+	protected void internalChangeState(AcademicServiceRequestBean academicServiceRequestBean) {
+		try {
+			verifyIsToProcessAndHasPersonalInfo(academicServiceRequestBean);
+			verifyIsToDeliveredAndIsPayed(academicServiceRequestBean);
+		} catch (DomainException e) {
+			throw new PhdDomainOperationException(e.getKey(), e, e.getArgs());
+		}
+
+		super.internalChangeState(academicServiceRequestBean);
+		if (academicServiceRequestBean.isToProcess()) {
+			if (!getPhdIndividualProgramProcess().isConclusionProcessed()) {
+				throw new PhdDomainOperationException("error.registryDiploma.registrationNotSubmitedToConclusionProcess");
+			}
+
+			if (isPayable() && !isPayed()) {
+				throw new PhdDomainOperationException("AcademicServiceRequest.hasnt.been.payed");
+			}
+
+			if (getRegistryCode() == null) {
+
+				PhdDiplomaRequest diplomaRequest = getPhdIndividualProgramProcess().getDiplomaRequest();
+
+				if (diplomaRequest != null && diplomaRequest.hasRegistryCode()) {
+					diplomaRequest.getRegistryCode().addDocumentRequest(this);
+				} else {
+					getRootDomainObject().getInstitutionUnit().getRegistryCodeGenerator().createRegistryFor(this);
+				}
+
+				getAdministrativeOffice().getCurrentRectorateSubmissionBatch().addDocumentRequest(this);
+			}
+
+			if (getLastGeneratedDocument() == null) {
+				generateDocument();
+			}
+
+			getDiplomaSupplement().process();
+		} else if (academicServiceRequestBean.isToConclude()) {
+			if (getDiplomaSupplement().isConcludedSituationAccepted()) {
+				getDiplomaSupplement().conclude();
+			}
+		} else if (academicServiceRequestBean.isToCancelOrReject()) {
+			if (hasEvent()) {
+				getEvent().cancel(academicServiceRequestBean.getResponsible());
+			}
+
+			if (academicServiceRequestBean.isToCancel()) {
+				getDiplomaSupplement().cancel(academicServiceRequestBean.getJustification());
+			}
+
+			if (academicServiceRequestBean.isToReject()) {
+				getDiplomaSupplement().reject(academicServiceRequestBean.getJustification());
+			}
+		}
+	}
+
+	@Override
+	public String getDescription() {
+		return getDescription(getAcademicServiceRequestType(), getDocumentRequestType().getQualifiedName() + "."
+				+ DegreeType.BOLONHA_ADVANCED_SPECIALIZATION_DIPLOMA.name());
+	}
+
+	public static PhdRegistryDiplomaRequest create(final PhdDocumentRequestCreateBean bean) {
+		return new PhdRegistryDiplomaRequest(bean);
+	}
+
+	@Override
+	public byte[] generateDocument() {
+		try {
+			final List<AdministrativeOfficeDocument> documents =
+					AdministrativeOfficeDocument.AdministrativeOfficeDocumentCreator.create(this);
+
+			String latexThesisTitle = getPhdIndividualProgramProcess().getLatexThesisTitle();
+
+			for (AdministrativeOfficeDocument administrativeOfficeDocument : documents) {
+				administrativeOfficeDocument.addParameter("useLatex", !StringUtils.isEmpty(latexThesisTitle));
+			}
+
+			final AdministrativeOfficeDocument[] array = {};
+			byte[] data = ReportsUtils.exportMultipleToPdfAsByteArray(documents.toArray(array));
+
+			if (!StringUtils.isEmpty(latexThesisTitle)) {
+				LatexStringRendererService latexService = new LatexStringRendererService();
+				byte[] renderedThesisTitle = latexService.render(latexThesisTitle, LatexFontSize.NORMALSIZE);
+				Integer xOffset = getHorizontalOffset() != null ? getHorizontalOffset() : 0;
+				Integer yOffset = getVerticalOffset() != null ? getVerticalOffset() : 0;
+
+				data = ReportsUtils.stampPdfAt(data, renderedThesisTitle, 0 + xOffset, -365 + yOffset);
+			}
+
+			DocumentRequestGeneratedDocument.store(this, documents.iterator().next().getReportFileName() + ".pdf", data);
+			return data;
+		} catch (JRException e) {
+			e.printStackTrace();
+			throw new DomainException("error.phdDiplomaRequest.errorGeneratingDocument");
+		} catch (LatexStringRendererException e) {
+			throw new DomainException("error.phdDiplomaRequest.latex.service", e);
+		}
+	}
+
+	@Override
+	public String getProgrammeTypeDescription() {
+		return ResourceBundle.getBundle("resources.PhdResources", Locale.getDefault()).getString("label.php.program");
+	}
+
+	@Override
+	public String getViewStudentProgrammeLink() {
+		return "/phdIndividualProgramProcess.do?method=viewProcess&amp;processId="
+				+ getPhdIndividualProgramProcess().getExternalId();
+	}
+
+	@Override
+	public String getReceivedActionLink() {
+		return String
+				.format("/phdAcademicServiceRequestManagement.do?method=prepareReceiveOnRectorate&amp;phdAcademicServiceRequestId=%s&amp;batchOid=%s",
+						getExternalId(), getRectorateSubmissionBatch().getExternalId());
+	}
+
+	@Override
+	public boolean isProgrammeLinkVisible() {
+		return getPhdIndividualProgramProcess().isCurrentUserAllowedToManageProcess();
+	}
 }

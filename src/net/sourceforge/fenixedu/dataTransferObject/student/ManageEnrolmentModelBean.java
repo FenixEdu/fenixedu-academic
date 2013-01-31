@@ -15,37 +15,37 @@ import net.sourceforge.fenixedu.domain.student.Registration;
  */
 public class ManageEnrolmentModelBean implements Serializable {
 
-    private EnrolmentModel enrolmentModel;
+	private EnrolmentModel enrolmentModel;
 
-    private ExecutionYear executionYear;
+	private ExecutionYear executionYear;
 
-    private Registration registration;
+	private Registration registration;
 
-    public ManageEnrolmentModelBean(Registration registration) {
-	super();
-	this.registration = registration;
-	setExecutionYear(ExecutionYear.readCurrentExecutionYear());
-	setEnrolmentModel(getRegistration().getEnrolmentModelForExecutionYear(getExecutionYear()));
-    }
+	public ManageEnrolmentModelBean(Registration registration) {
+		super();
+		this.registration = registration;
+		setExecutionYear(ExecutionYear.readCurrentExecutionYear());
+		setEnrolmentModel(getRegistration().getEnrolmentModelForExecutionYear(getExecutionYear()));
+	}
 
-    public EnrolmentModel getEnrolmentModel() {
-	return enrolmentModel;
-    }
+	public EnrolmentModel getEnrolmentModel() {
+		return enrolmentModel;
+	}
 
-    public void setEnrolmentModel(EnrolmentModel enrolmentModel) {
-	this.enrolmentModel = enrolmentModel;
-    }
+	public void setEnrolmentModel(EnrolmentModel enrolmentModel) {
+		this.enrolmentModel = enrolmentModel;
+	}
 
-    public ExecutionYear getExecutionYear() {
-	return executionYear;
-    }
+	public ExecutionYear getExecutionYear() {
+		return executionYear;
+	}
 
-    public void setExecutionYear(ExecutionYear executionYear) {
-	this.executionYear = executionYear;
-    }
+	public void setExecutionYear(ExecutionYear executionYear) {
+		this.executionYear = executionYear;
+	}
 
-    public Registration getRegistration() {
-	return registration;
-    }
+	public Registration getRegistration() {
+		return registration;
+	}
 
 }

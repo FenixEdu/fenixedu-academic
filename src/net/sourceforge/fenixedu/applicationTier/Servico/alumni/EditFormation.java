@@ -7,21 +7,21 @@ import net.sourceforge.fenixedu.domain.Formation;
 
 public class EditFormation extends FormationManagement {
 
-    public void run(final AlumniFormation formation) {
-	editAlumniFormation(formation);
-    }
-
-    public void run(final List<AlumniFormation> formationList) {
-
-	for (AlumniFormation formation : formationList) {
-	    editAlumniFormation(formation);
+	public void run(final AlumniFormation formation) {
+		editAlumniFormation(formation);
 	}
-    }
 
-    private void editAlumniFormation(final AlumniFormation formation) {
+	public void run(final List<AlumniFormation> formationList) {
 
-	Formation dbFormation = formation.getAssociatedFormation();
-	dbFormation.edit(formation,getFormationInstitution(formation));
-    }
+		for (AlumniFormation formation : formationList) {
+			editAlumniFormation(formation);
+		}
+	}
+
+	private void editAlumniFormation(final AlumniFormation formation) {
+
+		Formation dbFormation = formation.getAssociatedFormation();
+		dbFormation.edit(formation, getFormationInstitution(formation));
+	}
 
 }

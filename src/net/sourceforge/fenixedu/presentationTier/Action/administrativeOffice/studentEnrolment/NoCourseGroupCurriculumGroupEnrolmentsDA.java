@@ -28,142 +28,142 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 abstract public class NoCourseGroupCurriculumGroupEnrolmentsDA extends FenixDispatchAction {
 
-    @Override
-    public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-	request.setAttribute("actionName", getActionName());
-	return super.execute(mapping, actionForm, request, response);
-    }
-
-    public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) {
-	final NoCourseGroupEnrolmentBean bean = createNoCourseGroupEnrolmentBean(getStudentCurricularPlan(request),
-		getExecutionSemester(request));
-	return showExtraEnrolments(bean, mapping, actionForm, request, response);
-    }
-
-    protected StudentCurricularPlan getStudentCurricularPlan(final HttpServletRequest request) {
-	return rootDomainObject.readStudentCurricularPlanByOID(Integer.valueOf(request.getParameter("scpID")));
-    }
-
-    protected ExecutionSemester getExecutionSemester(final HttpServletRequest request) {
-	return rootDomainObject.readExecutionSemesterByOID(Integer.valueOf(request.getParameter("executionPeriodID")));
-    }
-
-    protected ActionForward showExtraEnrolments(NoCourseGroupEnrolmentBean bean, ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) {
-
-	final NoCourseGroupCurriculumGroup noCourseGroupCurriculumGroup = bean.getNoCourseGroupCurriculumGroup();
-	if (noCourseGroupCurriculumGroup != null) {
-	    bean.setCurriculumGroup(noCourseGroupCurriculumGroup);
-	    if (noCourseGroupCurriculumGroup.hasAnyEnrolments()) {
-		request.setAttribute("enrolments", noCourseGroupCurriculumGroup);
-	    }
+	@Override
+	public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		request.setAttribute("actionName", getActionName());
+		return super.execute(mapping, actionForm, request, response);
 	}
 
-	request.setAttribute("enrolmentBean", bean);
-
-	return mapping.findForward("showExtraEnrolments");
-    }
-
-    abstract protected NoCourseGroupEnrolmentBean createNoCourseGroupEnrolmentBean(
-	    final StudentCurricularPlan studentCurricularPlan, final ExecutionSemester executionSemester);
-
-    public ActionForward postBack(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) {
-	request.setAttribute("enrolmentBean", getNoCourseGroupEnrolmentBean());
-	RenderUtils.invalidateViewState();
-	return mapping.findForward("chooseExtraEnrolment");
-    }
-
-    protected NoCourseGroupEnrolmentBean getNoCourseGroupEnrolmentBean() {
-	return getRenderedObject("enrolmentBean");
-    }
-
-    public ActionForward chooseCurricular(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) {
-	request.setAttribute("enrolmentBean", getNoCourseGroupEnrolmentBean());
-	RenderUtils.invalidateViewState();
-	return mapping.findForward("chooseExtraEnrolment");
-    }
-
-    public ActionForward enrol(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) {
-
-	final NoCourseGroupEnrolmentBean bean = getNoCourseGroupEnrolmentBean();
-	request.setAttribute("enrolmentBean", bean);
-
-	try {
-	    final RuleResult ruleResult = CreateExtraEnrolment.run(bean);
-
-	    if (ruleResult.isWarning()) {
-		addRuleResultMessagesToActionMessages("warning", request, ruleResult);
-	    }
-
-	} catch (final IllegalDataAccessException e) {
-	    addActionMessage("error", request, "error.notAuthorized");
-	    return mapping.findForward("chooseExtraEnrolment");
-
-	} catch (final EnrollmentDomainException ex) {
-	    addRuleResultMessagesToActionMessages("enrolmentError", request, ex.getFalseResult());
-	    return mapping.findForward("chooseExtraEnrolment");
-
-	} catch (final DomainException e) {
-	    addActionMessage("error", request, e.getMessage(), e.getArgs());
-	    return mapping.findForward("chooseExtraEnrolment");
+	public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) {
+		final NoCourseGroupEnrolmentBean bean =
+				createNoCourseGroupEnrolmentBean(getStudentCurricularPlan(request), getExecutionSemester(request));
+		return showExtraEnrolments(bean, mapping, actionForm, request, response);
 	}
 
-	return showExtraEnrolments(bean, mapping, actionForm, request, response);
-    }
-
-    public ActionForward delete(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) {
-
-	final Enrolment enrolment = getEnrolment(request);
-	final StudentCurricularPlan studentCurricularPlan = getStudentCurricularPlan(request);
-	final ExecutionSemester executionSemester = getExecutionSemester(request);
-
-	try {
-	    studentCurricularPlan.removeCurriculumModulesFromNoCourseGroupCurriculumGroup(
-		    Collections.<CurriculumModule> singletonList(enrolment), executionSemester, getGroupType());
-
-	} catch (final IllegalDataAccessException e) {
-	    addActionMessage("error", request, "error.notAuthorized");
-
-	} catch (EnrollmentDomainException ex) {
-	    addRuleResultMessagesToActionMessages("error", request, ex.getFalseResult());
-
-	} catch (DomainException e) {
-	    addActionMessage("error", request, e.getMessage());
+	protected StudentCurricularPlan getStudentCurricularPlan(final HttpServletRequest request) {
+		return rootDomainObject.readStudentCurricularPlanByOID(Integer.valueOf(request.getParameter("scpID")));
 	}
 
-	return showExtraEnrolments(createNoCourseGroupEnrolmentBean(studentCurricularPlan, executionSemester), mapping,
-		actionForm, request, response);
-    }
+	protected ExecutionSemester getExecutionSemester(final HttpServletRequest request) {
+		return rootDomainObject.readExecutionSemesterByOID(Integer.valueOf(request.getParameter("executionPeriodID")));
+	}
 
-    protected Enrolment getEnrolment(HttpServletRequest request) {
-	return (Enrolment) rootDomainObject.readCurriculumModuleByOID(Integer.valueOf(request.getParameter("enrolment")));
-    }
+	protected ActionForward showExtraEnrolments(NoCourseGroupEnrolmentBean bean, ActionMapping mapping, ActionForm actionForm,
+			HttpServletRequest request, HttpServletResponse response) {
 
-    public ActionForward back(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) {
+		final NoCourseGroupCurriculumGroup noCourseGroupCurriculumGroup = bean.getNoCourseGroupCurriculumGroup();
+		if (noCourseGroupCurriculumGroup != null) {
+			bean.setCurriculumGroup(noCourseGroupCurriculumGroup);
+			if (noCourseGroupCurriculumGroup.hasAnyEnrolments()) {
+				request.setAttribute("enrolments", noCourseGroupCurriculumGroup);
+			}
+		}
 
-	final NoCourseGroupEnrolmentBean bean = getNoCourseGroupEnrolmentBean();
+		request.setAttribute("enrolmentBean", bean);
 
-	final StudentEnrolmentBean enrolmentBean = new StudentEnrolmentBean();
-	enrolmentBean.setStudentCurricularPlan(bean.getStudentCurricularPlan());
-	enrolmentBean.setExecutionPeriod(bean.getExecutionPeriod());
-	request.setAttribute("studentEnrolmentBean", enrolmentBean);
+		return mapping.findForward("showExtraEnrolments");
+	}
 
-	return mapping.findForward("showDegreeModulesToEnrol");
-    }
+	abstract protected NoCourseGroupEnrolmentBean createNoCourseGroupEnrolmentBean(
+			final StudentCurricularPlan studentCurricularPlan, final ExecutionSemester executionSemester);
 
-    public ActionForward back2(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) {
-	return showExtraEnrolments(getNoCourseGroupEnrolmentBean(), mapping, actionForm, request, response);
-    }
+	public ActionForward postBack(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) {
+		request.setAttribute("enrolmentBean", getNoCourseGroupEnrolmentBean());
+		RenderUtils.invalidateViewState();
+		return mapping.findForward("chooseExtraEnrolment");
+	}
 
-    abstract protected String getActionName();
+	protected NoCourseGroupEnrolmentBean getNoCourseGroupEnrolmentBean() {
+		return getRenderedObject("enrolmentBean");
+	}
 
-    abstract protected NoCourseGroupCurriculumGroupType getGroupType();
+	public ActionForward chooseCurricular(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) {
+		request.setAttribute("enrolmentBean", getNoCourseGroupEnrolmentBean());
+		RenderUtils.invalidateViewState();
+		return mapping.findForward("chooseExtraEnrolment");
+	}
+
+	public ActionForward enrol(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) {
+
+		final NoCourseGroupEnrolmentBean bean = getNoCourseGroupEnrolmentBean();
+		request.setAttribute("enrolmentBean", bean);
+
+		try {
+			final RuleResult ruleResult = CreateExtraEnrolment.run(bean);
+
+			if (ruleResult.isWarning()) {
+				addRuleResultMessagesToActionMessages("warning", request, ruleResult);
+			}
+
+		} catch (final IllegalDataAccessException e) {
+			addActionMessage("error", request, "error.notAuthorized");
+			return mapping.findForward("chooseExtraEnrolment");
+
+		} catch (final EnrollmentDomainException ex) {
+			addRuleResultMessagesToActionMessages("enrolmentError", request, ex.getFalseResult());
+			return mapping.findForward("chooseExtraEnrolment");
+
+		} catch (final DomainException e) {
+			addActionMessage("error", request, e.getMessage(), e.getArgs());
+			return mapping.findForward("chooseExtraEnrolment");
+		}
+
+		return showExtraEnrolments(bean, mapping, actionForm, request, response);
+	}
+
+	public ActionForward delete(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) {
+
+		final Enrolment enrolment = getEnrolment(request);
+		final StudentCurricularPlan studentCurricularPlan = getStudentCurricularPlan(request);
+		final ExecutionSemester executionSemester = getExecutionSemester(request);
+
+		try {
+			studentCurricularPlan.removeCurriculumModulesFromNoCourseGroupCurriculumGroup(
+					Collections.<CurriculumModule> singletonList(enrolment), executionSemester, getGroupType());
+
+		} catch (final IllegalDataAccessException e) {
+			addActionMessage("error", request, "error.notAuthorized");
+
+		} catch (EnrollmentDomainException ex) {
+			addRuleResultMessagesToActionMessages("error", request, ex.getFalseResult());
+
+		} catch (DomainException e) {
+			addActionMessage("error", request, e.getMessage());
+		}
+
+		return showExtraEnrolments(createNoCourseGroupEnrolmentBean(studentCurricularPlan, executionSemester), mapping,
+				actionForm, request, response);
+	}
+
+	protected Enrolment getEnrolment(HttpServletRequest request) {
+		return (Enrolment) rootDomainObject.readCurriculumModuleByOID(Integer.valueOf(request.getParameter("enrolment")));
+	}
+
+	public ActionForward back(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) {
+
+		final NoCourseGroupEnrolmentBean bean = getNoCourseGroupEnrolmentBean();
+
+		final StudentEnrolmentBean enrolmentBean = new StudentEnrolmentBean();
+		enrolmentBean.setStudentCurricularPlan(bean.getStudentCurricularPlan());
+		enrolmentBean.setExecutionPeriod(bean.getExecutionPeriod());
+		request.setAttribute("studentEnrolmentBean", enrolmentBean);
+
+		return mapping.findForward("showDegreeModulesToEnrol");
+	}
+
+	public ActionForward back2(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) {
+		return showExtraEnrolments(getNoCourseGroupEnrolmentBean(), mapping, actionForm, request, response);
+	}
+
+	abstract protected String getActionName();
+
+	abstract protected NoCourseGroupCurriculumGroupType getGroupType();
 }

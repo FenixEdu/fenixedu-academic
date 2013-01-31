@@ -15,22 +15,24 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
  */
 public class ShiftTypesProvider implements DataProvider {
 
-    public Object provide(Object source, Object currentValue) {
-	final TeacherInquiryDTO teacherInquiryDTO = (TeacherInquiryDTO) source;
-	return teacherInquiryDTO.getExecutionCourse().getShiftTypes();
-    }
+	@Override
+	public Object provide(Object source, Object currentValue) {
+		final TeacherInquiryDTO teacherInquiryDTO = (TeacherInquiryDTO) source;
+		return teacherInquiryDTO.getExecutionCourse().getShiftTypes();
+	}
 
-    public Converter getConverter() {
-	return new Converter() {
-	    @Override
-	    public Object convert(Class type, Object value) {
-		final List<ShiftType> shiftTypes = new ArrayList<ShiftType>();
-		for (final String o : (String[]) value) {
-		    shiftTypes.add(ShiftType.valueOf(o));
-		}
-		return shiftTypes;
-	    }
-	};
-    }
+	@Override
+	public Converter getConverter() {
+		return new Converter() {
+			@Override
+			public Object convert(Class type, Object value) {
+				final List<ShiftType> shiftTypes = new ArrayList<ShiftType>();
+				for (final String o : (String[]) value) {
+					shiftTypes.add(ShiftType.valueOf(o));
+				}
+				return shiftTypes;
+			}
+		};
+	}
 
 }

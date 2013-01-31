@@ -8,12 +8,12 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadExecutionPeriod extends FenixService {
 
-    @Service
-    public static InfoExecutionPeriod run(final String name, final InfoExecutionYear infoExecutionYear) {
+	@Service
+	public static InfoExecutionPeriod run(final String name, final InfoExecutionYear infoExecutionYear) {
 
-	final ExecutionSemester executionSemester = ExecutionSemester.readByNameAndExecutionYear(name, infoExecutionYear
-		.getYear());
-	return (executionSemester != null) ? InfoExecutionPeriod.newInfoFromDomain(executionSemester) : null;
-    }
+		final ExecutionSemester executionSemester =
+				ExecutionSemester.readByNameAndExecutionYear(name, infoExecutionYear.getYear());
+		return (executionSemester != null) ? InfoExecutionPeriod.newInfoFromDomain(executionSemester) : null;
+	}
 
 }

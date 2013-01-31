@@ -14,29 +14,30 @@ import org.joda.time.DateTime;
  */
 public class ResidenceCandidacies extends ResidenceCandidacies_Base {
 
-    public ResidenceCandidacies() {
-	super();
-	setRootDomainObject(RootDomainObject.getInstance());
-	setCreationDateDateTime(new DateTime());
-    }
+	public ResidenceCandidacies() {
+		super();
+		setRootDomainObject(RootDomainObject.getInstance());
+		setCreationDateDateTime(new DateTime());
+	}
 
-    public ResidenceCandidacies(String observations) {
-	this();
-	setObservations(observations);
-    }
-
+	public ResidenceCandidacies(String observations) {
+		this();
+		setObservations(observations);
+	}
 
 	@Deprecated
-	public java.util.Date getCreationDate(){
+	public java.util.Date getCreationDate() {
 		org.joda.time.DateTime dt = getCreationDateDateTime();
 		return (dt == null) ? null : new java.util.Date(dt.getMillis());
 	}
 
 	@Deprecated
-	public void setCreationDate(java.util.Date date){
-		if(date == null) setCreationDateDateTime(null);
-		else setCreationDateDateTime(new org.joda.time.DateTime(date.getTime()));
+	public void setCreationDate(java.util.Date date) {
+		if (date == null) {
+			setCreationDateDateTime(null);
+		} else {
+			setCreationDateDateTime(new org.joda.time.DateTime(date.getTime()));
+		}
 	}
-
 
 }

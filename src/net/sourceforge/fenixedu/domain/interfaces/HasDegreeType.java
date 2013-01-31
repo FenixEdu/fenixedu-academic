@@ -4,6 +4,6 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
 
 public interface HasDegreeType {
 
-    public DegreeType getDegreeType();
+	public DegreeType getDegreeType();
 
 }

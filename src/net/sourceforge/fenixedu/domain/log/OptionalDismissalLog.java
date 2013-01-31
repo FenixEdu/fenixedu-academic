@@ -10,18 +10,18 @@ import net.sourceforge.fenixedu.util.EnrolmentAction;
 
 public class OptionalDismissalLog extends OptionalDismissalLog_Base {
 
-    private OptionalDismissalLog() {
-	super();
-    }
+	private OptionalDismissalLog() {
+		super();
+	}
 
-    public OptionalDismissalLog(final EnrolmentAction action, final Registration registration,
-	    final OptionalCurricularCourse optionalCurricularCourse, final Credits credits, final Double ectsCredits,
-	    final ExecutionSemester executionSemester, final String who) {
-	this();
-	check(optionalCurricularCourse, "error.OptionalDismissalLog.invalid.optionalCurricularCourse");
-	init(action, registration, optionalCurricularCourse, executionSemester, who);
-	setCredits(BigDecimal.valueOf(ectsCredits));
-	setSourceDescription(buildSourceDescription(credits));
-    }
+	public OptionalDismissalLog(final EnrolmentAction action, final Registration registration,
+			final OptionalCurricularCourse optionalCurricularCourse, final Credits credits, final Double ectsCredits,
+			final ExecutionSemester executionSemester, final String who) {
+		this();
+		check(optionalCurricularCourse, "error.OptionalDismissalLog.invalid.optionalCurricularCourse");
+		init(action, registration, optionalCurricularCourse, executionSemester, who);
+		setCredits(BigDecimal.valueOf(ectsCredits));
+		setSourceDescription(buildSourceDescription(credits));
+	}
 
 }

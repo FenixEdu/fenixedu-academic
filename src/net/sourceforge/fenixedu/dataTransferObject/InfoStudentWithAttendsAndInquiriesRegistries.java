@@ -16,27 +16,27 @@ import net.sourceforge.fenixedu.domain.student.Registration;
  */
 public class InfoStudentWithAttendsAndInquiriesRegistries extends InfoStudent {
 
-    private List<InfoFrequenta> attends;
-    private List<InfoInquiriesRegistry> inquiriesRegistries;
+	private List<InfoFrequenta> attends;
+	private List<InfoInquiriesRegistry> inquiriesRegistries;
 
-    public InfoStudentWithAttendsAndInquiriesRegistries(final Registration registration) {
-	super(registration);
-    }
+	public InfoStudentWithAttendsAndInquiriesRegistries(final Registration registration) {
+		super(registration);
+	}
 
-    public List<InfoFrequenta> getAttends() {
-	return attends;
-    }
+	public List<InfoFrequenta> getAttends() {
+		return attends;
+	}
 
-    public void setAttends(List<InfoFrequenta> attends) {
-	this.attends = attends;
-    }
+	public void setAttends(List<InfoFrequenta> attends) {
+		this.attends = attends;
+	}
 
-    public List<InfoInquiriesRegistry> getInquiriesRegistries() {
-	return inquiriesRegistries;
-    }
+	public List<InfoInquiriesRegistry> getInquiriesRegistries() {
+		return inquiriesRegistries;
+	}
 
-    public void setInquiriesRegistries(List<InfoInquiriesRegistry> inquiriesRegistries) {
-	this.inquiriesRegistries = inquiriesRegistries;
-    }
+	public void setInquiriesRegistries(List<InfoInquiriesRegistry> inquiriesRegistries) {
+		this.inquiriesRegistries = inquiriesRegistries;
+	}
 
 }

@@ -5,16 +5,16 @@ import java.util.List;
 
 public class MandatoryCondition extends MandatoryCondition_Base {
 
-    public MandatoryCondition() {
-	super();
-    }
-
-    public List<String> getConditionValuesAsList() {
-	List<String> result = new ArrayList<String>();
-	String[] values = getConditionValues().split("_#_");
-	for (int iter = 0; iter < values.length; iter++) {
-	    result.add(values[iter]);
+	public MandatoryCondition() {
+		super();
 	}
-	return result;
-    }
+
+	public List<String> getConditionValuesAsList() {
+		List<String> result = new ArrayList<String>();
+		String[] values = getConditionValues().split("_#_");
+		for (String value : values) {
+			result.add(value);
+		}
+		return result;
+	}
 }

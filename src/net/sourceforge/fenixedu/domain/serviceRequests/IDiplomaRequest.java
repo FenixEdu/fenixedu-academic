@@ -8,19 +8,21 @@ import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.IDocumen
 import org.joda.time.LocalDate;
 
 public interface IDiplomaRequest extends IDocumentRequest {
-    public CycleType getWhatShouldBeRequestedCycle();
+	public CycleType getWhatShouldBeRequestedCycle();
 
-    public boolean hasRegistryCode();
+	@Override
+	public boolean hasRegistryCode();
 
-    public RegistryCode getRegistryCode();
+	@Override
+	public RegistryCode getRegistryCode();
 
-    public LocalDate getConclusionDate();
+	public LocalDate getConclusionDate();
 
-    public Integer getFinalAverage();
+	public Integer getFinalAverage();
 
-    public String getFinalAverageQualified();
+	public String getFinalAverageQualified();
 
-    public String getDissertationThesisTitle();
+	public String getDissertationThesisTitle();
 
-    public String getGraduateTitle(final Locale locale);
+	public String getGraduateTitle(final Locale locale);
 }

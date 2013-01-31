@@ -9,17 +9,19 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class RoleTypeForInternalRelationProvider implements DataProvider {
 
-    public Object provide(final Object source, final Object currentValue) {
-	final List<RoleType> roleTypes = new ArrayList<RoleType>();
-	roleTypes.add(RoleType.TEACHER);
-	roleTypes.add(RoleType.RESEARCHER);
-	roleTypes.add(RoleType.EMPLOYEE);
-	roleTypes.add(RoleType.GRANT_OWNER);
-	return roleTypes;
-    }
+	@Override
+	public Object provide(final Object source, final Object currentValue) {
+		final List<RoleType> roleTypes = new ArrayList<RoleType>();
+		roleTypes.add(RoleType.TEACHER);
+		roleTypes.add(RoleType.RESEARCHER);
+		roleTypes.add(RoleType.EMPLOYEE);
+		roleTypes.add(RoleType.GRANT_OWNER);
+		return roleTypes;
+	}
 
-    public Converter getConverter() {
-	return null;
-    }
+	@Override
+	public Converter getConverter() {
+		return null;
+	}
 
 }

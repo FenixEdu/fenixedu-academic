@@ -27,68 +27,69 @@ import pt.utl.ist.fenix.tools.file.VirtualPathNode;
 
 public class UploadUnitSiteLogo extends FenixService {
 
-    public File run(UnitSite site, java.io.File fileToUpload, String name) throws IOException, FenixServiceException {
+	public File run(UnitSite site, java.io.File fileToUpload, String name) throws IOException, FenixServiceException {
 
-	if (site.hasLogo()) {
-	    UnitSiteFile logo = site.getLogo();
-	    new DeleteFileRequest(AccessControl.getPerson(), logo.getExternalStorageIdentification());
+		if (site.hasLogo()) {
+			UnitSiteFile logo = site.getLogo();
+			new DeleteFileRequest(AccessControl.getPerson(), logo.getExternalStorageIdentification());
 
-	    logo.delete();
+			logo.delete();
+		}
+
+		if (fileToUpload == null || name == null) {
+			return null;
+		}
+
+		VirtualPath filePath = getVirtualPath(site);
+		Collection<FileSetMetaData> metaData = createMetaData(site, name);
+
+		UnitSiteFile file = new UnitSiteFile(filePath, name, name, metaData, FileUtils.readFileToByteArray(fileToUpload), null);
+
+		file.setPermittedGroup(null);
+
+		site.setLogo(file);
+
+		return file;
 	}
 
-	if (fileToUpload == null || name == null) {
-	    return null;
+	private VirtualPath getVirtualPath(UnitSite site) {
+
+		VirtualPathNode[] nodes =
+				{ new VirtualPathNode("Site", "Site"), new VirtualPathNode("Unit", "Unit"),
+						new VirtualPathNode(site.getUnit().getNameWithAcronym(), site.getUnit().getNameWithAcronym()),
+						new VirtualPathNode("Logo" + site.getIdInternal(), "Logo") };
+
+		VirtualPath path = new VirtualPath();
+		for (VirtualPathNode node : nodes) {
+			path.addNode(node);
+		}
+
+		return path;
 	}
 
-	VirtualPath filePath = getVirtualPath(site);
-	Collection<FileSetMetaData> metaData = createMetaData(site, name);
+	private Collection<FileSetMetaData> createMetaData(UnitSite site, String fileName) {
+		List<FileSetMetaData> metaData = new ArrayList<FileSetMetaData>();
 
-	UnitSiteFile file = new UnitSiteFile(filePath, name, name, metaData, FileUtils.readFileToByteArray(fileToUpload), null);
+		metaData.add(FileSetMetaData.createAuthorMeta(AccessControl.getPerson().getName()));
+		metaData.add(FileSetMetaData.createTitleMeta(site.getUnit().getNameWithAcronym() + " Logo"));
 
-	file.setPermittedGroup(null);
-
-	site.setLogo(file);
-
-	return file;
-    }
-
-    private VirtualPath getVirtualPath(UnitSite site) {
-
-	VirtualPathNode[] nodes = { new VirtualPathNode("Site", "Site"), new VirtualPathNode("Unit", "Unit"),
-		new VirtualPathNode(site.getUnit().getNameWithAcronym(), site.getUnit().getNameWithAcronym()),
-		new VirtualPathNode("Logo" + site.getIdInternal(), "Logo") };
-
-	VirtualPath path = new VirtualPath();
-	for (VirtualPathNode node : nodes) {
-	    path.addNode(node);
+		return metaData;
 	}
 
-	return path;
-    }
+	private FileDescriptor saveFile(VirtualPath filePath, String fileName, boolean isPrivate,
+			Collection<FileSetMetaData> metaData, java.io.File file) throws IOException, FenixServiceException {
+		IFileManager fileManager = FileManagerFactory.getFactoryInstance().getFileManager();
+		InputStream is = null;
+		try {
+			is = new FileInputStream(file);
+			return fileManager.saveFile(filePath, fileName, isPrivate, metaData, file);
+		} catch (FileNotFoundException e) {
+			throw new FenixServiceException(e.getMessage());
+		} finally {
+			if (is != null) {
+				is.close();
+			}
+		}
 
-    private Collection<FileSetMetaData> createMetaData(UnitSite site, String fileName) {
-	List<FileSetMetaData> metaData = new ArrayList<FileSetMetaData>();
-
-	metaData.add(FileSetMetaData.createAuthorMeta(AccessControl.getPerson().getName()));
-	metaData.add(FileSetMetaData.createTitleMeta(site.getUnit().getNameWithAcronym() + " Logo"));
-
-	return metaData;
-    }
-
-    private FileDescriptor saveFile(VirtualPath filePath, String fileName, boolean isPrivate,
-	    Collection<FileSetMetaData> metaData, java.io.File file) throws IOException, FenixServiceException {
-	IFileManager fileManager = FileManagerFactory.getFactoryInstance().getFileManager();
-	InputStream is = null;
-	try {
-	    is = new FileInputStream(file);
-	    return fileManager.saveFile(filePath, fileName, isPrivate, metaData, file);
-	} catch (FileNotFoundException e) {
-	    throw new FenixServiceException(e.getMessage());
-	} finally {
-	    if (is != null) {
-		is.close();
-	    }
 	}
-
-    }
 }

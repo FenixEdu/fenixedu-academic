@@ -6,87 +6,89 @@ package net.sourceforge.fenixedu.dataTransferObject;
  */
 public class InfoCandidateApproval extends InfoObject {
 
-    protected Integer idInternal;
+	protected Integer idInternal;
 
-    protected Integer orderPosition;
+	protected Integer orderPosition;
 
-    protected String candidateName;
+	protected String candidateName;
 
-    protected String remarks;
+	protected String remarks;
 
-    protected String situationName;
+	protected String situationName;
 
-    public InfoCandidateApproval() {
-    }
+	public InfoCandidateApproval() {
+	}
 
-    /**
-     * @return
-     */
-    public String getCandidateName() {
-	return candidateName;
-    }
+	/**
+	 * @return
+	 */
+	public String getCandidateName() {
+		return candidateName;
+	}
 
-    /**
-     * @return
-     */
-    public Integer getIdInternal() {
-	return idInternal;
-    }
+	/**
+	 * @return
+	 */
+	@Override
+	public Integer getIdInternal() {
+		return idInternal;
+	}
 
-    /**
-     * @return
-     */
-    public Integer getOrderPosition() {
-	return orderPosition;
-    }
+	/**
+	 * @return
+	 */
+	public Integer getOrderPosition() {
+		return orderPosition;
+	}
 
-    /**
-     * @return
-     */
-    public String getRemarks() {
-	return remarks;
-    }
+	/**
+	 * @return
+	 */
+	public String getRemarks() {
+		return remarks;
+	}
 
-    /**
-     * @return
-     */
-    public String getSituationName() {
-	return situationName;
-    }
+	/**
+	 * @return
+	 */
+	public String getSituationName() {
+		return situationName;
+	}
 
-    /**
-     * @param string
-     */
-    public void setCandidateName(String string) {
-	candidateName = string;
-    }
+	/**
+	 * @param string
+	 */
+	public void setCandidateName(String string) {
+		candidateName = string;
+	}
 
-    /**
-     * @param integer
-     */
-    public void setIdInternal(Integer integer) {
-	idInternal = integer;
-    }
+	/**
+	 * @param integer
+	 */
+	@Override
+	public void setIdInternal(Integer integer) {
+		idInternal = integer;
+	}
 
-    /**
-     * @param integer
-     */
-    public void setOrderPosition(Integer integer) {
-	orderPosition = integer;
-    }
+	/**
+	 * @param integer
+	 */
+	public void setOrderPosition(Integer integer) {
+		orderPosition = integer;
+	}
 
-    /**
-     * @param string
-     */
-    public void setRemarks(String string) {
-	remarks = string;
-    }
+	/**
+	 * @param string
+	 */
+	public void setRemarks(String string) {
+		remarks = string;
+	}
 
-    /**
-     * @param string
-     */
-    public void setSituationName(String string) {
-	situationName = string;
-    }
+	/**
+	 * @param string
+	 */
+	public void setSituationName(String string) {
+		situationName = string;
+	}
 
 }

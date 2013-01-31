@@ -23,44 +23,44 @@ import org.joda.time.DateTime;
  */
 public class RemoveProjectAccess extends FenixService {
 
-    public void run(String username, String costCenter, String personUsername, String projectCode, BackendInstance instance, String userNumber)
-	    throws ExcepcaoPersistencia {
-	final Person person = Person.readPersonByUsername(personUsername);
+	public void run(String username, String costCenter, String personUsername, String projectCode, BackendInstance instance,
+			String userNumber) throws ExcepcaoPersistencia {
+		final Person person = Person.readPersonByUsername(personUsername);
 
-	final boolean isCostCenter = costCenter != null && !costCenter.equals("");
-	final RoleType roleType = isCostCenter ? instance.institutionalRoleType : instance.roleType;
+		final boolean isCostCenter = costCenter != null && !costCenter.equals("");
+		final RoleType roleType = isCostCenter ? instance.institutionalRoleType : instance.roleType;
 
-	List<ProjectAccess> projectAccesses = ProjectAccess.getAllByPersonAndCostCenter(person, isCostCenter, true, instance);
+		List<ProjectAccess> projectAccesses = ProjectAccess.getAllByPersonAndCostCenter(person, isCostCenter, true, instance);
 
-	if (projectAccesses.size() == 1) {
-	    if (new PersistentProject().countUserProject(getUserNumber(person), instance) == 0) {
-		Iterator iter = person.getPersonRolesIterator();
-		while (iter.hasNext()) {
-		    Role role = (Role) iter.next();
-		    if (role.getRoleType().equals(roleType)) {
-			iter.remove();
-		    }
+		if (projectAccesses.size() == 1) {
+			if (new PersistentProject().countUserProject(getUserNumber(person), instance) == 0) {
+				Iterator iter = person.getPersonRolesIterator();
+				while (iter.hasNext()) {
+					Role role = (Role) iter.next();
+					if (role.getRoleType().equals(roleType)) {
+						iter.remove();
+					}
+				}
+			}
 		}
-	    }
+
+		ProjectAccess projectAccess = ProjectAccess.getByPersonAndProject(person, projectCode, instance);
+		DateTime yesterday = new DateTime().minusDays(1);
+		if (yesterday.isAfter(projectAccess.getBeginDateTime())) {
+			projectAccess.setEndDateTime(yesterday);
+		} else {
+			projectAccess.delete();
+		}
+
 	}
 
-	ProjectAccess projectAccess = ProjectAccess.getByPersonAndProject(person, projectCode, instance);
-	DateTime yesterday = new DateTime().minusDays(1);
-	if (yesterday.isAfter(projectAccess.getBeginDateTime())) {
-	    projectAccess.setEndDateTime(yesterday);
-	} else {
-	    projectAccess.delete();
+	private Integer getUserNumber(Person person) {
+		if (person.getEmployee() != null) {
+			return person.getEmployee().getEmployeeNumber();
+		}
+		if (person.getGrantOwner() != null) {
+			return person.getGrantOwner().getNumber();
+		}
+		return null;
 	}
-
-    }
-
-    private Integer getUserNumber(Person person) {
-	if (person.getEmployee() != null) {
-	    return person.getEmployee().getEmployeeNumber();
-	}
-	if (person.getGrantOwner() != null) {
-	    return person.getGrantOwner().getNumber();
-	}
-	return null;
-    }
 }

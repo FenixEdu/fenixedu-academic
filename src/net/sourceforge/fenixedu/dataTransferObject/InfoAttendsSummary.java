@@ -13,58 +13,58 @@ import java.util.Map;
  */
 public class InfoAttendsSummary extends InfoObject implements Serializable {
 
-    protected List attends;
+	protected List attends;
 
-    protected Map enrollmentDistribution;
+	protected Map enrollmentDistribution;
 
-    protected List numberOfEnrollments;
+	protected List numberOfEnrollments;
 
-    public InfoAttendsSummary() {
+	public InfoAttendsSummary() {
 
-    }
+	}
 
-    /**
-     * @return Returns the attends.
-     */
-    public List getAttends() {
-	return attends;
-    }
+	/**
+	 * @return Returns the attends.
+	 */
+	public List getAttends() {
+		return attends;
+	}
 
-    /**
-     * @param attends
-     *            The attends to set.
-     */
-    public void setAttends(List attends) {
-	this.attends = attends;
-    }
+	/**
+	 * @param attends
+	 *            The attends to set.
+	 */
+	public void setAttends(List attends) {
+		this.attends = attends;
+	}
 
-    /**
-     * @return Returns the enrollmentDistribution.
-     */
-    public Map getEnrollmentDistribution() {
-	return enrollmentDistribution;
-    }
+	/**
+	 * @return Returns the enrollmentDistribution.
+	 */
+	public Map getEnrollmentDistribution() {
+		return enrollmentDistribution;
+	}
 
-    /**
-     * @param enrollmentDistribution
-     *            The enrollmentDistribution to set.
-     */
-    public void setEnrollmentDistribution(Map enrollmentDistribution) {
-	this.enrollmentDistribution = enrollmentDistribution;
-    }
+	/**
+	 * @param enrollmentDistribution
+	 *            The enrollmentDistribution to set.
+	 */
+	public void setEnrollmentDistribution(Map enrollmentDistribution) {
+		this.enrollmentDistribution = enrollmentDistribution;
+	}
 
-    /**
-     * @return Returns the numberOfEnrollments.
-     */
-    public List getNumberOfEnrollments() {
-	return numberOfEnrollments;
-    }
+	/**
+	 * @return Returns the numberOfEnrollments.
+	 */
+	public List getNumberOfEnrollments() {
+		return numberOfEnrollments;
+	}
 
-    /**
-     * @param numberOfEnrollments
-     *            The numberOfEnrollments to set.
-     */
-    public void setNumberOfEnrollments(List numberOfEnrollments) {
-	this.numberOfEnrollments = numberOfEnrollments;
-    }
+	/**
+	 * @param numberOfEnrollments
+	 *            The numberOfEnrollments to set.
+	 */
+	public void setNumberOfEnrollments(List numberOfEnrollments) {
+		this.numberOfEnrollments = numberOfEnrollments;
+	}
 }

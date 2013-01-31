@@ -11,10 +11,10 @@ import java.io.Serializable;
  */
 public abstract class FenixUtil implements Serializable {
 
-    /**
+	/**
      *  
      */
-    public FenixUtil() {
-    }
+	public FenixUtil() {
+	}
 
 }

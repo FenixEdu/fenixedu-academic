@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -29,30 +28,31 @@ import pt.ist.fenixWebFramework.security.UserView;
  * 
  */
 public class RemoverAulaDeTurnoFormAction extends FenixShiftAndExecutionCourseAndExecutionDegreeAndCurricularYearContextAction {
-    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-	    throws Exception {
+	@Override
+	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
 
-	super.execute(mapping, form, request, response);
+		super.execute(mapping, form, request, response);
 
-	DynaActionForm editarAulasDeTurnoForm = (DynaActionForm) request.getAttribute("editarAulasDeTurnoForm");
+		DynaActionForm editarAulasDeTurnoForm = (DynaActionForm) request.getAttribute("editarAulasDeTurnoForm");
 
-	IUserView userView = UserView.getUser();
+		IUserView userView = UserView.getUser();
 
-	Integer shiftOID = new Integer(request.getParameter(PresentationConstants.SHIFT_OID));
+		Integer shiftOID = new Integer(request.getParameter(PresentationConstants.SHIFT_OID));
 
-	InfoShift infoTurno = (InfoShift) ReadShiftByOID.run(shiftOID);
+		InfoShift infoTurno = ReadShiftByOID.run(shiftOID);
 
-	InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) request
-		.getAttribute(PresentationConstants.EXECUTION_COURSE);
+		InfoExecutionCourse infoExecutionCourse =
+				(InfoExecutionCourse) request.getAttribute(PresentationConstants.EXECUTION_COURSE);
 
-	Integer indexAula = (Integer) editarAulasDeTurnoForm.get("indexAula");
+		Integer indexAula = (Integer) editarAulasDeTurnoForm.get("indexAula");
 
-	List infoAulas = (ArrayList) LerAulasDeTurno.run(new ShiftKey(infoTurno.getNome(), infoExecutionCourse));
+		List infoAulas = LerAulasDeTurno.run(new ShiftKey(infoTurno.getNome(), infoExecutionCourse));
 
-	InfoLesson infoLesson = (InfoLesson) infoAulas.get(indexAula.intValue());
+		InfoLesson infoLesson = (InfoLesson) infoAulas.get(indexAula.intValue());
 
-	RemoverAula.run(infoLesson, infoTurno);
+		RemoverAula.run(infoLesson, infoTurno);
 
-	return mapping.findForward("Sucesso");
-    }
+		return mapping.findForward("Sucesso");
+	}
 }

@@ -12,34 +12,37 @@ import org.apache.struts.action.ActionMapping;
 
 public class RespondToYearDelegateInquiriesQuestion extends FenixDispatchAction {
 
-    public final ActionForward showQuestion(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
+	public final ActionForward showQuestion(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
 
-	final DelegateInquiryTemplate inquiryTemplate = DelegateInquiryTemplate.getCurrentTemplate();
-	request.setAttribute("executionPeriod", inquiryTemplate == null ? null : inquiryTemplate.getExecutionPeriod());
+		final DelegateInquiryTemplate inquiryTemplate = DelegateInquiryTemplate.getCurrentTemplate();
+		request.setAttribute("executionPeriod", inquiryTemplate == null ? null : inquiryTemplate.getExecutionPeriod());
 
-	return mapping.findForward("respondToYearDelegateInquiriesQuestion");
-    }
+		return mapping.findForward("respondToYearDelegateInquiriesQuestion");
+	}
 
-    private ActionForward forward(final String path) {
-	final ActionForward actionForward = new ActionForward();
-	actionForward.setPath(path);
-	actionForward.setRedirect(true);
-	return actionForward;
-    }
+	private ActionForward forward(final String path) {
+		final ActionForward actionForward = new ActionForward();
+		actionForward.setPath(path);
+		actionForward.setRedirect(true);
+		return actionForward;
+	}
 
-    public final ActionForward respondLater(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-	return forward("/home.do");
-    }
+	public final ActionForward respondLater(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		return forward("/home.do");
+	}
 
-    public final ActionForward respondNow(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-	final String path = "/delegate/delegateInquiry.do?method=showCoursesToAnswerPage&page=0&" +  net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME + "=/delegado/delegado";
-	return forward(path
-		+ "&_request_checksum_="
-		+ pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.calculateChecksum(request
-			.getContextPath() + path));
-    }
+	public final ActionForward respondNow(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		final String path =
+				"/delegate/delegateInquiry.do?method=showCoursesToAnswerPage&page=0&"
+						+ net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME
+						+ "=/delegado/delegado";
+		return forward(path
+				+ "&_request_checksum_="
+				+ pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.calculateChecksum(request
+						.getContextPath() + path));
+	}
 
 }

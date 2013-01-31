@@ -11,16 +11,16 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.UnitName;
 
 public class SearchAcademicUnits extends SearchParties {
 
-    @Override
-    protected Collection search(String value, int size) {
-	Collection<UnitName> unitNames = UnitName.findInternalUnitWithType(value, size, DegreeUnit.class);
-	List<Unit> units = new ArrayList<Unit>();
+	@Override
+	protected Collection search(String value, int size) {
+		Collection<UnitName> unitNames = UnitName.findInternalUnitWithType(value, size, DegreeUnit.class);
+		List<Unit> units = new ArrayList<Unit>();
 
-	for (UnitName name : unitNames) {
-	    units.add(name.getUnit());
+		for (UnitName name : unitNames) {
+			units.add(name.getUnit());
+		}
+
+		return units;
 	}
-
-	return units;
-    }
 
 }

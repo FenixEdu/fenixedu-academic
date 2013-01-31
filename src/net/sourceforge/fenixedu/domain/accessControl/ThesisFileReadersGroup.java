@@ -21,101 +21,104 @@ import org.joda.time.DateTime;
  */
 public class ThesisFileReadersGroup extends DomainBackedGroup<Thesis> {
 
-    /**
-     * Serial version id.
-     */
-    private static final long serialVersionUID = 1L;
+	/**
+	 * Serial version id.
+	 */
+	private static final long serialVersionUID = 1L;
 
-    public ThesisFileReadersGroup(Thesis object) {
-	super(object);
-    }
-
-    @Override
-    public boolean isMember(Person person) {
-	Thesis thesis = getObject();
-
-	if (thesis == null) {
-	    return false;
+	public ThesisFileReadersGroup(Thesis object) {
+		super(object);
 	}
 
-	if (thesis.getDocumentsAvailableAfter() != null) {
-	    DateTime time = thesis.getDocumentsAvailableAfter();
+	@Override
+	public boolean isMember(Person person) {
+		Thesis thesis = getObject();
 
-	    if (time.isAfterNow()) {
-		return false;
-	    }
+		if (thesis == null) {
+			return false;
+		}
+
+		if (thesis.getDocumentsAvailableAfter() != null) {
+			DateTime time = thesis.getDocumentsAvailableAfter();
+
+			if (time.isAfterNow()) {
+				return false;
+			}
+		}
+
+		if (thesis.getVisibility() == null) {
+			return false;
+		}
+
+		switch (thesis.getVisibility()) {
+		case INTRANET:
+			return new InternalPersonGroup().isMember(person);
+		case PUBLIC:
+			return new EveryoneGroup().isMember(person);
+		default:
+			return false;
+		}
 	}
 
-	if (thesis.getVisibility() == null) {
-	    return false;
+	@Override
+	public Set<Person> getElements() {
+		Thesis thesis = getObject();
+
+		if (thesis == null) {
+			return Collections.emptySet();
+		}
+
+		if (thesis.getDocumentsAvailableAfter() != null) {
+			DateTime time = thesis.getDocumentsAvailableAfter();
+
+			if (time.isAfterNow()) {
+				return Collections.emptySet();
+			}
+		}
+
+		if (thesis.getVisibility() == null) {
+			return Collections.emptySet();
+		}
+
+		switch (thesis.getVisibility()) {
+		case INTRANET:
+			return new InternalPersonGroup().getElements();
+		case PUBLIC:
+			return new EveryoneGroup().getElements();
+		default:
+			return Collections.emptySet();
+		}
 	}
 
-	switch (thesis.getVisibility()) {
-	case INTRANET:
-	    return new InternalPersonGroup().isMember(person);
-	case PUBLIC:
-	    return new EveryoneGroup().isMember(person);
-	default:
-	    return false;
-	}
-    }
-
-    @Override
-    public Set<Person> getElements() {
-	Thesis thesis = getObject();
-
-	if (thesis == null) {
-	    return Collections.emptySet();
+	@Override
+	protected Argument[] getExpressionArguments() {
+		return new Argument[] { new IdOperator(getObject()) };
 	}
 
-	if (thesis.getDocumentsAvailableAfter() != null) {
-	    DateTime time = thesis.getDocumentsAvailableAfter();
+	public static class Builder implements GroupBuilder {
 
-	    if (time.isAfterNow()) {
-		return Collections.emptySet();
-	    }
+		@Override
+		public Group build(Object[] arguments) {
+			Thesis thesis;
+
+			try {
+				thesis = (Thesis) arguments[0];
+			} catch (ClassCastException e) {
+				throw new WrongTypeOfArgumentException(0, Thesis.class, arguments[0].getClass());
+			}
+
+			return new ThesisFileReadersGroup(thesis);
+		}
+
+		@Override
+		public int getMinArguments() {
+			return 1;
+		}
+
+		@Override
+		public int getMaxArguments() {
+			return 1;
+		}
+
 	}
-
-	if (thesis.getVisibility() == null) {
-	    return Collections.emptySet();
-	}
-
-	switch (thesis.getVisibility()) {
-	case INTRANET:
-	    return new InternalPersonGroup().getElements();
-	case PUBLIC:
-	    return new EveryoneGroup().getElements();
-	default:
-	    return Collections.emptySet();
-	}
-    }
-
-    @Override
-    protected Argument[] getExpressionArguments() {
-	return new Argument[] { new IdOperator(getObject()) };
-    }
-
-    public static class Builder implements GroupBuilder {
-
-	public Group build(Object[] arguments) {
-	    Thesis thesis;
-
-	    try {
-		thesis = (Thesis) arguments[0];
-	    } catch (ClassCastException e) {
-		throw new WrongTypeOfArgumentException(0, Thesis.class, arguments[0].getClass());
-	    }
-
-	    return new ThesisFileReadersGroup(thesis);
-	}
-
-	public int getMinArguments() {
-	    return 1;
-	}
-
-	public int getMaxArguments() {
-	    return 1;
-	}
-
-    }
 }

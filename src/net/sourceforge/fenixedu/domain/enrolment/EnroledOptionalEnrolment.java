@@ -15,60 +15,61 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 
 public class EnroledOptionalEnrolment extends EnroledCurriculumModuleWrapper {
 
-    /**
+	/**
      * 
      */
-    private static final long serialVersionUID = 3085559707039631255L;
+	private static final long serialVersionUID = 3085559707039631255L;
 
-    private OptionalCurricularCourse optionalCurricularCourse;
+	private OptionalCurricularCourse optionalCurricularCourse;
 
-    public EnroledOptionalEnrolment(CurriculumModule curriculumModule, OptionalCurricularCourse optionalCurricularCourse,
-	    ExecutionSemester executionSemester) {
-	super(curriculumModule, executionSemester);
-	setOptionalCurricularCourse(optionalCurricularCourse);
-
-    }
-
-    public OptionalCurricularCourse getOptionalCurricularCourse() {
-	return this.optionalCurricularCourse;
-    }
-
-    public void setOptionalCurricularCourse(OptionalCurricularCourse optionalCurricularCourse) {
-	this.optionalCurricularCourse = optionalCurricularCourse;
-    }
-
-    @Override
-    public List<CurricularRule> getCurricularRulesFromDegreeModule(ExecutionSemester executionSemester) {
-	final OptionalEnrolment optionalEnrolment = (OptionalEnrolment) getCurriculumModule();
-	return optionalEnrolment.isApproved() ? Collections.EMPTY_LIST : getOptionalCurricularCourse().getCurricularRules(
-		getContext(), executionSemester);
-    }
-
-    public Context getContext() {
-	if (this.context == null) {
-	    if (!getCurriculumModule().isRoot()) {
-		final CurriculumGroup parentCurriculumGroup = getCurriculumModule().getCurriculumGroup();
-		for (final Context context : parentCurriculumGroup.getDegreeModule().getValidChildContexts(getExecutionPeriod())) {
-		    if (context.getChildDegreeModule() == getOptionalCurricularCourse()) {
-			setContext(context);
-			break;
-		    }
-		}
-	    }
+	public EnroledOptionalEnrolment(CurriculumModule curriculumModule, OptionalCurricularCourse optionalCurricularCourse,
+			ExecutionSemester executionSemester) {
+		super(curriculumModule, executionSemester);
+		setOptionalCurricularCourse(optionalCurricularCourse);
 
 	}
 
-	return context;
-    }
+	public OptionalCurricularCourse getOptionalCurricularCourse() {
+		return this.optionalCurricularCourse;
+	}
 
-    @Override
-    public boolean isFor(DegreeModule degreeModule) {
-	return getDegreeModule() == degreeModule || getOptionalCurricularCourse() == degreeModule;
-    }
+	public void setOptionalCurricularCourse(OptionalCurricularCourse optionalCurricularCourse) {
+		this.optionalCurricularCourse = optionalCurricularCourse;
+	}
 
-    @Override
-    public boolean isAnnualCurricularCourse(ExecutionYear executionYear) {
-	return getOptionalCurricularCourse().isAnual(executionYear);
-    }
+	@Override
+	public List<CurricularRule> getCurricularRulesFromDegreeModule(ExecutionSemester executionSemester) {
+		final OptionalEnrolment optionalEnrolment = (OptionalEnrolment) getCurriculumModule();
+		return optionalEnrolment.isApproved() ? Collections.EMPTY_LIST : getOptionalCurricularCourse().getCurricularRules(
+				getContext(), executionSemester);
+	}
+
+	@Override
+	public Context getContext() {
+		if (this.context == null) {
+			if (!getCurriculumModule().isRoot()) {
+				final CurriculumGroup parentCurriculumGroup = getCurriculumModule().getCurriculumGroup();
+				for (final Context context : parentCurriculumGroup.getDegreeModule().getValidChildContexts(getExecutionPeriod())) {
+					if (context.getChildDegreeModule() == getOptionalCurricularCourse()) {
+						setContext(context);
+						break;
+					}
+				}
+			}
+
+		}
+
+		return context;
+	}
+
+	@Override
+	public boolean isFor(DegreeModule degreeModule) {
+		return getDegreeModule() == degreeModule || getOptionalCurricularCourse() == degreeModule;
+	}
+
+	@Override
+	public boolean isAnnualCurricularCourse(ExecutionYear executionYear) {
+		return getOptionalCurricularCourse().isAnual(executionYear);
+	}
 
 }

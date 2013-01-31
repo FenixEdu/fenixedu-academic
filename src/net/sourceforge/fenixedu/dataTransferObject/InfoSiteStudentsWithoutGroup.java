@@ -14,104 +14,106 @@ import java.util.ListIterator;
 
 public class InfoSiteStudentsWithoutGroup extends DataTranferObject implements ISiteComponent {
 
-    private List infoStudentList;
-    private Integer groupNumber;
-    private InfoStudent infoUserStudent;
-    private InfoGrouping infoGrouping;
+	private List infoStudentList;
+	private Integer groupNumber;
+	private InfoStudent infoUserStudent;
+	private InfoGrouping infoGrouping;
 
-    public boolean equals(Object objectToCompare) {
-	boolean result = false;
-	if (objectToCompare instanceof InfoSiteStudentsWithoutGroup) {
+	@Override
+	public boolean equals(Object objectToCompare) {
+		boolean result = false;
+		if (objectToCompare instanceof InfoSiteStudentsWithoutGroup) {
 
-	    result = (this.getGroupNumber().equals(((InfoSiteStudentsWithoutGroup) objectToCompare).getGroupNumber()));
+			result = (this.getGroupNumber().equals(((InfoSiteStudentsWithoutGroup) objectToCompare).getGroupNumber()));
 
+		}
+
+		if (((InfoSiteStudentsWithoutGroup) objectToCompare).getInfoStudentList() == null && this.getInfoStudentList() == null
+				&& result == true) {
+
+			return true;
+		}
+		if (((InfoSiteStudentsWithoutGroup) objectToCompare).getInfoStudentList() == null
+				|| this.getInfoStudentList() == null
+				|| ((InfoSiteStudentsWithoutGroup) objectToCompare).getInfoStudentList().size() != this.getInfoStudentList()
+						.size()) {
+
+			return false;
+		}
+
+		ListIterator iter1 = ((InfoSiteStudentsWithoutGroup) objectToCompare).getInfoStudentList().listIterator();
+		ListIterator iter2 = this.getInfoStudentList().listIterator();
+		while (result && iter1.hasNext()) {
+
+			InfoStudent infoStudent1 = (InfoStudent) iter1.next();
+			InfoStudent infoStudent2 = (InfoStudent) iter2.next();
+			if (!infoStudent1.equals(infoStudent2)) {
+
+				result = false;
+			}
+		}
+		return result;
 	}
 
-	if (((InfoSiteStudentsWithoutGroup) objectToCompare).getInfoStudentList() == null && this.getInfoStudentList() == null
-		&& result == true) {
-
-	    return true;
-	}
-	if (((InfoSiteStudentsWithoutGroup) objectToCompare).getInfoStudentList() == null
-		|| this.getInfoStudentList() == null
-		|| ((InfoSiteStudentsWithoutGroup) objectToCompare).getInfoStudentList().size() != this.getInfoStudentList()
-			.size()) {
-
-	    return false;
+	/**
+	 * @return
+	 */
+	public List getInfoStudentList() {
+		return infoStudentList;
 	}
 
-	ListIterator iter1 = ((InfoSiteStudentsWithoutGroup) objectToCompare).getInfoStudentList().listIterator();
-	ListIterator iter2 = this.getInfoStudentList().listIterator();
-	while (result && iter1.hasNext()) {
-
-	    InfoStudent infoStudent1 = (InfoStudent) iter1.next();
-	    InfoStudent infoStudent2 = (InfoStudent) iter2.next();
-	    if (!infoStudent1.equals(infoStudent2)) {
-
-		result = false;
-	    }
+	/**
+	 * @param list
+	 */
+	public void setInfoStudentList(List infoStudentList) {
+		this.infoStudentList = infoStudentList;
 	}
-	return result;
-    }
 
-    /**
-     * @return
-     */
-    public List getInfoStudentList() {
-	return infoStudentList;
-    }
+	/**
+	 * @return
+	 */
+	public Integer getGroupNumber() {
+		return groupNumber;
+	}
 
-    /**
-     * @param list
-     */
-    public void setInfoStudentList(List infoStudentList) {
-	this.infoStudentList = infoStudentList;
-    }
+	/**
+	 * @param integer
+	 */
+	public void setGroupNumber(Integer groupNumber) {
+		this.groupNumber = groupNumber;
+	}
 
-    /**
-     * @return
-     */
-    public Integer getGroupNumber() {
-	return groupNumber;
-    }
+	/**
+	 * @return
+	 */
+	public InfoStudent getInfoUserStudent() {
+		return infoUserStudent;
+	}
 
-    /**
-     * @param integer
-     */
-    public void setGroupNumber(Integer groupNumber) {
-	this.groupNumber = groupNumber;
-    }
+	/**
+	 * @param list
+	 */
+	public void setInfoUserStudent(InfoStudent infoUserStudent) {
+		this.infoUserStudent = infoUserStudent;
+	}
 
-    /**
-     * @return
-     */
-    public InfoStudent getInfoUserStudent() {
-	return infoUserStudent;
-    }
+	/**
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		String result = "[INFO_SITE_STUDENTS_WITHOUT";
+		result += ", infoStudentList=" + getInfoStudentList();
+		result += ", groupNumber=" + getGroupNumber();
+		result += "]";
+		return result;
+	}
 
-    /**
-     * @param list
-     */
-    public void setInfoUserStudent(InfoStudent infoUserStudent) {
-	this.infoUserStudent = infoUserStudent;
-    }
+	public InfoGrouping getInfoGrouping() {
+		return infoGrouping;
+	}
 
-    /**
-     * @see java.lang.Object#toString()
-     */
-    public String toString() {
-	String result = "[INFO_SITE_STUDENTS_WITHOUT";
-	result += ", infoStudentList=" + getInfoStudentList();
-	result += ", groupNumber=" + getGroupNumber();
-	result += "]";
-	return result;
-    }
-
-    public InfoGrouping getInfoGrouping() {
-	return infoGrouping;
-    }
-
-    public void setInfoGrouping(InfoGrouping infoGrouping) {
-	this.infoGrouping = infoGrouping;
-    }
+	public void setInfoGrouping(InfoGrouping infoGrouping) {
+		this.infoGrouping = infoGrouping;
+	}
 }

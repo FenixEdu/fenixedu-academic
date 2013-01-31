@@ -7,26 +7,27 @@ import net.sourceforge.fenixedu.domain.precedences.RestrictionByCurricularCourse
  */
 
 public class InfoRestrictionHasEverBeenOrIsCurrentlyEnrolledInCurricularCourse extends
-	InfoRestrictionDoneOrHasEverBeenEnrolledInCurricularCourse {
+		InfoRestrictionDoneOrHasEverBeenEnrolledInCurricularCourse {
 
-    public InfoRestrictionHasEverBeenOrIsCurrentlyEnrolledInCurricularCourse() {
-    }
-
-    public void copyFromDomain(RestrictionByCurricularCourse restriction) {
-	super.copyFromDomain(restriction);
-	super.setRestrictionKindResourceKey("label.manager.restrictionHasEverBeenOrIsCurrentlyEnrolledInCurricularCourse");
-    }
-
-    public static InfoRestrictionByCurricularCourse newInfoFromDomain(RestrictionByCurricularCourse restriction) {
-
-	InfoRestrictionHasEverBeenOrIsCurrentlyEnrolledInCurricularCourse infoRestriction = null;
-
-	if (restriction != null) {
-	    infoRestriction = new InfoRestrictionHasEverBeenOrIsCurrentlyEnrolledInCurricularCourse();
-	    infoRestriction.copyFromDomain(restriction);
+	public InfoRestrictionHasEverBeenOrIsCurrentlyEnrolledInCurricularCourse() {
 	}
 
-	return infoRestriction;
-    }
+	@Override
+	public void copyFromDomain(RestrictionByCurricularCourse restriction) {
+		super.copyFromDomain(restriction);
+		super.setRestrictionKindResourceKey("label.manager.restrictionHasEverBeenOrIsCurrentlyEnrolledInCurricularCourse");
+	}
+
+	public static InfoRestrictionByCurricularCourse newInfoFromDomain(RestrictionByCurricularCourse restriction) {
+
+		InfoRestrictionHasEverBeenOrIsCurrentlyEnrolledInCurricularCourse infoRestriction = null;
+
+		if (restriction != null) {
+			infoRestriction = new InfoRestrictionHasEverBeenOrIsCurrentlyEnrolledInCurricularCourse();
+			infoRestriction.copyFromDomain(restriction);
+		}
+
+		return infoRestriction;
+	}
 
 }

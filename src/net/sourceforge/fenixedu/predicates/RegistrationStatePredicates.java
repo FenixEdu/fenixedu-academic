@@ -17,13 +17,14 @@ import net.sourceforge.fenixedu.injectionCode.AccessControlPredicate;
  */
 public class RegistrationStatePredicates {
 
-    public static final AccessControlPredicate<RegistrationState> deletePredicate = new AccessControlPredicate<RegistrationState>() {
-	@Override
-	public boolean evaluate(RegistrationState c) {
-	    final Person person = AccessControl.getPerson();
-	    return AcademicAuthorizationGroup.getProgramsForOperation(person, AcademicOperationType.MANAGE_REGISTRATIONS)
-		    .contains(c.getRegistration().getDegree()) || person.hasRole(RoleType.MANAGER);
-	}
-    };
+	public static final AccessControlPredicate<RegistrationState> deletePredicate =
+			new AccessControlPredicate<RegistrationState>() {
+				@Override
+				public boolean evaluate(RegistrationState c) {
+					final Person person = AccessControl.getPerson();
+					return AcademicAuthorizationGroup.getProgramsForOperation(person, AcademicOperationType.MANAGE_REGISTRATIONS)
+							.contains(c.getRegistration().getDegree()) || person.hasRole(RoleType.MANAGER);
+				}
+			};
 
 }

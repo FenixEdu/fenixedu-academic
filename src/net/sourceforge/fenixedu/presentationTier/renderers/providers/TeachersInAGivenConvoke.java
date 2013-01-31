@@ -12,22 +12,24 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class TeachersInAGivenConvoke implements DataProvider {
 
-    public Object provide(Object source, Object currentValue) {
-	ConvokeBean bean = (ConvokeBean) source;
-	List<VigilantWrapper> teachersForAGivenCourse = bean.getTeachersForAGivenCourse();
-	WrittenEvaluation writtenEvaluation = bean.getWrittenEvaluation();
+	@Override
+	public Object provide(Object source, Object currentValue) {
+		ConvokeBean bean = (ConvokeBean) source;
+		List<VigilantWrapper> teachersForAGivenCourse = bean.getTeachersForAGivenCourse();
+		WrittenEvaluation writtenEvaluation = bean.getWrittenEvaluation();
 
-	if (writtenEvaluation != null && writtenEvaluation.getVigilancies().size() > 0) {
-	    for (Vigilancy convoke : writtenEvaluation.getVigilancies()) {
-		teachersForAGivenCourse.remove(convoke.getVigilantWrapper());
-	    }
+		if (writtenEvaluation != null && writtenEvaluation.getVigilancies().size() > 0) {
+			for (Vigilancy convoke : writtenEvaluation.getVigilancies()) {
+				teachersForAGivenCourse.remove(convoke.getVigilantWrapper());
+			}
 
+		}
+		return teachersForAGivenCourse;
 	}
-	return teachersForAGivenCourse;
-    }
 
-    public Converter getConverter() {
-	return new DomainObjectKeyArrayConverter();
-    }
+	@Override
+	public Converter getConverter() {
+		return new DomainObjectKeyArrayConverter();
+	}
 
 }

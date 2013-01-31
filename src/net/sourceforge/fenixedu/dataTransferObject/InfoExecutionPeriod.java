@@ -12,138 +12,141 @@ import net.sourceforge.fenixedu.util.PeriodState;
  */
 public class InfoExecutionPeriod extends InfoObject implements Comparable {
 
-    public static final Comparator<InfoExecutionPeriod> COMPARATOR_BY_YEAR_AND_SEMESTER = new Comparator<InfoExecutionPeriod>() {
+	public static final Comparator<InfoExecutionPeriod> COMPARATOR_BY_YEAR_AND_SEMESTER = new Comparator<InfoExecutionPeriod>() {
+
+		@Override
+		public int compare(InfoExecutionPeriod o1, InfoExecutionPeriod o2) {
+			final int c = o2.getInfoExecutionYear().getYear().compareTo(o1.getInfoExecutionYear().getYear());
+			return c == 0 ? o2.getSemester().compareTo(o1.getSemester()) : c;
+		}
+
+	};
+
+	private ExecutionSemester executionPeriodDomainReference;
+
+	private String qualifiedName;
+
+	public InfoExecutionPeriod(final ExecutionSemester executionSemester) {
+		executionPeriodDomainReference = executionSemester;
+	}
+
+	private InfoExecutionYear infoExecutionYear = null;
+
+	public InfoExecutionYear getInfoExecutionYear() {
+		if (infoExecutionYear == null) {
+			infoExecutionYear = new InfoExecutionYear(getExecutionPeriod().getExecutionYear());
+		}
+		return infoExecutionYear;
+	}
+
+	public String getName() {
+		return getExecutionPeriod().getName();
+	}
 
 	@Override
-	public int compare(InfoExecutionPeriod o1, InfoExecutionPeriod o2) {
-	    final int c = o2.getInfoExecutionYear().getYear().compareTo(o1.getInfoExecutionYear().getYear());
-	    return c == 0 ? o2.getSemester().compareTo(o1.getSemester()) : c;
+	public boolean equals(Object obj) {
+		if (obj instanceof InfoExecutionPeriod) {
+			InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) obj;
+			return (getInfoExecutionYear().equals(infoExecutionPeriod.getInfoExecutionYear()) && getName().equals(
+					infoExecutionPeriod.getName()));
+
+		}
+		return false;
 	}
 
-    };
-
-    private ExecutionSemester executionPeriodDomainReference;
-
-    private String qualifiedName;
-
-    public InfoExecutionPeriod(final ExecutionSemester executionSemester) {
-	executionPeriodDomainReference = executionSemester;
-    }
-
-    private InfoExecutionYear infoExecutionYear = null;
-
-    public InfoExecutionYear getInfoExecutionYear() {
-	if (infoExecutionYear == null) {
-	    infoExecutionYear = new InfoExecutionYear(getExecutionPeriod().getExecutionYear());
+	@Override
+	public String toString() {
+		return getExecutionPeriod().toString();
 	}
-	return infoExecutionYear;
-    }
 
-    public String getName() {
-	return getExecutionPeriod().getName();
-    }
-
-    public boolean equals(Object obj) {
-	if (obj instanceof InfoExecutionPeriod) {
-	    InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) obj;
-	    return (getInfoExecutionYear().equals(infoExecutionPeriod.getInfoExecutionYear()) && getName().equals(
-		    infoExecutionPeriod.getName()));
-
+	public PeriodState getState() {
+		return getExecutionPeriod().getState();
 	}
-	return false;
-    }
 
-    public String toString() {
-	return getExecutionPeriod().toString();
-    }
-
-    public PeriodState getState() {
-	return getExecutionPeriod().getState();
-    }
-
-    public Integer getSemester() {
-	return getExecutionPeriod().getSemester();
-    }
-
-    public int compareTo(Object arg0) {
-	InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) arg0;
-	int yearCmp = this.getInfoExecutionYear().compareTo(infoExecutionPeriod.getInfoExecutionYear());
-	if (yearCmp != 0) {
-	    return yearCmp;
-	} else {
-	    return this.getSemester().intValue() - infoExecutionPeriod.getSemester().intValue();
+	public Integer getSemester() {
+		return getExecutionPeriod().getSemester();
 	}
-    }
 
-    public Date getBeginDate() {
-	return getExecutionPeriod().getBeginDate();
-    }
-
-    public Date getEndDate() {
-	return getExecutionPeriod().getEndDate();
-    }
-
-    /**
-     * Method created for presentation matters. Concatenates execution period
-     * name with execution year name.
-     */
-    public String getDescription() {
-	StringBuilder buffer = new StringBuilder();
-
-	// these ifs are needed due to cloner converting strategy (it looks to
-	// all
-	// properties).
-	if (getName() != null) {
-	    buffer.append(getName());
+	@Override
+	public int compareTo(Object arg0) {
+		InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) arg0;
+		int yearCmp = this.getInfoExecutionYear().compareTo(infoExecutionPeriod.getInfoExecutionYear());
+		if (yearCmp != 0) {
+			return yearCmp;
+		} else {
+			return this.getSemester().intValue() - infoExecutionPeriod.getSemester().intValue();
+		}
 	}
-	if (getInfoExecutionYear() != null) {
-	    buffer.append(" - ").append(getInfoExecutionYear().getYear());
+
+	public Date getBeginDate() {
+		return getExecutionPeriod().getBeginDate();
 	}
-	return buffer.toString();
-    }
 
-    public InfoExecutionPeriod getPreviousInfoExecutionPeriod() {
-	final ExecutionSemester previousInfoExecutionPeriod = getExecutionPeriod().getPreviousExecutionPeriod();
-	return previousInfoExecutionPeriod == null ? null : new InfoExecutionPeriod(previousInfoExecutionPeriod);
-    }
+	public Date getEndDate() {
+		return getExecutionPeriod().getEndDate();
+	}
 
-    public static InfoExecutionPeriod newInfoFromDomain(ExecutionSemester executionSemester) {
-	return executionSemester == null ? null : new InfoExecutionPeriod(executionSemester);
-    }
+	/**
+	 * Method created for presentation matters. Concatenates execution period
+	 * name with execution year name.
+	 */
+	public String getDescription() {
+		StringBuilder buffer = new StringBuilder();
 
-    public String getQualifiedName() {
-	return getDescription();
-    }
+		// these ifs are needed due to cloner converting strategy (it looks to
+		// all
+		// properties).
+		if (getName() != null) {
+			buffer.append(getName());
+		}
+		if (getInfoExecutionYear() != null) {
+			buffer.append(" - ").append(getInfoExecutionYear().getYear());
+		}
+		return buffer.toString();
+	}
 
-    public Date getInquiryResponseBegin() {
-	return getExecutionPeriod().getInquiryResponsePeriod().getBegin().toDate();
-    }
+	public InfoExecutionPeriod getPreviousInfoExecutionPeriod() {
+		final ExecutionSemester previousInfoExecutionPeriod = getExecutionPeriod().getPreviousExecutionPeriod();
+		return previousInfoExecutionPeriod == null ? null : new InfoExecutionPeriod(previousInfoExecutionPeriod);
+	}
 
-    public Date getInquiryResponseEnd() {
-	return getExecutionPeriod().getInquiryResponsePeriod().getEnd().toDate();
-    }
+	public static InfoExecutionPeriod newInfoFromDomain(ExecutionSemester executionSemester) {
+		return executionSemester == null ? null : new InfoExecutionPeriod(executionSemester);
+	}
 
-    @Override
-    public void copyFromDomain(DomainObject domainObject) {
-	throw new Error("Method should not be called!");
-    }
+	public String getQualifiedName() {
+		return getDescription();
+	}
 
-    @Override
-    public Integer getIdInternal() {
-	return getExecutionPeriod().getIdInternal();
-    }
+	public Date getInquiryResponseBegin() {
+		return getExecutionPeriod().getInquiryResponsePeriod().getBegin().toDate();
+	}
 
-    @Override
-    public void setIdInternal(Integer integer) {
-	throw new Error("Method should not be called!");
-    }
+	public Date getInquiryResponseEnd() {
+		return getExecutionPeriod().getInquiryResponsePeriod().getEnd().toDate();
+	}
 
-    public ExecutionSemester getExecutionPeriod() {
-	return executionPeriodDomainReference;
-    }
+	@Override
+	public void copyFromDomain(DomainObject domainObject) {
+		throw new Error("Method should not be called!");
+	}
 
-    public void setExecutionPeriod(ExecutionSemester executionSemester) {
-	executionPeriodDomainReference = executionSemester;
-    }
+	@Override
+	public Integer getIdInternal() {
+		return getExecutionPeriod().getIdInternal();
+	}
+
+	@Override
+	public void setIdInternal(Integer integer) {
+		throw new Error("Method should not be called!");
+	}
+
+	public ExecutionSemester getExecutionPeriod() {
+		return executionPeriodDomainReference;
+	}
+
+	public void setExecutionPeriod(ExecutionSemester executionSemester) {
+		executionPeriodDomainReference = executionSemester;
+	}
 
 }

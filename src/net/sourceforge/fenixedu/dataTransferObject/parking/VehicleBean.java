@@ -7,74 +7,74 @@ import net.sourceforge.fenixedu.domain.parking.Vehicle;
 
 public class VehicleBean implements Serializable {
 
-    private Vehicle vehicle;
+	private Vehicle vehicle;
 
-    private ParkingParty parkingParty;
+	private ParkingParty parkingParty;
 
-    private String vehiclePlateNumber;
+	private String vehiclePlateNumber;
 
-    private String vehicleMake;
+	private String vehicleMake;
 
-    private Boolean deleteVehicle;
+	private Boolean deleteVehicle;
 
-    public VehicleBean(Vehicle vehicle, ParkingParty parkingParty) {
-	setVehicle(vehicle);
-	setParkingParty(parkingParty);
-	setVehiclePlateNumber(vehicle.getPlateNumber());
-	setVehicleMake(vehicle.getVehicleMake());
-	setDeleteVehicle(false);
-    }
-
-    public VehicleBean(ParkingParty parkingParty) {
-	setParkingParty(parkingParty);
-	setDeleteVehicle(false);
-    }
-
-    public Vehicle getVehicle() {
-	return vehicle;
-    }
-
-    public void setVehicle(Vehicle vehicle) {
-	if (vehicle != null) {
-	    this.vehicle = vehicle;
-	} else {
-	    this.vehicle = null;
+	public VehicleBean(Vehicle vehicle, ParkingParty parkingParty) {
+		setVehicle(vehicle);
+		setParkingParty(parkingParty);
+		setVehiclePlateNumber(vehicle.getPlateNumber());
+		setVehicleMake(vehicle.getVehicleMake());
+		setDeleteVehicle(false);
 	}
-    }
 
-    public ParkingParty getParkingParty() {
-	return parkingParty;
-    }
-
-    public void setParkingParty(ParkingParty parkingParty) {
-	if (parkingParty != null) {
-	    this.parkingParty = parkingParty;
-	} else {
-	    this.parkingParty = null;
+	public VehicleBean(ParkingParty parkingParty) {
+		setParkingParty(parkingParty);
+		setDeleteVehicle(false);
 	}
-    }
 
-    public String getVehicleMake() {
-	return vehicleMake;
-    }
+	public Vehicle getVehicle() {
+		return vehicle;
+	}
 
-    public void setVehicleMake(String vehicleMake) {
-	this.vehicleMake = vehicleMake;
-    }
+	public void setVehicle(Vehicle vehicle) {
+		if (vehicle != null) {
+			this.vehicle = vehicle;
+		} else {
+			this.vehicle = null;
+		}
+	}
 
-    public String getVehiclePlateNumber() {
-	return vehiclePlateNumber;
-    }
+	public ParkingParty getParkingParty() {
+		return parkingParty;
+	}
 
-    public void setVehiclePlateNumber(String vehiclePlateNumber) {
-	this.vehiclePlateNumber = vehiclePlateNumber;
-    }
+	public void setParkingParty(ParkingParty parkingParty) {
+		if (parkingParty != null) {
+			this.parkingParty = parkingParty;
+		} else {
+			this.parkingParty = null;
+		}
+	}
 
-    public Boolean getDeleteVehicle() {
-	return deleteVehicle;
-    }
+	public String getVehicleMake() {
+		return vehicleMake;
+	}
 
-    public void setDeleteVehicle(Boolean deleteVehicle) {
-	this.deleteVehicle = deleteVehicle;
-    }
+	public void setVehicleMake(String vehicleMake) {
+		this.vehicleMake = vehicleMake;
+	}
+
+	public String getVehiclePlateNumber() {
+		return vehiclePlateNumber;
+	}
+
+	public void setVehiclePlateNumber(String vehiclePlateNumber) {
+		this.vehiclePlateNumber = vehiclePlateNumber;
+	}
+
+	public Boolean getDeleteVehicle() {
+		return deleteVehicle;
+	}
+
+	public void setDeleteVehicle(Boolean deleteVehicle) {
+		this.deleteVehicle = deleteVehicle;
+	}
 }

@@ -11,15 +11,16 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadExecutionPeriodsByExecutionYear extends FenixService {
 
-    @Service
-    public static List run(Integer executionYearId) {
-	final ExecutionYear executionYear = executionYearId != null ? rootDomainObject.readExecutionYearByOID(executionYearId)
-		: ExecutionYear.readCurrentExecutionYear();
+	@Service
+	public static List run(Integer executionYearId) {
+		final ExecutionYear executionYear =
+				executionYearId != null ? rootDomainObject.readExecutionYearByOID(executionYearId) : ExecutionYear
+						.readCurrentExecutionYear();
 
-	final List<InfoExecutionPeriod> infoExecutionPeriods = new ArrayList<InfoExecutionPeriod>();
-	for (final ExecutionSemester executionSemester : executionYear.getExecutionPeriods()) {
-	    infoExecutionPeriods.add(InfoExecutionPeriod.newInfoFromDomain(executionSemester));
+		final List<InfoExecutionPeriod> infoExecutionPeriods = new ArrayList<InfoExecutionPeriod>();
+		for (final ExecutionSemester executionSemester : executionYear.getExecutionPeriods()) {
+			infoExecutionPeriods.add(InfoExecutionPeriod.newInfoFromDomain(executionSemester));
+		}
+		return infoExecutionPeriods;
 	}
-	return infoExecutionPeriods;
-    }
 }

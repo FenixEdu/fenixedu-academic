@@ -13,150 +13,151 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 public class NewMultipleChoiceQuestion extends NewMultipleChoiceQuestion_Base {
 
-    public NewMultipleChoiceQuestion() {
-	super();
+	public NewMultipleChoiceQuestion() {
+		super();
 
-	this.setShuffle(false);
-    }
-
-    public NewMultipleChoiceQuestion(NewQuestionGroup parentQuestionGroup) {
-	this();
-
-	init(parentQuestionGroup);
-    }
-
-    public List<NewChoice> getOrderedChoices() {
-	List<NewChoice> choices = new ArrayList<NewChoice>(this.getChoices());
-
-	Collections.sort(choices, Positionable.POSITION_COMPARATOR);
-
-	return choices;
-    }
-
-    public List<NewChoice> getOrderedChoices(boolean honorShuffle) {
-	if (honorShuffle && this.getShuffle()) {
-	    return getRandomlyOrderedChoices();
-	} else {
-	    return getOrderedChoices();
-	}
-    }
-
-    private List<NewChoice> getRandomlyOrderedChoices() {
-	Person person = AccessControl.getPerson();
-	Random random = new Random(person.getIdInternal());
-
-	int[] indexes = new int[this.getChoicesCount()];
-	int[] shuffledIndexes = new int[this.getChoicesCount()];
-
-	for (int i = 0; i < this.getChoicesCount(); i++) {
-	    indexes[i] = i;
+		this.setShuffle(false);
 	}
 
-	for (int i = 0, j = this.getChoicesCount(); i < this.getChoicesCount(); i++, j--) {
-	    int randomPosition = random.nextInt(j);
-	    shuffledIndexes[i] = indexes[randomPosition];
-	    indexes[randomPosition] = indexes[indexes[j - 1]];
+	public NewMultipleChoiceQuestion(NewQuestionGroup parentQuestionGroup) {
+		this();
+
+		init(parentQuestionGroup);
 	}
 
-	List<NewChoice> choices = new ArrayList<NewChoice>(this.getChoices());
+	public List<NewChoice> getOrderedChoices() {
+		List<NewChoice> choices = new ArrayList<NewChoice>(this.getChoices());
 
-	Collections.sort(choices, Positionable.POSITION_COMPARATOR);
+		Collections.sort(choices, Positionable.POSITION_COMPARATOR);
 
-	List<NewChoice> randomlyOrderedChoices = new ArrayList<NewChoice>();
-
-	for (int i = 0; i < this.getChoicesCount(); i++) {
-	    randomlyOrderedChoices.add(choices.get(shuffledIndexes[i]));
+		return choices;
 	}
 
-	return randomlyOrderedChoices;
-    }
-
-    @Override
-    public void delete() {
-	for (NewChoice choice : this.getChoices()) {
-	    choice.delete();
+	public List<NewChoice> getOrderedChoices(boolean honorShuffle) {
+		if (honorShuffle && this.getShuffle()) {
+			return getRandomlyOrderedChoices();
+		} else {
+			return getOrderedChoices();
+		}
 	}
 
-	super.delete();
-    }
+	private List<NewChoice> getRandomlyOrderedChoices() {
+		Person person = AccessControl.getPerson();
+		Random random = new Random(person.getIdInternal());
 
-    /**
-     * Cleans sorting of child choices. Should be called after deleting a
-     * choice.
-     */
-    public void resortChoices() {
-	int i = 1;
-	for (NewChoice choice : this.getOrderedChoices()) {
-	    choice.setPosition(i++);
-	}
-    }
+		int[] indexes = new int[this.getChoicesCount()];
+		int[] shuffledIndexes = new int[this.getChoicesCount()];
 
-    protected static final List<PredicateType> predicates = new ArrayList<PredicateType>();
+		for (int i = 0; i < this.getChoicesCount(); i++) {
+			indexes[i] = i;
+		}
 
-    static {
-	predicates.add(PredicateType.MULTIPLE_CHOICE_ANSWER);
-	predicates.add(PredicateType.MULTIPLE_CHOICE_COUNT);
-    }
+		for (int i = 0, j = this.getChoicesCount(); i < this.getChoicesCount(); i++, j--) {
+			int randomPosition = random.nextInt(j);
+			shuffledIndexes[i] = indexes[randomPosition];
+			indexes[randomPosition] = indexes[indexes[j - 1]];
+		}
 
-    public List<PredicateType> getPredicates() {
-	return predicates;
-    }
+		List<NewChoice> choices = new ArrayList<NewChoice>(this.getChoices());
 
-    @Override
-    public NewQuestionType getQuestionType() {
-	return NewQuestionType.MULTIPLE_CHOICE_QUESTION;
-    }
+		Collections.sort(choices, Positionable.POSITION_COMPARATOR);
 
-    @Override
-    protected void initCopy(NewTestElement testElement, HashMap<Object, Object> transformationMap) {
-	super.initCopy(testElement, transformationMap);
+		List<NewChoice> randomlyOrderedChoices = new ArrayList<NewChoice>();
 
-	NewMultipleChoiceQuestion multipleChoiceQuestion = (NewMultipleChoiceQuestion) testElement;
+		for (int i = 0; i < this.getChoicesCount(); i++) {
+			randomlyOrderedChoices.add(choices.get(shuffledIndexes[i]));
+		}
 
-	for (NewChoice choice : this.getChoices()) {
-	    NewChoice choiceCopy = (NewChoice) choice.copy(transformationMap);
-
-	    transformationMap.put(choice, choiceCopy);
-
-	    choiceCopy.setPosition(choice.getPosition());
-	    choiceCopy.setMultipleChoiceQuestion(multipleChoiceQuestion);
+		return randomlyOrderedChoices;
 	}
 
-	multipleChoiceQuestion.setShuffle(this.getShuffle());
-    }
+	@Override
+	public void delete() {
+		for (NewChoice choice : this.getChoices()) {
+			choice.delete();
+		}
 
-    @Override
-    public NewTestElement copy(HashMap<Object, Object> transformationMap) {
-	NewMultipleChoiceQuestion question = new NewMultipleChoiceQuestion();
-
-	transformationMap.put(this, question);
-
-	this.initCopy(question, transformationMap);
-
-	return question;
-    }
-
-    public List<NewChoice> getMultipleChoiceAnswer(Person person) {
-	NewAnswer answer = this.getAnswer(person);
-	if (answer == null) {
-	    return null;
-	}
-	return (List<NewChoice>) answer.getConcreteAnswer().getAnswer();
-    }
-
-    public List<NewChoice> getMultipleChoiceAnswer() {
-	return this.getMultipleChoiceAnswer(this.getPerson());
-    }
-
-    public void setAnswer(List<NewChoice> answerValue) {
-	NewAnswer answer = this.getAnswer();
-
-	if (answer == null) {
-	    answer = createAnswer();
+		super.delete();
 	}
 
-	ConcreteAnswer concreteAnswer = new ConcreteAnswer(answerValue);
-	this.getAnswer().setConcreteAnswer(concreteAnswer);
-    }
+	/**
+	 * Cleans sorting of child choices. Should be called after deleting a
+	 * choice.
+	 */
+	public void resortChoices() {
+		int i = 1;
+		for (NewChoice choice : this.getOrderedChoices()) {
+			choice.setPosition(i++);
+		}
+	}
+
+	protected static final List<PredicateType> predicates = new ArrayList<PredicateType>();
+
+	static {
+		predicates.add(PredicateType.MULTIPLE_CHOICE_ANSWER);
+		predicates.add(PredicateType.MULTIPLE_CHOICE_COUNT);
+	}
+
+	@Override
+	public List<PredicateType> getPredicates() {
+		return predicates;
+	}
+
+	@Override
+	public NewQuestionType getQuestionType() {
+		return NewQuestionType.MULTIPLE_CHOICE_QUESTION;
+	}
+
+	@Override
+	protected void initCopy(NewTestElement testElement, HashMap<Object, Object> transformationMap) {
+		super.initCopy(testElement, transformationMap);
+
+		NewMultipleChoiceQuestion multipleChoiceQuestion = (NewMultipleChoiceQuestion) testElement;
+
+		for (NewChoice choice : this.getChoices()) {
+			NewChoice choiceCopy = (NewChoice) choice.copy(transformationMap);
+
+			transformationMap.put(choice, choiceCopy);
+
+			choiceCopy.setPosition(choice.getPosition());
+			choiceCopy.setMultipleChoiceQuestion(multipleChoiceQuestion);
+		}
+
+		multipleChoiceQuestion.setShuffle(this.getShuffle());
+	}
+
+	@Override
+	public NewTestElement copy(HashMap<Object, Object> transformationMap) {
+		NewMultipleChoiceQuestion question = new NewMultipleChoiceQuestion();
+
+		transformationMap.put(this, question);
+
+		this.initCopy(question, transformationMap);
+
+		return question;
+	}
+
+	public List<NewChoice> getMultipleChoiceAnswer(Person person) {
+		NewAnswer answer = this.getAnswer(person);
+		if (answer == null) {
+			return null;
+		}
+		return (List<NewChoice>) answer.getConcreteAnswer().getAnswer();
+	}
+
+	public List<NewChoice> getMultipleChoiceAnswer() {
+		return this.getMultipleChoiceAnswer(this.getPerson());
+	}
+
+	public void setAnswer(List<NewChoice> answerValue) {
+		NewAnswer answer = this.getAnswer();
+
+		if (answer == null) {
+			answer = createAnswer();
+		}
+
+		ConcreteAnswer concreteAnswer = new ConcreteAnswer(answerValue);
+		this.getAnswer().setConcreteAnswer(concreteAnswer);
+	}
 
 }

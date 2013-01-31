@@ -9,12 +9,12 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class AddResultToTeacherInformationSheet extends FenixService {
 
-    @Checked("ResultPredicates.author")
-    @Service
-    public static void run(Teacher teacher, Integer resultId, String publicationArea) throws Exception {
+	@Checked("ResultPredicates.author")
+	@Service
+	public static void run(Teacher teacher, Integer resultId, String publicationArea) throws Exception {
 
-	ResearchResult result = rootDomainObject.readResearchResultByOID(resultId);
-	teacher.addToTeacherInformationSheet(result, PublicationArea.getEnum(publicationArea));
-    }
+		ResearchResult result = rootDomainObject.readResearchResultByOID(resultId);
+		teacher.addToTeacherInformationSheet(result, PublicationArea.getEnum(publicationArea));
+	}
 
 }

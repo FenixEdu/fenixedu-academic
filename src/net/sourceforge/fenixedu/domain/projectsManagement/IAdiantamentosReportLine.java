@@ -9,19 +9,19 @@ package net.sourceforge.fenixedu.domain.projectsManagement;
  * 
  */
 public interface IAdiantamentosReportLine {
-    public abstract Double getAdiantamentos();
+	public abstract Double getAdiantamentos();
 
-    public abstract void setAdiantamentos(Double adiantamentos);
+	public abstract void setAdiantamentos(Double adiantamentos);
 
-    public abstract Double getJustifications();
+	public abstract Double getJustifications();
 
-    public abstract void setJustifications(Double justifications);
+	public abstract void setJustifications(Double justifications);
 
-    public abstract String getProjectCode();
+	public abstract String getProjectCode();
 
-    public abstract void setProjectCode(String projectCode);
+	public abstract void setProjectCode(String projectCode);
 
-    public abstract Double getTotal();
+	public abstract Double getTotal();
 
-    public abstract void setTotal(Double total);
+	public abstract void setTotal(Double total);
 }

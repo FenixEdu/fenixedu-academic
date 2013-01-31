@@ -8,15 +8,15 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 
 public abstract class InfoRestriction extends InfoObject {
 
-    protected String restrictionKindResourceKey;
+	protected String restrictionKindResourceKey;
 
-    public String getRestrictionKindResourceKey() {
-	return restrictionKindResourceKey;
-    }
+	public String getRestrictionKindResourceKey() {
+		return restrictionKindResourceKey;
+	}
 
-    public void setRestrictionKindResourceKey(String restrictionKindResourceKey) {
-	this.restrictionKindResourceKey = restrictionKindResourceKey;
-    }
+	public void setRestrictionKindResourceKey(String restrictionKindResourceKey) {
+		this.restrictionKindResourceKey = restrictionKindResourceKey;
+	}
 
-    public abstract String getArg();
+	public abstract String getArg();
 }

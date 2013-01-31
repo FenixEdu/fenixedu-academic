@@ -29,88 +29,88 @@ import org.apache.struts.action.ActionMapping;
  */
 public class ShowDegreesAction extends FenixContextDispatchAction {
 
-    public ActionForward nonMaster(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-	ActionErrors errors = new ActionErrors();
+	public ActionForward nonMaster(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		ActionErrors errors = new ActionErrors();
 
-	Boolean inEnglish = new Boolean(false);
-	InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request
-		.getAttribute(PresentationConstants.EXECUTION_PERIOD);
-	InfoExecutionYear infoExecutionYear = null;
-	if (infoExecutionPeriod != null) {
-	    infoExecutionYear = infoExecutionPeriod.getInfoExecutionYear();
+		Boolean inEnglish = new Boolean(false);
+		InfoExecutionPeriod infoExecutionPeriod =
+				(InfoExecutionPeriod) request.getAttribute(PresentationConstants.EXECUTION_PERIOD);
+		InfoExecutionYear infoExecutionYear = null;
+		if (infoExecutionPeriod != null) {
+			infoExecutionYear = infoExecutionPeriod.getInfoExecutionYear();
+		}
+
+		List executionDegreesList = null;
+		try {
+			// ReadExecutionDegreesByExecutionYear
+			executionDegreesList = ReadNonMasterExecutionDegreesByExecutionYear.run(infoExecutionYear);
+		} catch (FenixServiceException e) {
+			errors.add("impossibleDegreeList", new ActionError("error.impossibleDegreeList"));
+			saveErrors(request, errors);
+		}
+
+		// buil a list of degrees by execution degrees list
+		List degreesList = buildDegreesList(executionDegreesList);
+
+		// put both list in request
+
+		request.setAttribute("degreesList", degreesList);
+		request.setAttribute("inEnglish", inEnglish);
+		return mapping.findForward("showDegrees");
 	}
 
-	List executionDegreesList = null;
-	try {
-	    // ReadExecutionDegreesByExecutionYear
-	    executionDegreesList = (List) ReadNonMasterExecutionDegreesByExecutionYear.run(infoExecutionYear);
-	} catch (FenixServiceException e) {
-	    errors.add("impossibleDegreeList", new ActionError("error.impossibleDegreeList"));
-	    saveErrors(request, errors);
+	public ActionForward master(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+		ActionErrors errors = new ActionErrors();
+
+		InfoExecutionPeriod infoExecutionPeriod =
+				(InfoExecutionPeriod) request.getAttribute(PresentationConstants.EXECUTION_PERIOD);
+		InfoExecutionYear infoExecutionYear = null;
+		String ano = null;
+		if (infoExecutionPeriod != null) {
+			infoExecutionYear = infoExecutionPeriod.getInfoExecutionYear();
+			ano = infoExecutionYear.getYear();
+		}
+
+		List executionDegreesList = null;
+		try {
+			// ReadExecutionDegreesByExecutionYear
+			executionDegreesList = ReadMasterDegrees.run(ano);
+		} catch (FenixServiceException e) {
+			errors.add("impossibleDegreeList", new ActionError("error.impossibleDegreeList"));
+			saveErrors(request, errors);
+		}
+
+		// buil a list of degrees by execution degrees list
+		List degreesList = buildDegreesList(executionDegreesList);
+
+		// put both list in request
+		request.setAttribute("degreesList", degreesList);
+
+		return mapping.findForward("showDegrees");
 	}
 
-	// buil a list of degrees by execution degrees list
-	List degreesList = buildDegreesList(executionDegreesList);
+	private List buildDegreesList(List executionDegreesList) {
+		if (executionDegreesList == null) {
+			return null;
+		}
 
-	// put both list in request
+		List degreesList = new ArrayList();
 
-	request.setAttribute("degreesList", degreesList);
-	request.setAttribute("inEnglish", inEnglish);
-	return mapping.findForward("showDegrees");
-    }
+		ListIterator listIterator = executionDegreesList.listIterator();
+		while (listIterator.hasNext()) {
+			InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) listIterator.next();
 
-    public ActionForward master(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-	    throws Exception {
-	ActionErrors errors = new ActionErrors();
+			if (!degreesList.contains(infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree())) {
 
-	InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request
-		.getAttribute(PresentationConstants.EXECUTION_PERIOD);
-	InfoExecutionYear infoExecutionYear = null;
-	String ano = null;
-	if (infoExecutionPeriod != null) {
-	    infoExecutionYear = infoExecutionPeriod.getInfoExecutionYear();
-	    ano = infoExecutionYear.getYear();
+				degreesList.add(infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree());
+			}
+		}
+
+		// order list by alphabetic order of the code
+		Collections.sort(degreesList, new BeanComparator("nome"));
+
+		return degreesList;
 	}
-
-	List executionDegreesList = null;
-	try {
-	    // ReadExecutionDegreesByExecutionYear
-	    executionDegreesList = (List) ReadMasterDegrees.run(ano);
-	} catch (FenixServiceException e) {
-	    errors.add("impossibleDegreeList", new ActionError("error.impossibleDegreeList"));
-	    saveErrors(request, errors);
-	}
-
-	// buil a list of degrees by execution degrees list
-	List degreesList = buildDegreesList(executionDegreesList);
-
-	// put both list in request
-	request.setAttribute("degreesList", degreesList);
-
-	return mapping.findForward("showDegrees");
-    }
-
-    private List buildDegreesList(List executionDegreesList) {
-	if (executionDegreesList == null) {
-	    return null;
-	}
-
-	List degreesList = new ArrayList();
-
-	ListIterator listIterator = executionDegreesList.listIterator();
-	while (listIterator.hasNext()) {
-	    InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) listIterator.next();
-
-	    if (!degreesList.contains(infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree())) {
-
-		degreesList.add(infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree());
-	    }
-	}
-
-	// order list by alphabetic order of the code
-	Collections.sort(degreesList, new BeanComparator("nome"));
-
-	return degreesList;
-    }
 }

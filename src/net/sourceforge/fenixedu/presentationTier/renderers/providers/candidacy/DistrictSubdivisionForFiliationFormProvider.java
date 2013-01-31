@@ -13,32 +13,33 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class DistrictSubdivisionForFiliationFormProvider implements DataProvider {
 
-    public Converter getConverter() {
-	return null;
-    }
-
-    @Override
-    public Object provide(Object source, Object currentValue) {
-	final FiliationForm filiationForm = (FiliationForm) source;
-	if (filiationForm.getDistrictOfBirth() != null) {
-	    final District district = District.readByName(filiationForm.getDistrictOfBirth());
-
-	    if (district != null) {
-		return transformToStringCollection(district);
-	    }
+	@Override
+	public Converter getConverter() {
+		return null;
 	}
 
-	return Collections.emptyList();
-    }
+	@Override
+	public Object provide(Object source, Object currentValue) {
+		final FiliationForm filiationForm = (FiliationForm) source;
+		if (filiationForm.getDistrictOfBirth() != null) {
+			final District district = District.readByName(filiationForm.getDistrictOfBirth());
 
-    private Set<String> transformToStringCollection(final District district) {
-	final SortedSet<String> result = new TreeSet<String>();
+			if (district != null) {
+				return transformToStringCollection(district);
+			}
+		}
 
-	for (final DistrictSubdivision each : district.getDistrictSubdivisions()) {
-	    result.add(each.getName());
+		return Collections.emptyList();
 	}
 
-	return result;
-    }
+	private Set<String> transformToStringCollection(final District district) {
+		final SortedSet<String> result = new TreeSet<String>();
+
+		for (final DistrictSubdivision each : district.getDistrictSubdivisions()) {
+			result.add(each.getName());
+		}
+
+		return result;
+	}
 
 }

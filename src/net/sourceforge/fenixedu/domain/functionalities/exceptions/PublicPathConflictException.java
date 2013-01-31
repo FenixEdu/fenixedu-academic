@@ -17,15 +17,15 @@ import net.sourceforge.fenixedu.domain.functionalities.Functionality;
  */
 public class PublicPathConflictException extends DomainException {
 
-    /**
-     * Serialization id.
-     */
-    private static final long serialVersionUID = 1L;
+	/**
+	 * Serialization id.
+	 */
+	private static final long serialVersionUID = 1L;
 
-    private static final String MESSAGE = "functionalities.functionality.publicPath.conflict";
+	private static final String MESSAGE = "functionalities.functionality.publicPath.conflict";
 
-    public PublicPathConflictException(String path) {
-	super(MESSAGE, path);
-    }
+	public PublicPathConflictException(String path) {
+		super(MESSAGE, path);
+	}
 
 }

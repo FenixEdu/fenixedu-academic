@@ -9,23 +9,22 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class DeleteDegreeOfficialPublication extends FenixService {
 
-    /**
-     * Must ensure "REQUIRED" slots are filled
-     * 
-     * @param degree
-     * @param date
-     * @throws FenixServiceException
-     */
-    @Checked("RolePredicates.SCIENTIFIC_COUNCIL_PREDICATE")
-    @Service
-    public static void run(DegreeOfficialPublication degreeOfficialPublication)
-	    throws FenixServiceException {
+	/**
+	 * Must ensure "REQUIRED" slots are filled
+	 * 
+	 * @param degree
+	 * @param date
+	 * @throws FenixServiceException
+	 */
+	@Checked("RolePredicates.SCIENTIFIC_COUNCIL_PREDICATE")
+	@Service
+	public static void run(DegreeOfficialPublication degreeOfficialPublication) throws FenixServiceException {
 
-	if (degreeOfficialPublication == null) {
-	    throw new InvalidArgumentsServiceException();
+		if (degreeOfficialPublication == null) {
+			throw new InvalidArgumentsServiceException();
+		}
+
+		degreeOfficialPublication.getDegree().removeOfficialPublication(degreeOfficialPublication);
 	}
-
-	degreeOfficialPublication.getDegree().removeOfficialPublication(degreeOfficialPublication);
-    }
 
 }

@@ -13,18 +13,20 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class OpenExecutionYearsProvider implements DataProvider {
 
-    public Object provide(Object source, Object currentValue) {
+	@Override
+	public Object provide(Object source, Object currentValue) {
 
-	final List<ExecutionYear> executionYears = ExecutionYear.readOpenExecutionYears();
-	executionYears.add(ExecutionYear.readCurrentExecutionYear());
+		final List<ExecutionYear> executionYears = ExecutionYear.readOpenExecutionYears();
+		executionYears.add(ExecutionYear.readCurrentExecutionYear());
 
-	Collections.sort(executionYears, new ReverseComparator());
+		Collections.sort(executionYears, new ReverseComparator());
 
-	return executionYears;
-    }
+		return executionYears;
+	}
 
-    public Converter getConverter() {
-	return new DomainObjectKeyConverter();
-    }
+	@Override
+	public Converter getConverter() {
+		return new DomainObjectKeyConverter();
+	}
 
 }

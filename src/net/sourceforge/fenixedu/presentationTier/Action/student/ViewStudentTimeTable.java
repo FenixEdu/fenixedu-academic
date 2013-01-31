@@ -18,18 +18,10 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
  * 
@@ -37,52 +29,58 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
  * @author zenida
  * 
  */
-@Mapping(module = "student", path = "/studentTimeTable", input = "/studentTimeTable.do?page=0", attribute = "studentTimeTableForm", formBean = "studentTimeTableForm", scope = "request", parameter = "method")
-@Forwards(value = {
-		@Forward(name = "showTimeTable", path = "df.timeTable.show"),
+@Mapping(
+		module = "student",
+		path = "/studentTimeTable",
+		input = "/studentTimeTable.do?page=0",
+		attribute = "studentTimeTableForm",
+		formBean = "studentTimeTableForm",
+		scope = "request",
+		parameter = "method")
+@Forwards(value = { @Forward(name = "showTimeTable", path = "df.timeTable.show"),
 		@Forward(name = "chooseRegistration", path = "/student/timeTable/chooseRegistration.jsp") })
 public class ViewStudentTimeTable extends FenixDispatchAction {
 
-    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-	    throws FenixActionException, FenixFilterException, FenixServiceException {
+	public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+			throws FenixActionException, FenixFilterException, FenixServiceException {
 
-	List<Registration> registrations = getUserView(request).getPerson().getStudent().getActiveRegistrations();
-	if (registrations.size() == 1) {
-	    return forwardToShowTimeTable(registrations.get(0), mapping, request);
-	} else {
-	    request.setAttribute("registrations", registrations);
-	    return mapping.findForward("chooseRegistration");
+		List<Registration> registrations = getUserView(request).getPerson().getStudent().getActiveRegistrations();
+		if (registrations.size() == 1) {
+			return forwardToShowTimeTable(registrations.get(0), mapping, request);
+		} else {
+			request.setAttribute("registrations", registrations);
+			return mapping.findForward("chooseRegistration");
+		}
 	}
-    }
 
-    public ActionForward showTimeTable(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixActionException, FenixFilterException, FenixServiceException {
+	public ActionForward showTimeTable(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) throws FenixActionException, FenixFilterException, FenixServiceException {
 
-	return forwardToShowTimeTable(getRegistration(actionForm, request), mapping, request);
-    }
-    
-    protected ActionForward forwardToShowTimeTableForSupervisor(Registration registration, ActionMapping mapping, HttpServletRequest request)
-    		throws FenixActionException, FenixFilterException, FenixServiceException {
-	
-	return forwardToShowTimeTable(registration, mapping, request);
-    }
-
-    public static ActionForward forwardToShowTimeTable(Registration registration, ActionMapping mapping, HttpServletRequest request)
-	    throws FenixActionException, FenixFilterException, FenixServiceException {
-
-	List<InfoLesson> infoLessons = (List) ReadStudentTimeTable.run(registration);
-
-	request.setAttribute("person", registration.getPerson());
-	request.setAttribute("infoLessons", infoLessons);
-	request.setAttribute("registrationId", registration.getIdInternal());
-	return mapping.findForward("showTimeTable");
-    }
-
-    private Registration getRegistration(final ActionForm form, final HttpServletRequest request) {
-	Integer registrationId = (Integer) ((DynaActionForm) form).get("registrationId");
-	if (registrationId == null && !StringUtils.isEmpty(request.getParameter("registrationId"))) {
-	    registrationId = Integer.valueOf(request.getParameter("registrationId"));
+		return forwardToShowTimeTable(getRegistration(actionForm, request), mapping, request);
 	}
-	return rootDomainObject.readRegistrationByOID(registrationId);
-    }
+
+	protected ActionForward forwardToShowTimeTableForSupervisor(Registration registration, ActionMapping mapping,
+			HttpServletRequest request) throws FenixActionException, FenixFilterException, FenixServiceException {
+
+		return forwardToShowTimeTable(registration, mapping, request);
+	}
+
+	public static ActionForward forwardToShowTimeTable(Registration registration, ActionMapping mapping,
+			HttpServletRequest request) throws FenixActionException, FenixFilterException, FenixServiceException {
+
+		List<InfoLesson> infoLessons = ReadStudentTimeTable.run(registration);
+
+		request.setAttribute("person", registration.getPerson());
+		request.setAttribute("infoLessons", infoLessons);
+		request.setAttribute("registrationId", registration.getIdInternal());
+		return mapping.findForward("showTimeTable");
+	}
+
+	private Registration getRegistration(final ActionForm form, final HttpServletRequest request) {
+		Integer registrationId = (Integer) ((DynaActionForm) form).get("registrationId");
+		if (registrationId == null && !StringUtils.isEmpty(request.getParameter("registrationId"))) {
+			registrationId = Integer.valueOf(request.getParameter("registrationId"));
+		}
+		return rootDomainObject.readRegistrationByOID(registrationId);
+	}
 }

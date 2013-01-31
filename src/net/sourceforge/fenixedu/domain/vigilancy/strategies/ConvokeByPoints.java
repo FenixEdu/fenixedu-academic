@@ -17,78 +17,80 @@ import org.apache.commons.collections.comparators.ComparatorChain;
 
 public class ConvokeByPoints extends Strategy {
 
-    public ConvokeByPoints() {
-	super();
-    }
-
-    public StrategySugestion sugest(List<VigilantWrapper> vigilants, WrittenEvaluation writtenEvaluation) {
-
-	List<VigilantWrapper> teachersSugestion = new ArrayList<VigilantWrapper>();
-	List<VigilantWrapper> vigilantSugestion = new ArrayList<VigilantWrapper>();
-	Set<Person> incompatiblePersons = new HashSet<Person>();
-	List<UnavailableInformation> unavailableVigilants = new ArrayList<UnavailableInformation>();
-
-	if (writtenEvaluation.hasAnyVigilancies()) {
-	    incompatiblePersons.addAll(getIncompatiblePersons(writtenEvaluation));
+	public ConvokeByPoints() {
+		super();
 	}
 
-	final List<ExecutionCourse> executionCourses = writtenEvaluation.getAssociatedExecutionCourses();
+	@Override
+	public StrategySugestion sugest(List<VigilantWrapper> vigilants, WrittenEvaluation writtenEvaluation) {
 
-	for (VigilantWrapper vigilant : vigilants) {
+		List<VigilantWrapper> teachersSugestion = new ArrayList<VigilantWrapper>();
+		List<VigilantWrapper> vigilantSugestion = new ArrayList<VigilantWrapper>();
+		Set<Person> incompatiblePersons = new HashSet<Person>();
+		List<UnavailableInformation> unavailableVigilants = new ArrayList<UnavailableInformation>();
 
-	    Person vigilantPerson = vigilant.getPerson();
-
-	    if (vigilant.canBeConvokedForWrittenEvaluation(writtenEvaluation)
-		    && !incompatiblePersons.contains(vigilantPerson.getIncompatibleVigilantPerson())) {
-
-		if (vigilantPerson.teachesAny(executionCourses)) {
-		    teachersSugestion.add(vigilant);
-		    incompatiblePersons.add(vigilant.getPerson());
-		} else {
-		    vigilantSugestion.add(vigilant);
+		if (writtenEvaluation.hasAnyVigilancies()) {
+			incompatiblePersons.addAll(getIncompatiblePersons(writtenEvaluation));
 		}
 
-	    } else {
-		if (!vigilantIsAlreadyConvokedForThisExam(vigilant, writtenEvaluation)) {
-		    UnavailableTypes reason;
-		    if (incompatiblePersons.contains(vigilant.getPerson().getIncompatibleVigilant())) {
-			reason = UnavailableTypes.INCOMPATIBLE_PERSON;
-		    } else {
-			reason = vigilant.getWhyIsUnavailabeFor(writtenEvaluation);
-		    }
-		    unavailableVigilants.add(new UnavailableInformation(vigilant, reason));
+		final List<ExecutionCourse> executionCourses = writtenEvaluation.getAssociatedExecutionCourses();
 
+		for (VigilantWrapper vigilant : vigilants) {
+
+			Person vigilantPerson = vigilant.getPerson();
+
+			if (vigilant.canBeConvokedForWrittenEvaluation(writtenEvaluation)
+					&& !incompatiblePersons.contains(vigilantPerson.getIncompatibleVigilantPerson())) {
+
+				if (vigilantPerson.teachesAny(executionCourses)) {
+					teachersSugestion.add(vigilant);
+					incompatiblePersons.add(vigilant.getPerson());
+				} else {
+					vigilantSugestion.add(vigilant);
+				}
+
+			} else {
+				if (!vigilantIsAlreadyConvokedForThisExam(vigilant, writtenEvaluation)) {
+					UnavailableTypes reason;
+					if (incompatiblePersons.contains(vigilant.getPerson().getIncompatibleVigilant())) {
+						reason = UnavailableTypes.INCOMPATIBLE_PERSON;
+					} else {
+						reason = vigilant.getWhyIsUnavailabeFor(writtenEvaluation);
+					}
+					unavailableVigilants.add(new UnavailableInformation(vigilant, reason));
+
+				}
+			}
 		}
-	    }
+
+		ComparatorChain comparator = new ComparatorChain();
+		comparator.addComparator(VigilantWrapper.ESTIMATED_POINTS_COMPARATOR);
+		// comparator.addComparator(new ConvokeComparator());
+		comparator.addComparator(VigilantWrapper.CATEGORY_COMPARATOR);
+		comparator.addComparator(VigilantWrapper.USERNAME_COMPARATOR);
+
+		Collections.sort(vigilantSugestion, comparator);
+		Collections.sort(teachersSugestion, comparator);
+		return new StrategySugestion(teachersSugestion, vigilantSugestion, unavailableVigilants);
 	}
 
-	ComparatorChain comparator = new ComparatorChain();
-	comparator.addComparator(VigilantWrapper.ESTIMATED_POINTS_COMPARATOR);
-	// comparator.addComparator(new ConvokeComparator());
-	comparator.addComparator(VigilantWrapper.CATEGORY_COMPARATOR);
-	comparator.addComparator(VigilantWrapper.USERNAME_COMPARATOR);
-
-	Collections.sort(vigilantSugestion, comparator);
-	Collections.sort(teachersSugestion, comparator);
-	return new StrategySugestion(teachersSugestion, vigilantSugestion, unavailableVigilants);
-    }
-
-    private boolean vigilantIsAlreadyConvokedForThisExam(VigilantWrapper vigilant, WrittenEvaluation writtenEvaluation) {
-	List<Vigilancy> convokes = vigilant.getVigilancies();
-	for (Vigilancy convoke : convokes) {
-	    if (convoke.getWrittenEvaluation().equals(writtenEvaluation) && convoke.isActive())
-		return true;
+	private boolean vigilantIsAlreadyConvokedForThisExam(VigilantWrapper vigilant, WrittenEvaluation writtenEvaluation) {
+		List<Vigilancy> convokes = vigilant.getVigilancies();
+		for (Vigilancy convoke : convokes) {
+			if (convoke.getWrittenEvaluation().equals(writtenEvaluation) && convoke.isActive()) {
+				return true;
+			}
+		}
+		return false;
 	}
-	return false;
-    }
 
-    private List<Person> getIncompatiblePersons(WrittenEvaluation writtenEvaluation) {
-	List<Vigilancy> convokes = writtenEvaluation.getVigilancies();
-	List<Person> people = new ArrayList<Person>();
-	for (Vigilancy convoke : convokes) {
-	    VigilantWrapper vigilant = convoke.getVigilantWrapper();
-	    people.add(vigilant.getPerson());
+	private List<Person> getIncompatiblePersons(WrittenEvaluation writtenEvaluation) {
+		List<Vigilancy> convokes = writtenEvaluation.getVigilancies();
+		List<Person> people = new ArrayList<Person>();
+		for (Vigilancy convoke : convokes) {
+			VigilantWrapper vigilant = convoke.getVigilantWrapper();
+			people.add(vigilant.getPerson());
+		}
+		return people;
 	}
-	return people;
-    }
 }

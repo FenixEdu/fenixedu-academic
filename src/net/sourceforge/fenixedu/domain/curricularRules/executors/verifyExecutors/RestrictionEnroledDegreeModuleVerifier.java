@@ -10,33 +10,33 @@ import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
 
 public class RestrictionEnroledDegreeModuleVerifier extends VerifyRuleExecutor {
 
-    @Override
-    protected RuleResult verifyEnrolmentWithRules(ICurricularRule curricularRule, EnrolmentContext enrolmentContext,
-	    DegreeModule degreeModuleToVerify, CourseGroup parentCourseGroup) {
+	@Override
+	protected RuleResult verifyEnrolmentWithRules(ICurricularRule curricularRule, EnrolmentContext enrolmentContext,
+			DegreeModule degreeModuleToVerify, CourseGroup parentCourseGroup) {
 
-	final RestrictionEnroledDegreeModule restrictionEnroledDegreeModule = (RestrictionEnroledDegreeModule) curricularRule;
+		final RestrictionEnroledDegreeModule restrictionEnroledDegreeModule = (RestrictionEnroledDegreeModule) curricularRule;
 
-	if (isApproved(enrolmentContext, restrictionEnroledDegreeModule.getPrecedenceDegreeModule(), parentCourseGroup)) {
-	    return RuleResult.createTrue(degreeModuleToVerify);
+		if (isApproved(enrolmentContext, restrictionEnroledDegreeModule.getPrecedenceDegreeModule(), parentCourseGroup)) {
+			return RuleResult.createTrue(degreeModuleToVerify);
+		}
+
+		for (final IDegreeModuleToEvaluate degreeModuleToEvaluate : enrolmentContext
+				.getAllChildDegreeModulesToEvaluateFor(parentCourseGroup)) {
+
+			if (degreeModuleToEvaluate.isLeaf()
+					&& degreeModuleToEvaluate.isFor(restrictionEnroledDegreeModule.getPrecedenceDegreeModule())) {
+				return RuleResult.createTrue(degreeModuleToVerify);
+			}
+		}
+
+		return RuleResult.createFalse(degreeModuleToVerify);
+
 	}
 
-	for (final IDegreeModuleToEvaluate degreeModuleToEvaluate : enrolmentContext
-		.getAllChildDegreeModulesToEvaluateFor(parentCourseGroup)) {
-
-	    if (degreeModuleToEvaluate.isLeaf()
-		    && degreeModuleToEvaluate.isFor(restrictionEnroledDegreeModule.getPrecedenceDegreeModule())) {
-		return RuleResult.createTrue(degreeModuleToVerify);
-	    }
+	@Override
+	protected RuleResult verifyEnrolmentWithTemporaryEnrolment(ICurricularRule curricularRule, EnrolmentContext enrolmentContext,
+			DegreeModule degreeModuleToVerify, CourseGroup parentCourseGroup) {
+		return verifyEnrolmentWithRules(curricularRule, enrolmentContext, degreeModuleToVerify, parentCourseGroup);
 	}
-
-	return RuleResult.createFalse(degreeModuleToVerify);
-
-    }
-
-    @Override
-    protected RuleResult verifyEnrolmentWithTemporaryEnrolment(ICurricularRule curricularRule, EnrolmentContext enrolmentContext,
-	    DegreeModule degreeModuleToVerify, CourseGroup parentCourseGroup) {
-	return verifyEnrolmentWithRules(curricularRule, enrolmentContext, degreeModuleToVerify, parentCourseGroup);
-    }
 
 }

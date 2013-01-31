@@ -20,36 +20,36 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class DeleteBranches extends FenixService {
 
-    // delete a set of branches
-    @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
-    @Service
-    public static List run(List internalIds, Boolean forceDelete) throws FenixServiceException {
-	Iterator iter = internalIds.iterator();
+	// delete a set of branches
+	@Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
+	@Service
+	public static List run(List internalIds, Boolean forceDelete) throws FenixServiceException {
+		Iterator iter = internalIds.iterator();
 
-	List undeletedCodes = new ArrayList();
-	Integer internalId;
-	Branch branch;
+		List undeletedCodes = new ArrayList();
+		Integer internalId;
+		Branch branch;
 
-	while (iter.hasNext()) {
-	    internalId = (Integer) iter.next();
-	    branch = rootDomainObject.readBranchByOID(internalId);
-	    if (branch != null) {
-		try {
-		    if (branch.getStudentCurricularPlans().isEmpty()) {
-			branch.delete();
-		    } else {
-			if (forceDelete.booleanValue() == true) {
-			    branch.delete();
-			} else {
-			    undeletedCodes.add(branch.getCode());
+		while (iter.hasNext()) {
+			internalId = (Integer) iter.next();
+			branch = rootDomainObject.readBranchByOID(internalId);
+			if (branch != null) {
+				try {
+					if (branch.getStudentCurricularPlans().isEmpty()) {
+						branch.delete();
+					} else {
+						if (forceDelete.booleanValue() == true) {
+							branch.delete();
+						} else {
+							undeletedCodes.add(branch.getCode());
+						}
+					}
+				} catch (DomainException e) {
+					undeletedCodes.add(branch.getCode());
+				}
 			}
-		    }
-		} catch (DomainException e) {
-		    undeletedCodes.add(branch.getCode());
 		}
-	    }
-	}
 
-	return undeletedCodes;
-    }
+		return undeletedCodes;
+	}
 }

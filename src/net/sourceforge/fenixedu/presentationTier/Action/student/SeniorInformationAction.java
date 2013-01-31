@@ -29,48 +29,56 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
  * @author Luis Egidio, luis.egidio@ist.utl.pt
  * 
  */
-@Mapping(module = "student", path = "/seniorInformation", input = "/seniorInformation.do?method=prepare&page=0", scope = "request", parameter = "method")
+@Mapping(
+		module = "student",
+		path = "/seniorInformation",
+		input = "/seniorInformation.do?method=prepare&page=0",
+		scope = "request",
+		parameter = "method")
 @Forwards(value = {
-	@Forward(name = "chooseRegistration", path = "/student/senior/chooseRegistration.jsp", tileProperties = @Tile(title = "private.student.finalists.seniorinformationsheet" )),
-	@Forward(name = "show-result", path = "/student/senior/seniorInfo.jsp", tileProperties = @Tile(title = "private.student.finalists.seniorinformationsheet" )),
-	@Forward(name = "show-form", path = "/student/senior/seniorInfoManagement.jsp", tileProperties = @Tile(title = "private.student.finalists.seniorinformationsheet" )) })
+		@Forward(name = "chooseRegistration", path = "/student/senior/chooseRegistration.jsp", tileProperties = @Tile(
+				title = "private.student.finalists.seniorinformationsheet")),
+		@Forward(name = "show-result", path = "/student/senior/seniorInfo.jsp", tileProperties = @Tile(
+				title = "private.student.finalists.seniorinformationsheet")),
+		@Forward(name = "show-form", path = "/student/senior/seniorInfoManagement.jsp", tileProperties = @Tile(
+				title = "private.student.finalists.seniorinformationsheet")) })
 public class SeniorInformationAction extends FenixDispatchAction {
 
-    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-	    throws Exception {
+	public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
 
-	Registration registration = null;
+		Registration registration = null;
 
-	final Integer registrationOID = getIntegerFromRequest(request, "registrationOID");
-	final Student loggedStudent = getUserView(request).getPerson().getStudent();
+		final Integer registrationOID = getIntegerFromRequest(request, "registrationOID");
+		final Student loggedStudent = getUserView(request).getPerson().getStudent();
 
-	if (registrationOID != null) {
-	    registration = rootDomainObject.readRegistrationByOID(registrationOID);
-	} else if (loggedStudent != null) {
-	    if (loggedStudent.getRegistrations().size() == 1) {
-		registration = loggedStudent.getRegistrations().get(0);
-	    } else {
-		request.setAttribute("student", loggedStudent);
-		return mapping.findForward("chooseRegistration");
-	    }
+		if (registrationOID != null) {
+			registration = rootDomainObject.readRegistrationByOID(registrationOID);
+		} else if (loggedStudent != null) {
+			if (loggedStudent.getRegistrations().size() == 1) {
+				registration = loggedStudent.getRegistrations().get(0);
+			} else {
+				request.setAttribute("student", loggedStudent);
+				return mapping.findForward("chooseRegistration");
+			}
+		}
+
+		if (registration == null) {
+			throw new FenixActionException();
+		} else {
+			final Senior senior = ReadStudentSenior.run(registration);
+			request.setAttribute("senior", senior);
+			return mapping.findForward("show-form");
+		}
 	}
 
-	if (registration == null) {
-	    throw new FenixActionException();
-	} else {
-	    final Senior senior = ReadStudentSenior.run(registration);
-	    request.setAttribute("senior", senior);
-	    return mapping.findForward("show-form");
+	public ActionForward change(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+
+		final IViewState viewState = RenderUtils.getViewState("editSeniorExpectedInfoID");
+		request.setAttribute("senior", viewState.getMetaObject().getObject());
+
+		return mapping.findForward("show-result");
 	}
-    }
-
-    public ActionForward change(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-	    throws Exception {
-
-	final IViewState viewState = RenderUtils.getViewState("editSeniorExpectedInfoID");
-	request.setAttribute("senior", viewState.getMetaObject().getObject());
-
-	return mapping.findForward("show-result");
-    }
 
 }

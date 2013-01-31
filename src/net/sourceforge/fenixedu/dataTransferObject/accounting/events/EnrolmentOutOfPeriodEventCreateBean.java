@@ -4,23 +4,23 @@ import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 
 public class EnrolmentOutOfPeriodEventCreateBean extends AccountingEventCreateBean {
 
-    /**
+	/**
      * 
      */
-    private static final long serialVersionUID = -7857479858097958524L;
+	private static final long serialVersionUID = -7857479858097958524L;
 
-    private Integer numberOfDelayDays;
+	private Integer numberOfDelayDays;
 
-    public EnrolmentOutOfPeriodEventCreateBean(StudentCurricularPlan studentCurricularPlan) {
-	super(studentCurricularPlan);
-    }
+	public EnrolmentOutOfPeriodEventCreateBean(StudentCurricularPlan studentCurricularPlan) {
+		super(studentCurricularPlan);
+	}
 
-    public Integer getNumberOfDelayDays() {
-	return numberOfDelayDays;
-    }
+	public Integer getNumberOfDelayDays() {
+		return numberOfDelayDays;
+	}
 
-    public void setNumberOfDelayDays(Integer numberOfDelayDays) {
-	this.numberOfDelayDays = numberOfDelayDays;
-    }
+	public void setNumberOfDelayDays(Integer numberOfDelayDays) {
+		this.numberOfDelayDays = numberOfDelayDays;
+	}
 
 }

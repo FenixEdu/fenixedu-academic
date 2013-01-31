@@ -8,9 +8,9 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class CreateLibraryCard extends FenixService {
 
-    @Checked("RolePredicates.LIBRARY_PREDICATE")
-    @Service
-    public static LibraryCard run(LibraryCardDTO libraryCardDTO) {
-	return new LibraryCard(libraryCardDTO);
-    }
+	@Checked("RolePredicates.LIBRARY_PREDICATE")
+	@Service
+	public static LibraryCard run(LibraryCardDTO libraryCardDTO) {
+		return new LibraryCard(libraryCardDTO);
+	}
 }

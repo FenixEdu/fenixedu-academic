@@ -4,17 +4,17 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 
 public class QuestionCondition extends QuestionCondition_Base {
 
-    public QuestionCondition() {
-	super();
-	setRootDomainObject(RootDomainObject.getInstance());
-    }
+	public QuestionCondition() {
+		super();
+		setRootDomainObject(RootDomainObject.getInstance());
+	}
 
-    public void delete() {
-	removeInquiryDependentQuestion();
-	removeInquiryGroupQuestion();
-	removeInquiryQuestion();
-	removeRootDomainObject();
-	super.deleteDomainObject();
-    }
+	public void delete() {
+		removeInquiryDependentQuestion();
+		removeInquiryGroupQuestion();
+		removeInquiryQuestion();
+		removeRootDomainObject();
+		super.deleteDomainObject();
+	}
 
 }

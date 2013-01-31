@@ -11,21 +11,21 @@ import java.util.List;
  * 
  */
 public class InfoSiteEvaluationExecutionCourses extends DataTranferObject implements ISiteComponent {
-    protected List infoExecutionCourses;
+	protected List infoExecutionCourses;
 
-    /**
-     * @return Returns the infoExecutionCourses.
-     */
-    public List getInfoExecutionCourses() {
-	return infoExecutionCourses;
-    }
+	/**
+	 * @return Returns the infoExecutionCourses.
+	 */
+	public List getInfoExecutionCourses() {
+		return infoExecutionCourses;
+	}
 
-    /**
-     * @param infoExecutionCourses
-     *            The infoExecutionCourses to set.
-     */
-    public void setInfoExecutionCourses(List infoExecutionCourses) {
-	this.infoExecutionCourses = infoExecutionCourses;
-    }
+	/**
+	 * @param infoExecutionCourses
+	 *            The infoExecutionCourses to set.
+	 */
+	public void setInfoExecutionCourses(List infoExecutionCourses) {
+		this.infoExecutionCourses = infoExecutionCourses;
+	}
 
 }

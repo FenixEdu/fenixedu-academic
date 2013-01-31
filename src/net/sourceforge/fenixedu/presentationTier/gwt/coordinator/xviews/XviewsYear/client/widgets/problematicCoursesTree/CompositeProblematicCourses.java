@@ -5,65 +5,64 @@ import java.util.Map;
 
 import net.sourceforge.fenixedu.presentationTier.gwt.coordinator.xviews.XviewsYear.client.InarServiceAsync;
 import net.sourceforge.fenixedu.presentationTier.gwt.coordinator.xviews.XviewsYear.client.XviewsYear;
-import net.sourceforge.fenixedu.presentationTier.gwt.coordinator.xviews.XviewsYear.client.widgets.FenixLoadingScreenWidget;
 
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
-public class CompositeProblematicCourses extends Composite{
-    
-    private InarServiceAsync inarService;
-    private String eyId;
-    private String dcpId;
-    private String heuristic;
-    private Map<Integer, Map<Integer, List<String>>> executionCourses;
+public class CompositeProblematicCourses extends Composite {
 
-    private XviewsYear window;
-    
-    private VerticalPanel mainPanel;
+	private InarServiceAsync inarService;
+	private String eyId;
+	private String dcpId;
+	private String heuristic;
+	private Map<Integer, Map<Integer, List<String>>> executionCourses;
 
-    public CompositeProblematicCourses(XviewsYear window, int width, int height, String eyId, String dcpId, String heuristic, InarServiceAsync inarService) {
-	super();
-	this.eyId = eyId;
-	this.dcpId = dcpId;
-	this.heuristic = heuristic;
-	this.inarService = inarService;
-	this.window = window;
-	
-	mainPanel = new VerticalPanel();
-	mainPanel.setSpacing(35);
-	initWidget(mainPanel);
-	loadProblematicCourses();
-    }
-    
-    private void loadProblematicCourses() {
-	inarService.getDCPCourses(eyId, dcpId, heuristic, new AsyncCallback<Map<Integer, Map<Integer, List<String>>>>() {
+	private XviewsYear window;
 
-	    @Override
-	    public void onFailure(Throwable caught) {
-		window.notifyServiceFailure();
-		executionCourses = null;
-		
-	    }
+	private VerticalPanel mainPanel;
 
-	    @Override
-	    public void onSuccess(Map<Integer, Map<Integer, List<String>>> result) {
-		executionCourses = result;
-		loadWidget();
-		
-	    }
-	    
-	});
-	
-    }
-    
-    private void loadWidget() {
-	for(int year : executionCourses.keySet()) {
-	    YearBlock yearBlock = new YearBlock(year, executionCourses.get(year), window, inarService);
-	    mainPanel.add(yearBlock);
+	public CompositeProblematicCourses(XviewsYear window, int width, int height, String eyId, String dcpId, String heuristic,
+			InarServiceAsync inarService) {
+		super();
+		this.eyId = eyId;
+		this.dcpId = dcpId;
+		this.heuristic = heuristic;
+		this.inarService = inarService;
+		this.window = window;
+
+		mainPanel = new VerticalPanel();
+		mainPanel.setSpacing(35);
+		initWidget(mainPanel);
+		loadProblematicCourses();
 	}
-	window.widgetReady();
-    }
+
+	private void loadProblematicCourses() {
+		inarService.getDCPCourses(eyId, dcpId, heuristic, new AsyncCallback<Map<Integer, Map<Integer, List<String>>>>() {
+
+			@Override
+			public void onFailure(Throwable caught) {
+				window.notifyServiceFailure();
+				executionCourses = null;
+
+			}
+
+			@Override
+			public void onSuccess(Map<Integer, Map<Integer, List<String>>> result) {
+				executionCourses = result;
+				loadWidget();
+
+			}
+
+		});
+
+	}
+
+	private void loadWidget() {
+		for (int year : executionCourses.keySet()) {
+			YearBlock yearBlock = new YearBlock(year, executionCourses.get(year), window, inarService);
+			mainPanel.add(yearBlock);
+		}
+		window.widgetReady();
+	}
 }

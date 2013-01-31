@@ -26,131 +26,130 @@ import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.
  * <p>
  * If the request contains <code>section=1&grade=16.5</code> then
  * 
- * <code>$N(1) = 1</code> and <code>$N($P(section)) = 1</code> and
- * <code>$N($P(grade), float) = 16.5</code>
+ * <code>$N(1) = 1</code> and <code>$N($P(section)) = 1</code> and <code>$N($P(grade), float) = 16.5</code>
  * 
  * @author cfgi
  */
 public class NumberOperator extends OperatorArgument {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    private static final int NUMBER = 0;
-    private static final int TYPE = 1;
+	private static final int NUMBER = 0;
+	private static final int TYPE = 1;
 
-    protected static enum SupportedType {
-	_short, _int, _long, _float, _double
-    }
-
-    public NumberOperator(Argument number) {
-	super();
-
-	addArgument(number);
-    }
-
-    public NumberOperator(Argument number, Argument type) {
-	super();
-
-	addArgument(number);
-	addArgument(type);
-    }
-
-    public NumberOperator(Integer number) {
-	this(new StaticArgument(number));
-    }
-
-    NumberOperator(GroupContextProvider provider, Argument argument) {
-	this(argument);
-
-	setContextProvider(provider);
-    }
-
-    @Override
-    protected void checkOperatorArguments() {
-	int size = getArguments().size();
-
-	if (size < 1 | size > 2) {
-	    throw new WrongNumberOfArgumentsException(size, 1, 2);
-	}
-    }
-
-    @Override
-    protected Number execute() {
-	String numberValue = getNumberValue();
-	return convertNumber(numberValue.toString());
-    }
-
-    /**
-     * @return the value of the first argument
-     */
-    protected String getNumberValue() {
-	return String.valueOf(argument(NUMBER).getValue());
-    }
-
-    /**
-     * Converts the parameter value to a number of the appropriate type.
-     * 
-     * @param value
-     *            the value to convert
-     * 
-     * @return the the value as a number of the asked type
-     */
-    protected Number convertNumber(String value) {
-	if (value == null || value.length() == 0) {
-	    return null;
+	protected static enum SupportedType {
+		_short, _int, _long, _float, _double
 	}
 
-	SupportedType type = getGivenType();
+	public NumberOperator(Argument number) {
+		super();
 
-	if (type == null) {
-	    type = SupportedType._int;
+		addArgument(number);
 	}
 
-	try {
-	    switch (type) {
-	    case _short:
-		return Short.valueOf(value);
-	    case _int:
-		return Integer.valueOf(value);
-	    case _long:
-		return Byte.valueOf(value);
-	    case _float:
-		return Float.valueOf(value);
-	    case _double:
-		return Double.valueOf(value);
-	    default:
-		throw new RuntimeException();
-	    }
-	} catch (NumberFormatException e) {
-	    throw new GroupDynamicExpressionException("accessControl.group.expression.operator.number.invalid", value);
-	}
-    }
+	public NumberOperator(Argument number, Argument type) {
+		super();
 
-    /**
-     * @return the given type as a value of {@link SupportedType}
-     */
-    protected SupportedType getGivenType() {
-	if (getArguments().size() == 1) {
-	    return null;
+		addArgument(number);
+		addArgument(type);
 	}
 
-	String type = String.valueOf(argument(TYPE).getValue());
-
-	try {
-	    return SupportedType.valueOf("_" + type);
-	} catch (IllegalArgumentException e) {
-	    throw new NumberTypeNotSupported(type);
+	public NumberOperator(Integer number) {
+		this(new StaticArgument(number));
 	}
-    }
 
-    @Override
-    public String getMainValueString() {
-	SupportedType type = getGivenType();
+	NumberOperator(GroupContextProvider provider, Argument argument) {
+		this(argument);
 
-	if (type == null || type.equals(SupportedType._int)) {
-	    return String.format("$N(%s)", argument(NUMBER));
-	} else {
-	    return String.format("$N(%s, '%s')", argument(NUMBER), type.name().substring(1));
+		setContextProvider(provider);
 	}
-    }
+
+	@Override
+	protected void checkOperatorArguments() {
+		int size = getArguments().size();
+
+		if (size < 1 | size > 2) {
+			throw new WrongNumberOfArgumentsException(size, 1, 2);
+		}
+	}
+
+	@Override
+	protected Number execute() {
+		String numberValue = getNumberValue();
+		return convertNumber(numberValue.toString());
+	}
+
+	/**
+	 * @return the value of the first argument
+	 */
+	protected String getNumberValue() {
+		return String.valueOf(argument(NUMBER).getValue());
+	}
+
+	/**
+	 * Converts the parameter value to a number of the appropriate type.
+	 * 
+	 * @param value
+	 *            the value to convert
+	 * 
+	 * @return the the value as a number of the asked type
+	 */
+	protected Number convertNumber(String value) {
+		if (value == null || value.length() == 0) {
+			return null;
+		}
+
+		SupportedType type = getGivenType();
+
+		if (type == null) {
+			type = SupportedType._int;
+		}
+
+		try {
+			switch (type) {
+			case _short:
+				return Short.valueOf(value);
+			case _int:
+				return Integer.valueOf(value);
+			case _long:
+				return Byte.valueOf(value);
+			case _float:
+				return Float.valueOf(value);
+			case _double:
+				return Double.valueOf(value);
+			default:
+				throw new RuntimeException();
+			}
+		} catch (NumberFormatException e) {
+			throw new GroupDynamicExpressionException("accessControl.group.expression.operator.number.invalid", value);
+		}
+	}
+
+	/**
+	 * @return the given type as a value of {@link SupportedType}
+	 */
+	protected SupportedType getGivenType() {
+		if (getArguments().size() == 1) {
+			return null;
+		}
+
+		String type = String.valueOf(argument(TYPE).getValue());
+
+		try {
+			return SupportedType.valueOf("_" + type);
+		} catch (IllegalArgumentException e) {
+			throw new NumberTypeNotSupported(type);
+		}
+	}
+
+	@Override
+	public String getMainValueString() {
+		SupportedType type = getGivenType();
+
+		if (type == null || type.equals(SupportedType._int)) {
+			return String.format("$N(%s)", argument(NUMBER));
+		} else {
+			return String.format("$N(%s, '%s')", argument(NUMBER), type.name().substring(1));
+		}
+	}
 }

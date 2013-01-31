@@ -11,44 +11,44 @@ import org.apache.struts.taglib.logic.ConditionalTagBase;
 
 public class ActivityAvailableTag extends ConditionalTagBase {
 
-    static private final long serialVersionUID = 1L;
+	static private final long serialVersionUID = 1L;
 
-    private Process process;
-    private Class<? extends Activity> activity;
+	private Process process;
+	private Class<? extends Activity> activity;
 
-    public Process getProcess() {
-	return process;
-    }
-
-    public void setProcess(Process process) {
-	this.process = process;
-    }
-
-    public void setProcess(Object object) {
-	setProcess((Process) object);
-    }
-
-    public Class<? extends Activity> getActivity() {
-	return activity;
-    }
-
-    public void setActivity(Class<?> activity) {
-	this.activity = (Class<? extends Activity>) activity;
-    }
-
-    @Override
-    protected boolean condition() throws JspException {
-	final Activity activity = getProcess().getActivity(getActivity());
-
-	if (activity == null) {
-	    throw new JspException("ActivityAvailableTag: activity not found");
+	public Process getProcess() {
+		return process;
 	}
 
-	try {
-	    activity.checkPreConditions(getProcess(), AccessControl.getUserView());
-	    return true;
-	} catch (final PreConditionNotValidException e) {
-	    return false;
+	public void setProcess(Process process) {
+		this.process = process;
 	}
-    }
+
+	public void setProcess(Object object) {
+		setProcess((Process) object);
+	}
+
+	public Class<? extends Activity> getActivity() {
+		return activity;
+	}
+
+	public void setActivity(Class<?> activity) {
+		this.activity = (Class<? extends Activity>) activity;
+	}
+
+	@Override
+	protected boolean condition() throws JspException {
+		final Activity activity = getProcess().getActivity(getActivity());
+
+		if (activity == null) {
+			throw new JspException("ActivityAvailableTag: activity not found");
+		}
+
+		try {
+			activity.checkPreConditions(getProcess(), AccessControl.getUserView());
+			return true;
+		} catch (final PreConditionNotValidException e) {
+			return false;
+		}
+	}
 }

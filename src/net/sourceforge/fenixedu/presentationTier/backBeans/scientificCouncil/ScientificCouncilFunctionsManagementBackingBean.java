@@ -15,32 +15,33 @@ import org.joda.time.YearMonthDay;
 
 public class ScientificCouncilFunctionsManagementBackingBean extends ManagerFunctionsManagementBackingBean {
 
-    protected void getUnitsList(Unit parentUnit, Unit parentUnitParent, StringBuilder buffer, YearMonthDay currentDate) {
+	@Override
+	protected void getUnitsList(Unit parentUnit, Unit parentUnitParent, StringBuilder buffer, YearMonthDay currentDate) {
 
-	openLITag(buffer);
+		openLITag(buffer);
 
-	List<Unit> subUnits = new ArrayList<Unit>(getSubUnits(parentUnit, currentDate));
-	Collections.sort(subUnits, Unit.COMPARATOR_BY_NAME_AND_ID);
+		List<Unit> subUnits = new ArrayList<Unit>(getSubUnits(parentUnit, currentDate));
+		Collections.sort(subUnits, Unit.COMPARATOR_BY_NAME_AND_ID);
 
-	if (!subUnits.isEmpty()) {
-	    putImage(parentUnit, buffer, parentUnitParent);
+		if (!subUnits.isEmpty()) {
+			putImage(parentUnit, buffer, parentUnitParent);
+		}
+
+		buffer.append("<a href=\"").append(getContextPath())
+				.append("/scientificCouncil/functionsManagement/chooseFunction.faces?personID=").append(personID)
+				.append("&unitID=").append(parentUnit.getIdInternal()).append("\">").append(parentUnit.getPresentationName())
+				.append("</a>").append("</li>");
+
+		if (!subUnits.isEmpty()) {
+			openULTag(parentUnit, buffer, parentUnitParent);
+		}
+
+		for (Unit subUnit : subUnits) {
+			getUnitsList(subUnit, parentUnit, buffer, currentDate);
+		}
+
+		if (!subUnits.isEmpty()) {
+			closeULTag(buffer);
+		}
 	}
-
-	buffer.append("<a href=\"").append(getContextPath()).append(
-		"/scientificCouncil/functionsManagement/chooseFunction.faces?personID=").append(personID).append("&unitID=")
-		.append(parentUnit.getIdInternal()).append("\">").append(parentUnit.getPresentationName()).append("</a>").append(
-			"</li>");
-
-	if (!subUnits.isEmpty()) {
-	    openULTag(parentUnit, buffer, parentUnitParent);
-	}
-
-	for (Unit subUnit : subUnits) {
-	    getUnitsList(subUnit, parentUnit, buffer, currentDate);
-	}
-
-	if (!subUnits.isEmpty()) {
-	    closeULTag(buffer);
-	}
-    }
 }

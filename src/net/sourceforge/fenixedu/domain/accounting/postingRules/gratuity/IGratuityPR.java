@@ -5,6 +5,6 @@ import net.sourceforge.fenixedu.util.Money;
 
 public interface IGratuityPR {
 
-    public Money getDefaultGratuityAmount(ExecutionYear executionYear);
+	public Money getDefaultGratuityAmount(ExecutionYear executionYear);
 
 }

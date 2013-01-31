@@ -5,19 +5,19 @@ import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 
 public class HasEnrolmentsOnlyInSecondSemesterPaymentPlanRule implements PaymentPlanRule {
 
-    HasEnrolmentsOnlyInSecondSemesterPaymentPlanRule() {
-    }
-    
-    @Override
-    public boolean isEvaluatedInNotSpecificPaymentRules() {
-        return true;
-    }
+	HasEnrolmentsOnlyInSecondSemesterPaymentPlanRule() {
+	}
 
-    @Override
-    public boolean isAppliableFor(StudentCurricularPlan studentCurricularPlan, ExecutionYear executionYear) {
-	return !studentCurricularPlan.hasAnyEnrolmentForExecutionPeriod(executionYear.getFirstExecutionPeriod())
-		&& studentCurricularPlan.hasAnyEnrolmentForExecutionPeriod(executionYear.getFirstExecutionPeriod()
-			.getNextExecutionPeriod());
-    }
+	@Override
+	public boolean isEvaluatedInNotSpecificPaymentRules() {
+		return true;
+	}
+
+	@Override
+	public boolean isAppliableFor(StudentCurricularPlan studentCurricularPlan, ExecutionYear executionYear) {
+		return !studentCurricularPlan.hasAnyEnrolmentForExecutionPeriod(executionYear.getFirstExecutionPeriod())
+				&& studentCurricularPlan.hasAnyEnrolmentForExecutionPeriod(executionYear.getFirstExecutionPeriod()
+						.getNextExecutionPeriod());
+	}
 
 }

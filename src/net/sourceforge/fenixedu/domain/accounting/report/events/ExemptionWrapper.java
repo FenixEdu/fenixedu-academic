@@ -11,77 +11,77 @@ import pt.utl.ist.fenix.tools.resources.DefaultResourceBundleProvider;
 import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 public class ExemptionWrapper {
-    Exemption exemption;
+	Exemption exemption;
 
-    public ExemptionWrapper(final Exemption exemption) {
-	this.exemption = exemption;
-    }
-
-    public String getExemptionTypeDescription() {
-	Properties formatterProperties = new Properties();
-
-	formatterProperties.put(LabelFormatter.ENUMERATION_RESOURCES, "resources.EnumerationResources");
-	formatterProperties.put(LabelFormatter.APPLICATION_RESOURCES, "resources.ApplicationResources");
-
-	return exemption.getExemptionJustification().getDescription()
-		.toString(new DefaultResourceBundleProvider(formatterProperties));
-    }
-
-    public String getExemptionValue() {
-	if (exemption.isAcademicEventExemption()) {
-	    return "-";
-	} else if (exemption.isGratuityExemption()) {
-	    GratuityExemption gratuityExemption = (GratuityExemption) exemption;
-
-		if (gratuityExemption.isPercentageExemption()) {
-		return "-";
-	    } else if (gratuityExemption.isValueExemption()) {
-		return ((ValueGratuityExemption) gratuityExemption).getValue().toPlainString();
-	    }
-	} else if (exemption.isAdministrativeOfficeFeeAndInsuranceExemption()) {
-	    return "-";
-	} else if (exemption.isInsuranceExemption()) {
-	    return "-";
-	} else if (exemption.isPenaltyExemption()) {
-	    return "-";
-	} else if (exemption.isPhdEventExemption()) {
-	    return ((PhdEventExemption) exemption).getValue().toPlainString();
-	} else if (exemption.isSecondCycleIndividualCandidacyExemption()) {
-	    return "-";
+	public ExemptionWrapper(final Exemption exemption) {
+		this.exemption = exemption;
 	}
 
-	throw new RuntimeException("unknown exemption");
-    }
+	public String getExemptionTypeDescription() {
+		Properties formatterProperties = new Properties();
 
-    public String getPercentage() {
-	if (exemption.isAcademicEventExemption()) {
-	    return "-";
-	} else if (exemption.isGratuityExemption()) {
-	    GratuityExemption gratuityExemption = (GratuityExemption) exemption;
+		formatterProperties.put(LabelFormatter.ENUMERATION_RESOURCES, "resources.EnumerationResources");
+		formatterProperties.put(LabelFormatter.APPLICATION_RESOURCES, "resources.ApplicationResources");
 
-	    if (gratuityExemption.isPercentageExemption()) {
-		return ((PercentageGratuityExemption) gratuityExemption).getPercentage().toString();
-	    } else if (gratuityExemption.isValueExemption()) {
-		return "-";
-
-	    }
-	} else if (exemption.isAdministrativeOfficeFeeAndInsuranceExemption()) {
-	    return "-";
-	} else if (exemption.isInsuranceExemption()) {
-	    return "-";
-	} else if (exemption.isPenaltyExemption()) {
-	    return "-";
-	} else if (exemption.isPhdEventExemption()) {
-	    return "-";
-	} else if (exemption.isSecondCycleIndividualCandidacyExemption()) {
-	    return "-";
+		return exemption.getExemptionJustification().getDescription()
+				.toString(new DefaultResourceBundleProvider(formatterProperties));
 	}
 
-	throw new RuntimeException("unknown exemption");
-    }
+	public String getExemptionValue() {
+		if (exemption.isAcademicEventExemption()) {
+			return "-";
+		} else if (exemption.isGratuityExemption()) {
+			GratuityExemption gratuityExemption = (GratuityExemption) exemption;
 
-    public String getJustification() {
-	return exemption.getExemptionJustification().getReason();
-    }
+			if (gratuityExemption.isPercentageExemption()) {
+				return "-";
+			} else if (gratuityExemption.isValueExemption()) {
+				return ((ValueGratuityExemption) gratuityExemption).getValue().toPlainString();
+			}
+		} else if (exemption.isAdministrativeOfficeFeeAndInsuranceExemption()) {
+			return "-";
+		} else if (exemption.isInsuranceExemption()) {
+			return "-";
+		} else if (exemption.isPenaltyExemption()) {
+			return "-";
+		} else if (exemption.isPhdEventExemption()) {
+			return ((PhdEventExemption) exemption).getValue().toPlainString();
+		} else if (exemption.isSecondCycleIndividualCandidacyExemption()) {
+			return "-";
+		}
+
+		throw new RuntimeException("unknown exemption");
+	}
+
+	public String getPercentage() {
+		if (exemption.isAcademicEventExemption()) {
+			return "-";
+		} else if (exemption.isGratuityExemption()) {
+			GratuityExemption gratuityExemption = (GratuityExemption) exemption;
+
+			if (gratuityExemption.isPercentageExemption()) {
+				return ((PercentageGratuityExemption) gratuityExemption).getPercentage().toString();
+			} else if (gratuityExemption.isValueExemption()) {
+				return "-";
+
+			}
+		} else if (exemption.isAdministrativeOfficeFeeAndInsuranceExemption()) {
+			return "-";
+		} else if (exemption.isInsuranceExemption()) {
+			return "-";
+		} else if (exemption.isPenaltyExemption()) {
+			return "-";
+		} else if (exemption.isPhdEventExemption()) {
+			return "-";
+		} else if (exemption.isSecondCycleIndividualCandidacyExemption()) {
+			return "-";
+		}
+
+		throw new RuntimeException("unknown exemption");
+	}
+
+	public String getJustification() {
+		return exemption.getExemptionJustification().getReason();
+	}
 
 }

@@ -23,24 +23,24 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class ReadExecutionDegreesOfTypeDegree extends FenixService {
 
-    @Checked("RolePredicates.TEACHER_PREDICATE")
-    @Service
-    public static List run() {
-	String year = ExecutionYear.readCurrentExecutionYear().getYear();
-	List executionDegrees = ExecutionDegree.getAllByExecutionYearAndDegreeType(year, DegreeType.DEGREE);
+	@Checked("RolePredicates.TEACHER_PREDICATE")
+	@Service
+	public static List run() {
+		String year = ExecutionYear.readCurrentExecutionYear().getYear();
+		List executionDegrees = ExecutionDegree.getAllByExecutionYearAndDegreeType(year, DegreeType.DEGREE);
 
-	List infoExecutionDegrees = new ArrayList();
+		List infoExecutionDegrees = new ArrayList();
 
-	if (executionDegrees != null) {
-	    Iterator iterator = executionDegrees.iterator();
-	    while (iterator.hasNext()) {
-		ExecutionDegree executionDegree = (ExecutionDegree) iterator.next();
-		InfoExecutionDegree infoExecutionDegree = InfoExecutionDegree.newInfoFromDomain(executionDegree);
+		if (executionDegrees != null) {
+			Iterator iterator = executionDegrees.iterator();
+			while (iterator.hasNext()) {
+				ExecutionDegree executionDegree = (ExecutionDegree) iterator.next();
+				InfoExecutionDegree infoExecutionDegree = InfoExecutionDegree.newInfoFromDomain(executionDegree);
 
-		infoExecutionDegrees.add(infoExecutionDegree);
-	    }
+				infoExecutionDegrees.add(infoExecutionDegree);
+			}
+		}
+
+		return infoExecutionDegrees;
 	}
-
-	return infoExecutionDegrees;
-    }
 }

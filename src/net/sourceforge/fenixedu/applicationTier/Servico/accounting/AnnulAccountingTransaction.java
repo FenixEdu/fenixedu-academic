@@ -8,11 +8,11 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class AnnulAccountingTransaction extends FenixService {
 
-    @Checked("AcademicPredicates.MANAGE_PAYMENTS")
-    @Service
-    public static void run(final Employee employee, final AnnulAccountingTransactionBean annulAccountingTransactionBean) {
-	annulAccountingTransactionBean.getTransaction().annul(employee.getPerson().getUser(),
-		annulAccountingTransactionBean.getReason());
-    }
+	@Checked("AcademicPredicates.MANAGE_PAYMENTS")
+	@Service
+	public static void run(final Employee employee, final AnnulAccountingTransactionBean annulAccountingTransactionBean) {
+		annulAccountingTransactionBean.getTransaction().annul(employee.getPerson().getUser(),
+				annulAccountingTransactionBean.getReason());
+	}
 
 }

@@ -8,68 +8,68 @@ import net.sourceforge.fenixedu.util.EnrolmentAction;
 
 public class OptionalDismissal extends OptionalDismissal_Base {
 
-    public OptionalDismissal() {
-	super();
-    }
-
-    public OptionalDismissal(Credits credits, CurriculumGroup curriculumGroup, OptionalCurricularCourse optionalCurricularCourse,
-	    Double ectsCredits) {
-	init(credits, curriculumGroup, optionalCurricularCourse, ectsCredits);
-	createCurriculumLineLog(EnrolmentAction.ENROL);
-    }
-
-    protected void init(Credits credits, CurriculumGroup curriculumGroup, OptionalCurricularCourse optionalCurricularCourse,
-	    Double ectsCredits) {
-	init(credits, curriculumGroup, optionalCurricularCourse);
-	checkCredits(ectsCredits);
-	setEctsCredits(ectsCredits);
-    }
-
-    private void checkCredits(final Double ectsCredits) {
-	if (ectsCredits == null || ectsCredits.doubleValue() == 0) {
-	    throw new DomainException("error.OptionalDismissal.invalid.credits");
+	public OptionalDismissal() {
+		super();
 	}
-    }
 
-    @Override
-    public OptionalCurricularCourse getCurricularCourse() {
-	return (OptionalCurricularCourse) super.getCurricularCourse();
-    }
-
-    @Override
-    public void setDegreeModule(final DegreeModule degreeModule) {
-	if (degreeModule != null && !(degreeModule instanceof OptionalCurricularCourse)) {
-	    throw new DomainException("error.optionalDismissal.DegreeModuleCanOnlyBeOptionalCurricularCourse");
+	public OptionalDismissal(Credits credits, CurriculumGroup curriculumGroup, OptionalCurricularCourse optionalCurricularCourse,
+			Double ectsCredits) {
+		init(credits, curriculumGroup, optionalCurricularCourse, ectsCredits);
+		createCurriculumLineLog(EnrolmentAction.ENROL);
 	}
-	super.setDegreeModule(degreeModule);
-    }
 
-    @Override
-    public StringBuilder print(String tabs) {
-	final StringBuilder builder = new StringBuilder();
-	builder.append(tabs);
-	builder.append("[OD ").append(hasDegreeModule() ? getDegreeModule().getName() : "").append(" ]\n");
-	return builder;
-    }
+	protected void init(Credits credits, CurriculumGroup curriculumGroup, OptionalCurricularCourse optionalCurricularCourse,
+			Double ectsCredits) {
+		init(credits, curriculumGroup, optionalCurricularCourse);
+		checkCredits(ectsCredits);
+		setEctsCredits(ectsCredits);
+	}
 
-    @Override
-    public boolean isSimilar(Dismissal dismissal) {
-	return dismissal instanceof OptionalDismissal && super.isSimilar(dismissal)
-		&& hasSameEctsCredits((OptionalDismissal) dismissal);
-    }
+	private void checkCredits(final Double ectsCredits) {
+		if (ectsCredits == null || ectsCredits.doubleValue() == 0) {
+			throw new DomainException("error.OptionalDismissal.invalid.credits");
+		}
+	}
 
-    private boolean hasSameEctsCredits(OptionalDismissal dismissal) {
-	return getEctsCredits().equals(dismissal.getEctsCredits());
-    }
+	@Override
+	public OptionalCurricularCourse getCurricularCourse() {
+		return (OptionalCurricularCourse) super.getCurricularCourse();
+	}
 
-    @Override
-    protected void createCurriculumLineLog(final EnrolmentAction action) {
-	new OptionalDismissalLog(action, getRegistration(), getCurricularCourse(), getCredits(), getEctsCredits(),
-		getExecutionPeriod(), getCurrentUser());
-    }
+	@Override
+	public void setDegreeModule(final DegreeModule degreeModule) {
+		if (degreeModule != null && !(degreeModule instanceof OptionalCurricularCourse)) {
+			throw new DomainException("error.optionalDismissal.DegreeModuleCanOnlyBeOptionalCurricularCourse");
+		}
+		super.setDegreeModule(degreeModule);
+	}
 
-    @Override
-    public boolean isOptional() {
-	return true;
-    }
+	@Override
+	public StringBuilder print(String tabs) {
+		final StringBuilder builder = new StringBuilder();
+		builder.append(tabs);
+		builder.append("[OD ").append(hasDegreeModule() ? getDegreeModule().getName() : "").append(" ]\n");
+		return builder;
+	}
+
+	@Override
+	public boolean isSimilar(Dismissal dismissal) {
+		return dismissal instanceof OptionalDismissal && super.isSimilar(dismissal)
+				&& hasSameEctsCredits((OptionalDismissal) dismissal);
+	}
+
+	private boolean hasSameEctsCredits(OptionalDismissal dismissal) {
+		return getEctsCredits().equals(dismissal.getEctsCredits());
+	}
+
+	@Override
+	protected void createCurriculumLineLog(final EnrolmentAction action) {
+		new OptionalDismissalLog(action, getRegistration(), getCurricularCourse(), getCredits(), getEctsCredits(),
+				getExecutionPeriod(), getCurrentUser());
+	}
+
+	@Override
+	public boolean isOptional() {
+		return true;
+	}
 }

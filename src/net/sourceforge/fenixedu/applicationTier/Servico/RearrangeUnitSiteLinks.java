@@ -8,12 +8,12 @@ import net.sourceforge.fenixedu.domain.UnitSiteLink;
 
 public class RearrangeUnitSiteLinks extends FenixService {
 
-    public void run(UnitSite site, Boolean top, List<UnitSiteLink> links) {
-	if (top) {
-	    site.setTopLinksOrder(links);
-	} else {
-	    site.setFooterLinksOrder(links);
+	public void run(UnitSite site, Boolean top, List<UnitSiteLink> links) {
+		if (top) {
+			site.setTopLinksOrder(links);
+		} else {
+			site.setFooterLinksOrder(links);
+		}
 	}
-    }
 
 }

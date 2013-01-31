@@ -20,25 +20,25 @@ import pt.ist.fenixframework.pstm.IllegalWriteException;
  */
 public class DeleteObjectByOID extends FenixService {
 
-    @Checked("RolePredicates.MANAGER_PREDICATE")
-    @Service
-    public static Boolean run(Class clazz, Integer idInternal) throws FenixServiceException {
-	try {
-	    MethodUtils.invokeMethod(rootDomainObject.readDomainObjectByOID(clazz, idInternal), "delete", null);
-	} catch (InvocationTargetException e) {
-	    if (e.getTargetException() != null) {
-		if (e.getTargetException() instanceof IllegalWriteException) {
-		    throw ((IllegalWriteException) e.getTargetException());
+	@Checked("RolePredicates.MANAGER_PREDICATE")
+	@Service
+	public static Boolean run(Class clazz, Integer idInternal) throws FenixServiceException {
+		try {
+			MethodUtils.invokeMethod(rootDomainObject.readDomainObjectByOID(clazz, idInternal), "delete", null);
+		} catch (InvocationTargetException e) {
+			if (e.getTargetException() != null) {
+				if (e.getTargetException() instanceof IllegalWriteException) {
+					throw ((IllegalWriteException) e.getTargetException());
+				}
+				throw new FenixServiceException(e.getTargetException());
+			}
+			throw new FenixServiceException(e);
+		} catch (NoSuchMethodException e) {
+			throw new FenixServiceException(e);
+		} catch (IllegalAccessException e) {
+			throw new FenixServiceException(e);
 		}
-		throw new FenixServiceException(e.getTargetException());
-	    }
-	    throw new FenixServiceException(e);
-	} catch (NoSuchMethodException e) {
-	    throw new FenixServiceException(e);
-	} catch (IllegalAccessException e) {
-	    throw new FenixServiceException(e);
-	}
 
-	return true;
-    }
+		return true;
+	}
 }

@@ -19,66 +19,67 @@ import pt.utl.ist.berserk.ServiceResponse;
  */
 public class ReadCandidateEnrolmentsByCandidateIDAuthorizationFilter extends Filtro {
 
-    public ReadCandidateEnrolmentsByCandidateIDAuthorizationFilter() {
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see
-     * pt.utl.ist.berserk.logic.filterManager.IFilter#execute(pt.utl.ist.berserk
-     * .ServiceRequest, pt.utl.ist.berserk.ServiceResponse)
-     */
-    public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
-	IUserView id = getRemoteUser(request);
-	Object[] argumentos = getServiceCallArguments(request);
-	if ((id != null && id.getRoleTypes() != null && !containsRoleType(id.getRoleTypes()))
-		|| (id != null && id.getRoleTypes() != null && !hasPrivilege(id, argumentos)) || (id == null)
-		|| (id.getRoleTypes() == null)) {
-	    throw new NotAuthorizedFilterException();
-	}
-    }
-
-    /**
-     * @return The Needed Roles to Execute The Service
-     */
-    @Override
-    protected Collection<RoleType> getNeededRoleTypes() {
-	List<RoleType> roles = new ArrayList<RoleType>();
-	roles.add(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE);
-	roles.add(RoleType.COORDINATOR);
-	return roles;
-    }
-
-    /**
-     * @param id
-     * @param argumentos
-     * @return
-     */
-    private boolean hasPrivilege(IUserView id, Object[] arguments) {
-	if (id.hasRoleType(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE)) {
-	    return true;
+	public ReadCandidateEnrolmentsByCandidateIDAuthorizationFilter() {
 	}
 
-	if (id.hasRoleType(RoleType.COORDINATOR)) {
-	    final Person person = id.getPerson();
-	    // Read The ExecutionDegree
-	    Integer candidateID = (Integer) arguments[0];
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * pt.utl.ist.berserk.logic.filterManager.IFilter#execute(pt.utl.ist.berserk
+	 * .ServiceRequest, pt.utl.ist.berserk.ServiceResponse)
+	 */
+	@Override
+	public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
+		IUserView id = getRemoteUser(request);
+		Object[] argumentos = getServiceCallArguments(request);
+		if ((id != null && id.getRoleTypes() != null && !containsRoleType(id.getRoleTypes()))
+				|| (id != null && id.getRoleTypes() != null && !hasPrivilege(id, argumentos)) || (id == null)
+				|| (id.getRoleTypes() == null)) {
+			throw new NotAuthorizedFilterException();
+		}
+	}
 
-	    MasterDegreeCandidate masterDegreeCandidate = rootDomainObject.readMasterDegreeCandidateByOID(candidateID);
+	/**
+	 * @return The Needed Roles to Execute The Service
+	 */
+	@Override
+	protected Collection<RoleType> getNeededRoleTypes() {
+		List<RoleType> roles = new ArrayList<RoleType>();
+		roles.add(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE);
+		roles.add(RoleType.COORDINATOR);
+		return roles;
+	}
 
-	    if (masterDegreeCandidate == null) {
-		return false;
-	    }
+	/**
+	 * @param id
+	 * @param argumentos
+	 * @return
+	 */
+	private boolean hasPrivilege(IUserView id, Object[] arguments) {
+		if (id.hasRoleType(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE)) {
+			return true;
+		}
 
-	    // modified by Tânia Pousão
-	    Coordinator coordinator = masterDegreeCandidate.getExecutionDegree().getCoordinatorByTeacher(person);
-	    if (coordinator != null) {
+		if (id.hasRoleType(RoleType.COORDINATOR)) {
+			final Person person = id.getPerson();
+			// Read The ExecutionDegree
+			Integer candidateID = (Integer) arguments[0];
+
+			MasterDegreeCandidate masterDegreeCandidate = rootDomainObject.readMasterDegreeCandidateByOID(candidateID);
+
+			if (masterDegreeCandidate == null) {
+				return false;
+			}
+
+			// modified by Tânia Pousão
+			Coordinator coordinator = masterDegreeCandidate.getExecutionDegree().getCoordinatorByTeacher(person);
+			if (coordinator != null) {
+				return true;
+			}
+			return false;
+		}
 		return true;
-	    }
-	    return false;
 	}
-	return true;
-    }
 
 }

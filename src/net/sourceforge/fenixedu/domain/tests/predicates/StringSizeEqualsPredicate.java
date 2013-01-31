@@ -8,38 +8,41 @@ import net.sourceforge.fenixedu.domain.tests.NewStringQuestion;
 import net.sourceforge.fenixedu.presentationTier.Action.teacher.tests.PredicateBean;
 
 public class StringSizeEqualsPredicate extends AtomicPredicate implements Predicate {
-    private final int size;
+	private final int size;
 
-    public StringSizeEqualsPredicate(int size) {
-	super();
+	public StringSizeEqualsPredicate(int size) {
+		super();
 
-	this.size = size;
-    }
-
-    public StringSizeEqualsPredicate(PredicateBean predicateBean) {
-	this(predicateBean.getSize());
-    }
-
-    public boolean evaluate(NewQuestion question, Person person) {
-	NewStringQuestion stringQuestion = (NewStringQuestion) question;
-
-	if (!stringQuestion.isAnswered(person)) {
-	    return false;
+		this.size = size;
 	}
 
-	return stringQuestion.getStringAnswer(person).length() == size;
-    }
+	public StringSizeEqualsPredicate(PredicateBean predicateBean) {
+		this(predicateBean.getSize());
+	}
 
-    public int getSize() {
-	return size;
-    }
+	@Override
+	public boolean evaluate(NewQuestion question, Person person) {
+		NewStringQuestion stringQuestion = (NewStringQuestion) question;
 
-    public boolean uses(Object object) {
-	return false;
-    }
+		if (!stringQuestion.isAnswered(person)) {
+			return false;
+		}
 
-    public Predicate transform(HashMap<Object, Object> transformMap) {
-	return new StringSizeEqualsPredicate(getSize());
-    }
+		return stringQuestion.getStringAnswer(person).length() == size;
+	}
+
+	public int getSize() {
+		return size;
+	}
+
+	@Override
+	public boolean uses(Object object) {
+		return false;
+	}
+
+	@Override
+	public Predicate transform(HashMap<Object, Object> transformMap) {
+		return new StringSizeEqualsPredicate(getSize());
+	}
 
 }

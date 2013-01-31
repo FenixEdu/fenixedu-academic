@@ -21,71 +21,69 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
  * @author Leonor Almeida
  * @author Sergio Montelobo
  * 
  */
-@Mapping(module = "coordinator", path = "/teachersInformation", attribute = "teacherInformationForm", formBean = "teacherInformationForm", scope = "request")
+@Mapping(
+		module = "coordinator",
+		path = "/teachersInformation",
+		attribute = "teacherInformationForm",
+		formBean = "teacherInformationForm",
+		scope = "request")
 @Forwards(value = { @Forward(name = "show", path = "/coordinator/teachers/viewTeachersInformation.jsp") })
 public class ReadTeachersInformationAction extends FenixAction {
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @seeorg.apache.struts.action.Action#execute(org.apache.struts.action.
-     * ActionMapping, org.apache.struts.action.ActionForm,
-     * javax.servlet.http.HttpServletRequest,
-     * javax.servlet.http.HttpServletResponse)
-     */
-    public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-	CoordinatedDegreeInfo.setCoordinatorContext(request);
-	Integer degreeCurricularPlanID = (Integer) request.getAttribute("degreeCurricularPlanID");
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @seeorg.apache.struts.action.Action#execute(org.apache.struts.action.
+	 * ActionMapping, org.apache.struts.action.ActionForm,
+	 * javax.servlet.http.HttpServletRequest,
+	 * javax.servlet.http.HttpServletResponse)
+	 */
+	@Override
+	public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		CoordinatedDegreeInfo.setCoordinatorContext(request);
+		Integer degreeCurricularPlanID = (Integer) request.getAttribute("degreeCurricularPlanID");
 
-	Integer executionDegreeID = new Integer(request.getParameter("executionDegreeId"));
-	request.setAttribute("executionDegreeId", executionDegreeID);
+		Integer executionDegreeID = new Integer(request.getParameter("executionDegreeId"));
+		request.setAttribute("executionDegreeId", executionDegreeID);
 
-	// Lists all years attatched to the degree curricular plan
-	List executionYearList = (List) ReadExecutionYearsByDegreeCurricularPlanID.run(degreeCurricularPlanID);
+		// Lists all years attatched to the degree curricular plan
+		List executionYearList = ReadExecutionYearsByDegreeCurricularPlanID.run(degreeCurricularPlanID);
 
-	List executionYearsLabelValueList = new ArrayList();
-	for (int i = 0; i < executionYearList.size(); i++) {
-	    InfoExecutionYear infoExecutionYear = (InfoExecutionYear) executionYearList.get(i);
-	    executionYearsLabelValueList.add(new LabelValueBean(infoExecutionYear.getYear(), infoExecutionYear.getYear()));
+		List executionYearsLabelValueList = new ArrayList();
+		for (int i = 0; i < executionYearList.size(); i++) {
+			InfoExecutionYear infoExecutionYear = (InfoExecutionYear) executionYearList.get(i);
+			executionYearsLabelValueList.add(new LabelValueBean(infoExecutionYear.getYear(), infoExecutionYear.getYear()));
+		}
+
+		request.setAttribute("executionYearList", executionYearsLabelValueList);
+
+		DynaActionForm teacherInformationForm = (DynaActionForm) actionForm;
+		String yearString = (String) teacherInformationForm.get("yearString");
+		List infoSiteTeachersInformation = null;
+
+		if (yearString.equalsIgnoreCase("") || yearString == null) {
+			// show user option
+			teacherInformationForm.set("yearString",
+					((InfoExecutionYear) executionYearList.get(executionYearList.size() - 1)).getYear());
+		}
+
+		Object[] args = { executionDegreeID, Boolean.FALSE, yearString };
+		infoSiteTeachersInformation = (List) ServiceUtils.executeService("ReadTeachersInformation", args);
+
+		request.setAttribute("infoSiteTeachersInformation", infoSiteTeachersInformation);
+
+		return mapping.findForward("show");
 	}
-
-	request.setAttribute("executionYearList", executionYearsLabelValueList);
-
-	DynaActionForm teacherInformationForm = (DynaActionForm) actionForm;
-	String yearString = (String) teacherInformationForm.get("yearString");
-	List infoSiteTeachersInformation = null;
-
-	if (yearString.equalsIgnoreCase("") || yearString == null) {
-	    // show user option
-	    teacherInformationForm.set("yearString", ((InfoExecutionYear) executionYearList.get(executionYearList.size() - 1))
-		    .getYear());
-	}
-
-	Object[] args = { executionDegreeID, Boolean.FALSE, yearString };
-	infoSiteTeachersInformation = (List) ServiceUtils.executeService("ReadTeachersInformation", args);
-
-	request.setAttribute("infoSiteTeachersInformation", infoSiteTeachersInformation);
-
-	return mapping.findForward("show");
-    }
 
 }

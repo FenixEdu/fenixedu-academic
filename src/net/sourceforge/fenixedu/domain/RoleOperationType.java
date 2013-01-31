@@ -1,9 +1,9 @@
 package net.sourceforge.fenixedu.domain;
 
 public enum RoleOperationType {
-    ADD, REMOVE;
+	ADD, REMOVE;
 
-    public String getName() {
-	return name();
-    }
+	public String getName() {
+		return name();
+	}
 }

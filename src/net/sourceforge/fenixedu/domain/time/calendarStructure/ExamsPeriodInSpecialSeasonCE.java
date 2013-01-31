@@ -6,20 +6,20 @@ import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class ExamsPeriodInSpecialSeasonCE extends ExamsPeriodInSpecialSeasonCE_Base {
 
-    public ExamsPeriodInSpecialSeasonCE(AcademicCalendarEntry academicCalendarEntry, MultiLanguageString title,
-	    MultiLanguageString description, DateTime begin, DateTime end, AcademicCalendarRootEntry rootEntry) {
+	public ExamsPeriodInSpecialSeasonCE(AcademicCalendarEntry academicCalendarEntry, MultiLanguageString title,
+			MultiLanguageString description, DateTime begin, DateTime end, AcademicCalendarRootEntry rootEntry) {
 
-	super();
-	super.initEntry(academicCalendarEntry, title, description, begin, end, rootEntry);
-    }
+		super();
+		super.initEntry(academicCalendarEntry, title, description, begin, end, rootEntry);
+	}
 
-    private ExamsPeriodInSpecialSeasonCE(AcademicCalendarEntry parentEntry, ExamsPeriodCE examsPeriodCE) {
-	super();
-	super.initVirtualEntry(parentEntry, examsPeriodCE);
-    }
+	private ExamsPeriodInSpecialSeasonCE(AcademicCalendarEntry parentEntry, ExamsPeriodCE examsPeriodCE) {
+		super();
+		super.initVirtualEntry(parentEntry, examsPeriodCE);
+	}
 
-    @Override
-    protected AcademicCalendarEntry createVirtualEntry(AcademicCalendarEntry parentEntry) {
-	return new ExamsPeriodInSpecialSeasonCE(parentEntry, this);
-    }
+	@Override
+	protected AcademicCalendarEntry createVirtualEntry(AcademicCalendarEntry parentEntry) {
+		return new ExamsPeriodInSpecialSeasonCE(parentEntry, this);
+	}
 }

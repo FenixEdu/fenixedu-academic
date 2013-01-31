@@ -11,158 +11,161 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 
 public class AlumniSearchBean extends AlumniMailSendToBean {
 
-    private int totalItems;
+	private int totalItems;
 
-    private String name;
-    private Integer studentNumber;
-    private String documentIdNumber;
-    private Degree degree;
-    private List<Registration> alumni;
-    private String email;
-    private String mobileNumber;
-    private String telephoneNumber;
-    private ExecutionYear firstExecutionYear;
-    private ExecutionYear finalExecutionYear;
+	private String name;
+	private Integer studentNumber;
+	private String documentIdNumber;
+	private Degree degree;
+	private List<Registration> alumni;
+	private String email;
+	private String mobileNumber;
+	private String telephoneNumber;
+	private ExecutionYear firstExecutionYear;
+	private ExecutionYear finalExecutionYear;
 
-    public AlumniSearchBean() {
-	this("", ExecutionYear.readFirstExecutionYear(), ExecutionYear.readLastExecutionYear());
-    }
-
-    public AlumniSearchBean(DegreeType degreeType, String name, ExecutionYear firstYear, ExecutionYear lastYear) {
-	this(name, firstYear, lastYear);
-	setDegreeType(degreeType);
-    }
-
-    public AlumniSearchBean(String name, ExecutionYear firstYear, ExecutionYear lastYear) {
-	setName(name);
-	setFirstExecutionYear(firstYear);
-	setFinalExecutionYear(lastYear);
-	setDegreeType(null);
-    }
-
-    public List<Registration> getAlumni() {
-	if (this.alumni == null)
-	    return null;
-	List<Registration> alumni = new ArrayList<Registration>();
-	for (Registration reference : this.alumni) {
-	    alumni.add(reference);
-	}
-	return alumni;
-    }
-
-    public void setAlumni(List<Registration> alumni) {
-	if (this.alumni == null) {
-	    this.alumni = new ArrayList<Registration>(alumni.size());
-	} else {
-	    this.alumni.clear();
+	public AlumniSearchBean() {
+		this("", ExecutionYear.readFirstExecutionYear(), ExecutionYear.readLastExecutionYear());
 	}
 
-	for (Registration person : alumni) {
-	    this.alumni.add(person);
+	public AlumniSearchBean(DegreeType degreeType, String name, ExecutionYear firstYear, ExecutionYear lastYear) {
+		this(name, firstYear, lastYear);
+		setDegreeType(degreeType);
 	}
-    }
 
-    public String getName() {
-	return name;
-    }
-
-    public void setName(String name) {
-	this.name = name;
-    }
-
-    public String getSearchElementsAsParameters() {
-	String urlParameters = "&amp;beansearch=" + this.getDegreeType() + ":" + this.getName() + ":";
-	urlParameters += (this.getFirstExecutionYear() == null ? "null" : this.getFirstExecutionYear().getIdInternal()) + ":";
-	urlParameters += (this.getFinalExecutionYear() == null ? "null" : this.getFinalExecutionYear().getIdInternal());
-	return urlParameters;
-    }
-
-    public static AlumniSearchBean getBeanFromParameters(String requestParameter) {
-	final String[] values = requestParameter.split(":");
-	final String firstYear = values[2];
-	final String finalYear = values[3];
-
-	ExecutionYear first = (firstYear.equals("null") ? ExecutionYear.readFirstExecutionYear() : RootDomainObject.getInstance()
-		.readExecutionYearByOID(Integer.valueOf(firstYear)));
-	ExecutionYear last = (finalYear.equals("null") ? ExecutionYear.readLastExecutionYear() : RootDomainObject.getInstance()
-		.readExecutionYearByOID(Integer.valueOf(finalYear)));
-
-	if (values[0].equals("null")) {
-	    return new AlumniSearchBean(values[1], first, last);
-	} else {
-	    return new AlumniSearchBean(DegreeType.valueOf(values[0]), values[1], first, last);
+	public AlumniSearchBean(String name, ExecutionYear firstYear, ExecutionYear lastYear) {
+		setName(name);
+		setFirstExecutionYear(firstYear);
+		setFinalExecutionYear(lastYear);
+		setDegreeType(null);
 	}
-    }
 
-    public ExecutionYear getFinalExecutionYear() {
-        return finalExecutionYear;
-    }
+	public List<Registration> getAlumni() {
+		if (this.alumni == null) {
+			return null;
+		}
+		List<Registration> alumni = new ArrayList<Registration>();
+		for (Registration reference : this.alumni) {
+			alumni.add(reference);
+		}
+		return alumni;
+	}
 
-    public void setFinalExecutionYear(ExecutionYear finalExecutionYear) {
-        this.finalExecutionYear = finalExecutionYear;
-    }
+	public void setAlumni(List<Registration> alumni) {
+		if (this.alumni == null) {
+			this.alumni = new ArrayList<Registration>(alumni.size());
+		} else {
+			this.alumni.clear();
+		}
 
-    public ExecutionYear getFirstExecutionYear() {
-        return firstExecutionYear;
-    }
+		for (Registration person : alumni) {
+			this.alumni.add(person);
+		}
+	}
 
-    public void setFirstExecutionYear(ExecutionYear firstExecutionYear) {
-        this.firstExecutionYear = firstExecutionYear;
-    }
-    
-    public int getTotalItems() {
-	return totalItems;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public void setTotalItems(int totalItems) {
-	this.totalItems = totalItems;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    public Degree getDegree() {
-	return this.degree;
-    }
+	public String getSearchElementsAsParameters() {
+		String urlParameters = "&amp;beansearch=" + this.getDegreeType() + ":" + this.getName() + ":";
+		urlParameters += (this.getFirstExecutionYear() == null ? "null" : this.getFirstExecutionYear().getIdInternal()) + ":";
+		urlParameters += (this.getFinalExecutionYear() == null ? "null" : this.getFinalExecutionYear().getIdInternal());
+		return urlParameters;
+	}
 
-    public void setDegree(Degree degree) {
-	this.degree = degree;
-    }
+	public static AlumniSearchBean getBeanFromParameters(String requestParameter) {
+		final String[] values = requestParameter.split(":");
+		final String firstYear = values[2];
+		final String finalYear = values[3];
 
-    public Integer getStudentNumber() {
-	return studentNumber;
-    }
+		ExecutionYear first =
+				(firstYear.equals("null") ? ExecutionYear.readFirstExecutionYear() : RootDomainObject.getInstance()
+						.readExecutionYearByOID(Integer.valueOf(firstYear)));
+		ExecutionYear last =
+				(finalYear.equals("null") ? ExecutionYear.readLastExecutionYear() : RootDomainObject.getInstance()
+						.readExecutionYearByOID(Integer.valueOf(finalYear)));
 
-    public void setStudentNumber(Integer studentNumber) {
-	this.studentNumber = studentNumber;
-    }
+		if (values[0].equals("null")) {
+			return new AlumniSearchBean(values[1], first, last);
+		} else {
+			return new AlumniSearchBean(DegreeType.valueOf(values[0]), values[1], first, last);
+		}
+	}
 
-    public String getDocumentIdNumber() {
-	return documentIdNumber;
-    }
+	public ExecutionYear getFinalExecutionYear() {
+		return finalExecutionYear;
+	}
 
-    public void setDocumentIdNumber(String documentIdNumber) {
-	this.documentIdNumber = documentIdNumber;
-    }
+	public void setFinalExecutionYear(ExecutionYear finalExecutionYear) {
+		this.finalExecutionYear = finalExecutionYear;
+	}
 
-    public String getEmail() {
-	return email;
-    }
+	public ExecutionYear getFirstExecutionYear() {
+		return firstExecutionYear;
+	}
 
-    public void setEmail(String email) {
-	this.email = email;
-    }
+	public void setFirstExecutionYear(ExecutionYear firstExecutionYear) {
+		this.firstExecutionYear = firstExecutionYear;
+	}
 
-    public String getMobileNumber() {
-	return mobileNumber;
-    }
+	public int getTotalItems() {
+		return totalItems;
+	}
 
-    public void setMobileNumber(String mobileNumber) {
-	this.mobileNumber = mobileNumber;
-    }
+	public void setTotalItems(int totalItems) {
+		this.totalItems = totalItems;
+	}
 
-    public String getTelephoneNumber() {
-	return telephoneNumber;
-    }
+	public Degree getDegree() {
+		return this.degree;
+	}
 
-    public void setTelephoneNumber(String telephoneNumber) {
-	this.telephoneNumber = telephoneNumber;
-    }
+	public void setDegree(Degree degree) {
+		this.degree = degree;
+	}
+
+	public Integer getStudentNumber() {
+		return studentNumber;
+	}
+
+	public void setStudentNumber(Integer studentNumber) {
+		this.studentNumber = studentNumber;
+	}
+
+	public String getDocumentIdNumber() {
+		return documentIdNumber;
+	}
+
+	public void setDocumentIdNumber(String documentIdNumber) {
+		this.documentIdNumber = documentIdNumber;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getMobileNumber() {
+		return mobileNumber;
+	}
+
+	public void setMobileNumber(String mobileNumber) {
+		this.mobileNumber = mobileNumber;
+	}
+
+	public String getTelephoneNumber() {
+		return telephoneNumber;
+	}
+
+	public void setTelephoneNumber(String telephoneNumber) {
+		this.telephoneNumber = telephoneNumber;
+	}
 }

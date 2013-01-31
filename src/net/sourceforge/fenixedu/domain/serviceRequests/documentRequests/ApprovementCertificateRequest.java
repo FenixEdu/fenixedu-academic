@@ -25,238 +25,237 @@ import org.joda.time.DateTime;
 
 public class ApprovementCertificateRequest extends ApprovementCertificateRequest_Base {
 
-    protected ApprovementCertificateRequest() {
-	super();
-    }
+	protected ApprovementCertificateRequest() {
+		super();
+	}
 
-    public ApprovementCertificateRequest(final DocumentRequestCreateBean bean) {
-	this();
-	super.init(bean);
+	public ApprovementCertificateRequest(final DocumentRequestCreateBean bean) {
+		this();
+		super.init(bean);
 
-	checkParameters(bean);
-	super.setMobilityProgram(bean.getMobilityProgram());
-	super.setIgnoreExternalEntries(bean.isIgnoreExternalEntries());
-	super.setIgnoreCurriculumInAdvance(bean.isIgnoreCurriculumInAdvance());
+		checkParameters(bean);
+		super.setMobilityProgram(bean.getMobilityProgram());
+		super.setIgnoreExternalEntries(bean.isIgnoreExternalEntries());
+		super.setIgnoreCurriculumInAdvance(bean.isIgnoreCurriculumInAdvance());
+
+		// TODO: remove this after DEA diplomas and certificates
+		if (!isDEARegistration()) {
+
+			if (getRegistration().isConcluded()) {
+				throw new DomainException("ApprovementCertificateRequest.registration.is.concluded");
+			}
+
+			if (getRegistration().isRegistrationConclusionProcessed()) {
+				throw new DomainException("ApprovementCertificateRequest.registration.has.conclusion.processed");
+			}
+		}
+
+		if (getEntriesToReport(isDEARegistration()).isEmpty()) {
+			throw new DomainException("ApprovementCertificateRequest.registration.without.approvements");
+		}
+	}
 
 	// TODO: remove this after DEA diplomas and certificates
-	if (!isDEARegistration()) {
-
-	    if (getRegistration().isConcluded()) {
-		throw new DomainException("ApprovementCertificateRequest.registration.is.concluded");
-	    }
-
-	    if (getRegistration().isRegistrationConclusionProcessed()) {
-		throw new DomainException("ApprovementCertificateRequest.registration.has.conclusion.processed");
-	    }
+	private boolean isDEARegistration() {
+		return getRegistration().getDegreeType() == DegreeType.BOLONHA_ADVANCED_SPECIALIZATION_DIPLOMA;
 	}
 
-	if (getEntriesToReport(isDEARegistration()).isEmpty()) {
-	    throw new DomainException("ApprovementCertificateRequest.registration.without.approvements");
+	@Override
+	final protected void checkParameters(final DocumentRequestCreateBean bean) {
+		if (bean.getMobilityProgram() != null && bean.isIgnoreExternalEntries()) {
+			throw new DomainException("ApprovementCertificateRequest.cannot.ignore.external.entries.within.a.mobility.program");
+		}
 	}
-    }
 
-    // TODO: remove this after DEA diplomas and certificates
-    private boolean isDEARegistration() {
-	return getRegistration().getDegreeType() == DegreeType.BOLONHA_ADVANCED_SPECIALIZATION_DIPLOMA;
-    }
+	@Override
+	protected void internalChangeState(AcademicServiceRequestBean academicServiceRequestBean) {
+		super.internalChangeState(academicServiceRequestBean);
 
-    @Override
-    final protected void checkParameters(final DocumentRequestCreateBean bean) {
-	if (bean.getMobilityProgram() != null && bean.isIgnoreExternalEntries()) {
-	    throw new DomainException("ApprovementCertificateRequest.cannot.ignore.external.entries.within.a.mobility.program");
-	}
-    }
+		if (academicServiceRequestBean.isToProcess()) {
 
-    @Override
-    protected void internalChangeState(AcademicServiceRequestBean academicServiceRequestBean) {
-	super.internalChangeState(academicServiceRequestBean);
+			// TODO: remove this after DEA diplomas and certificate
+			if (!isDEARegistration()) {
 
-	if (academicServiceRequestBean.isToProcess()) {
+				if (getRegistration().isConcluded()) {
+					throw new DomainException("ApprovementCertificateRequest.registration.is.concluded");
+				}
 
-	    // TODO: remove this after DEA diplomas and certificate
-	    if (!isDEARegistration()) {
+				if (getRegistration().isRegistrationConclusionProcessed()) {
+					throw new DomainException("ApprovementCertificateRequest.registration.has.conclusion.processed");
+				}
+			}
 
-		if (getRegistration().isConcluded()) {
-		    throw new DomainException("ApprovementCertificateRequest.registration.is.concluded");
+			if (getEntriesToReport(isDEARegistration()).isEmpty()) {
+				throw new DomainException("ApprovementCertificateRequest.registration.without.approvements");
+			}
+
+			// FIXME For now, the following conditions are only valid for 5year
+			// degrees
+			if (getRegistration().getDegreeType().getYears() == 5 && getDocumentPurposeType() == DocumentPurposeType.PROFESSIONAL) {
+
+				int curricularYear = getRegistration().getCurricularYear();
+
+				if (curricularYear <= 3) {
+					throw new DomainException("ApprovementCertificateRequest.registration.hasnt.finished.third.year");
+				}
+			}
 		}
 
-		if (getRegistration().isRegistrationConclusionProcessed()) {
-		    throw new DomainException("ApprovementCertificateRequest.registration.has.conclusion.processed");
+		if (academicServiceRequestBean.isToConclude()) {
+			super.setNumberOfUnits(calculateNumberOfUnits());
 		}
-	    }
+	}
 
-	    if (getEntriesToReport(isDEARegistration()).isEmpty()) {
-		throw new DomainException("ApprovementCertificateRequest.registration.without.approvements");
-	    }
+	@Override
+	protected boolean isPayed() {
+		return super.isPayed() || getEvent().isCancelled();
+	}
 
-	    // FIXME For now, the following conditions are only valid for 5year
-	    // degrees
-	    if (getRegistration().getDegreeType().getYears() == 5 && getDocumentPurposeType() == DocumentPurposeType.PROFESSIONAL) {
+	@Override
+	final public DocumentRequestType getDocumentRequestType() {
+		return DocumentRequestType.APPROVEMENT_CERTIFICATE;
+	}
 
-		int curricularYear = getRegistration().getCurricularYear();
+	@Override
+	final public String getDocumentTemplateKey() {
+		return getClass().getName();
+	}
 
-		if (curricularYear <= 3) {
-		    throw new DomainException("ApprovementCertificateRequest.registration.hasnt.finished.third.year");
+	@Override
+	final public EventType getEventType() {
+		return RegistrationAgreement.EXEMPTED_AGREEMENTS.contains(getRegistration().getRegistrationAgreement()) ? null : EventType.APPROVEMENT_CERTIFICATE_REQUEST;
+	}
+
+	@Override
+	final public Integer getNumberOfUnits() {
+		final Integer res = super.getNumberOfUnits();
+		return res == null ? calculateNumberOfUnits() : res;
+	}
+
+	private int calculateNumberOfUnits() {
+		return getEntriesToReport(isDEARegistration()).size() + getExtraCurricularEntriesToReport().size()
+				+ getPropaedeuticEntriesToReport().size();
+	}
+
+	@Override
+	final public void setNumberOfUnits(final Integer numberOfUnits) {
+		throw new DomainException("error.ApprovementCertificateRequest.cannot.modify.numberOfUnits");
+	}
+
+	@Override
+	public void setMobilityProgram(MobilityProgram mobilityProgram) {
+		throw new DomainException("error.ApprovementCertificateRequest.cannot.modify");
+	}
+
+	@Override
+	public void setIgnoreExternalEntries(Boolean ignoreExternalEntries) {
+		throw new DomainException("error.ApprovementCertificateRequest.cannot.modify");
+	}
+
+	@Override
+	public boolean isToPrint() {
+		final Integer units = super.getNumberOfUnits();
+		return !hasConcluded() || units != null && units.intValue() == calculateNumberOfUnits();
+	}
+
+	final private Collection<ICurriculumEntry> getEntriesToReport(final boolean useConcluded) {
+		final HashSet<ICurriculumEntry> result = new HashSet<ICurriculumEntry>();
+
+		final Registration registration = getRegistration();
+		ICurriculum curriculum;
+		if (registration.isBolonha()) {
+			for (final CycleCurriculumGroup cycle : registration.getLastStudentCurricularPlan().getInternalCycleCurriculumGrops()) {
+				if (cycle.hasAnyApprovedCurriculumLines() && (useConcluded || !cycle.isConclusionProcessed())) {
+					curriculum = cycle.getCurriculum(getFilteringDate());
+					filterEntries(result, this, curriculum);
+				}
+			}
+		} else {
+			curriculum = getRegistration().getCurriculum(getFilteringDate());
+			filterEntries(result, this, curriculum);
 		}
-	    }
+
+		return result;
 	}
 
-	if (academicServiceRequestBean.isToConclude()) {
-	    super.setNumberOfUnits(calculateNumberOfUnits());
+	public DateTime getFilteringDate() {
+		return hasConcluded() ? getRequestConclusionDate() : new DateTime();
 	}
-    }
 
-    @Override
-    protected boolean isPayed() {
-	return super.isPayed() || getEvent().isCancelled();
-    }
+	static final public void filterEntries(final Collection<ICurriculumEntry> result,
+			final ApprovementCertificateRequest request, final ICurriculum curriculum) {
+		for (final ICurriculumEntry entry : curriculum.getCurriculumEntries()) {
+			if (entry instanceof Dismissal) {
+				final Dismissal dismissal = (Dismissal) entry;
+				if (dismissal.getCredits().isEquivalence() || dismissal.isCreditsDismissal()
+						&& !dismissal.getCredits().isSubstitution()) {
+					continue;
+				}
+			} else if (entry instanceof ExternalEnrolment && request.getIgnoreExternalEntries()) {
+				continue;
+			}
 
-    @Override
-    final public DocumentRequestType getDocumentRequestType() {
-	return DocumentRequestType.APPROVEMENT_CERTIFICATE;
-    }
-
-    @Override
-    final public String getDocumentTemplateKey() {
-	return getClass().getName();
-    }
-
-    @Override
-    final public EventType getEventType() {
-	return RegistrationAgreement.EXEMPTED_AGREEMENTS.contains(getRegistration().getRegistrationAgreement()) ? null
-		: EventType.APPROVEMENT_CERTIFICATE_REQUEST;
-    }
-
-    @Override
-    final public Integer getNumberOfUnits() {
-	final Integer res = super.getNumberOfUnits();
-	return res == null ? calculateNumberOfUnits() : res;
-    }
-
-    private int calculateNumberOfUnits() {
-	return getEntriesToReport(isDEARegistration()).size() + getExtraCurricularEntriesToReport().size()
-		+ getPropaedeuticEntriesToReport().size();
-    }
-
-    @Override
-    final public void setNumberOfUnits(final Integer numberOfUnits) {
-	throw new DomainException("error.ApprovementCertificateRequest.cannot.modify.numberOfUnits");
-    }
-
-    @Override
-    public void setMobilityProgram(MobilityProgram mobilityProgram) {
-	throw new DomainException("error.ApprovementCertificateRequest.cannot.modify");
-    }
-
-    @Override
-    public void setIgnoreExternalEntries(Boolean ignoreExternalEntries) {
-	throw new DomainException("error.ApprovementCertificateRequest.cannot.modify");
-    }
-
-    @Override
-    public boolean isToPrint() {
-	final Integer units = super.getNumberOfUnits();
-	return !hasConcluded() || units != null && units.intValue() == calculateNumberOfUnits();
-    }
-
-    final private Collection<ICurriculumEntry> getEntriesToReport(final boolean useConcluded) {
-	final HashSet<ICurriculumEntry> result = new HashSet<ICurriculumEntry>();
-
-	final Registration registration = getRegistration();
-	ICurriculum curriculum;
-	if (registration.isBolonha()) {
-	    for (final CycleCurriculumGroup cycle : registration.getLastStudentCurricularPlan().getInternalCycleCurriculumGrops()) {
-		if (cycle.hasAnyApprovedCurriculumLines() && (useConcluded || !cycle.isConclusionProcessed())) {
-		    curriculum = cycle.getCurriculum(getFilteringDate());
-		    filterEntries(result, this, curriculum);
+			result.add(entry);
 		}
-	    }
-	} else {
-	    curriculum = getRegistration().getCurriculum(getFilteringDate());
-	    filterEntries(result, this, curriculum);
 	}
 
-	return result;
-    }
+	final public Collection<ICurriculumEntry> getExtraCurricularEntriesToReport() {
+		final Collection<ICurriculumEntry> result = new HashSet<ICurriculumEntry>();
 
-    public DateTime getFilteringDate() {
-	return hasConcluded() ? getRequestConclusionDate() : new DateTime();
-    }
+		reportApprovedCurriculumLines(result, calculateExtraCurriculumLines());
+		reportExternalGroups(result);
 
-    static final public void filterEntries(final Collection<ICurriculumEntry> result,
-	    final ApprovementCertificateRequest request, final ICurriculum curriculum) {
-	for (final ICurriculumEntry entry : curriculum.getCurriculumEntries()) {
-	    if (entry instanceof Dismissal) {
-		final Dismissal dismissal = (Dismissal) entry;
-		if (dismissal.getCredits().isEquivalence() || dismissal.isCreditsDismissal()
-			&& !dismissal.getCredits().isSubstitution()) {
-		    continue;
+		return result;
+	}
+
+	private Collection<CurriculumLine> calculateExtraCurriculumLines() {
+		final Collection<CurriculumLine> result = new HashSet<CurriculumLine>();
+
+		for (final CurriculumLine line : getRegistration().getExtraCurricularCurriculumLines()) {
+			if (line.isEnrolment()) {
+				if (!((Enrolment) line).isSourceOfAnyCreditsInCurriculum()) {
+					result.add(line);
+				}
+			} else {
+				result.add(line);
+			}
 		}
-	    } else if (entry instanceof ExternalEnrolment && request.getIgnoreExternalEntries()) {
-		continue;
-	    }
 
-	    result.add(entry);
+		return result;
 	}
-    }
 
-    final public Collection<ICurriculumEntry> getExtraCurricularEntriesToReport() {
-	final Collection<ICurriculumEntry> result = new HashSet<ICurriculumEntry>();
-
-	reportApprovedCurriculumLines(result, calculateExtraCurriculumLines());
-	reportExternalGroups(result);
-
-	return result;
-    }
-
-    private Collection<CurriculumLine> calculateExtraCurriculumLines() {
-	final Collection<CurriculumLine> result = new HashSet<CurriculumLine>();
-
-	for (final CurriculumLine line : getRegistration().getExtraCurricularCurriculumLines()) {
-	    if (line.isEnrolment()) {
-		if (!((Enrolment) line).isSourceOfAnyCreditsInCurriculum()) {
-		    result.add(line);
+	private void reportApprovedCurriculumLines(final Collection<ICurriculumEntry> result, final Collection<CurriculumLine> lines) {
+		for (final CurriculumLine line : lines) {
+			if (line.isApproved()) {
+				if (line.isEnrolment()) {
+					result.add((IEnrolment) line);
+				} else if (line.isDismissal() && ((Dismissal) line).getCredits().isSubstitution()) {
+					result.addAll(((Dismissal) line).getSourceIEnrolments());
+				}
+			}
 		}
-	    } else {
-		result.add(line);
-	    }
 	}
 
-	return result;
-    }
-
-    private void reportApprovedCurriculumLines(final Collection<ICurriculumEntry> result, final Collection<CurriculumLine> lines) {
-	for (final CurriculumLine line : lines) {
-	    if (line.isApproved()) {
-		if (line.isEnrolment()) {
-		    result.add((IEnrolment) line);
-		} else if (line.isDismissal() && ((Dismissal) line).getCredits().isSubstitution()) {
-		    result.addAll(((Dismissal) line).getSourceIEnrolments());
+	private void reportExternalGroups(final Collection<ICurriculumEntry> result) {
+		if (getIgnoreCurriculumInAdvance() != null && !getIgnoreCurriculumInAdvance()) {
+			for (final ExternalCurriculumGroup group : getRegistration().getLastStudentCurricularPlan()
+					.getExternalCurriculumGroups()) {
+				filterEntries(result, this, group.getCurriculumInAdvance(getFilteringDate()));
+			}
 		}
-	    }
 	}
-    }
 
-    private void reportExternalGroups(final Collection<ICurriculumEntry> result) {
-	if (getIgnoreCurriculumInAdvance() != null && !getIgnoreCurriculumInAdvance()) {
-	    for (final ExternalCurriculumGroup group : getRegistration().getLastStudentCurricularPlan()
-		    .getExternalCurriculumGroups()) {
-		filterEntries(result, this, group.getCurriculumInAdvance(getFilteringDate()));
-	    }
+	final public Collection<ICurriculumEntry> getPropaedeuticEntriesToReport() {
+		final Collection<ICurriculumEntry> result = new HashSet<ICurriculumEntry>();
+
+		reportApprovedCurriculumLines(result, getRegistration().getPropaedeuticCurriculumLines());
+
+		return result;
 	}
-    }
 
-    final public Collection<ICurriculumEntry> getPropaedeuticEntriesToReport() {
-	final Collection<ICurriculumEntry> result = new HashSet<ICurriculumEntry>();
-
-	reportApprovedCurriculumLines(result, getRegistration().getPropaedeuticCurriculumLines());
-
-	return result;
-    }
-
-    @Override
-    public boolean hasPersonalInfo() {
-	return true;
-    }
+	@Override
+	public boolean hasPersonalInfo() {
+		return true;
+	}
 
 }

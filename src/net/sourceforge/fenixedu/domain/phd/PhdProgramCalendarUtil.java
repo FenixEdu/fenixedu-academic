@@ -7,40 +7,40 @@ import org.joda.time.LocalDate;
 
 public class PhdProgramCalendarUtil {
 
-    static public int countWorkDaysBetween(final LocalDate startDate, final LocalDate endDate) {
+	static public int countWorkDaysBetween(final LocalDate startDate, final LocalDate endDate) {
 
-	int result = 0;
-	LocalDate current = startDate.plusDays(1);
+		int result = 0;
+		LocalDate current = startDate.plusDays(1);
 
-	while (!current.isAfter(endDate)) {
-	    if (isWorkDay(current)) {
-		result++;
-	    }
+		while (!current.isAfter(endDate)) {
+			if (isWorkDay(current)) {
+				result++;
+			}
 
-	    current = current.plusDays(1);
+			current = current.plusDays(1);
+		}
+
+		return result;
 	}
 
-	return result;
-    }
+	static public LocalDate addWorkDaysTo(final LocalDate date, final int workDays) {
+		int current = workDays;
+		LocalDate result = date;
 
-    static public LocalDate addWorkDaysTo(final LocalDate date, final int workDays) {
-	int current = workDays;
-	LocalDate result = date;
+		while (current > 0) {
+			result = result.plusDays(1);
 
-	while (current > 0) {
-	    result = result.plusDays(1);
+			if (isWorkDay(result)) {
+				current--;
+			}
+		}
 
-	    if (isWorkDay(result)) {
-		current--;
-	    }
+		return result;
 	}
 
-	return result;
-    }
+	static private boolean isWorkDay(LocalDate current) {
+		final WeekDay dayOfWeek = WeekDay.fromJodaTimeToWeekDay(current.toDateTimeAtStartOfDay());
 
-    static private boolean isWorkDay(LocalDate current) {
-	final WeekDay dayOfWeek = WeekDay.fromJodaTimeToWeekDay(current.toDateTimeAtStartOfDay());
-
-	return dayOfWeek != WeekDay.SATURDAY && dayOfWeek != WeekDay.SUNDAY && !Holiday.isHoliday(current);
-    }
+		return dayOfWeek != WeekDay.SATURDAY && dayOfWeek != WeekDay.SUNDAY && !Holiday.isHoliday(current);
+	}
 }

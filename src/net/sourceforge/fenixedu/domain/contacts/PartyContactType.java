@@ -2,22 +2,22 @@ package net.sourceforge.fenixedu.domain.contacts;
 
 public enum PartyContactType {
 
-    PERSONAL,
+	PERSONAL,
 
-    WORK,
+	WORK,
 
-    INSTITUTIONAL;
+	INSTITUTIONAL;
 
-    public String getName() {
-	return name();
-    }
+	public String getName() {
+		return name();
+	}
 
-    public String getQualifiedName() {
-	return PartyContactType.class.getSimpleName() + "." + name();
-    }
+	public String getQualifiedName() {
+		return PartyContactType.class.getSimpleName() + "." + name();
+	}
 
-    public String getFullyQualifiedName() {
-	return PartyContactType.class.getName() + "." + name();
-    }
+	public String getFullyQualifiedName() {
+		return PartyContactType.class.getName() + "." + name();
+	}
 
 }

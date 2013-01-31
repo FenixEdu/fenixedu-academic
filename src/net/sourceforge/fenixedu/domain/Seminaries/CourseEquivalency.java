@@ -16,18 +16,18 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
  */
 public class CourseEquivalency extends CourseEquivalency_Base {
 
-    public CourseEquivalency() {
-	super();
-	setRootDomainObject(RootDomainObject.getInstance());
-    }
+	public CourseEquivalency() {
+		super();
+		setRootDomainObject(RootDomainObject.getInstance());
+	}
 
-    public void delete() {
-	removeCurricularCourse();
-	removeModality();
-	removeSeminary();
-	getThemes().clear();
-	removeRootDomainObject();
-	super.deleteDomainObject();
-    }
+	public void delete() {
+		removeCurricularCourse();
+		removeModality();
+		removeSeminary();
+		getThemes().clear();
+		removeRootDomainObject();
+		super.deleteDomainObject();
+	}
 
 }

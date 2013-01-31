@@ -4,13 +4,13 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 
 public class AllAlumniGroup extends RoleTypeGroup {
 
-    public AllAlumniGroup() {
-	super(RoleType.ALUMNI);
-    }
+	public AllAlumniGroup() {
+		super(RoleType.ALUMNI);
+	}
 
-    @Override
-    public String getPresentationNameKey() {
-	return "label.name." + getClass().getSimpleName();
-    }
+	@Override
+	public String getPresentationNameKey() {
+		return "label.name." + getClass().getSimpleName();
+	}
 
 }

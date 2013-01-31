@@ -12,8 +12,8 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
  */
 public class DeleteFinalDegreeWorkProposal extends FenixService {
 
-    public void run(Integer finalDegreeWorkProposalOID) throws FenixServiceException {
-	rootDomainObject.readProposalByOID(finalDegreeWorkProposalOID).delete();
-    }
+	public void run(Integer finalDegreeWorkProposalOID) throws FenixServiceException {
+		rootDomainObject.readProposalByOID(finalDegreeWorkProposalOID).delete();
+	}
 
 }

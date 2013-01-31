@@ -8,17 +8,17 @@ package net.sourceforge.fenixedu.domain.exceptions;
  */
 public class DuplicatedNameException extends DomainException {
 
-    /**
-     * Serial version id.
-     */
-    private static final long serialVersionUID = 1L;
+	/**
+	 * Serial version id.
+	 */
+	private static final long serialVersionUID = 1L;
 
-    public DuplicatedNameException(String key) {
-	super(key);
-    }
+	public DuplicatedNameException(String key) {
+		super(key);
+	}
 
-    public DuplicatedNameException(String key, String[] args) {
-	super(key, args);
-    }
+	public DuplicatedNameException(String key, String[] args) {
+		super(key, args);
+	}
 
 }

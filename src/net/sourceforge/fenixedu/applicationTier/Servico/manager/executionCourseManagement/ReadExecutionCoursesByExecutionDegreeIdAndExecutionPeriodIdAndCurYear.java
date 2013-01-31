@@ -20,44 +20,45 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class ReadExecutionCoursesByExecutionDegreeIdAndExecutionPeriodIdAndCurYear extends FenixService {
 
-    @Service
-    public static Object run(Integer executionDegreeId, Integer executionPeriodId, Integer curricularYearInt)
-	    throws FenixServiceException {
+	@Service
+	public static Object run(Integer executionDegreeId, Integer executionPeriodId, Integer curricularYearInt)
+			throws FenixServiceException {
 
-	if (executionPeriodId == null) {
-	    throw new FenixServiceException("nullExecutionPeriodId");
+		if (executionPeriodId == null) {
+			throw new FenixServiceException("nullExecutionPeriodId");
+		}
+
+		final ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(executionPeriodId);
+
+		final List<ExecutionCourse> executionCourseList;
+		if (executionDegreeId == null && curricularYearInt == null) {
+			executionCourseList = executionSemester.getExecutionCoursesWithNoCurricularCourses();
+		} else {
+			final ExecutionDegree executionDegree = findExecutionDegreeByID(executionSemester, executionDegreeId);
+			final DegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
+			final CurricularYear curricularYear = CurricularYear.readByYear(curricularYearInt);
+			executionCourseList =
+					executionSemester.getExecutionCoursesByDegreeCurricularPlanAndSemesterAndCurricularYearAndName(
+							degreeCurricularPlan, curricularYear, "%");
+		}
+
+		final List infoExecutionCourseList = new ArrayList(executionCourseList.size());
+		for (final ExecutionCourse executionCourse : executionCourseList) {
+			infoExecutionCourseList.add(InfoExecutionCourse.newInfoFromDomain(executionCourse));
+		}
+
+		return infoExecutionCourseList;
 	}
 
-	final ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(executionPeriodId);
-
-	final List<ExecutionCourse> executionCourseList;
-	if (executionDegreeId == null && curricularYearInt == null) {
-	    executionCourseList = executionSemester.getExecutionCoursesWithNoCurricularCourses();
-	} else {
-	    final ExecutionDegree executionDegree = findExecutionDegreeByID(executionSemester, executionDegreeId);
-	    final DegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
-	    final CurricularYear curricularYear = CurricularYear.readByYear(curricularYearInt);
-	    executionCourseList = executionSemester.getExecutionCoursesByDegreeCurricularPlanAndSemesterAndCurricularYearAndName(
-		    degreeCurricularPlan, curricularYear, "%");
+	private static ExecutionDegree findExecutionDegreeByID(final ExecutionSemester executionSemester,
+			final Integer executionDegreeId) {
+		final ExecutionYear executionYear = executionSemester.getExecutionYear();
+		for (final ExecutionDegree executionDegree : executionYear.getExecutionDegreesSet()) {
+			if (executionDegree.getIdInternal().equals(executionDegreeId)) {
+				return executionDegree;
+			}
+		}
+		return null;
 	}
-
-	final List infoExecutionCourseList = new ArrayList(executionCourseList.size());
-	for (final ExecutionCourse executionCourse : executionCourseList) {
-	    infoExecutionCourseList.add(InfoExecutionCourse.newInfoFromDomain(executionCourse));
-	}
-
-	return infoExecutionCourseList;
-    }
-
-    private static ExecutionDegree findExecutionDegreeByID(final ExecutionSemester executionSemester,
-	    final Integer executionDegreeId) {
-	final ExecutionYear executionYear = executionSemester.getExecutionYear();
-	for (final ExecutionDegree executionDegree : executionYear.getExecutionDegreesSet()) {
-	    if (executionDegree.getIdInternal().equals(executionDegreeId)) {
-		return executionDegree;
-	    }
-	}
-	return null;
-    }
 
 }

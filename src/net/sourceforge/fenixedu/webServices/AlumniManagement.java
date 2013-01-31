@@ -14,36 +14,37 @@ import org.codehaus.xfire.MessageContext;
 
 public class AlumniManagement implements IAlumniManagement {
 
-    private static final String storedPassword;
-    private static final String storedUsername;
+	private static final String storedPassword;
+	private static final String storedUsername;
 
-    static {
-	storedUsername = PropertiesManager.getProperty("webServices.PersonManagement.getPersonInformation.username");
-	storedPassword = PropertiesManager.getProperty("webServices.PersonManagement.getPersonInformation.password");
-    }
-
-    public String validateAlumniIdentity(String username, String password, String requestOID, String requestUUID,
-	    MessageContext context) throws NotAuthorizedException {
-
-	checkPermissions(username, password, context);
-	AlumniIdentityCheckRequest identityCheckRequest = (AlumniIdentityCheckRequest) DomainObject.fromOID(Long
-		.valueOf(requestOID));
-	if (identityCheckRequest != null && identityCheckRequest.getRequestToken().equals(UUID.fromString(requestUUID))) {
-	    return identityCheckRequest.getAlumni().getLoginUsername();
-	}
-	return null;
-    }
-
-    private void checkPermissions(String username, String password, MessageContext context) throws NotAuthorizedException {
-	// check user/pass
-	if (!storedUsername.equals(username) || !storedPassword.equals(password)) {
-	    throw new NotAuthorizedException();
+	static {
+		storedUsername = PropertiesManager.getProperty("webServices.PersonManagement.getPersonInformation.username");
+		storedPassword = PropertiesManager.getProperty("webServices.PersonManagement.getPersonInformation.password");
 	}
 
-	// check hosts accessing this service
-	if (!HostAccessControl.isAllowed(this, (ServletRequest) context.getProperty("XFireServletController.httpServletRequest"))) {
-	    throw new NotAuthorizedException();
+	@Override
+	public String validateAlumniIdentity(String username, String password, String requestOID, String requestUUID,
+			MessageContext context) throws NotAuthorizedException {
+
+		checkPermissions(username, password, context);
+		AlumniIdentityCheckRequest identityCheckRequest =
+				(AlumniIdentityCheckRequest) DomainObject.fromOID(Long.valueOf(requestOID));
+		if (identityCheckRequest != null && identityCheckRequest.getRequestToken().equals(UUID.fromString(requestUUID))) {
+			return identityCheckRequest.getAlumni().getLoginUsername();
+		}
+		return null;
 	}
-    }
+
+	private void checkPermissions(String username, String password, MessageContext context) throws NotAuthorizedException {
+		// check user/pass
+		if (!storedUsername.equals(username) || !storedPassword.equals(password)) {
+			throw new NotAuthorizedException();
+		}
+
+		// check hosts accessing this service
+		if (!HostAccessControl.isAllowed(this, (ServletRequest) context.getProperty("XFireServletController.httpServletRequest"))) {
+			throw new NotAuthorizedException();
+		}
+	}
 
 }

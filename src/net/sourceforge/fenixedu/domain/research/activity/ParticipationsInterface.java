@@ -7,13 +7,13 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 
 public interface ParticipationsInterface {
 
-    public List<? extends Participation> getParticipationsFor(Party party);
+	public List<? extends Participation> getParticipationsFor(Party party);
 
-    public List<? extends Participation> getParticipations();
+	public List<? extends Participation> getParticipations();
 
-    public void addUniqueParticipation(Participation participation);
+	public void addUniqueParticipation(Participation participation);
 
-    public boolean canBeEditedByUser(Person person);
+	public boolean canBeEditedByUser(Person person);
 
-    public boolean canBeEditedByCurrentUser();
+	public boolean canBeEditedByCurrentUser();
 }

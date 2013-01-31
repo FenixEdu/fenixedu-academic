@@ -30,67 +30,74 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(module = "departmentAdmOffice", path = "/departmentFunctionalities", scope = "request", parameter = "method")
 @Forwards(value = {
-	@Forward(name = "uploadFile", path = "department-upload-file", tileProperties = @Tile(title = "private.department.departmentspecific.files")),
-	@Forward(name = "manageFiles", path = "department-manage-files", tileProperties = @Tile(title = "private.department.departmentspecific.files")),
-	@Forward(name = "editUploaders", path = "department-edit-uploaders", tileProperties = @Tile(title = "private.department.departmentspecific.files")),
-	@Forward(name = "managePersistedGroups", path = "manage-persisted-groups", tileProperties = @Tile(title = "private.department.departmentspecific.files")),
-	@Forward(name = "editFile", path = "department-edit-file", tileProperties = @Tile(title = "private.department.departmentspecific.files")),
-	@Forward(name = "editPersistedGroup", path = "edit-persisted-group", tileProperties = @Tile(title = "private.department.departmentspecific.files")),
-	@Forward(name = "createPersistedGroup", path = "create-persisted-group", tileProperties = @Tile(title = "private.department.departmentspecific.files")) })
+		@Forward(name = "uploadFile", path = "department-upload-file", tileProperties = @Tile(
+				title = "private.department.departmentspecific.files")),
+		@Forward(name = "manageFiles", path = "department-manage-files", tileProperties = @Tile(
+				title = "private.department.departmentspecific.files")),
+		@Forward(name = "editUploaders", path = "department-edit-uploaders", tileProperties = @Tile(
+				title = "private.department.departmentspecific.files")),
+		@Forward(name = "managePersistedGroups", path = "manage-persisted-groups", tileProperties = @Tile(
+				title = "private.department.departmentspecific.files")),
+		@Forward(name = "editFile", path = "department-edit-file", tileProperties = @Tile(
+				title = "private.department.departmentspecific.files")),
+		@Forward(name = "editPersistedGroup", path = "edit-persisted-group", tileProperties = @Tile(
+				title = "private.department.departmentspecific.files")),
+		@Forward(name = "createPersistedGroup", path = "create-persisted-group", tileProperties = @Tile(
+				title = "private.department.departmentspecific.files")) })
 public class DepartmentFunctionalities extends UnitFunctionalities {
 
-    final ProjectSubmissionsManagementDispatchAction action = new ProjectSubmissionsManagementDispatchAction();
+	final ProjectSubmissionsManagementDispatchAction action = new ProjectSubmissionsManagementDispatchAction();
 
-    public ActionForward showProjects(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-	final Unit unit = getUnit(request);
-	final Department department = unit.getDepartment();
-	Map<ExecutionCourse, Set<Project>> coursesProjects = new HashMap<ExecutionCourse, Set<Project>>();
-	for (Project project : department.getProjects()) {
-	    for (ExecutionCourse course : project.getAssociatedExecutionCourses()) {
-		Set<Project> projects = coursesProjects.get(course);
-		if (projects == null) {
-		    projects = new HashSet<Project>();
-		    coursesProjects.put(course, projects);
+	public ActionForward showProjects(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		final Unit unit = getUnit(request);
+		final Department department = unit.getDepartment();
+		Map<ExecutionCourse, Set<Project>> coursesProjects = new HashMap<ExecutionCourse, Set<Project>>();
+		for (Project project : department.getProjects()) {
+			for (ExecutionCourse course : project.getAssociatedExecutionCourses()) {
+				Set<Project> projects = coursesProjects.get(course);
+				if (projects == null) {
+					projects = new HashSet<Project>();
+					coursesProjects.put(course, projects);
+				}
+				projects.add(project);
+			}
 		}
-		projects.add(project);
-	    }
+		request.setAttribute("coursesProjects", coursesProjects);
+		return mapping.findForward("showProjects");
 	}
-	request.setAttribute("coursesProjects", coursesProjects);
-	return mapping.findForward("showProjects");
-    }
 
-    public ActionForward viewLastProjectSubmissionForEachGroup(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
-	// final ActionForward forward =
-	// mapping.findForward("viewLastProjectSubmissionForEachGroup");
-	action.execute(mapping, form, request, response);
-	return action.viewLastProjectSubmissionForEachGroup(mapping, form, request, response);
+	public ActionForward viewLastProjectSubmissionForEachGroup(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
+		// final ActionForward forward =
+		// mapping.findForward("viewLastProjectSubmissionForEachGroup");
+		action.execute(mapping, form, request, response);
+		return action.viewLastProjectSubmissionForEachGroup(mapping, form, request, response);
 
-    }
+	}
 
-    public ActionForward viewProjectSubmissionsByGroup(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-	// final ActionForward forward =
-	// mapping.findForward("viewProjectSubmissionsByGroup");
-	action.execute(mapping, form, request, response);
-	return action.viewProjectSubmissionsByGroup(mapping, form, request, response);
-	// return forward;
-    }
+	public ActionForward viewProjectSubmissionsByGroup(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		// final ActionForward forward =
+		// mapping.findForward("viewProjectSubmissionsByGroup");
+		action.execute(mapping, form, request, response);
+		return action.viewProjectSubmissionsByGroup(mapping, form, request, response);
+		// return forward;
+	}
 
-    public ActionForward downloadProjectsInZipFormat(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixActionException, FenixFilterException, IOException, ServletException {
-	return action.downloadProjectsInZipFormat(mapping, form, request, response);
-    }
+	public ActionForward downloadProjectsInZipFormat(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws FenixActionException, FenixFilterException, IOException, ServletException {
+		return action.downloadProjectsInZipFormat(mapping, form, request, response);
+	}
 
-    public ActionForward prepareSelectiveDownload(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixActionException, FenixFilterException, IOException, ServletException {
-	return action.prepareSelectiveDownload(mapping, form, request, response);
-    }
+	public ActionForward prepareSelectiveDownload(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws FenixActionException, FenixFilterException, IOException, ServletException {
+		return action.prepareSelectiveDownload(mapping, form, request, response);
+	}
 
-    public ActionForward selectiveDownload(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixActionException, FenixFilterException, IOException, ServletException {
-	return action.selectiveDownload(mapping, form, request, response);
-    }
+	public ActionForward selectiveDownload(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws FenixActionException, FenixFilterException, IOException, ServletException {
+		return action.selectiveDownload(mapping, form, request, response);
+	}
 
 }

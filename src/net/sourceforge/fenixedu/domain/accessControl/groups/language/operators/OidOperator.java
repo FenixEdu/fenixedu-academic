@@ -22,44 +22,44 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
  * @author Pedro Santos
  */
 public class OidOperator extends OperatorArgument {
-    private static final int PARAMETER = 0;
+	private static final int PARAMETER = 0;
 
-    private ParameterOperator value;
+	private ParameterOperator value;
 
-    public OidOperator(Argument parameter) {
-	addArgument(parameter);
-    }
-
-    public OidOperator(DomainObject domainObject) {
-	this(new StaticArgument(domainObject.getExternalId()));
-    }
-
-    @Override
-    protected void checkOperatorArguments() {
-	int size = getArguments().size();
-
-	if (size != 1) {
-	    throw new WrongNumberOfArgumentsException(size, 1, 1);
-	}
-    }
-
-    @Override
-    protected DomainObject execute() {
-	Argument argument = argument(PARAMETER);
-	if (argument instanceof StaticArgument) {
-	    StaticArgument staticArgument = (StaticArgument) argument;
-	    return AbstractDomainObject.fromExternalId(staticArgument.getString());
+	public OidOperator(Argument parameter) {
+		addArgument(parameter);
 	}
 
-	if (this.value == null) {
-	    this.value = new ParameterOperator(this, argument(PARAMETER));
+	public OidOperator(DomainObject domainObject) {
+		this(new StaticArgument(domainObject.getExternalId()));
 	}
-	return AbstractDomainObject.fromExternalId((String) value.getValue());
-    }
 
-    @Override
-    protected String getMainValueString() {
-	return String.format("$O(%s)", argument(PARAMETER));
-    }
+	@Override
+	protected void checkOperatorArguments() {
+		int size = getArguments().size();
+
+		if (size != 1) {
+			throw new WrongNumberOfArgumentsException(size, 1, 1);
+		}
+	}
+
+	@Override
+	protected DomainObject execute() {
+		Argument argument = argument(PARAMETER);
+		if (argument instanceof StaticArgument) {
+			StaticArgument staticArgument = (StaticArgument) argument;
+			return AbstractDomainObject.fromExternalId(staticArgument.getString());
+		}
+
+		if (this.value == null) {
+			this.value = new ParameterOperator(this, argument(PARAMETER));
+		}
+		return AbstractDomainObject.fromExternalId((String) value.getValue());
+	}
+
+	@Override
+	protected String getMainValueString() {
+		return String.format("$O(%s)", argument(PARAMETER));
+	}
 
 }

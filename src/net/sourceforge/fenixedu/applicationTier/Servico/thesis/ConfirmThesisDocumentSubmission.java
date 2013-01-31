@@ -9,9 +9,9 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class ConfirmThesisDocumentSubmission extends FenixService {
 
-    @Service
-    public static void run(Thesis thesis) {
-	thesis.setConfirmmedDocuments(new DateTime());
-    }
+	@Service
+	public static void run(Thesis thesis) {
+		thesis.setConfirmmedDocuments(new DateTime());
+	}
 
 }

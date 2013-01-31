@@ -11,6 +11,6 @@ import net.sourceforge.fenixedu.domain.Grouping;
  * 
  */
 public interface IGroupEnrolmentStrategyFactory {
-    public IGroupEnrolmentStrategy getGroupEnrolmentStrategyInstance(Grouping grouping);
+	public IGroupEnrolmentStrategy getGroupEnrolmentStrategyInstance(Grouping grouping);
 
 }

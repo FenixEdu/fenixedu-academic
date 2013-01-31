@@ -4,11 +4,19 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.ResourceBundle;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.dataTransferObject.student.ExecutionPeriodStatisticsBean;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.domain.student.RegistrationProtocol;
+import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -20,146 +28,131 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.pstm.AbstractDomainObject;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
-
-import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.dataTransferObject.student.ExecutionPeriodStatisticsBean;
-import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
-import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.domain.student.RegistrationProtocol;
-import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(path = "/viewStudent", module = "externalSupervision")
-@Forwards( {
-    	@Forward(name = "selectStudent", path = "/externalSupervision/consult/selectStudent.jsp"),
-    	@Forward(name = "showStats", path = "/externalSupervision/consult/showStats.jsp")})
-public class ExternalSupervisorViewStudentDA extends FenixDispatchAction{
-    
-    public ActionForward beginTaskFlow(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response){
-	
-	final IUserView userView = UserView.getUser();
-	final Person supervisor = userView.getPerson();
-	
-	RegistrationProtocol protocol = supervisor.getOnlyRegistrationProtocol();
-	ExternalSupervisorViewsBean bean;
-	
-	if(protocol == null){
-	    bean = new ExternalSupervisorViewsBean();
-	    
-	} else {
-	    bean  = new ExternalSupervisorViewsBean(protocol);
-	}
-	
-	
-	request.setAttribute("sessionBean", bean);
-	return mapping.findForward("selectStudent");
-    }
-    
-    public ActionForward showStats(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response){
-	
-	ExternalSupervisorViewsBean bean = getRenderedObject("sessionBean");
-	final IUserView userView = UserView.getUser();
-	final Person supervisor = userView.getPerson();
-	boolean isOmnipotent;
-	Set<RegistrationProtocol> jurisdictions = supervisor.getRegistrationProtocolsSet(); 
-	
-	if(bean == null){
-	    
-	    final String personId = request.getParameter("personId");
-	    Person student = AbstractDomainObject.fromExternalId(personId);
-	    
-	    RegistrationProtocol protocol = supervisor.getOnlyRegistrationProtocol();
-		
-	    if(protocol == null){
-		bean = new ExternalSupervisorViewsBean(student);
-		isOmnipotent = true;
-	    } else {
-		bean = new ExternalSupervisorViewsBean(student, protocol);
-		isOmnipotent = false;
-	    }
-	} else {
-	    if(bean.getProtocol() == null){
-		isOmnipotent = true;
-	    } else {
-		isOmnipotent = false;
-	    }
-	}
-	
-	if(!bean.supervisorHasPermission(isOmnipotent, jurisdictions)){
-	    Boolean errorNoPermission = true;
-	    request.setAttribute("errorNoPermission", errorNoPermission);
-	    return mapping.findForward("selectStudent");
-	}
-	
-	/*if(bean.noCurriculum()){
-	    Boolean noCurriculum =  true;
-	    request.setAttribute("noCurriculum", noCurriculum);
-	}*/
-	
-	final Person personStudent = bean.getStudent();
-	final List<Registration> registrations = personStudent.getStudent().getRegistrations();
-	Boolean hasDissertations;
+@Forwards({ @Forward(name = "selectStudent", path = "/externalSupervision/consult/selectStudent.jsp"),
+		@Forward(name = "showStats", path = "/externalSupervision/consult/showStats.jsp") })
+public class ExternalSupervisorViewStudentDA extends FenixDispatchAction {
 
-	List<ExecutionPeriodStatisticsBean> studentStatistics = getStudentStatistics(registrations);
-	
-	if(ShowThesisStatus.hasDissertations(personStudent.getStudent())){
-	    hasDissertations = true;
-	    request.setAttribute("hasDissertations", hasDissertations);
-	}
+	public ActionForward beginTaskFlow(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) {
 
-	request.setAttribute("studentStatistics", studentStatistics);
-	request.setAttribute("sessionBean", bean);
-	return mapping.findForward("showStats");
-    }
-    
-    public ActionForward invalidStudent(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response){
-	ExternalSupervisorViewsBean bean = getRenderedObject("sessionBean");
-	request.setAttribute("sessionBean", bean);
-	RenderUtils.invalidateViewState("sessionBean");
-	return mapping.findForward("selectStudent");
-    }
-    
-    /*
-     * Imported from /student/tutor/TutorInfoDispatchAction.java
-     * along with all statistics logic used above on showStats()
-     */
-    private List<ExecutionPeriodStatisticsBean> getStudentStatistics(List<Registration> registrations) {
-	List<ExecutionPeriodStatisticsBean> studentStatistics = new ArrayList<ExecutionPeriodStatisticsBean>();
+		final IUserView userView = UserView.getUser();
+		final Person supervisor = userView.getPerson();
 
-	Map<ExecutionSemester, ExecutionPeriodStatisticsBean> enrolmentsByExecutionPeriod = new HashMap<ExecutionSemester, ExecutionPeriodStatisticsBean>();
+		RegistrationProtocol protocol = supervisor.getOnlyRegistrationProtocol();
+		ExternalSupervisorViewsBean bean;
 
-	for (Registration registration : registrations) {
-	    for (StudentCurricularPlan studentCurricularPlan : registration.getStudentCurricularPlans()) {
-		for (ExecutionSemester executionSemester : studentCurricularPlan.getEnrolmentsExecutionPeriods()) {
-		    if (enrolmentsByExecutionPeriod.containsKey(executionSemester)) {
-			ExecutionPeriodStatisticsBean executionPeriodStatisticsBean = enrolmentsByExecutionPeriod
-				.get(executionSemester);
-			executionPeriodStatisticsBean.addEnrolmentsWithinExecutionPeriod(studentCurricularPlan
-				.getEnrolmentsByExecutionPeriod(executionSemester));
-			enrolmentsByExecutionPeriod.put(executionSemester, executionPeriodStatisticsBean);
-		    } else {
-			ExecutionPeriodStatisticsBean executionPeriodStatisticsBean = new ExecutionPeriodStatisticsBean(
-				executionSemester);
-			executionPeriodStatisticsBean.addEnrolmentsWithinExecutionPeriod(studentCurricularPlan
-				.getEnrolmentsByExecutionPeriod(executionSemester));
-			enrolmentsByExecutionPeriod.put(executionSemester, executionPeriodStatisticsBean);
-		    }
+		if (protocol == null) {
+			bean = new ExternalSupervisorViewsBean();
+
+		} else {
+			bean = new ExternalSupervisorViewsBean(protocol);
 		}
-	    }
+
+		request.setAttribute("sessionBean", bean);
+		return mapping.findForward("selectStudent");
 	}
 
-	studentStatistics.addAll(enrolmentsByExecutionPeriod.values());
+	public ActionForward showStats(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) {
 
-	return studentStatistics;
-    }
+		ExternalSupervisorViewsBean bean = getRenderedObject("sessionBean");
+		final IUserView userView = UserView.getUser();
+		final Person supervisor = userView.getPerson();
+		boolean isOmnipotent;
+		Set<RegistrationProtocol> jurisdictions = supervisor.getRegistrationProtocolsSet();
+
+		if (bean == null) {
+
+			final String personId = request.getParameter("personId");
+			Person student = AbstractDomainObject.fromExternalId(personId);
+
+			RegistrationProtocol protocol = supervisor.getOnlyRegistrationProtocol();
+
+			if (protocol == null) {
+				bean = new ExternalSupervisorViewsBean(student);
+				isOmnipotent = true;
+			} else {
+				bean = new ExternalSupervisorViewsBean(student, protocol);
+				isOmnipotent = false;
+			}
+		} else {
+			if (bean.getProtocol() == null) {
+				isOmnipotent = true;
+			} else {
+				isOmnipotent = false;
+			}
+		}
+
+		if (!bean.supervisorHasPermission(isOmnipotent, jurisdictions)) {
+			Boolean errorNoPermission = true;
+			request.setAttribute("errorNoPermission", errorNoPermission);
+			return mapping.findForward("selectStudent");
+		}
+
+		/*if(bean.noCurriculum()){
+		    Boolean noCurriculum =  true;
+		    request.setAttribute("noCurriculum", noCurriculum);
+		}*/
+
+		final Person personStudent = bean.getStudent();
+		final List<Registration> registrations = personStudent.getStudent().getRegistrations();
+		Boolean hasDissertations;
+
+		List<ExecutionPeriodStatisticsBean> studentStatistics = getStudentStatistics(registrations);
+
+		if (ShowThesisStatus.hasDissertations(personStudent.getStudent())) {
+			hasDissertations = true;
+			request.setAttribute("hasDissertations", hasDissertations);
+		}
+
+		request.setAttribute("studentStatistics", studentStatistics);
+		request.setAttribute("sessionBean", bean);
+		return mapping.findForward("showStats");
+	}
+
+	public ActionForward invalidStudent(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) {
+		ExternalSupervisorViewsBean bean = getRenderedObject("sessionBean");
+		request.setAttribute("sessionBean", bean);
+		RenderUtils.invalidateViewState("sessionBean");
+		return mapping.findForward("selectStudent");
+	}
+
+	/*
+	 * Imported from /student/tutor/TutorInfoDispatchAction.java
+	 * along with all statistics logic used above on showStats()
+	 */
+	private List<ExecutionPeriodStatisticsBean> getStudentStatistics(List<Registration> registrations) {
+		List<ExecutionPeriodStatisticsBean> studentStatistics = new ArrayList<ExecutionPeriodStatisticsBean>();
+
+		Map<ExecutionSemester, ExecutionPeriodStatisticsBean> enrolmentsByExecutionPeriod =
+				new HashMap<ExecutionSemester, ExecutionPeriodStatisticsBean>();
+
+		for (Registration registration : registrations) {
+			for (StudentCurricularPlan studentCurricularPlan : registration.getStudentCurricularPlans()) {
+				for (ExecutionSemester executionSemester : studentCurricularPlan.getEnrolmentsExecutionPeriods()) {
+					if (enrolmentsByExecutionPeriod.containsKey(executionSemester)) {
+						ExecutionPeriodStatisticsBean executionPeriodStatisticsBean =
+								enrolmentsByExecutionPeriod.get(executionSemester);
+						executionPeriodStatisticsBean.addEnrolmentsWithinExecutionPeriod(studentCurricularPlan
+								.getEnrolmentsByExecutionPeriod(executionSemester));
+						enrolmentsByExecutionPeriod.put(executionSemester, executionPeriodStatisticsBean);
+					} else {
+						ExecutionPeriodStatisticsBean executionPeriodStatisticsBean =
+								new ExecutionPeriodStatisticsBean(executionSemester);
+						executionPeriodStatisticsBean.addEnrolmentsWithinExecutionPeriod(studentCurricularPlan
+								.getEnrolmentsByExecutionPeriod(executionSemester));
+						enrolmentsByExecutionPeriod.put(executionSemester, executionPeriodStatisticsBean);
+					}
+				}
+			}
+		}
+
+		studentStatistics.addAll(enrolmentsByExecutionPeriod.values());
+
+		return studentStatistics;
+	}
 
 }

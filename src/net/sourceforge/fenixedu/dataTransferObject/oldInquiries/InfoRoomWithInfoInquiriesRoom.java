@@ -14,26 +14,26 @@ import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
  */
 public class InfoRoomWithInfoInquiriesRoom extends InfoRoom {
 
-    private InfoInquiriesRoom inquiriesRoom;
+	private InfoInquiriesRoom inquiriesRoom;
 
-    public static InfoRoomWithInfoInquiriesRoom newInfoFromDomain(AllocatableSpace room) {
-	InfoRoomWithInfoInquiriesRoom infoRoom = null;
-	if (room != null) {
-	    infoRoom = new InfoRoomWithInfoInquiriesRoom(room);
+	public static InfoRoomWithInfoInquiriesRoom newInfoFromDomain(AllocatableSpace room) {
+		InfoRoomWithInfoInquiriesRoom infoRoom = null;
+		if (room != null) {
+			infoRoom = new InfoRoomWithInfoInquiriesRoom(room);
+		}
+		return infoRoom;
 	}
-	return infoRoom;
-    }
 
-    public InfoRoomWithInfoInquiriesRoom(final AllocatableSpace oldRoom) {
-	super(oldRoom);
-    }
+	public InfoRoomWithInfoInquiriesRoom(final AllocatableSpace oldRoom) {
+		super(oldRoom);
+	}
 
-    public InfoInquiriesRoom getInquiriesRoom() {
-	return inquiriesRoom;
-    }
+	public InfoInquiriesRoom getInquiriesRoom() {
+		return inquiriesRoom;
+	}
 
-    public void setInquiriesRoom(InfoInquiriesRoom inquiriesRoom) {
-	this.inquiriesRoom = inquiriesRoom;
-    }
+	public void setInquiriesRoom(InfoInquiriesRoom inquiriesRoom) {
+		this.inquiriesRoom = inquiriesRoom;
+	}
 
 }

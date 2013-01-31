@@ -10,20 +10,21 @@ import net.sourceforge.fenixedu.domain.Attends;
  * @author Tânia Pousão 23/Jun/2004
  */
 public class InfoFrequentaWithInfoStudent extends InfoFrequenta {
-    public void copyFromDomain(Attends frequenta) {
-	super.copyFromDomain(frequenta);
-	if (frequenta != null) {
-	    setAluno(InfoStudent.newInfoFromDomain(frequenta.getRegistration()));
-	}
-    }
-
-    public static InfoFrequenta newInfoFromDomain(Attends attend) {
-	InfoFrequentaWithInfoStudent infoAttend = null;
-	if (attend != null) {
-	    infoAttend = new InfoFrequentaWithInfoStudent();
-	    infoAttend.copyFromDomain(attend);
+	@Override
+	public void copyFromDomain(Attends frequenta) {
+		super.copyFromDomain(frequenta);
+		if (frequenta != null) {
+			setAluno(InfoStudent.newInfoFromDomain(frequenta.getRegistration()));
+		}
 	}
 
-	return infoAttend;
-    }
+	public static InfoFrequenta newInfoFromDomain(Attends attend) {
+		InfoFrequentaWithInfoStudent infoAttend = null;
+		if (attend != null) {
+			infoAttend = new InfoFrequentaWithInfoStudent();
+			infoAttend.copyFromDomain(attend);
+		}
+
+		return infoAttend;
+	}
 }

@@ -21,173 +21,183 @@ import org.joda.time.YearMonthDay;
 
 public abstract class CurricularRule extends CurricularRule_Base implements ICurricularRule {
 
-    protected CurricularRule() {
-	super();
-	setRootDomainObject(RootDomainObject.getInstance());
-    }
-
-    protected void init(final DegreeModule degreeModuleToApplyRule, final CourseGroup contextCourseGroup,
-	    final ExecutionSemester begin, final ExecutionSemester end, final CurricularRuleType type) {
-
-	// TODO assure only one rule of a certain type for a given execution
-	// period
-
-	init(degreeModuleToApplyRule, contextCourseGroup, begin, end);
-	checkCurricularRuleType(type);
-	setCurricularRuleType(type);
-    }
-
-    private void checkCurricularRuleType(final CurricularRuleType type) {
-	if (type == null) {
-	    throw new DomainException("curricular.rule.invalid.parameters");
+	protected CurricularRule() {
+		super();
+		setRootDomainObject(RootDomainObject.getInstance());
 	}
-    }
 
-    protected void init(final DegreeModule degreeModuleToApplyRule, final CourseGroup contextCourseGroup,
-	    final ExecutionSemester begin, final ExecutionSemester end) {
+	protected void init(final DegreeModule degreeModuleToApplyRule, final CourseGroup contextCourseGroup,
+			final ExecutionSemester begin, final ExecutionSemester end, final CurricularRuleType type) {
 
-	checkParameters(degreeModuleToApplyRule, begin);
-	checkExecutionPeriods(begin, end);
-	setDegreeModuleToApplyRule(degreeModuleToApplyRule);
-	setContextCourseGroup(contextCourseGroup);
-	setBegin(begin);
-	setEnd(end);
-    }
+		// TODO assure only one rule of a certain type for a given execution
+		// period
 
-    protected void checkParameters(final DegreeModule degreeModuleToApplyRule, final ExecutionSemester begin) {
-	if (degreeModuleToApplyRule == null || begin == null) {
-	    throw new DomainException("curricular.rule.invalid.parameters");
+		init(degreeModuleToApplyRule, contextCourseGroup, begin, end);
+		checkCurricularRuleType(type);
+		setCurricularRuleType(type);
 	}
-	if (degreeModuleToApplyRule.isRoot()) {
-	    throw new DomainException("curricular.rule.invalid.parameters");
+
+	private void checkCurricularRuleType(final CurricularRuleType type) {
+		if (type == null) {
+			throw new DomainException("curricular.rule.invalid.parameters");
+		}
 	}
-    }
 
-    protected void edit(ExecutionSemester beginExecutionPeriod, ExecutionSemester endExecutionPeriod) {
-	checkExecutionPeriods(beginExecutionPeriod, endExecutionPeriod);
-	setBegin(beginExecutionPeriod);
-	setEnd(endExecutionPeriod);
-    }
+	protected void init(final DegreeModule degreeModuleToApplyRule, final CourseGroup contextCourseGroup,
+			final ExecutionSemester begin, final ExecutionSemester end) {
 
-    public void delete() {
-	removeOwnParameters();
-	removeCommonParameters();
-	removeRootDomainObject();
-	super.deleteDomainObject();
-    }
+		checkParameters(degreeModuleToApplyRule, begin);
+		checkExecutionPeriods(begin, end);
+		setDegreeModuleToApplyRule(degreeModuleToApplyRule);
+		setContextCourseGroup(contextCourseGroup);
+		setBegin(begin);
+		setEnd(end);
+	}
 
-    protected void removeCommonParameters() {
-	removeDegreeModuleToApplyRule();
-	removeBegin();
-	removeEnd();
-	removeParentCompositeRule();
-	removeContextCourseGroup();
-	removeRootDomainObject();
-    }
+	protected void checkParameters(final DegreeModule degreeModuleToApplyRule, final ExecutionSemester begin) {
+		if (degreeModuleToApplyRule == null || begin == null) {
+			throw new DomainException("curricular.rule.invalid.parameters");
+		}
+		if (degreeModuleToApplyRule.isRoot()) {
+			throw new DomainException("curricular.rule.invalid.parameters");
+		}
+	}
 
-    public boolean appliesToContext(final Context context) {
-	return context == null || appliesToCourseGroup(context.getParentCourseGroup());
-    }
+	protected void edit(ExecutionSemester beginExecutionPeriod, ExecutionSemester endExecutionPeriod) {
+		checkExecutionPeriods(beginExecutionPeriod, endExecutionPeriod);
+		setBegin(beginExecutionPeriod);
+		setEnd(endExecutionPeriod);
+	}
 
-    public boolean appliesToCourseGroup(final CourseGroup courseGroup) {
-	return (!hasContextCourseGroup() || getContextCourseGroup() == courseGroup);
-    }
+	public void delete() {
+		removeOwnParameters();
+		removeCommonParameters();
+		removeRootDomainObject();
+		super.deleteDomainObject();
+	}
 
-    public boolean isCompositeRule() {
-	return getCurricularRuleType() == null;
-    }
+	protected void removeCommonParameters() {
+		removeDegreeModuleToApplyRule();
+		removeBegin();
+		removeEnd();
+		removeParentCompositeRule();
+		removeContextCourseGroup();
+		removeRootDomainObject();
+	}
 
-    protected boolean belongsToCompositeRule() {
-	return hasParentCompositeRule();
-    }
+	@Override
+	public boolean appliesToContext(final Context context) {
+		return context == null || appliesToCourseGroup(context.getParentCourseGroup());
+	}
 
-    @Override
-    public ExecutionSemester getBegin() {
-	return belongsToCompositeRule() ? getParentCompositeRule().getBegin() : super.getBegin();
-    }
+	@Override
+	public boolean appliesToCourseGroup(final CourseGroup courseGroup) {
+		return (!hasContextCourseGroup() || getContextCourseGroup() == courseGroup);
+	}
 
-    @Override
-    public ExecutionSemester getEnd() {
-	return belongsToCompositeRule() ? getParentCompositeRule().getEnd() : super.getEnd();
-    }
+	@Override
+	public boolean isCompositeRule() {
+		return getCurricularRuleType() == null;
+	}
 
-    @Override
-    public DegreeModule getDegreeModuleToApplyRule() {
-	return belongsToCompositeRule() ? getParentCompositeRule().getDegreeModuleToApplyRule() : super
-		.getDegreeModuleToApplyRule();
-    }
+	protected boolean belongsToCompositeRule() {
+		return hasParentCompositeRule();
+	}
 
-    @Override
-    public CourseGroup getContextCourseGroup() {
-	return belongsToCompositeRule() ? getParentCompositeRule().getContextCourseGroup() : super.getContextCourseGroup();
-    }
+	@Override
+	public ExecutionSemester getBegin() {
+		return belongsToCompositeRule() ? getParentCompositeRule().getBegin() : super.getBegin();
+	}
 
-    public boolean hasContextCourseGroup(final CourseGroup parent) {
-	return getContextCourseGroup() == parent;
-    }
+	@Override
+	public ExecutionSemester getEnd() {
+		return belongsToCompositeRule() ? getParentCompositeRule().getEnd() : super.getEnd();
+	}
 
-    @Override
-    public boolean hasCurricularRuleType(final CurricularRuleType ruleType) {
-	return getCurricularRuleType() == ruleType;
-    }
+	@Override
+	public DegreeModule getDegreeModuleToApplyRule() {
+		return belongsToCompositeRule() ? getParentCompositeRule().getDegreeModuleToApplyRule() : super
+				.getDegreeModuleToApplyRule();
+	}
 
-    public boolean isValid(ExecutionSemester executionSemester) {
-	return (getBegin().isBeforeOrEquals(executionSemester) && (getEnd() == null || getEnd()
-		.isAfterOrEquals(executionSemester)));
-    }
+	@Override
+	public CourseGroup getContextCourseGroup() {
+		return belongsToCompositeRule() ? getParentCompositeRule().getContextCourseGroup() : super.getContextCourseGroup();
+	}
 
-    public boolean isValid(ExecutionYear executionYear) {
-	for (ExecutionSemester executionSemester : executionYear.getExecutionPeriods()) {
-	    if (isValid(executionSemester)) {
+	public boolean hasContextCourseGroup(final CourseGroup parent) {
+		return getContextCourseGroup() == parent;
+	}
+
+	@Override
+	public boolean hasCurricularRuleType(final CurricularRuleType ruleType) {
+		return getCurricularRuleType() == ruleType;
+	}
+
+	@Override
+	public boolean isValid(ExecutionSemester executionSemester) {
+		return (getBegin().isBeforeOrEquals(executionSemester) && (getEnd() == null || getEnd()
+				.isAfterOrEquals(executionSemester)));
+	}
+
+	@Override
+	public boolean isValid(ExecutionYear executionYear) {
+		for (ExecutionSemester executionSemester : executionYear.getExecutionPeriods()) {
+			if (isValid(executionSemester)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	@Override
+	public boolean isActive() {
+		return !hasEnd() || getEnd().containsDay(new YearMonthDay());
+	}
+
+	protected void checkExecutionPeriods(ExecutionSemester beginExecutionPeriod, ExecutionSemester endExecutionPeriod) {
+		if (endExecutionPeriod != null && beginExecutionPeriod.isAfter(endExecutionPeriod)) {
+			throw new DomainException("curricular.rule.begin.is.after.end.execution.period");
+		}
+	}
+
+	@Override
+	public boolean isVisible() {
 		return true;
-	    }
 	}
-	return false;
-    }
 
-    public boolean isActive() {
-	return !hasEnd() || getEnd().containsDay(new YearMonthDay());
-    }
-
-    protected void checkExecutionPeriods(ExecutionSemester beginExecutionPeriod, ExecutionSemester endExecutionPeriod) {
-	if (endExecutionPeriod != null && beginExecutionPeriod.isAfter(endExecutionPeriod)) {
-	    throw new DomainException("curricular.rule.begin.is.after.end.execution.period");
+	@Override
+	public RuleResult evaluate(final IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, final EnrolmentContext enrolmentContext) {
+		return CurricularRuleExecutorFactory.findExecutor(this).execute(this, sourceDegreeModuleToEvaluate, enrolmentContext);
 	}
-    }
 
-    public boolean isVisible() {
-	return true;
-    }
-
-    public RuleResult evaluate(final IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, final EnrolmentContext enrolmentContext) {
-	return CurricularRuleExecutorFactory.findExecutor(this).execute(this, sourceDegreeModuleToEvaluate, enrolmentContext);
-    }
-
-    public RuleResult verify(final VerifyRuleLevel level, final EnrolmentContext enrolmentContext,
-	    final DegreeModule degreeModuleToVerify, final CourseGroup parentCourseGroup) {
-	return createVerifyRuleExecutor().verify(this, level, enrolmentContext, degreeModuleToVerify, parentCourseGroup);
-    }
-
-    abstract protected void removeOwnParameters();
-
-    abstract public boolean isLeaf();
-
-    abstract public List<GenericPair<Object, Boolean>> getLabel();
-
-    static public CurricularRule createCurricularRule(final LogicOperator logicOperator, final CurricularRule... curricularRules) {
-	switch (logicOperator) {
-	case AND:
-	    return new AndRule(curricularRules);
-	case OR:
-	    return new OrRule(curricularRules);
-	case NOT:
-	    if (curricularRules.length != 1) {
-		throw new DomainException("error.invalid.notRule.parameters");
-	    }
-	    return new NotRule(curricularRules[0]);
-	default:
-	    throw new DomainException("error.unsupported.logic.operator");
+	@Override
+	public RuleResult verify(final VerifyRuleLevel level, final EnrolmentContext enrolmentContext,
+			final DegreeModule degreeModuleToVerify, final CourseGroup parentCourseGroup) {
+		return createVerifyRuleExecutor().verify(this, level, enrolmentContext, degreeModuleToVerify, parentCourseGroup);
 	}
-    }
+
+	abstract protected void removeOwnParameters();
+
+	abstract public boolean isLeaf();
+
+	@Override
+	abstract public List<GenericPair<Object, Boolean>> getLabel();
+
+	static public CurricularRule createCurricularRule(final LogicOperator logicOperator, final CurricularRule... curricularRules) {
+		switch (logicOperator) {
+		case AND:
+			return new AndRule(curricularRules);
+		case OR:
+			return new OrRule(curricularRules);
+		case NOT:
+			if (curricularRules.length != 1) {
+				throw new DomainException("error.invalid.notRule.parameters");
+			}
+			return new NotRule(curricularRules[0]);
+		default:
+			throw new DomainException("error.unsupported.logic.operator");
+		}
+	}
 
 }

@@ -17,46 +17,48 @@ import org.apache.commons.collections.Transformer;
 
 public class ReadQualifications extends FenixService {
 
-    public InfoSiteQualifications run(String user) {
+	public InfoSiteQualifications run(String user) {
 
-	final Person person = Person.readPersonByUsername(user);
+		final Person person = Person.readPersonByUsername(user);
 
-	final List<InfoQualification> infoQualifications = (List) CollectionUtils.collect(person.getAssociatedQualifications(),
-		new Transformer() {
-		    public Object transform(Object o) {
-			Qualification qualification = (Qualification) o;
-			return InfoQualificationWithPersonAndCountry.newInfoFromDomain(qualification);
-		    }
+		final List<InfoQualification> infoQualifications =
+				(List) CollectionUtils.collect(person.getAssociatedQualifications(), new Transformer() {
+					@Override
+					public Object transform(Object o) {
+						Qualification qualification = (Qualification) o;
+						return InfoQualificationWithPersonAndCountry.newInfoFromDomain(qualification);
+					}
+				});
+		Collections.sort(infoQualifications, new Comparator() {
+
+			@Override
+			public int compare(Object o1, Object o2) {
+				InfoQualification infoQualification1 = (InfoQualification) o1;
+				InfoQualification infoQualification2 = (InfoQualification) o2;
+				if (infoQualification1.getDate() == null && infoQualification2.getDate() == null) {
+					return 0;
+				} else if (infoQualification1.getDate() == null) {
+					return -1;
+				} else if (infoQualification2.getDate() == null) {
+					return 1;
+				} else {
+					if (infoQualification1.getDate().before(infoQualification2.getDate())) {
+						return -1;
+					} else if (infoQualification1.getDate().after(infoQualification2.getDate())) {
+						return 1;
+					} else if (infoQualification1.getDate().equals(infoQualification2.getDate())) {
+						return 0;
+					}
+				}
+				return 0;
+			}
 		});
-	Collections.sort(infoQualifications, new Comparator() {
 
-	    public int compare(Object o1, Object o2) {
-		InfoQualification infoQualification1 = (InfoQualification) o1;
-		InfoQualification infoQualification2 = (InfoQualification) o2;
-		if (infoQualification1.getDate() == null && infoQualification2.getDate() == null) {
-		    return 0;
-		} else if (infoQualification1.getDate() == null) {
-		    return -1;
-		} else if (infoQualification2.getDate() == null) {
-		    return 1;
-		} else {
-		    if (infoQualification1.getDate().before(infoQualification2.getDate())) {
-			return -1;
-		    } else if (infoQualification1.getDate().after(infoQualification2.getDate())) {
-			return 1;
-		    } else if (infoQualification1.getDate().equals(infoQualification2.getDate())) {
-			return 0;
-		    }
-		}
-		return 0;
-	    }
-	});
+		InfoSiteQualifications infoSiteQualifications = new InfoSiteQualifications();
+		infoSiteQualifications.setInfoQualifications(infoQualifications);
+		infoSiteQualifications.setInfoPerson(InfoPerson.newInfoFromDomain(person));
 
-	InfoSiteQualifications infoSiteQualifications = new InfoSiteQualifications();
-	infoSiteQualifications.setInfoQualifications(infoQualifications);
-	infoSiteQualifications.setInfoPerson(InfoPerson.newInfoFromDomain(person));
-
-	return infoSiteQualifications;
-    }
+		return infoSiteQualifications;
+	}
 
 }

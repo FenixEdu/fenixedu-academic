@@ -34,54 +34,55 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 @Forwards({ @Forward(name = "showManageEnrolmentModel", path = "/academicAdminOffice/manageEnrolmentModel.jsp") })
 public class ManageEnrolmentModelDA extends FenixDispatchAction {
 
-    public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-	Registration registration = rootDomainObject
-		.readRegistrationByOID(getRequestParameterAsInteger(request, "registrationID"));
-	EnrolmentModelFactoryEditor enrolmentModelFactoryEditor = new EnrolmentModelFactoryEditor(registration);
+	public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+		Registration registration =
+				rootDomainObject.readRegistrationByOID(getRequestParameterAsInteger(request, "registrationID"));
+		EnrolmentModelFactoryEditor enrolmentModelFactoryEditor = new EnrolmentModelFactoryEditor(registration);
 
-	request.setAttribute("enrolmentModelBean", enrolmentModelFactoryEditor);
-	return mapping.findForward("showManageEnrolmentModel");
-    }
-
-    public ActionForward setEnrolmentModel(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-	EnrolmentModelFactoryEditor enrolmentModelFactoryEditor = null;
-
-	if (RenderUtils.getViewState() != null) {
-	    executeFactoryMethod();
-	    enrolmentModelFactoryEditor = (EnrolmentModelFactoryEditor) RenderUtils.getViewState().getMetaObject().getObject();
+		request.setAttribute("enrolmentModelBean", enrolmentModelFactoryEditor);
+		return mapping.findForward("showManageEnrolmentModel");
 	}
 
-	return redirect("/student.do?method=visualizeRegistration&registrationID="
-		+ enrolmentModelFactoryEditor.getRegistration().getIdInternal(), request);
-    }
+	public ActionForward setEnrolmentModel(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+		EnrolmentModelFactoryEditor enrolmentModelFactoryEditor = null;
 
-    public ActionForward postback(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
-	EnrolmentModelFactoryEditor enrolmentModelFactoryEditor = (EnrolmentModelFactoryEditor) getObjectFromViewState("enrolmentModelBean");
-	RenderUtils.invalidateViewState();
+		if (RenderUtils.getViewState() != null) {
+			executeFactoryMethod();
+			enrolmentModelFactoryEditor = (EnrolmentModelFactoryEditor) RenderUtils.getViewState().getMetaObject().getObject();
+		}
 
-	enrolmentModelFactoryEditor.setEnrolmentModel(enrolmentModelFactoryEditor.getRegistration()
-		.getEnrolmentModelForExecutionYear(enrolmentModelFactoryEditor.getExecutionYear()));
-
-	request.setAttribute("enrolmentModelBean", enrolmentModelFactoryEditor);
-	return mapping.findForward("showManageEnrolmentModel");
-    }
-
-    public static class ExecutionYearForRegistrationProvider extends AbstractDomainObjectProvider {
-
-	@Override
-	public Object provide(Object source, Object currentValue) {
-	    ((EnrolmentModelFactoryEditor) source).getRegistration().getStartExecutionYear();
-
-	    List<ExecutionYear> executionYearList = new ArrayList<ExecutionYear>();
-	    ExecutionYear iterator = ((EnrolmentModelFactoryEditor) source).getRegistration().getStartExecutionYear();
-	    while (ExecutionYear.readCurrentExecutionYear().getNextExecutionYear() != iterator) {
-		executionYearList.add(iterator);
-		iterator = iterator.getNextExecutionYear();
-	    }
-
-	    return executionYearList;
+		return redirect("/student.do?method=visualizeRegistration&registrationID="
+				+ enrolmentModelFactoryEditor.getRegistration().getIdInternal(), request);
 	}
-    }
+
+	public ActionForward postback(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+		EnrolmentModelFactoryEditor enrolmentModelFactoryEditor =
+				(EnrolmentModelFactoryEditor) getObjectFromViewState("enrolmentModelBean");
+		RenderUtils.invalidateViewState();
+
+		enrolmentModelFactoryEditor.setEnrolmentModel(enrolmentModelFactoryEditor.getRegistration()
+				.getEnrolmentModelForExecutionYear(enrolmentModelFactoryEditor.getExecutionYear()));
+
+		request.setAttribute("enrolmentModelBean", enrolmentModelFactoryEditor);
+		return mapping.findForward("showManageEnrolmentModel");
+	}
+
+	public static class ExecutionYearForRegistrationProvider extends AbstractDomainObjectProvider {
+
+		@Override
+		public Object provide(Object source, Object currentValue) {
+			((EnrolmentModelFactoryEditor) source).getRegistration().getStartExecutionYear();
+
+			List<ExecutionYear> executionYearList = new ArrayList<ExecutionYear>();
+			ExecutionYear iterator = ((EnrolmentModelFactoryEditor) source).getRegistration().getStartExecutionYear();
+			while (ExecutionYear.readCurrentExecutionYear().getNextExecutionYear() != iterator) {
+				executionYearList.add(iterator);
+				iterator = iterator.getNextExecutionYear();
+			}
+
+			return executionYearList;
+		}
+	}
 }

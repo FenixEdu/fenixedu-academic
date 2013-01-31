@@ -22,19 +22,8 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionServlet;
 
 import pt.ist.fenixWebFramework.security.UserView;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
@@ -42,81 +31,82 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
  */
 @Mapping(module = "person", path = "/retrievePersonalPhoto", scope = "session", parameter = "method")
 public class RetrievePersonalPhotoAction extends FenixDispatchAction {
-    public ActionForward retrieveByUUID(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-	final String uuid = request.getParameter("uuid");
-	final User user = User.readUserByUserUId(uuid);
-	return user == null ? null : retrievePhotograph(request, response, user.getPerson());
-    }
-
-    public ActionForward retrieveOwnPhoto(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
-	final IUserView userView = UserView.getUser();
-	final Photograph personalPhoto = userView.getPerson().getPersonalPhotoEvenIfPending();
-	if (personalPhoto != null) {
-	    writePhoto(response, personalPhoto);
-	    return null;
+	public ActionForward retrieveByUUID(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+		final String uuid = request.getParameter("uuid");
+		final User user = User.readUserByUserUId(uuid);
+		return user == null ? null : retrievePhotograph(request, response, user.getPerson());
 	}
-	writeUnavailablePhoto(response);
-	return null;
-    }
 
-    public ActionForward retrieveByID(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-	final Integer personID = new Integer(request.getParameter("personCode"));
-	final Person person = (Person) rootDomainObject.readPartyByOID(personID);
-	return retrievePhotograph(request, response, person);
-    }
-
-    public ActionForward retrievePendingByID(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-	final Integer photoID = new Integer(request.getParameter("photoCode"));
-	Photograph photo = rootDomainObject.readPhotographByOID(photoID);
-	if (photo != null) {
-	    writePhoto(response, photo);
-	    return null;
-	}
-	writeUnavailablePhoto(response);
-	return null;
-    }
-
-    protected ActionForward retrievePhotograph(final HttpServletRequest request, final HttpServletResponse response,
-	    final Person person) {
-	if (person != null) {
-	    final Photograph personalPhoto = person.getPersonalPhoto();
-	    if (personalPhoto != null) {
-		if (person.isPhotoAvailableToCurrentUser()) {
-		    writePhoto(response, personalPhoto);
-		    return null;
+	public ActionForward retrieveOwnPhoto(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) {
+		final IUserView userView = UserView.getUser();
+		final Photograph personalPhoto = userView.getPerson().getPersonalPhotoEvenIfPending();
+		if (personalPhoto != null) {
+			writePhoto(response, personalPhoto);
+			return null;
 		}
-	    }
+		writeUnavailablePhoto(response);
+		return null;
 	}
-	writeUnavailablePhoto(response);
-	return null;
-    }
 
-    public static void writePhoto(final HttpServletResponse response, final Photograph personalPhoto) {
-	try {
-	    response.setContentType(personalPhoto.getContentType().getMimeType());
-	    final DataOutputStream dos = new DataOutputStream(response.getOutputStream());
-	    dos.write(personalPhoto.getContents());
-	    dos.close();
-	} catch (IOException e) {
+	public ActionForward retrieveByID(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+		final Integer personID = new Integer(request.getParameter("personCode"));
+		final Person person = (Person) rootDomainObject.readPartyByOID(personID);
+		return retrievePhotograph(request, response, person);
 	}
-    }
 
-    public void writeUnavailablePhoto(HttpServletResponse response) {
-	writeUnavailablePhoto(response, getServlet());
-    }
-
-    public static void writeUnavailablePhoto(HttpServletResponse response, ActionServlet actionServlet) {
-	try {
-	    final DataOutputStream dos = new DataOutputStream(response.getOutputStream());
-	    final String path = actionServlet.getServletContext().getRealPath(
-		    "/images/photo_placer01_" + Language.getDefaultLanguage().name() + ".gif");
-	    dos.write(FileUtils.readFileToByteArray(new File(path)));
-	    dos.close();
-	} catch (IOException e) {
+	public ActionForward retrievePendingByID(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+		final Integer photoID = new Integer(request.getParameter("photoCode"));
+		Photograph photo = rootDomainObject.readPhotographByOID(photoID);
+		if (photo != null) {
+			writePhoto(response, photo);
+			return null;
+		}
+		writeUnavailablePhoto(response);
+		return null;
 	}
-    }
+
+	protected ActionForward retrievePhotograph(final HttpServletRequest request, final HttpServletResponse response,
+			final Person person) {
+		if (person != null) {
+			final Photograph personalPhoto = person.getPersonalPhoto();
+			if (personalPhoto != null) {
+				if (person.isPhotoAvailableToCurrentUser()) {
+					writePhoto(response, personalPhoto);
+					return null;
+				}
+			}
+		}
+		writeUnavailablePhoto(response);
+		return null;
+	}
+
+	public static void writePhoto(final HttpServletResponse response, final Photograph personalPhoto) {
+		try {
+			response.setContentType(personalPhoto.getContentType().getMimeType());
+			final DataOutputStream dos = new DataOutputStream(response.getOutputStream());
+			dos.write(personalPhoto.getContents());
+			dos.close();
+		} catch (IOException e) {
+		}
+	}
+
+	public void writeUnavailablePhoto(HttpServletResponse response) {
+		writeUnavailablePhoto(response, getServlet());
+	}
+
+	public static void writeUnavailablePhoto(HttpServletResponse response, ActionServlet actionServlet) {
+		try {
+			final DataOutputStream dos = new DataOutputStream(response.getOutputStream());
+			final String path =
+					actionServlet.getServletContext().getRealPath(
+							"/images/photo_placer01_" + Language.getDefaultLanguage().name() + ".gif");
+			dos.write(FileUtils.readFileToByteArray(new File(path)));
+			dos.close();
+		} catch (IOException e) {
+		}
+	}
 }

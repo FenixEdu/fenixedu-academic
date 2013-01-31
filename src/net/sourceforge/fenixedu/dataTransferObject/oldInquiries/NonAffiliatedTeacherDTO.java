@@ -11,20 +11,20 @@ import net.sourceforge.fenixedu.domain.NonAffiliatedTeacher;
  */
 public class NonAffiliatedTeacherDTO extends TeacherDTO {
 
-    private NonAffiliatedTeacher nonAffiliatedTeacher;
+	private NonAffiliatedTeacher nonAffiliatedTeacher;
 
-    public NonAffiliatedTeacherDTO(NonAffiliatedTeacher nonAffiliatedTeacher) {
-	this.nonAffiliatedTeacher = nonAffiliatedTeacher;
-    }
+	public NonAffiliatedTeacherDTO(NonAffiliatedTeacher nonAffiliatedTeacher) {
+		this.nonAffiliatedTeacher = nonAffiliatedTeacher;
+	}
 
-    @Override
-    public NonAffiliatedTeacher getTeacher() {
-	return nonAffiliatedTeacher;
-    }
+	@Override
+	public NonAffiliatedTeacher getTeacher() {
+		return nonAffiliatedTeacher;
+	}
 
-    @Override
-    public String getName() {
-	return getTeacher().getName();
-    }
+	@Override
+	public String getName() {
+		return getTeacher().getName();
+	}
 
 }

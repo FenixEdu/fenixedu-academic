@@ -8,11 +8,11 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class DeleteAcademicCalendarEntry extends FenixService {
 
-    @Checked("RolePredicates.MANAGER_PREDICATE")
-    @Service
-    public static void run(AcademicCalendarEntry entry, AcademicCalendarRootEntry rootEntry) {
-	if (entry != null) {
-	    entry.delete(rootEntry);
+	@Checked("RolePredicates.MANAGER_PREDICATE")
+	@Service
+	public static void run(AcademicCalendarEntry entry, AcademicCalendarRootEntry rootEntry) {
+		if (entry != null) {
+			entry.delete(rootEntry);
+		}
 	}
-    }
 }

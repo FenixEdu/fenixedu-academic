@@ -20,165 +20,173 @@ import net.sourceforge.fenixedu.domain.StudentGroup;
 
 public abstract class GroupEnrolmentStrategy implements IGroupEnrolmentStrategy {
 
-    @Override
-    public boolean checkNumberOfGroups(Grouping grouping, Shift shift) {
-	Integer maximumGroupCapacity = grouping.getGroupMaximumNumber();
+	@Override
+	public boolean checkNumberOfGroups(Grouping grouping, Shift shift) {
+		Integer maximumGroupCapacity = grouping.getGroupMaximumNumber();
 
-	if (grouping.getDifferentiatedCapacity()) {
-	    maximumGroupCapacity = shift.getShiftGroupingProperties().getCapacity();
-	} else if (grouping.getGroupMaximumNumber() == null) {
-	    return true;
-	}
-
-	int numberOfGroups = 0;
-	if (shift != null) {
-	    numberOfGroups = grouping.readAllStudentGroupsBy(shift).size();
-	} else {
-	    numberOfGroups = grouping.getStudentGroupsWithoutShift().size();
-	}
-	if (maximumGroupCapacity == null || numberOfGroups < maximumGroupCapacity) {
-	    return true;
-	}
-	return false;
-    }
-
-    @Override
-    public boolean checkEnrolmentDate(Grouping grouping, Calendar actualDate) {
-	Long actualDateInMills = new Long(actualDate.getTimeInMillis());
-	Long enrolmentBeginDayInMills = null;
-	Long enrolmentEndDayInMills = null;
-
-	if (grouping.getEnrolmentBeginDay() != null)
-	    enrolmentBeginDayInMills = new Long(grouping.getEnrolmentBeginDay().getTimeInMillis());
-
-	if (grouping.getEnrolmentEndDay() != null)
-	    enrolmentEndDayInMills = new Long(grouping.getEnrolmentEndDay().getTimeInMillis());
-
-	if (enrolmentBeginDayInMills == null && enrolmentEndDayInMills == null)
-	    return true;
-
-	if (enrolmentBeginDayInMills != null && enrolmentEndDayInMills == null) {
-	    if (actualDateInMills.compareTo(enrolmentBeginDayInMills) > 0)
-		return true;
-	}
-
-	if (enrolmentBeginDayInMills == null && enrolmentEndDayInMills != null) {
-	    if (actualDateInMills.compareTo(enrolmentEndDayInMills) < 0)
-		return true;
-	}
-
-	if (actualDateInMills.compareTo(enrolmentBeginDayInMills) > 0 && actualDateInMills.compareTo(enrolmentEndDayInMills) < 0)
-	    return true;
-
-	return false;
-    }
-
-    @Override
-    public boolean checkShiftType(Grouping grouping, Shift shift) {
-	if (shift != null) {
-	    return shift.containsType(grouping.getShiftType());
-	} else {
-	    return grouping.getShiftType() == null;
-	}
-    }
-
-    @Override
-    public List checkShiftsType(Grouping grouping, List shifts) {
-	List result = new ArrayList();
-	if (grouping.getShiftType() != null) {
-	    for (final Shift shift : (List<Shift>) shifts) {
-		if (shift.containsType(grouping.getShiftType())) {
-		    result.add(shift);
-		}
-	    }
-	}
-	return result;
-    }
-
-    @Override
-    public boolean checkAlreadyEnroled(Grouping grouping, String studentUsername) {
-
-	final Attends studentAttend = grouping.getStudentAttend(studentUsername);
-
-	if (studentAttend != null) {
-	    List<StudentGroup> groupingStudentGroups = grouping.getStudentGroups();
-	    for (final StudentGroup studentGroup : groupingStudentGroups) {
-		List<Attends> studentGroupAttends = studentGroup.getAttends();
-		for (final Attends attend : studentGroupAttends) {
-		    if (attend == studentAttend) {
+		if (grouping.getDifferentiatedCapacity()) {
+			maximumGroupCapacity = shift.getShiftGroupingProperties().getCapacity();
+		} else if (grouping.getGroupMaximumNumber() == null) {
 			return true;
-		    }
 		}
-	    }
-	}
-	return false;
-    }
 
-    @Override
-    public boolean checkNotEnroledInGroup(Grouping grouping, StudentGroup studentGroup, String studentUsername) {
-
-	final Attends studentAttend = grouping.getStudentAttend(studentUsername);
-
-	if (studentAttend != null) {
-	    List<Attends> studentGroupAttends = studentGroup.getAttends();
-	    for (final Attends attend : studentGroupAttends) {
-		if (attend == studentAttend) {
-		    return false;
+		int numberOfGroups = 0;
+		if (shift != null) {
+			numberOfGroups = grouping.readAllStudentGroupsBy(shift).size();
+		} else {
+			numberOfGroups = grouping.getStudentGroupsWithoutShift().size();
 		}
-	    }
-	}
-	return true;
-    }
-
-    @Override
-    public boolean checkPossibleToEnrolInExistingGroup(Grouping grouping, StudentGroup studentGroup) {
-
-	final int numberOfElements = studentGroup.getAttendsCount();
-	final Integer maximumCapacity = grouping.getMaximumCapacity();
-	if (maximumCapacity == null)
-	    return true;
-	if (numberOfElements < maximumCapacity)
-	    return true;
-
-	return false;
-    }
-
-    @Override
-    public boolean checkIfStudentGroupIsEmpty(Attends attend, StudentGroup studentGroup) {
-
-	final List allStudentGroupAttends = studentGroup.getAttends();
-	if (allStudentGroupAttends.size() == 1 && allStudentGroupAttends.contains(attend)) {
-	    return true;
-	}
-	return false;
-    }
-
-    @Override
-    public boolean checkStudentInGrouping(Grouping grouping, String username) {
-
-	final Attends attend = grouping.getStudentAttend(username);
-	return attend != null;
-    }
-
-    @Override
-    public boolean checkStudentsUserNamesInGrouping(List<String> studentUsernames, Grouping grouping) {
-	for (final String studentUsername : studentUsernames) {
-	    if (grouping.getStudentAttend(studentUsername) == null) {
+		if (maximumGroupCapacity == null || numberOfGroups < maximumGroupCapacity) {
+			return true;
+		}
 		return false;
-	    }
 	}
-	return true;
-    }
 
-    @Override
-    public boolean checkHasShift(Grouping grouping) {
-	return grouping.getShiftType() != null;
-    }
+	@Override
+	public boolean checkEnrolmentDate(Grouping grouping, Calendar actualDate) {
+		Long actualDateInMills = new Long(actualDate.getTimeInMillis());
+		Long enrolmentBeginDayInMills = null;
+		Long enrolmentEndDayInMills = null;
 
-    @Override
-    public abstract Integer enrolmentPolicyNewGroup(Grouping grouping, int numberOfStudentsToEnrole, Shift shift);
+		if (grouping.getEnrolmentBeginDay() != null) {
+			enrolmentBeginDayInMills = new Long(grouping.getEnrolmentBeginDay().getTimeInMillis());
+		}
 
-    @Override
-    public abstract boolean checkNumberOfGroupElements(Grouping grouping, StudentGroup studentGroup);
+		if (grouping.getEnrolmentEndDay() != null) {
+			enrolmentEndDayInMills = new Long(grouping.getEnrolmentEndDay().getTimeInMillis());
+		}
+
+		if (enrolmentBeginDayInMills == null && enrolmentEndDayInMills == null) {
+			return true;
+		}
+
+		if (enrolmentBeginDayInMills != null && enrolmentEndDayInMills == null) {
+			if (actualDateInMills.compareTo(enrolmentBeginDayInMills) > 0) {
+				return true;
+			}
+		}
+
+		if (enrolmentBeginDayInMills == null && enrolmentEndDayInMills != null) {
+			if (actualDateInMills.compareTo(enrolmentEndDayInMills) < 0) {
+				return true;
+			}
+		}
+
+		if (actualDateInMills.compareTo(enrolmentBeginDayInMills) > 0 && actualDateInMills.compareTo(enrolmentEndDayInMills) < 0) {
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
+	public boolean checkShiftType(Grouping grouping, Shift shift) {
+		if (shift != null) {
+			return shift.containsType(grouping.getShiftType());
+		} else {
+			return grouping.getShiftType() == null;
+		}
+	}
+
+	@Override
+	public List checkShiftsType(Grouping grouping, List shifts) {
+		List result = new ArrayList();
+		if (grouping.getShiftType() != null) {
+			for (final Shift shift : (List<Shift>) shifts) {
+				if (shift.containsType(grouping.getShiftType())) {
+					result.add(shift);
+				}
+			}
+		}
+		return result;
+	}
+
+	@Override
+	public boolean checkAlreadyEnroled(Grouping grouping, String studentUsername) {
+
+		final Attends studentAttend = grouping.getStudentAttend(studentUsername);
+
+		if (studentAttend != null) {
+			List<StudentGroup> groupingStudentGroups = grouping.getStudentGroups();
+			for (final StudentGroup studentGroup : groupingStudentGroups) {
+				List<Attends> studentGroupAttends = studentGroup.getAttends();
+				for (final Attends attend : studentGroupAttends) {
+					if (attend == studentAttend) {
+						return true;
+					}
+				}
+			}
+		}
+		return false;
+	}
+
+	@Override
+	public boolean checkNotEnroledInGroup(Grouping grouping, StudentGroup studentGroup, String studentUsername) {
+
+		final Attends studentAttend = grouping.getStudentAttend(studentUsername);
+
+		if (studentAttend != null) {
+			List<Attends> studentGroupAttends = studentGroup.getAttends();
+			for (final Attends attend : studentGroupAttends) {
+				if (attend == studentAttend) {
+					return false;
+				}
+			}
+		}
+		return true;
+	}
+
+	@Override
+	public boolean checkPossibleToEnrolInExistingGroup(Grouping grouping, StudentGroup studentGroup) {
+
+		final int numberOfElements = studentGroup.getAttendsCount();
+		final Integer maximumCapacity = grouping.getMaximumCapacity();
+		if (maximumCapacity == null) {
+			return true;
+		}
+		if (numberOfElements < maximumCapacity) {
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
+	public boolean checkIfStudentGroupIsEmpty(Attends attend, StudentGroup studentGroup) {
+
+		final List allStudentGroupAttends = studentGroup.getAttends();
+		if (allStudentGroupAttends.size() == 1 && allStudentGroupAttends.contains(attend)) {
+			return true;
+		}
+		return false;
+	}
+
+	@Override
+	public boolean checkStudentInGrouping(Grouping grouping, String username) {
+
+		final Attends attend = grouping.getStudentAttend(username);
+		return attend != null;
+	}
+
+	@Override
+	public boolean checkStudentsUserNamesInGrouping(List<String> studentUsernames, Grouping grouping) {
+		for (final String studentUsername : studentUsernames) {
+			if (grouping.getStudentAttend(studentUsername) == null) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	@Override
+	public boolean checkHasShift(Grouping grouping) {
+		return grouping.getShiftType() != null;
+	}
+
+	@Override
+	public abstract Integer enrolmentPolicyNewGroup(Grouping grouping, int numberOfStudentsToEnrole, Shift shift);
+
+	@Override
+	public abstract boolean checkNumberOfGroupElements(Grouping grouping, StudentGroup studentGroup);
 
 }

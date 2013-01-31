@@ -10,16 +10,18 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class EntryPhaseProvider implements DataProvider {
 
-    public Object provide(Object source, Object currentValue) {
-	IngressionInformationBean ingressionInformationBean = (IngressionInformationBean) source;
-	if (ingressionInformationBean.getIngression() != null && ingressionInformationBean.getIngression().hasEntryPhase()) {
-	    return Arrays.asList(EntryPhase.values());
+	@Override
+	public Object provide(Object source, Object currentValue) {
+		IngressionInformationBean ingressionInformationBean = (IngressionInformationBean) source;
+		if (ingressionInformationBean.getIngression() != null && ingressionInformationBean.getIngression().hasEntryPhase()) {
+			return Arrays.asList(EntryPhase.values());
+		}
+		return new ArrayList<EntryPhase>();
 	}
-	return new ArrayList<EntryPhase>();
-    }
 
-    public Converter getConverter() {
-	return null;
-    }
+	@Override
+	public Converter getConverter() {
+		return null;
+	}
 
 }

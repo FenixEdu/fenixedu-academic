@@ -20,43 +20,43 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class ReadActiveMasterDegreeThesis extends FenixService {
 
-    @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
-    @Service
-    public static Collection<MasterDegreeThesis> run(MasterDegreeThesisState thesisState, Integer year, Degree degree) {
+	@Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
+	@Service
+	public static Collection<MasterDegreeThesis> run(MasterDegreeThesisState thesisState, Integer year, Degree degree) {
 
-	Collection<MasterDegreeThesis> result = new ArrayList<MasterDegreeThesis>();
-	for (MasterDegreeThesis masterDegreeThesis : rootDomainObject.getMasterDegreeThesiss()) {
+		Collection<MasterDegreeThesis> result = new ArrayList<MasterDegreeThesis>();
+		for (MasterDegreeThesis masterDegreeThesis : rootDomainObject.getMasterDegreeThesiss()) {
 
-	    if (masterDegreeThesis.getStudentCurricularPlan().getDegree() != degree) {
-		continue;
-	    }
+			if (masterDegreeThesis.getStudentCurricularPlan().getDegree() != degree) {
+				continue;
+			}
 
-	    if (year != null && thesisState != MasterDegreeThesisState.NOT_DELIVERED) {
-		final MasterDegreeProofVersion proofVersion = masterDegreeThesis.getActiveMasterDegreeProofVersion();
+			if (year != null && thesisState != MasterDegreeThesisState.NOT_DELIVERED) {
+				final MasterDegreeProofVersion proofVersion = masterDegreeThesis.getActiveMasterDegreeProofVersion();
 
-		if (proofVersion == null) {
-		    continue;
+				if (proofVersion == null) {
+					continue;
+				}
+
+				if (thesisState == MasterDegreeThesisState.CONCLUDED
+						&& (proofVersion.getProofDateYearMonthDay() == null || proofVersion.getProofDateYearMonthDay().getYear() != year)) {
+					continue;
+				}
+
+				if (thesisState == MasterDegreeThesisState.DELIVERED
+						&& (proofVersion.getThesisDeliveryDateYearMonthDay() == null || proofVersion
+								.getThesisDeliveryDateYearMonthDay().getYear() != year)) {
+					continue;
+				}
+
+			}
+
+			if (masterDegreeThesis.getState() == thesisState) {
+				result.add(masterDegreeThesis);
+			}
 		}
 
-		if (thesisState == MasterDegreeThesisState.CONCLUDED
-			&& (proofVersion.getProofDateYearMonthDay() == null || proofVersion.getProofDateYearMonthDay().getYear() != year)) {
-		    continue;
-		}
-
-		if (thesisState == MasterDegreeThesisState.DELIVERED
-			&& (proofVersion.getThesisDeliveryDateYearMonthDay() == null || proofVersion
-				.getThesisDeliveryDateYearMonthDay().getYear() != year)) {
-		    continue;
-		}
-
-	    }
-
-	    if (masterDegreeThesis.getState() == thesisState) {
-		result.add(masterDegreeThesis);
-	    }
+		return result;
 	}
-
-	return result;
-    }
 
 }

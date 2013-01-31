@@ -10,140 +10,139 @@ import pt.utl.ist.fenix.tools.util.Pair;
 
 public class DegreeCurricularPlanRenderer extends OutputRenderer {
 
-    static private final String CELL_CLASSES = "scplancolident, scplancolcurricularcourse, scplancolcurricularcourse, "
-	    + "scplancolenrollmentstate, scplancolenrollmenttype, scplancolgrade, scplancolweight, scplancolects, scplancolects";
+	static private final String CELL_CLASSES = "scplancolident, scplancolcurricularcourse, scplancolcurricularcourse, "
+			+ "scplancolenrollmentstate, scplancolenrollmenttype, scplancolgrade, scplancolweight, scplancolects, scplancolects";
 
-    // TODO: change this (create constants and correct css classes)
+	// TODO: change this (create constants and correct css classes)
 
-    private String degreeCurricularPlanClass = "scplan";
-    private String courseGroupRowClass = "scplangroup";
-    private String curricularCourseRowClass = "scplanenrollment";
-    private String curricularRuleRowClass = "scprules";
-    private String cellClasses = CELL_CLASSES;
+	private String degreeCurricularPlanClass = "scplan";
+	private String courseGroupRowClass = "scplangroup";
+	private String curricularCourseRowClass = "scplanenrollment";
+	private String curricularRuleRowClass = "scprules";
+	private String cellClasses = CELL_CLASSES;
 
-    public String getDegreeCurricularPlanClass() {
-	return degreeCurricularPlanClass;
-    }
-
-    public void setDegreeCurricularPlanClass(String degreeCurricularPlanClass) {
-	this.degreeCurricularPlanClass = degreeCurricularPlanClass;
-    }
-
-    public String getCourseGroupRowClass() {
-	return courseGroupRowClass;
-    }
-
-    public void setCourseGroupRowClass(String courseGroupRowClass) {
-	this.courseGroupRowClass = courseGroupRowClass;
-    }
-
-    public String getCurricularCourseRowClass() {
-	return curricularCourseRowClass;
-    }
-
-    public void setCurricularCourseRowClass(String curricularCourseRowClass) {
-	this.curricularCourseRowClass = curricularCourseRowClass;
-    }
-
-    public String getCurricularRuleRowClass() {
-	return curricularRuleRowClass;
-    }
-
-    public void setCurricularRuleRowClass(String curricularRuleRowClass) {
-	this.curricularRuleRowClass = curricularRuleRowClass;
-    }
-
-    private String[] getCellClasses() {
-	return this.cellClasses.split(",");
-    }
-
-    protected String getTabCellClass() {
-	return getCellClasses()[0];
-    }
-
-    protected String getLabelCellClass() {
-	return getCellClasses()[1];
-    }
-
-    protected String getCurriclarCourseCellClass() {
-	return getCellClasses()[2];
-    }
-
-    protected String getCurricularPeriodCellClass() {
-	return getCellClasses()[3];
-    }
-
-    protected String getRegimeCellClass() {
-	return getCellClasses()[4];
-    }
-
-    protected String getCourseLoadCellClass() {
-	return getCellClasses()[5];
-    }
-
-    protected String getEctsCreditsCellClass() {
-	return getCellClasses()[6];
-    }
-
-    protected String getOptionalInformationCellClass() {
-	return getCellClasses()[7];
-    }
-
-    private DegreeCurricularPlanRendererConfig config;
-
-    protected DegreeCurricularPlan getDegreeCurricularPlan() {
-	return config.getDegreeCurricularPlan();
-    }
-
-    protected ExecutionYear getExecutionInterval() {
-	return config.getExecutionInterval();
-    }
-
-    private boolean organizeByGroups() {
-	return config.organizeByGroups();
-    }
-
-    private boolean organizeByYears() {
-	return config.organizeByYears();
-    }
-
-    protected boolean showRules() {
-	return config.isShowRules();
-    }
-
-    protected boolean showCourses() {
-	return config.isShowCourses();
-    }
-
-    protected String getViewCurricularCourseUrl() {
-	return config.getViewCurricularCourseUrl();
-    }
-
-    protected List<Pair<String, String>> getViewCurricularCourseUrlParameters() {
-	return config.getViewCurricularCourseUrlParameters();
-    }
-    
-    protected boolean isCurricularCourseLinkable() {
-	return config.isCurricularCourseLinkable();
-    }
-
-    protected String getDegreeModuleIdAttributeName() {
-	return config.getDegreeModuleIdAttributeName();
-    }
-
-    @Override
-    protected Layout getLayout(Object object, Class type) {
-	config = (DegreeCurricularPlanRendererConfig) object;
-
-	if (organizeByGroups()) {
-	    return new DegreeCurricularPlanGroupsLayout(this);
-
-	} else if (organizeByYears()) {
-	    return new DegreeCurricularPlanYearsLayout(this);
+	public String getDegreeCurricularPlanClass() {
+		return degreeCurricularPlanClass;
 	}
 
-	throw new RuntimeException("error.DegreeCurricularPlanRenderer.unexpected.organization");
-    }
+	public void setDegreeCurricularPlanClass(String degreeCurricularPlanClass) {
+		this.degreeCurricularPlanClass = degreeCurricularPlanClass;
+	}
 
+	public String getCourseGroupRowClass() {
+		return courseGroupRowClass;
+	}
+
+	public void setCourseGroupRowClass(String courseGroupRowClass) {
+		this.courseGroupRowClass = courseGroupRowClass;
+	}
+
+	public String getCurricularCourseRowClass() {
+		return curricularCourseRowClass;
+	}
+
+	public void setCurricularCourseRowClass(String curricularCourseRowClass) {
+		this.curricularCourseRowClass = curricularCourseRowClass;
+	}
+
+	public String getCurricularRuleRowClass() {
+		return curricularRuleRowClass;
+	}
+
+	public void setCurricularRuleRowClass(String curricularRuleRowClass) {
+		this.curricularRuleRowClass = curricularRuleRowClass;
+	}
+
+	private String[] getCellClasses() {
+		return this.cellClasses.split(",");
+	}
+
+	protected String getTabCellClass() {
+		return getCellClasses()[0];
+	}
+
+	protected String getLabelCellClass() {
+		return getCellClasses()[1];
+	}
+
+	protected String getCurriclarCourseCellClass() {
+		return getCellClasses()[2];
+	}
+
+	protected String getCurricularPeriodCellClass() {
+		return getCellClasses()[3];
+	}
+
+	protected String getRegimeCellClass() {
+		return getCellClasses()[4];
+	}
+
+	protected String getCourseLoadCellClass() {
+		return getCellClasses()[5];
+	}
+
+	protected String getEctsCreditsCellClass() {
+		return getCellClasses()[6];
+	}
+
+	protected String getOptionalInformationCellClass() {
+		return getCellClasses()[7];
+	}
+
+	private DegreeCurricularPlanRendererConfig config;
+
+	protected DegreeCurricularPlan getDegreeCurricularPlan() {
+		return config.getDegreeCurricularPlan();
+	}
+
+	protected ExecutionYear getExecutionInterval() {
+		return config.getExecutionInterval();
+	}
+
+	private boolean organizeByGroups() {
+		return config.organizeByGroups();
+	}
+
+	private boolean organizeByYears() {
+		return config.organizeByYears();
+	}
+
+	protected boolean showRules() {
+		return config.isShowRules();
+	}
+
+	protected boolean showCourses() {
+		return config.isShowCourses();
+	}
+
+	protected String getViewCurricularCourseUrl() {
+		return config.getViewCurricularCourseUrl();
+	}
+
+	protected List<Pair<String, String>> getViewCurricularCourseUrlParameters() {
+		return config.getViewCurricularCourseUrlParameters();
+	}
+
+	protected boolean isCurricularCourseLinkable() {
+		return config.isCurricularCourseLinkable();
+	}
+
+	protected String getDegreeModuleIdAttributeName() {
+		return config.getDegreeModuleIdAttributeName();
+	}
+
+	@Override
+	protected Layout getLayout(Object object, Class type) {
+		config = (DegreeCurricularPlanRendererConfig) object;
+
+		if (organizeByGroups()) {
+			return new DegreeCurricularPlanGroupsLayout(this);
+
+		} else if (organizeByYears()) {
+			return new DegreeCurricularPlanYearsLayout(this);
+		}
+
+		throw new RuntimeException("error.DegreeCurricularPlanRenderer.unexpected.organization");
+	}
 
 }

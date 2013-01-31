@@ -15,36 +15,37 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class FinalResult extends FenixService {
 
-    @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
-    @Service
-    public static InfoFinalResult run(InfoStudentCurricularPlan infoStudentCurricularPlan) throws Exception {
+	@Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
+	@Service
+	public static InfoFinalResult run(InfoStudentCurricularPlan infoStudentCurricularPlan) throws Exception {
 
-	boolean result = false;
+		boolean result = false;
 
-	StudentCurricularPlan studentCurricularPlan = rootDomainObject.readStudentCurricularPlanByOID(infoStudentCurricularPlan
-		.getIdInternal());
+		StudentCurricularPlan studentCurricularPlan =
+				rootDomainObject.readStudentCurricularPlanByOID(infoStudentCurricularPlan.getIdInternal());
 
-	IDegreeCurricularPlanStrategyFactory degreeCurricularPlanStrategyFactory = DegreeCurricularPlanStrategyFactory
-		.getInstance();
+		IDegreeCurricularPlanStrategyFactory degreeCurricularPlanStrategyFactory =
+				DegreeCurricularPlanStrategyFactory.getInstance();
 
-	IMasterDegreeCurricularPlanStrategy masterDegreeCurricularPlanStrategy = (IMasterDegreeCurricularPlanStrategy) degreeCurricularPlanStrategyFactory
-		.getDegreeCurricularPlanStrategy(studentCurricularPlan.getDegreeCurricularPlan());
+		IMasterDegreeCurricularPlanStrategy masterDegreeCurricularPlanStrategy =
+				(IMasterDegreeCurricularPlanStrategy) degreeCurricularPlanStrategyFactory
+						.getDegreeCurricularPlanStrategy(studentCurricularPlan.getDegreeCurricularPlan());
 
-	// verify if the school part is concluded
-	if (studentCurricularPlan.getDegreeCurricularPlan().getNeededCredits() == null) {
-	    return null;
+		// verify if the school part is concluded
+		if (studentCurricularPlan.getDegreeCurricularPlan().getNeededCredits() == null) {
+			return null;
+		}
+
+		result = masterDegreeCurricularPlanStrategy.checkEndOfScholarship(studentCurricularPlan);
+
+		if (result == true) {
+			InfoFinalResult infoFinalResult = new InfoFinalResult();
+
+			masterDegreeCurricularPlanStrategy.calculateStudentAverage(studentCurricularPlan, infoFinalResult);
+
+			return infoFinalResult;
+		}
+
+		return null;
 	}
-
-	result = masterDegreeCurricularPlanStrategy.checkEndOfScholarship(studentCurricularPlan);
-
-	if (result == true) {
-	    InfoFinalResult infoFinalResult = new InfoFinalResult();
-
-	    masterDegreeCurricularPlanStrategy.calculateStudentAverage(studentCurricularPlan, infoFinalResult);
-
-	    return infoFinalResult;
-	}
-
-	return null;
-    }
 }

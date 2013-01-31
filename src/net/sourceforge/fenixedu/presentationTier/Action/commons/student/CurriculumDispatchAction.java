@@ -50,315 +50,319 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
  * @author David Santos
  * @author André Fernandes / João Brito
  */
-@Mapping(path = "/viewStudentCurriculum", module = "academicAdministration", formBean = "studentCurricularPlanAndEnrollmentsSelectionForm")
+@Mapping(
+		path = "/viewStudentCurriculum",
+		module = "academicAdministration",
+		formBean = "studentCurricularPlanAndEnrollmentsSelectionForm")
 @Forwards({ @Forward(name = "ShowStudentCurriculum", path = "/student/curriculum/displayStudentCurriculum_bd.jsp"),
-	@Forward(name = "ShowStudentCurricularPlans", path = "df.page.showStudentCurricularPlans"),
-	@Forward(name = "ShowStudentCurriculumForCoordinator", path = "df.page.showStudentCurriculumForCoordinator"),
-	@Forward(name = "NotAuthorized", path = "df.page.notAuthorized") })
+		@Forward(name = "ShowStudentCurricularPlans", path = "df.page.showStudentCurricularPlans"),
+		@Forward(name = "ShowStudentCurriculumForCoordinator", path = "df.page.showStudentCurriculumForCoordinator"),
+		@Forward(name = "NotAuthorized", path = "df.page.notAuthorized") })
 public class CurriculumDispatchAction extends FenixDispatchAction {
 
-    @Override
-    public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-	CoordinatedDegreeInfo.setCoordinatorContext(request);
-	return super.execute(mapping, actionForm, request, response);
-    }
-
-    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
-	RenderUtils.invalidateViewState();
-
-	Registration registration = null;
-
-	final Integer registrationOID = getRegistrationOID(request);
-	final Student loggedStudent = getUserView(request).getPerson().getStudent();
-
-	if (registrationOID != null) {
-	    registration = rootDomainObject.readRegistrationByOID(registrationOID);
-	} else if (loggedStudent != null) {
-	    /**
-	     * We no longer want to filter students with 1 registration only.
-	     * All taskflows are now forced to render "chooseRegistration.jsp"
-	     * in order to make it possible to present the
-	     * ExtraCurricularActivities information. This old block of code is
-	     * kept commented only for legacy purpose.
-	     */
-	    // if (loggedStudent.getRegistrations().size() == 1) {
-	    // registration = loggedStudent.getRegistrations().get(0);
-	    // } else {
-	    request.setAttribute("student", loggedStudent);
-
-	    List<Registration> validRegistrations = getValidRegistrations(loggedStudent);
-
-	    request.setAttribute("validRegistrations", validRegistrations);
-
-	    return mapping.findForward("chooseRegistration");
-	    // }
+	@Override
+	public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		CoordinatedDegreeInfo.setCoordinatorContext(request);
+		return super.execute(mapping, actionForm, request, response);
 	}
 
-	if (registration == null) {
-	    return mapping.findForward("NotAuthorized");
-	} else {
-	    return getStudentCP(registration, mapping, (DynaActionForm) form, request);
-	}
-    }
+	public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+		RenderUtils.invalidateViewState();
 
-    private List<Registration> getValidRegistrations(Student loggedStudent) {
-	List<Registration> result = new ArrayList<Registration>();
+		Registration registration = null;
 
-	for (Registration registration : loggedStudent.getRegistrations()) {
-	    if (!registration.isCanceled()) {
-		result.add(registration);
-	    }
-	}
+		final Integer registrationOID = getRegistrationOID(request);
+		final Student loggedStudent = getUserView(request).getPerson().getStudent();
 
-	return result;
-    }
+		if (registrationOID != null) {
+			registration = rootDomainObject.readRegistrationByOID(registrationOID);
+		} else if (loggedStudent != null) {
+			/**
+			 * We no longer want to filter students with 1 registration only.
+			 * All taskflows are now forced to render "chooseRegistration.jsp"
+			 * in order to make it possible to present the
+			 * ExtraCurricularActivities information. This old block of code is
+			 * kept commented only for legacy purpose.
+			 */
+			// if (loggedStudent.getRegistrations().size() == 1) {
+			// registration = loggedStudent.getRegistrations().get(0);
+			// } else {
+			request.setAttribute("student", loggedStudent);
 
-    private Integer getRegistrationOID(HttpServletRequest request) {
-	String registrationOID = request.getParameter("registrationOID");
-	if (registrationOID == null || !StringUtils.isNumeric(registrationOID)) {
-	    registrationOID = (String) request.getAttribute("registrationOID");
-	}
+			List<Registration> validRegistrations = getValidRegistrations(loggedStudent);
 
-	return (registrationOID == null || registrationOID.equals("") || !StringUtils.isNumeric(registrationOID)) ? null
-		: Integer.valueOf(registrationOID);
-    }
+			request.setAttribute("validRegistrations", validRegistrations);
 
-    public ActionForward prepareReadByStudentNumber(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
-	RenderUtils.invalidateViewState();
-
-	DynaActionForm actionForm = (DynaActionForm) form;
-	Registration registration = null;
-
-	final Integer degreeCurricularPlanId = (Integer) actionForm.get("degreeCurricularPlanID");
-	Student student = getStudent(actionForm);
-	if (student != null) {
-	    if (degreeCurricularPlanId != null && degreeCurricularPlanId > 0) {
-		DegreeCurricularPlan degreeCurricularPlan = rootDomainObject
-			.readDegreeCurricularPlanByOID(degreeCurricularPlanId);
-		registration = student.readRegistrationByDegreeCurricularPlan(degreeCurricularPlan);
-	    } else {
-		final List<Registration> registrations = student.getRegistrations();
-		if (!registrations.isEmpty()) {
-		    registration = registrations.iterator().next();
+			return mapping.findForward("chooseRegistration");
+			// }
 		}
-	    }
+
+		if (registration == null) {
+			return mapping.findForward("NotAuthorized");
+		} else {
+			return getStudentCP(registration, mapping, (DynaActionForm) form, request);
+		}
 	}
 
-	if (registration == null) {
-	    return mapping.findForward("NotAuthorized");
-	} else {
-	    return getStudentCP(registration, mapping, actionForm, request);
+	private List<Registration> getValidRegistrations(Student loggedStudent) {
+		List<Registration> result = new ArrayList<Registration>();
+
+		for (Registration registration : loggedStudent.getRegistrations()) {
+			if (!registration.isCanceled()) {
+				result.add(registration);
+			}
+		}
+
+		return result;
 	}
 
-    }
+	private Integer getRegistrationOID(HttpServletRequest request) {
+		String registrationOID = request.getParameter("registrationOID");
+		if (registrationOID == null || !StringUtils.isNumeric(registrationOID)) {
+			registrationOID = (String) request.getAttribute("registrationOID");
+		}
 
-    private Student getStudent(DynaActionForm form) {
-	final Integer studentNumber = Integer.valueOf((String) form.get("studentNumber"));
-	Student student = Student.readStudentByNumber(studentNumber);
-	// if (student != null) {
-	// Teacher teacher = AccessControl.getPerson().getTeacher();
-	// for (Tutorship tutorship : student.getTutorships()) {
-	// if (tutorship.getTeacher().equals(teacher))
-	// return student;
-	// }
-	// for (Coordinator coordinator :
-	// AccessControl.getPerson().getCoordinators()) {
-	// DegreeCurricularPlan dcp =
-	// coordinator.getExecutionDegree().getDegreeCurricularPlan();
-	// for (Registration registration : student.getRegistrations()) {
-	// if (registration.getStudentCurricularPlan(dcp) != null)
-	// return student;
-	// }
-	// }
-	// }
-	// return null;
-	return student;
-    }
-
-    protected ActionForward getStudentCPForSupervisor(final Registration registration, final ActionMapping mapping,
-	    DynaActionForm actionForm, final HttpServletRequest request) {
-
-	return getStudentCP(registration, mapping, actionForm, request);
-    }
-
-    private ActionForward getStudentCP(final Registration registration, final ActionMapping mapping, DynaActionForm actionForm,
-	    final HttpServletRequest request) {
-	request.setAttribute("registration", registration);
-
-	String studentCPID = getStudentCPID(request, actionForm);
-	if (StringUtils.isEmpty(studentCPID)) {
-	    studentCPID = getDefaultStudentCPID(registration).getId().toString();
-	    actionForm.set("studentCPID", studentCPID);
-	}
-	request.setAttribute("selectedStudentCurricularPlans", getSelectedStudentCurricularPlans(registration, studentCPID));
-	request.setAttribute("scpsLabelValueBeanList", getSCPsLabelValueBeanList(registration.getStudentCurricularPlans()));
-
-	if (StringUtils.isEmpty(actionForm.getString("viewType"))) {
-	    actionForm.set("viewType", ViewType.ALL.name());
+		return (registrationOID == null || registrationOID.equals("") || !StringUtils.isNumeric(registrationOID)) ? null : Integer
+				.valueOf(registrationOID);
 	}
 
-	if (StringUtils.isEmpty(actionForm.getString("select"))) {
-	    actionForm
-		    .set("select",
-			    AcademicPredicates.VIEW_FULL_STUDENT_CURRICULUM.evaluate(AccessControl.getPerson()) ? EnrolmentStateFilterType.ALL
-				    .name() : EnrolmentStateFilterType.APPROVED_OR_ENROLED.name());
+	public ActionForward prepareReadByStudentNumber(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) {
+		RenderUtils.invalidateViewState();
+
+		DynaActionForm actionForm = (DynaActionForm) form;
+		Registration registration = null;
+
+		final Integer degreeCurricularPlanId = (Integer) actionForm.get("degreeCurricularPlanID");
+		Student student = getStudent(actionForm);
+		if (student != null) {
+			if (degreeCurricularPlanId != null && degreeCurricularPlanId > 0) {
+				DegreeCurricularPlan degreeCurricularPlan =
+						rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanId);
+				registration = student.readRegistrationByDegreeCurricularPlan(degreeCurricularPlan);
+			} else {
+				final List<Registration> registrations = student.getRegistrations();
+				if (!registrations.isEmpty()) {
+					registration = registrations.iterator().next();
+				}
+			}
+		}
+
+		if (registration == null) {
+			return mapping.findForward("NotAuthorized");
+		} else {
+			return getStudentCP(registration, mapping, actionForm, request);
+		}
+
 	}
 
-	if (StringUtils.isEmpty(actionForm.getString("organizedBy"))) {
-	    String organizedBy = registration.getDegreeType() == DegreeType.MASTER_DEGREE ? OrganizationType.EXECUTION_YEARS
-		    .name() : OrganizationType.GROUPS.name();
-	    actionForm.set("organizedBy", organizedBy);
+	private Student getStudent(DynaActionForm form) {
+		final Integer studentNumber = Integer.valueOf((String) form.get("studentNumber"));
+		Student student = Student.readStudentByNumber(studentNumber);
+		// if (student != null) {
+		// Teacher teacher = AccessControl.getPerson().getTeacher();
+		// for (Tutorship tutorship : student.getTutorships()) {
+		// if (tutorship.getTeacher().equals(teacher))
+		// return student;
+		// }
+		// for (Coordinator coordinator :
+		// AccessControl.getPerson().getCoordinators()) {
+		// DegreeCurricularPlan dcp =
+		// coordinator.getExecutionDegree().getDegreeCurricularPlan();
+		// for (Registration registration : student.getRegistrations()) {
+		// if (registration.getStudentCurricularPlan(dcp) != null)
+		// return student;
+		// }
+		// }
+		// }
+		// return null;
+		return student;
 	}
 
-	if (request.getParameter("degreeCurricularPlanID") == null
-		|| Integer.valueOf(request.getParameter("degreeCurricularPlanID")) == 0) {
-	    return mapping.findForward("ShowStudentCurriculum");
-	} else {
-	    request.setAttribute("degreeCurricularPlanID", Integer.valueOf(request.getParameter("degreeCurricularPlanID")));
-	    return mapping.findForward("ShowStudentCurriculumForCoordinator");
-	}
-    }
+	protected ActionForward getStudentCPForSupervisor(final Registration registration, final ActionMapping mapping,
+			DynaActionForm actionForm, final HttpServletRequest request) {
 
-    private List<StudentCurricularPlan> getSelectedStudentCurricularPlans(final Registration registration,
-	    final String studentCPID) {
-	final List<StudentCurricularPlan> result;
-
-	final StudentCurricularPlanIDDomainType scpIdType = new StudentCurricularPlanIDDomainType(studentCPID);
-	if (scpIdType.isNewest()) {
-	    result = Collections.singletonList(registration.getLastStudentCurricularPlan());
-	} else if (scpIdType.isAll()) {
-	    result = getSortedStudentCurricularPlans(registration);
-	} else {
-	    result = Collections.singletonList(getStudentCurricularPlan(registration, Integer.valueOf(studentCPID)));
+		return getStudentCP(registration, mapping, actionForm, request);
 	}
 
-	return result;
-    }
+	private ActionForward getStudentCP(final Registration registration, final ActionMapping mapping, DynaActionForm actionForm,
+			final HttpServletRequest request) {
+		request.setAttribute("registration", registration);
 
-    private StudentCurricularPlanIDDomainType getDefaultStudentCPID(final Registration registration) {
-	return registration.isBolonha() ? StudentCurricularPlanIDDomainType.NEWEST : StudentCurricularPlanIDDomainType.ALL;
-    }
+		String studentCPID = getStudentCPID(request, actionForm);
+		if (StringUtils.isEmpty(studentCPID)) {
+			studentCPID = getDefaultStudentCPID(registration).getId().toString();
+			actionForm.set("studentCPID", studentCPID);
+		}
+		request.setAttribute("selectedStudentCurricularPlans", getSelectedStudentCurricularPlans(registration, studentCPID));
+		request.setAttribute("scpsLabelValueBeanList", getSCPsLabelValueBeanList(registration.getStudentCurricularPlans()));
 
-    private String getStudentCPID(HttpServletRequest request, DynaActionForm actionForm) {
-	String result = request.getParameter("studentCPID");
-	if (result == null) {
-	    result = (String) request.getAttribute("studentCPID");
-	} else if (result == null) {
-	    result = (String) actionForm.get("studentCPID");
+		if (StringUtils.isEmpty(actionForm.getString("viewType"))) {
+			actionForm.set("viewType", ViewType.ALL.name());
+		}
+
+		if (StringUtils.isEmpty(actionForm.getString("select"))) {
+			actionForm
+					.set("select",
+							AcademicPredicates.VIEW_FULL_STUDENT_CURRICULUM.evaluate(AccessControl.getPerson()) ? EnrolmentStateFilterType.ALL
+									.name() : EnrolmentStateFilterType.APPROVED_OR_ENROLED.name());
+		}
+
+		if (StringUtils.isEmpty(actionForm.getString("organizedBy"))) {
+			String organizedBy =
+					registration.getDegreeType() == DegreeType.MASTER_DEGREE ? OrganizationType.EXECUTION_YEARS.name() : OrganizationType.GROUPS
+							.name();
+			actionForm.set("organizedBy", organizedBy);
+		}
+
+		if (request.getParameter("degreeCurricularPlanID") == null
+				|| Integer.valueOf(request.getParameter("degreeCurricularPlanID")) == 0) {
+			return mapping.findForward("ShowStudentCurriculum");
+		} else {
+			request.setAttribute("degreeCurricularPlanID", Integer.valueOf(request.getParameter("degreeCurricularPlanID")));
+			return mapping.findForward("ShowStudentCurriculumForCoordinator");
+		}
 	}
 
-	return result;
-    }
+	private List<StudentCurricularPlan> getSelectedStudentCurricularPlans(final Registration registration,
+			final String studentCPID) {
+		final List<StudentCurricularPlan> result;
 
-    private List<StudentCurricularPlan> getSortedStudentCurricularPlans(final Registration registration) {
-	final List<StudentCurricularPlan> result = new ArrayList<StudentCurricularPlan>();
-	result.addAll(registration.getStudentCurricularPlans());
-	Collections.sort(result, new BeanComparator("startDateYearMonthDay"));
+		final StudentCurricularPlanIDDomainType scpIdType = new StudentCurricularPlanIDDomainType(studentCPID);
+		if (scpIdType.isNewest()) {
+			result = Collections.singletonList(registration.getLastStudentCurricularPlan());
+		} else if (scpIdType.isAll()) {
+			result = getSortedStudentCurricularPlans(registration);
+		} else {
+			result = Collections.singletonList(getStudentCurricularPlan(registration, Integer.valueOf(studentCPID)));
+		}
 
-	return result;
-    }
-
-    private StudentCurricularPlan getStudentCurricularPlan(final Registration registration, final Integer scpId) {
-	for (final StudentCurricularPlan studentCurricularPlan : registration.getStudentCurricularPlansSet()) {
-	    if (studentCurricularPlan.getIdInternal().equals(scpId)) {
-		return studentCurricularPlan;
-	    }
+		return result;
 	}
 
-	return null;
-    }
-
-    private List<LabelValueBean> getSCPsLabelValueBeanList(List<StudentCurricularPlan> studentCurricularPlans) {
-	final List<LabelValueBean> result = new ArrayList<LabelValueBean>();
-
-	result.add(new LabelValueBean(StudentCurricularPlanIDDomainType.NEWEST_STRING, StudentCurricularPlanIDDomainType.NEWEST
-		.toString()));
-	result.add(new LabelValueBean(StudentCurricularPlanIDDomainType.ALL_STRING, StudentCurricularPlanIDDomainType.ALL
-		.toString()));
-
-	for (final StudentCurricularPlan studentCurricularPlan : studentCurricularPlans) {
-	    final StringBuilder label = new StringBuilder();
-
-	    label.append(studentCurricularPlan.getRegistration().getDegreeNameWithDescription());
-	    label.append(", ").append(studentCurricularPlan.getDegreeCurricularPlan().getName());
-
-	    if (studentCurricularPlan.getSpecialization() != null) {
-		label.append(" - ").append(BundleUtil.getEnumName(studentCurricularPlan.getSpecialization()));
-	    }
-
-	    label.append(" - ").append(studentCurricularPlan.getStartDateYearMonthDay());
-
-	    result.add(new LabelValueBean(label.toString(), String.valueOf(studentCurricularPlan.getIdInternal())));
+	private StudentCurricularPlanIDDomainType getDefaultStudentCPID(final Registration registration) {
+		return registration.isBolonha() ? StudentCurricularPlanIDDomainType.NEWEST : StudentCurricularPlanIDDomainType.ALL;
 	}
 
-	return result;
-    }
+	private String getStudentCPID(HttpServletRequest request, DynaActionForm actionForm) {
+		String result = request.getParameter("studentCPID");
+		if (result == null) {
+			result = (String) request.getAttribute("studentCPID");
+		} else if (result == null) {
+			result = (String) actionForm.get("studentCPID");
+		}
 
-    public ActionForward getCurriculumForCoordinator(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws ExistingActionException, FenixFilterException, FenixServiceException {
-
-	// get and set the degreeCurricularPlanID from the request and onto the
-	// request
-	Integer degreeCurricularPlanID = null;
-	if (request.getParameter("degreeCurricularPlanID") != null) {
-	    degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanID"));
-	    request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
+		return result;
 	}
 
-	final String studentCurricularPlanID = getStudentCPID(request, (DynaActionForm) form);
+	private List<StudentCurricularPlan> getSortedStudentCurricularPlans(final Registration registration) {
+		final List<StudentCurricularPlan> result = new ArrayList<StudentCurricularPlan>();
+		result.addAll(registration.getStudentCurricularPlans());
+		Collections.sort(result, new BeanComparator("startDateYearMonthDay"));
 
-	Integer executionDegreeID = getExecutionDegree(request);
-	List result = null;
-	try {
-	    // TODO check
-	    Object args[] = { executionDegreeID, Integer.valueOf(studentCurricularPlanID) };
-	    result = (ArrayList) ServiceManagerServiceFactory.executeService("ReadStudentCurriculum", args);
-	} catch (NotAuthorizedException e) {
-	    return mapping.findForward("NotAuthorized");
-	}
-	// TODO Remove this exception! It returns null and it is not supposed!
-	catch (Exception exp) {
-	    exp.printStackTrace();
-	    return null;
+		return result;
 	}
 
-	BeanComparator courseName = new BeanComparator("infoCurricularCourse.name");
-	BeanComparator executionYear = new BeanComparator("infoExecutionPeriod.infoExecutionYear.year");
-	ComparatorChain chainComparator = new ComparatorChain();
-	chainComparator.addComparator(courseName);
-	chainComparator.addComparator(executionYear);
+	private StudentCurricularPlan getStudentCurricularPlan(final Registration registration, final Integer scpId) {
+		for (final StudentCurricularPlan studentCurricularPlan : registration.getStudentCurricularPlansSet()) {
+			if (studentCurricularPlan.getIdInternal().equals(scpId)) {
+				return studentCurricularPlan;
+			}
+		}
 
-	Collections.sort(result, chainComparator);
-
-	InfoStudentCurricularPlan infoStudentCurricularPlan = null;
-	try {
-
-	    infoStudentCurricularPlan = ReadStudentCurricularPlan.run(Integer.valueOf(studentCurricularPlanID));
-	} catch (ExistingServiceException e) {
-	    throw new ExistingActionException(e);
+		return null;
 	}
 
-	request.setAttribute(PresentationConstants.CURRICULUM, result);
-	request.setAttribute(PresentationConstants.STUDENT_CURRICULAR_PLAN, infoStudentCurricularPlan);
+	private List<LabelValueBean> getSCPsLabelValueBeanList(List<StudentCurricularPlan> studentCurricularPlans) {
+		final List<LabelValueBean> result = new ArrayList<LabelValueBean>();
 
-	return mapping.findForward("ShowStudentCurriculum");
-    }
+		result.add(new LabelValueBean(StudentCurricularPlanIDDomainType.NEWEST_STRING, StudentCurricularPlanIDDomainType.NEWEST
+				.toString()));
+		result.add(new LabelValueBean(StudentCurricularPlanIDDomainType.ALL_STRING, StudentCurricularPlanIDDomainType.ALL
+				.toString()));
 
-    private Integer getExecutionDegree(HttpServletRequest request) {
-	Integer executionDegreeId = null;
+		for (final StudentCurricularPlan studentCurricularPlan : studentCurricularPlans) {
+			final StringBuilder label = new StringBuilder();
 
-	String executionDegreeIdString = request.getParameter("executionDegreeId");
-	if (executionDegreeIdString == null) {
-	    executionDegreeIdString = (String) request.getAttribute("executionDegreeId");
+			label.append(studentCurricularPlan.getRegistration().getDegreeNameWithDescription());
+			label.append(", ").append(studentCurricularPlan.getDegreeCurricularPlan().getName());
+
+			if (studentCurricularPlan.getSpecialization() != null) {
+				label.append(" - ").append(BundleUtil.getEnumName(studentCurricularPlan.getSpecialization()));
+			}
+
+			label.append(" - ").append(studentCurricularPlan.getStartDateYearMonthDay());
+
+			result.add(new LabelValueBean(label.toString(), String.valueOf(studentCurricularPlan.getIdInternal())));
+		}
+
+		return result;
 	}
-	if (executionDegreeIdString != null) {
-	    executionDegreeId = Integer.valueOf(executionDegreeIdString);
-	}
-	request.setAttribute("executionDegreeId", executionDegreeId);
 
-	return executionDegreeId;
-    }
+	public ActionForward getCurriculumForCoordinator(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws ExistingActionException, FenixFilterException, FenixServiceException {
+
+		// get and set the degreeCurricularPlanID from the request and onto the
+		// request
+		Integer degreeCurricularPlanID = null;
+		if (request.getParameter("degreeCurricularPlanID") != null) {
+			degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanID"));
+			request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
+		}
+
+		final String studentCurricularPlanID = getStudentCPID(request, (DynaActionForm) form);
+
+		Integer executionDegreeID = getExecutionDegree(request);
+		List result = null;
+		try {
+			// TODO check
+			Object args[] = { executionDegreeID, Integer.valueOf(studentCurricularPlanID) };
+			result = (ArrayList) ServiceManagerServiceFactory.executeService("ReadStudentCurriculum", args);
+		} catch (NotAuthorizedException e) {
+			return mapping.findForward("NotAuthorized");
+		}
+		// TODO Remove this exception! It returns null and it is not supposed!
+		catch (Exception exp) {
+			exp.printStackTrace();
+			return null;
+		}
+
+		BeanComparator courseName = new BeanComparator("infoCurricularCourse.name");
+		BeanComparator executionYear = new BeanComparator("infoExecutionPeriod.infoExecutionYear.year");
+		ComparatorChain chainComparator = new ComparatorChain();
+		chainComparator.addComparator(courseName);
+		chainComparator.addComparator(executionYear);
+
+		Collections.sort(result, chainComparator);
+
+		InfoStudentCurricularPlan infoStudentCurricularPlan = null;
+		try {
+
+			infoStudentCurricularPlan = ReadStudentCurricularPlan.run(Integer.valueOf(studentCurricularPlanID));
+		} catch (ExistingServiceException e) {
+			throw new ExistingActionException(e);
+		}
+
+		request.setAttribute(PresentationConstants.CURRICULUM, result);
+		request.setAttribute(PresentationConstants.STUDENT_CURRICULAR_PLAN, infoStudentCurricularPlan);
+
+		return mapping.findForward("ShowStudentCurriculum");
+	}
+
+	private Integer getExecutionDegree(HttpServletRequest request) {
+		Integer executionDegreeId = null;
+
+		String executionDegreeIdString = request.getParameter("executionDegreeId");
+		if (executionDegreeIdString == null) {
+			executionDegreeIdString = (String) request.getAttribute("executionDegreeId");
+		}
+		if (executionDegreeIdString != null) {
+			executionDegreeId = Integer.valueOf(executionDegreeIdString);
+		}
+		request.setAttribute("executionDegreeId", executionDegreeId);
+
+		return executionDegreeId;
+	}
 
 }

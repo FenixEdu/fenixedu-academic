@@ -15,37 +15,37 @@ import net.sourceforge.fenixedu.dataTransferObject.DataTranferObject;
  */
 public class InfoAreas2Choose extends DataTranferObject implements Serializable {
 
-    private List finalSpecializationAreas;
+	private List finalSpecializationAreas;
 
-    private List finalSecundaryAreas;
+	private List finalSecundaryAreas;
 
-    /**
-     * @return Returns the finalSecundaryAreas.
-     */
-    public List getFinalSecundaryAreas() {
-	return finalSecundaryAreas;
-    }
+	/**
+	 * @return Returns the finalSecundaryAreas.
+	 */
+	public List getFinalSecundaryAreas() {
+		return finalSecundaryAreas;
+	}
 
-    /**
-     * @param finalSecundaryAreas
-     *            The finalSecundaryAreas to set.
-     */
-    public void setFinalSecundaryAreas(List finalSecundaryAreas) {
-	this.finalSecundaryAreas = finalSecundaryAreas;
-    }
+	/**
+	 * @param finalSecundaryAreas
+	 *            The finalSecundaryAreas to set.
+	 */
+	public void setFinalSecundaryAreas(List finalSecundaryAreas) {
+		this.finalSecundaryAreas = finalSecundaryAreas;
+	}
 
-    /**
-     * @return Returns the finalSpecializationAreas.
-     */
-    public List getFinalSpecializationAreas() {
-	return finalSpecializationAreas;
-    }
+	/**
+	 * @return Returns the finalSpecializationAreas.
+	 */
+	public List getFinalSpecializationAreas() {
+		return finalSpecializationAreas;
+	}
 
-    /**
-     * @param finalSpecializationAreas
-     *            The finalSpecializationAreas to set.
-     */
-    public void setFinalSpecializationAreas(List finalSpecializationAreas) {
-	this.finalSpecializationAreas = finalSpecializationAreas;
-    }
+	/**
+	 * @param finalSpecializationAreas
+	 *            The finalSpecializationAreas to set.
+	 */
+	public void setFinalSpecializationAreas(List finalSpecializationAreas) {
+		this.finalSpecializationAreas = finalSpecializationAreas;
+	}
 }

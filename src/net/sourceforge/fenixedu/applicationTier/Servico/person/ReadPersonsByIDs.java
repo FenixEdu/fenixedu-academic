@@ -10,14 +10,14 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadPersonsByIDs extends FenixService {
 
-    @Service
-    public static List<InfoPerson> run(final List<Integer> personIds) {
+	@Service
+	public static List<InfoPerson> run(final List<Integer> personIds) {
 
-	final List<InfoPerson> result = new ArrayList<InfoPerson>(personIds.size());
-	for (final Integer personId : personIds) {
-	    result.add(InfoPerson.newInfoFromDomain((Person) rootDomainObject.readPartyByOID(personId)));
+		final List<InfoPerson> result = new ArrayList<InfoPerson>(personIds.size());
+		for (final Integer personId : personIds) {
+			result.add(InfoPerson.newInfoFromDomain((Person) rootDomainObject.readPartyByOID(personId)));
+		}
+		return result;
 	}
-	return result;
-    }
 
 }

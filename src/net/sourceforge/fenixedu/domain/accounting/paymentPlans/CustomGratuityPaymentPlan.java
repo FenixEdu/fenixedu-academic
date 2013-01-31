@@ -15,68 +15,69 @@ import dml.runtime.RelationAdapter;
 
 public class CustomGratuityPaymentPlan extends CustomGratuityPaymentPlan_Base {
 
-    static {
-	ServiceAgreementServiceAgreementPaymentPlan
-		.addListener(new RelationAdapter<ServiceAgreementPaymentPlan, ServiceAgreement>() {
-		    @Override
-		    public void beforeAdd(ServiceAgreementPaymentPlan paymentPlanToAdd, ServiceAgreement serviceAgreement) {
+	static {
+		ServiceAgreementServiceAgreementPaymentPlan
+				.addListener(new RelationAdapter<ServiceAgreementPaymentPlan, ServiceAgreement>() {
+					@Override
+					public void beforeAdd(ServiceAgreementPaymentPlan paymentPlanToAdd, ServiceAgreement serviceAgreement) {
 
-			if (paymentPlanToAdd != null) {
-			    if (paymentPlanToAdd.isCustomGratuityPaymentPlan()
-				    && serviceAgreement.hasCustomGratuityPaymentPlan(paymentPlanToAdd.getExecutionYear())) {
-				throw new DomainException(
-					"error.domain.accounting.ServiceAgreement.already.has.a.customGratuity.payment.plan.for.execution.year");
-			    }
+						if (paymentPlanToAdd != null) {
+							if (paymentPlanToAdd.isCustomGratuityPaymentPlan()
+									&& serviceAgreement.hasCustomGratuityPaymentPlan(paymentPlanToAdd.getExecutionYear())) {
+								throw new DomainException(
+										"error.domain.accounting.ServiceAgreement.already.has.a.customGratuity.payment.plan.for.execution.year");
+							}
 
-			}
-		    }
-		});
+						}
+					}
+				});
 
-	GratuityPaymentPlanGratuityEventWithPaymentPlan
-		.addListener(new RelationAdapter<PaymentPlan, GratuityEventWithPaymentPlan>() {
-		    @Override
-		    public void beforeAdd(PaymentPlan paymentPlan, GratuityEventWithPaymentPlan event) {
-			if (paymentPlan != null && event != null) {
-			    if (paymentPlan.isCustomGratuityPaymentPlan() && paymentPlan.hasAnyGratuityEventsWithPaymentPlan()) {
-				throw new DomainException("error.domain.accounting.PaymentPlan.already.has.gratuityEvent");
-			    }
-			}
-		    }
-		});
-    }
-
-    private CustomGratuityPaymentPlan() {
-	super();
-    }
-
-    public CustomGratuityPaymentPlan(final ExecutionYear executionYear,
-	    final DegreeCurricularPlanServiceAgreement serviceAgreement) {
-	this();
-	super.init(executionYear, serviceAgreement, Boolean.FALSE);
-    }
-
-    @Override
-    public boolean isGratuityPaymentPlan() {
-	return true;
-    }
-
-    @Override
-    public boolean isCustomGratuityPaymentPlan() {
-	return true;
-    }
-
-    public void delete() {
-	while (hasAnyInstallments()) {
-	    getInstallments().get(0).delete();
+		GratuityPaymentPlanGratuityEventWithPaymentPlan
+				.addListener(new RelationAdapter<PaymentPlan, GratuityEventWithPaymentPlan>() {
+					@Override
+					public void beforeAdd(PaymentPlan paymentPlan, GratuityEventWithPaymentPlan event) {
+						if (paymentPlan != null && event != null) {
+							if (paymentPlan.isCustomGratuityPaymentPlan() && paymentPlan.hasAnyGratuityEventsWithPaymentPlan()) {
+								throw new DomainException("error.domain.accounting.PaymentPlan.already.has.gratuityEvent");
+							}
+						}
+					}
+				});
 	}
-	getGratuityEventsWithPaymentPlan().clear();
-	removeParameters();
-	removeRootDomainObject();
-	super.deleteDomainObject();
-    }
 
-    @Override
-    protected Collection<PaymentPlanRule> getSpecificPaymentPlanRules() {
-	return Collections.emptyList();
-    }
+	private CustomGratuityPaymentPlan() {
+		super();
+	}
+
+	public CustomGratuityPaymentPlan(final ExecutionYear executionYear,
+			final DegreeCurricularPlanServiceAgreement serviceAgreement) {
+		this();
+		super.init(executionYear, serviceAgreement, Boolean.FALSE);
+	}
+
+	@Override
+	public boolean isGratuityPaymentPlan() {
+		return true;
+	}
+
+	@Override
+	public boolean isCustomGratuityPaymentPlan() {
+		return true;
+	}
+
+	@Override
+	public void delete() {
+		while (hasAnyInstallments()) {
+			getInstallments().get(0).delete();
+		}
+		getGratuityEventsWithPaymentPlan().clear();
+		removeParameters();
+		removeRootDomainObject();
+		super.deleteDomainObject();
+	}
+
+	@Override
+	protected Collection<PaymentPlanRule> getSpecificPaymentPlanRules() {
+		return Collections.emptyList();
+	}
 }

@@ -7,9 +7,9 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class CancelResidenceEvent extends FenixService {
 
-    @Service
-    public static void run(final ResidenceEvent residenceEvent, Person responsible) {
-	residenceEvent.cancel(responsible);
-    }
+	@Service
+	public static void run(final ResidenceEvent residenceEvent, Person responsible) {
+		residenceEvent.cancel(responsible);
+	}
 
 }

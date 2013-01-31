@@ -9,79 +9,79 @@ package net.sourceforge.fenixedu.util;
 
 public class ProposalState extends FenixUtil {
 
-    public static final int CRIADOR = 1;
-    public static final int ACEITE = 2;
-    public static final int EM_ESPERA = 3;
-    public static final int REJEITADO = 4;
+	public static final int CRIADOR = 1;
+	public static final int ACEITE = 2;
+	public static final int EM_ESPERA = 3;
+	public static final int REJEITADO = 4;
 
-    private final Integer state;
+	private final Integer state;
 
-    public ProposalState(int proposal_state) {
-	this.state = new Integer(proposal_state);
-    }
-
-    public ProposalState(Integer proposal_state) {
-	this.state = proposal_state;
-    }
-
-    public Integer getState() {
-	return this.state;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-	boolean resultado = false;
-	if (obj instanceof ProposalState) {
-	    ProposalState state = (ProposalState) obj;
-	    resultado = (this.getState().intValue() == state.getState().intValue());
+	public ProposalState(int proposal_state) {
+		this.state = new Integer(proposal_state);
 	}
-	return resultado;
-    }
 
-    @Override
-    public String toString() {
-	int value = this.state.intValue();
-	switch (value) {
-	case CRIADOR:
-	    return "C";
-	case ACEITE:
-	    return "A";
-	case EM_ESPERA:
-	    return "EE";
-	case REJEITADO:
-	    return "R";
+	public ProposalState(Integer proposal_state) {
+		this.state = proposal_state;
 	}
-	return "Error: Invalid proposal state";
-    }
 
-    public String getSiglaProposalState() {
-	int value = this.state.intValue();
-	switch (value) {
-	case CRIADOR:
-	    return "C";
-	case ACEITE:
-	    return "A";
-	case EM_ESPERA:
-	    return "EE";
-	case REJEITADO:
-	    return "R";
+	public Integer getState() {
+		return this.state;
 	}
-	return "Error: Invalid proposal state";
-    }
 
-    public String getFullNameProposalState() {
-	int value = this.state.intValue();
-	switch (value) {
-	case CRIADOR:
-	    return "CRIADOR";
-	case ACEITE:
-	    return "ACEITE";
-	case EM_ESPERA:
-	    return "EM_ESPERA";
-	case REJEITADO:
-	    return "REJEITADO";
+	@Override
+	public boolean equals(Object obj) {
+		boolean resultado = false;
+		if (obj instanceof ProposalState) {
+			ProposalState state = (ProposalState) obj;
+			resultado = (this.getState().intValue() == state.getState().intValue());
+		}
+		return resultado;
 	}
-	return "Error: Invalid proposal state";
-    }
+
+	@Override
+	public String toString() {
+		int value = this.state.intValue();
+		switch (value) {
+		case CRIADOR:
+			return "C";
+		case ACEITE:
+			return "A";
+		case EM_ESPERA:
+			return "EE";
+		case REJEITADO:
+			return "R";
+		}
+		return "Error: Invalid proposal state";
+	}
+
+	public String getSiglaProposalState() {
+		int value = this.state.intValue();
+		switch (value) {
+		case CRIADOR:
+			return "C";
+		case ACEITE:
+			return "A";
+		case EM_ESPERA:
+			return "EE";
+		case REJEITADO:
+			return "R";
+		}
+		return "Error: Invalid proposal state";
+	}
+
+	public String getFullNameProposalState() {
+		int value = this.state.intValue();
+		switch (value) {
+		case CRIADOR:
+			return "CRIADOR";
+		case ACEITE:
+			return "ACEITE";
+		case EM_ESPERA:
+			return "EM_ESPERA";
+		case REJEITADO:
+			return "REJEITADO";
+		}
+		return "Error: Invalid proposal state";
+	}
 
 }

@@ -5,70 +5,70 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 public abstract class ResourceAllocation extends ResourceAllocation_Base {
 
-    protected ResourceAllocation() {
-	super();
-	setRootDomainObject(RootDomainObject.getInstance());
-    }
-
-    public void delete() {
-	super.setResource(null);
-	removeRootDomainObject();
-	super.deleteDomainObject();
-    }
-
-    @Override
-    public void setResource(Resource resource) {
-	if (resource == null) {
-	    throw new DomainException("error.allocation.no.space");
+	protected ResourceAllocation() {
+		super();
+		setRootDomainObject(RootDomainObject.getInstance());
 	}
-	super.setResource(resource);
-    }
 
-    public boolean isSpaceOccupation() {
-	return false;
-    }
+	public void delete() {
+		super.setResource(null);
+		removeRootDomainObject();
+		super.deleteDomainObject();
+	}
 
-    public boolean isVehicleAllocation() {
-	return false;
-    }
+	@Override
+	public void setResource(Resource resource) {
+		if (resource == null) {
+			throw new DomainException("error.allocation.no.space");
+		}
+		super.setResource(resource);
+	}
 
-    public boolean isPersonSpaceOccupation() {
-	return false;
-    }
+	public boolean isSpaceOccupation() {
+		return false;
+	}
 
-    public boolean isMaterialSpaceOccupation() {
-	return false;
-    }
+	public boolean isVehicleAllocation() {
+		return false;
+	}
 
-    public boolean isExtensionSpaceOccupation() {
-	return false;
-    }
+	public boolean isPersonSpaceOccupation() {
+		return false;
+	}
 
-    public boolean isUnitSpaceOccupation() {
-	return false;
-    }
+	public boolean isMaterialSpaceOccupation() {
+		return false;
+	}
 
-    public boolean isEventSpaceOccupation() {
-	return false;
-    }
+	public boolean isExtensionSpaceOccupation() {
+		return false;
+	}
 
-    public boolean isGenericEventSpaceOccupation() {
-	return false;
-    }
+	public boolean isUnitSpaceOccupation() {
+		return false;
+	}
 
-    public boolean isWrittenEvaluationSpaceOccupation() {
-	return false;
-    }
+	public boolean isEventSpaceOccupation() {
+		return false;
+	}
 
-    public boolean isLessonSpaceOccupation() {
-	return false;
-    }
+	public boolean isGenericEventSpaceOccupation() {
+		return false;
+	}
 
-    public boolean isLessonInstanceSpaceOccupation() {
-	return false;
-    }
+	public boolean isWrittenEvaluationSpaceOccupation() {
+		return false;
+	}
 
-    public boolean isNotLessonSpaceOccupation() {
-	return isLessonInstanceSpaceOccupation() || isLessonSpaceOccupation();
-    }
+	public boolean isLessonSpaceOccupation() {
+		return false;
+	}
+
+	public boolean isLessonInstanceSpaceOccupation() {
+		return false;
+	}
+
+	public boolean isNotLessonSpaceOccupation() {
+		return isLessonInstanceSpaceOccupation() || isLessonSpaceOccupation();
+	}
 }

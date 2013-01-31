@@ -15,20 +15,20 @@ import java.util.List;
  */
 public class InfoSiteExam extends DataTranferObject implements ISiteComponent {
 
-    private List infoExams;
+	private List infoExams;
 
-    /**
-     * @return
-     */
-    public List getInfoExams() {
-	return infoExams;
-    }
+	/**
+	 * @return
+	 */
+	public List getInfoExams() {
+		return infoExams;
+	}
 
-    /**
-     * @param list
-     */
-    public void setInfoExams(List list) {
-	infoExams = list;
-    }
+	/**
+	 * @param list
+	 */
+	public void setInfoExams(List list) {
+		infoExams = list;
+	}
 
 }

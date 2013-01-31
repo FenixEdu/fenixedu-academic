@@ -7,8 +7,8 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class AddDefaultDocumentToResearchResult extends FenixService {
 
-    @Service
-    public static void run(ResearchResult result) {
-	ResearchResultMetaDataManager.addDefaultDocument(result);
-    }
+	@Service
+	public static void run(ResearchResult result) {
+		ResearchResultMetaDataManager.addDefaultDocument(result);
+	}
 }

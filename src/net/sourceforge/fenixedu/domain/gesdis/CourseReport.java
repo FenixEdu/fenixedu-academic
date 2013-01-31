@@ -17,37 +17,39 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
  */
 public class CourseReport extends CourseReport_Base {
 
-    public CourseReport() {
-	super();
-	setRootDomainObject(RootDomainObject.getInstance());
-    }
+	public CourseReport() {
+		super();
+		setRootDomainObject(RootDomainObject.getInstance());
+	}
 
-    public void edit(String newReport) {
-	if (newReport == null)
-	    throw new NullPointerException();
+	public void edit(String newReport) {
+		if (newReport == null) {
+			throw new NullPointerException();
+		}
 
-	setReport(newReport);
-	setLastModificationDate(Calendar.getInstance().getTime());
-    }
+		setReport(newReport);
+		setLastModificationDate(Calendar.getInstance().getTime());
+	}
 
-    public void delete() {
-	setExecutionCourse(null);
-	removeRootDomainObject();
-	super.deleteDomainObject();
-    }
-
+	public void delete() {
+		setExecutionCourse(null);
+		removeRootDomainObject();
+		super.deleteDomainObject();
+	}
 
 	@Deprecated
-	public java.util.Date getLastModificationDate(){
+	public java.util.Date getLastModificationDate() {
 		org.joda.time.DateTime dt = getLastModificationDateDateTime();
 		return (dt == null) ? null : new java.util.Date(dt.getMillis());
 	}
 
 	@Deprecated
-	public void setLastModificationDate(java.util.Date date){
-		if(date == null) setLastModificationDateDateTime(null);
-		else setLastModificationDateDateTime(new org.joda.time.DateTime(date.getTime()));
+	public void setLastModificationDate(java.util.Date date) {
+		if (date == null) {
+			setLastModificationDateDateTime(null);
+		} else {
+			setLastModificationDateDateTime(new org.joda.time.DateTime(date.getTime()));
+		}
 	}
-
 
 }

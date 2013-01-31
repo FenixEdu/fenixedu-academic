@@ -5,48 +5,49 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class PersistentSuportMGPISTID extends PersistentSuportOracle {
 
-    private static PersistentSuportMGPISTID instance = null;
+	private static PersistentSuportMGPISTID instance = null;
 
-    private String databaseUrl = null;
+	private String databaseUrl = null;
 
-    public PersistentSuportMGPISTID(String userNamePropertyName, String userPassPropertyName, String urlPropertyName) {
-	super(userNamePropertyName, userPassPropertyName, urlPropertyName);
-    }
-
-    public static synchronized PersistentSuportOracle getProjectDBInstance() {
-	if (instance == null) {
-	    instance = new PersistentSuportMGPISTID(
-		    "db.istidProjectManagement.user",
-		    "db.istidProjectManagement.pass",
-		    "db.istidProjectManagement.alias");
+	public PersistentSuportMGPISTID(String userNamePropertyName, String userPassPropertyName, String urlPropertyName) {
+		super(userNamePropertyName, userPassPropertyName, urlPropertyName);
 	}
-	return instance;
-    }
 
-    public String getDatabaseUrl() throws ExcepcaoPersistencia {
-	if (databaseUrl == null) {
-	    setDatabaseUrl();
+	public static synchronized PersistentSuportOracle getProjectDBInstance() {
+		if (instance == null) {
+			instance =
+					new PersistentSuportMGPISTID("db.istidProjectManagement.user", "db.istidProjectManagement.pass",
+							"db.istidProjectManagement.alias");
+		}
+		return instance;
 	}
-	return databaseUrl;
-    }
 
-    public void setDatabaseUrl() throws ExcepcaoPersistencia {
-	if (databaseUrl == null) {
-	    String DBUserName = PropertiesManager.getProperty(connectionProperties.userNamePropertyName);
-	    String DBUserPass = PropertiesManager.getProperty(connectionProperties.userPassPropertyName);
-	    String DBUrl = PropertiesManager.getProperty(connectionProperties.urlPropertyName);
-	    if (DBUserName == null || DBUserPass == null || DBUrl == null) {
-		throw new ExcepcaoPersistencia();
-	    }
-	    StringBuilder stringBuffer = new StringBuilder();
-	    stringBuffer.append("jdbc:oracle:thin:");
-	    stringBuffer.append(DBUserName);
-	    stringBuffer.append("/");
-	    stringBuffer.append(DBUserPass);
-	    stringBuffer.append("@");
-	    stringBuffer.append(DBUrl);
-	    databaseUrl = stringBuffer.toString();
+	@Override
+	public String getDatabaseUrl() throws ExcepcaoPersistencia {
+		if (databaseUrl == null) {
+			setDatabaseUrl();
+		}
+		return databaseUrl;
 	}
-    }
+
+	@Override
+	public void setDatabaseUrl() throws ExcepcaoPersistencia {
+		if (databaseUrl == null) {
+			String DBUserName = PropertiesManager.getProperty(connectionProperties.userNamePropertyName);
+			String DBUserPass = PropertiesManager.getProperty(connectionProperties.userPassPropertyName);
+			String DBUrl = PropertiesManager.getProperty(connectionProperties.urlPropertyName);
+			if (DBUserName == null || DBUserPass == null || DBUrl == null) {
+				throw new ExcepcaoPersistencia();
+			}
+			StringBuilder stringBuffer = new StringBuilder();
+			stringBuffer.append("jdbc:oracle:thin:");
+			stringBuffer.append(DBUserName);
+			stringBuffer.append("/");
+			stringBuffer.append(DBUserPass);
+			stringBuffer.append("@");
+			stringBuffer.append(DBUrl);
+			databaseUrl = stringBuffer.toString();
+		}
+	}
 
 }

@@ -19,77 +19,81 @@ import org.apache.commons.beanutils.BeanComparator;
 
 public class TeacherShiftTypeGroupsResumeResult extends BlockResumeResult implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    private Professorship professorship;
-    private ShiftType shiftType;
-    private InquiryResult globalTeacherResult;
+	private Professorship professorship;
+	private ShiftType shiftType;
+	private InquiryResult globalTeacherResult;
 
-    public TeacherShiftTypeGroupsResumeResult(Professorship professorship, ShiftType shiftType,
-	    ResultPersonCategory personCategory, String firstHeaderKey, String firstPresentationName, boolean regentViewHimself) {
-	setProfessorship(professorship);
-	setShiftType(shiftType);
-	setPerson(professorship.getPerson());
-	setPersonCategory(personCategory);
-	setFirstHeaderKey(firstHeaderKey);
-	setFirstPresentationName(firstPresentationName);
-	setRegentViewHimself(regentViewHimself);
-	initResultBlocks();
-    }
-
-    protected void initResultBlocks() {
-	setResultBlocks(new TreeSet<InquiryResult>(new BeanComparator("inquiryQuestion.questionOrder")));
-	for (InquiryResult inquiryResult : getProfessorship().getInquiryResults(getShiftType())) {
-	    if (InquiryConnectionType.GROUP.equals(inquiryResult.getConnectionType())
-		    && !inquiryResult.getInquiryQuestion().getAssociatedBlocks().isEmpty()) { //change to TEACHER_SHIFT_EVALUATION
-		getResultBlocks().add(inquiryResult);
-	    } else if (InquiryResultType.TEACHER_SHIFT_TYPE.equals(inquiryResult.getResultType())) {
-		setGlobalTeacherResult(inquiryResult);
-	    }
+	public TeacherShiftTypeGroupsResumeResult(Professorship professorship, ShiftType shiftType,
+			ResultPersonCategory personCategory, String firstHeaderKey, String firstPresentationName, boolean regentViewHimself) {
+		setProfessorship(professorship);
+		setShiftType(shiftType);
+		setPerson(professorship.getPerson());
+		setPersonCategory(personCategory);
+		setFirstHeaderKey(firstHeaderKey);
+		setFirstPresentationName(firstPresentationName);
+		setRegentViewHimself(regentViewHimself);
+		initResultBlocks();
 	}
-    }
 
-    protected InquiryAnswer getInquiryAnswer() {
-	return getProfessorship().getInquiryTeacherAnswer();
-    }
-
-    protected int getNumberOfInquiryQuestions() {
-	TeacherInquiryTemplate inquiryTemplate = TeacherInquiryTemplate.getTemplateByExecutionPeriod(getProfessorship()
-		.getExecutionCourse().getExecutionPeriod());
-	return inquiryTemplate.getNumberOfRequiredQuestions();
-    }
-
-    protected List<InquiryResult> getInquiryResultsByQuestion(InquiryQuestion inquiryQuestion) {
-	List<InquiryResult> inquiryResults = new ArrayList<InquiryResult>();
-	for (InquiryResult inquiryResult : getProfessorship().getInquiryResults(getShiftType())) {
-	    if (inquiryResult.getInquiryQuestion() == inquiryQuestion && inquiryResult.getResultClassification() != null) {
-		inquiryResults.add(inquiryResult);
-	    }
+	@Override
+	protected void initResultBlocks() {
+		setResultBlocks(new TreeSet<InquiryResult>(new BeanComparator("inquiryQuestion.questionOrder")));
+		for (InquiryResult inquiryResult : getProfessorship().getInquiryResults(getShiftType())) {
+			if (InquiryConnectionType.GROUP.equals(inquiryResult.getConnectionType())
+					&& !inquiryResult.getInquiryQuestion().getAssociatedBlocks().isEmpty()) { //change to TEACHER_SHIFT_EVALUATION
+				getResultBlocks().add(inquiryResult);
+			} else if (InquiryResultType.TEACHER_SHIFT_TYPE.equals(inquiryResult.getResultType())) {
+				setGlobalTeacherResult(inquiryResult);
+			}
+		}
 	}
-	return inquiryResults;
-    }
 
-    public void setProfessorship(Professorship professorship) {
-	this.professorship = professorship;
-    }
+	@Override
+	protected InquiryAnswer getInquiryAnswer() {
+		return getProfessorship().getInquiryTeacherAnswer();
+	}
 
-    public Professorship getProfessorship() {
-	return professorship;
-    }
+	@Override
+	protected int getNumberOfInquiryQuestions() {
+		TeacherInquiryTemplate inquiryTemplate =
+				TeacherInquiryTemplate.getTemplateByExecutionPeriod(getProfessorship().getExecutionCourse().getExecutionPeriod());
+		return inquiryTemplate.getNumberOfRequiredQuestions();
+	}
 
-    public void setShiftType(ShiftType shiftType) {
-	this.shiftType = shiftType;
-    }
+	@Override
+	protected List<InquiryResult> getInquiryResultsByQuestion(InquiryQuestion inquiryQuestion) {
+		List<InquiryResult> inquiryResults = new ArrayList<InquiryResult>();
+		for (InquiryResult inquiryResult : getProfessorship().getInquiryResults(getShiftType())) {
+			if (inquiryResult.getInquiryQuestion() == inquiryQuestion && inquiryResult.getResultClassification() != null) {
+				inquiryResults.add(inquiryResult);
+			}
+		}
+		return inquiryResults;
+	}
 
-    public ShiftType getShiftType() {
-	return shiftType;
-    }
+	public void setProfessorship(Professorship professorship) {
+		this.professorship = professorship;
+	}
 
-    public void setGlobalTeacherResult(InquiryResult globalTeacherResult) {
-	this.globalTeacherResult = globalTeacherResult;
-    }
+	public Professorship getProfessorship() {
+		return professorship;
+	}
 
-    public InquiryResult getGlobalTeacherResult() {
-	return globalTeacherResult;
-    }
+	public void setShiftType(ShiftType shiftType) {
+		this.shiftType = shiftType;
+	}
+
+	public ShiftType getShiftType() {
+		return shiftType;
+	}
+
+	public void setGlobalTeacherResult(InquiryResult globalTeacherResult) {
+		this.globalTeacherResult = globalTeacherResult;
+	}
+
+	public InquiryResult getGlobalTeacherResult() {
+		return globalTeacherResult;
+	}
 }

@@ -28,62 +28,63 @@ import pt.utl.ist.berserk.logic.serviceManager.ServiceParameters;
  * @author Susana Fernandes
  */
 public class ProjectsManagerAuthorizationFilter extends AuthorizationByRoleFilter {
-    public final static ProjectsManagerAuthorizationFilter instance = new ProjectsManagerAuthorizationFilter();
+	public final static ProjectsManagerAuthorizationFilter instance = new ProjectsManagerAuthorizationFilter();
 
-    protected ThreadLocal<RoleType> roleToAuthorize = new ThreadLocal<RoleType>();
+	protected ThreadLocal<RoleType> roleToAuthorize = new ThreadLocal<RoleType>();
 
-    public static Filtro getInstance() {
-	return instance;
-    }
-
-    @Override
-    public void execute(ServiceRequest request, ServiceResponse response) throws FilterException, Exception {
-	final IUserView userView = getRemoteUser(request);
-	ServiceParameters serviceParameters = request.getServiceParameters();
-	Object[] parametersArray = serviceParameters.parametersArray();
-	String costCenter = (String) parametersArray[1];
-	BackendInstance instance = BackendInstance.IST;
-	if (parametersArray[parametersArray.length - 1] != null) {
-	    instance = (BackendInstance) parametersArray[parametersArray.length - 1];
+	public static Filtro getInstance() {
+		return instance;
 	}
-	Integer userNumber = getUserNumber(userView.getPerson());
-	if (userNumber == null)
-	    throw new NotAuthorizedFilterException();
-	serviceParameters.addParameter("userNumber", userNumber.toString(), serviceParameters.parametersArray().length);
 
-	final RoleType roleType;
-	if (costCenter != null && !costCenter.equals("")) {
-	    roleType = instance.institutionalRoleType;
-	    final Role role = Role.getRoleByRoleType(roleType);
-	    if (!costCenter.equals(role.getPortalSubApplication()) && StringUtils.isNumeric(costCenter)) {
-		if (new PersistentProjectUser().getCCNameByCoordinatorAndCC(userNumber, new Integer(costCenter), instance) != null) {
-		    serviceParameters.addParameter("userNumber", costCenter, serviceParameters.parametersArray().length - 1);
+	@Override
+	public void execute(ServiceRequest request, ServiceResponse response) throws FilterException, Exception {
+		final IUserView userView = getRemoteUser(request);
+		ServiceParameters serviceParameters = request.getServiceParameters();
+		Object[] parametersArray = serviceParameters.parametersArray();
+		String costCenter = (String) parametersArray[1];
+		BackendInstance instance = BackendInstance.IST;
+		if (parametersArray[parametersArray.length - 1] != null) {
+			instance = (BackendInstance) parametersArray[parametersArray.length - 1];
 		}
-	    }
-	} else {
-	    roleType = instance.roleType;
-	    serviceParameters.addParameter("costCenter", "", 1);
-	}
-	roleToAuthorize.set(roleType);
-	super.execute(request, response);
-	request.setServiceParameters(serviceParameters);
-    }
+		Integer userNumber = getUserNumber(userView.getPerson());
+		if (userNumber == null) {
+			throw new NotAuthorizedFilterException();
+		}
+		serviceParameters.addParameter("userNumber", userNumber.toString(), serviceParameters.parametersArray().length);
 
-    private Integer getUserNumber(final Person person) {
-	final Employee employee = person == null ? null : person.getEmployee();
-	final GrantOwner grantOwner = person == null ? null : person.getGrantOwner();
-	Integer userNumber = null;
-	if (employee != null) {
-	    userNumber = employee.getEmployeeNumber();
-	} else if (grantOwner != null) {
-	    userNumber = grantOwner.getNumber();
+		final RoleType roleType;
+		if (costCenter != null && !costCenter.equals("")) {
+			roleType = instance.institutionalRoleType;
+			final Role role = Role.getRoleByRoleType(roleType);
+			if (!costCenter.equals(role.getPortalSubApplication()) && StringUtils.isNumeric(costCenter)) {
+				if (new PersistentProjectUser().getCCNameByCoordinatorAndCC(userNumber, new Integer(costCenter), instance) != null) {
+					serviceParameters.addParameter("userNumber", costCenter, serviceParameters.parametersArray().length - 1);
+				}
+			}
+		} else {
+			roleType = instance.roleType;
+			serviceParameters.addParameter("costCenter", "", 1);
+		}
+		roleToAuthorize.set(roleType);
+		super.execute(request, response);
+		request.setServiceParameters(serviceParameters);
 	}
-	return userNumber;
-    }
 
-    @Override
-    protected RoleType getRoleType() {
-	return roleToAuthorize.get();
-    }
+	private Integer getUserNumber(final Person person) {
+		final Employee employee = person == null ? null : person.getEmployee();
+		final GrantOwner grantOwner = person == null ? null : person.getGrantOwner();
+		Integer userNumber = null;
+		if (employee != null) {
+			userNumber = employee.getEmployeeNumber();
+		} else if (grantOwner != null) {
+			userNumber = grantOwner.getNumber();
+		}
+		return userNumber;
+	}
+
+	@Override
+	protected RoleType getRoleType() {
+		return roleToAuthorize.get();
+	}
 
 }

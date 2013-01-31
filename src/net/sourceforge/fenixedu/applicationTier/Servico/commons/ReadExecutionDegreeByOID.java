@@ -17,10 +17,10 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class ReadExecutionDegreeByOID extends FenixService {
 
-    @Service
-    public static InfoExecutionDegree run(Integer oid) {
-	final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(oid);
-	return InfoExecutionDegree.newInfoFromDomain(executionDegree);
-    }
+	@Service
+	public static InfoExecutionDegree run(Integer oid) {
+		final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(oid);
+		return InfoExecutionDegree.newInfoFromDomain(executionDegree);
+	}
 
 }

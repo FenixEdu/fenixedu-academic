@@ -7,59 +7,59 @@ import net.sourceforge.fenixedu.util.BundleUtil;
 
 public class SummaryTeacherBean implements Serializable {
 
-    private Professorship professorshipReference;
+	private Professorship professorshipReference;
 
-    private Boolean others;
+	private Boolean others;
 
-    public SummaryTeacherBean(Professorship professorship) {
-	if (professorship == null) {
-	    throw new RuntimeException();
+	public SummaryTeacherBean(Professorship professorship) {
+		if (professorship == null) {
+			throw new RuntimeException();
+		}
+		setProfessorship(professorship);
 	}
-	setProfessorship(professorship);
-    }
 
-    public SummaryTeacherBean(Boolean ohters) {
-	if (ohters == null) {
-	    throw new RuntimeException();
+	public SummaryTeacherBean(Boolean ohters) {
+		if (ohters == null) {
+			throw new RuntimeException();
+		}
+		setOthers(ohters);
 	}
-	setOthers(ohters);
-    }
 
-    public Boolean getOthers() {
-	return others;
-    }
-
-    public void setOthers(Boolean others) {
-	this.others = others;
-    }
-
-    public Professorship getProfessorship() {
-	return this.professorshipReference;
-    }
-
-    public void setProfessorship(Professorship professorship) {
-	this.professorshipReference = professorship;
-    }
-
-    public String getLabel() {
-	if (getProfessorship() != null) {
-	    return getProfessorship().getPerson().getName();
-	} else if (getOthers()) {
-	    return BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "label.others");
+	public Boolean getOthers() {
+		return others;
 	}
-	return "";
-    }
 
-    @Override
-    public boolean equals(Object obj) {
-	return (obj instanceof SummaryTeacherBean
-		&& (getProfessorship() == null || getProfessorship().equals(((SummaryTeacherBean) obj).getProfessorship())) && (getOthers() == null || getOthers()
-		.equals(((SummaryTeacherBean) obj).getOthers())));
-    }
+	public void setOthers(Boolean others) {
+		this.others = others;
+	}
 
-    @Override
-    public int hashCode() {
-	return 37 * (((getProfessorship() != null) ? getProfessorship().hashCode() : 37) + ((getOthers() != null) ? getOthers()
-		.hashCode() : 37));
-    }
+	public Professorship getProfessorship() {
+		return this.professorshipReference;
+	}
+
+	public void setProfessorship(Professorship professorship) {
+		this.professorshipReference = professorship;
+	}
+
+	public String getLabel() {
+		if (getProfessorship() != null) {
+			return getProfessorship().getPerson().getName();
+		} else if (getOthers()) {
+			return BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "label.others");
+		}
+		return "";
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		return (obj instanceof SummaryTeacherBean
+				&& (getProfessorship() == null || getProfessorship().equals(((SummaryTeacherBean) obj).getProfessorship())) && (getOthers() == null || getOthers()
+				.equals(((SummaryTeacherBean) obj).getOthers())));
+	}
+
+	@Override
+	public int hashCode() {
+		return 37 * (((getProfessorship() != null) ? getProfessorship().hashCode() : 37) + ((getOthers() != null) ? getOthers()
+				.hashCode() : 37));
+	}
 }

@@ -13,67 +13,67 @@ import net.sourceforge.fenixedu.domain.enrolment.OptionalDegreeModuleToEnrol;
 
 public class PhdValidCurricularCoursesExecutor extends CurricularRuleExecutor {
 
-    @Override
-    protected boolean canBeEvaluated(ICurricularRule curricularRule, IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate,
-	    EnrolmentContext enrolmentContext) {
-	return true;
-    }
-
-    @Override
-    protected RuleResult executeEnrolmentInEnrolmentEvaluation(ICurricularRule curricularRule,
-	    IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, EnrolmentContext enrolmentContext) {
-	return RuleResult.createNA(sourceDegreeModuleToEvaluate.getDegreeModule());
-    }
-
-    @Override
-    protected RuleResult executeEnrolmentVerificationWithRules(ICurricularRule curricularRule,
-	    IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, EnrolmentContext enrolmentContext) {
-
-	final CurricularCourse curricularCourse = getCurricularCourse(sourceDegreeModuleToEvaluate, curricularRule);
-
-	if (!curricularCourse.hasAnyActiveContext(enrolmentContext.getExecutionPeriod())) {
-	    return RuleResult.createNA(sourceDegreeModuleToEvaluate.getDegreeModule());
+	@Override
+	protected boolean canBeEvaluated(ICurricularRule curricularRule, IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate,
+			EnrolmentContext enrolmentContext) {
+		return true;
 	}
 
-	final Collection<CompetenceCourse> collection = getCompetenceCoursesAvailableToEnrol(enrolmentContext);
-
-	if (!collection.contains(curricularCourse.getCompetenceCourse())) {
-
-	    if (isEnrolling(enrolmentContext, curricularCourse)) {
-
-		return RuleResult.createFalse(sourceDegreeModuleToEvaluate.getDegreeModule(),
-			"curricularRules.ruleExecutors.PhdValidCurricularCoursesExecutor.invalid.curricularCourse",
-			curricularCourse.getName());
-
-	    } else if (isApproved(enrolmentContext, curricularCourse) || isEnroled(enrolmentContext, curricularCourse)) {
-
-		return RuleResult.createImpossible(sourceDegreeModuleToEvaluate.getDegreeModule(),
-			"curricularRules.ruleExecutors.PhdValidCurricularCoursesExecutor.invalid.curricularCourse",
-			curricularCourse.getName());
-	    }
+	@Override
+	protected RuleResult executeEnrolmentInEnrolmentEvaluation(ICurricularRule curricularRule,
+			IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, EnrolmentContext enrolmentContext) {
+		return RuleResult.createNA(sourceDegreeModuleToEvaluate.getDegreeModule());
 	}
 
-	return RuleResult.createTrue(sourceDegreeModuleToEvaluate.getDegreeModule());
-    }
+	@Override
+	protected RuleResult executeEnrolmentVerificationWithRules(ICurricularRule curricularRule,
+			IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, EnrolmentContext enrolmentContext) {
 
-    private CurricularCourse getCurricularCourse(IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate,
-	    ICurricularRule curricularRule) {
+		final CurricularCourse curricularCourse = getCurricularCourse(sourceDegreeModuleToEvaluate, curricularRule);
 
-	if (sourceDegreeModuleToEvaluate.isOptional()) {
-	    return ((OptionalDegreeModuleToEnrol) sourceDegreeModuleToEvaluate).getCurricularCourse();
-	} else {
-	    return (CurricularCourse) curricularRule.getDegreeModuleToApplyRule();
+		if (!curricularCourse.hasAnyActiveContext(enrolmentContext.getExecutionPeriod())) {
+			return RuleResult.createNA(sourceDegreeModuleToEvaluate.getDegreeModule());
+		}
+
+		final Collection<CompetenceCourse> collection = getCompetenceCoursesAvailableToEnrol(enrolmentContext);
+
+		if (!collection.contains(curricularCourse.getCompetenceCourse())) {
+
+			if (isEnrolling(enrolmentContext, curricularCourse)) {
+
+				return RuleResult.createFalse(sourceDegreeModuleToEvaluate.getDegreeModule(),
+						"curricularRules.ruleExecutors.PhdValidCurricularCoursesExecutor.invalid.curricularCourse",
+						curricularCourse.getName());
+
+			} else if (isApproved(enrolmentContext, curricularCourse) || isEnroled(enrolmentContext, curricularCourse)) {
+
+				return RuleResult.createImpossible(sourceDegreeModuleToEvaluate.getDegreeModule(),
+						"curricularRules.ruleExecutors.PhdValidCurricularCoursesExecutor.invalid.curricularCourse",
+						curricularCourse.getName());
+			}
+		}
+
+		return RuleResult.createTrue(sourceDegreeModuleToEvaluate.getDegreeModule());
 	}
-    }
 
-    private Collection<CompetenceCourse> getCompetenceCoursesAvailableToEnrol(final EnrolmentContext context) {
-	return context.getRegistration().getPhdIndividualProgramProcess().getCompetenceCoursesAvailableToEnrol();
-    }
+	private CurricularCourse getCurricularCourse(IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate,
+			ICurricularRule curricularRule) {
 
-    @Override
-    protected RuleResult executeEnrolmentWithRulesAndTemporaryEnrolment(ICurricularRule curricularRule,
-	    IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, EnrolmentContext enrolmentContext) {
-	return executeEnrolmentVerificationWithRules(curricularRule, sourceDegreeModuleToEvaluate, enrolmentContext);
-    }
+		if (sourceDegreeModuleToEvaluate.isOptional()) {
+			return ((OptionalDegreeModuleToEnrol) sourceDegreeModuleToEvaluate).getCurricularCourse();
+		} else {
+			return (CurricularCourse) curricularRule.getDegreeModuleToApplyRule();
+		}
+	}
+
+	private Collection<CompetenceCourse> getCompetenceCoursesAvailableToEnrol(final EnrolmentContext context) {
+		return context.getRegistration().getPhdIndividualProgramProcess().getCompetenceCoursesAvailableToEnrol();
+	}
+
+	@Override
+	protected RuleResult executeEnrolmentWithRulesAndTemporaryEnrolment(ICurricularRule curricularRule,
+			IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, EnrolmentContext enrolmentContext) {
+		return executeEnrolmentVerificationWithRules(curricularRule, sourceDegreeModuleToEvaluate, enrolmentContext);
+	}
 
 }

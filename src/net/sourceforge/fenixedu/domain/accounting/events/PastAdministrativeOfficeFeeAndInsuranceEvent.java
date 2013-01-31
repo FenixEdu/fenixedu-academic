@@ -14,52 +14,52 @@ import pt.ist.fenixWebFramework.security.accessControl.Checked;
 
 public class PastAdministrativeOfficeFeeAndInsuranceEvent extends PastAdministrativeOfficeFeeAndInsuranceEvent_Base {
 
-    protected PastAdministrativeOfficeFeeAndInsuranceEvent() {
-	super();
-    }
-
-    public PastAdministrativeOfficeFeeAndInsuranceEvent(AdministrativeOffice administrativeOffice, Person person,
-	    ExecutionYear executionYear, final Money pastAdministrativeOfficeFeeAndInsuranceAmount) {
-	this();
-	init(administrativeOffice, person, executionYear, pastAdministrativeOfficeFeeAndInsuranceAmount);
-    }
-
-    private void init(AdministrativeOffice administrativeOffice, Person person, ExecutionYear executionYear,
-	    Money pastAdministrativeOfficeFeeAndInsuranceAmount) {
-	super.init(administrativeOffice, EventType.ADMINISTRATIVE_OFFICE_FEE_INSURANCE, person, executionYear);
-	checkParameters(pastAdministrativeOfficeFeeAndInsuranceAmount);
-	super.setPastAdministrativeOfficeFeeAndInsuranceAmount(pastAdministrativeOfficeFeeAndInsuranceAmount);
-    }
-
-    private void checkParameters(Money pastAdministrativeOfficeFeeAndInsuranceAmount) {
-	if (pastAdministrativeOfficeFeeAndInsuranceAmount == null || pastAdministrativeOfficeFeeAndInsuranceAmount.isZero()) {
-	    throw new DomainException(
-		    "error.net.sourceforge.fenixedu.domain.accounting.events.PastAdministrativeOfficeFeeAndInsuranceEvent.pastAdministrativeOfficeFeeAndInsuranceAmount.cannot.be.null.and.must.be.greather.than.zero");
+	protected PastAdministrativeOfficeFeeAndInsuranceEvent() {
+		super();
 	}
-    }
 
-    @Checked("RolePredicates.MANAGER_PREDICATE")
-    @Override
-    public void setPastAdministrativeOfficeFeeAndInsuranceAmount(Money pastAdministrativeOfficeFeeAndInsuranceAmount) {
-	super.setPastAdministrativeOfficeFeeAndInsuranceAmount(pastAdministrativeOfficeFeeAndInsuranceAmount);
-	// throw new DomainException(
-	// "error.net.sourceforge.fenixedu.domain.accounting.events.PastAdministrativeOfficeFeeAndInsuranceEvent.cannot.modify.pastAdministrativeOfficeFeeAndInsuranceAmount"
-	// );
-    }
+	public PastAdministrativeOfficeFeeAndInsuranceEvent(AdministrativeOffice administrativeOffice, Person person,
+			ExecutionYear executionYear, final Money pastAdministrativeOfficeFeeAndInsuranceAmount) {
+		this();
+		init(administrativeOffice, person, executionYear, pastAdministrativeOfficeFeeAndInsuranceAmount);
+	}
 
-    @Override
-    public boolean isExemptionAppliable() {
-	return true;
-    }
+	private void init(AdministrativeOffice administrativeOffice, Person person, ExecutionYear executionYear,
+			Money pastAdministrativeOfficeFeeAndInsuranceAmount) {
+		super.init(administrativeOffice, EventType.ADMINISTRATIVE_OFFICE_FEE_INSURANCE, person, executionYear);
+		checkParameters(pastAdministrativeOfficeFeeAndInsuranceAmount);
+		super.setPastAdministrativeOfficeFeeAndInsuranceAmount(pastAdministrativeOfficeFeeAndInsuranceAmount);
+	}
 
-    @Override
-    public Set<EntryType> getPossibleEntryTypesForDeposit() {
-	return Collections.singleton(EntryType.ADMINISTRATIVE_OFFICE_FEE_INSURANCE);
-    }
+	private void checkParameters(Money pastAdministrativeOfficeFeeAndInsuranceAmount) {
+		if (pastAdministrativeOfficeFeeAndInsuranceAmount == null || pastAdministrativeOfficeFeeAndInsuranceAmount.isZero()) {
+			throw new DomainException(
+					"error.net.sourceforge.fenixedu.domain.accounting.events.PastAdministrativeOfficeFeeAndInsuranceEvent.pastAdministrativeOfficeFeeAndInsuranceAmount.cannot.be.null.and.must.be.greather.than.zero");
+		}
+	}
 
-    @Override
-    public boolean isInDebt() {
-	return isOpen();
-    }
+	@Checked("RolePredicates.MANAGER_PREDICATE")
+	@Override
+	public void setPastAdministrativeOfficeFeeAndInsuranceAmount(Money pastAdministrativeOfficeFeeAndInsuranceAmount) {
+		super.setPastAdministrativeOfficeFeeAndInsuranceAmount(pastAdministrativeOfficeFeeAndInsuranceAmount);
+		// throw new DomainException(
+		// "error.net.sourceforge.fenixedu.domain.accounting.events.PastAdministrativeOfficeFeeAndInsuranceEvent.cannot.modify.pastAdministrativeOfficeFeeAndInsuranceAmount"
+		// );
+	}
+
+	@Override
+	public boolean isExemptionAppliable() {
+		return true;
+	}
+
+	@Override
+	public Set<EntryType> getPossibleEntryTypesForDeposit() {
+		return Collections.singleton(EntryType.ADMINISTRATIVE_OFFICE_FEE_INSURANCE);
+	}
+
+	@Override
+	public boolean isInDebt() {
+		return isOpen();
+	}
 
 }

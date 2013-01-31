@@ -23,186 +23,185 @@ import pt.utl.ist.fenix.tools.util.Pair;
 
 public class ModuleManagementAction extends FunctionalitiesDispatchAction {
 
-    public ActionForward view(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-	Module module = getModule(request);
+	public ActionForward view(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		Module module = getModule(request);
 
-	if (module == null) {
-	    return viewRoot(mapping, actionForm, request, response);
-	} else {
-	    return viewModule(module, mapping, actionForm, request, response);
-	}
-    }
-
-    public ActionForward edit(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-	Module module = getModule(request);
-
-	if (module == null) {
-	    return viewRoot(mapping, actionForm, request, response);
-	} else {
-	    return forwardTo(mapping.findForward("edit"), request, module, false);
-	}
-    }
-
-    public ActionForward create(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-	Module module = getParent(request);
-
-	if (module == null) {
-	    return mapping.findForward("create.toplevel");
-	} else {
-	    return forwardTo(mapping.findForward("create"), request, module, true);
-	}
-    }
-
-    protected Module getParent(HttpServletRequest request) {
-	return (Module) getObject(request, Module.class, "parent");
-    }
-
-    public ActionForward organize(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-	Module module = getModule(request);
-	String structure = request.getParameter("tree");
-
-	if (structure == null || structure.length() == 0) {
-	    return viewModule(module, mapping, actionForm, request, response);
+		if (module == null) {
+			return viewRoot(mapping, actionForm, request, response);
+		} else {
+			return viewModule(module, mapping, actionForm, request, response);
+		}
 	}
 
-	// structure =~ "([0-9]+-[0-9]+,)+"
-	// each repeating block is a pair with <initial position of
-	// child>-<initial position of parent>
-	// meaning that child is now a child of parent.
-	try {
-	    updateStructure(getTreeRoots(module), structure);
-	} catch (MatchPathConflictException e) {
-	    processException(request, mapping, null, e);
+	public ActionForward edit(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		Module module = getModule(request);
+
+		if (module == null) {
+			return viewRoot(mapping, actionForm, request, response);
+		} else {
+			return forwardTo(mapping.findForward("edit"), request, module, false);
+		}
 	}
 
-	return viewModule(module, mapping, actionForm, request, response);
-    }
+	public ActionForward create(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		Module module = getParent(request);
 
-    private List<Content> getTreeRoots(Module module) {
-	List<Content> roots = new ArrayList<Content>();
-
-	roots.add(module); // root of tree
-
-	if (module != null) {
-	    roots.addAll(module.getOrderedFunctionalities());
-	} else {
-	    roots.addAll(Functionality.getOrderedTopLevelFunctionalities());
+		if (module == null) {
+			return mapping.findForward("create.toplevel");
+		} else {
+			return forwardTo(mapping.findForward("create"), request, module, true);
+		}
 	}
 
-	return roots;
-    }
-
-    /**
-     * @throws ClassCastException
-     *             if some parent referred in <tt>structure</tt> is not a
-     *             {@link Module}
-     * @throws IndexOutOfBoundsException
-     *             if some index used in <tt>structure</tt> is not valid
-     *             according to the given module
-     * @throws NullPointerException
-     *             if some index used in <tt>structure</tt> in not a number
-     */
-    private void updateStructure(List<Content> roots, String structure) throws Exception {
-	List<Pair<Module, Content>> arrangements = new ArrayList<Pair<Module, Content>>();
-
-	List<Content> functionalities = flatten(roots);
-
-	String[] nodes = structure.split(",");
-	for (int i = 0; i < nodes.length; i++) {
-	    String[] parts = nodes[i].split("-");
-
-	    Integer childIndex = getId(parts[0]);
-	    Integer parentIndex = getId(parts[1]);
-
-	    Module parent = (Module) functionalities.get(parentIndex);
-	    Content child = functionalities.get(childIndex);
-
-	    arrangements.add(new Pair<Module, Content>(parent, child));
+	protected Module getParent(HttpServletRequest request) {
+		return (Module) getObject(request, Module.class, "parent");
 	}
 
-	rearrangeFunctionalities(arrangements);
-    }
+	public ActionForward organize(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		Module module = getModule(request);
+		String structure = request.getParameter("tree");
 
-    private List<Content> flatten(List<Content> roots) {
-	List<Content> functionalities = new ArrayList<Content>();
+		if (structure == null || structure.length() == 0) {
+			return viewModule(module, mapping, actionForm, request, response);
+		}
 
-	for (Content functionality : roots) {
-	    if (functionality instanceof Module) {
-		functionalities.addAll(flatten((Module) functionality));
-	    } else {
-		functionalities.add(functionality);
-	    }
+		// structure =~ "([0-9]+-[0-9]+,)+"
+		// each repeating block is a pair with <initial position of
+		// child>-<initial position of parent>
+		// meaning that child is now a child of parent.
+		try {
+			updateStructure(getTreeRoots(module), structure);
+		} catch (MatchPathConflictException e) {
+			processException(request, mapping, null, e);
+		}
+
+		return viewModule(module, mapping, actionForm, request, response);
 	}
 
-	return functionalities;
-    }
+	private List<Content> getTreeRoots(Module module) {
+		List<Content> roots = new ArrayList<Content>();
 
-    private List<Content> flatten(Module root) {
-	List<Content> result = new ArrayList<Content>();
+		roots.add(module); // root of tree
 
-	result.add(root);
-	for (Content functionality : root.getOrderedChildren(Content.class)) {
-	    if (functionality instanceof Module) {
-		result.addAll(flatten((Module) functionality));
-	    } else {
-		result.add(functionality);
-	    }
+		if (module != null) {
+			roots.addAll(module.getOrderedFunctionalities());
+		} else {
+			roots.addAll(Functionality.getOrderedTopLevelFunctionalities());
+		}
+
+		return roots;
 	}
 
-	return result;
-    }
+	/**
+	 * @throws ClassCastException
+	 *             if some parent referred in <tt>structure</tt> is not a {@link Module}
+	 * @throws IndexOutOfBoundsException
+	 *             if some index used in <tt>structure</tt> is not valid
+	 *             according to the given module
+	 * @throws NullPointerException
+	 *             if some index used in <tt>structure</tt> in not a number
+	 */
+	private void updateStructure(List<Content> roots, String structure) throws Exception {
+		List<Pair<Module, Content>> arrangements = new ArrayList<Pair<Module, Content>>();
 
-    public ActionForward importStructure(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-	Module module = getModule(request);
+		List<Content> functionalities = flatten(roots);
 
-	IViewState viewState = RenderUtils.getViewState("structure");
-	RenderUtils.invalidateViewState("structure");
+		String[] nodes = structure.split(",");
+		for (String node : nodes) {
+			String[] parts = node.split("-");
 
-	if (viewState == null) {
-	    return viewModule(module, mapping, actionForm, request, response);
+			Integer childIndex = getId(parts[0]);
+			Integer parentIndex = getId(parts[1]);
+
+			Module parent = (Module) functionalities.get(parentIndex);
+			Content child = functionalities.get(childIndex);
+
+			arrangements.add(new Pair<Module, Content>(parent, child));
+		}
+
+		rearrangeFunctionalities(arrangements);
 	}
 
-	StructureBean bean = (StructureBean) viewState.getMetaObject().getObject();
-	if (bean == null) {
-	    return viewModule(module, mapping, actionForm, request, response);
+	private List<Content> flatten(List<Content> roots) {
+		List<Content> functionalities = new ArrayList<Content>();
+
+		for (Content functionality : roots) {
+			if (functionality instanceof Module) {
+				functionalities.addAll(flatten((Module) functionality));
+			} else {
+				functionalities.add(functionality);
+			}
+		}
+
+		return functionalities;
 	}
 
-	try {
-	    if (bean.isUuidUsed() && !bean.isCurrentParentUsed()) {
-		importStartupFunctionalities(bean.getStream());
-	    } else {
-		importFunctionalities(module, bean.getStream(), bean.isPrincipalPreserved(), bean.isUuidUsed());
-	    }
-	} catch (DomainException e) {
-	    addMessage(request, "error", e.getKey(), e.getArgs());
-	    return uploadStructure(mapping, actionForm, request, response);
-	} catch (IOException e) {
-	    addMessage(request, "error", "functionalities.import.file.read.failed", new String[0]);
-	    return uploadStructure(mapping, actionForm, request, response);
-	} catch (Exception e) {
-	    addMessage(request, "error", "functionalities.import.file.failed", e.getMessage());
-	    return uploadStructure(mapping, actionForm, request, response);
+	private List<Content> flatten(Module root) {
+		List<Content> result = new ArrayList<Content>();
+
+		result.add(root);
+		for (Content functionality : root.getOrderedChildren(Content.class)) {
+			if (functionality instanceof Module) {
+				result.addAll(flatten((Module) functionality));
+			} else {
+				result.add(functionality);
+			}
+		}
+
+		return result;
 	}
 
-	return viewModule(module, mapping, actionForm, request, response);
-    }
+	public ActionForward importStructure(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		Module module = getModule(request);
 
-    public ActionForward uploadStructure(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-	Module module = getModule(request);
+		IViewState viewState = RenderUtils.getViewState("structure");
+		RenderUtils.invalidateViewState("structure");
 
-	request.setAttribute("bean", new StructureBean());
+		if (viewState == null) {
+			return viewModule(module, mapping, actionForm, request, response);
+		}
 
-	if (module == null) {
-	    return mapping.findForward("upload.toplevel");
-	} else {
-	    return forwardTo(mapping.findForward("upload"), request, module, true);
+		StructureBean bean = (StructureBean) viewState.getMetaObject().getObject();
+		if (bean == null) {
+			return viewModule(module, mapping, actionForm, request, response);
+		}
+
+		try {
+			if (bean.isUuidUsed() && !bean.isCurrentParentUsed()) {
+				importStartupFunctionalities(bean.getStream());
+			} else {
+				importFunctionalities(module, bean.getStream(), bean.isPrincipalPreserved(), bean.isUuidUsed());
+			}
+		} catch (DomainException e) {
+			addMessage(request, "error", e.getKey(), e.getArgs());
+			return uploadStructure(mapping, actionForm, request, response);
+		} catch (IOException e) {
+			addMessage(request, "error", "functionalities.import.file.read.failed", new String[0]);
+			return uploadStructure(mapping, actionForm, request, response);
+		} catch (Exception e) {
+			addMessage(request, "error", "functionalities.import.file.failed", e.getMessage());
+			return uploadStructure(mapping, actionForm, request, response);
+		}
+
+		return viewModule(module, mapping, actionForm, request, response);
 	}
-    }
+
+	public ActionForward uploadStructure(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		Module module = getModule(request);
+
+		request.setAttribute("bean", new StructureBean());
+
+		if (module == null) {
+			return mapping.findForward("upload.toplevel");
+		} else {
+			return forwardTo(mapping.findForward("upload"), request, module, true);
+		}
+	}
 
 }

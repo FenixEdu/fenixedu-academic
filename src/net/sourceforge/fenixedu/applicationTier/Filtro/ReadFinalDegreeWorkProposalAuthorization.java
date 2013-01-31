@@ -16,18 +16,19 @@ import pt.utl.ist.berserk.ServiceResponse;
  */
 public class ReadFinalDegreeWorkProposalAuthorization extends Filtro {
 
-    public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
-	IUserView id = getRemoteUser(request);
-	Integer finalDegreeWorkProposalOID = (Integer) request.getServiceParameters().parametersArray()[0];
-	if (finalDegreeWorkProposalOID != null) {
-	    Proposal proposal = rootDomainObject.readProposalByOID(finalDegreeWorkProposalOID);
-	    if (proposal != null) {
-		if (proposal.canBeReadBy(id)) {
-		    return;
+	@Override
+	public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
+		IUserView id = getRemoteUser(request);
+		Integer finalDegreeWorkProposalOID = (Integer) request.getServiceParameters().parametersArray()[0];
+		if (finalDegreeWorkProposalOID != null) {
+			Proposal proposal = rootDomainObject.readProposalByOID(finalDegreeWorkProposalOID);
+			if (proposal != null) {
+				if (proposal.canBeReadBy(id)) {
+					return;
+				}
+			}
 		}
-	    }
+		throw new NotAuthorizedFilterException();
 	}
-	throw new NotAuthorizedFilterException();
-    }
 
 }

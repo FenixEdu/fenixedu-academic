@@ -25,47 +25,47 @@ import net.sourceforge.fenixedu.domain.StudentGroup;
 
 public class DeleteStudentGroupMembers extends FenixService {
 
-    public Boolean run(Integer executionCourseID, Integer studentGroupID, Integer groupPropertiesID, List studentUsernames)
-	    throws FenixServiceException {
+	public Boolean run(Integer executionCourseID, Integer studentGroupID, Integer groupPropertiesID, List studentUsernames)
+			throws FenixServiceException {
 
-	final StudentGroup studentGroup = rootDomainObject.readStudentGroupByOID(studentGroupID);
-	if (studentGroup == null) {
-	    throw new InvalidArgumentsServiceException();
-	}
-
-	final Grouping grouping = studentGroup.getGrouping();
-	final IGroupEnrolmentStrategyFactory enrolmentGroupPolicyStrategyFactory = GroupEnrolmentStrategyFactory.getInstance();
-	final IGroupEnrolmentStrategy strategy = enrolmentGroupPolicyStrategyFactory.getGroupEnrolmentStrategyInstance(grouping);
-
-	if (!strategy.checkStudentsUserNamesInGrouping(studentUsernames, grouping)) {
-	    throw new InvalidArgumentsServiceException();
-	}
-
-	StringBuilder sbStudentNumbers = new StringBuilder("");
-	sbStudentNumbers.setLength(0);
-	for (final String studentUsername : (List<String>) studentUsernames) {
-	    Attends attend = grouping.getStudentAttend(studentUsername);
-	    if (attend != null) {
-		if (sbStudentNumbers.length() != 0) {
-		    sbStudentNumbers.append(", " + attend.getRegistration().getNumber().toString());
-		} else {
-		    sbStudentNumbers.append(attend.getRegistration().getNumber().toString());
+		final StudentGroup studentGroup = rootDomainObject.readStudentGroupByOID(studentGroupID);
+		if (studentGroup == null) {
+			throw new InvalidArgumentsServiceException();
 		}
-		attend.removeStudentGroups(studentGroup);
-	    }
-	}
 
-	// no students means no log entry -- list may contain invalid values, so
-	// its size cannot be used to test
-	if (sbStudentNumbers.length() != 0) {
-	    List<ExecutionCourse> ecs = grouping.getExecutionCourses();
-	    for (ExecutionCourse ec : ecs) {
-		GroupsAndShiftsManagementLog.createLog(ec, "resources.MessagingResources",
-			"log.executionCourse.groupAndShifts.grouping.group.element.removed", Integer.toString(studentUsernames
-				.size()), sbStudentNumbers.toString(), studentGroup.getGroupNumber().toString(), grouping
-				.getName(), ec.getNome(), ec.getDegreePresentationString());
-	    }
+		final Grouping grouping = studentGroup.getGrouping();
+		final IGroupEnrolmentStrategyFactory enrolmentGroupPolicyStrategyFactory = GroupEnrolmentStrategyFactory.getInstance();
+		final IGroupEnrolmentStrategy strategy = enrolmentGroupPolicyStrategyFactory.getGroupEnrolmentStrategyInstance(grouping);
+
+		if (!strategy.checkStudentsUserNamesInGrouping(studentUsernames, grouping)) {
+			throw new InvalidArgumentsServiceException();
+		}
+
+		StringBuilder sbStudentNumbers = new StringBuilder("");
+		sbStudentNumbers.setLength(0);
+		for (final String studentUsername : (List<String>) studentUsernames) {
+			Attends attend = grouping.getStudentAttend(studentUsername);
+			if (attend != null) {
+				if (sbStudentNumbers.length() != 0) {
+					sbStudentNumbers.append(", " + attend.getRegistration().getNumber().toString());
+				} else {
+					sbStudentNumbers.append(attend.getRegistration().getNumber().toString());
+				}
+				attend.removeStudentGroups(studentGroup);
+			}
+		}
+
+		// no students means no log entry -- list may contain invalid values, so
+		// its size cannot be used to test
+		if (sbStudentNumbers.length() != 0) {
+			List<ExecutionCourse> ecs = grouping.getExecutionCourses();
+			for (ExecutionCourse ec : ecs) {
+				GroupsAndShiftsManagementLog.createLog(ec, "resources.MessagingResources",
+						"log.executionCourse.groupAndShifts.grouping.group.element.removed", Integer.toString(studentUsernames
+								.size()), sbStudentNumbers.toString(), studentGroup.getGroupNumber().toString(), grouping
+								.getName(), ec.getNome(), ec.getDegreePresentationString());
+			}
+		}
+		return true;
 	}
-	return true;
-    }
 }

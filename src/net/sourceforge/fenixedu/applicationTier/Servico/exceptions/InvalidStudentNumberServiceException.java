@@ -7,23 +7,24 @@ package net.sourceforge.fenixedu.applicationTier.Servico.exceptions;
  */
 public class InvalidStudentNumberServiceException extends FenixServiceException {
 
-    public InvalidStudentNumberServiceException() {
-    }
+	public InvalidStudentNumberServiceException() {
+	}
 
-    public InvalidStudentNumberServiceException(Throwable cause) {
-	super(cause);
-    }
+	public InvalidStudentNumberServiceException(Throwable cause) {
+		super(cause);
+	}
 
-    public InvalidStudentNumberServiceException(String message, Throwable cause) {
-	super(message, cause);
-    }
+	public InvalidStudentNumberServiceException(String message, Throwable cause) {
+		super(message, cause);
+	}
 
-    public String toString() {
-	String result = "[InvalidStudentNumberServiceException\n";
-	result += "message" + this.getMessage() + "\n";
-	result += "cause" + this.getCause() + "\n";
-	result += "]";
-	return result;
-    }
+	@Override
+	public String toString() {
+		String result = "[InvalidStudentNumberServiceException\n";
+		result += "message" + this.getMessage() + "\n";
+		result += "cause" + this.getCause() + "\n";
+		result += "]";
+		return result;
+	}
 
 }

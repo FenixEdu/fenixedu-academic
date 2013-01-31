@@ -45,100 +45,108 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
  * 
  */
 
-@Mapping(module = "departmentAdmOffice", path = "/prepareListDepartmentTeachersCredits", attribute = "executionPeriodForm", formBean = "executionPeriodForm", scope = "session")
+@Mapping(
+		module = "departmentAdmOffice",
+		path = "/prepareListDepartmentTeachersCredits",
+		attribute = "executionPeriodForm",
+		formBean = "executionPeriodForm",
+		scope = "session")
 @Forwards(value = { @Forward(name = "show-teachers-credits-list", path = "show-teachers-credits-list") })
 public class ShowTeachersCreditsDepartmentListAction extends FenixAction {
 
-    @Override
-    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-	    throws NumberFormatException, FenixFilterException, FenixServiceException, ParseException {
+	@Override
+	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+			throws NumberFormatException, FenixFilterException, FenixServiceException, ParseException {
 
-	DynaActionForm dynaActionForm = (DynaActionForm) form;
-	IUserView userView = UserView.getUser();
+		DynaActionForm dynaActionForm = (DynaActionForm) form;
+		IUserView userView = UserView.getUser();
 
-	Integer executionPeriodID = (Integer) dynaActionForm.get("executionPeriodId");
+		Integer executionPeriodID = (Integer) dynaActionForm.get("executionPeriodId");
 
-	ExecutionSemester executionSemester = null;
-	if (executionPeriodID == null) {
-	    executionSemester = ExecutionSemester.readLastExecutionSemesterForCredits();
-	} else {
-	    executionSemester = rootDomainObject.readExecutionSemesterByOID(executionPeriodID);
-	}
-
-	dynaActionForm.set("executionPeriodId", executionSemester.getIdInternal());
-
-	List<TeacherWithCreditsDTO> teachersCredits = new ArrayList<TeacherWithCreditsDTO>();
-	for (Department department : userView.getPerson().getManageableDepartmentCredits()) {
-	    List<Teacher> teachers = department.getAllTeachers(executionSemester.getBeginDateYearMonthDay(),
-		    executionSemester.getEndDateYearMonthDay());
-	    for (Teacher teacher : teachers) {
-		TeacherCredits teacherCredits = TeacherCredits.readTeacherCredits(executionSemester, teacher);
-		if (teacherCredits == null || teacherCredits.getTeacherCreditsState().isOpenState()) {
-		    double managementCredits = teacher.getManagementFunctionsCredits(executionSemester);
-		    double serviceExemptionsCredits = teacher.getServiceExemptionCredits(executionSemester);
-		    double thesesCredits = teacher.getThesesCredits(executionSemester);
-		    ProfessionalCategory categoryByPeriod = teacher.getCategoryByPeriod(executionSemester);
-		    String category = categoryByPeriod != null ? categoryByPeriod.getName().getContent() : null;
-		    double mandatoryLessonHours = teacher.getMandatoryLessonHours(executionSemester);
-		    TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionSemester);
-		    CreditLineDTO creditLineDTO = new CreditLineDTO(executionSemester, teacherService, managementCredits,
-			    serviceExemptionsCredits, mandatoryLessonHours, teacher, thesesCredits);
-		    TeacherWithCreditsDTO teacherWithCreditsDTO = new TeacherWithCreditsDTO(teacher, category, creditLineDTO);
-		    teachersCredits.add(teacherWithCreditsDTO);
-		} else if (teacherCredits.getTeacherCreditsState().isCloseState()) {
-		    CreditLineDTO creditLineDTO = new CreditLineDTO(executionSemester, teacherCredits);
-		    String categopry = teacherCredits.getProfessionalCategory() != null ? teacherCredits
-			    .getProfessionalCategory().getName().getContent() : null;
-		    TeacherWithCreditsDTO teacherWithCreditsDTO = new TeacherWithCreditsDTO(teacher, categopry, creditLineDTO);
-		    teachersCredits.add(teacherWithCreditsDTO);
+		ExecutionSemester executionSemester = null;
+		if (executionPeriodID == null) {
+			executionSemester = ExecutionSemester.readLastExecutionSemesterForCredits();
+		} else {
+			executionSemester = rootDomainObject.readExecutionSemesterByOID(executionPeriodID);
 		}
 
-	    }
+		dynaActionForm.set("executionPeriodId", executionSemester.getIdInternal());
+
+		List<TeacherWithCreditsDTO> teachersCredits = new ArrayList<TeacherWithCreditsDTO>();
+		for (Department department : userView.getPerson().getManageableDepartmentCredits()) {
+			List<Teacher> teachers =
+					department.getAllTeachers(executionSemester.getBeginDateYearMonthDay(),
+							executionSemester.getEndDateYearMonthDay());
+			for (Teacher teacher : teachers) {
+				TeacherCredits teacherCredits = TeacherCredits.readTeacherCredits(executionSemester, teacher);
+				if (teacherCredits == null || teacherCredits.getTeacherCreditsState().isOpenState()) {
+					double managementCredits = teacher.getManagementFunctionsCredits(executionSemester);
+					double serviceExemptionsCredits = teacher.getServiceExemptionCredits(executionSemester);
+					double thesesCredits = teacher.getThesesCredits(executionSemester);
+					ProfessionalCategory categoryByPeriod = teacher.getCategoryByPeriod(executionSemester);
+					String category = categoryByPeriod != null ? categoryByPeriod.getName().getContent() : null;
+					double mandatoryLessonHours = teacher.getMandatoryLessonHours(executionSemester);
+					TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionSemester);
+					CreditLineDTO creditLineDTO =
+							new CreditLineDTO(executionSemester, teacherService, managementCredits, serviceExemptionsCredits,
+									mandatoryLessonHours, teacher, thesesCredits);
+					TeacherWithCreditsDTO teacherWithCreditsDTO = new TeacherWithCreditsDTO(teacher, category, creditLineDTO);
+					teachersCredits.add(teacherWithCreditsDTO);
+				} else if (teacherCredits.getTeacherCreditsState().isCloseState()) {
+					CreditLineDTO creditLineDTO = new CreditLineDTO(executionSemester, teacherCredits);
+					String categopry =
+							teacherCredits.getProfessionalCategory() != null ? teacherCredits.getProfessionalCategory().getName()
+									.getContent() : null;
+					TeacherWithCreditsDTO teacherWithCreditsDTO = new TeacherWithCreditsDTO(teacher, categopry, creditLineDTO);
+					teachersCredits.add(teacherWithCreditsDTO);
+				}
+
+			}
+		}
+		String sortBy = request.getParameter("sortBy");
+		request.setAttribute("teachersCreditsListSize", teachersCredits.size());
+		Iterator orderedTeacherCredits = orderList(sortBy, teachersCredits.iterator());
+		request.setAttribute("departmentsList", userView.getPerson().getManageableDepartmentCredits());
+		request.setAttribute("teachersCreditsList", orderedTeacherCredits);
+
+		readAndSaveAllExecutionPeriods(request);
+		return mapping.findForward("show-teachers-credits-list");
 	}
-	String sortBy = request.getParameter("sortBy");
-	request.setAttribute("teachersCreditsListSize", teachersCredits.size());
-	Iterator orderedTeacherCredits = orderList(sortBy, teachersCredits.iterator());
-	request.setAttribute("departmentsList", userView.getPerson().getManageableDepartmentCredits());
-	request.setAttribute("teachersCreditsList", orderedTeacherCredits);
 
-	readAndSaveAllExecutionPeriods(request);
-	return mapping.findForward("show-teachers-credits-list");
-    }
-
-    private Iterator orderList(String sortBy, Iterator<TeacherWithCreditsDTO> iterator) {
-	Iterator orderedIterator = null;
-	if (sortBy == null || sortBy.length() == 0 || sortBy.equals("name")) {
-	    orderedIterator = new OrderedIterator(iterator, new BeanComparator("teacher.person.name"));
-	} else {
-	    orderedIterator = new OrderedIterator(iterator, new BeanComparator("teacher.person.istUsername"));
+	private Iterator orderList(String sortBy, Iterator<TeacherWithCreditsDTO> iterator) {
+		Iterator orderedIterator = null;
+		if (sortBy == null || sortBy.length() == 0 || sortBy.equals("name")) {
+			orderedIterator = new OrderedIterator(iterator, new BeanComparator("teacher.person.name"));
+		} else {
+			orderedIterator = new OrderedIterator(iterator, new BeanComparator("teacher.person.istUsername"));
+		}
+		return orderedIterator;
 	}
-	return orderedIterator;
-    }
 
-    private void readAndSaveAllExecutionPeriods(HttpServletRequest request) throws FenixFilterException, FenixServiceException {
-	List<InfoExecutionPeriod> notClosedExecutionPeriods = new ArrayList<InfoExecutionPeriod>();
+	private void readAndSaveAllExecutionPeriods(HttpServletRequest request) throws FenixFilterException, FenixServiceException {
+		List<InfoExecutionPeriod> notClosedExecutionPeriods = new ArrayList<InfoExecutionPeriod>();
 
-	notClosedExecutionPeriods = ReadNotClosedExecutionPeriods.run();
+		notClosedExecutionPeriods = ReadNotClosedExecutionPeriods.run();
 
-	List<LabelValueBean> executionPeriods = getNotClosedExecutionPeriods(notClosedExecutionPeriods);
-	request.setAttribute("executionPeriods", executionPeriods);
-    }
-
-    private List<LabelValueBean> getNotClosedExecutionPeriods(List<InfoExecutionPeriod> allExecutionPeriods) {
-	List<LabelValueBean> executionPeriods = new ArrayList<LabelValueBean>();
-	ExecutionSemester lastExecutionSemester = ExecutionSemester.readLastExecutionSemesterForCredits();
-
-	for (InfoExecutionPeriod infoExecutionPeriod : allExecutionPeriods) {
-	    if (infoExecutionPeriod.getInfoExecutionYear().getExecutionYear()
-		    .isBeforeOrEquals(lastExecutionSemester.getExecutionYear())) {
-		LabelValueBean labelValueBean = new LabelValueBean();
-		labelValueBean.setLabel(infoExecutionPeriod.getInfoExecutionYear().getYear() + " - "
-			+ infoExecutionPeriod.getSemester() + "º Semestre");
-		labelValueBean.setValue(infoExecutionPeriod.getIdInternal().toString());
-		executionPeriods.add(labelValueBean);
-	    }
+		List<LabelValueBean> executionPeriods = getNotClosedExecutionPeriods(notClosedExecutionPeriods);
+		request.setAttribute("executionPeriods", executionPeriods);
 	}
-	Collections.sort(executionPeriods, new BeanComparator("label"));
-	return executionPeriods;
-    }
+
+	private List<LabelValueBean> getNotClosedExecutionPeriods(List<InfoExecutionPeriod> allExecutionPeriods) {
+		List<LabelValueBean> executionPeriods = new ArrayList<LabelValueBean>();
+		ExecutionSemester lastExecutionSemester = ExecutionSemester.readLastExecutionSemesterForCredits();
+
+		for (InfoExecutionPeriod infoExecutionPeriod : allExecutionPeriods) {
+			if (infoExecutionPeriod.getInfoExecutionYear().getExecutionYear()
+					.isBeforeOrEquals(lastExecutionSemester.getExecutionYear())) {
+				LabelValueBean labelValueBean = new LabelValueBean();
+				labelValueBean.setLabel(infoExecutionPeriod.getInfoExecutionYear().getYear() + " - "
+						+ infoExecutionPeriod.getSemester() + "º Semestre");
+				labelValueBean.setValue(infoExecutionPeriod.getIdInternal().toString());
+				executionPeriods.add(labelValueBean);
+			}
+		}
+		Collections.sort(executionPeriods, new BeanComparator("label"));
+		return executionPeriods;
+	}
 }

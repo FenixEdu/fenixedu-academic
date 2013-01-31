@@ -8,35 +8,35 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 
 public class RegistrationsBean implements Serializable {
 
-    private Registration selected;
-    private List<Registration> registrations;
+	private Registration selected;
+	private List<Registration> registrations;
 
-    public RegistrationsBean() {
-	this.selected = null;
-    }
-
-    public List<Registration> getRegistrations() {
-	List<Registration> result = new ArrayList<Registration>();
-	for (Registration registration : registrations) {
-	    result.add(registration);
+	public RegistrationsBean() {
+		this.selected = null;
 	}
-	return result;
-    }
 
-    public void setRegistrations(List<Registration> registrations) {
-	this.registrations = new ArrayList<Registration>();
-
-	for (Registration registration : registrations) {
-	    this.registrations.add(registration);
+	public List<Registration> getRegistrations() {
+		List<Registration> result = new ArrayList<Registration>();
+		for (Registration registration : registrations) {
+			result.add(registration);
+		}
+		return result;
 	}
-    }
 
-    public Registration getSelected() {
-	return selected;
-    }
+	public void setRegistrations(List<Registration> registrations) {
+		this.registrations = new ArrayList<Registration>();
 
-    public void setSelected(Registration selected) {
-	this.selected = selected;
-    }
+		for (Registration registration : registrations) {
+			this.registrations.add(registration);
+		}
+	}
+
+	public Registration getSelected() {
+		return selected;
+	}
+
+	public void setSelected(Registration selected) {
+		this.selected = selected;
+	}
 
 }

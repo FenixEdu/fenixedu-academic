@@ -8,13 +8,13 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 
 public class ReadContributor extends FenixService {
 
-    public InfoContributor run(Integer contributorNumber) throws FenixServiceException {
-	final Party contributor = Party.readByContributorNumber(contributorNumber.toString());
-	if (contributor == null) {
-	    throw new ExcepcaoInexistente();
-	}
+	public InfoContributor run(Integer contributorNumber) throws FenixServiceException {
+		final Party contributor = Party.readByContributorNumber(contributorNumber.toString());
+		if (contributor == null) {
+			throw new ExcepcaoInexistente();
+		}
 
-	return InfoContributor.newInfoFromDomain(contributor);
-    }
+		return InfoContributor.newInfoFromDomain(contributor);
+	}
 
 }

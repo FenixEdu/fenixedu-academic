@@ -9,14 +9,14 @@ import pt.ist.fenixWebFramework.renderers.converters.EnumConverter;
 
 public class PhdGuidanceDocumentTypeProvider implements DataProvider {
 
-    @Override
-    public Converter getConverter() {
-	return new EnumConverter();
-    }
+	@Override
+	public Converter getConverter() {
+		return new EnumConverter();
+	}
 
-    @Override
-    public Object provide(Object source, Object current) {
-	return Arrays.asList(PhdIndividualProgramDocumentType.FEEDBACK_REPORT, PhdIndividualProgramDocumentType.GUIDANCE_OTHER);
-    }
+	@Override
+	public Object provide(Object source, Object current) {
+		return Arrays.asList(PhdIndividualProgramDocumentType.FEEDBACK_REPORT, PhdIndividualProgramDocumentType.GUIDANCE_OTHER);
+	}
 
 }

@@ -7,12 +7,12 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class CreateProfessionalInformation extends FenixService {
 
-    @Service
-    public static Job run(final AlumniJobBean bean) {
+	@Service
+	public static Job run(final AlumniJobBean bean) {
 
-	return new Job(bean.getAlumni().getStudent().getPerson(), bean.getEmployerName(), bean.getCity(), bean.getCountry(), bean
-		.getChildBusinessArea(), bean.getParentBusinessArea(), bean.getPosition(), bean.getBeginDateAsLocalDate(), bean
-		.getEndDateAsLocalDate(), bean.getApplicationType(), bean.getContractType(), bean.getSalary());
-    }
+		return new Job(bean.getAlumni().getStudent().getPerson(), bean.getEmployerName(), bean.getCity(), bean.getCountry(),
+				bean.getChildBusinessArea(), bean.getParentBusinessArea(), bean.getPosition(), bean.getBeginDateAsLocalDate(),
+				bean.getEndDateAsLocalDate(), bean.getApplicationType(), bean.getContractType(), bean.getSalary());
+	}
 
 }

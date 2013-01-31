@@ -13,80 +13,80 @@ import org.joda.time.LocalDate;
 
 public class CycleConclusionProcess extends CycleConclusionProcess_Base {
 
-    private CycleConclusionProcess(final RegistrationConclusionBean bean) {
-	super();
-	super.setRootDomainObject(RootDomainObject.getInstance());
+	private CycleConclusionProcess(final RegistrationConclusionBean bean) {
+		super();
+		super.setRootDomainObject(RootDomainObject.getInstance());
 
-	final CycleCurriculumGroup cycle = bean.getCycleCurriculumGroup();
-	final ExecutionYear conclusionYear = bean.getConclusionYear();
+		final CycleCurriculumGroup cycle = bean.getCycleCurriculumGroup();
+		final ExecutionYear conclusionYear = bean.getConclusionYear();
 
-	check(cycle, "error.CycleConclusionProcess.argument.must.not.be.null");
-	check(conclusionYear, "error.CycleConclusionProcess.argument.must.not.be.null");
+		check(cycle, "error.CycleConclusionProcess.argument.must.not.be.null");
+		check(conclusionYear, "error.CycleConclusionProcess.argument.must.not.be.null");
 
-	super.setCycle(cycle);
-	super.setConclusionYear(conclusionYear);
-	addVersions(bean);
-    }
-
-    @Override
-    public boolean isCycleConclusionProcess() {
-	return true;
-    }
-
-    public static void conclude(final RegistrationConclusionBean bean) {
-	if (bean.isConclusionProcessed()) {
-	    throw new DomainException("error.ConclusionProcess.already.concluded.must.update");
+		super.setCycle(cycle);
+		super.setConclusionYear(conclusionYear);
+		addVersions(bean);
 	}
 
-	new CycleConclusionProcess(bean);
-    }
-
-    @Override
-    public void update(RegistrationConclusionBean bean) {
-	if (!bean.isConclusionProcessed()) {
-	    throw new DomainException("error.ConclusionProcess.is.not.concluded");
+	@Override
+	public boolean isCycleConclusionProcess() {
+		return true;
 	}
 
-	addVersions(bean);
+	public static void conclude(final RegistrationConclusionBean bean) {
+		if (bean.isConclusionProcessed()) {
+			throw new DomainException("error.ConclusionProcess.already.concluded.must.update");
+		}
 
-    }
-
-    @Override
-    final public void update(final Person responsible, final Integer finalAverage, final LocalDate conclusionDate,
-	    final String notes) {
-	addVersions(new RegistrationConclusionBean(getRegistration(), getCycle()));
-	getLastVersion().update(responsible, finalAverage, conclusionDate, notes);
-    }
-
-    @Override
-    protected void addSpecificVersionInfo() {
-	if (getCycleType() == CycleType.SECOND_CYCLE) {
-	    getLastVersion().setDissertationEnrolment(getRegistration().getDissertationEnrolment());
+		new CycleConclusionProcess(bean);
 	}
-    }
 
-    @Override
-    public void setRootDomainObject(RootDomainObject rootDomainObject) {
-	throw new DomainException("error.ConclusionProcess.method.not.allowed");
-    }
+	@Override
+	public void update(RegistrationConclusionBean bean) {
+		if (!bean.isConclusionProcessed()) {
+			throw new DomainException("error.ConclusionProcess.is.not.concluded");
+		}
 
-    @Override
-    public void setCycle(CycleCurriculumGroup cycle) {
-	throw new DomainException("error.ConclusionProcess.method.not.allowed");
-    }
+		addVersions(bean);
 
-    @Override
-    public void setConclusionYear(ExecutionYear conclusionYear) {
-	throw new DomainException("error.ConclusionProcess.method.not.allowed");
-    }
+	}
 
-    public CycleType getCycleType() {
-	return getCycle().getCycleType();
-    }
+	@Override
+	final public void update(final Person responsible, final Integer finalAverage, final LocalDate conclusionDate,
+			final String notes) {
+		addVersions(new RegistrationConclusionBean(getRegistration(), getCycle()));
+		getLastVersion().update(responsible, finalAverage, conclusionDate, notes);
+	}
 
-    @Override
-    public Registration getRegistration() {
-	return getCycle().getRegistration();
-    }
+	@Override
+	protected void addSpecificVersionInfo() {
+		if (getCycleType() == CycleType.SECOND_CYCLE) {
+			getLastVersion().setDissertationEnrolment(getRegistration().getDissertationEnrolment());
+		}
+	}
+
+	@Override
+	public void setRootDomainObject(RootDomainObject rootDomainObject) {
+		throw new DomainException("error.ConclusionProcess.method.not.allowed");
+	}
+
+	@Override
+	public void setCycle(CycleCurriculumGroup cycle) {
+		throw new DomainException("error.ConclusionProcess.method.not.allowed");
+	}
+
+	@Override
+	public void setConclusionYear(ExecutionYear conclusionYear) {
+		throw new DomainException("error.ConclusionProcess.method.not.allowed");
+	}
+
+	public CycleType getCycleType() {
+		return getCycle().getCycleType();
+	}
+
+	@Override
+	public Registration getRegistration() {
+		return getCycle().getRegistration();
+	}
 
 }

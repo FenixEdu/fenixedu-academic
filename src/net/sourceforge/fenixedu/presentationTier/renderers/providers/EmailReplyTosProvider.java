@@ -11,18 +11,20 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class EmailReplyTosProvider implements DataProvider {
 
-    public Object provide(final Object source, final Object currentValue) {
-	final EmailBean emailBean = (EmailBean) source;
-	final Sender sender = emailBean.getSender();
-	final Set<ReplyTo> replyTos = new TreeSet<ReplyTo>(ReplyTo.COMPARATOR_BY_ADDRESS);
-	if (sender != null) {
-	    replyTos.addAll(sender.getConcreteReplyTos());
+	@Override
+	public Object provide(final Object source, final Object currentValue) {
+		final EmailBean emailBean = (EmailBean) source;
+		final Sender sender = emailBean.getSender();
+		final Set<ReplyTo> replyTos = new TreeSet<ReplyTo>(ReplyTo.COMPARATOR_BY_ADDRESS);
+		if (sender != null) {
+			replyTos.addAll(sender.getConcreteReplyTos());
+		}
+		return replyTos;
 	}
-	return replyTos;
-    }
 
-    public Converter getConverter() {
-	return null;
-    }
+	@Override
+	public Converter getConverter() {
+		return null;
+	}
 
 }

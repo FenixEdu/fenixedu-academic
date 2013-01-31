@@ -18,60 +18,60 @@ import pt.ist.fenixframework.pstm.Transaction;
 
 public class JerseyAuthFilter implements Filter {
 
-    final static String systemUsername = PropertiesManager.getProperty("jersey.username");
-    final static String systemPassword = PropertiesManager.getProperty("jersey.password");
-    final static String USERNAME_KEY = "__username__";
-    final static String PASSWORD_KEY = "__password__";
+	final static String systemUsername = PropertiesManager.getProperty("jersey.username");
+	final static String systemPassword = PropertiesManager.getProperty("jersey.password");
+	final static String USERNAME_KEY = "__username__";
+	final static String PASSWORD_KEY = "__password__";
 
-    @Override
-    public void destroy() {
-    }
-
-    @Override
-    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
-	    throws IOException, ServletException {
-	final HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
-	final HttpServletResponse httpServletResponse = (HttpServletResponse) servletResponse;
-	doFilter(httpServletRequest, httpServletResponse, filterChain);
-    }
-
-    public void doFilter(final HttpServletRequest request, final HttpServletResponse response, final FilterChain filterChain)
-	    throws IOException, ServletException {
-	if (checkAccessControl(request)) {
-	    filterChain.doFilter(request, response);
-	} else {
-	    throw new ServletException("Not Authorized");
+	@Override
+	public void destroy() {
 	}
-    }
 
-    @Override
-    public void init(FilterConfig arg0) throws ServletException {
-    }
-
-    private Boolean checkAccessControl(final HttpServletRequest request) {
-	final String url = getClientAddress(request);
-	final String username = request.getHeader(USERNAME_KEY);
-	final String password = request.getHeader(PASSWORD_KEY);
-	Boolean found = Boolean.FALSE;
-	Transaction.begin(true);
-	Transaction.currentFenixTransaction().setReadOnly();
-	for (final RemoteHost remoteHost : RemoteSystem.getInstance().getRemoteHostsSet()) {
-	    if (remoteHost.matches(url, username, password)) {
-		System.out.println("[Jersey Server Invoke by client " + url);
-		found = Boolean.TRUE;
-	    }
+	@Override
+	public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
+			throws IOException, ServletException {
+		final HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
+		final HttpServletResponse httpServletResponse = (HttpServletResponse) servletResponse;
+		doFilter(httpServletRequest, httpServletResponse, filterChain);
 	}
-	System.out.println("[Jersey Server] Invoke by client " + url);
-	Transaction.forceFinish();
-	return found;
-    }
 
-    private String getClientAddress(final HttpServletRequest request) {
-	final String xForwardForHeader = request.getHeader("X-Forwarded-For");
-	if (xForwardForHeader != null && !xForwardForHeader.isEmpty()) {
-	    final int urlSeperator = xForwardForHeader.indexOf(',');
-	    return urlSeperator > 0 ? xForwardForHeader.substring(0, urlSeperator) : xForwardForHeader;
+	public void doFilter(final HttpServletRequest request, final HttpServletResponse response, final FilterChain filterChain)
+			throws IOException, ServletException {
+		if (checkAccessControl(request)) {
+			filterChain.doFilter(request, response);
+		} else {
+			throw new ServletException("Not Authorized");
+		}
 	}
-	return request.getRemoteHost();
-    }
+
+	@Override
+	public void init(FilterConfig arg0) throws ServletException {
+	}
+
+	private Boolean checkAccessControl(final HttpServletRequest request) {
+		final String url = getClientAddress(request);
+		final String username = request.getHeader(USERNAME_KEY);
+		final String password = request.getHeader(PASSWORD_KEY);
+		Boolean found = Boolean.FALSE;
+		Transaction.begin(true);
+		Transaction.currentFenixTransaction().setReadOnly();
+		for (final RemoteHost remoteHost : RemoteSystem.getInstance().getRemoteHostsSet()) {
+			if (remoteHost.matches(url, username, password)) {
+				System.out.println("[Jersey Server Invoke by client " + url);
+				found = Boolean.TRUE;
+			}
+		}
+		System.out.println("[Jersey Server] Invoke by client " + url);
+		Transaction.forceFinish();
+		return found;
+	}
+
+	private String getClientAddress(final HttpServletRequest request) {
+		final String xForwardForHeader = request.getHeader("X-Forwarded-For");
+		if (xForwardForHeader != null && !xForwardForHeader.isEmpty()) {
+			final int urlSeperator = xForwardForHeader.indexOf(',');
+			return urlSeperator > 0 ? xForwardForHeader.substring(0, urlSeperator) : xForwardForHeader;
+		}
+		return request.getRemoteHost();
+	}
 }

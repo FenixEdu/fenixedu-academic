@@ -8,39 +8,40 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.UnitAcronym;
 
 public abstract class AbstractAcronymPathProcess<T extends Site> extends AbstractPathProcessor {
 
-    protected T site = null;
+	protected T site = null;
 
-    @Override
-    public Content processPath(String path) {
-	return getSite();
-    }
-
-    private Content getSite() {
-	if (site == null) {
-	    for (UnitAcronym acronym : RootDomainObject.getInstance().getUnitAcronyms()) {
-		if (acronym.getAcronym().equalsIgnoreCase(getAcronym())) {
-		    Unit unit = acronym.getUnits().get(0);
-		    site = (T) unit.getSite();
-		    return site;
-		}
-	    }
+	@Override
+	public Content processPath(String path) {
+		return getSite();
 	}
-	return site;
-    }
 
-    protected abstract String getAcronym();
+	private Content getSite() {
+		if (site == null) {
+			for (UnitAcronym acronym : RootDomainObject.getInstance().getUnitAcronyms()) {
+				if (acronym.getAcronym().equalsIgnoreCase(getAcronym())) {
+					Unit unit = acronym.getUnits().get(0);
+					site = (T) unit.getSite();
+					return site;
+				}
+			}
+		}
+		return site;
+	}
 
-    @Override
-    public String getTrailingPath(String path) {
-	return path;
-    }
+	protected abstract String getAcronym();
 
-    @Override
-    public Content getInitialContent() {
-	return getSite();
-    }
+	@Override
+	public String getTrailingPath(String path) {
+		return path;
+	}
 
-    public boolean keepPortalInContentsPath() {
-	return false;
-    }
+	@Override
+	public Content getInitialContent() {
+		return getSite();
+	}
+
+	@Override
+	public boolean keepPortalInContentsPath() {
+		return false;
+	}
 }

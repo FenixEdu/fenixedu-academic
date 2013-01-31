@@ -9,10 +9,10 @@ import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class EditExternalUnit extends FenixService {
 
-    @Service
-    public static void run(final EditExternalUnitBean externalUnitBean) {
-	final Unit externalUnit = externalUnitBean.getExternalUnit();
-	externalUnit.edit(new MultiLanguageString(Language.getDefaultLanguage(), externalUnitBean.getUnitName()),
-		externalUnitBean.getUnitCode());
-    }
+	@Service
+	public static void run(final EditExternalUnitBean externalUnitBean) {
+		final Unit externalUnit = externalUnitBean.getExternalUnit();
+		externalUnit.edit(new MultiLanguageString(Language.getDefaultLanguage(), externalUnitBean.getUnitName()),
+				externalUnitBean.getUnitCode());
+	}
 }

@@ -15,14 +15,14 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class ReadTransactionByID extends FenixService {
 
-    @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
-    @Service
-    public static InfoTransaction run(Integer transactionId) throws FenixServiceException {
-	Transaction transaction = rootDomainObject.readTransactionByOID(transactionId);
-	if (transaction == null) {
-	    throw new ExcepcaoInexistente();
+	@Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
+	@Service
+	public static InfoTransaction run(Integer transactionId) throws FenixServiceException {
+		Transaction transaction = rootDomainObject.readTransactionByOID(transactionId);
+		if (transaction == null) {
+			throw new ExcepcaoInexistente();
+		}
+		return InfoTransaction.newInfoFromDomain(transaction);
 	}
-	return InfoTransaction.newInfoFromDomain(transaction);
-    }
 
 }

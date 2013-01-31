@@ -23,220 +23,228 @@ import pt.utl.ist.fenix.tools.spreadsheet.WorkbookExportFormat;
 
 public class CareerWorkshopApplicationEvent extends CareerWorkshopApplicationEvent_Base {
 
-    public CareerWorkshopApplicationEvent(DateTime beginDate, DateTime endDate, String relatedInformation) {
-	super();
-	evaluateDatesConsistency(beginDate, endDate);
-	setBeginDate(beginDate);
-	setEndDate(endDate);
-	setRelatedInformation(relatedInformation);
-	setRootDomainObject(RootDomainObject.getInstance());
-    }
-
-    public void evaluateDatesConsistency(DateTime beginDate, DateTime endDate) {
-	if (beginDate == null || endDate == null)
-	    throw new DomainException("error.careerWorkshop.creatingNewEvent: Invalid values for begin/end dates");
-	if (!beginDate.isBefore(endDate))
-	    throw new DomainException("error.careerWorkshop.creatingNewEvent: Inconsistent values for begin/end dates");
-	if (isOverlapping(beginDate, endDate))
-	    throw new DomainException("error.careerWorkshop.creatingNewEvent: New period overlaps existing period");
-    }
-
-    public void delete() {
-	if (!getCareerWorkshopApplications().isEmpty())
-	    throw new DomainException(
-		    "error.careerWorkshop.deletingEvent: This event already have applications associated, therefore it cannot be destroyed.");
-	if (getCareerWorkshopConfirmationEvent() != null)
-	    throw new DomainException("error.careerWorkshop.deletingEvent: A confirmation period is already defined.");
-	removeRootDomainObject();
-	removeSpreadsheet();
-	deleteDomainObject();
-    }
-
-    public CareerWorkshopSpreadsheet getApplications() {
-	if (hasRootDomainObject()) {
-	    if (getLastUpdate() == null || getSpreadsheet() == null)
-		generateSpreadsheet();
-	    if (getLastUpdate().plusDays(1).isAfter(getSpreadsheet().getUploadTime())) {
-		generateSpreadsheet();
-	    }
+	public CareerWorkshopApplicationEvent(DateTime beginDate, DateTime endDate, String relatedInformation) {
+		super();
+		evaluateDatesConsistency(beginDate, endDate);
+		setBeginDate(beginDate);
+		setEndDate(endDate);
+		setRelatedInformation(relatedInformation);
+		setRootDomainObject(RootDomainObject.getInstance());
 	}
-	return getSpreadsheet();
-    }
 
-    @Service
-    public void generateSpreadsheet() {
-	StringBuilder stringBuilder = new StringBuilder();
-	stringBuilder.append("ISTCareerWorkshopsApplications-");
-	DateTime stamp = (getLastUpdate() != null ? getLastUpdate() : new DateTime());
-	stringBuilder.append(stamp.toString("ddMMyyyyhhmm"));
-	stringBuilder.append(".csv");
-
-	final SheetData<CareerWorkshopApplication> dataSheet = new SheetData<CareerWorkshopApplication>(getProcessedList()) {
-
-	    @Override
-	    protected void makeLine(CareerWorkshopApplication item) {
-		DateTime timestamp = item.getSealStamp();
-
-		Registration reg = null;
-		for (Registration regIter : item.getStudent().getActiveRegistrationsIn(
-			ExecutionSemester.readActualExecutionSemester())) {
-		    if (regIter.getStudentCurricularPlan(ExecutionSemester.readActualExecutionSemester()).isSecondCycle()) {
-			reg = regIter;
-			break;
-		    }
+	public void evaluateDatesConsistency(DateTime beginDate, DateTime endDate) {
+		if (beginDate == null || endDate == null) {
+			throw new DomainException("error.careerWorkshop.creatingNewEvent: Invalid values for begin/end dates");
 		}
-		if (reg == null) {
-		    reg = item.getStudent().getLastRegistration();
+		if (!beginDate.isBefore(endDate)) {
+			throw new DomainException("error.careerWorkshop.creatingNewEvent: Inconsistent values for begin/end dates");
 		}
-
-		Integer registrationLength = 0;
-		ExecutionYear bottom = reg.getIngressionYear().getPreviousExecutionYear();
-		ExecutionYear yearIter = ExecutionYear.readCurrentExecutionYear();
-		while (yearIter != bottom) {
-		    if (reg.hasAnyActiveState(yearIter)) {
-			registrationLength++;
-		    }
-		    yearIter = yearIter.getPreviousExecutionYear();
+		if (isOverlapping(beginDate, endDate)) {
+			throw new DomainException("error.careerWorkshop.creatingNewEvent: New period overlaps existing period");
 		}
-		int[] sessionPreferences = item.getSessionPreferences();
-		CareerWorkshopSessions[] sessionsList = CareerWorkshopSessions.values();
-		int[] themePreferences = item.getThemePreferences();
-		CareerWorkshopThemes[] themesList = CareerWorkshopThemes.values();
+	}
 
-		addCell("Data de inscrição", timestamp.toString("dd-MM-yyyy"));
-		addCell("Hora de inscrição", timestamp.toString("HH:mm"));
-		addCell("Número aluno", item.getStudent().getNumber());
-		addCell("Nome", item.getStudent().getName());
-		addCell("Email", item.getStudent().getPerson().getDefaultEmailAddressValue());
-		addCell("Curso", reg.getDegree().getSigla());
-		if (reg.getCurriculum(ExecutionYear.readCurrentExecutionYear(), CycleType.SECOND_CYCLE)
-			.getStudentCurricularPlan() != null) {
-		    addCell("Ano Curricular", reg.getCurriculum(ExecutionYear.readCurrentExecutionYear(), CycleType.SECOND_CYCLE)
-			    .getCurricularYear());
-		} else {
-		    addCell("Ano Curricular", "--");
+	public void delete() {
+		if (!getCareerWorkshopApplications().isEmpty()) {
+			throw new DomainException(
+					"error.careerWorkshop.deletingEvent: This event already have applications associated, therefore it cannot be destroyed.");
 		}
-		addCell("Número de inscrições", registrationLength);
-		for (int i = 0; i < sessionPreferences.length; i++) {
-		    addCell(sessionsList[i].getDescription(), sessionPreferences[i] + 1);
+		if (getCareerWorkshopConfirmationEvent() != null) {
+			throw new DomainException("error.careerWorkshop.deletingEvent: A confirmation period is already defined.");
 		}
-		for (int i = 0; i < themePreferences.length; i++) {
-		    addCell(themesList[i].getDescription(), themePreferences[i] + 1);
+		removeRootDomainObject();
+		removeSpreadsheet();
+		deleteDomainObject();
+	}
+
+	public CareerWorkshopSpreadsheet getApplications() {
+		if (hasRootDomainObject()) {
+			if (getLastUpdate() == null || getSpreadsheet() == null) {
+				generateSpreadsheet();
+			}
+			if (getLastUpdate().plusDays(1).isAfter(getSpreadsheet().getUploadTime())) {
+				generateSpreadsheet();
+			}
 		}
-
-	    }
-
-	};
-
-	try {
-	    ByteArrayOutputStream io = new ByteArrayOutputStream();
-	    new SpreadsheetBuilder().addSheet(stringBuilder.toString(), dataSheet).build(WorkbookExportFormat.CSV, io);
-
-	    setSpreadsheet(new CareerWorkshopSpreadsheet(stringBuilder.toString(), io.toByteArray()));
-	    setLastUpdate(new DateTime());
-	} catch (IOException ioe) {
-	    throw new DomainException("error.careerWorkshop.criticalFailureGeneratingTheSpreadsheetFile", ioe);
+		return getSpreadsheet();
 	}
-    }
 
-    public String getFormattedBeginDate() {
-	return getBeginDate().toString("dd-MM-yyyy");
-    }
+	@Service
+	public void generateSpreadsheet() {
+		StringBuilder stringBuilder = new StringBuilder();
+		stringBuilder.append("ISTCareerWorkshopsApplications-");
+		DateTime stamp = (getLastUpdate() != null ? getLastUpdate() : new DateTime());
+		stringBuilder.append(stamp.toString("ddMMyyyyhhmm"));
+		stringBuilder.append(".csv");
 
-    public String getFormattedEndDate() {
-	return getEndDate().toString("dd-MM-yyyy");
-    }
+		final SheetData<CareerWorkshopApplication> dataSheet = new SheetData<CareerWorkshopApplication>(getProcessedList()) {
 
-    public Boolean getIsConfirmationPeriodAttached() {
-	return (getCareerWorkshopConfirmationEvent() != null ? true : false);
-    }
+			@Override
+			protected void makeLine(CareerWorkshopApplication item) {
+				DateTime timestamp = item.getSealStamp();
 
-    public String getConfirmationBeginDate() {
-	if (getCareerWorkshopConfirmationEvent() == null) {
-	    return "--";
-	}
-	return getCareerWorkshopConfirmationEvent().getFormattedBeginDate();
-    }
+				Registration reg = null;
+				for (Registration regIter : item.getStudent().getActiveRegistrationsIn(
+						ExecutionSemester.readActualExecutionSemester())) {
+					if (regIter.getStudentCurricularPlan(ExecutionSemester.readActualExecutionSemester()).isSecondCycle()) {
+						reg = regIter;
+						break;
+					}
+				}
+				if (reg == null) {
+					reg = item.getStudent().getLastRegistration();
+				}
 
-    public String getConfirmationEndDate() {
-	if (getCareerWorkshopConfirmationEvent() == null) {
-	    return "--";
-	}
-	return getCareerWorkshopConfirmationEvent().getFormattedEndDate();
-    }
+				Integer registrationLength = 0;
+				ExecutionYear bottom = reg.getIngressionYear().getPreviousExecutionYear();
+				ExecutionYear yearIter = ExecutionYear.readCurrentExecutionYear();
+				while (yearIter != bottom) {
+					if (reg.hasAnyActiveState(yearIter)) {
+						registrationLength++;
+					}
+					yearIter = yearIter.getPreviousExecutionYear();
+				}
+				int[] sessionPreferences = item.getSessionPreferences();
+				CareerWorkshopSessions[] sessionsList = CareerWorkshopSessions.values();
+				int[] themePreferences = item.getThemePreferences();
+				CareerWorkshopThemes[] themesList = CareerWorkshopThemes.values();
 
-    public int getNumberOfApplications() {
-	int result = 0;
-	for (CareerWorkshopApplication application : getCareerWorkshopApplications()) {
-	    if (application.getSealStamp() != null) {
-		result++;
-	    }
-	}
-	return result;
-    }
+				addCell("Data de inscrição", timestamp.toString("dd-MM-yyyy"));
+				addCell("Hora de inscrição", timestamp.toString("HH:mm"));
+				addCell("Número aluno", item.getStudent().getNumber());
+				addCell("Nome", item.getStudent().getName());
+				addCell("Email", item.getStudent().getPerson().getDefaultEmailAddressValue());
+				addCell("Curso", reg.getDegree().getSigla());
+				if (reg.getCurriculum(ExecutionYear.readCurrentExecutionYear(), CycleType.SECOND_CYCLE)
+						.getStudentCurricularPlan() != null) {
+					addCell("Ano Curricular", reg.getCurriculum(ExecutionYear.readCurrentExecutionYear(), CycleType.SECOND_CYCLE)
+							.getCurricularYear());
+				} else {
+					addCell("Ano Curricular", "--");
+				}
+				addCell("Número de inscrições", registrationLength);
+				for (int i = 0; i < sessionPreferences.length; i++) {
+					addCell(sessionsList[i].getDescription(), sessionPreferences[i] + 1);
+				}
+				for (int i = 0; i < themePreferences.length; i++) {
+					addCell(themesList[i].getDescription(), themePreferences[i] + 1);
+				}
 
-    public int getNumberOfConfirmations() {
-	if (getCareerWorkshopConfirmationEvent() == null) {
-	    return 0;
-	}
-	return getCareerWorkshopConfirmationEvent().getNumberOfConfirmations();
-    }
+			}
 
-    private boolean isOverlapping(DateTime beginDate, DateTime endDate) {
-	for (CareerWorkshopApplicationEvent each : RootDomainObject.getInstance().getCareerWorkshopApplicationEvents()) {
-	    if ((!beginDate.isBefore(each.getBeginDate()) && !beginDate.isAfter(each.getEndDate()))
-		    || (!endDate.isBefore(each.getBeginDate()) && !endDate.isAfter(each.getEndDate())))
-		return true;
-	}
-	return false;
-    }
+		};
 
-    private List<CareerWorkshopApplication> getProcessedList() {
-	List<CareerWorkshopApplication> processedApplications = new ArrayList<CareerWorkshopApplication>();
-	for (CareerWorkshopApplication application : getCareerWorkshopApplications()) {
-	    if (application.getSealStamp() != null) {
-		processedApplications.add(application);
-	    }
-	}
-	Collections.sort(processedApplications, new Comparator<CareerWorkshopApplication>() {
+		try {
+			ByteArrayOutputStream io = new ByteArrayOutputStream();
+			new SpreadsheetBuilder().addSheet(stringBuilder.toString(), dataSheet).build(WorkbookExportFormat.CSV, io);
 
-	    @Override
-	    public int compare(CareerWorkshopApplication o1, CareerWorkshopApplication o2) {
-		if (o1.getSealStamp().isBefore(o2.getSealStamp())) {
-		    return -1;
+			setSpreadsheet(new CareerWorkshopSpreadsheet(stringBuilder.toString(), io.toByteArray()));
+			setLastUpdate(new DateTime());
+		} catch (IOException ioe) {
+			throw new DomainException("error.careerWorkshop.criticalFailureGeneratingTheSpreadsheetFile", ioe);
 		}
-		if (o1.getSealStamp().isAfter(o2.getSealStamp())) {
-		    return 1;
+	}
+
+	public String getFormattedBeginDate() {
+		return getBeginDate().toString("dd-MM-yyyy");
+	}
+
+	public String getFormattedEndDate() {
+		return getEndDate().toString("dd-MM-yyyy");
+	}
+
+	public Boolean getIsConfirmationPeriodAttached() {
+		return (getCareerWorkshopConfirmationEvent() != null ? true : false);
+	}
+
+	public String getConfirmationBeginDate() {
+		if (getCareerWorkshopConfirmationEvent() == null) {
+			return "--";
 		}
-		return 0;
-	    }
-	});
-	return processedApplications;
-    }
-
-    public boolean isApplicationEventOpened() {
-	DateTime today = new DateTime();
-	return (today.isBefore(getBeginDate()) || today.isAfter(getEndDate())) ? false : true;
-    }
-
-    public boolean isConfirmationPeriodOpened() {
-	DateTime today = new DateTime();
-	if (getCareerWorkshopConfirmationEvent() == null) {
-	    return false;
+		return getCareerWorkshopConfirmationEvent().getFormattedBeginDate();
 	}
-	CareerWorkshopConfirmationEvent confirmation = getCareerWorkshopConfirmationEvent();
-	if (confirmation.getBeginDate() == null || confirmation.getEndDate() == null) {
-	    return false;
-	}
-	return (today.isBefore(confirmation.getBeginDate()) || today.isAfter(confirmation.getEndDate())) ? false : true;
-    }
 
-    static public CareerWorkshopApplicationEvent getActualEvent() {
-	for (CareerWorkshopApplicationEvent each : RootDomainObject.getInstance().getCareerWorkshopApplicationEvents()) {
-	    if (each.isApplicationEventOpened())
-		return each;
+	public String getConfirmationEndDate() {
+		if (getCareerWorkshopConfirmationEvent() == null) {
+			return "--";
+		}
+		return getCareerWorkshopConfirmationEvent().getFormattedEndDate();
 	}
-	return null;
-    }
+
+	public int getNumberOfApplications() {
+		int result = 0;
+		for (CareerWorkshopApplication application : getCareerWorkshopApplications()) {
+			if (application.getSealStamp() != null) {
+				result++;
+			}
+		}
+		return result;
+	}
+
+	public int getNumberOfConfirmations() {
+		if (getCareerWorkshopConfirmationEvent() == null) {
+			return 0;
+		}
+		return getCareerWorkshopConfirmationEvent().getNumberOfConfirmations();
+	}
+
+	private boolean isOverlapping(DateTime beginDate, DateTime endDate) {
+		for (CareerWorkshopApplicationEvent each : RootDomainObject.getInstance().getCareerWorkshopApplicationEvents()) {
+			if ((!beginDate.isBefore(each.getBeginDate()) && !beginDate.isAfter(each.getEndDate()))
+					|| (!endDate.isBefore(each.getBeginDate()) && !endDate.isAfter(each.getEndDate()))) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private List<CareerWorkshopApplication> getProcessedList() {
+		List<CareerWorkshopApplication> processedApplications = new ArrayList<CareerWorkshopApplication>();
+		for (CareerWorkshopApplication application : getCareerWorkshopApplications()) {
+			if (application.getSealStamp() != null) {
+				processedApplications.add(application);
+			}
+		}
+		Collections.sort(processedApplications, new Comparator<CareerWorkshopApplication>() {
+
+			@Override
+			public int compare(CareerWorkshopApplication o1, CareerWorkshopApplication o2) {
+				if (o1.getSealStamp().isBefore(o2.getSealStamp())) {
+					return -1;
+				}
+				if (o1.getSealStamp().isAfter(o2.getSealStamp())) {
+					return 1;
+				}
+				return 0;
+			}
+		});
+		return processedApplications;
+	}
+
+	public boolean isApplicationEventOpened() {
+		DateTime today = new DateTime();
+		return (today.isBefore(getBeginDate()) || today.isAfter(getEndDate())) ? false : true;
+	}
+
+	public boolean isConfirmationPeriodOpened() {
+		DateTime today = new DateTime();
+		if (getCareerWorkshopConfirmationEvent() == null) {
+			return false;
+		}
+		CareerWorkshopConfirmationEvent confirmation = getCareerWorkshopConfirmationEvent();
+		if (confirmation.getBeginDate() == null || confirmation.getEndDate() == null) {
+			return false;
+		}
+		return (today.isBefore(confirmation.getBeginDate()) || today.isAfter(confirmation.getEndDate())) ? false : true;
+	}
+
+	static public CareerWorkshopApplicationEvent getActualEvent() {
+		for (CareerWorkshopApplicationEvent each : RootDomainObject.getInstance().getCareerWorkshopApplicationEvents()) {
+			if (each.isApplicationEventOpened()) {
+				return each;
+			}
+		}
+		return null;
+	}
 
 }

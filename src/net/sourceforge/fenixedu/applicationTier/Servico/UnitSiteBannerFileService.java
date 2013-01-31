@@ -11,7 +11,6 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.domain.DeleteFileRequest;
 import net.sourceforge.fenixedu.domain.UnitSite;
 import net.sourceforge.fenixedu.domain.UnitSiteBanner;
 import net.sourceforge.fenixedu.domain.UnitSiteBannerFile;
@@ -29,81 +28,82 @@ import pt.utl.ist.fenix.tools.file.VirtualPathNode;
 
 public class UnitSiteBannerFileService extends FenixService {
 
-    protected UnitSiteBannerFile createBannerFile(UnitSite site, File fileToUpload, String name) throws FenixServiceException,
-	    IOException {
-	if (fileToUpload == null) {
-	    return null;
+	protected UnitSiteBannerFile createBannerFile(UnitSite site, File fileToUpload, String name) throws FenixServiceException,
+			IOException {
+		if (fileToUpload == null) {
+			return null;
+		}
+
+		VirtualPath filePath = getVirtualPath(site);
+		Collection<FileSetMetaData> metaData = createMetaData(site, name);
+
+		return new UnitSiteBannerFile(filePath, name, name, metaData, FileUtils.readFileToByteArray(fileToUpload), null);
 	}
 
-	VirtualPath filePath = getVirtualPath(site);
-	Collection<FileSetMetaData> metaData = createMetaData(site, name);
+	protected VirtualPath getVirtualPath(UnitSite site) {
 
-	return new UnitSiteBannerFile(filePath, name, name, metaData, FileUtils.readFileToByteArray(fileToUpload), null);
-    }
+		VirtualPathNode[] nodes =
+				{ new VirtualPathNode("Site", "Site"), new VirtualPathNode("Unit", "Unit"),
+						new VirtualPathNode(site.getUnit().getNameWithAcronym(), site.getUnit().getNameWithAcronym()),
+						new VirtualPathNode("Banner" + site.getIdInternal(), "Banner") };
 
-    protected VirtualPath getVirtualPath(UnitSite site) {
+		VirtualPath path = new VirtualPath();
+		for (VirtualPathNode node : nodes) {
+			path.addNode(node);
+		}
 
-	VirtualPathNode[] nodes = { new VirtualPathNode("Site", "Site"), new VirtualPathNode("Unit", "Unit"),
-		new VirtualPathNode(site.getUnit().getNameWithAcronym(), site.getUnit().getNameWithAcronym()),
-		new VirtualPathNode("Banner" + site.getIdInternal(), "Banner") };
-
-	VirtualPath path = new VirtualPath();
-	for (VirtualPathNode node : nodes) {
-	    path.addNode(node);
+		return path;
 	}
 
-	return path;
-    }
+	protected Collection<FileSetMetaData> createMetaData(UnitSite site, String fileName) {
+		List<FileSetMetaData> metaData = new ArrayList<FileSetMetaData>();
 
-    protected Collection<FileSetMetaData> createMetaData(UnitSite site, String fileName) {
-	List<FileSetMetaData> metaData = new ArrayList<FileSetMetaData>();
+		metaData.add(FileSetMetaData.createAuthorMeta(AccessControl.getPerson().getName()));
+		metaData.add(FileSetMetaData.createTitleMeta(site.getUnit().getNameWithAcronym() + " Banner"));
 
-	metaData.add(FileSetMetaData.createAuthorMeta(AccessControl.getPerson().getName()));
-	metaData.add(FileSetMetaData.createTitleMeta(site.getUnit().getNameWithAcronym() + " Banner"));
-
-	return metaData;
-    }
-
-    protected FileDescriptor saveFile(VirtualPath filePath, String fileName, boolean isPrivate,
-	    Collection<FileSetMetaData> metaData, File fileToUpload) throws FenixServiceException, IOException {
-	IFileManager fileManager = FileManagerFactory.getFactoryInstance().getFileManager();
-	InputStream is = null;
-	try {
-	    is = new FileInputStream(fileToUpload);
-	    return fileManager.saveFile(filePath, fileName, isPrivate, metaData, is);
-	} catch (FileNotFoundException e) {
-	    throw new FenixServiceException(e);
-	} finally {
-	    if (is != null) {
-		is.close();
-	    }
-	}
-    }
-
-    protected void updateBanner(UnitSite site, UnitSiteBanner banner, File mainFile, String mainName, File backFile,
-	    String backName, UnitSiteBannerRepeatType repeat, String color, String link, Integer weight)
-	    throws FenixServiceException, IOException {
-	UnitSiteBannerFile main = createBannerFile(site, mainFile, mainName);
-	UnitSiteBannerFile background = createBannerFile(site, backFile, backName);
-
-	if (main != null) {
-	    banner.setMainImage(main);
+		return metaData;
 	}
 
-	if (background != null) {
-	    banner.setBackgroundImage(background);
+	protected FileDescriptor saveFile(VirtualPath filePath, String fileName, boolean isPrivate,
+			Collection<FileSetMetaData> metaData, File fileToUpload) throws FenixServiceException, IOException {
+		IFileManager fileManager = FileManagerFactory.getFactoryInstance().getFileManager();
+		InputStream is = null;
+		try {
+			is = new FileInputStream(fileToUpload);
+			return fileManager.saveFile(filePath, fileName, isPrivate, metaData, is);
+		} catch (FileNotFoundException e) {
+			throw new FenixServiceException(e);
+		} finally {
+			if (is != null) {
+				is.close();
+			}
+		}
 	}
 
-	banner.setRepeatType(repeat);
-	banner.setColor(color);
-	banner.setLink(link);
-	banner.setWeight(weight);
-    }
+	protected void updateBanner(UnitSite site, UnitSiteBanner banner, File mainFile, String mainName, File backFile,
+			String backName, UnitSiteBannerRepeatType repeat, String color, String link, Integer weight)
+			throws FenixServiceException, IOException {
+		UnitSiteBannerFile main = createBannerFile(site, mainFile, mainName);
+		UnitSiteBannerFile background = createBannerFile(site, backFile, backName);
 
-    protected void deleteFile(UnitSiteBannerFile bannerFile) {
-	if (bannerFile != null) {
-	    bannerFile.delete();
+		if (main != null) {
+			banner.setMainImage(main);
+		}
+
+		if (background != null) {
+			banner.setBackgroundImage(background);
+		}
+
+		banner.setRepeatType(repeat);
+		banner.setColor(color);
+		banner.setLink(link);
+		banner.setWeight(weight);
 	}
-    }
+
+	protected void deleteFile(UnitSiteBannerFile bannerFile) {
+		if (bannerFile != null) {
+			bannerFile.delete();
+		}
+	}
 
 }

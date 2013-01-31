@@ -25,34 +25,36 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class GetProjectGroupAttendantsByExecutionCourseIDANDStudentUsername extends FenixService {
 
-    @Service
-    public static StudentGroupAttendacyInformation run(Integer executionCourseID, String username) throws BDException {
+	@Service
+	public static StudentGroupAttendacyInformation run(Integer executionCourseID, String username) throws BDException {
 
-	Registration registration = Registration.readByUsername(username);
+		Registration registration = Registration.readByUsername(username);
 
-	ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseID);
+		ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseID);
 
-	Attends attendacy = registration.readAttendByExecutionCourse(executionCourse);
-	if (attendacy == null)
-	    return null; // the student is not enrolled on this course
+		Attends attendacy = registration.readAttendByExecutionCourse(executionCourse);
+		if (attendacy == null) {
+			return null; // the student is not enrolled on this course
+		}
 
-	List<StudentGroup> attendStudentGroup = attendacy.getStudentGroups();
-	StudentGroup studentGroup = (attendStudentGroup.isEmpty()) ? null : attendStudentGroup.get(0);
+		List<StudentGroup> attendStudentGroup = attendacy.getStudentGroups();
+		StudentGroup studentGroup = (attendStudentGroup.isEmpty()) ? null : attendStudentGroup.get(0);
 
-	if (studentGroup == null)
-	    return null; // the student has not a group, at least at this
-	// course
+		if (studentGroup == null) {
+			return null; // the student has not a group, at least at this
+			// course
+		}
 
-	StudentGroupAttendacyInformation info = new StudentGroupAttendacyInformation();
-	info.setShiftName(studentGroup.getShift().getNome());
-	List lessons = studentGroup.getShift().getAssociatedLessons();
-	info.setDegreesNames(executionCourse.getAssociatedCurricularCourses());
-	info.setLessons(lessons);
-	info.setGroupNumber(studentGroup.getGroupNumber());
+		StudentGroupAttendacyInformation info = new StudentGroupAttendacyInformation();
+		info.setShiftName(studentGroup.getShift().getNome());
+		List lessons = studentGroup.getShift().getAssociatedLessons();
+		info.setDegreesNames(executionCourse.getAssociatedCurricularCourses());
+		info.setLessons(lessons);
+		info.setGroupNumber(studentGroup.getGroupNumber());
 
-	List groupAttends = studentGroup.getAttends();
-	info.setGroupAttends(groupAttends);
+		List groupAttends = studentGroup.getAttends();
+		info.setGroupAttends(groupAttends);
 
-	return info;
-    }
+		return info;
+	}
 }

@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.presentationTier.Action.research.researchUnit;
 import java.io.InputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.accessControl.Group;
@@ -13,75 +12,76 @@ import net.sourceforge.fenixedu.injectionCode.IGroup;
 
 public class UnitFileUploadBean extends UnitFileBean implements Serializable {
 
-    private Unit unit;
+	private Unit unit;
 
-    private String fileName;
-    private Long fileSize;
+	private String fileName;
+	private Long fileSize;
 
-    private List<IGroup> permittedGroups;
-    private Group permittedGroup;
+	private List<IGroup> permittedGroups;
+	private Group permittedGroup;
 
-    transient private InputStream uploadFile;
-    private String authorsName;
+	transient private InputStream uploadFile;
+	private String authorsName;
 
-    public UnitFileUploadBean(Unit unit) {
-	this.unit = unit;
-	permittedGroups = new ArrayList<IGroup>();
-    }
+	public UnitFileUploadBean(Unit unit) {
+		this.unit = unit;
+		permittedGroups = new ArrayList<IGroup>();
+	}
 
-    public Unit getUnit() {
-	return this.unit;
-    }
+	@Override
+	public Unit getUnit() {
+		return this.unit;
+	}
 
-    public String getAuthorsName() {
-	return authorsName;
-    }
+	public String getAuthorsName() {
+		return authorsName;
+	}
 
-    public void setAuthorsName(String authorsName) {
-	this.authorsName = authorsName;
-    }
+	public void setAuthorsName(String authorsName) {
+		this.authorsName = authorsName;
+	}
 
-    public InputStream getUploadFile() {
-	return uploadFile;
-    }
+	public InputStream getUploadFile() {
+		return uploadFile;
+	}
 
-    public void setUploadFile(InputStream file) {
-	this.uploadFile = file;
-    }
+	public void setUploadFile(InputStream file) {
+		this.uploadFile = file;
+	}
 
-    public String getFileName() {
-	return fileName;
-    }
+	public String getFileName() {
+		return fileName;
+	}
 
-    public void setFileName(String fileName) {
-	this.fileName = fileName;
-    }
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
+	}
 
-    public Long getFileSize() {
-	return fileSize;
-    }
+	public Long getFileSize() {
+		return fileSize;
+	}
 
-    public void setFileSize(Long fileSize) {
-	this.fileSize = fileSize;
-    }
+	public void setFileSize(Long fileSize) {
+		this.fileSize = fileSize;
+	}
 
-    public Group getPermittedGroup() {
-	return (permittedGroup != null) ? permittedGroup : getUnion();
-    }
+	public Group getPermittedGroup() {
+		return (permittedGroup != null) ? permittedGroup : getUnion();
+	}
 
-    public void setPermittedGroup(Group permittedGroup) {
-	this.permittedGroup = permittedGroup;
-    }
+	public void setPermittedGroup(Group permittedGroup) {
+		this.permittedGroup = permittedGroup;
+	}
 
-    public Group getUnion() {
-	return new GroupUnion((Collection<IGroup>) getPermittedGroups());
-    }
+	public Group getUnion() {
+		return new GroupUnion(getPermittedGroups());
+	}
 
-    public List<IGroup> getPermittedGroups() {
-	return permittedGroups;
-    }
+	public List<IGroup> getPermittedGroups() {
+		return permittedGroups;
+	}
 
-    public void setPermittedGroups(List<IGroup> permittedGroups) {
-	this.permittedGroups = permittedGroups;
-    }
+	public void setPermittedGroups(List<IGroup> permittedGroups) {
+		this.permittedGroups = permittedGroups;
+	}
 }

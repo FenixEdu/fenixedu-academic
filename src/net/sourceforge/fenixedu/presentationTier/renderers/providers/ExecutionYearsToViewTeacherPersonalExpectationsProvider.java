@@ -10,20 +10,22 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class ExecutionYearsToViewTeacherPersonalExpectationsProvider implements DataProvider {
 
-    public Object provide(Object source, Object currentValue) {
-	List<ExecutionYear> result = new ArrayList<ExecutionYear>();
-	ExecutionYear year = ExecutionYear.readExecutionYearByName("2005/2006");
-	result.add(year);
+	@Override
+	public Object provide(Object source, Object currentValue) {
+		List<ExecutionYear> result = new ArrayList<ExecutionYear>();
+		ExecutionYear year = ExecutionYear.readExecutionYearByName("2005/2006");
+		result.add(year);
 
-	ExecutionYear nextExecutionYear = year.getNextExecutionYear();
-	while (nextExecutionYear != null) {
-	    result.add(nextExecutionYear);
-	    nextExecutionYear = nextExecutionYear.getNextExecutionYear();
+		ExecutionYear nextExecutionYear = year.getNextExecutionYear();
+		while (nextExecutionYear != null) {
+			result.add(nextExecutionYear);
+			nextExecutionYear = nextExecutionYear.getNextExecutionYear();
+		}
+		return result;
 	}
-	return result;
-    }
 
-    public Converter getConverter() {
-	return new DomainObjectKeyConverter();
-    }
+	@Override
+	public Converter getConverter() {
+		return new DomainObjectKeyConverter();
+	}
 }

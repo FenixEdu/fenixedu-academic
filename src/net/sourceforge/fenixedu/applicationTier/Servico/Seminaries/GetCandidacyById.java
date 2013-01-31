@@ -20,13 +20,13 @@ import net.sourceforge.fenixedu.presentationTier.Action.Seminaries.Exceptions.BD
  */
 public class GetCandidacyById extends FenixService {
 
-    public InfoCandidacy run(Integer id) throws BDException {
-	InfoCandidacy infoCandidacy = null;
+	public InfoCandidacy run(Integer id) throws BDException {
+		InfoCandidacy infoCandidacy = null;
 
-	SeminaryCandidacy candidacy = rootDomainObject.readSeminaryCandidacyByOID(id);
-	infoCandidacy = InfoCandidacyWithCaseStudyChoices.newInfoFromDomain(candidacy);
+		SeminaryCandidacy candidacy = rootDomainObject.readSeminaryCandidacyByOID(id);
+		infoCandidacy = InfoCandidacyWithCaseStudyChoices.newInfoFromDomain(candidacy);
 
-	return infoCandidacy;
-    }
+		return infoCandidacy;
+	}
 
 }

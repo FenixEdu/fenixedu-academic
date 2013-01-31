@@ -12,19 +12,19 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.PartySocialSecuri
 
 public class SearchPartiesBySocialSecurityNumber extends FenixService implements AutoCompleteSearchService {
 
-    protected Collection search(final String value, final int size) {
-	final List<Party> parties = new ArrayList<Party>();
-	for (final PartySocialSecurityNumber partySocialSecurityNumber : rootDomainObject.getPartySocialSecurityNumbersSet()) {
-	    if (partySocialSecurityNumber.getSocialSecurityNumber().indexOf(value) >= 0) {
-		parties.add(partySocialSecurityNumber.getParty());
-	    }
+	protected Collection search(final String value, final int size) {
+		final List<Party> parties = new ArrayList<Party>();
+		for (final PartySocialSecurityNumber partySocialSecurityNumber : rootDomainObject.getPartySocialSecurityNumbersSet()) {
+			if (partySocialSecurityNumber.getSocialSecurityNumber().indexOf(value) >= 0) {
+				parties.add(partySocialSecurityNumber.getParty());
+			}
+		}
+		return parties;
 	}
-	return parties;
-    }
 
-    @Override
-    public Collection run(Class type, String value, int limit, Map<String, String> arguments) {
-	return search(value, limit);
-    }
+	@Override
+	public Collection run(Class type, String value, int limit, Map<String, String> arguments) {
+		return search(value, limit);
+	}
 
 }

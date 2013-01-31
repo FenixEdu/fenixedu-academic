@@ -8,7 +8,7 @@ import java.util.List;
  */
 
 public interface ICandidateView {
-    List getInfoApplicationInfos();
+	List getInfoApplicationInfos();
 
-    boolean changeablePersonalInfo();
+	boolean changeablePersonalInfo();
 }

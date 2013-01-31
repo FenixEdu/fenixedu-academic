@@ -33,33 +33,33 @@ import pt.ist.fenixWebFramework.security.UserView;
 
 public class ReadAllTeacherCreditsResumeDispatchAction extends FenixDispatchAction {
 
-    public ActionForward prepareTeacherSearch(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws NumberFormatException, FenixFilterException, FenixServiceException {
+	public ActionForward prepareTeacherSearch(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws NumberFormatException, FenixFilterException, FenixServiceException {
 
-	DynaActionForm dynaForm = (DynaActionForm) form;
-	dynaForm.set("method", "showTeacherCreditsResume");
-	return mapping.findForward("search-teacher-form");
-    }
+		DynaActionForm dynaForm = (DynaActionForm) form;
+		dynaForm.set("method", "showTeacherCreditsResume");
+		return mapping.findForward("search-teacher-form");
+	}
 
-    public ActionForward showTeacherCreditsResume(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws NumberFormatException, FenixServiceException, Exception {
-	IUserView userView = UserView.getUser();
+	public ActionForward showTeacherCreditsResume(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws NumberFormatException, FenixServiceException, Exception {
+		IUserView userView = UserView.getUser();
 
-	DynaActionForm dynaForm = (DynaActionForm) form;
-	String teacherId = dynaForm.getString("teacherId");
+		DynaActionForm dynaForm = (DynaActionForm) form;
+		String teacherId = dynaForm.getString("teacherId");
 
-	Teacher teacher = Teacher.readByIstId(teacherId);
-	dynaForm.set("teacherId", teacher.getIdInternal());
-	request.setAttribute("teacher", teacher);
+		Teacher teacher = Teacher.readByIstId(teacherId);
+		dynaForm.set("teacherId", teacher.getIdInternal());
+		request.setAttribute("teacher", teacher);
 
-	List<CreditLine> creditsLines = (List) ReadAllTeacherCredits.run(teacher.getIdInternal());
-	request.setAttribute("creditsLinesSize", creditsLines.size());
+		List<CreditLine> creditsLines = (List) ReadAllTeacherCredits.run(teacher.getIdInternal());
+		request.setAttribute("creditsLinesSize", creditsLines.size());
 
-	BeanComparator dateComparator = new BeanComparator("executionPeriod.beginDate");
-	Iterator orderedCreditsLines = new OrderedIterator(creditsLines.iterator(), dateComparator);
+		BeanComparator dateComparator = new BeanComparator("executionPeriod.beginDate");
+		Iterator orderedCreditsLines = new OrderedIterator(creditsLines.iterator(), dateComparator);
 
-	request.setAttribute("creditsLines", orderedCreditsLines);
-	return mapping.findForward("show-all-credits-resume");
-    }
+		request.setAttribute("creditsLines", orderedCreditsLines);
+		return mapping.findForward("show-all-credits-resume");
+	}
 
 }

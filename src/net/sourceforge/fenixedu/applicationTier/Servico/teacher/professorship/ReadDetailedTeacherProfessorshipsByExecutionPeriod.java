@@ -17,22 +17,22 @@ import net.sourceforge.fenixedu.domain.Teacher;
  */
 public class ReadDetailedTeacherProfessorshipsByExecutionPeriod extends ReadDetailedTeacherProfessorshipsAbstractService {
 
-    public List run(Integer teacherOID, Integer executionPeriodOID) throws FenixServiceException {
+	public List run(Integer teacherOID, Integer executionPeriodOID) throws FenixServiceException {
 
-	final ExecutionSemester executionSemester;
-	if (executionPeriodOID == null) {
-	    executionSemester = ExecutionSemester.readActualExecutionSemester();
-	} else {
-	    executionSemester = rootDomainObject.readExecutionSemesterByOID(executionPeriodOID);
-	}
+		final ExecutionSemester executionSemester;
+		if (executionPeriodOID == null) {
+			executionSemester = ExecutionSemester.readActualExecutionSemester();
+		} else {
+			executionSemester = rootDomainObject.readExecutionSemesterByOID(executionPeriodOID);
+		}
 
-	final Teacher teacher = rootDomainObject.readTeacherByOID(teacherOID);
-	final List<Professorship> responsibleFors = new ArrayList<Professorship>();
-	for (Professorship professorship : teacher.responsibleFors()) {
-	    if (professorship.getExecutionCourse().getExecutionPeriod() == executionSemester) {
-		responsibleFors.add(professorship);
-	    }
+		final Teacher teacher = rootDomainObject.readTeacherByOID(teacherOID);
+		final List<Professorship> responsibleFors = new ArrayList<Professorship>();
+		for (Professorship professorship : teacher.responsibleFors()) {
+			if (professorship.getExecutionCourse().getExecutionPeriod() == executionSemester) {
+				responsibleFors.add(professorship);
+			}
+		}
+		return getDetailedProfessorships(teacher.getProfessorships(executionSemester), responsibleFors);
 	}
-	return getDetailedProfessorships(teacher.getProfessorships(executionSemester), responsibleFors);
-    }
 }

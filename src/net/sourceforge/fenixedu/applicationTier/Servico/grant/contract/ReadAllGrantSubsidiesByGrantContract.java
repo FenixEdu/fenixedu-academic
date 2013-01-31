@@ -23,20 +23,21 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class ReadAllGrantSubsidiesByGrantContract extends FenixService {
 
-    @Checked("RolePredicates.GRANT_OWNER_MANAGER_PREDICATE")
-    @Service
-    public static List run(Integer idContract) throws FenixServiceException {
-	GrantContract grantContract = rootDomainObject.readGrantContractByOID(idContract);
-	List<GrantSubsidy> subsidies = grantContract.getAssociatedGrantSubsidies();
+	@Checked("RolePredicates.GRANT_OWNER_MANAGER_PREDICATE")
+	@Service
+	public static List run(Integer idContract) throws FenixServiceException {
+		GrantContract grantContract = rootDomainObject.readGrantContractByOID(idContract);
+		List<GrantSubsidy> subsidies = grantContract.getAssociatedGrantSubsidies();
 
-	if (subsidies == null)
-	    return new ArrayList();
+		if (subsidies == null) {
+			return new ArrayList();
+		}
 
-	final List infoSubsidyList = new ArrayList();
-	for (final GrantSubsidy grantSubsidy : grantContract.getAssociatedGrantSubsidiesSet()) {
-	    InfoGrantSubsidy infoGrantSubsidy = InfoGrantSubsidyWithContract.newInfoFromDomain(grantSubsidy);
-	    infoSubsidyList.add(infoGrantSubsidy);
+		final List infoSubsidyList = new ArrayList();
+		for (final GrantSubsidy grantSubsidy : grantContract.getAssociatedGrantSubsidiesSet()) {
+			InfoGrantSubsidy infoGrantSubsidy = InfoGrantSubsidyWithContract.newInfoFromDomain(grantSubsidy);
+			infoSubsidyList.add(infoGrantSubsidy);
+		}
+		return infoSubsidyList;
 	}
-	return infoSubsidyList;
-    }
 }

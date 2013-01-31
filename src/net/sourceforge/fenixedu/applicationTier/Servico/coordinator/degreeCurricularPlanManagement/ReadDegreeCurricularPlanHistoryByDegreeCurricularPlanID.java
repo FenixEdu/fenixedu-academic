@@ -17,28 +17,28 @@ import pt.ist.fenixWebFramework.services.Service;
  * 
  */
 public class ReadDegreeCurricularPlanHistoryByDegreeCurricularPlanID extends FenixService {
-    @Checked("RolePredicates.COORDINATOR_PREDICATE")
-    @Service
-    public static InfoDegreeCurricularPlan run(Integer degreeCurricularPlanID) throws FenixServiceException {
+	@Checked("RolePredicates.COORDINATOR_PREDICATE")
+	@Service
+	public static InfoDegreeCurricularPlan run(Integer degreeCurricularPlanID) throws FenixServiceException {
 
-	InfoDegreeCurricularPlan infoDegreeCurricularPlan = null;
+		InfoDegreeCurricularPlan infoDegreeCurricularPlan = null;
 
-	DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanID);
+		DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanID);
 
-	if (degreeCurricularPlan != null) {
-	    List<CurricularCourse> allCurricularCourses = degreeCurricularPlan.getCurricularCourses();
+		if (degreeCurricularPlan != null) {
+			List<CurricularCourse> allCurricularCourses = degreeCurricularPlan.getCurricularCourses();
 
-	    if (allCurricularCourses != null && !allCurricularCourses.isEmpty()) {
-		infoDegreeCurricularPlan = createInfoDegreeCurricularPlan(degreeCurricularPlan, allCurricularCourses);
-	    }
+			if (allCurricularCourses != null && !allCurricularCourses.isEmpty()) {
+				infoDegreeCurricularPlan = createInfoDegreeCurricularPlan(degreeCurricularPlan, allCurricularCourses);
+			}
+		}
+
+		return infoDegreeCurricularPlan;
 	}
 
-	return infoDegreeCurricularPlan;
-    }
-
-    private static InfoDegreeCurricularPlan createInfoDegreeCurricularPlan(DegreeCurricularPlan degreeCurricularPlan,
-	    List allCurricularCourses) {
-	return InfoDegreeCurricularPlan.newInfoFromDomain(degreeCurricularPlan);
-    }
+	private static InfoDegreeCurricularPlan createInfoDegreeCurricularPlan(DegreeCurricularPlan degreeCurricularPlan,
+			List allCurricularCourses) {
+		return InfoDegreeCurricularPlan.newInfoFromDomain(degreeCurricularPlan);
+	}
 
 }

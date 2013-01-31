@@ -32,495 +32,498 @@ import pt.ist.fenixWebFramework.services.Service;
 import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 
 public class ListGrantContractAndInsuranceByCriteria extends FenixService {
-    private static final double dayValueOfInsurance = 0.17;
+	private static final double dayValueOfInsurance = 0.17;
 
-    /**
-     * Query the grant owner by criteria of grant contract
-     * 
-     * @throws ExcepcaoPersistencia
-     * 
-     * @returns an array of objects object[0] List of result object[1]
-     *          IndoSpanCriteriaListGrantOwner
-     */
-    @Checked("RolePredicates.GRANT_OWNER_MANAGER_PREDICATE")
-    @Service
-    public static Object[] run(InfoSpanByCriteriaListGrantContract infoSpanByCriteriaListGrantOwner)
-	    throws FenixServiceException, FenixFilterException, Exception {
+	/**
+	 * Query the grant owner by criteria of grant contract
+	 * 
+	 * @throws ExcepcaoPersistencia
+	 * 
+	 * @returns an array of objects object[0] List of result object[1]
+	 *          IndoSpanCriteriaListGrantOwner
+	 */
+	@Checked("RolePredicates.GRANT_OWNER_MANAGER_PREDICATE")
+	@Service
+	public static Object[] run(InfoSpanByCriteriaListGrantContract infoSpanByCriteriaListGrantOwner)
+			throws FenixServiceException, FenixFilterException, Exception {
 
-	// Read the grant contracts ordered by persistentSupportan
-	List<GrantContractRegime> grantContractBySpanAndCriteria = readAllContractsByCriteria(
-		propertyOrderBy(infoSpanByCriteriaListGrantOwner.getOrderBy()), infoSpanByCriteriaListGrantOwner
-			.getJustActiveContract(), infoSpanByCriteriaListGrantOwner.getJustDesactiveContract(),
-		infoSpanByCriteriaListGrantOwner.getBeginContract(), infoSpanByCriteriaListGrantOwner.getEndContract(),
-		infoSpanByCriteriaListGrantOwner.getSpanNumber(), PresentationConstants.NUMBER_OF_ELEMENTS_IN_SPAN,
-		infoSpanByCriteriaListGrantOwner.getGrantTypeId(), infoSpanByCriteriaListGrantOwner.getValidToTheDate());
+		// Read the grant contracts ordered by persistentSupportan
+		List<GrantContractRegime> grantContractBySpanAndCriteria =
+				readAllContractsByCriteria(propertyOrderBy(infoSpanByCriteriaListGrantOwner.getOrderBy()),
+						infoSpanByCriteriaListGrantOwner.getJustActiveContract(),
+						infoSpanByCriteriaListGrantOwner.getJustDesactiveContract(),
+						infoSpanByCriteriaListGrantOwner.getBeginContract(), infoSpanByCriteriaListGrantOwner.getEndContract(),
+						infoSpanByCriteriaListGrantOwner.getSpanNumber(), PresentationConstants.NUMBER_OF_ELEMENTS_IN_SPAN,
+						infoSpanByCriteriaListGrantOwner.getGrantTypeId(), infoSpanByCriteriaListGrantOwner.getValidToTheDate());
 
-	List<InfoListGrantOwnerByOrder> listGrantContract = null;
+		List<InfoListGrantOwnerByOrder> listGrantContract = null;
 
-	if (grantContractBySpanAndCriteria != null && grantContractBySpanAndCriteria.size() != 0) {
-	    // Construct the info list and add to the result.
-	    listGrantContract = new ArrayList<InfoListGrantOwnerByOrder>();
+		if (grantContractBySpanAndCriteria != null && grantContractBySpanAndCriteria.size() != 0) {
+			// Construct the info list and add to the result.
+			listGrantContract = new ArrayList<InfoListGrantOwnerByOrder>();
 
-	    for (GrantContractRegime grantContractRegime : grantContractBySpanAndCriteria) {
-		convertToInfoListGrantOwnerByOrder(grantContractRegime, infoSpanByCriteriaListGrantOwner, listGrantContract);
-	    }
+			for (GrantContractRegime grantContractRegime : grantContractBySpanAndCriteria) {
+				convertToInfoListGrantOwnerByOrder(grantContractRegime, infoSpanByCriteriaListGrantOwner, listGrantContract);
+			}
+		}
+
+		if (infoSpanByCriteriaListGrantOwner.getTotalElements() == null) {
+			// Setting the search attributes
+			infoSpanByCriteriaListGrantOwner.setTotalElements(countAllByCriteria(
+					infoSpanByCriteriaListGrantOwner.getJustActiveContract(),
+					infoSpanByCriteriaListGrantOwner.getJustDesactiveContract(),
+					infoSpanByCriteriaListGrantOwner.getBeginContract(), infoSpanByCriteriaListGrantOwner.getEndContract(),
+					infoSpanByCriteriaListGrantOwner.getGrantTypeId(), infoSpanByCriteriaListGrantOwner.getValidToTheDate()));
+		}
+		listGrantContract = mergeEqualGrantOwners(listGrantContract);
+
+		Object[] result = { listGrantContract, infoSpanByCriteriaListGrantOwner };
+		return result;
 	}
 
-	if (infoSpanByCriteriaListGrantOwner.getTotalElements() == null) {
-	    // Setting the search attributes
-	    infoSpanByCriteriaListGrantOwner.setTotalElements(countAllByCriteria(infoSpanByCriteriaListGrantOwner
-		    .getJustActiveContract(), infoSpanByCriteriaListGrantOwner.getJustDesactiveContract(),
-		    infoSpanByCriteriaListGrantOwner.getBeginContract(), infoSpanByCriteriaListGrantOwner.getEndContract(),
-		    infoSpanByCriteriaListGrantOwner.getGrantTypeId(), infoSpanByCriteriaListGrantOwner.getValidToTheDate()));
-	}
-	listGrantContract = mergeEqualGrantOwners(listGrantContract);
-
-	Object[] result = { listGrantContract, infoSpanByCriteriaListGrantOwner };
-	return result;
-    }
-
-    private static List<InfoListGrantOwnerByOrder> mergeEqualGrantOwners(List<InfoListGrantOwnerByOrder> listGrantContract) {
-	Map<Integer, InfoListGrantOwnerByOrder> mergedGrantOwners = new HashMap<Integer, InfoListGrantOwnerByOrder>();
-	List<InfoListGrantOwnerByOrder> repeatedGrantOwners = new ArrayList<InfoListGrantOwnerByOrder>();
-	for (InfoListGrantOwnerByOrder grantOwnerByOrder : listGrantContract) {
-	    InfoListGrantOwnerByOrder grantOwnerByOrderMap = mergedGrantOwners.get(grantOwnerByOrder.getGrantOwnerId());
-	    if (grantOwnerByOrderMap == null) {
-		mergedGrantOwners.put(grantOwnerByOrder.getGrantOwnerId(), grantOwnerByOrder);
-	    } else if (grantOwnerByOrder.getNumberPaymentEntity() != null
-		    && grantOwnerByOrderMap.getNumberPaymentEntity() != null
-		    && grantOwnerByOrder.getNumberPaymentEntity().equals(grantOwnerByOrderMap.getNumberPaymentEntity())) {
-		mergeInfoGrantOwner(grantOwnerByOrder, grantOwnerByOrderMap);
-	    } else {
-		repeatedGrantOwners.add(grantOwnerByOrder);
-	    }
-	}
-	repeatedGrantOwners.addAll(mergedGrantOwners.values());
-	return repeatedGrantOwners;
-    }
-
-    private static void mergeInfoGrantOwner(InfoListGrantOwnerByOrder grantOwnerByOrder,
-	    InfoListGrantOwnerByOrder grantOwnerByOrderMap) {
-	if (grantOwnerByOrder.getBeginContract() != null && grantOwnerByOrderMap.getBeginContract() != null
-		&& grantOwnerByOrder.getBeginContract().before(grantOwnerByOrderMap.getBeginContract())) {
-	    grantOwnerByOrderMap.setBeginContract(grantOwnerByOrder.getBeginContract());
-	}
-	if (grantOwnerByOrder.getEndContract() != null && grantOwnerByOrderMap.getEndContract() != null
-		&& grantOwnerByOrder.getEndContract().after(grantOwnerByOrderMap.getEndContract())) {
-	    grantOwnerByOrderMap.setEndContract(grantOwnerByOrder.getEndContract());
-	}
-	grantOwnerByOrderMap.setTotalInsurance(grantOwnerByOrder.getTotalInsurance() + grantOwnerByOrderMap.getTotalInsurance());
-	grantOwnerByOrderMap.setTotalOfDays(grantOwnerByOrder.getTotalOfDays() + grantOwnerByOrderMap.getTotalOfDays());
-	grantOwnerByOrderMap.setTotalOfGrantPayment(grantOwnerByOrder.getTotalOfGrantPayment()
-		+ grantOwnerByOrderMap.getTotalOfGrantPayment());
-    }
-
-    /**
-     * For each Grant Owner 1- Read all grant contracts that are in the criteria
-     * 1.1 - Read The active regime of each contract 1.2 - Read the insurance of
-     * each contract 2- Construct the info and put it on the list result
-     * 
-     * @throws ParseException
-     */
-    private static void convertToInfoListGrantOwnerByOrder(GrantContractRegime grantContractRegime,
-	    InfoSpanByCriteriaListGrantContract infoSpanByCriteriaListGrantOwner, List<InfoListGrantOwnerByOrder> result)
-	    throws ParseException {
-
-	final GrantOwner grantOwner = grantContractRegime.getGrantContract().getGrantOwner();
-	InfoListGrantOwnerByOrder infoListGrantOwnerByOrder = new InfoListGrantOwnerByOrder(grantOwner);
-
-	infoListGrantOwnerByOrder.setContractNumber(grantContractRegime.getGrantContract().getContractNumber());
-
-	// infoListGrantOwnerByOrder.setGrantType(grantContractRegime.
-	// getGrantContract().getGrantType().getSigla());
-
-	// infoListGrantOwnerByOrder.setBeginContract(grantContractRegime.
-	// getDateBeginContract());
-	// infoListGrantOwnerByOrder.setEndContract(grantContractRegime.
-	// getDateEndContract());
-
-	List<GrantSubsidy> grantSubsidyList = grantContractRegime.getGrantContract().getAssociatedGrantSubsidies();
-	for (GrantSubsidy grantSubsidy : grantSubsidyList) {
-	    for (GrantPart grantPart : rootDomainObject.getGrantParts()) {
-		if (grantSubsidy.equals(grantPart.getGrantSubsidy())) {
-		    if (grantPart.getGrantPaymentEntity() != null) {
-			infoListGrantOwnerByOrder.setInsurancePaymentEntity(grantPart.getGrantPaymentEntity().getNumber());
-			infoListGrantOwnerByOrder.setNumberPaymentEntity(grantPart.getGrantPaymentEntity().getNumber());
-			infoListGrantOwnerByOrder.setDesignation(grantPart.getGrantPaymentEntity().getDesignation());
-		    }
+	private static List<InfoListGrantOwnerByOrder> mergeEqualGrantOwners(List<InfoListGrantOwnerByOrder> listGrantContract) {
+		Map<Integer, InfoListGrantOwnerByOrder> mergedGrantOwners = new HashMap<Integer, InfoListGrantOwnerByOrder>();
+		List<InfoListGrantOwnerByOrder> repeatedGrantOwners = new ArrayList<InfoListGrantOwnerByOrder>();
+		for (InfoListGrantOwnerByOrder grantOwnerByOrder : listGrantContract) {
+			InfoListGrantOwnerByOrder grantOwnerByOrderMap = mergedGrantOwners.get(grantOwnerByOrder.getGrantOwnerId());
+			if (grantOwnerByOrderMap == null) {
+				mergedGrantOwners.put(grantOwnerByOrder.getGrantOwnerId(), grantOwnerByOrder);
+			} else if (grantOwnerByOrder.getNumberPaymentEntity() != null
+					&& grantOwnerByOrderMap.getNumberPaymentEntity() != null
+					&& grantOwnerByOrder.getNumberPaymentEntity().equals(grantOwnerByOrderMap.getNumberPaymentEntity())) {
+				mergeInfoGrantOwner(grantOwnerByOrder, grantOwnerByOrderMap);
+			} else {
+				repeatedGrantOwners.add(grantOwnerByOrder);
+			}
 		}
-	    }
+		repeatedGrantOwners.addAll(mergedGrantOwners.values());
+		return repeatedGrantOwners;
 	}
 
-	GrantInsurance grantInsurance = grantContractRegime.getGrantContract().getGrantInsurance();
-
-	// InfoGrantInsurance infoGrantInsurance = new InfoGrantInsurance();
-
-	if (grantInsurance != null) {
-	    final long MILLIS_PER_DAY = 1000 * 60 * 60 * 24;
-	    long days = 0;
-	    Date beginDate = infoSpanByCriteriaListGrantOwner.getBeginContract();
-
-	    Date endDate = infoSpanByCriteriaListGrantOwner.getEndContract();
-
-	    if (grantContractRegime.getDateBeginContract() != null) {
-
-		// if (grantInsurance.getDateBeginInsurance().before(
-		// infoSpanByCriteriaListGrantOwner.getBeginContract())
-		// || grantInsurance.getDateBeginInsurance().equals(
-		// infoSpanByCriteriaListGrantOwner.getBeginContract())) {
-		//                        
-		// beginDate =
-		// infoSpanByCriteriaListGrantOwner.getBeginContract();
-		// }
-		// if (grantInsurance.getDateBeginInsurance().after(
-		// infoSpanByCriteriaListGrantOwner.getBeginContract())) {
-		// beginDate = grantInsurance.getDateBeginInsurance();
-		// }
-		// }
-		// if (grantInsurance.getDateEndInsurance() != null) {
-		// if (grantInsurance.getDateEndInsurance().before(
-		// infoSpanByCriteriaListGrantOwner.getEndContract())) {
-		// endDate = grantInsurance.getDateEndInsurance();
-		// }
-		// if (grantInsurance.getDateEndInsurance().after(
-		// infoSpanByCriteriaListGrantOwner.getEndContract())
-		// || grantInsurance.getDateEndInsurance().equals(
-		// infoSpanByCriteriaListGrantOwner.getEndContract())) {
-		// endDate = infoSpanByCriteriaListGrantOwner.getEndContract();
-		// }
-
-		if (grantContractRegime.getDateBeginContract().before(infoSpanByCriteriaListGrantOwner.getBeginContract())
-			|| grantContractRegime.getDateBeginContract().equals(infoSpanByCriteriaListGrantOwner.getBeginContract())) {
-
-		    beginDate = infoSpanByCriteriaListGrantOwner.getBeginContract();
+	private static void mergeInfoGrantOwner(InfoListGrantOwnerByOrder grantOwnerByOrder,
+			InfoListGrantOwnerByOrder grantOwnerByOrderMap) {
+		if (grantOwnerByOrder.getBeginContract() != null && grantOwnerByOrderMap.getBeginContract() != null
+				&& grantOwnerByOrder.getBeginContract().before(grantOwnerByOrderMap.getBeginContract())) {
+			grantOwnerByOrderMap.setBeginContract(grantOwnerByOrder.getBeginContract());
 		}
-		if (grantContractRegime.getDateBeginContract().after(infoSpanByCriteriaListGrantOwner.getBeginContract())) {
-		    beginDate = grantContractRegime.getDateBeginContract();
+		if (grantOwnerByOrder.getEndContract() != null && grantOwnerByOrderMap.getEndContract() != null
+				&& grantOwnerByOrder.getEndContract().after(grantOwnerByOrderMap.getEndContract())) {
+			grantOwnerByOrderMap.setEndContract(grantOwnerByOrder.getEndContract());
 		}
-	    }
-	    if (grantContractRegime.getDateEndContract() != null) {
-		if (grantContractRegime.getDateEndContract().before(infoSpanByCriteriaListGrantOwner.getEndContract())) {
-		    endDate = grantContractRegime.getDateEndContract();
-		}
-		if (grantContractRegime.getDateEndContract().after(infoSpanByCriteriaListGrantOwner.getEndContract())
-			|| grantContractRegime.getDateEndContract().equals(infoSpanByCriteriaListGrantOwner.getEndContract())) {
-		    endDate = infoSpanByCriteriaListGrantOwner.getEndContract();
-		}
-		if (!StringUtils.isEmpty(grantContractRegime.getGrantContract().getEndContractMotive())) {
-		    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
-		    try {
-			Date rescissionDate = simpleDateFormat.parse(grantContractRegime.getGrantContract()
-				.getEndContractMotive());
-			endDate = endDate.before(rescissionDate) ? endDate : rescissionDate;
-		    } catch (java.text.ParseException e) {
-		    }
-		}
-	    }
-
-	    long deltaMillis = endDate.getTime() - beginDate.getTime();
-	    days = (deltaMillis / MILLIS_PER_DAY) + 1;
-	    infoListGrantOwnerByOrder.setTotalInsurance(dayValueOfInsurance * days);
-	    infoListGrantOwnerByOrder.setBeginContract(grantContractRegime.getDateBeginContract());
-	    infoListGrantOwnerByOrder.setEndContract(endDate.before(grantContractRegime.getDateEndContract()) ? endDate
-		    : grantContractRegime.getDateEndContract());
-	    infoListGrantOwnerByOrder.setTotalOfDays(days);
-
+		grantOwnerByOrderMap.setTotalInsurance(grantOwnerByOrder.getTotalInsurance() + grantOwnerByOrderMap.getTotalInsurance());
+		grantOwnerByOrderMap.setTotalOfDays(grantOwnerByOrder.getTotalOfDays() + grantOwnerByOrderMap.getTotalOfDays());
+		grantOwnerByOrderMap.setTotalOfGrantPayment(grantOwnerByOrder.getTotalOfGrantPayment()
+				+ grantOwnerByOrderMap.getTotalOfGrantPayment());
 	}
 
-	result.add(infoListGrantOwnerByOrder);
-    }
+	/**
+	 * For each Grant Owner 1- Read all grant contracts that are in the criteria
+	 * 1.1 - Read The active regime of each contract 1.2 - Read the insurance of
+	 * each contract 2- Construct the info and put it on the list result
+	 * 
+	 * @throws ParseException
+	 */
+	private static void convertToInfoListGrantOwnerByOrder(GrantContractRegime grantContractRegime,
+			InfoSpanByCriteriaListGrantContract infoSpanByCriteriaListGrantOwner, List<InfoListGrantOwnerByOrder> result)
+			throws ParseException {
 
-    /*
-     * Returns the order string to add to the criteria
-     */
-    private static String propertyOrderBy(String orderBy) {
-	String result = null;
-	if (orderBy.equals("orderByGrantOwnerNumber")) {
-	    result = "grantOwner.number";
-	} else if (orderBy.equals("orderByGrantContractNumber")) {
-	    result = "contractNumber";
-	} else if (orderBy.equals("orderByFirstName")) {
-	    result = "grantOwner.person.name";
-	} else if (orderBy.equals("orderByGrantType")) {
-	    result = "grantType.sigla";
-	} else if (orderBy.equals("orderByDateBeginContract")) {
-	    result = "contractRegimes.dateBeginContract";
-	} else if (orderBy.equals("orderByDateEndContract")) {
-	    result = "contractRegimes.dateEndContract";
-	}
-	return result;
-    }
+		final GrantOwner grantOwner = grantContractRegime.getGrantContract().getGrantOwner();
+		InfoListGrantOwnerByOrder infoListGrantOwnerByOrder = new InfoListGrantOwnerByOrder(grantOwner);
 
-    public static List<GrantContractRegime> readAllContractsByCriteria(String orderBy, Boolean justActiveContracts,
-	    Boolean justDesactiveContracts, Date dateBeginContract, Date dateEndContract, Integer spanNumber,
-	    Integer numberOfElementsInSpan, Integer grantTypeId, Date validToTheDate) throws FenixFilterException,
-	    FenixServiceException, Exception {
+		infoListGrantOwnerByOrder.setContractNumber(grantContractRegime.getGrantContract().getContractNumber());
 
-	List<GrantContractRegime> result = new ArrayList<GrantContractRegime>();
-	Date ToTheDate = null;
+		// infoListGrantOwnerByOrder.setGrantType(grantContractRegime.
+		// getGrantContract().getGrantType().getSigla());
 
-	List<GrantContractRegime> grantContractRegimes = new ArrayList<GrantContractRegime>();
-	grantContractRegimes.addAll(rootDomainObject.getGrantContractRegimes());
+		// infoListGrantOwnerByOrder.setBeginContract(grantContractRegime.
+		// getDateBeginContract());
+		// infoListGrantOwnerByOrder.setEndContract(grantContractRegime.
+		// getDateEndContract());
 
-	List<GrantContractRegime> grantList = new ArrayList<GrantContractRegime>(grantContractRegimes);
-
-	for (GrantContractRegime regime : grantContractRegimes) {
-	    final GrantContract grantContract = regime.getGrantContract();
-	    if (grantContract == null) {
-		grantList.remove(regime);
-	    }
-	}
-
-	Collections.sort(grantList, new BeanComparator("grantContract.grantOwner.number"));
-	Collections.reverse(grantList);
-	for (final GrantContractRegime grantContractRegime : (grantList)) {
-	    final GrantContract grantContract = grantContractRegime.getGrantContract();
-	    if (grantContract == null) {
-		continue;
-	    }
-
-	    if ((validToTheDate == null || validToTheDate.equals(""))
-		    && (dateBeginContract == null || dateBeginContract.equals(""))
-		    && (dateEndContract == null || dateEndContract.equals(""))) {
-		if (justActiveContracts != null && justActiveContracts.booleanValue()) {
-		    if (grantContractRegime.getGrantContract().getEndContractMotive() != null
-			    && !grantContractRegime.getGrantContract().getEndContractMotive().equals("")) {
-			continue;
-		    }
-		    if (!grantContractRegime.getContractRegimeActive()) {
-			continue;
-		    }
-		}
-		if (justDesactiveContracts != null && justDesactiveContracts.booleanValue()) {
-		    if (grantContractRegime.getContractRegimeActive()
-			    && (grantContractRegime.getGrantContract().getEndContractMotive() == null || grantContractRegime
-				    .getGrantContract().getEndContractMotive().equals(""))) {
-			continue;
-		    }
-		}
-	    }
-
-	    if (validToTheDate != null) {
-		if (grantContractRegime.getDateBeginContract() == null || grantContractRegime.getDateEndContract() == null) {
-		    continue;
-		}
-		if (DateFormatUtil.isBefore("yyyy-MM-dd", grantContractRegime.getDateEndContract(), validToTheDate)) {
-		    continue;
-		}
-		if (DateFormatUtil.isAfter("yyyy-MM-dd", grantContractRegime.getDateBeginContract(), validToTheDate)) {
-		    continue;
-		}
-		if (grantContractRegime.getGrantContract().getEndContractMotive() != null
-			&& !grantContractRegime.getGrantContract().getEndContractMotive().equals("")) {
-		    continue;
+		List<GrantSubsidy> grantSubsidyList = grantContractRegime.getGrantContract().getAssociatedGrantSubsidies();
+		for (GrantSubsidy grantSubsidy : grantSubsidyList) {
+			for (GrantPart grantPart : rootDomainObject.getGrantParts()) {
+				if (grantSubsidy.equals(grantPart.getGrantSubsidy())) {
+					if (grantPart.getGrantPaymentEntity() != null) {
+						infoListGrantOwnerByOrder.setInsurancePaymentEntity(grantPart.getGrantPaymentEntity().getNumber());
+						infoListGrantOwnerByOrder.setNumberPaymentEntity(grantPart.getGrantPaymentEntity().getNumber());
+						infoListGrantOwnerByOrder.setDesignation(grantPart.getGrantPaymentEntity().getDesignation());
+					}
+				}
+			}
 		}
 
-	    }
+		GrantInsurance grantInsurance = grantContractRegime.getGrantContract().getGrantInsurance();
 
-	    if ((dateBeginContract != null && !dateBeginContract.equals(""))
-		    && (dateEndContract != null && !dateEndContract.equals(""))) {
+		// InfoGrantInsurance infoGrantInsurance = new InfoGrantInsurance();
 
-		if (grantContractRegime.getDateBeginContract() == null || grantContractRegime.getDateEndContract() == null) {
-		    continue;
+		if (grantInsurance != null) {
+			final long MILLIS_PER_DAY = 1000 * 60 * 60 * 24;
+			long days = 0;
+			Date beginDate = infoSpanByCriteriaListGrantOwner.getBeginContract();
+
+			Date endDate = infoSpanByCriteriaListGrantOwner.getEndContract();
+
+			if (grantContractRegime.getDateBeginContract() != null) {
+
+				// if (grantInsurance.getDateBeginInsurance().before(
+				// infoSpanByCriteriaListGrantOwner.getBeginContract())
+				// || grantInsurance.getDateBeginInsurance().equals(
+				// infoSpanByCriteriaListGrantOwner.getBeginContract())) {
+				//                        
+				// beginDate =
+				// infoSpanByCriteriaListGrantOwner.getBeginContract();
+				// }
+				// if (grantInsurance.getDateBeginInsurance().after(
+				// infoSpanByCriteriaListGrantOwner.getBeginContract())) {
+				// beginDate = grantInsurance.getDateBeginInsurance();
+				// }
+				// }
+				// if (grantInsurance.getDateEndInsurance() != null) {
+				// if (grantInsurance.getDateEndInsurance().before(
+				// infoSpanByCriteriaListGrantOwner.getEndContract())) {
+				// endDate = grantInsurance.getDateEndInsurance();
+				// }
+				// if (grantInsurance.getDateEndInsurance().after(
+				// infoSpanByCriteriaListGrantOwner.getEndContract())
+				// || grantInsurance.getDateEndInsurance().equals(
+				// infoSpanByCriteriaListGrantOwner.getEndContract())) {
+				// endDate = infoSpanByCriteriaListGrantOwner.getEndContract();
+				// }
+
+				if (grantContractRegime.getDateBeginContract().before(infoSpanByCriteriaListGrantOwner.getBeginContract())
+						|| grantContractRegime.getDateBeginContract().equals(infoSpanByCriteriaListGrantOwner.getBeginContract())) {
+
+					beginDate = infoSpanByCriteriaListGrantOwner.getBeginContract();
+				}
+				if (grantContractRegime.getDateBeginContract().after(infoSpanByCriteriaListGrantOwner.getBeginContract())) {
+					beginDate = grantContractRegime.getDateBeginContract();
+				}
+			}
+			if (grantContractRegime.getDateEndContract() != null) {
+				if (grantContractRegime.getDateEndContract().before(infoSpanByCriteriaListGrantOwner.getEndContract())) {
+					endDate = grantContractRegime.getDateEndContract();
+				}
+				if (grantContractRegime.getDateEndContract().after(infoSpanByCriteriaListGrantOwner.getEndContract())
+						|| grantContractRegime.getDateEndContract().equals(infoSpanByCriteriaListGrantOwner.getEndContract())) {
+					endDate = infoSpanByCriteriaListGrantOwner.getEndContract();
+				}
+				if (!StringUtils.isEmpty(grantContractRegime.getGrantContract().getEndContractMotive())) {
+					SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
+					try {
+						Date rescissionDate =
+								simpleDateFormat.parse(grantContractRegime.getGrantContract().getEndContractMotive());
+						endDate = endDate.before(rescissionDate) ? endDate : rescissionDate;
+					} catch (java.text.ParseException e) {
+					}
+				}
+			}
+
+			long deltaMillis = endDate.getTime() - beginDate.getTime();
+			days = (deltaMillis / MILLIS_PER_DAY) + 1;
+			infoListGrantOwnerByOrder.setTotalInsurance(dayValueOfInsurance * days);
+			infoListGrantOwnerByOrder.setBeginContract(grantContractRegime.getDateBeginContract());
+			infoListGrantOwnerByOrder
+					.setEndContract(endDate.before(grantContractRegime.getDateEndContract()) ? endDate : grantContractRegime
+							.getDateEndContract());
+			infoListGrantOwnerByOrder.setTotalOfDays(days);
+
 		}
 
-		if (!grantContractRegime.belongsToPeriod(dateBeginContract, dateEndContract)) {
-		    continue;
-		}
-
-		if (justActiveContracts != null && justActiveContracts.booleanValue()) {
-		    if (!grantContractRegime.getState().equals(Integer.valueOf(1))) {
-			continue;
-		    }
-		    if (grantContractRegime.getGrantContract().getEndContractMotive() != null
-			    && !grantContractRegime.getGrantContract().getEndContractMotive().equals("")) {
-			continue;
-		    }
-		}
-
-		if (justDesactiveContracts != null && justDesactiveContracts.booleanValue()) {
-		    if (grantContractRegime.getState().equals(Integer.valueOf(1))
-			    && (grantContractRegime.getGrantContract().getEndContractMotive() == null || grantContractRegime
-				    .getGrantContract().getEndContractMotive().equals(""))) {
-			continue;
-		    }
-
-		}
-	    }
-
-	    if (grantTypeId != null) {
-		if (!grantContractRegime.getGrantContract().getGrantType().getIdInternal().equals(grantTypeId)) {
-		    continue;
-		}
-	    }
-	    result.add(grantContractRegime);
+		result.add(infoListGrantOwnerByOrder);
 	}
 
-	int begin = (spanNumber - 1) * numberOfElementsInSpan;
-	int end = begin + numberOfElementsInSpan;
-
-	return result.subList(begin, Math.min(end, result.size()));
-    }
-
-    public static List<GrantContract> readBySpan(Integer spanNumber, Integer numberOfElementsInSpan,
-	    List<GrantContract> grantContract) {
-	List<GrantContract> result = new ArrayList<GrantContract>();
-	Iterator iter = grantContract.iterator();
-
-	int begin = (spanNumber.intValue() - 1) * numberOfElementsInSpan.intValue();
-	int end = begin + numberOfElementsInSpan.intValue();
-	if (begin != 0) {
-	    for (int j = 0; j < (begin - 1) && iter.hasNext(); j++) {
-		iter.next();
-	    }
+	/*
+	 * Returns the order string to add to the criteria
+	 */
+	private static String propertyOrderBy(String orderBy) {
+		String result = null;
+		if (orderBy.equals("orderByGrantOwnerNumber")) {
+			result = "grantOwner.number";
+		} else if (orderBy.equals("orderByGrantContractNumber")) {
+			result = "contractNumber";
+		} else if (orderBy.equals("orderByFirstName")) {
+			result = "grantOwner.person.name";
+		} else if (orderBy.equals("orderByGrantType")) {
+			result = "grantType.sigla";
+		} else if (orderBy.equals("orderByDateBeginContract")) {
+			result = "contractRegimes.dateBeginContract";
+		} else if (orderBy.equals("orderByDateEndContract")) {
+			result = "contractRegimes.dateEndContract";
+		}
+		return result;
 	}
 
-	for (int i = begin; i < end && iter.hasNext(); i++) {
-	    GrantContract grantContract1 = (GrantContract) iter.next();
+	public static List<GrantContractRegime> readAllContractsByCriteria(String orderBy, Boolean justActiveContracts,
+			Boolean justDesactiveContracts, Date dateBeginContract, Date dateEndContract, Integer spanNumber,
+			Integer numberOfElementsInSpan, Integer grantTypeId, Date validToTheDate) throws FenixFilterException,
+			FenixServiceException, Exception {
 
-	    result.add(grantContract1);
+		List<GrantContractRegime> result = new ArrayList<GrantContractRegime>();
+		Date ToTheDate = null;
+
+		List<GrantContractRegime> grantContractRegimes = new ArrayList<GrantContractRegime>();
+		grantContractRegimes.addAll(rootDomainObject.getGrantContractRegimes());
+
+		List<GrantContractRegime> grantList = new ArrayList<GrantContractRegime>(grantContractRegimes);
+
+		for (GrantContractRegime regime : grantContractRegimes) {
+			final GrantContract grantContract = regime.getGrantContract();
+			if (grantContract == null) {
+				grantList.remove(regime);
+			}
+		}
+
+		Collections.sort(grantList, new BeanComparator("grantContract.grantOwner.number"));
+		Collections.reverse(grantList);
+		for (final GrantContractRegime grantContractRegime : (grantList)) {
+			final GrantContract grantContract = grantContractRegime.getGrantContract();
+			if (grantContract == null) {
+				continue;
+			}
+
+			if ((validToTheDate == null || validToTheDate.equals(""))
+					&& (dateBeginContract == null || dateBeginContract.equals(""))
+					&& (dateEndContract == null || dateEndContract.equals(""))) {
+				if (justActiveContracts != null && justActiveContracts.booleanValue()) {
+					if (grantContractRegime.getGrantContract().getEndContractMotive() != null
+							&& !grantContractRegime.getGrantContract().getEndContractMotive().equals("")) {
+						continue;
+					}
+					if (!grantContractRegime.getContractRegimeActive()) {
+						continue;
+					}
+				}
+				if (justDesactiveContracts != null && justDesactiveContracts.booleanValue()) {
+					if (grantContractRegime.getContractRegimeActive()
+							&& (grantContractRegime.getGrantContract().getEndContractMotive() == null || grantContractRegime
+									.getGrantContract().getEndContractMotive().equals(""))) {
+						continue;
+					}
+				}
+			}
+
+			if (validToTheDate != null) {
+				if (grantContractRegime.getDateBeginContract() == null || grantContractRegime.getDateEndContract() == null) {
+					continue;
+				}
+				if (DateFormatUtil.isBefore("yyyy-MM-dd", grantContractRegime.getDateEndContract(), validToTheDate)) {
+					continue;
+				}
+				if (DateFormatUtil.isAfter("yyyy-MM-dd", grantContractRegime.getDateBeginContract(), validToTheDate)) {
+					continue;
+				}
+				if (grantContractRegime.getGrantContract().getEndContractMotive() != null
+						&& !grantContractRegime.getGrantContract().getEndContractMotive().equals("")) {
+					continue;
+				}
+
+			}
+
+			if ((dateBeginContract != null && !dateBeginContract.equals(""))
+					&& (dateEndContract != null && !dateEndContract.equals(""))) {
+
+				if (grantContractRegime.getDateBeginContract() == null || grantContractRegime.getDateEndContract() == null) {
+					continue;
+				}
+
+				if (!grantContractRegime.belongsToPeriod(dateBeginContract, dateEndContract)) {
+					continue;
+				}
+
+				if (justActiveContracts != null && justActiveContracts.booleanValue()) {
+					if (!grantContractRegime.getState().equals(Integer.valueOf(1))) {
+						continue;
+					}
+					if (grantContractRegime.getGrantContract().getEndContractMotive() != null
+							&& !grantContractRegime.getGrantContract().getEndContractMotive().equals("")) {
+						continue;
+					}
+				}
+
+				if (justDesactiveContracts != null && justDesactiveContracts.booleanValue()) {
+					if (grantContractRegime.getState().equals(Integer.valueOf(1))
+							&& (grantContractRegime.getGrantContract().getEndContractMotive() == null || grantContractRegime
+									.getGrantContract().getEndContractMotive().equals(""))) {
+						continue;
+					}
+
+				}
+			}
+
+			if (grantTypeId != null) {
+				if (!grantContractRegime.getGrantContract().getGrantType().getIdInternal().equals(grantTypeId)) {
+					continue;
+				}
+			}
+			result.add(grantContractRegime);
+		}
+
+		int begin = (spanNumber - 1) * numberOfElementsInSpan;
+		int end = begin + numberOfElementsInSpan;
+
+		return result.subList(begin, Math.min(end, result.size()));
 	}
 
-	return result;
-    }
+	public static List<GrantContract> readBySpan(Integer spanNumber, Integer numberOfElementsInSpan,
+			List<GrantContract> grantContract) {
+		List<GrantContract> result = new ArrayList<GrantContract>();
+		Iterator iter = grantContract.iterator();
 
-    public static Integer countAllByCriteria(Boolean justActiveContracts, Boolean justDesactiveContracts, Date dateBeginContract,
-	    Date dateEndContract, Integer grantTypeId, Date validToTheDate) throws FenixServiceException, FenixFilterException {
-	Integer result = Integer.valueOf(0);
+		int begin = (spanNumber.intValue() - 1) * numberOfElementsInSpan.intValue();
+		int end = begin + numberOfElementsInSpan.intValue();
+		if (begin != 0) {
+			for (int j = 0; j < (begin - 1) && iter.hasNext(); j++) {
+				iter.next();
+			}
+		}
 
-	List<GrantContractRegime> grantContractRegimes = new ArrayList<GrantContractRegime>();
-	grantContractRegimes.addAll(rootDomainObject.getGrantContractRegimes());
-	List<GrantContractRegime> grantList = new ArrayList<GrantContractRegime>(grantContractRegimes);
+		for (int i = begin; i < end && iter.hasNext(); i++) {
+			GrantContract grantContract1 = (GrantContract) iter.next();
 
-	for (GrantContractRegime regime : grantContractRegimes) {
-	    final GrantContract grantContract = regime.getGrantContract();
-	    if (grantContract == null) {
-		grantList.remove(regime);
-	    }
+			result.add(grantContract1);
+		}
+
+		return result;
 	}
 
-	Collections.sort(grantList, new BeanComparator("grantContract.grantOwner.number"));
-	Collections.reverse(grantList);
+	public static Integer countAllByCriteria(Boolean justActiveContracts, Boolean justDesactiveContracts, Date dateBeginContract,
+			Date dateEndContract, Integer grantTypeId, Date validToTheDate) throws FenixServiceException, FenixFilterException {
+		Integer result = Integer.valueOf(0);
 
-	// ComparatorChain comparatorChain = new ComparatorChain(new
-	// BeanComparator(
-	// "grantContract.grantOwner.number"), true);
-	// Collections.sort(grantContractRegimes, comparatorChain);
-	// Collections.reverse(grantContractRegimes);
-	for (final GrantContractRegime grantContractRegime : (grantList)) {
-	    final GrantContract grantContract = grantContractRegime.getGrantContract();
+		List<GrantContractRegime> grantContractRegimes = new ArrayList<GrantContractRegime>();
+		grantContractRegimes.addAll(rootDomainObject.getGrantContractRegimes());
+		List<GrantContractRegime> grantList = new ArrayList<GrantContractRegime>(grantContractRegimes);
 
-	    if (grantContract == null) {
-		continue;
-	    }
-
-	    if ((validToTheDate == null || validToTheDate.equals(""))
-		    && (dateBeginContract == null || dateBeginContract.equals(""))
-		    && (dateEndContract == null || dateEndContract.equals(""))) {
-		if (justActiveContracts != null && justActiveContracts.booleanValue()) {
-
-		    if (grantContractRegime.getGrantContract().getEndContractMotive() != null
-			    && !grantContractRegime.getGrantContract().getEndContractMotive().equals("")) {
-			continue;
-		    }
-		    if (!grantContractRegime.getContractRegimeActive()) {
-			continue;
-		    }
-		}
-		if (justDesactiveContracts != null && justDesactiveContracts.booleanValue()) {
-
-		    if (grantContractRegime.getContractRegimeActive()
-			    && (grantContractRegime.getGrantContract().getEndContractMotive() == null || grantContractRegime
-				    .getGrantContract().getEndContractMotive().equals(""))) {
-			continue;
-		    }
-		}
-	    }
-
-	    if (validToTheDate != null) {
-
-		if (grantContractRegime.getDateBeginContract() == null || grantContractRegime.getDateEndContract() == null) {
-		    continue;
-		}
-		if (DateFormatUtil.isBefore("yyyy-MM-dd", grantContractRegime.getDateEndContract(), validToTheDate)) {
-		    continue;
-		}
-		if (DateFormatUtil.isAfter("yyyy-MM-dd", grantContractRegime.getDateBeginContract(), validToTheDate)) {
-		    continue;
-		}
-		if (grantContractRegime.getGrantContract().getEndContractMotive() != null
-			&& !grantContractRegime.getGrantContract().getEndContractMotive().equals("")) {
-		    continue;
+		for (GrantContractRegime regime : grantContractRegimes) {
+			final GrantContract grantContract = regime.getGrantContract();
+			if (grantContract == null) {
+				grantList.remove(regime);
+			}
 		}
 
-	    }
+		Collections.sort(grantList, new BeanComparator("grantContract.grantOwner.number"));
+		Collections.reverse(grantList);
 
-	    if ((dateBeginContract != null && !dateBeginContract.equals(""))
-		    && (dateEndContract != null && !dateEndContract.equals(""))) {
+		// ComparatorChain comparatorChain = new ComparatorChain(new
+		// BeanComparator(
+		// "grantContract.grantOwner.number"), true);
+		// Collections.sort(grantContractRegimes, comparatorChain);
+		// Collections.reverse(grantContractRegimes);
+		for (final GrantContractRegime grantContractRegime : (grantList)) {
+			final GrantContract grantContract = grantContractRegime.getGrantContract();
 
-		if (grantContractRegime.getDateBeginContract() == null || grantContractRegime.getDateEndContract() == null) {
-		    continue;
+			if (grantContract == null) {
+				continue;
+			}
+
+			if ((validToTheDate == null || validToTheDate.equals(""))
+					&& (dateBeginContract == null || dateBeginContract.equals(""))
+					&& (dateEndContract == null || dateEndContract.equals(""))) {
+				if (justActiveContracts != null && justActiveContracts.booleanValue()) {
+
+					if (grantContractRegime.getGrantContract().getEndContractMotive() != null
+							&& !grantContractRegime.getGrantContract().getEndContractMotive().equals("")) {
+						continue;
+					}
+					if (!grantContractRegime.getContractRegimeActive()) {
+						continue;
+					}
+				}
+				if (justDesactiveContracts != null && justDesactiveContracts.booleanValue()) {
+
+					if (grantContractRegime.getContractRegimeActive()
+							&& (grantContractRegime.getGrantContract().getEndContractMotive() == null || grantContractRegime
+									.getGrantContract().getEndContractMotive().equals(""))) {
+						continue;
+					}
+				}
+			}
+
+			if (validToTheDate != null) {
+
+				if (grantContractRegime.getDateBeginContract() == null || grantContractRegime.getDateEndContract() == null) {
+					continue;
+				}
+				if (DateFormatUtil.isBefore("yyyy-MM-dd", grantContractRegime.getDateEndContract(), validToTheDate)) {
+					continue;
+				}
+				if (DateFormatUtil.isAfter("yyyy-MM-dd", grantContractRegime.getDateBeginContract(), validToTheDate)) {
+					continue;
+				}
+				if (grantContractRegime.getGrantContract().getEndContractMotive() != null
+						&& !grantContractRegime.getGrantContract().getEndContractMotive().equals("")) {
+					continue;
+				}
+
+			}
+
+			if ((dateBeginContract != null && !dateBeginContract.equals(""))
+					&& (dateEndContract != null && !dateEndContract.equals(""))) {
+
+				if (grantContractRegime.getDateBeginContract() == null || grantContractRegime.getDateEndContract() == null) {
+					continue;
+				}
+
+				if (!grantContractRegime.belongsToPeriod(dateBeginContract, dateEndContract)) {
+					continue;
+				}
+
+				if (justActiveContracts != null && justActiveContracts.booleanValue()) {
+					if (!grantContractRegime.getState().equals(Integer.valueOf(1))) {
+						continue;
+					}
+					if (grantContractRegime.getGrantContract().getEndContractMotive() != null
+							&& !grantContractRegime.getGrantContract().getEndContractMotive().equals("")) {
+						continue;
+					}
+				}
+
+				if (justDesactiveContracts != null && justDesactiveContracts.booleanValue()) {
+					if (grantContractRegime.getState().equals(Integer.valueOf(1))
+							&& (grantContractRegime.getGrantContract().getEndContractMotive() == null || grantContractRegime
+									.getGrantContract().getEndContractMotive().equals(""))) {
+						continue;
+					}
+
+				}
+
+			} else if ((dateBeginContract != null && !dateBeginContract.equals(""))
+					&& (dateEndContract == null || dateEndContract.equals(""))) {
+				if (grantContractRegime.getDateBeginContract() == null) {
+					continue;
+				}
+				if (!grantContractRegime.getDateBeginContract().equals(dateBeginContract)) {
+					continue;
+				}
+				if (justActiveContracts != null && justActiveContracts.booleanValue()) {
+					if (!grantContractRegime.getState().equals(Integer.valueOf(1))) {
+						continue;
+					}
+					if (grantContractRegime.getGrantContract().getEndContractMotive() != null
+							&& !grantContractRegime.getGrantContract().getEndContractMotive().equals("")) {
+						continue;
+					}
+				}
+
+				if (justDesactiveContracts != null && justDesactiveContracts.booleanValue()) {
+					if (grantContractRegime.getState().equals(Integer.valueOf(1))
+							&& (grantContractRegime.getGrantContract().getEndContractMotive() == null || grantContractRegime
+									.getGrantContract().getEndContractMotive().equals(""))) {
+						continue;
+					}
+				}
+			}
+
+			if (grantTypeId != null) {
+				if (!grantContractRegime.getGrantContract().getGrantType().getIdInternal().equals(grantTypeId)) {
+					continue;
+				}
+			}
+
+			result++;
 		}
-
-		if (!grantContractRegime.belongsToPeriod(dateBeginContract, dateEndContract)) {
-		    continue;
-		}
-
-		if (justActiveContracts != null && justActiveContracts.booleanValue()) {
-		    if (!grantContractRegime.getState().equals(Integer.valueOf(1))) {
-			continue;
-		    }
-		    if (grantContractRegime.getGrantContract().getEndContractMotive() != null
-			    && !grantContractRegime.getGrantContract().getEndContractMotive().equals("")) {
-			continue;
-		    }
-		}
-
-		if (justDesactiveContracts != null && justDesactiveContracts.booleanValue()) {
-		    if (grantContractRegime.getState().equals(Integer.valueOf(1))
-			    && (grantContractRegime.getGrantContract().getEndContractMotive() == null || grantContractRegime
-				    .getGrantContract().getEndContractMotive().equals(""))) {
-			continue;
-		    }
-
-		}
-
-	    } else if ((dateBeginContract != null && !dateBeginContract.equals(""))
-		    && (dateEndContract == null || dateEndContract.equals(""))) {
-		if (grantContractRegime.getDateBeginContract() == null) {
-		    continue;
-		}
-		if (!grantContractRegime.getDateBeginContract().equals(dateBeginContract)) {
-		    continue;
-		}
-		if (justActiveContracts != null && justActiveContracts.booleanValue()) {
-		    if (!grantContractRegime.getState().equals(Integer.valueOf(1))) {
-			continue;
-		    }
-		    if (grantContractRegime.getGrantContract().getEndContractMotive() != null
-			    && !grantContractRegime.getGrantContract().getEndContractMotive().equals("")) {
-			continue;
-		    }
-		}
-
-		if (justDesactiveContracts != null && justDesactiveContracts.booleanValue()) {
-		    if (grantContractRegime.getState().equals(Integer.valueOf(1))
-			    && (grantContractRegime.getGrantContract().getEndContractMotive() == null || grantContractRegime
-				    .getGrantContract().getEndContractMotive().equals(""))) {
-			continue;
-		    }
-		}
-	    }
-
-	    if (grantTypeId != null) {
-		if (!grantContractRegime.getGrantContract().getGrantType().getIdInternal().equals(grantTypeId)) {
-		    continue;
-		}
-	    }
-
-	    result++;
+		return result;
 	}
-	return result;
-    }
 
 }

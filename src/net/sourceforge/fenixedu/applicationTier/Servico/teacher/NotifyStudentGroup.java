@@ -19,21 +19,22 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class NotifyStudentGroup extends FenixService {
 
-    @Checked("RolePredicates.TEACHER_PREDICATE")
-    @Service
-    public static void run(ProjectSubmission submission, ExecutionCourse course, Person person) {
+	@Checked("RolePredicates.TEACHER_PREDICATE")
+	@Service
+	public static void run(ProjectSubmission submission, ExecutionCourse course, Person person) {
 
-	Set<Person> recievers = new HashSet<Person>();
+		Set<Person> recievers = new HashSet<Person>();
 
-	for (Attends attend : submission.getStudentGroup().getAttends()) {
-	    recievers.add(attend.getRegistration().getStudent().getPerson());
+		for (Attends attend : submission.getStudentGroup().getAttends()) {
+			recievers.add(attend.getRegistration().getStudent().getPerson());
+		}
+
+		final String groupName =
+				BundleUtil.getStringFromResourceBundle("resources.GlobalResources", "label.group", new String[] { submission
+						.getStudentGroup().getGroupNumber().toString() });
+		Sender sender = ExecutionCourseSender.newInstance(course);
+		Recipient recipient = new Recipient(groupName, new FixedSetGroup(recievers));
+		new Message(sender, sender.getConcreteReplyTos(), recipient.asCollection(), submission.getProject().getName(),
+				submission.getTeacherObservation(), "");
 	}
-
-	final String groupName = BundleUtil.getStringFromResourceBundle("resources.GlobalResources",
-	    "label.group", new String[] { submission.getStudentGroup().getGroupNumber().toString() });
-	Sender sender = ExecutionCourseSender.newInstance(course);
-	Recipient recipient = new Recipient(groupName, new FixedSetGroup(recievers));
-	new Message(sender, sender.getConcreteReplyTos(), recipient.asCollection(), submission.getProject().getName(), submission
-		.getTeacherObservation(), "");
-    }
 }

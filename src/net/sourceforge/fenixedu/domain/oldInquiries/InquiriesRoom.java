@@ -15,26 +15,27 @@ import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
  */
 public class InquiriesRoom extends InquiriesRoom_Base {
 
-    public InquiriesRoom() {
-	super();
-	setRootDomainObject(RootDomainObject.getInstance());
-    }
+	public InquiriesRoom() {
+		super();
+		setRootDomainObject(RootDomainObject.getInstance());
+	}
 
-    protected InquiriesRoom(InquiriesCourse inquiriesCourse, AllocatableSpace room, InfoInquiriesRoom infoInquiriesRoom) {
-	this();
-	if ((inquiriesCourse == null) || (room == null))
-	    throw new DomainException("The inquiriesCourse and room should not be null!");
+	protected InquiriesRoom(InquiriesCourse inquiriesCourse, AllocatableSpace room, InfoInquiriesRoom infoInquiriesRoom) {
+		this();
+		if ((inquiriesCourse == null) || (room == null)) {
+			throw new DomainException("The inquiriesCourse and room should not be null!");
+		}
 
-	this.setInquiriesCourse(inquiriesCourse);
-	this.setRoom(room);
-	this.setBasicProperties(infoInquiriesRoom);
+		this.setInquiriesCourse(inquiriesCourse);
+		this.setRoom(room);
+		this.setBasicProperties(infoInquiriesRoom);
 
-    }
+	}
 
-    private void setBasicProperties(InfoInquiriesRoom infoInquiriesRoom) {
-	this.setEnvironmentalConditions(infoInquiriesRoom.getEnvironmentalConditions());
-	this.setEquipmentQuality(infoInquiriesRoom.getEquipmentQuality());
-	this.setSpaceAdequation(infoInquiriesRoom.getSpaceAdequation());
+	private void setBasicProperties(InfoInquiriesRoom infoInquiriesRoom) {
+		this.setEnvironmentalConditions(infoInquiriesRoom.getEnvironmentalConditions());
+		this.setEquipmentQuality(infoInquiriesRoom.getEquipmentQuality());
+		this.setSpaceAdequation(infoInquiriesRoom.getSpaceAdequation());
 
-    }
+	}
 }

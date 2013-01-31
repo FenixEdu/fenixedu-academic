@@ -6,26 +6,26 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 
 public class CardGenerationContext implements Serializable {
 
-    private ExecutionYear executionYear;
+	private ExecutionYear executionYear;
 
-    public CardGenerationContext() {
-	executionYear = executionYearDR(ExecutionYear.readCurrentExecutionYear());
-    }
+	public CardGenerationContext() {
+		executionYear = executionYearDR(ExecutionYear.readCurrentExecutionYear());
+	}
 
-    public CardGenerationContext(final ExecutionYear executionYear) {
-	setExecutionYear(executionYear);
-    }
+	public CardGenerationContext(final ExecutionYear executionYear) {
+		setExecutionYear(executionYear);
+	}
 
-    public ExecutionYear getExecutionYear() {
-	return executionYear;
-    }
+	public ExecutionYear getExecutionYear() {
+		return executionYear;
+	}
 
-    public void setExecutionYear(final ExecutionYear executionYear) {
-	this.executionYear = executionYearDR(executionYear);
-    }
+	public void setExecutionYear(final ExecutionYear executionYear) {
+		this.executionYear = executionYearDR(executionYear);
+	}
 
-    private ExecutionYear executionYearDR(final ExecutionYear executionYear) {
-	return executionYear;
-    }
+	private ExecutionYear executionYearDR(final ExecutionYear executionYear) {
+		return executionYear;
+	}
 
 }

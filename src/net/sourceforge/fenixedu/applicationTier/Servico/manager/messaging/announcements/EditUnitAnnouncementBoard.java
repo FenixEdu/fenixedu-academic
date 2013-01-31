@@ -6,7 +6,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.manager.messaging.annou
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.messaging.UnitAnnouncementBoard;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 /**
@@ -17,15 +16,15 @@ import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
  */
 public class EditUnitAnnouncementBoard extends CreateUnitAnnouncementBoard {
 
-    public void run(UnitAnnouncementBoard board, UnitAnnouncementBoardParameters parameters) throws FenixServiceException {
+	public void run(UnitAnnouncementBoard board, UnitAnnouncementBoardParameters parameters) throws FenixServiceException {
 
-	board.setUnitPermittedReadGroupType(parameters.readersGroupType);
-	board.setUnitPermittedWriteGroupType(parameters.writersGroupType);
-	board.setUnitPermittedManagementGroupType(parameters.managementGroupType);
-	board.setName(new MultiLanguageString(parameters.name));
-	board.setMandatory(parameters.mandatory);
-	board.setReaders(this.buildGroup(parameters.readersGroupType, (Unit) board.getParty()));
-	board.setWriters(this.buildGroup(parameters.writersGroupType, (Unit) board.getParty()));
-	board.setManagers(this.buildGroup(parameters.managementGroupType, (Unit) board.getParty()));
-    }
+		board.setUnitPermittedReadGroupType(parameters.readersGroupType);
+		board.setUnitPermittedWriteGroupType(parameters.writersGroupType);
+		board.setUnitPermittedManagementGroupType(parameters.managementGroupType);
+		board.setName(new MultiLanguageString(parameters.name));
+		board.setMandatory(parameters.mandatory);
+		board.setReaders(this.buildGroup(parameters.readersGroupType, board.getParty()));
+		board.setWriters(this.buildGroup(parameters.writersGroupType, board.getParty()));
+		board.setManagers(this.buildGroup(parameters.managementGroupType, board.getParty()));
+	}
 }

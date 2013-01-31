@@ -23,40 +23,40 @@ import net.sourceforge.fenixedu.domain.degree.finalProject.TeacherDegreeFinalPro
  */
 public class ReadTeacherDFPStudentsService extends FenixService {
 
-    public TeacherDegreeFinalProjectStudentsDTO run(InfoTeacher infoTeacher, Integer executionPeriodId) {
-	TeacherDegreeFinalProjectStudentsDTO teacherDfpStudentsDTO = new TeacherDegreeFinalProjectStudentsDTO();
+	public TeacherDegreeFinalProjectStudentsDTO run(InfoTeacher infoTeacher, Integer executionPeriodId) {
+		TeacherDegreeFinalProjectStudentsDTO teacherDfpStudentsDTO = new TeacherDegreeFinalProjectStudentsDTO();
 
-	ExecutionSemester executionSemester = getExecutionPeriod(executionPeriodId);
+		ExecutionSemester executionSemester = getExecutionPeriod(executionPeriodId);
 
-	Teacher teacher = rootDomainObject.readTeacherByOID(infoTeacher.getIdInternal());
-	InfoTeacher infoTeacher2 = InfoTeacher.newInfoFromDomain(teacher);
+		Teacher teacher = rootDomainObject.readTeacherByOID(infoTeacher.getIdInternal());
+		InfoTeacher infoTeacher2 = InfoTeacher.newInfoFromDomain(teacher);
 
-	final Set<TeacherDegreeFinalProjectStudent> teacherDegreeFinalProjectStudents = teacher
-		.findTeacherDegreeFinalProjectStudentsByExecutionPeriod(executionSemester);
-	final List infoteacherDFPStudentList = new ArrayList();
-	for (final TeacherDegreeFinalProjectStudent teacherDegreeFinalProjectStudent : teacherDegreeFinalProjectStudents) {
-	    final InfoTeacherDegreeFinalProjectStudent infoTeacherDegreeFinalProjectStudent = InfoTeacherDegreeFinalProjectStudentWithStudentAndPerson
-		    .newInfoFromDomain(teacherDegreeFinalProjectStudent);
-	    infoteacherDFPStudentList.add(infoTeacherDegreeFinalProjectStudent);
+		final Set<TeacherDegreeFinalProjectStudent> teacherDegreeFinalProjectStudents =
+				teacher.findTeacherDegreeFinalProjectStudentsByExecutionPeriod(executionSemester);
+		final List infoteacherDFPStudentList = new ArrayList();
+		for (final TeacherDegreeFinalProjectStudent teacherDegreeFinalProjectStudent : teacherDegreeFinalProjectStudents) {
+			final InfoTeacherDegreeFinalProjectStudent infoTeacherDegreeFinalProjectStudent =
+					InfoTeacherDegreeFinalProjectStudentWithStudentAndPerson.newInfoFromDomain(teacherDegreeFinalProjectStudent);
+			infoteacherDFPStudentList.add(infoTeacherDegreeFinalProjectStudent);
+		}
+
+		teacherDfpStudentsDTO.setInfoTeacher(infoTeacher2);
+		InfoExecutionPeriod infoExecutionPeriod = InfoExecutionPeriod.newInfoFromDomain(executionSemester);
+		teacherDfpStudentsDTO.setInfoExecutionPeriod(infoExecutionPeriod);
+		teacherDfpStudentsDTO.setInfoTeacherDegreeFinalProjectStudentList(infoteacherDFPStudentList);
+
+		return teacherDfpStudentsDTO;
+
 	}
 
-	teacherDfpStudentsDTO.setInfoTeacher(infoTeacher2);
-	InfoExecutionPeriod infoExecutionPeriod = InfoExecutionPeriod.newInfoFromDomain(executionSemester);
-	teacherDfpStudentsDTO.setInfoExecutionPeriod(infoExecutionPeriod);
-	teacherDfpStudentsDTO.setInfoTeacherDegreeFinalProjectStudentList(infoteacherDFPStudentList);
+	private ExecutionSemester getExecutionPeriod(Integer executionPeriodId) {
 
-	return teacherDfpStudentsDTO;
-
-    }
-
-    private ExecutionSemester getExecutionPeriod(Integer executionPeriodId) {
-
-	final ExecutionSemester executionSemester;
-	if ((executionPeriodId == null) || (executionPeriodId.intValue() == 0)) {
-	    executionSemester = ExecutionSemester.readActualExecutionSemester();
-	} else {
-	    executionSemester = rootDomainObject.readExecutionSemesterByOID(executionPeriodId);
+		final ExecutionSemester executionSemester;
+		if ((executionPeriodId == null) || (executionPeriodId.intValue() == 0)) {
+			executionSemester = ExecutionSemester.readActualExecutionSemester();
+		} else {
+			executionSemester = rootDomainObject.readExecutionSemesterByOID(executionPeriodId);
+		}
+		return executionSemester;
 	}
-	return executionSemester;
-    }
 }

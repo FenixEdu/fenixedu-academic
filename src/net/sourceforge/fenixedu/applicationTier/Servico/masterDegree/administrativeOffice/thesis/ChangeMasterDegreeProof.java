@@ -31,46 +31,47 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class ChangeMasterDegreeProof extends FenixService {
 
-    @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
-    @Service
-    public static void run(IUserView userView, Integer studentCurricularPlanID, Date proofDate, Date thesisDeliveryDate,
-	    MasterDegreeClassification finalResult, Integer attachedCopiesNumber, List<String> teacherJuriesNumbers,
-	    List<Integer> externalJuriesIDs) throws FenixServiceException {
+	@Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
+	@Service
+	public static void run(IUserView userView, Integer studentCurricularPlanID, Date proofDate, Date thesisDeliveryDate,
+			MasterDegreeClassification finalResult, Integer attachedCopiesNumber, List<String> teacherJuriesNumbers,
+			List<Integer> externalJuriesIDs) throws FenixServiceException {
 
-	StudentCurricularPlan studentCurricularPlan = rootDomainObject.readStudentCurricularPlanByOID(studentCurricularPlanID);
-	MasterDegreeThesis storedMasterDegreeThesis = studentCurricularPlan.getMasterDegreeThesis();
-	if (storedMasterDegreeThesis == null) {
-	    throw new NonExistingServiceException("error.exception.masterDegree.nonExistentMasterDegreeThesis");
-	}
+		StudentCurricularPlan studentCurricularPlan = rootDomainObject.readStudentCurricularPlanByOID(studentCurricularPlanID);
+		MasterDegreeThesis storedMasterDegreeThesis = studentCurricularPlan.getMasterDegreeThesis();
+		if (storedMasterDegreeThesis == null) {
+			throw new NonExistingServiceException("error.exception.masterDegree.nonExistentMasterDegreeThesis");
+		}
 
-	IDegreeCurricularPlanStrategyFactory degreeCurricularPlanStrategyFactory = DegreeCurricularPlanStrategyFactory
-		.getInstance();
-	IMasterDegreeCurricularPlanStrategy masterDegreeCurricularPlanStrategy = (IMasterDegreeCurricularPlanStrategy) degreeCurricularPlanStrategyFactory
-		.getDegreeCurricularPlanStrategy(studentCurricularPlan.getDegreeCurricularPlan());
+		IDegreeCurricularPlanStrategyFactory degreeCurricularPlanStrategyFactory =
+				DegreeCurricularPlanStrategyFactory.getInstance();
+		IMasterDegreeCurricularPlanStrategy masterDegreeCurricularPlanStrategy =
+				(IMasterDegreeCurricularPlanStrategy) degreeCurricularPlanStrategyFactory
+						.getDegreeCurricularPlanStrategy(studentCurricularPlan.getDegreeCurricularPlan());
 
-	if (!masterDegreeCurricularPlanStrategy.checkEndOfScholarship(studentCurricularPlan)) {
-	    throw new ScholarshipNotFinishedServiceException("error.exception.masterDegree.scholarshipNotFinished");
-	}
+		if (!masterDegreeCurricularPlanStrategy.checkEndOfScholarship(studentCurricularPlan)) {
+			throw new ScholarshipNotFinishedServiceException("error.exception.masterDegree.scholarshipNotFinished");
+		}
 
-	MasterDegreeProofVersion storedMasterDegreeProofVersion = studentCurricularPlan.readActiveMasterDegreeProofVersion();
-	if (storedMasterDegreeProofVersion != null) {
-	    storedMasterDegreeProofVersion.setCurrentState(new State(State.INACTIVE));
-	}
+		MasterDegreeProofVersion storedMasterDegreeProofVersion = studentCurricularPlan.readActiveMasterDegreeProofVersion();
+		if (storedMasterDegreeProofVersion != null) {
+			storedMasterDegreeProofVersion.setCurrentState(new State(State.INACTIVE));
+		}
 
-	Employee employee = userView.getPerson().getEmployee();
+		Employee employee = userView.getPerson().getEmployee();
 
-	List<Teacher> teacherJuries = (List<Teacher>) Teacher.readByNumbers(teacherJuriesNumbers);
-	List<ExternalContract> externalJuries = ExternalContract.readByIDs(externalJuriesIDs);
+		List<Teacher> teacherJuries = Teacher.readByNumbers(teacherJuriesNumbers);
+		List<ExternalContract> externalJuries = ExternalContract.readByIDs(externalJuriesIDs);
 
-	new MasterDegreeProofVersion(storedMasterDegreeThesis, employee, new Date(), proofDate, thesisDeliveryDate, finalResult,
-		attachedCopiesNumber, new State(State.ACTIVE), teacherJuries, externalJuries);
+		new MasterDegreeProofVersion(storedMasterDegreeThesis, employee, new Date(), proofDate, thesisDeliveryDate, finalResult,
+				attachedCopiesNumber, new State(State.ACTIVE), teacherJuries, externalJuries);
 
-	if (finalResult.equals(MasterDegreeClassification.APPROVED)) {
-	    Person person = studentCurricularPlan.getRegistration().getPerson();
-	    person.addPersonRoles(Role.getRoleByRoleType(RoleType.ALUMNI));
+		if (finalResult.equals(MasterDegreeClassification.APPROVED)) {
+			Person person = studentCurricularPlan.getRegistration().getPerson();
+			person.addPersonRoles(Role.getRoleByRoleType(RoleType.ALUMNI));
 //	    person.removeRoleByType(RoleType.STUDENT);
-	}
+		}
 
-    }
+	}
 
 }

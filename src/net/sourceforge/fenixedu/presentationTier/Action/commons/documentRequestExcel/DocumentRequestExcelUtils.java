@@ -28,110 +28,110 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class DocumentRequestExcelUtils {
 
-    HttpServletRequest request;
-    HttpServletResponse response;
+	HttpServletRequest request;
+	HttpServletResponse response;
 
-    public DocumentRequestExcelUtils(HttpServletRequest request, HttpServletResponse response) {
-	this.request = request;
-	this.response = response;
-    }
-
-    public void generateSortedExcel(Set<AcademicServiceRequest> documents, String prefix) {
-
-	SortedSet<AcademicServiceRequest> sorted = new TreeSet<AcademicServiceRequest>(
-		DocumentRequest.COMPARATOR_BY_REGISTRY_NUMBER);
-	sorted.addAll(documents);
-	generate(sorted, getCodes(sorted), prefix);
-
-    }
-
-    public void generateExcel(Set<AcademicServiceRequest> documents, String prefix) {
-
-	generate(documents, getCodes(documents), prefix);
-
-    }
-
-    private Set<RegistryCode> getCodes(Set<AcademicServiceRequest> documents) {
-	Set<RegistryCode> codes = new HashSet<RegistryCode>();
-	for (AcademicServiceRequest document : documents) {
-	    codes.add(document.getRegistryCode());
+	public DocumentRequestExcelUtils(HttpServletRequest request, HttpServletResponse response) {
+		this.request = request;
+		this.response = response;
 	}
-	return codes;
-    }
 
-    private Integer calculateMin(Set<RegistryCode> codes) {
-	Integer min = null;
-	for (RegistryCode code : codes) {
-	    Integer codeNumber = code.getCodeNumber();
-	    if (min == null || codeNumber.intValue() < min.intValue()) {
-		min = codeNumber;
-	    }
+	public void generateSortedExcel(Set<AcademicServiceRequest> documents, String prefix) {
+
+		SortedSet<AcademicServiceRequest> sorted =
+				new TreeSet<AcademicServiceRequest>(DocumentRequest.COMPARATOR_BY_REGISTRY_NUMBER);
+		sorted.addAll(documents);
+		generate(sorted, getCodes(sorted), prefix);
+
 	}
-	return min;
-    }
 
-    private Integer calculateMax(Set<RegistryCode> codes) {
-	Integer min = null;
-	Integer max = null;
-	for (RegistryCode code : codes) {
-	    Integer codeNumber = code.getCodeNumber();
-	    if (max == null || codeNumber.intValue() > max.intValue()) {
-		max = codeNumber;
-	    }
+	public void generateExcel(Set<AcademicServiceRequest> documents, String prefix) {
+
+		generate(documents, getCodes(documents), prefix);
+
 	}
-	return max;
-    }
 
-    private void generate(Set<AcademicServiceRequest> documents, Set<RegistryCode> codes, String prefix) {
-
-	SheetData<AcademicServiceRequest> data = new SheetData<AcademicServiceRequest>(documents) {
-	    @Override
-	    protected void makeLine(AcademicServiceRequest request) {
-		IDocumentRequest document = (IDocumentRequest) request;
-		ResourceBundle enumeration = ResourceBundle.getBundle("resources.EnumerationResources", Language.getLocale());
-		addCell("Código", document.getRegistryCode().getCode());
-		addCell("Tipo de Documento", enumeration.getString(document.getDocumentRequestType().name()));
-		CycleType cycle = null;
-		switch (document.getDocumentRequestType()) {
-		case REGISTRY_DIPLOMA_REQUEST:
-		    cycle = ((IRegistryDiplomaRequest) document).getRequestedCycle();
-		    break;
-		case DIPLOMA_REQUEST:
-		    cycle = ((IDiplomaRequest) document).getWhatShouldBeRequestedCycle();
-		    break;
-		case DIPLOMA_SUPPLEMENT_REQUEST:
-		    cycle = ((IDiplomaSupplementRequest) document).getRequestedCycle();
-		    break;
-		default:
-		    addCell("Ciclo", null);
+	private Set<RegistryCode> getCodes(Set<AcademicServiceRequest> documents) {
+		Set<RegistryCode> codes = new HashSet<RegistryCode>();
+		for (AcademicServiceRequest document : documents) {
+			codes.add(document.getRegistryCode());
 		}
-		addCell("Ciclo", cycle != null ? enumeration.getString(cycle.name()) : null);
-
-		if (document.isRequestForRegistration()) {
-		    addCell("Tipo de Curso",
-			    enumeration.getString(((RegistrationAcademicServiceRequest) document).getDegreeType().name()));
-		} else if (document.isRequestForPhd()) {
-		    addCell("Tipo de Estudos", "Programa doutoral");
-		}
-		addCell("Nº de Aluno", document.getStudent().getNumber());
-		addCell("Nome", document.getPerson().getName());
-		if (!(document.isDiploma())) {
-		    addCell("Ficheiro", request.getLastGeneratedDocument().getFilename());
-		}
-	    }
-	};
-
-	try {
-	    response.setContentType("application/vnd.ms-excel");
-	    response.setHeader("Content-disposition", "attachment; filename=" + prefix + calculateMin(codes) + "-"
-		    + calculateMax(codes) + "(" + codes.size() + ")" + ".xls");
-	    final ServletOutputStream writer = response.getOutputStream();
-	    new SpreadsheetBuilder().addSheet("lote", data).build(WorkbookExportFormat.EXCEL, writer);
-	    writer.flush();
-	    response.flushBuffer();
-	} catch (IOException e) {
-	    throw new DomainException("error.rectorateSubmission.errorGeneratingMetadata", e);
+		return codes;
 	}
-    }
+
+	private Integer calculateMin(Set<RegistryCode> codes) {
+		Integer min = null;
+		for (RegistryCode code : codes) {
+			Integer codeNumber = code.getCodeNumber();
+			if (min == null || codeNumber.intValue() < min.intValue()) {
+				min = codeNumber;
+			}
+		}
+		return min;
+	}
+
+	private Integer calculateMax(Set<RegistryCode> codes) {
+		Integer min = null;
+		Integer max = null;
+		for (RegistryCode code : codes) {
+			Integer codeNumber = code.getCodeNumber();
+			if (max == null || codeNumber.intValue() > max.intValue()) {
+				max = codeNumber;
+			}
+		}
+		return max;
+	}
+
+	private void generate(Set<AcademicServiceRequest> documents, Set<RegistryCode> codes, String prefix) {
+
+		SheetData<AcademicServiceRequest> data = new SheetData<AcademicServiceRequest>(documents) {
+			@Override
+			protected void makeLine(AcademicServiceRequest request) {
+				IDocumentRequest document = (IDocumentRequest) request;
+				ResourceBundle enumeration = ResourceBundle.getBundle("resources.EnumerationResources", Language.getLocale());
+				addCell("Código", document.getRegistryCode().getCode());
+				addCell("Tipo de Documento", enumeration.getString(document.getDocumentRequestType().name()));
+				CycleType cycle = null;
+				switch (document.getDocumentRequestType()) {
+				case REGISTRY_DIPLOMA_REQUEST:
+					cycle = ((IRegistryDiplomaRequest) document).getRequestedCycle();
+					break;
+				case DIPLOMA_REQUEST:
+					cycle = ((IDiplomaRequest) document).getWhatShouldBeRequestedCycle();
+					break;
+				case DIPLOMA_SUPPLEMENT_REQUEST:
+					cycle = ((IDiplomaSupplementRequest) document).getRequestedCycle();
+					break;
+				default:
+					addCell("Ciclo", null);
+				}
+				addCell("Ciclo", cycle != null ? enumeration.getString(cycle.name()) : null);
+
+				if (document.isRequestForRegistration()) {
+					addCell("Tipo de Curso",
+							enumeration.getString(((RegistrationAcademicServiceRequest) document).getDegreeType().name()));
+				} else if (document.isRequestForPhd()) {
+					addCell("Tipo de Estudos", "Programa doutoral");
+				}
+				addCell("Nº de Aluno", document.getStudent().getNumber());
+				addCell("Nome", document.getPerson().getName());
+				if (!(document.isDiploma())) {
+					addCell("Ficheiro", request.getLastGeneratedDocument().getFilename());
+				}
+			}
+		};
+
+		try {
+			response.setContentType("application/vnd.ms-excel");
+			response.setHeader("Content-disposition", "attachment; filename=" + prefix + calculateMin(codes) + "-"
+					+ calculateMax(codes) + "(" + codes.size() + ")" + ".xls");
+			final ServletOutputStream writer = response.getOutputStream();
+			new SpreadsheetBuilder().addSheet("lote", data).build(WorkbookExportFormat.EXCEL, writer);
+			writer.flush();
+			response.flushBuffer();
+		} catch (IOException e) {
+			throw new DomainException("error.rectorateSubmission.errorGeneratingMetadata", e);
+		}
+	}
 
 }

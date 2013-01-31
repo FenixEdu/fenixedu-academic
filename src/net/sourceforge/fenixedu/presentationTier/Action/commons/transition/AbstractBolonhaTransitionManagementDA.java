@@ -15,57 +15,57 @@ import org.apache.struts.action.DynaActionForm;
 
 public abstract class AbstractBolonhaTransitionManagementDA extends FenixDispatchAction {
 
-    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+	public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
 
-	final List<Registration> registrations = getRegistrations(request);
-	if (registrations.size() == 1) {
-	    final Registration registration = registrations.iterator().next();
-	    setParametersToShowStudentCurricularPlan(form, request, registration);
+		final List<Registration> registrations = getRegistrations(request);
+		if (registrations.size() == 1) {
+			final Registration registration = registrations.iterator().next();
+			setParametersToShowStudentCurricularPlan(form, request, registration);
 
-	    return mapping.findForward("showStudentCurricularPlan");
+			return mapping.findForward("showStudentCurricularPlan");
+		}
+
+		request.setAttribute("registrations", registrations);
+
+		return mapping.findForward("chooseRegistration");
+
 	}
 
-	request.setAttribute("registrations", registrations);
+	private void setParametersToShowStudentCurricularPlan(final ActionForm form, final HttpServletRequest request,
+			final Registration registration) {
 
-	return mapping.findForward("chooseRegistration");
+		setRegistration(request, registration);
 
-    }
-
-    private void setParametersToShowStudentCurricularPlan(final ActionForm form, final HttpServletRequest request,
-	    final Registration registration) {
-
-	setRegistration(request, registration);
-
-	final DynaActionForm dynaActionForm = ((DynaActionForm) form);
-	dynaActionForm.set("registrationId", registration.getIdInternal());
-    }
-
-    private void setRegistration(HttpServletRequest request, final Registration registration) {
-	request.setAttribute("registration", registration);
-    }
-
-    public ActionForward showStudentCurricularPlan(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
-
-	setParametersToShowStudentCurricularPlan(form, request, getRegistration(request, form));
-
-	return mapping.findForward("showStudentCurricularPlan");
-    }
-
-    private Registration getRegistration(final HttpServletRequest request, final ActionForm form) {
-	return getRegistration(request, (Integer) ((DynaActionForm) form).get("registrationId"));
-    }
-
-    private Registration getRegistration(final HttpServletRequest request, final Integer registrationId) {
-	for (final Registration registration : getRegistrations(request)) {
-	    if (registration.getIdInternal().equals(registrationId)) {
-		return registration;
-	    }
+		final DynaActionForm dynaActionForm = ((DynaActionForm) form);
+		dynaActionForm.set("registrationId", registration.getIdInternal());
 	}
 
-	return null;
-    }
+	private void setRegistration(HttpServletRequest request, final Registration registration) {
+		request.setAttribute("registration", registration);
+	}
 
-    abstract protected List<Registration> getRegistrations(final HttpServletRequest request);
+	public ActionForward showStudentCurricularPlan(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) {
+
+		setParametersToShowStudentCurricularPlan(form, request, getRegistration(request, form));
+
+		return mapping.findForward("showStudentCurricularPlan");
+	}
+
+	private Registration getRegistration(final HttpServletRequest request, final ActionForm form) {
+		return getRegistration(request, (Integer) ((DynaActionForm) form).get("registrationId"));
+	}
+
+	private Registration getRegistration(final HttpServletRequest request, final Integer registrationId) {
+		for (final Registration registration : getRegistrations(request)) {
+			if (registration.getIdInternal().equals(registrationId)) {
+				return registration;
+			}
+		}
+
+		return null;
+	}
+
+	abstract protected List<Registration> getRegistrations(final HttpServletRequest request);
 
 }

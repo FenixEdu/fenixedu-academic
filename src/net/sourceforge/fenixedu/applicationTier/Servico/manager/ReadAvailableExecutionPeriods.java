@@ -17,24 +17,24 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadAvailableExecutionPeriods extends FenixService {
 
-    @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
-    @Service
-    public static List run(List<Integer> unavailableExecutionPeriodsIDs) throws FenixServiceException {
+	@Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
+	@Service
+	public static List run(List<Integer> unavailableExecutionPeriodsIDs) throws FenixServiceException {
 
-	final Collection<ExecutionSemester> filteredExecutionPeriods = new ArrayList<ExecutionSemester>(rootDomainObject
-		.getExecutionPeriodsSet());
-	for (final Integer executionPeriodID : unavailableExecutionPeriodsIDs) {
-	    final ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(executionPeriodID);
-	    filteredExecutionPeriods.remove(executionSemester);
+		final Collection<ExecutionSemester> filteredExecutionPeriods =
+				new ArrayList<ExecutionSemester>(rootDomainObject.getExecutionPeriodsSet());
+		for (final Integer executionPeriodID : unavailableExecutionPeriodsIDs) {
+			final ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(executionPeriodID);
+			filteredExecutionPeriods.remove(executionSemester);
+		}
+		return (List) CollectionUtils.collect(filteredExecutionPeriods, TRANSFORM_EXECUTIONPERIOD_TO_INFOEXECUTIONPERIOD);
 	}
-	return (List) CollectionUtils.collect(filteredExecutionPeriods, TRANSFORM_EXECUTIONPERIOD_TO_INFOEXECUTIONPERIOD);
-    }
 
-    private static final Transformer TRANSFORM_EXECUTIONPERIOD_TO_INFOEXECUTIONPERIOD = new Transformer() {
-	@Override
-	public Object transform(Object executionPeriod) {
-	    return InfoExecutionPeriod.newInfoFromDomain((ExecutionSemester) executionPeriod);
-	}
-    };
+	private static final Transformer TRANSFORM_EXECUTIONPERIOD_TO_INFOEXECUTIONPERIOD = new Transformer() {
+		@Override
+		public Object transform(Object executionPeriod) {
+			return InfoExecutionPeriod.newInfoFromDomain((ExecutionSemester) executionPeriod);
+		}
+	};
 
 }

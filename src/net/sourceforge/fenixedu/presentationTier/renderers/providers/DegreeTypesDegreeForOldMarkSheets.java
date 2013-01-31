@@ -16,29 +16,30 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class DegreeTypesDegreeForOldMarkSheets implements DataProvider {
 
-    @Override
-    public Converter getConverter() {
-	return new DomainObjectKeyConverter();
-    }
-
-    @Override
-    public Object provide(Object source, Object currentValue) {
-	final MarkSheetManagementBaseBean markSheetManagementBean = (MarkSheetManagementBaseBean) source;
-	if (markSheetManagementBean.getExecutionPeriod() != null) {
-	    final Set<Degree> result = new TreeSet<Degree>(Degree.COMPARATOR_BY_DEGREE_TYPE_AND_NAME_AND_ID);
-	    Set<Degree> availableDegrees = AcademicAuthorizationGroup.getDegreesForOperation(AccessControl.getPerson(),
-		    AcademicOperationType.MANAGE_MARKSHEETS);
-	    Set<Degree> degrees = new HashSet<Degree>();
-	    for (Degree degree : availableDegrees) {
-		if (!degree.isBolonhaDegree()) {
-		    degrees.add(degree);
-		}
-	    }
-	    result.addAll(degrees);
-	    return result;
+	@Override
+	public Converter getConverter() {
+		return new DomainObjectKeyConverter();
 	}
 
-	return Collections.emptySet();
-    }
+	@Override
+	public Object provide(Object source, Object currentValue) {
+		final MarkSheetManagementBaseBean markSheetManagementBean = (MarkSheetManagementBaseBean) source;
+		if (markSheetManagementBean.getExecutionPeriod() != null) {
+			final Set<Degree> result = new TreeSet<Degree>(Degree.COMPARATOR_BY_DEGREE_TYPE_AND_NAME_AND_ID);
+			Set<Degree> availableDegrees =
+					AcademicAuthorizationGroup.getDegreesForOperation(AccessControl.getPerson(),
+							AcademicOperationType.MANAGE_MARKSHEETS);
+			Set<Degree> degrees = new HashSet<Degree>();
+			for (Degree degree : availableDegrees) {
+				if (!degree.isBolonhaDegree()) {
+					degrees.add(degree);
+				}
+			}
+			result.addAll(degrees);
+			return result;
+		}
+
+		return Collections.emptySet();
+	}
 
 }

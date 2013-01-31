@@ -16,10 +16,10 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class ReadDepartmentByTeacher extends FenixService {
 
-    @Service
-    public static InfoDepartment run(InfoTeacher infoTeacher) {
-	Teacher teacher = rootDomainObject.readTeacherByOID(infoTeacher.getIdInternal());
-	Department department = teacher.getCurrentWorkingDepartment();
-	return InfoDepartment.newInfoFromDomain(department);
-    }
+	@Service
+	public static InfoDepartment run(InfoTeacher infoTeacher) {
+		Teacher teacher = rootDomainObject.readTeacherByOID(infoTeacher.getIdInternal());
+		Department department = teacher.getCurrentWorkingDepartment();
+		return InfoDepartment.newInfoFromDomain(department);
+	}
 }

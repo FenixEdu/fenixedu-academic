@@ -17,48 +17,45 @@ import org.apache.struts.action.ActionMapping;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(path = "/undoneQueueJobs", module = "manager")
-@Forwards( { @Forward(name = "undoneQueueJobs", path = "/manager/undoneQueueJobs.jsp")})
-public class UndoneQueueJobsDA extends FenixDispatchAction{
-    
-    public ActionForward prepareUndoneQueueJobList(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {
+@Forwards({ @Forward(name = "undoneQueueJobs", path = "/manager/undoneQueueJobs.jsp") })
+public class UndoneQueueJobsDA extends FenixDispatchAction {
 
-	List<QueueJob> allJobs = rootDomainObject.getQueueJob();
-	List<QueueJob> queueJobs = new ArrayList<QueueJob>();
-	
-	for (QueueJob job : allJobs){
-	    if (job.getIsNotDoneAndCancelled() || job.getIsNotDoneAndNotCancelled()){
-		if (job instanceof TutorshipStudentLowPerformanceQueueJob){
+	public ActionForward prepareUndoneQueueJobList(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) {
 
+		List<QueueJob> allJobs = rootDomainObject.getQueueJob();
+		List<QueueJob> queueJobs = new ArrayList<QueueJob>();
+
+		for (QueueJob job : allJobs) {
+			if (job.getIsNotDoneAndCancelled() || job.getIsNotDoneAndNotCancelled()) {
+				if (job instanceof TutorshipStudentLowPerformanceQueueJob) {
+
+				}
+				queueJobs.add(job);
+			}
 		}
-		queueJobs.add(job);
-	    }
+
+		request.setAttribute("queueJobList", queueJobs);
+
+		return mapping.findForward("undoneQueueJobs");
 	}
-	
-	request.setAttribute("queueJobList", queueJobs);
 
-	return mapping.findForward("undoneQueueJobs");
-    }
-    
-    public ActionForward resendQueuedJob(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {
-	QueueJob job = getDomainObject(request, "id");
-	job.resend();
+	public ActionForward resendQueuedJob(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) {
+		QueueJob job = getDomainObject(request, "id");
+		job.resend();
 
-	return prepareUndoneQueueJobList(mapping, actionForm, request, response);
-    }
-    
-    public ActionForward cancelQueuedJob(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {
-	QueueJob job = getDomainObject(request, "id");
-	job.cancel();
+		return prepareUndoneQueueJobList(mapping, actionForm, request, response);
+	}
 
-	return prepareUndoneQueueJobList(mapping, actionForm, request, response);
-    }
-    
+	public ActionForward cancelQueuedJob(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) {
+		QueueJob job = getDomainObject(request, "id");
+		job.cancel();
+
+		return prepareUndoneQueueJobList(mapping, actionForm, request, response);
+	}
+
 }

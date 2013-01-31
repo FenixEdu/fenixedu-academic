@@ -27,18 +27,28 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
  * @author Barbosa
  * @author Pica
  */
-@Mapping(module = "facultyAdmOffice", path = "/manageGrantCostCenter", input = "/manageGrantCostCenter.do?page=0&method=prepareManageGrantCostCenter", attribute = "voidForm", formBean = "voidForm", scope = "request", parameter = "method")
-@Forwards(value = { @Forward(name = "manage-grant-costcenter", path = "/facultyAdmOffice/grant/contract/manageGrantCostCenter.jsp", tileProperties = @Tile(title = "private.teachingstaffandresearcher.miscellaneousmanagement.costcenter")) })
+@Mapping(
+		module = "facultyAdmOffice",
+		path = "/manageGrantCostCenter",
+		input = "/manageGrantCostCenter.do?page=0&method=prepareManageGrantCostCenter",
+		attribute = "voidForm",
+		formBean = "voidForm",
+		scope = "request",
+		parameter = "method")
+@Forwards(value = { @Forward(
+		name = "manage-grant-costcenter",
+		path = "/facultyAdmOffice/grant/contract/manageGrantCostCenter.jsp",
+		tileProperties = @Tile(title = "private.teachingstaffandresearcher.miscellaneousmanagement.costcenter")) })
 public class ManageGrantCostCenterAction extends FenixDispatchAction {
-    public ActionForward prepareManageGrantCostCenter(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-	List<GrantCostCenter> grantCenterList = new ArrayList<GrantCostCenter>();
-	for (final GrantPaymentEntity grantPaymentEntity : rootDomainObject.getGrantPaymentEntitys()) {
-	    if (grantPaymentEntity.isCostCenter()) {
-		grantCenterList.add((GrantCostCenter) grantPaymentEntity);
-	    }
+	public ActionForward prepareManageGrantCostCenter(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		List<GrantCostCenter> grantCenterList = new ArrayList<GrantCostCenter>();
+		for (final GrantPaymentEntity grantPaymentEntity : rootDomainObject.getGrantPaymentEntitys()) {
+			if (grantPaymentEntity.isCostCenter()) {
+				grantCenterList.add((GrantCostCenter) grantPaymentEntity);
+			}
+		}
+		request.setAttribute("grantCenterList", grantCenterList);
+		return mapping.findForward("manage-grant-costcenter");
 	}
-	request.setAttribute("grantCenterList", grantCenterList);
-	return mapping.findForward("manage-grant-costcenter");
-    }
 }

@@ -6,8 +6,8 @@ import net.sourceforge.fenixedu.domain.tests.NewCorrector;
 import pt.ist.fenixWebFramework.services.Service;
 
 public class DeleteCorrector extends FenixService {
-    @Service
-    public static void run(NewCorrector corrector) throws FenixServiceException {
-	corrector.delete();
-    }
+	@Service
+	public static void run(NewCorrector corrector) throws FenixServiceException {
+		corrector.delete();
+	}
 }

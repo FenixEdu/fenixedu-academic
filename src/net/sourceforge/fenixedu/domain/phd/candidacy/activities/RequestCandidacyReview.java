@@ -15,52 +15,52 @@ import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcessS
 
 public class RequestCandidacyReview extends PhdProgramCandidacyProcessActivity {
 
-    static final private List<PhdProgramCandidacyProcessState> PREVIOUS_STATE = Arrays.asList(
+	static final private List<PhdProgramCandidacyProcessState> PREVIOUS_STATE = Arrays.asList(
 
-    PhdProgramCandidacyProcessState.PRE_CANDIDATE,
+	PhdProgramCandidacyProcessState.PRE_CANDIDATE,
 
-    PhdProgramCandidacyProcessState.STAND_BY_WITH_MISSING_INFORMATION,
+	PhdProgramCandidacyProcessState.STAND_BY_WITH_MISSING_INFORMATION,
 
-    PhdProgramCandidacyProcessState.STAND_BY_WITH_COMPLETE_INFORMATION,
+	PhdProgramCandidacyProcessState.STAND_BY_WITH_COMPLETE_INFORMATION,
 
-    PhdProgramCandidacyProcessState.REJECTED,
+	PhdProgramCandidacyProcessState.REJECTED,
 
-    PhdProgramCandidacyProcessState.WAITING_FOR_SCIENTIFIC_COUNCIL_RATIFICATION);
+	PhdProgramCandidacyProcessState.WAITING_FOR_SCIENTIFIC_COUNCIL_RATIFICATION);
 
-    @Override
-    protected void activityPreConditions(PhdProgramCandidacyProcess process, IUserView userView) {
-	if (PREVIOUS_STATE.contains(process.getActiveState())) {
-	    return;
-	}
-	throw new PreConditionNotValidException();
-    }
-
-    @Override
-    protected PhdProgramCandidacyProcess executeActivity(PhdProgramCandidacyProcess process, IUserView userView, Object object) {
-
-	final PhdIndividualProgramProcess mainProcess = process.getIndividualProgramProcess();
-	if (!mainProcess.hasPhdProgram()) {
-	    throw new DomainException("error.phd.candidacy.PhdProgramCandidacyProcess.RequestCandidacyReview.invalid.phd.program");
+	@Override
+	protected void activityPreConditions(PhdProgramCandidacyProcess process, IUserView userView) {
+		if (PREVIOUS_STATE.contains(process.getActiveState())) {
+			return;
+		}
+		throw new PreConditionNotValidException();
 	}
 
-	final PhdProgramCandidacyProcessStateBean bean = (PhdProgramCandidacyProcessStateBean) object;
-	process.createState(PhdProgramCandidacyProcessState.PENDING_FOR_COORDINATOR_OPINION, userView.getPerson(),
-		bean.getRemarks());
+	@Override
+	protected PhdProgramCandidacyProcess executeActivity(PhdProgramCandidacyProcess process, IUserView userView, Object object) {
 
-	if (bean.getGenerateAlert()) {
-	    AlertService.alertCoordinators(mainProcess, subject(), body(mainProcess));
+		final PhdIndividualProgramProcess mainProcess = process.getIndividualProgramProcess();
+		if (!mainProcess.hasPhdProgram()) {
+			throw new DomainException("error.phd.candidacy.PhdProgramCandidacyProcess.RequestCandidacyReview.invalid.phd.program");
+		}
+
+		final PhdProgramCandidacyProcessStateBean bean = (PhdProgramCandidacyProcessStateBean) object;
+		process.createState(PhdProgramCandidacyProcessState.PENDING_FOR_COORDINATOR_OPINION, userView.getPerson(),
+				bean.getRemarks());
+
+		if (bean.getGenerateAlert()) {
+			AlertService.alertCoordinators(mainProcess, subject(), body(mainProcess));
+		}
+
+		return process;
 	}
 
-	return process;
-    }
+	private AlertMessage subject() {
+		return AlertMessage.create("message.phd.alert.candidacy.review.subject");
+	}
 
-    private AlertMessage subject() {
-	return AlertMessage.create("message.phd.alert.candidacy.review.subject");
-    }
-
-    private AlertMessage body(final PhdIndividualProgramProcess process) {
-	return AlertMessage.create("message.phd.alert.candidacy.review.body").args(process.getProcessNumber(),
-		process.getPerson().getName());
-    }
+	private AlertMessage body(final PhdIndividualProgramProcess process) {
+		return AlertMessage.create("message.phd.alert.candidacy.review.body").args(process.getProcessNumber(),
+				process.getPerson().getName());
+	}
 
 }

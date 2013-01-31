@@ -16,188 +16,187 @@ import org.joda.time.YearMonthDay;
 
 public class InstallmentBean implements Serializable {
 
-    static private final long serialVersionUID = -103744109361724129L;
+	static private final long serialVersionUID = -103744109361724129L;
 
-    private boolean selected;
+	private boolean selected;
 
-    private Money amount;
+	private Money amount;
 
-    private BigDecimal ectsForAmount;
+	private BigDecimal ectsForAmount;
 
-    private List<ExecutionSemester> executionSemesters;
+	private List<ExecutionSemester> executionSemesters;
 
-    private YearMonthDay startDate;
+	private YearMonthDay startDate;
 
-    private YearMonthDay endDate;
+	private YearMonthDay endDate;
 
-    private boolean penaltyAppliable;
+	private boolean penaltyAppliable;
 
-    private BigDecimal montlyPenaltyPercentage;
+	private BigDecimal montlyPenaltyPercentage;
 
-    private YearMonthDay whenToStartApplyPenalty;
+	private YearMonthDay whenToStartApplyPenalty;
 
-    private Integer maxMonthsToApplyPenalty;
+	private Integer maxMonthsToApplyPenalty;
 
-    private PaymentPlanBean paymentPlanBean;
+	private PaymentPlanBean paymentPlanBean;
 
-    private Integer numberOfDaysToStartApplyingPenalty = null;
+	private Integer numberOfDaysToStartApplyingPenalty = null;
 
-    public InstallmentBean(PaymentPlanBean paymentPlanBean) {
-	setExecutionSemesters(new ArrayList<ExecutionSemester>());
-	setPaymentPlanBean(paymentPlanBean);
-    }
+	public InstallmentBean(PaymentPlanBean paymentPlanBean) {
+		setExecutionSemesters(new ArrayList<ExecutionSemester>());
+		setPaymentPlanBean(paymentPlanBean);
+	}
 
-    public InstallmentBean(final Installment installment) {
-	setPaymentPlanBean(new PaymentPlanBean(installment.getPaymentPlan().getExecutionYear()));
-	setExecutionSemesters(new ArrayList<ExecutionSemester>());
-	setAmount(installment.getAmount());
-	setStartDate(installment.getStartDate());
-	setEndDate(installment.getEndDate());
+	public InstallmentBean(final Installment installment) {
+		setPaymentPlanBean(new PaymentPlanBean(installment.getPaymentPlan().getExecutionYear()));
+		setExecutionSemesters(new ArrayList<ExecutionSemester>());
+		setAmount(installment.getAmount());
+		setStartDate(installment.getStartDate());
+		setEndDate(installment.getEndDate());
 
+		if (installment instanceof InstallmentWithMonthlyPenalty) {
+			InstallmentWithMonthlyPenalty installmentWithPenalty = (InstallmentWithMonthlyPenalty) installment;
+			setMaxMonthsToApplyPenalty(installmentWithPenalty.getMaxMonthsToApplyPenalty());
 
-	if (installment instanceof InstallmentWithMonthlyPenalty) {
-	    InstallmentWithMonthlyPenalty installmentWithPenalty = (InstallmentWithMonthlyPenalty) installment;
-	    setMaxMonthsToApplyPenalty(installmentWithPenalty.getMaxMonthsToApplyPenalty());
+			if (!(installment instanceof InstallmentForFirstTimeStudents)) {
+				setWhenToStartApplyPenalty(installmentWithPenalty.getWhenStartToApplyPenalty());
+			}
 
-	    if (!(installment instanceof InstallmentForFirstTimeStudents)) {
-		setWhenToStartApplyPenalty(installmentWithPenalty.getWhenStartToApplyPenalty());
-	    }
+			setMontlyPenaltyPercentage(installmentWithPenalty.getPenaltyPercentage());
 
-	    setMontlyPenaltyPercentage(installmentWithPenalty.getPenaltyPercentage());
+		}
+
+		if (installment instanceof PartialRegimeInstallment) {
+			PartialRegimeInstallment partialInstallment = (PartialRegimeInstallment) installment;
+			setExecutionSemesters(partialInstallment.getExecutionSemesters());
+			setEctsForAmount(partialInstallment.getEctsForAmount());
+		}
+
+		if (installment instanceof InstallmentForFirstTimeStudents) {
+			InstallmentForFirstTimeStudents installmentForFirstTimeStudents = (InstallmentForFirstTimeStudents) installment;
+			setNumberOfDaysToStartApplyingPenalty(installmentForFirstTimeStudents.getNumberOfDaysToStartApplyingPenalty());
+		}
+	}
+
+	public PaymentPlanBean getPaymentPlanBean() {
+		return paymentPlanBean;
+	}
+
+	public void setPaymentPlanBean(PaymentPlanBean paymentPlanBean) {
+		this.paymentPlanBean = paymentPlanBean;
+	}
+
+	public Money getAmount() {
+		return amount;
+	}
+
+	public void setAmount(Money amount) {
+		this.amount = amount;
+	}
+
+	public YearMonthDay getStartDate() {
+		return startDate;
+	}
+
+	public void setStartDate(YearMonthDay startDate) {
+		this.startDate = startDate;
+	}
+
+	public YearMonthDay getEndDate() {
+		return endDate;
+	}
+
+	public void setEndDate(YearMonthDay endDate) {
+		this.endDate = endDate;
+	}
+
+	public BigDecimal getMontlyPenaltyPercentage() {
+		return montlyPenaltyPercentage;
+	}
+
+	public void setMontlyPenaltyPercentage(BigDecimal montlyPenaltyPercentage) {
+		this.montlyPenaltyPercentage = montlyPenaltyPercentage;
+	}
+
+	public YearMonthDay getWhenToStartApplyPenalty() {
+		return whenToStartApplyPenalty;
+	}
+
+	public void setWhenToStartApplyPenalty(YearMonthDay whenToStartApplyPenalty) {
+		this.whenToStartApplyPenalty = whenToStartApplyPenalty;
+	}
+
+	public boolean isSelected() {
+		return selected;
+	}
+
+	public void setSelected(boolean selected) {
+		this.selected = selected;
+	}
+
+	public Integer getMaxMonthsToApplyPenalty() {
+		return maxMonthsToApplyPenalty;
+	}
+
+	public void setMaxMonthsToApplyPenalty(Integer maxMonthsToApplyPenalty) {
+		this.maxMonthsToApplyPenalty = maxMonthsToApplyPenalty;
+	}
+
+	public boolean hasRequiredInformation() {
+		boolean result = this.amount != null && this.startDate != null && this.endDate != null;
+
+		if (!isPenaltyAppliable()) {
+			return result;
+		}
+
+		return result && this.montlyPenaltyPercentage != null && this.whenToStartApplyPenalty != null
+				&& this.maxMonthsToApplyPenalty != null;
 
 	}
 
-	if (installment instanceof PartialRegimeInstallment) {
-	    PartialRegimeInstallment partialInstallment = (PartialRegimeInstallment) installment;
-	    setExecutionSemesters(partialInstallment.getExecutionSemesters());
-	    setEctsForAmount(partialInstallment.getEctsForAmount());
+	public boolean isPenaltyAppliable() {
+		return penaltyAppliable;
 	}
 
-	if (installment instanceof InstallmentForFirstTimeStudents) {
-	    InstallmentForFirstTimeStudents installmentForFirstTimeStudents = (InstallmentForFirstTimeStudents) installment;
-	    setNumberOfDaysToStartApplyingPenalty(installmentForFirstTimeStudents.getNumberOfDaysToStartApplyingPenalty());
-	}
-    }
-
-    public PaymentPlanBean getPaymentPlanBean() {
-	return paymentPlanBean;
-    }
-
-    public void setPaymentPlanBean(PaymentPlanBean paymentPlanBean) {
-	this.paymentPlanBean = paymentPlanBean;
-    }
-
-    public Money getAmount() {
-	return amount;
-    }
-
-    public void setAmount(Money amount) {
-	this.amount = amount;
-    }
-
-    public YearMonthDay getStartDate() {
-	return startDate;
-    }
-
-    public void setStartDate(YearMonthDay startDate) {
-	this.startDate = startDate;
-    }
-
-    public YearMonthDay getEndDate() {
-	return endDate;
-    }
-
-    public void setEndDate(YearMonthDay endDate) {
-	this.endDate = endDate;
-    }
-
-    public BigDecimal getMontlyPenaltyPercentage() {
-	return montlyPenaltyPercentage;
-    }
-
-    public void setMontlyPenaltyPercentage(BigDecimal montlyPenaltyPercentage) {
-	this.montlyPenaltyPercentage = montlyPenaltyPercentage;
-    }
-
-    public YearMonthDay getWhenToStartApplyPenalty() {
-	return whenToStartApplyPenalty;
-    }
-
-    public void setWhenToStartApplyPenalty(YearMonthDay whenToStartApplyPenalty) {
-	this.whenToStartApplyPenalty = whenToStartApplyPenalty;
-    }
-
-    public boolean isSelected() {
-	return selected;
-    }
-
-    public void setSelected(boolean selected) {
-	this.selected = selected;
-    }
-
-    public Integer getMaxMonthsToApplyPenalty() {
-	return maxMonthsToApplyPenalty;
-    }
-
-    public void setMaxMonthsToApplyPenalty(Integer maxMonthsToApplyPenalty) {
-	this.maxMonthsToApplyPenalty = maxMonthsToApplyPenalty;
-    }
-
-    public boolean hasRequiredInformation() {
-	boolean result = this.amount != null && this.startDate != null && this.endDate != null;
-
-	if (!isPenaltyAppliable()) {
-	    return result;
+	public void setPenaltyAppliable(boolean penaltyAppliable) {
+		this.penaltyAppliable = penaltyAppliable;
 	}
 
-	return result && this.montlyPenaltyPercentage != null && this.whenToStartApplyPenalty != null
-		&& this.maxMonthsToApplyPenalty != null;
-
-    }
-
-    public boolean isPenaltyAppliable() {
-	return penaltyAppliable;
-    }
-
-    public void setPenaltyAppliable(boolean penaltyAppliable) {
-	this.penaltyAppliable = penaltyAppliable;
-    }
-
-    public BigDecimal getEctsForAmount() {
-	return ectsForAmount;
-    }
-
-    public void setEctsForAmount(BigDecimal ectsForAmount) {
-	this.ectsForAmount = ectsForAmount;
-    }
-
-    public List<ExecutionSemester> getExecutionSemesters() {
-	final List<ExecutionSemester> result = new ArrayList<ExecutionSemester>();
-	for (final ExecutionSemester each : this.executionSemesters) {
-	    result.add(each);
+	public BigDecimal getEctsForAmount() {
+		return ectsForAmount;
 	}
 
-	return result;
-    }
-
-    public void setExecutionSemesters(List<ExecutionSemester> executionSemesters) {
-	final List<ExecutionSemester> result = new ArrayList<ExecutionSemester>();
-	for (final ExecutionSemester each : executionSemesters) {
-	    result.add(each);
+	public void setEctsForAmount(BigDecimal ectsForAmount) {
+		this.ectsForAmount = ectsForAmount;
 	}
 
-	this.executionSemesters = result;
-    }
+	public List<ExecutionSemester> getExecutionSemesters() {
+		final List<ExecutionSemester> result = new ArrayList<ExecutionSemester>();
+		for (final ExecutionSemester each : this.executionSemesters) {
+			result.add(each);
+		}
 
-    public Integer getNumberOfDaysToStartApplyingPenalty() {
-	return numberOfDaysToStartApplyingPenalty;
-    }
+		return result;
+	}
 
-    public void setNumberOfDaysToStartApplyingPenalty(Integer numberOfDaysToStartApplyingPenalty) {
-	this.numberOfDaysToStartApplyingPenalty = numberOfDaysToStartApplyingPenalty;
-    }
+	public void setExecutionSemesters(List<ExecutionSemester> executionSemesters) {
+		final List<ExecutionSemester> result = new ArrayList<ExecutionSemester>();
+		for (final ExecutionSemester each : executionSemesters) {
+			result.add(each);
+		}
 
-    public boolean isForFirstTimeInstitutionStudents() {
-	return getNumberOfDaysToStartApplyingPenalty() != null;
-    }
+		this.executionSemesters = result;
+	}
+
+	public Integer getNumberOfDaysToStartApplyingPenalty() {
+		return numberOfDaysToStartApplyingPenalty;
+	}
+
+	public void setNumberOfDaysToStartApplyingPenalty(Integer numberOfDaysToStartApplyingPenalty) {
+		this.numberOfDaysToStartApplyingPenalty = numberOfDaysToStartApplyingPenalty;
+	}
+
+	public boolean isForFirstTimeInstitutionStudents() {
+		return getNumberOfDaysToStartApplyingPenalty() != null;
+	}
 }

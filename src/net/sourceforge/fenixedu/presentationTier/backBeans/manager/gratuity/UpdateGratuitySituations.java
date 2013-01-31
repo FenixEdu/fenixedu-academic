@@ -23,40 +23,41 @@ import org.apache.struts.util.LabelValueBean;
  */
 public class UpdateGratuitySituations extends FenixBackingBean {
 
-    private String executionYear;
+	private String executionYear;
 
-    public void update(ActionEvent evt) {
+	public void update(ActionEvent evt) {
 
-	Object[] args = { this.executionYear };
-	try {
-	    ServiceUtils.executeService("CreateGratuitySituationsForCurrentExecutionYear", args);
+		Object[] args = { this.executionYear };
+		try {
+			ServiceUtils.executeService("CreateGratuitySituationsForCurrentExecutionYear", args);
 
-	} catch (FenixFilterException e) {
-	} catch (FenixServiceException e1) {
+		} catch (FenixFilterException e) {
+		} catch (FenixServiceException e1) {
+		}
+
 	}
 
-    }
+	public List getExecutionYears() {
 
-    public List getExecutionYears() {
+		List<LabelValueBean> executionYears = (List) ReadNotClosedExecutionYears.run();
 
-	List<LabelValueBean> executionYears = (List) ReadNotClosedExecutionYears.run();
+		CollectionUtils.transform(executionYears, new Transformer() {
+			@Override
+			public Object transform(Object arg0) {
+				InfoExecutionYear executionYear = (InfoExecutionYear) arg0;
+				return new SelectItem(executionYear.getYear(), executionYear.getYear());
+			}
+		});
 
-	CollectionUtils.transform(executionYears, new Transformer() {
-	    public Object transform(Object arg0) {
-		InfoExecutionYear executionYear = (InfoExecutionYear) arg0;
-		return new SelectItem(executionYear.getYear(), executionYear.getYear());
-	    }
-	});
+		return executionYears;
+	}
 
-	return executionYears;
-    }
+	public String getExecutionYear() {
+		return executionYear;
+	}
 
-    public String getExecutionYear() {
-	return executionYear;
-    }
-
-    public void setExecutionYear(String executionYear) {
-	this.executionYear = executionYear;
-    }
+	public void setExecutionYear(String executionYear) {
+		this.executionYear = executionYear;
+	}
 
 }

@@ -16,77 +16,78 @@ import net.sourceforge.fenixedu.domain.support.FAQSection;
  */
 public class InfoFAQSection extends InfoObject implements Serializable {
 
-    private InfoFAQSection parentSection = null;
+	private InfoFAQSection parentSection = null;
 
-    private String sectionName = null;
+	private String sectionName = null;
 
-    private List subSections = null;
+	private List subSections = null;
 
-    private List entries = null;
+	private List entries = null;
 
-    public InfoFAQSection() {
-	super();
-    }
-
-    public int hashCode() {
-	if (this.getIdInternal() != null) {
-	    return this.getIdInternal().intValue();
+	public InfoFAQSection() {
+		super();
 	}
 
-	return 0;
-    }
+	@Override
+	public int hashCode() {
+		if (this.getIdInternal() != null) {
+			return this.getIdInternal().intValue();
+		}
 
-    public InfoFAQSection getParentSection() {
-	return parentSection;
-    }
-
-    public void setParentSection(InfoFAQSection parentSection) {
-	this.parentSection = parentSection;
-    }
-
-    public String getSectionName() {
-	return sectionName;
-    }
-
-    public void setSectionName(String sectionName) {
-	this.sectionName = sectionName;
-    }
-
-    public List getSubSections() {
-	return subSections;
-    }
-
-    public void setSubSections(List subSections) {
-	this.subSections = subSections;
-    }
-
-    public List getEntries() {
-	return entries;
-    }
-
-    public void setEntries(List entries) {
-	this.entries = entries;
-    }
-
-    public void copyFromDomain(FAQSection faqSection) {
-	super.copyFromDomain(faqSection);
-	if (faqSection != null) {
-	    setSectionName(faqSection.getSectionName());
-	    FAQSection parentSection = faqSection.getParentSection();
-	    if (parentSection != null) {
-		setParentSection(new InfoFAQSection());
-		getParentSection().setIdInternal(parentSection.getIdInternal());
-	    }
+		return 0;
 	}
-    }
 
-    public static InfoFAQSection newInfoFromDomain(FAQSection faqSection) {
-	InfoFAQSection infoFAQSection = null;
-	if (faqSection != null) {
-	    infoFAQSection = new InfoFAQSection();
-	    infoFAQSection.copyFromDomain(faqSection);
+	public InfoFAQSection getParentSection() {
+		return parentSection;
 	}
-	return infoFAQSection;
-    }
+
+	public void setParentSection(InfoFAQSection parentSection) {
+		this.parentSection = parentSection;
+	}
+
+	public String getSectionName() {
+		return sectionName;
+	}
+
+	public void setSectionName(String sectionName) {
+		this.sectionName = sectionName;
+	}
+
+	public List getSubSections() {
+		return subSections;
+	}
+
+	public void setSubSections(List subSections) {
+		this.subSections = subSections;
+	}
+
+	public List getEntries() {
+		return entries;
+	}
+
+	public void setEntries(List entries) {
+		this.entries = entries;
+	}
+
+	public void copyFromDomain(FAQSection faqSection) {
+		super.copyFromDomain(faqSection);
+		if (faqSection != null) {
+			setSectionName(faqSection.getSectionName());
+			FAQSection parentSection = faqSection.getParentSection();
+			if (parentSection != null) {
+				setParentSection(new InfoFAQSection());
+				getParentSection().setIdInternal(parentSection.getIdInternal());
+			}
+		}
+	}
+
+	public static InfoFAQSection newInfoFromDomain(FAQSection faqSection) {
+		InfoFAQSection infoFAQSection = null;
+		if (faqSection != null) {
+			infoFAQSection = new InfoFAQSection();
+			infoFAQSection.copyFromDomain(faqSection);
+		}
+		return infoFAQSection;
+	}
 
 }

@@ -11,16 +11,16 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadPaymentTransactionByGuideEntryID extends FenixService {
 
-    @Checked("RolePredicates.MANAGER_PREDICATE")
-    @Service
-    public static InfoPaymentTransaction run(Integer guideEntryId) throws FenixServiceException {
-	GuideEntry guideEntry = rootDomainObject.readGuideEntryByOID(guideEntryId);
-	PaymentTransaction paymentTransaction = guideEntry.getPaymentTransaction();
-	if (paymentTransaction == null) {
-	    throw new ExcepcaoInexistente();
-	}
+	@Checked("RolePredicates.MANAGER_PREDICATE")
+	@Service
+	public static InfoPaymentTransaction run(Integer guideEntryId) throws FenixServiceException {
+		GuideEntry guideEntry = rootDomainObject.readGuideEntryByOID(guideEntryId);
+		PaymentTransaction paymentTransaction = guideEntry.getPaymentTransaction();
+		if (paymentTransaction == null) {
+			throw new ExcepcaoInexistente();
+		}
 
-	return InfoPaymentTransaction.newInfoFromDomain(paymentTransaction);
-    }
+		return InfoPaymentTransaction.newInfoFromDomain(paymentTransaction);
+	}
 
 }

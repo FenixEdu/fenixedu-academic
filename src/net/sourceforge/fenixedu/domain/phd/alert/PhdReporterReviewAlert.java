@@ -21,105 +21,105 @@ import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class PhdReporterReviewAlert extends PhdReporterReviewAlert_Base {
 
-    static private final int DAYS_UNTIL_WARNING = 35;
-    static private final int DAYS_UNTIL_DEADLINE = 40;
+	static private final int DAYS_UNTIL_WARNING = 35;
+	static private final int DAYS_UNTIL_DEADLINE = 40;
 
-    public PhdReporterReviewAlert(final PhdIndividualProgramProcess process, PhdParticipant participant) {
-	super();
-	super.init(process, buildSubject(process), buildBody(process, participant));
-	setPhdParticipant(participant);
-    }
-
-    @Override
-    public String getDescription() {
-	return getResourceBundle().getString("message.phd.request.reminder.jury.reviews.report.description");
-    }
-
-    @Override
-    protected boolean isToDiscard() {
-	if (hasFireDate()) {
-	    return true;
+	public PhdReporterReviewAlert(final PhdIndividualProgramProcess process, PhdParticipant participant) {
+		super();
+		super.init(process, buildSubject(process), buildBody(process, participant));
+		setPhdParticipant(participant);
 	}
 
-	PhdProgramProcessDocument feedbackDocument = getProcess().getLatestDocumentVersionFor(
-		PhdIndividualProgramDocumentType.JURY_REPORT_FEEDBACK);
-	if (feedbackDocument != null && feedbackDocument.getUploadTime().isAfter(getWhenCreated())) {
-	    return true;
+	@Override
+	public String getDescription() {
+		return getResourceBundle().getString("message.phd.request.reminder.jury.reviews.report.description");
 	}
 
-	return false;
-    }
+	@Override
+	protected boolean isToDiscard() {
+		if (hasFireDate()) {
+			return true;
+		}
 
-    @Override
-    protected boolean isToFire() {
-	if (!hasExceededAlertDate()) {
-	    return false;
+		PhdProgramProcessDocument feedbackDocument =
+				getProcess().getLatestDocumentVersionFor(PhdIndividualProgramDocumentType.JURY_REPORT_FEEDBACK);
+		if (feedbackDocument != null && feedbackDocument.getUploadTime().isAfter(getWhenCreated())) {
+			return true;
+		}
+
+		return false;
 	}
 
-	if (!hasFireDate()) {
-	    return true;
+	@Override
+	protected boolean isToFire() {
+		if (!hasExceededAlertDate()) {
+			return false;
+		}
+
+		if (!hasFireDate()) {
+			return true;
+		}
+
+		return false;
 	}
 
-	return false;
-    }
-
-    private boolean hasExceededAlertDate() {
-	return !new LocalDate().isBefore(getLimitDateForAlert());
-    }
-
-    private LocalDate getLimitDateForAlert() {
-	return getProcess().getThesisProcess().getWhenJuryValidated().plusDays(DAYS_UNTIL_WARNING);
-    }
-
-    private int getDaysLeftUntilDeadline(PhdIndividualProgramProcess process) {
-	return Days.daysBetween(new LocalDate(), getLimitDateForDeadline(process)).getDays();
-    }
-
-    private LocalDate getLimitDateForDeadline(PhdIndividualProgramProcess process) {
-	return process.getThesisProcess().getWhenJuryValidated().plusDays(DAYS_UNTIL_DEADLINE);
-    }
-
-    @Override
-    protected void generateMessage() {
-	generateMessageForReporters();
-    }
-
-    private MultiLanguageString buildSubject(final PhdIndividualProgramProcess process) {
-	return new MultiLanguageString(Language.getDefaultLanguage(), AlertMessage.get(
-		"message.phd.request.jury.reviews.external.access.subject", process.getPhdProgram().getName()));
-    }
-
-    private MultiLanguageString buildBody(final PhdIndividualProgramProcess process, PhdParticipant participant) {
-	return new MultiLanguageString(Language.getDefaultLanguage(), AlertMessage.get(
-		"message.phd.request.reminder.jury.reviews.reporter.body", process.getPerson().getName(),
-		process.getProcessNumber(), getDaysLeftUntilDeadline(process))
-		+ "\n\n"
-		+ PhdThesisActivity.getAccessInformation(process, participant,
-			"message.phd.request.jury.reviews.coordinator.access", "message.phd.request.jury.reviews.teacher.access"));
-    }
-
-    private void generateMessageForReporters() {
-	PhdParticipant participant = getPhdParticipant();
-	if (participant.isInternal()) {
-	    InternalPhdParticipant internalParticipant = (InternalPhdParticipant) participant;
-	    new PhdAlertMessage(getProcess(), internalParticipant.getPerson(), getFormattedSubject(), buildBody(getProcess(),
-		    participant));
-	    new Message(getSender(), new Recipient(Collections.singleton(internalParticipant.getPerson())), buildMailSubject(),
-		    buildMailBody());
-	} else {
-	    new Message(getSender(), Collections.<ReplyTo> emptyList(), Collections.<Recipient> emptyList(), buildMailSubject(),
-		    buildMailBody(), Collections.singleton(participant.getEmail()));
+	private boolean hasExceededAlertDate() {
+		return !new LocalDate().isBefore(getLimitDateForAlert());
 	}
 
-    }
+	private LocalDate getLimitDateForAlert() {
+		return getProcess().getThesisProcess().getWhenJuryValidated().plusDays(DAYS_UNTIL_WARNING);
+	}
 
-    @Override
-    public boolean isToSendMail() {
-	return true;
-    }
+	private int getDaysLeftUntilDeadline(PhdIndividualProgramProcess process) {
+		return Days.daysBetween(new LocalDate(), getLimitDateForDeadline(process)).getDays();
+	}
 
-    public static int getReporterReviewDeadlineDays() {
-	return DAYS_UNTIL_DEADLINE;
-    }
+	private LocalDate getLimitDateForDeadline(PhdIndividualProgramProcess process) {
+		return process.getThesisProcess().getWhenJuryValidated().plusDays(DAYS_UNTIL_DEADLINE);
+	}
+
+	@Override
+	protected void generateMessage() {
+		generateMessageForReporters();
+	}
+
+	private MultiLanguageString buildSubject(final PhdIndividualProgramProcess process) {
+		return new MultiLanguageString(Language.getDefaultLanguage(), AlertMessage.get(
+				"message.phd.request.jury.reviews.external.access.subject", process.getPhdProgram().getName()));
+	}
+
+	private MultiLanguageString buildBody(final PhdIndividualProgramProcess process, PhdParticipant participant) {
+		return new MultiLanguageString(Language.getDefaultLanguage(), AlertMessage.get(
+				"message.phd.request.reminder.jury.reviews.reporter.body", process.getPerson().getName(),
+				process.getProcessNumber(), getDaysLeftUntilDeadline(process))
+				+ "\n\n"
+				+ PhdThesisActivity.getAccessInformation(process, participant,
+						"message.phd.request.jury.reviews.coordinator.access", "message.phd.request.jury.reviews.teacher.access"));
+	}
+
+	private void generateMessageForReporters() {
+		PhdParticipant participant = getPhdParticipant();
+		if (participant.isInternal()) {
+			InternalPhdParticipant internalParticipant = (InternalPhdParticipant) participant;
+			new PhdAlertMessage(getProcess(), internalParticipant.getPerson(), getFormattedSubject(), buildBody(getProcess(),
+					participant));
+			new Message(getSender(), new Recipient(Collections.singleton(internalParticipant.getPerson())), buildMailSubject(),
+					buildMailBody());
+		} else {
+			new Message(getSender(), Collections.<ReplyTo> emptyList(), Collections.<Recipient> emptyList(), buildMailSubject(),
+					buildMailBody(), Collections.singleton(participant.getEmail()));
+		}
+
+	}
+
+	@Override
+	public boolean isToSendMail() {
+		return true;
+	}
+
+	public static int getReporterReviewDeadlineDays() {
+		return DAYS_UNTIL_DEADLINE;
+	}
 
 }

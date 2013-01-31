@@ -6,17 +6,17 @@ import net.sourceforge.fenixedu.domain.resource.Resource;
 
 public class ResourceAllocationBean implements Serializable {
 
-    private Resource resourceReference;
+	private Resource resourceReference;
 
-    public ResourceAllocationBean() {
+	public ResourceAllocationBean() {
 
-    }
+	}
 
-    public Resource getResource() {
-	return resourceReference;
-    }
+	public Resource getResource() {
+		return resourceReference;
+	}
 
-    public void setResource(Resource resource) {
-	resourceReference = resource;
-    }
+	public void setResource(Resource resource) {
+		resourceReference = resource;
+	}
 }

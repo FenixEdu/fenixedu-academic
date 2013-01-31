@@ -13,39 +13,39 @@ import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import pt.ist.fenixWebFramework.services.Service;
 
 public class CoordinatorSender extends CoordinatorSender_Base {
-    private Recipient createRecipient(Group group) {
-	return new Recipient(null, group);
-    }
-
-    public CoordinatorSender(Degree degree) {
-	super();
-	setDegree(degree);
-	setFromAddress(Sender.getNoreplyMail());
-	addReplyTos(new CurrentUserReplyTo());
-	setMembers(new DegreeAllCoordinatorsGroup(degree));
-	setFromName(getMembers().getName());
-	Group current = new CurrentDegreeCoordinatorsGroup(degree);
-	Group teachers = new DegreeTeachersGroup(degree);
-	Group students = new DegreeStudentsGroup(degree);
-	for (CycleType cycleType : degree.getDegreeType().getCycleTypes()) {
-	    Group studentsCycle = new DegreeStudentsCycleGroup(degree, cycleType);
-	    addRecipients(createRecipient(studentsCycle));
+	private Recipient createRecipient(Group group) {
+		return new Recipient(null, group);
 	}
-	addRecipients(createRecipient(current));
-	addRecipients(createRecipient(teachers));
-	addRecipients(createRecipient(students));
-	addRecipients(createRecipient(new AllTeachersGroup()));
-	addRecipients(createRecipient(new AllStudentsGroup()));
-    }
 
-    @Override
-    public String getFromName() {
-	return getMembers().getName();
-    }
+	public CoordinatorSender(Degree degree) {
+		super();
+		setDegree(degree);
+		setFromAddress(Sender.getNoreplyMail());
+		addReplyTos(new CurrentUserReplyTo());
+		setMembers(new DegreeAllCoordinatorsGroup(degree));
+		setFromName(getMembers().getName());
+		Group current = new CurrentDegreeCoordinatorsGroup(degree);
+		Group teachers = new DegreeTeachersGroup(degree);
+		Group students = new DegreeStudentsGroup(degree);
+		for (CycleType cycleType : degree.getDegreeType().getCycleTypes()) {
+			Group studentsCycle = new DegreeStudentsCycleGroup(degree, cycleType);
+			addRecipients(createRecipient(studentsCycle));
+		}
+		addRecipients(createRecipient(current));
+		addRecipients(createRecipient(teachers));
+		addRecipients(createRecipient(students));
+		addRecipients(createRecipient(new AllTeachersGroup()));
+		addRecipients(createRecipient(new AllStudentsGroup()));
+	}
 
-    @Service
-    public static CoordinatorSender newInstance(Degree degree) {
-	CoordinatorSender sender = degree.getSender();
-	return sender == null ? new CoordinatorSender(degree) : sender;
-    }
+	@Override
+	public String getFromName() {
+		return getMembers().getName();
+	}
+
+	@Service
+	public static CoordinatorSender newInstance(Degree degree) {
+		CoordinatorSender sender = degree.getSender();
+		return sender == null ? new CoordinatorSender(degree) : sender;
+	}
 }

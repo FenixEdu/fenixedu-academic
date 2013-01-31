@@ -16,48 +16,48 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
 
 public class PhdStudentCurriculumGroupBean extends StudentCurriculumGroupBean {
 
-    static private final long serialVersionUID = 1L;
+	static private final long serialVersionUID = 1L;
 
-    public PhdStudentCurriculumGroupBean(CurriculumGroup curriculumGroup, ExecutionSemester executionSemester,
-	    int[] curricularYears) {
-	super(curriculumGroup, executionSemester, curricularYears);
-    }
-
-    @Override
-    protected List<IDegreeModuleToEvaluate> buildCurricularCoursesToEnrol(CurriculumGroup group, ExecutionSemester semester) {
-
-	final Collection<CompetenceCourse> collection = getCompetenceCoursesAvailableToEnrol();
-
-	final List<IDegreeModuleToEvaluate> result = new ArrayList<IDegreeModuleToEvaluate>();
-	for (final Context context : group.getCurricularCourseContextsToEnrol(semester)) {
-
-	    if (canBeUsed(collection, context)) {
-		result.add(new DegreeModuleToEnrol(group, context, semester));
-	    }
+	public PhdStudentCurriculumGroupBean(CurriculumGroup curriculumGroup, ExecutionSemester executionSemester,
+			int[] curricularYears) {
+		super(curriculumGroup, executionSemester, curricularYears);
 	}
 
-	return result;
-    }
+	@Override
+	protected List<IDegreeModuleToEvaluate> buildCurricularCoursesToEnrol(CurriculumGroup group, ExecutionSemester semester) {
 
-    private boolean canBeUsed(Collection<CompetenceCourse> collection, Context context) {
-	final CurricularCourse course = (CurricularCourse) context.getChildDegreeModule();
-	return course.isOptionalCurricularCourse()
-		|| (course.hasCompetenceCourse() && collection.contains(course.getCompetenceCourse()));
-    }
+		final Collection<CompetenceCourse> collection = getCompetenceCoursesAvailableToEnrol();
 
-    private Collection<CompetenceCourse> getCompetenceCoursesAvailableToEnrol() {
-	return getRegistration().getPhdIndividualProgramProcess().getCompetenceCoursesAvailableToEnrol();
-    }
+		final List<IDegreeModuleToEvaluate> result = new ArrayList<IDegreeModuleToEvaluate>();
+		for (final Context context : group.getCurricularCourseContextsToEnrol(semester)) {
 
-    @Override
-    protected List<IDegreeModuleToEvaluate> buildCurricularCoursesToEnrol(CurriculumGroup group,
-	    ExecutionSemester executionSemester, int[] curricularYears) {
-	throw new DomainException("error.PhdStudentCurriculumGroupBean.unexpected.invocation");
-    }
+			if (canBeUsed(collection, context)) {
+				result.add(new DegreeModuleToEnrol(group, context, semester));
+			}
+		}
 
-    @Override
-    protected StudentCurriculumGroupBean createEnroledCurriculumGroupBean(ExecutionSemester executionSemester,
-	    int[] curricularYears, CurriculumGroup curriculumGroup) {
-	return new PhdStudentCurriculumGroupBean(curriculumGroup, executionSemester, curricularYears);
-    }
+		return result;
+	}
+
+	private boolean canBeUsed(Collection<CompetenceCourse> collection, Context context) {
+		final CurricularCourse course = (CurricularCourse) context.getChildDegreeModule();
+		return course.isOptionalCurricularCourse()
+				|| (course.hasCompetenceCourse() && collection.contains(course.getCompetenceCourse()));
+	}
+
+	private Collection<CompetenceCourse> getCompetenceCoursesAvailableToEnrol() {
+		return getRegistration().getPhdIndividualProgramProcess().getCompetenceCoursesAvailableToEnrol();
+	}
+
+	@Override
+	protected List<IDegreeModuleToEvaluate> buildCurricularCoursesToEnrol(CurriculumGroup group,
+			ExecutionSemester executionSemester, int[] curricularYears) {
+		throw new DomainException("error.PhdStudentCurriculumGroupBean.unexpected.invocation");
+	}
+
+	@Override
+	protected StudentCurriculumGroupBean createEnroledCurriculumGroupBean(ExecutionSemester executionSemester,
+			int[] curricularYears, CurriculumGroup curriculumGroup) {
+		return new PhdStudentCurriculumGroupBean(curriculumGroup, executionSemester, curricularYears);
+	}
 }

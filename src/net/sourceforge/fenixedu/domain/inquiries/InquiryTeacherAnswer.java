@@ -5,17 +5,17 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 public class InquiryTeacherAnswer extends InquiryTeacherAnswer_Base {
 
-    public InquiryTeacherAnswer(Professorship professorship) {
-	super();
-	setProfessorship(professorship);
-    }
-
-    public void delete() {
-	if (hasAnyQuestionAnswers()) {
-	    throw new DomainException("error.inquiryAnswer.questionAnswersAssociated");
+	public InquiryTeacherAnswer(Professorship professorship) {
+		super();
+		setProfessorship(professorship);
 	}
-	removeProfessorship();
-	removeRootDomainObject();
-	super.deleteDomainObject();
-    }
+
+	public void delete() {
+		if (hasAnyQuestionAnswers()) {
+			throw new DomainException("error.inquiryAnswer.questionAnswersAssociated");
+		}
+		removeProfessorship();
+		removeRootDomainObject();
+		super.deleteDomainObject();
+	}
 }

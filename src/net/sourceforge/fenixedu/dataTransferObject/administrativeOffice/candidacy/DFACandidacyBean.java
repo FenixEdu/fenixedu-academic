@@ -10,59 +10,59 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
 
 public class DFACandidacyBean implements Serializable {
 
-    private DegreeType degreeType;
+	private DegreeType degreeType;
 
-    private Degree degree;
+	private Degree degree;
 
-    private DegreeCurricularPlan degreeCurricularPlan;
+	private DegreeCurricularPlan degreeCurricularPlan;
 
-    private ExecutionDegree executionDegree;
+	private ExecutionDegree executionDegree;
 
-    private ExecutionYear executionYear;
+	private ExecutionYear executionYear;
 
-    public DFACandidacyBean() {
-	degreeType = DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA;
-    }
+	public DFACandidacyBean() {
+		degreeType = DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA;
+	}
 
-    public Degree getDegree() {
-	return this.degree;
-    }
+	public Degree getDegree() {
+		return this.degree;
+	}
 
-    public void setDegree(Degree degree) {
-	this.degree = degree;
-    }
+	public void setDegree(Degree degree) {
+		this.degree = degree;
+	}
 
-    public DegreeCurricularPlan getDegreeCurricularPlan() {
-	return this.degreeCurricularPlan;
-    }
+	public DegreeCurricularPlan getDegreeCurricularPlan() {
+		return this.degreeCurricularPlan;
+	}
 
-    public void setDegreeCurricularPlan(DegreeCurricularPlan degreeCurricularPlan) {
-	this.degreeCurricularPlan = degreeCurricularPlan;
-    }
+	public void setDegreeCurricularPlan(DegreeCurricularPlan degreeCurricularPlan) {
+		this.degreeCurricularPlan = degreeCurricularPlan;
+	}
 
-    public ExecutionDegree getExecutionDegree() {
-	return (this.executionYear == null || this.degreeCurricularPlan == null) ? null : getDegreeCurricularPlan()
-		.getExecutionDegreeByYear(getExecutionYear());
-    }
+	public ExecutionDegree getExecutionDegree() {
+		return (this.executionYear == null || this.degreeCurricularPlan == null) ? null : getDegreeCurricularPlan()
+				.getExecutionDegreeByYear(getExecutionYear());
+	}
 
-    public void setExecutionDegree(ExecutionDegree executionDegree) {
-	this.executionDegree = executionDegree;
-    }
+	public void setExecutionDegree(ExecutionDegree executionDegree) {
+		this.executionDegree = executionDegree;
+	}
 
-    public ExecutionYear getExecutionYear() {
-	return this.executionYear;
-    }
+	public ExecutionYear getExecutionYear() {
+		return this.executionYear;
+	}
 
-    public void setExecutionYear(ExecutionYear executionYear) {
-	this.executionYear = executionYear;
-    }
+	public void setExecutionYear(ExecutionYear executionYear) {
+		this.executionYear = executionYear;
+	}
 
-    public DegreeType getDegreeType() {
-	return degreeType;
-    }
+	public DegreeType getDegreeType() {
+		return degreeType;
+	}
 
-    public void setDegreeType(DegreeType degreeType) {
-	this.degreeType = degreeType;
-    }
+	public void setDegreeType(DegreeType degreeType) {
+		this.degreeType = degreeType;
+	}
 
 }

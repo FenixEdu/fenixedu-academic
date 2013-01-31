@@ -12,22 +12,22 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class TeacherResponsibleByExecutionCourse extends FenixService {
 
-    @Service
-    public static Boolean run(String teacherUserName, Integer executionCourseCode, Integer curricularCourseCode)
-	    throws FenixServiceException {
-	return Boolean.valueOf(ExecutionCourseResponsibleTeacher(teacherUserName, executionCourseCode)
-		&& CurricularCourseNotBasic(curricularCourseCode));
-    }
+	@Service
+	public static Boolean run(String teacherUserName, Integer executionCourseCode, Integer curricularCourseCode)
+			throws FenixServiceException {
+		return Boolean.valueOf(ExecutionCourseResponsibleTeacher(teacherUserName, executionCourseCode)
+				&& CurricularCourseNotBasic(curricularCourseCode));
+	}
 
-    private static boolean ExecutionCourseResponsibleTeacher(String teacherUserName, Integer executionCourseCode) {
-	final Teacher teacher = Teacher.readTeacherByUsername(teacherUserName);
-	final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseCode);
-	return teacher.isResponsibleFor(executionCourse) != null;
-    }
+	private static boolean ExecutionCourseResponsibleTeacher(String teacherUserName, Integer executionCourseCode) {
+		final Teacher teacher = Teacher.readTeacherByUsername(teacherUserName);
+		final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseCode);
+		return teacher.isResponsibleFor(executionCourse) != null;
+	}
 
-    private static boolean CurricularCourseNotBasic(Integer curricularCourseCode) {
-	CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(curricularCourseCode);
-	return curricularCourse.getBasic() == Boolean.FALSE;
-    }
+	private static boolean CurricularCourseNotBasic(Integer curricularCourseCode) {
+		CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(curricularCourseCode);
+		return curricularCourse.getBasic() == Boolean.FALSE;
+	}
 
 }

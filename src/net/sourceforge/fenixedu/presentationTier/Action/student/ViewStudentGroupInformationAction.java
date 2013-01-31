@@ -38,61 +38,67 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
  * @author asnr and scpo
  * 
  */
-@Mapping(module = "student", path = "/viewStudentGroupInformation", attribute = "enroledExecutionCoursesForm", formBean = "enroledExecutionCoursesForm", scope = "request")
+@Mapping(
+		module = "student",
+		path = "/viewStudentGroupInformation",
+		attribute = "enroledExecutionCoursesForm",
+		formBean = "enroledExecutionCoursesForm",
+		scope = "request")
 @Forwards(value = { @Forward(name = "sucess", path = "/student/viewStudentGroupInformation_bd.jsp"),
-	@Forward(name = "viewShiftsAndGroups", path = "/viewShiftsAndGroups.do"),
-	@Forward(name = "viewExecutionCourseProjects", path = "/viewExecutionCourseProjects.do") })
+		@Forward(name = "viewShiftsAndGroups", path = "/viewShiftsAndGroups.do"),
+		@Forward(name = "viewExecutionCourseProjects", path = "/viewExecutionCourseProjects.do") })
 public class ViewStudentGroupInformationAction extends FenixContextAction {
 
-    @Override
-    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-	    throws FenixActionException, FenixFilterException, FenixServiceException {
+	@Override
+	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+			throws FenixActionException, FenixFilterException, FenixServiceException {
 
-	IUserView userView = getUserView(request);
+		IUserView userView = getUserView(request);
 
-	String studentGroupCodeString = request.getParameter("studentGroupCode");
-	Integer studentGroupCode = new Integer(studentGroupCodeString);
-	String shiftCodeString = request.getParameter("shiftCode");
-	String groupPropertiesCodeString = request.getParameter("groupPropertiesCode");
-	Integer groupPropertiesCode = new Integer(groupPropertiesCodeString);
+		String studentGroupCodeString = request.getParameter("studentGroupCode");
+		Integer studentGroupCode = new Integer(studentGroupCodeString);
+		String shiftCodeString = request.getParameter("shiftCode");
+		String groupPropertiesCodeString = request.getParameter("groupPropertiesCode");
+		Integer groupPropertiesCode = new Integer(groupPropertiesCodeString);
 
-	ISiteComponent viewStudentGroup;
-	try {
-	    Integer type = VerifyGroupingAndStudentGroupWithoutShift.run(studentGroupCode, groupPropertiesCode, shiftCodeString,
-		    userView.getUtilizador());
-	    viewStudentGroup = ReadStudentGroupInformation.run(studentGroupCode);
-	    request.setAttribute("ShiftType", type);
-	} catch (ExistingServiceException e) {
-	    ActionErrors actionErrors = new ActionErrors();
-	    ActionError error = null;
-	    error = new ActionError("error.noProject");
-	    actionErrors.add("error.noProject", error);
-	    saveErrors(request, actionErrors);
-	    return mapping.findForward("viewExecutionCourseProjects");
-	} catch (InvalidSituationServiceException e) {
-	    ActionErrors actionErrors = new ActionErrors();
-	    ActionError error = null;
-	    error = new ActionError("error.noGroup");
-	    actionErrors.add("error.noGroup", error);
-	    saveErrors(request, actionErrors);
-	    return mapping.findForward("viewShiftsAndGroups");
-	} catch (InvalidArgumentsServiceException e) {
-	    ActionErrors actionErrors = new ActionErrors();
-	    ActionError error = null;
-	    error = new ActionError("error.StudentGroupShiftIsChanged");
-	    actionErrors.add("error.StudentGroupShiftIsChanged", error);
-	    saveErrors(request, actionErrors);
-	    return mapping.findForward("viewShiftsAndGroups");
-	} catch (FenixServiceException e) {
-	    throw new FenixActionException(e);
+		ISiteComponent viewStudentGroup;
+		try {
+			Integer type =
+					VerifyGroupingAndStudentGroupWithoutShift.run(studentGroupCode, groupPropertiesCode, shiftCodeString,
+							userView.getUtilizador());
+			viewStudentGroup = ReadStudentGroupInformation.run(studentGroupCode);
+			request.setAttribute("ShiftType", type);
+		} catch (ExistingServiceException e) {
+			ActionErrors actionErrors = new ActionErrors();
+			ActionError error = null;
+			error = new ActionError("error.noProject");
+			actionErrors.add("error.noProject", error);
+			saveErrors(request, actionErrors);
+			return mapping.findForward("viewExecutionCourseProjects");
+		} catch (InvalidSituationServiceException e) {
+			ActionErrors actionErrors = new ActionErrors();
+			ActionError error = null;
+			error = new ActionError("error.noGroup");
+			actionErrors.add("error.noGroup", error);
+			saveErrors(request, actionErrors);
+			return mapping.findForward("viewShiftsAndGroups");
+		} catch (InvalidArgumentsServiceException e) {
+			ActionErrors actionErrors = new ActionErrors();
+			ActionError error = null;
+			error = new ActionError("error.StudentGroupShiftIsChanged");
+			actionErrors.add("error.StudentGroupShiftIsChanged", error);
+			saveErrors(request, actionErrors);
+			return mapping.findForward("viewShiftsAndGroups");
+		} catch (FenixServiceException e) {
+			throw new FenixActionException(e);
+		}
+
+		InfoSiteStudentGroup infoSiteStudentGroup = (InfoSiteStudentGroup) viewStudentGroup;
+		request.setAttribute("infoSiteStudentGroup", infoSiteStudentGroup);
+
+		List<InfoExportGrouping> infoExportGroupings = ReadExportGroupingsByGrouping.run(groupPropertiesCode);
+		request.setAttribute("infoExportGroupings", infoExportGroupings);
+
+		return mapping.findForward("sucess");
 	}
-
-	InfoSiteStudentGroup infoSiteStudentGroup = (InfoSiteStudentGroup) viewStudentGroup;
-	request.setAttribute("infoSiteStudentGroup", infoSiteStudentGroup);
-
-	List<InfoExportGrouping> infoExportGroupings = ReadExportGroupingsByGrouping.run(groupPropertiesCode);
-	request.setAttribute("infoExportGroupings", infoExportGroupings);
-
-	return mapping.findForward("sucess");
-    }
 }

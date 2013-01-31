@@ -8,10 +8,10 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class SpaceAccessGroupsManagement extends FenixService {
 
-    @Service
-    public static void run(Space space, SpaceAccessGroupType accessGroupType, boolean toAdd, boolean isToMaintainElements,
-	    String expression) throws FenixServiceException {
-	space.addOrRemovePersonFromAccessGroup(accessGroupType, Boolean.valueOf(toAdd), Boolean.valueOf(isToMaintainElements),
-		expression);
-    }
+	@Service
+	public static void run(Space space, SpaceAccessGroupType accessGroupType, boolean toAdd, boolean isToMaintainElements,
+			String expression) throws FenixServiceException {
+		space.addOrRemovePersonFromAccessGroup(accessGroupType, Boolean.valueOf(toAdd), Boolean.valueOf(isToMaintainElements),
+				expression);
+	}
 }

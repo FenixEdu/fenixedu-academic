@@ -14,64 +14,65 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
 
 public interface IDegreeModuleToEvaluate {
 
-    public static final Comparator<IDegreeModuleToEvaluate> COMPARATOR_BY_EXECUTION_PERIOD = new Comparator<IDegreeModuleToEvaluate>() {
+	public static final Comparator<IDegreeModuleToEvaluate> COMPARATOR_BY_EXECUTION_PERIOD =
+			new Comparator<IDegreeModuleToEvaluate>() {
 
-	@Override
-	public int compare(IDegreeModuleToEvaluate o1, IDegreeModuleToEvaluate o2) {
-	    return o1.getExecutionPeriod().compareTo(o2.getExecutionPeriod());
-	}
+				@Override
+				public int compare(IDegreeModuleToEvaluate o1, IDegreeModuleToEvaluate o2) {
+					return o1.getExecutionPeriod().compareTo(o2.getExecutionPeriod());
+				}
 
-    };
+			};
 
-    public static final Comparator<IDegreeModuleToEvaluate> COMPARATOR_BY_CONTEXT = new Comparator<IDegreeModuleToEvaluate>() {
+	public static final Comparator<IDegreeModuleToEvaluate> COMPARATOR_BY_CONTEXT = new Comparator<IDegreeModuleToEvaluate>() {
 
-	@Override
-	public int compare(IDegreeModuleToEvaluate o1, IDegreeModuleToEvaluate o2) {
-	    return o1.getContext().compareTo(o2.getContext());
-	}
+		@Override
+		public int compare(IDegreeModuleToEvaluate o1, IDegreeModuleToEvaluate o2) {
+			return o1.getContext().compareTo(o2.getContext());
+		}
 
-    };
+	};
 
-    public CurriculumGroup getCurriculumGroup();
+	public CurriculumGroup getCurriculumGroup();
 
-    public Context getContext();
+	public Context getContext();
 
-    public DegreeModule getDegreeModule();
+	public DegreeModule getDegreeModule();
 
-    public boolean isFor(final DegreeModule degreeModule);
+	public boolean isFor(final DegreeModule degreeModule);
 
-    public ExecutionSemester getExecutionPeriod();
+	public ExecutionSemester getExecutionPeriod();
 
-    public boolean isLeaf();
+	public boolean isLeaf();
 
-    public boolean isOptional();
+	public boolean isOptional();
 
-    public boolean isEnroled();
+	public boolean isEnroled();
 
-    public boolean isEnroling();
+	public boolean isEnroling();
 
-    public boolean isDissertation();
+	public boolean isDissertation();
 
-    public boolean canCollectRules();
+	public boolean canCollectRules();
 
-    public String getName();
+	public String getName();
 
-    public String getYearFullLabel();
+	public String getYearFullLabel();
 
-    public boolean isOptionalCurricularCourse();
+	public boolean isOptionalCurricularCourse();
 
-    public String getKey();
+	public String getKey();
 
-    public Double getEctsCredits();
+	public Double getEctsCredits();
 
-    public Double getEctsCredits(final ExecutionSemester executionSemester);
+	public Double getEctsCredits(final ExecutionSemester executionSemester);
 
-    public double getAccumulatedEctsCredits(final ExecutionSemester executionSemester);
+	public double getAccumulatedEctsCredits(final ExecutionSemester executionSemester);
 
-    public List<CurricularRule> getCurricularRulesFromDegreeModule(final ExecutionSemester executionSemester);
+	public List<CurricularRule> getCurricularRulesFromDegreeModule(final ExecutionSemester executionSemester);
 
-    public Set<ICurricularRule> getCurricularRulesFromCurriculumGroup(final ExecutionSemester executionSemester);
+	public Set<ICurricularRule> getCurricularRulesFromCurriculumGroup(final ExecutionSemester executionSemester);
 
-    public boolean isAnnualCurricularCourse(final ExecutionYear executionYear);
+	public boolean isAnnualCurricularCourse(final ExecutionYear executionYear);
 
 }

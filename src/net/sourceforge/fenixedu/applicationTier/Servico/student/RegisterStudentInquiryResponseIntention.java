@@ -11,23 +11,23 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class RegisterStudentInquiryResponseIntention extends FenixService {
 
-    @Checked("RolePredicates.STUDENT_PREDICATE")
-    @Service
-    public static void run(final Person person, final Boolean dontWantToRespond) {
-	final Student student = person.getStudent();
-	final InquiriesStudentExecutionPeriod inquiriesStudentExecutionPeriod = getInquiriesStudentExecutionPeriod(student);
-	inquiriesStudentExecutionPeriod.setDontWantToRespond(dontWantToRespond);
-    }
-
-    private static InquiriesStudentExecutionPeriod getInquiriesStudentExecutionPeriod(final Student student) {
-	for (final InquiriesStudentExecutionPeriod inquiriesStudentExecutionPeriod : student
-		.getInquiriesStudentExecutionPeriodsSet()) {
-	    if (inquiriesStudentExecutionPeriod.getExecutionPeriod().getState().equals(PeriodState.CURRENT)) {
-		return inquiriesStudentExecutionPeriod;
-	    }
+	@Checked("RolePredicates.STUDENT_PREDICATE")
+	@Service
+	public static void run(final Person person, final Boolean dontWantToRespond) {
+		final Student student = person.getStudent();
+		final InquiriesStudentExecutionPeriod inquiriesStudentExecutionPeriod = getInquiriesStudentExecutionPeriod(student);
+		inquiriesStudentExecutionPeriod.setDontWantToRespond(dontWantToRespond);
 	}
-	final ExecutionSemester executionSemester = ExecutionSemester.readActualExecutionSemester();
-	return new InquiriesStudentExecutionPeriod(student, executionSemester);
-    }
+
+	private static InquiriesStudentExecutionPeriod getInquiriesStudentExecutionPeriod(final Student student) {
+		for (final InquiriesStudentExecutionPeriod inquiriesStudentExecutionPeriod : student
+				.getInquiriesStudentExecutionPeriodsSet()) {
+			if (inquiriesStudentExecutionPeriod.getExecutionPeriod().getState().equals(PeriodState.CURRENT)) {
+				return inquiriesStudentExecutionPeriod;
+			}
+		}
+		final ExecutionSemester executionSemester = ExecutionSemester.readActualExecutionSemester();
+		return new InquiriesStudentExecutionPeriod(student, executionSemester);
+	}
 
 }

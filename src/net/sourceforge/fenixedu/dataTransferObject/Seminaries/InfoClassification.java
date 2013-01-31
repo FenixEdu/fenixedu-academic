@@ -19,52 +19,52 @@ import net.sourceforge.fenixedu.dataTransferObject.DataTranferObject;
  * 
  */
 public class InfoClassification extends DataTranferObject {
-    private String aritmeticClassification;
+	private String aritmeticClassification;
 
-    private String classification;
+	private String classification;
 
-    private String completedCourses;
+	private String completedCourses;
 
-    /**
-     * @return
-     */
-    public String getAritmeticClassification() {
-	return aritmeticClassification;
-    }
+	/**
+	 * @return
+	 */
+	public String getAritmeticClassification() {
+		return aritmeticClassification;
+	}
 
-    /**
-     * @return
-     */
-    public String getClassification() {
-	return classification;
-    }
+	/**
+	 * @return
+	 */
+	public String getClassification() {
+		return classification;
+	}
 
-    /**
-     * @param f
-     */
-    public void setAritmeticClassification(String f) {
-	aritmeticClassification = f;
-    }
+	/**
+	 * @param f
+	 */
+	public void setAritmeticClassification(String f) {
+		aritmeticClassification = f;
+	}
 
-    /**
-     * @param f
-     */
-    public void setClassification(String f) {
-	classification = f;
-    }
+	/**
+	 * @param f
+	 */
+	public void setClassification(String f) {
+		classification = f;
+	}
 
-    /**
-     * @return
-     */
-    public String getCompletedCourses() {
-	return completedCourses;
-    }
+	/**
+	 * @return
+	 */
+	public String getCompletedCourses() {
+		return completedCourses;
+	}
 
-    /**
-     * @param f
-     */
-    public void setCompletedCourses(String f) {
-	completedCourses = f;
-    }
+	/**
+	 * @param f
+	 */
+	public void setCompletedCourses(String f) {
+		completedCourses = f;
+	}
 
 }

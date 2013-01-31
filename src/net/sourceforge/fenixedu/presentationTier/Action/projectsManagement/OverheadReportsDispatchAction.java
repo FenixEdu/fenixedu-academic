@@ -16,7 +16,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.projectsManagement.InfoOverheadReport;
 import net.sourceforge.fenixedu.persistenceTierOracle.BackendInstance;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.util.StringUtils;
 import net.sourceforge.fenixedu.util.projectsManagement.ReportType;
 
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -31,63 +30,65 @@ import pt.ist.fenixWebFramework.security.UserView;
  */
 public class OverheadReportsDispatchAction extends ReportsDispatchAction {
 
-    public ActionForward getReport(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixServiceException, FenixFilterException {
-	final IUserView userView = UserView.getUser();
-	final String reportTypeStr = request.getParameter("reportType");
-	final ReportType reportType = new ReportType(reportTypeStr);
-	final String costCenter = request.getParameter("costCenter");
-	final BackendInstance backendInstance = ProjectRequestUtil.getInstance(request);
-	request.setAttribute("backendInstance", backendInstance);
-	getCostCenterName(request, costCenter, backendInstance);
-	if (reportType.getReportType() != null) {
-	    if (reportType.equals(ReportType.GENERATED_OVERHEADS) || reportType.equals(ReportType.TRANSFERED_OVERHEADS)
-		    || reportType.equals(ReportType.OVERHEADS_SUMMARY)) {
-		final InfoOverheadReport infoReport = (InfoOverheadReport) ServiceUtils.executeService("ReadOverheadReport",
-			new Object[] { userView.getUtilizador(), costCenter, reportType, null, backendInstance });
-		getSpans(request, infoReport);
-		request.setAttribute("infoReport", infoReport);
-		request.setAttribute("reportType", reportTypeStr);
+	public ActionForward getReport(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws FenixServiceException, FenixFilterException {
+		final IUserView userView = UserView.getUser();
+		final String reportTypeStr = request.getParameter("reportType");
+		final ReportType reportType = new ReportType(reportTypeStr);
+		final String costCenter = request.getParameter("costCenter");
+		final BackendInstance backendInstance = ProjectRequestUtil.getInstance(request);
+		request.setAttribute("backendInstance", backendInstance);
 		getCostCenterName(request, costCenter, backendInstance);
-		return mapping.findForward("show" + reportTypeStr);
-	    }
+		if (reportType.getReportType() != null) {
+			if (reportType.equals(ReportType.GENERATED_OVERHEADS) || reportType.equals(ReportType.TRANSFERED_OVERHEADS)
+					|| reportType.equals(ReportType.OVERHEADS_SUMMARY)) {
+				final InfoOverheadReport infoReport =
+						(InfoOverheadReport) ServiceUtils.executeService("ReadOverheadReport",
+								new Object[] { userView.getUtilizador(), costCenter, reportType, null, backendInstance });
+				getSpans(request, infoReport);
+				request.setAttribute("infoReport", infoReport);
+				request.setAttribute("reportType", reportTypeStr);
+				getCostCenterName(request, costCenter, backendInstance);
+				return mapping.findForward("show" + reportTypeStr);
+			}
+		}
+
+		return mapping.findForward("index");
 	}
 
-	return mapping.findForward("index");
-    }
+	public ActionForward exportToExcel(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws FenixServiceException, FenixFilterException {
+		final IUserView userView = UserView.getUser();
+		final String reportTypeStr = request.getParameter("reportType");
+		final ReportType reportType = new ReportType(reportTypeStr);
+		final String costCenter = request.getParameter("costCenter");
+		final BackendInstance backendInstance = ProjectRequestUtil.getInstance(request);
+		request.setAttribute("backendInstance", backendInstance);
+		getCostCenterName(request, costCenter, backendInstance);
+		HSSFWorkbook wb = new HSSFWorkbook();
+		String fileName = "listagem";
 
-    public ActionForward exportToExcel(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixServiceException, FenixFilterException {
-	final IUserView userView = UserView.getUser();
-	final String reportTypeStr = request.getParameter("reportType");
-	final ReportType reportType = new ReportType(reportTypeStr);
-	final String costCenter = request.getParameter("costCenter");
-	final BackendInstance backendInstance = ProjectRequestUtil.getInstance(request);
-	request.setAttribute("backendInstance", backendInstance);
-	getCostCenterName(request, costCenter, backendInstance);
-	HSSFWorkbook wb = new HSSFWorkbook();
-	String fileName = "listagem";
+		if (reportType.getReportType() != null) {
+			if (reportType.equals(ReportType.GENERATED_OVERHEADS) || reportType.equals(ReportType.TRANSFERED_OVERHEADS)
+					|| reportType.equals(ReportType.OVERHEADS_SUMMARY)) {
+				InfoOverheadReport infoOverheadReport =
+						(InfoOverheadReport) ServiceUtils.executeService("ReadOverheadReport",
+								new Object[] { userView.getUtilizador(), costCenter, reportType, null, backendInstance });
+				infoOverheadReport.getReportToExcel(userView, wb, reportType);
+			}
+			fileName = reportType.getReportLabel().replaceAll(" ", "_");
+		}
+		try {
+			ServletOutputStream writer = response.getOutputStream();
+			response.setContentType("application/vnd.ms-excel");
+			response.setHeader("Content-disposition", "attachment; filename=" + fileName + ".xls");
+			wb.write(writer);
+			writer.flush();
+			response.flushBuffer();
+		} catch (IOException e) {
+			throw new FenixServiceException();
+		}
 
-	if (reportType.getReportType() != null) {
-	    if (reportType.equals(ReportType.GENERATED_OVERHEADS) || reportType.equals(ReportType.TRANSFERED_OVERHEADS)
-		    || reportType.equals(ReportType.OVERHEADS_SUMMARY)) {
-		InfoOverheadReport infoOverheadReport = (InfoOverheadReport) ServiceUtils.executeService("ReadOverheadReport",
-			new Object[] { userView.getUtilizador(), costCenter, reportType, null, backendInstance });
-		infoOverheadReport.getReportToExcel(userView, wb, reportType);
-	    }
-	    fileName = reportType.getReportLabel().replaceAll(" ", "_");
+		return null;
 	}
-	try {
-	    ServletOutputStream writer = response.getOutputStream();
-	    response.setContentType("application/vnd.ms-excel");
-	    response.setHeader("Content-disposition", "attachment; filename=" + fileName + ".xls");
-	    wb.write(writer);
-	    writer.flush();
-	    response.flushBuffer();
-	} catch (IOException e) {
-	    throw new FenixServiceException();
-	}
-
-	return null;
-    }
 }

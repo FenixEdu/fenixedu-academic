@@ -16,36 +16,37 @@ import net.sourceforge.fenixedu.util.EvaluationType;
  */
 public class InfoWrittenTest extends InfoWrittenEvaluation {
 
-    protected String description;
+	protected String description;
 
-    public String getDescription() {
-	return description;
-    }
-
-    public void setDescription(String description) {
-	this.description = description;
-    }
-
-    public void copyFromDomain(WrittenTest writtenTest) {
-	super.copyFromDomain(writtenTest);
-	if (writtenTest != null) {
-	    setDescription(writtenTest.getDescription());
-	    setEvaluationType(EvaluationType.TEST_TYPE);
+	public String getDescription() {
+		return description;
 	}
-    }
 
-    public static InfoWrittenTest newInfoFromDomain(WrittenTest writtenTest) {
-	InfoWrittenTest infoWrittenTest = null;
-	if (writtenTest != null) {
-	    infoWrittenTest = new InfoWrittenTest();
-	    infoWrittenTest.copyFromDomain(writtenTest);
+	public void setDescription(String description) {
+		this.description = description;
 	}
-	return infoWrittenTest;
-    }
 
-    public DiaSemana getDiaSemana() {
-	Calendar day = this.getDay();
-	return new DiaSemana(day.get(Calendar.DAY_OF_WEEK));
-    }
+	public void copyFromDomain(WrittenTest writtenTest) {
+		super.copyFromDomain(writtenTest);
+		if (writtenTest != null) {
+			setDescription(writtenTest.getDescription());
+			setEvaluationType(EvaluationType.TEST_TYPE);
+		}
+	}
+
+	public static InfoWrittenTest newInfoFromDomain(WrittenTest writtenTest) {
+		InfoWrittenTest infoWrittenTest = null;
+		if (writtenTest != null) {
+			infoWrittenTest = new InfoWrittenTest();
+			infoWrittenTest.copyFromDomain(writtenTest);
+		}
+		return infoWrittenTest;
+	}
+
+	@Override
+	public DiaSemana getDiaSemana() {
+		Calendar day = this.getDay();
+		return new DiaSemana(day.get(Calendar.DAY_OF_WEEK));
+	}
 
 }

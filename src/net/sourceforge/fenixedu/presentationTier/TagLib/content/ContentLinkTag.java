@@ -12,146 +12,146 @@ import org.apache.struts.util.RequestUtils;
 
 public class ContentLinkTag extends BodyTagSupport {
 
-    protected String body = null;
-    protected String name = null;
-    protected String property = null;
-    protected String scope = null;
-    protected String target = null;
-    protected String title = null;
-    protected Boolean hrefInBody = null;
-    protected String styleClass = null;
+	protected String body = null;
+	protected String name = null;
+	protected String property = null;
+	protected String scope = null;
+	protected String target = null;
+	protected String title = null;
+	protected Boolean hrefInBody = null;
+	protected String styleClass = null;
 
-    public String getName() {
-	return (this.name);
-    }
+	public String getName() {
+		return (this.name);
+	}
 
-    public void setName(String name) {
-	this.name = name;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    public String getProperty() {
-	return (this.property);
-    }
+	public String getProperty() {
+		return (this.property);
+	}
 
-    public void setProperty(String property) {
-	this.property = property;
-    }
+	public void setProperty(String property) {
+		this.property = property;
+	}
 
-    public String getTarget() {
-	return target;
-    }
+	public String getTarget() {
+		return target;
+	}
 
-    public void setTarget(String target) {
-	this.target = target;
-    }
+	public void setTarget(String target) {
+		this.target = target;
+	}
 
-    public String getTitle() {
-	return title;
-    }
+	public String getTitle() {
+		return title;
+	}
 
-    public Boolean getHrefInBody() {
-	return hrefInBody;
-    }
+	public Boolean getHrefInBody() {
+		return hrefInBody;
+	}
 
-    public void setHrefInBody(Boolean hrefInBody) {
-	this.hrefInBody = hrefInBody;
-    }
+	public void setHrefInBody(Boolean hrefInBody) {
+		this.hrefInBody = hrefInBody;
+	}
 
-    public void setTitle(String title) {
-	this.title = title;
-    }
+	public void setTitle(String title) {
+		this.title = title;
+	}
 
-    public String getStyleClass() {
-	return styleClass;
-    }
+	public String getStyleClass() {
+		return styleClass;
+	}
 
-    public void setStyleClass(String styleClass) {
-	this.styleClass = styleClass;
-    }
+	public void setStyleClass(String styleClass) {
+		this.styleClass = styleClass;
+	}
 
-    @Override
-    public int doStartTag() throws JspException {
-	return EVAL_BODY_BUFFERED;
-    }
+	@Override
+	public int doStartTag() throws JspException {
+		return EVAL_BODY_BUFFERED;
+	}
 
-    @Override
-    public int doAfterBody() throws JspException {
-	return SKIP_BODY;
-    }
+	@Override
+	public int doAfterBody() throws JspException {
+		return SKIP_BODY;
+	}
 
-    @Override
-    public int doEndTag() throws JspException {
-	try {
-	    writeStartTag();
-	    if (getHrefInBody() != null && getHrefInBody()) {
+	@Override
+	public int doEndTag() throws JspException {
+		try {
+			writeStartTag();
+			if (getHrefInBody() != null && getHrefInBody()) {
+				final Content content = DefineContentPathTag.getContent(name, pageContext, getScope(), getProperty());
+				final String path = content.getReversePath();
+				write(RequestUtils.absoluteURL((HttpServletRequest) pageContext.getRequest(), path).toString());
+			} else {
+				write(getBodyContent().getString().trim());
+			}
+			writeEndTag();
+		} catch (IOException e) {
+			throw new JspException(e);
+		}
+
+		this.release();
+
+		return EVAL_PAGE;
+	}
+
+	protected void writeStartTag() throws IOException, JspException {
 		final Content content = DefineContentPathTag.getContent(name, pageContext, getScope(), getProperty());
-		final String path = content.getReversePath();
-		write(RequestUtils.absoluteURL((HttpServletRequest) pageContext.getRequest(), path).toString());
-	    } else {
-		write(getBodyContent().getString().trim());
-	    }
-	    writeEndTag();
-	} catch (IOException e) {
-	    throw new JspException(e);
+		if (content.isPublic()) {
+			write(pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX);
+		} else {
+			write(pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestRewriter.HAS_CONTEXT_PREFIX);
+		}
+		write("<a href=\"");
+		write(getContextPath());
+		write(content.getReversePath());
+		write("\"");
+		if (getTarget() != null) {
+			write(" target=\"" + getTarget() + "\"");
+		}
+		if (getTitle() != null) {
+			write(" title=\"" + getTitle() + "\"");
+		}
+		if (getStyleClass() != null) {
+			write(" class=\"" + getStyleClass() + "\"");
+		}
+		write(">");
 	}
 
-	this.release();
-
-	return EVAL_PAGE;
-    }
-
-    protected void writeStartTag() throws IOException, JspException {
-	final Content content = DefineContentPathTag.getContent(name, pageContext, getScope(), getProperty());
-	if (content.isPublic()) {
-	    write(pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX);
-	} else {
-	    write(pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestRewriter.HAS_CONTEXT_PREFIX);
+	protected void writeEndTag() throws IOException {
+		write("</a>");
 	}
-	write("<a href=\"");
-	write(getContextPath());
-	write(content.getReversePath());
-	write("\"");
-	if (getTarget() != null) {
-	    write(" target=\"" + getTarget() + "\"");
+
+	protected void write(final String text) throws IOException {
+		pageContext.getOut().write(text);
 	}
-	if (getTitle() != null) {
-	    write(" title=\"" + getTitle() + "\"");
+
+	protected String getContextPath() {
+		final HttpServletRequest httpServletRequest = (HttpServletRequest) pageContext.getRequest();
+		return httpServletRequest.getContextPath();
 	}
-	if (getStyleClass() != null) {
-	    write(" class=\"" + getStyleClass() + "\"");
+
+	@Override
+	public void release() {
+		super.release();
+		body = null;
+		name = null;
+		property = null;
+		scope = null;
+		target = null;
+		hrefInBody = null;
 	}
-	write(">");
-    }
 
-    protected void writeEndTag() throws IOException {
-	write("</a>");
-    }
+	public String getScope() {
+		return scope;
+	}
 
-    protected void write(final String text) throws IOException {
-	pageContext.getOut().write(text);
-    }
-
-    protected String getContextPath() {
-	final HttpServletRequest httpServletRequest = (HttpServletRequest) pageContext.getRequest();
-	return httpServletRequest.getContextPath();
-    }
-
-    @Override
-    public void release() {
-	super.release();
-	body = null;
-	name = null;
-	property = null;
-	scope = null;
-	target = null;
-	hrefInBody = null;
-    }
-
-    public String getScope() {
-	return scope;
-    }
-
-    public void setScope(String scope) {
-	this.scope = scope;
-    }
+	public void setScope(String scope) {
+		this.scope = scope;
+	}
 }

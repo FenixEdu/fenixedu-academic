@@ -4,9 +4,9 @@ import java.util.Locale;
 
 public interface PhdProcessStateType {
 
-    public String getName();
+	public String getName();
 
-    public String getLocalizedName();
+	public String getLocalizedName();
 
-    public String getLocalizedName(final Locale locale);
+	public String getLocalizedName(final Locale locale);
 }

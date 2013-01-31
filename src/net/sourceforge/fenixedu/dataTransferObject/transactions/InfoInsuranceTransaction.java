@@ -11,61 +11,61 @@ import net.sourceforge.fenixedu.domain.transactions.InsuranceTransaction;
  */
 public class InfoInsuranceTransaction extends InfoPaymentTransaction {
 
-    private InfoExecutionYear infoExecutionYear;
+	private InfoExecutionYear infoExecutionYear;
 
-    private InfoStudent infoStudent;
+	private InfoStudent infoStudent;
 
-    public InfoInsuranceTransaction() {
+	public InfoInsuranceTransaction() {
 
-    }
-
-    protected void copyFromDomain(InsuranceTransaction insuranceTransaction) {
-
-	super.copyFromDomain(insuranceTransaction);
-
-	this.infoExecutionYear = InfoExecutionYear.newInfoFromDomain(insuranceTransaction.getExecutionYear());
-	this.infoStudent = InfoStudent.newInfoFromDomain(insuranceTransaction.getStudent());
-    }
-
-    public static InfoInsuranceTransaction newInfoFromDomain(InsuranceTransaction insuranceTransaction) {
-
-	if (insuranceTransaction == null) {
-	    return null;
 	}
 
-	InfoInsuranceTransaction infoInsuranceTransaction = new InfoInsuranceTransaction();
-	infoInsuranceTransaction.copyFromDomain(insuranceTransaction);
+	protected void copyFromDomain(InsuranceTransaction insuranceTransaction) {
 
-	return infoInsuranceTransaction;
-    }
+		super.copyFromDomain(insuranceTransaction);
 
-    /**
-     * @return Returns the infoExecutionYear.
-     */
-    public InfoExecutionYear getInfoExecutionYear() {
-	return infoExecutionYear;
-    }
+		this.infoExecutionYear = InfoExecutionYear.newInfoFromDomain(insuranceTransaction.getExecutionYear());
+		this.infoStudent = InfoStudent.newInfoFromDomain(insuranceTransaction.getStudent());
+	}
 
-    /**
-     * @param infoExecutionYear
-     *            The infoExecutionYear to set.
-     */
-    public void setInfoExecutionYear(InfoExecutionYear infoExecutionYear) {
-	this.infoExecutionYear = infoExecutionYear;
-    }
+	public static InfoInsuranceTransaction newInfoFromDomain(InsuranceTransaction insuranceTransaction) {
 
-    /**
-     * @return Returns the infoStudent.
-     */
-    public InfoStudent getInfoStudent() {
-	return infoStudent;
-    }
+		if (insuranceTransaction == null) {
+			return null;
+		}
 
-    /**
-     * @param infoStudent
-     *            The infoStudent to set.
-     */
-    public void setInfoStudent(InfoStudent infoStudent) {
-	this.infoStudent = infoStudent;
-    }
+		InfoInsuranceTransaction infoInsuranceTransaction = new InfoInsuranceTransaction();
+		infoInsuranceTransaction.copyFromDomain(insuranceTransaction);
+
+		return infoInsuranceTransaction;
+	}
+
+	/**
+	 * @return Returns the infoExecutionYear.
+	 */
+	public InfoExecutionYear getInfoExecutionYear() {
+		return infoExecutionYear;
+	}
+
+	/**
+	 * @param infoExecutionYear
+	 *            The infoExecutionYear to set.
+	 */
+	public void setInfoExecutionYear(InfoExecutionYear infoExecutionYear) {
+		this.infoExecutionYear = infoExecutionYear;
+	}
+
+	/**
+	 * @return Returns the infoStudent.
+	 */
+	public InfoStudent getInfoStudent() {
+		return infoStudent;
+	}
+
+	/**
+	 * @param infoStudent
+	 *            The infoStudent to set.
+	 */
+	public void setInfoStudent(InfoStudent infoStudent) {
+		this.infoStudent = infoStudent;
+	}
 }

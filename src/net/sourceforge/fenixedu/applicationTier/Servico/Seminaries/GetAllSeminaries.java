@@ -13,24 +13,24 @@ import org.joda.time.DateTime;
 
 public class GetAllSeminaries extends FenixService {
 
-    public List run(Boolean inEnrollmentPeriod) throws BDException {
-	List<InfoSeminary> result = new LinkedList<InfoSeminary>();
+	public List run(Boolean inEnrollmentPeriod) throws BDException {
+		List<InfoSeminary> result = new LinkedList<InfoSeminary>();
 
-	List<Seminary> seminaries = rootDomainObject.getSeminarys();
-	for (Seminary seminary : seminaries) {
+		List<Seminary> seminaries = rootDomainObject.getSeminarys();
+		for (Seminary seminary : seminaries) {
 
-	    if (!inEnrollmentPeriod) {
-		result.add(InfoSeminaryWithEquivalencies.newInfoFromDomain(seminary));
-	    } else {
-		final DateTime now = new DateTime();
-		if (!now.isBefore(seminary.getEnrollmentBeginYearMonthDay().toDateMidnight())
-			&& !now.isAfter(seminary.getEnrollmentEndYearMonthDay().toDateMidnight())) {
-		    result.add(InfoSeminaryWithEquivalencies.newInfoFromDomain(seminary));
+			if (!inEnrollmentPeriod) {
+				result.add(InfoSeminaryWithEquivalencies.newInfoFromDomain(seminary));
+			} else {
+				final DateTime now = new DateTime();
+				if (!now.isBefore(seminary.getEnrollmentBeginYearMonthDay().toDateMidnight())
+						&& !now.isAfter(seminary.getEnrollmentEndYearMonthDay().toDateMidnight())) {
+					result.add(InfoSeminaryWithEquivalencies.newInfoFromDomain(seminary));
+				}
+			}
 		}
-	    }
-	}
 
-	return result;
-    }
+		return result;
+	}
 
 }

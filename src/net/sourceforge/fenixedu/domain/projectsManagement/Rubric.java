@@ -11,41 +11,47 @@ import java.io.Serializable;
  * 
  */
 public class Rubric implements IRubric, Serializable {
-    String code;
+	String code;
 
-    String description;
+	String description;
 
-    Double value;
+	Double value;
 
-    public Rubric() {
-    }
+	public Rubric() {
+	}
 
-    public Rubric(String code, String description) {
-	setCode(code);
-	setDescription(description);
-    }
+	public Rubric(String code, String description) {
+		setCode(code);
+		setDescription(description);
+	}
 
-    public String getCode() {
-	return code;
-    }
+	@Override
+	public String getCode() {
+		return code;
+	}
 
-    public void setCode(String code) {
-	this.code = code;
-    }
+	@Override
+	public void setCode(String code) {
+		this.code = code;
+	}
 
-    public String getDescription() {
-	return description;
-    }
+	@Override
+	public String getDescription() {
+		return description;
+	}
 
-    public void setDescription(String description) {
-	this.description = description;
-    }
+	@Override
+	public void setDescription(String description) {
+		this.description = description;
+	}
 
-    public Double getValue() {
-	return value;
-    }
+	@Override
+	public Double getValue() {
+		return value;
+	}
 
-    public void setValue(Double value) {
-	this.value = value;
-    }
+	@Override
+	public void setValue(Double value) {
+		this.value = value;
+	}
 }

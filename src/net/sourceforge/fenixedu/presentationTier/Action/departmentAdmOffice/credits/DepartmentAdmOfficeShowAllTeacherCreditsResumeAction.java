@@ -27,51 +27,63 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
-@Mapping(module = "departmentAdmOffice", path = "/showAllTeacherCreditsResume", attribute = "teacherSearchForm", formBean = "teacherSearchForm", scope = "request", parameter = "method")
+@Mapping(
+		module = "departmentAdmOffice",
+		path = "/showAllTeacherCreditsResume",
+		attribute = "teacherSearchForm",
+		formBean = "teacherSearchForm",
+		scope = "request",
+		parameter = "method")
 @Forwards(value = { @Forward(name = "search-teacher-form", path = "search-for-teacher-credits"),
-	@Forward(name = "teacher-not-found", path = "search-for-teacher-credits"),
-	@Forward(name = "show-all-credits-resume", path = "showAllCreditsResume") })
-@Exceptions(value = { @ExceptionHandling(type = java.lang.NumberFormatException.class, key = "errors.invalid.teacher-number", handler = org.apache.struts.action.ExceptionHandler.class, path = "/showAllTeacherCreditsResume.do?method=prepareTeacherSearch&page=0", scope = "request") })
+		@Forward(name = "teacher-not-found", path = "search-for-teacher-credits"),
+		@Forward(name = "show-all-credits-resume", path = "showAllCreditsResume") })
+@Exceptions(value = { @ExceptionHandling(
+		type = java.lang.NumberFormatException.class,
+		key = "errors.invalid.teacher-number",
+		handler = org.apache.struts.action.ExceptionHandler.class,
+		path = "/showAllTeacherCreditsResume.do?method=prepareTeacherSearch&page=0",
+		scope = "request") })
 public class DepartmentAdmOfficeShowAllTeacherCreditsResumeAction extends ShowAllTeacherCreditsResumeAction {
 
-    public ActionForward prepareTeacherSearch(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws NumberFormatException, FenixFilterException, FenixServiceException {
+	public ActionForward prepareTeacherSearch(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws NumberFormatException, FenixFilterException, FenixServiceException {
 
-	DynaActionForm dynaForm = (DynaActionForm) form;
-	dynaForm.set("method", "showTeacherCreditsResume");
-	return mapping.findForward("search-teacher-form");
-    }
-
-    public ActionForward showTeacherCreditsResume(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-
-	DynaActionForm dynaActionForm = (DynaActionForm) form;
-	ExecutionSemester executionSemester = ExecutionSemester.readActualExecutionSemester();
-	Teacher teacher = Teacher.readByIstId(dynaActionForm.getString("teacherId").trim());
-
-	if (teacher == null || !isTeacherOfManageableDepartments(teacher, executionSemester, request)) {
-	    request.setAttribute("teacherNotFound", "teacherNotFound");
-	    dynaActionForm.set("method", "showTeacherCreditsResume");
-	    return mapping.findForward("teacher-not-found");
+		DynaActionForm dynaForm = (DynaActionForm) form;
+		dynaForm.set("method", "showTeacherCreditsResume");
+		return mapping.findForward("search-teacher-form");
 	}
 
-	readAllTeacherCredits(request, teacher);
-	return mapping.findForward("show-all-credits-resume");
-    }
+	public ActionForward showTeacherCreditsResume(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
 
-    private boolean isTeacherOfManageableDepartments(Teacher teacher, ExecutionSemester executionSemester,
-	    HttpServletRequest request) {
-	IUserView userView = UserView.getUser();
-	List<Department> manageableDepartments = userView.getPerson().getManageableDepartmentCredits();
-	List<Unit> workingPlacesByPeriod = teacher.getWorkingPlacesByPeriod(executionSemester.getBeginDateYearMonthDay(),
-		executionSemester.getEndDateYearMonthDay());
-	for (Unit unit : workingPlacesByPeriod) {
-	    DepartmentUnit departmentUnit = unit.getDepartmentUnit();
-	    Department teacherDepartment = departmentUnit != null ? departmentUnit.getDepartment() : null;
-	    if (teacherDepartment != null && manageableDepartments.contains(teacherDepartment)) {
-		return true;
-	    }
+		DynaActionForm dynaActionForm = (DynaActionForm) form;
+		ExecutionSemester executionSemester = ExecutionSemester.readActualExecutionSemester();
+		Teacher teacher = Teacher.readByIstId(dynaActionForm.getString("teacherId").trim());
+
+		if (teacher == null || !isTeacherOfManageableDepartments(teacher, executionSemester, request)) {
+			request.setAttribute("teacherNotFound", "teacherNotFound");
+			dynaActionForm.set("method", "showTeacherCreditsResume");
+			return mapping.findForward("teacher-not-found");
+		}
+
+		readAllTeacherCredits(request, teacher);
+		return mapping.findForward("show-all-credits-resume");
 	}
-	return false;
-    }
+
+	private boolean isTeacherOfManageableDepartments(Teacher teacher, ExecutionSemester executionSemester,
+			HttpServletRequest request) {
+		IUserView userView = UserView.getUser();
+		List<Department> manageableDepartments = userView.getPerson().getManageableDepartmentCredits();
+		List<Unit> workingPlacesByPeriod =
+				teacher.getWorkingPlacesByPeriod(executionSemester.getBeginDateYearMonthDay(),
+						executionSemester.getEndDateYearMonthDay());
+		for (Unit unit : workingPlacesByPeriod) {
+			DepartmentUnit departmentUnit = unit.getDepartmentUnit();
+			Department teacherDepartment = departmentUnit != null ? departmentUnit.getDepartment() : null;
+			if (teacherDepartment != null && manageableDepartments.contains(teacherDepartment)) {
+				return true;
+			}
+		}
+		return false;
+	}
 }

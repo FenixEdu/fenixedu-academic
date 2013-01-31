@@ -6,14 +6,16 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class PredicatesForPredicateBean implements DataProvider {
 
-    public Object provide(Object source, Object currentValue) {
-	PredicateBean predicateBean = (PredicateBean) source;
+	@Override
+	public Object provide(Object source, Object currentValue) {
+		PredicateBean predicateBean = (PredicateBean) source;
 
-	return predicateBean.getPredicates();
-    }
+		return predicateBean.getPredicates();
+	}
 
-    public Converter getConverter() {
-	return null;
-    }
+	@Override
+	public Converter getConverter() {
+		return null;
+	}
 
 }

@@ -12,34 +12,30 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.ForwardAction;
 
 import pt.ist.fenixWebFramework.security.UserView;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
-@Mapping(module = "publico", path = "/degreeSite/showCourseSite", attribute = "chooseContextDegreeForm", formBean = "chooseContextDegreeForm", scope = "request", parameter = "/publico/showCourseSite.do?method=showCurricularCourseSite")
+@Mapping(
+		module = "publico",
+		path = "/degreeSite/showCourseSite",
+		attribute = "chooseContextDegreeForm",
+		formBean = "chooseContextDegreeForm",
+		scope = "request",
+		parameter = "/publico/showCourseSite.do?method=showCurricularCourseSite")
 public class FenixForwardAction extends ForwardAction {
 
-    public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
+	@Override
+	public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
 
-	return super.execute(mapping, actionForm, request, response);
-    }
+		return super.execute(mapping, actionForm, request, response);
+	}
 
-    protected static IUserView getUserView(HttpServletRequest request) {
-	return UserView.getUser();
-    }
+	protected static IUserView getUserView(HttpServletRequest request) {
+		return UserView.getUser();
+	}
 
-    protected Person getLoggedPerson(HttpServletRequest request) {
-	return getUserView(request).getPerson();
-    }
+	protected Person getLoggedPerson(HttpServletRequest request) {
+		return getUserView(request).getPerson();
+	}
 
 }

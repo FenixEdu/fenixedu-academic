@@ -14,24 +14,24 @@ import org.apache.struts.action.ActionMapping;
 
 public class RespondToCoordinationExecutionDegreeReportsQuestion extends FenixDispatchAction {
 
-    public final ActionForward showQuestion(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-	final InquiryResponsePeriod lastPeriod = InquiryResponsePeriod.readOpenPeriod(InquiryResponsePeriodType.COORDINATOR);
-	request.setAttribute("executionPeriod", lastPeriod == null ? null : lastPeriod.getExecutionPeriod());
-	request.setAttribute("executionDegrees", AccessControl.getPerson().getCoordinationExecutionDegreeReportsToAnswer());
-	return mapping.findForward("respondToInquiriesQuestion");
-    }
+	public final ActionForward showQuestion(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		final InquiryResponsePeriod lastPeriod = InquiryResponsePeriod.readOpenPeriod(InquiryResponsePeriodType.COORDINATOR);
+		request.setAttribute("executionPeriod", lastPeriod == null ? null : lastPeriod.getExecutionPeriod());
+		request.setAttribute("executionDegrees", AccessControl.getPerson().getCoordinationExecutionDegreeReportsToAnswer());
+		return mapping.findForward("respondToInquiriesQuestion");
+	}
 
-    private ActionForward forward(final String path) {
-	final ActionForward actionForward = new ActionForward();
-	actionForward.setPath(path);
-	actionForward.setRedirect(true);
-	return actionForward;
-    }
+	private ActionForward forward(final String path) {
+		final ActionForward actionForward = new ActionForward();
+		actionForward.setPath(path);
+		actionForward.setRedirect(true);
+		return actionForward;
+	}
 
-    public final ActionForward respondLater(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-	return forward("/home.do");
-    }
+	public final ActionForward respondLater(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		return forward("/home.do");
+	}
 
 }

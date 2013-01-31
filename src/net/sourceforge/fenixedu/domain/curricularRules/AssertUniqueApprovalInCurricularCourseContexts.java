@@ -13,47 +13,55 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 public class AssertUniqueApprovalInCurricularCourseContexts extends CurricularRuleNotPersistent {
 
-    private CurricularCourse toApply;
+	private CurricularCourse toApply;
 
-    public AssertUniqueApprovalInCurricularCourseContexts(final CurricularCourse toApply) {
-	if (toApply == null) {
-	    throw new DomainException("curricular.rule.invalid.parameters");
-	} else {
-	    this.toApply = toApply;
+	public AssertUniqueApprovalInCurricularCourseContexts(final CurricularCourse toApply) {
+		if (toApply == null) {
+			throw new DomainException("curricular.rule.invalid.parameters");
+		} else {
+			this.toApply = toApply;
+		}
 	}
-    }
 
-    public List<GenericPair<Object, Boolean>> getLabel() {
-	return Collections.singletonList(new GenericPair<Object, Boolean>("label.assertUniqueApprovalInCurricularCourseContexts",
-		true));
-    }
+	@Override
+	public List<GenericPair<Object, Boolean>> getLabel() {
+		return Collections.singletonList(new GenericPair<Object, Boolean>("label.assertUniqueApprovalInCurricularCourseContexts",
+				true));
+	}
 
-    public DegreeModule getDegreeModuleToApplyRule() {
-	return toApply;
-    }
+	@Override
+	public DegreeModule getDegreeModuleToApplyRule() {
+		return toApply;
+	}
 
-    public CourseGroup getContextCourseGroup() {
-	return null;
-    }
+	@Override
+	public CourseGroup getContextCourseGroup() {
+		return null;
+	}
 
-    public CompositeRule getParentCompositeRule() {
-	return null;
-    }
+	@Override
+	public CompositeRule getParentCompositeRule() {
+		return null;
+	}
 
-    public CurricularRuleType getCurricularRuleType() {
-	return CurricularRuleType.ASSERT_UNIQUE_APPROVAL_IN_CURRICULAR_COURSE_CONTEXTS;
-    }
+	@Override
+	public CurricularRuleType getCurricularRuleType() {
+		return CurricularRuleType.ASSERT_UNIQUE_APPROVAL_IN_CURRICULAR_COURSE_CONTEXTS;
+	}
 
-    public ExecutionSemester getBegin() {
-	return ExecutionSemester.readActualExecutionSemester();
-    }
+	@Override
+	public ExecutionSemester getBegin() {
+		return ExecutionSemester.readActualExecutionSemester();
+	}
 
-    public ExecutionSemester getEnd() {
-	return null;
-    }
+	@Override
+	public ExecutionSemester getEnd() {
+		return null;
+	}
 
-    public VerifyRuleExecutor createVerifyRuleExecutor() {
-	return VerifyRuleExecutor.NULL_VERIFY_EXECUTOR;
-    }
+	@Override
+	public VerifyRuleExecutor createVerifyRuleExecutor() {
+		return VerifyRuleExecutor.NULL_VERIFY_EXECUTOR;
+	}
 
 }

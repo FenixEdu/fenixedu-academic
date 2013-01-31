@@ -13,331 +13,331 @@ import org.joda.time.LocalDate;
 
 public class PhdIndividualProgramProcessBean implements Serializable {
 
-    public static enum QualificationExamsResult {
-	NULL(null),
+	public static enum QualificationExamsResult {
+		NULL(null),
 
-	YES(Boolean.TRUE),
+		YES(Boolean.TRUE),
 
-	NO(Boolean.FALSE);
+		NO(Boolean.FALSE);
 
-	private Boolean value;
+		private Boolean value;
 
-	private QualificationExamsResult(Boolean value) {
-	    this.value = value;
+		private QualificationExamsResult(Boolean value) {
+			this.value = value;
+		}
+
+		public Boolean getValue() {
+			return value;
+		}
+
+		static public QualificationExamsResult fromValue(Boolean value) {
+			if (value == null) {
+				return QualificationExamsResult.NULL;
+			} else if (value == Boolean.TRUE) {
+				return QualificationExamsResult.YES;
+			} else {
+				return QualificationExamsResult.NO;
+			}
+
+		}
+
 	}
 
-	public Boolean getValue() {
-	    return value;
+	static private final long serialVersionUID = 909403079500457245L;
+
+	private LocalDate candidacyDate;
+	private String thesisTitle;
+	private String thesisTitleEn;
+	private PhdIndividualProgramCollaborationType collaborationType;
+	private String otherCollaborationType;
+
+	private final List<PhdThesisSubjectOrderBean> thesisSubjectBeans;
+
+	private PhdIndividualProgramProcess individualProgramProcess;
+	private PhdProgram phdProgram;
+	private PhdProgramFocusArea focusArea;
+	private ExternalPhdProgram externalPhdProgram;
+
+	private QualificationExamsResult qualificationExamsRequired;
+	private QualificationExamsResult qualificationExamsPerformed;
+
+	private PhdIndividualProgramProcessState processState;
+
+	private LocalDate whenRatified;
+
+	private LocalDate whenFormalizedRegistration;
+
+	private LocalDate whenStartedStudies;
+
+	private Integer phdStudentNumber;
+
+	private PhdIndividualProgramProcess destiny;
+
+	private String remarks;
+
+	private String latexThesisTitle;
+
+	private String latexThesisTitleEn;
+
+	private LocalDate stateDate;
+
+	public PhdIndividualProgramProcessBean() {
+		thesisSubjectBeans = new ArrayList<PhdThesisSubjectOrderBean>();
+		setQualificationExamsRequired(QualificationExamsResult.NULL);
+		setQualificationExamsPerformed(QualificationExamsResult.NULL);
 	}
 
-	static public QualificationExamsResult fromValue(Boolean value) {
-	    if (value == null) {
-		return QualificationExamsResult.NULL;
-	    } else if (value == Boolean.TRUE) {
-		return QualificationExamsResult.YES;
-	    } else {
-		return QualificationExamsResult.NO;
-	    }
+	public PhdIndividualProgramProcessBean(final PhdIndividualProgramProcess process) {
+		thesisSubjectBeans = new ArrayList<PhdThesisSubjectOrderBean>();
+		setCandidacyDate(process.getCandidacyDate());
 
+		setPhdProgram(process.getPhdProgram());
+		setFocusArea(process.getPhdProgramFocusArea());
+		setExternalPhdProgram(process.getExternalPhdProgram());
+
+		for (ThesisSubjectOrder subjectOrder : process.getThesisSubjectOrders()) {
+			addThesisSubjectBean(new PhdThesisSubjectOrderBean(subjectOrder.getSubjectOrder(), subjectOrder.getThesisSubject()));
+		}
+		sortThesisSubjectBeans();
+
+		setThesisTitle(process.getThesisTitle());
+		setThesisTitleEn(process.getThesisTitleEn());
+		setCollaborationType(process.getCollaborationType());
+		setOtherCollaborationType(process.getOtherCollaborationType());
+
+		setIndividualProgramProcess(process);
+
+		setQualificationExamsRequired(QualificationExamsResult.fromValue(process.getQualificationExamsRequired()));
+		setQualificationExamsPerformed(QualificationExamsResult.fromValue(process.getQualificationExamsPerformed()));
+
+		setWhenRatified(process.getCandidacyProcess().getWhenRatified());
+		setWhenFormalizedRegistration(process.getWhenFormalizedRegistration());
+		setWhenStartedStudies(process.getWhenStartedStudies());
+
+		setPhdStudentNumber(process.getPhdIndividualProcessNumber().getPhdStudentNumber());
+
+		setLatexThesisTitle(process.getLatexThesisTitle());
+		setLatexThesisTitleEn(process.getLatexThesisTitleEn());
 	}
 
-    }
-
-    static private final long serialVersionUID = 909403079500457245L;
-
-    private LocalDate candidacyDate;
-    private String thesisTitle;
-    private String thesisTitleEn;
-    private PhdIndividualProgramCollaborationType collaborationType;
-    private String otherCollaborationType;
-
-    private final List<PhdThesisSubjectOrderBean> thesisSubjectBeans;
-
-    private PhdIndividualProgramProcess individualProgramProcess;
-    private PhdProgram phdProgram;
-    private PhdProgramFocusArea focusArea;
-    private ExternalPhdProgram externalPhdProgram;
-
-    private QualificationExamsResult qualificationExamsRequired;
-    private QualificationExamsResult qualificationExamsPerformed;
-
-    private PhdIndividualProgramProcessState processState;
-
-    private LocalDate whenRatified;
-
-    private LocalDate whenFormalizedRegistration;
-
-    private LocalDate whenStartedStudies;
-
-    private Integer phdStudentNumber;
-
-    private PhdIndividualProgramProcess destiny;
-
-    private String remarks;
-
-    private String latexThesisTitle;
-
-    private String latexThesisTitleEn;
-
-    private LocalDate stateDate;
-
-    public PhdIndividualProgramProcessBean() {
-	thesisSubjectBeans = new ArrayList<PhdThesisSubjectOrderBean>();
-	setQualificationExamsRequired(QualificationExamsResult.NULL);
-	setQualificationExamsPerformed(QualificationExamsResult.NULL);
-    }
-
-    public PhdIndividualProgramProcessBean(final PhdIndividualProgramProcess process) {
-	thesisSubjectBeans = new ArrayList<PhdThesisSubjectOrderBean>();
-	setCandidacyDate(process.getCandidacyDate());
-
-	setPhdProgram(process.getPhdProgram());
-	setFocusArea(process.getPhdProgramFocusArea());
-	setExternalPhdProgram(process.getExternalPhdProgram());
-
-	for (ThesisSubjectOrder subjectOrder : process.getThesisSubjectOrders()) {
-	    addThesisSubjectBean(new PhdThesisSubjectOrderBean(subjectOrder.getSubjectOrder(), subjectOrder.getThesisSubject()));
-	}
-	sortThesisSubjectBeans();
-
-	setThesisTitle(process.getThesisTitle());
-	setThesisTitleEn(process.getThesisTitleEn());
-	setCollaborationType(process.getCollaborationType());
-	setOtherCollaborationType(process.getOtherCollaborationType());
-
-	setIndividualProgramProcess(process);
-
-	setQualificationExamsRequired(QualificationExamsResult.fromValue(process.getQualificationExamsRequired()));
-	setQualificationExamsPerformed(QualificationExamsResult.fromValue(process.getQualificationExamsPerformed()));
-
-	setWhenRatified(process.getCandidacyProcess().getWhenRatified());
-	setWhenFormalizedRegistration(process.getWhenFormalizedRegistration());
-	setWhenStartedStudies(process.getWhenStartedStudies());
-
-	setPhdStudentNumber(process.getPhdIndividualProcessNumber().getPhdStudentNumber());
-
-	setLatexThesisTitle(process.getLatexThesisTitle());
-	setLatexThesisTitleEn(process.getLatexThesisTitleEn());
-    }
-
-    public List<PhdThesisSubjectOrderBean> getThesisSubjectBeans() {
-	return thesisSubjectBeans;
-    }
-
-    public void addThesisSubjectBean(PhdThesisSubjectOrderBean thesisSubjectBean) {
-	thesisSubjectBeans.add(thesisSubjectBean);
-	sortThesisSubjectBeans();
-    }
-
-    public PhdThesisSubjectOrderBean getThesisSubjectBean(int order) {
-	for (PhdThesisSubjectOrderBean bean : getThesisSubjectBeans()) {
-	    if (bean.getOrder() == order) {
-		return bean;
-	    }
+	public List<PhdThesisSubjectOrderBean> getThesisSubjectBeans() {
+		return thesisSubjectBeans;
 	}
 
-	return null;
-    }
-
-    public void sortThesisSubjectBeans() {
-	Collections.sort(thesisSubjectBeans, PhdThesisSubjectOrderBean.COMPARATOR_BY_ORDER);
-    }
-
-    public void updateThesisSubjectBeans() {
-	int order = 1;
-	getThesisSubjectBeans().clear();
-	if (hasFocusArea()) {
-	    for (ThesisSubject thesisSubject : getFocusArea().getThesisSubjects()) {
-		addThesisSubjectBean(new PhdThesisSubjectOrderBean(order++, thesisSubject));
-	    }
+	public void addThesisSubjectBean(PhdThesisSubjectOrderBean thesisSubjectBean) {
+		thesisSubjectBeans.add(thesisSubjectBean);
+		sortThesisSubjectBeans();
 	}
-    }
 
-    public LocalDate getCandidacyDate() {
-	return candidacyDate;
-    }
+	public PhdThesisSubjectOrderBean getThesisSubjectBean(int order) {
+		for (PhdThesisSubjectOrderBean bean : getThesisSubjectBeans()) {
+			if (bean.getOrder() == order) {
+				return bean;
+			}
+		}
 
-    public void setCandidacyDate(LocalDate candidacyDate) {
-	this.candidacyDate = candidacyDate;
-    }
+		return null;
+	}
 
-    public String getThesisTitle() {
-	return thesisTitle;
-    }
+	public void sortThesisSubjectBeans() {
+		Collections.sort(thesisSubjectBeans, PhdThesisSubjectOrderBean.COMPARATOR_BY_ORDER);
+	}
 
-    public void setThesisTitle(String thesisTitle) {
-	this.thesisTitle = thesisTitle;
-    }
+	public void updateThesisSubjectBeans() {
+		int order = 1;
+		getThesisSubjectBeans().clear();
+		if (hasFocusArea()) {
+			for (ThesisSubject thesisSubject : getFocusArea().getThesisSubjects()) {
+				addThesisSubjectBean(new PhdThesisSubjectOrderBean(order++, thesisSubject));
+			}
+		}
+	}
 
-    public String getThesisTitleEn() {
-	return thesisTitleEn;
-    }
+	public LocalDate getCandidacyDate() {
+		return candidacyDate;
+	}
 
-    public void setThesisTitleEn(String thesisTitleEn) {
-	this.thesisTitleEn = thesisTitleEn;
-    }
+	public void setCandidacyDate(LocalDate candidacyDate) {
+		this.candidacyDate = candidacyDate;
+	}
 
-    public PhdIndividualProgramCollaborationType getCollaborationType() {
-	return collaborationType;
-    }
+	public String getThesisTitle() {
+		return thesisTitle;
+	}
 
-    public void setCollaborationType(PhdIndividualProgramCollaborationType collaborationType) {
-	this.collaborationType = collaborationType;
-    }
+	public void setThesisTitle(String thesisTitle) {
+		this.thesisTitle = thesisTitle;
+	}
 
-    public String getOtherCollaborationType() {
-	return otherCollaborationType;
-    }
+	public String getThesisTitleEn() {
+		return thesisTitleEn;
+	}
 
-    public void setOtherCollaborationType(String otherCollaborationType) {
-	this.otherCollaborationType = otherCollaborationType;
-    }
+	public void setThesisTitleEn(String thesisTitleEn) {
+		this.thesisTitleEn = thesisTitleEn;
+	}
 
-    public boolean isCollaborationInformationCorrect() {
-	return getCollaborationType().needExtraInformation() ? !isEmpty(otherCollaborationType) : true;
-    }
+	public PhdIndividualProgramCollaborationType getCollaborationType() {
+		return collaborationType;
+	}
 
-    public PhdIndividualProgramProcess getIndividualProgramProcess() {
-	return this.individualProgramProcess;
-    }
+	public void setCollaborationType(PhdIndividualProgramCollaborationType collaborationType) {
+		this.collaborationType = collaborationType;
+	}
 
-    public void setIndividualProgramProcess(final PhdIndividualProgramProcess individualProgramProcess) {
-	this.individualProgramProcess = individualProgramProcess;
-    }
+	public String getOtherCollaborationType() {
+		return otherCollaborationType;
+	}
 
-    public PhdProgram getPhdProgram() {
-	return this.phdProgram;
-    }
+	public void setOtherCollaborationType(String otherCollaborationType) {
+		this.otherCollaborationType = otherCollaborationType;
+	}
 
-    public void setPhdProgram(final PhdProgram phdProgram) {
-	this.phdProgram = phdProgram;
-    }
+	public boolean isCollaborationInformationCorrect() {
+		return getCollaborationType().needExtraInformation() ? !isEmpty(otherCollaborationType) : true;
+	}
 
-    public boolean hasPhdProgram() {
-	return getPhdProgram() != null;
-    }
+	public PhdIndividualProgramProcess getIndividualProgramProcess() {
+		return this.individualProgramProcess;
+	}
 
-    public PhdProgramFocusArea getFocusArea() {
-	return this.focusArea;
-    }
+	public void setIndividualProgramProcess(final PhdIndividualProgramProcess individualProgramProcess) {
+		this.individualProgramProcess = individualProgramProcess;
+	}
 
-    public void setFocusArea(final PhdProgramFocusArea focusArea) {
-	this.focusArea = focusArea;
-    }
+	public PhdProgram getPhdProgram() {
+		return this.phdProgram;
+	}
 
-    public boolean hasFocusArea() {
-	return getFocusArea() != null;
-    }
+	public void setPhdProgram(final PhdProgram phdProgram) {
+		this.phdProgram = phdProgram;
+	}
 
-    public QualificationExamsResult getQualificationExamsRequired() {
-	return qualificationExamsRequired;
-    }
+	public boolean hasPhdProgram() {
+		return getPhdProgram() != null;
+	}
 
-    public Boolean getQualificationExamsRequiredBooleanValue() {
-	return qualificationExamsRequired.getValue();
-    }
+	public PhdProgramFocusArea getFocusArea() {
+		return this.focusArea;
+	}
 
-    public void setQualificationExamsRequired(QualificationExamsResult qualificationExamsRequired) {
-	this.qualificationExamsRequired = qualificationExamsRequired;
-    }
+	public void setFocusArea(final PhdProgramFocusArea focusArea) {
+		this.focusArea = focusArea;
+	}
 
-    public QualificationExamsResult getQualificationExamsPerformed() {
-	return qualificationExamsPerformed;
-    }
+	public boolean hasFocusArea() {
+		return getFocusArea() != null;
+	}
 
-    public Boolean getQualificationExamsPerformedBooleanValue() {
-	return qualificationExamsPerformed.getValue();
-    }
+	public QualificationExamsResult getQualificationExamsRequired() {
+		return qualificationExamsRequired;
+	}
 
-    public void setQualificationExamsPerformed(QualificationExamsResult qualificationExamsPerformed) {
-	this.qualificationExamsPerformed = qualificationExamsPerformed;
-    }
+	public Boolean getQualificationExamsRequiredBooleanValue() {
+		return qualificationExamsRequired.getValue();
+	}
 
-    public PhdIndividualProgramProcessState getProcessState() {
-	return processState;
-    }
+	public void setQualificationExamsRequired(QualificationExamsResult qualificationExamsRequired) {
+		this.qualificationExamsRequired = qualificationExamsRequired;
+	}
 
-    public void setProcessState(PhdIndividualProgramProcessState processState) {
-	this.processState = processState;
-    }
+	public QualificationExamsResult getQualificationExamsPerformed() {
+		return qualificationExamsPerformed;
+	}
 
-    public ExternalPhdProgram getExternalPhdProgram() {
-	return this.externalPhdProgram;
-    }
+	public Boolean getQualificationExamsPerformedBooleanValue() {
+		return qualificationExamsPerformed.getValue();
+	}
 
-    public void setExternalPhdProgram(final ExternalPhdProgram externalPhdProgram) {
-	this.externalPhdProgram = externalPhdProgram;
-    }
+	public void setQualificationExamsPerformed(QualificationExamsResult qualificationExamsPerformed) {
+		this.qualificationExamsPerformed = qualificationExamsPerformed;
+	}
 
-    public LocalDate getWhenRatified() {
-	return whenRatified;
-    }
+	public PhdIndividualProgramProcessState getProcessState() {
+		return processState;
+	}
 
-    public void setWhenRatified(LocalDate whenRatified) {
-	this.whenRatified = whenRatified;
-    }
+	public void setProcessState(PhdIndividualProgramProcessState processState) {
+		this.processState = processState;
+	}
 
-    public LocalDate getWhenFormalizedRegistration() {
-	return whenFormalizedRegistration;
-    }
+	public ExternalPhdProgram getExternalPhdProgram() {
+		return this.externalPhdProgram;
+	}
 
-    public void setWhenFormalizedRegistration(LocalDate whenFormalizedRegistration) {
-	this.whenFormalizedRegistration = whenFormalizedRegistration;
-    }
+	public void setExternalPhdProgram(final ExternalPhdProgram externalPhdProgram) {
+		this.externalPhdProgram = externalPhdProgram;
+	}
 
-    public LocalDate getWhenStartedStudies() {
-	return whenStartedStudies;
-    }
+	public LocalDate getWhenRatified() {
+		return whenRatified;
+	}
 
-    public void setWhenStartedStudies(LocalDate whenStartedStudies) {
-	this.whenStartedStudies = whenStartedStudies;
-    }
+	public void setWhenRatified(LocalDate whenRatified) {
+		this.whenRatified = whenRatified;
+	}
 
-    public Integer getPhdStudentNumber() {
-	return phdStudentNumber;
-    }
+	public LocalDate getWhenFormalizedRegistration() {
+		return whenFormalizedRegistration;
+	}
 
-    public void setPhdStudentNumber(Integer phdStudentNumber) {
-	this.phdStudentNumber = phdStudentNumber;
-    }
+	public void setWhenFormalizedRegistration(LocalDate whenFormalizedRegistration) {
+		this.whenFormalizedRegistration = whenFormalizedRegistration;
+	}
 
-    public PhdIndividualProgramProcess getDestiny() {
-	return destiny;
-    }
+	public LocalDate getWhenStartedStudies() {
+		return whenStartedStudies;
+	}
 
-    public void setDestiny(PhdIndividualProgramProcess destiny) {
-	this.destiny = destiny;
-    }
+	public void setWhenStartedStudies(LocalDate whenStartedStudies) {
+		this.whenStartedStudies = whenStartedStudies;
+	}
 
-    public String getRemarks() {
-	return remarks;
-    }
+	public Integer getPhdStudentNumber() {
+		return phdStudentNumber;
+	}
 
-    public void setRemarks(String remarks) {
-	this.remarks = remarks;
-    }
+	public void setPhdStudentNumber(Integer phdStudentNumber) {
+		this.phdStudentNumber = phdStudentNumber;
+	}
 
-    public String getLatexThesisTitle() {
-	return latexThesisTitle;
-    }
+	public PhdIndividualProgramProcess getDestiny() {
+		return destiny;
+	}
 
-    public void setLatexThesisTitle(String latexThesisTitle) {
-	this.latexThesisTitle = latexThesisTitle;
-    }
+	public void setDestiny(PhdIndividualProgramProcess destiny) {
+		this.destiny = destiny;
+	}
 
-    public String getLatexThesisTitleEn() {
-	return latexThesisTitleEn;
-    }
+	public String getRemarks() {
+		return remarks;
+	}
 
-    public void setLatexThesisTitleEn(String latexThesisTitleEn) {
-	this.latexThesisTitleEn = latexThesisTitleEn;
-    }
+	public void setRemarks(String remarks) {
+		this.remarks = remarks;
+	}
 
-    public LocalDate getStateDate() {
-	return stateDate;
-    }
+	public String getLatexThesisTitle() {
+		return latexThesisTitle;
+	}
 
-    public void setStateDate(LocalDate stateDate) {
-	this.stateDate = stateDate;
-    }
+	public void setLatexThesisTitle(String latexThesisTitle) {
+		this.latexThesisTitle = latexThesisTitle;
+	}
+
+	public String getLatexThesisTitleEn() {
+		return latexThesisTitleEn;
+	}
+
+	public void setLatexThesisTitleEn(String latexThesisTitleEn) {
+		this.latexThesisTitleEn = latexThesisTitleEn;
+	}
+
+	public LocalDate getStateDate() {
+		return stateDate;
+	}
+
+	public void setStateDate(LocalDate stateDate) {
+		this.stateDate = stateDate;
+	}
 }

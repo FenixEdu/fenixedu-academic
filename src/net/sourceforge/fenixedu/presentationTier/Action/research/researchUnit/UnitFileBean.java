@@ -13,105 +13,105 @@ import net.sourceforge.fenixedu.injectionCode.IGroup;
 
 public class UnitFileBean implements Serializable {
 
-    private UnitFile file;
+	private UnitFile file;
 
-    private String name;
+	private String name;
 
-    private String description;
+	private String description;
 
-    private List<IGroup> groups;
+	private List<IGroup> groups;
 
-    private String tags;
+	private String tags;
 
-    protected UnitFileBean() {
-	this.file = null;
-	groups = new ArrayList<IGroup>();
-    }
-
-    public UnitFileBean(UnitFile file) {
-	this.file = file;
-	this.name = file.getDisplayName();
-	this.description = file.getDescription();
-	setupGroups(file.getPermittedGroup());
-	setupTags(file.getUnitFileTags());
-    }
-
-    private void setupTags(List<UnitFileTag> unitFileTags) {
-	String tags = "";
-	int i = unitFileTags.size();
-	for (UnitFileTag tag : unitFileTags) {
-	    tags += tag.getName();
-	    if (--i > 0) {
-		tags += " ";
-	    }
-	}
-	setTags(tags);
-    }
-
-    private void setupGroups(Group permittedGroup) {
-	if (permittedGroup instanceof GroupUnion) {
-	    groups = flatten((GroupUnion) permittedGroup);
-	} else {
-	    groups = new ArrayList<IGroup>();
-	    groups.add(permittedGroup);
+	protected UnitFileBean() {
+		this.file = null;
+		groups = new ArrayList<IGroup>();
 	}
 
-    }
-
-    private List<IGroup> flatten(GroupUnion group) {
-	List<IGroup> groups = new ArrayList<IGroup>();
-	for (IGroup children : group.getChildren()) {
-	    if (children instanceof GroupUnion) {
-		groups.addAll(flatten((GroupUnion) children));
-	    } else {
-		groups.add(children);
-	    }
+	public UnitFileBean(UnitFile file) {
+		this.file = file;
+		this.name = file.getDisplayName();
+		this.description = file.getDescription();
+		setupGroups(file.getPermittedGroup());
+		setupTags(file.getUnitFileTags());
 	}
-	return groups;
-    }
 
-    public UnitFile getFile() {
-	return file;
-    }
+	private void setupTags(List<UnitFileTag> unitFileTags) {
+		String tags = "";
+		int i = unitFileTags.size();
+		for (UnitFileTag tag : unitFileTags) {
+			tags += tag.getName();
+			if (--i > 0) {
+				tags += " ";
+			}
+		}
+		setTags(tags);
+	}
 
-    public List<IGroup> getGroups() {
-	return groups;
-    }
+	private void setupGroups(Group permittedGroup) {
+		if (permittedGroup instanceof GroupUnion) {
+			groups = flatten((GroupUnion) permittedGroup);
+		} else {
+			groups = new ArrayList<IGroup>();
+			groups.add(permittedGroup);
+		}
 
-    public void setGroups(List<IGroup> groups) {
-	this.groups = groups;
-    }
+	}
 
-    public String getDescription() {
-	return description;
-    }
+	private List<IGroup> flatten(GroupUnion group) {
+		List<IGroup> groups = new ArrayList<IGroup>();
+		for (IGroup children : group.getChildren()) {
+			if (children instanceof GroupUnion) {
+				groups.addAll(flatten((GroupUnion) children));
+			} else {
+				groups.add(children);
+			}
+		}
+		return groups;
+	}
 
-    public void setDescription(String description) {
-	this.description = description;
-    }
+	public UnitFile getFile() {
+		return file;
+	}
 
-    public String getName() {
-	return name;
-    }
+	public List<IGroup> getGroups() {
+		return groups;
+	}
 
-    public void setName(String name) {
-	this.name = name;
-    }
+	public void setGroups(List<IGroup> groups) {
+		this.groups = groups;
+	}
 
-    public Group getGroup() {
-	return new GroupUnion(getGroups());
-    }
+	public String getDescription() {
+		return description;
+	}
 
-    public Unit getUnit() {
-	return getFile().getUnit();
-    }
+	public void setDescription(String description) {
+		this.description = description;
+	}
 
-    public String getTags() {
-	return tags;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public void setTags(String tags) {
-	this.tags = tags;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public Group getGroup() {
+		return new GroupUnion(getGroups());
+	}
+
+	public Unit getUnit() {
+		return getFile().getUnit();
+	}
+
+	public String getTags() {
+		return tags;
+	}
+
+	public void setTags(String tags) {
+		this.tags = tags;
+	}
 
 }

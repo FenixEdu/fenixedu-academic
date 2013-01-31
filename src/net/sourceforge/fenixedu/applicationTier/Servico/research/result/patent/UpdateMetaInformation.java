@@ -7,8 +7,8 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class UpdateMetaInformation extends FenixService {
 
-    @Service
-    public static void run(ResearchResult result) {
-	ResearchResultMetaDataManager.updateMetaDataInStorageFor(result);
-    }
+	@Service
+	public static void run(ResearchResult result) {
+		ResearchResultMetaDataManager.updateMetaDataInStorageFor(result);
+	}
 }

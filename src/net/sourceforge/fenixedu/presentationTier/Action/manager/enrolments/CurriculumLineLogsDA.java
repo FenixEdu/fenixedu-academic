@@ -36,165 +36,165 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Mapping(path = "/curriculumLineLogs", module = "manager")
 @Forwards({ @Forward(name = "searchCurriculumLineLogs", path = "/manager/viewCurriculumLineLogs.jsp"),
-	@Forward(name = "viewCurriculumLineLogStatistics", path = "/manager/viewCurriculumLineLogStatistics.jsp") })
+		@Forward(name = "viewCurriculumLineLogStatistics", path = "/manager/viewCurriculumLineLogStatistics.jsp") })
 public class CurriculumLineLogsDA extends FenixDispatchAction {
 
-    public ActionForward prepareViewCurriculumLineLogs(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
-	request.setAttribute("bean", new SearchCurriculumLineLog());
-	return mapping.findForward("searchCurriculumLineLogs");
-    }
-
-    public ActionForward viewCurriculumLineLogs(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
-
-	final SearchCurriculumLineLog searchCurriculumLineLog = getRenderedObject();
-	request.setAttribute("bean", searchCurriculumLineLog);
-	Student student = Student.readStudentByNumber(searchCurriculumLineLog.getStudentNumber());
-
-	if (student == null) {
-	    addActionMessage(request, "exception.student.does.not.exist");
-	    return mapping.findForward("searchCurriculumLineLogs");
+	public ActionForward prepareViewCurriculumLineLogs(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) {
+		request.setAttribute("bean", new SearchCurriculumLineLog());
+		return mapping.findForward("searchCurriculumLineLogs");
 	}
 
-	request.setAttribute("curriculumLineLogs", student.getCurriculumLineLogs(searchCurriculumLineLog.getExecutionPeriod()));
-	return mapping.findForward("searchCurriculumLineLogs");
-    }
+	public ActionForward viewCurriculumLineLogs(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) {
 
-    public static class CurriculumLineLogStatisticsCalculator {
+		final SearchCurriculumLineLog searchCurriculumLineLog = getRenderedObject();
+		request.setAttribute("bean", searchCurriculumLineLog);
+		Student student = Student.readStudentByNumber(searchCurriculumLineLog.getStudentNumber());
 
-	private static final int INTERVAL_SIZE_IN_MILLIS = 300000;
-
-	final Interval enrolmentPeriod;
-	final int[] enrolments;
-	final int[] unenrolments;
-
-	public CurriculumLineLogStatisticsCalculator(final ExecutionSemester executionSemester) {
-	    enrolmentPeriod = findEnrolmentPeriod(executionSemester);
-	    final long start = enrolmentPeriod.getStart().getMillis();
-	    final long durationMillis = enrolmentPeriod.toDurationMillis();
-	    final int numberOfIntervals = (int) (durationMillis / INTERVAL_SIZE_IN_MILLIS) + 1;
-
-	    enrolments = new int[numberOfIntervals];
-	    unenrolments = new int[numberOfIntervals];
-
-	    for (final CurriculumLineLog curriculumLineLog : executionSemester.getCurriculumLineLogsSet()) {
-		if (curriculumLineLog instanceof EnrolmentLog) {
-		    final DateTime dateTime = curriculumLineLog.getDateDateTime();
-		    if (enrolmentPeriod.contains(dateTime)) {
-			final long offset = dateTime.getMillis() - start;
-			final int i = (int) offset / INTERVAL_SIZE_IN_MILLIS;
-
-			if (curriculumLineLog.getAction() == EnrolmentAction.ENROL) {
-			    enrolments[i]++;
-			} else {
-			    unenrolments[i]++;
-			}
-		    }
+		if (student == null) {
+			addActionMessage(request, "exception.student.does.not.exist");
+			return mapping.findForward("searchCurriculumLineLogs");
 		}
-	    }
+
+		request.setAttribute("curriculumLineLogs", student.getCurriculumLineLogs(searchCurriculumLineLog.getExecutionPeriod()));
+		return mapping.findForward("searchCurriculumLineLogs");
 	}
 
-	public Interval getEnrolmentPeriod() {
-	    return enrolmentPeriod;
-	}
+	public static class CurriculumLineLogStatisticsCalculator {
 
-	public int[] getEnrolments() {
-	    return enrolments;
-	}
+		private static final int INTERVAL_SIZE_IN_MILLIS = 300000;
 
-	public int[] getUnenrolments() {
-	    return unenrolments;
-	}
+		final Interval enrolmentPeriod;
+		final int[] enrolments;
+		final int[] unenrolments;
 
-	private Interval findEnrolmentPeriod(final ExecutionSemester executionSemester) {
-	    DateTime start = null, end = null;
-	    for (final EnrolmentPeriod enrolmentPeriod : executionSemester.getEnrolmentPeriodSet()) {
-		if (enrolmentPeriod instanceof EnrolmentPeriodInCurricularCourses) {
-		    final DegreeType degreeType = enrolmentPeriod.getDegreeCurricularPlan().getDegreeType();
-		    if (degreeType == DegreeType.BOLONHA_DEGREE || degreeType == DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE
-			    || degreeType == DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE) {
-			if (start == null || start.isAfter(enrolmentPeriod.getStartDateDateTime())) {
-			    start = enrolmentPeriod.getStartDateDateTime();
+		public CurriculumLineLogStatisticsCalculator(final ExecutionSemester executionSemester) {
+			enrolmentPeriod = findEnrolmentPeriod(executionSemester);
+			final long start = enrolmentPeriod.getStart().getMillis();
+			final long durationMillis = enrolmentPeriod.toDurationMillis();
+			final int numberOfIntervals = (int) (durationMillis / INTERVAL_SIZE_IN_MILLIS) + 1;
+
+			enrolments = new int[numberOfIntervals];
+			unenrolments = new int[numberOfIntervals];
+
+			for (final CurriculumLineLog curriculumLineLog : executionSemester.getCurriculumLineLogsSet()) {
+				if (curriculumLineLog instanceof EnrolmentLog) {
+					final DateTime dateTime = curriculumLineLog.getDateDateTime();
+					if (enrolmentPeriod.contains(dateTime)) {
+						final long offset = dateTime.getMillis() - start;
+						final int i = (int) offset / INTERVAL_SIZE_IN_MILLIS;
+
+						if (curriculumLineLog.getAction() == EnrolmentAction.ENROL) {
+							enrolments[i]++;
+						} else {
+							unenrolments[i]++;
+						}
+					}
+				}
 			}
-			if (end == null || end.isBefore(enrolmentPeriod.getEndDateDateTime())) {
-			    end = enrolmentPeriod.getEndDateDateTime();
-			}
-		    }
 		}
-	    }
-	    return start == null || end == null ? null : new Interval(start, end);
-	}
 
-	public byte[] getOperationsChart() throws IOException {
-	    final TimeTableXYDataset dataset = new TimeTableXYDataset();
+		public Interval getEnrolmentPeriod() {
+			return enrolmentPeriod;
+		}
 
-	    DateTime index = enrolmentPeriod.getStart();
-	    for (int i = 0; i < enrolments.length; i++) {
-		final Second second = new Second(index.toDate());
-		index = index.plus(INTERVAL_SIZE_IN_MILLIS);
+		public int[] getEnrolments() {
+			return enrolments;
+		}
 
-		final int enrolmentCount = enrolments[i];
-		dataset.add(second, enrolmentCount, "Enrolments");
+		public int[] getUnenrolments() {
+			return unenrolments;
+		}
 
-		final int unenrolmentCount = unenrolments[i];
-		dataset.add(second, unenrolmentCount, "Unenrolments");
-	    }
+		private Interval findEnrolmentPeriod(final ExecutionSemester executionSemester) {
+			DateTime start = null, end = null;
+			for (final EnrolmentPeriod enrolmentPeriod : executionSemester.getEnrolmentPeriodSet()) {
+				if (enrolmentPeriod instanceof EnrolmentPeriodInCurricularCourses) {
+					final DegreeType degreeType = enrolmentPeriod.getDegreeCurricularPlan().getDegreeType();
+					if (degreeType == DegreeType.BOLONHA_DEGREE || degreeType == DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE
+							|| degreeType == DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE) {
+						if (start == null || start.isAfter(enrolmentPeriod.getStartDateDateTime())) {
+							start = enrolmentPeriod.getStartDateDateTime();
+						}
+						if (end == null || end.isBefore(enrolmentPeriod.getEndDateDateTime())) {
+							end = enrolmentPeriod.getEndDateDateTime();
+						}
+					}
+				}
+			}
+			return start == null || end == null ? null : new Interval(start, end);
+		}
 
-	    return getOperationsChart(dataset);
-	}
+		public byte[] getOperationsChart() throws IOException {
+			final TimeTableXYDataset dataset = new TimeTableXYDataset();
 
-	private byte[] getOperationsChart(final TimeTableXYDataset dataset) throws IOException {
-	    final JFreeChart jfreeChart = ChartFactory.createTimeSeriesChart("", "", "", dataset, true, true, true);
-	    final BufferedImage bufferedImage = jfreeChart.createBufferedImage(1000, 500);
-	    final ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-	    ImageIO.write(bufferedImage, "jpg", outputStream);
-	    bufferedImage.flush();
-	    outputStream.close();
-	    return outputStream.toByteArray();
-	}
+			DateTime index = enrolmentPeriod.getStart();
+			for (int i = 0; i < enrolments.length; i++) {
+				final Second second = new Second(index.toDate());
+				index = index.plus(INTERVAL_SIZE_IN_MILLIS);
 
-    }
+				final int enrolmentCount = enrolments[i];
+				dataset.add(second, enrolmentCount, "Enrolments");
 
-    public ActionForward viewCurriculumLineLogStatistics(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
+				final int unenrolmentCount = unenrolments[i];
+				dataset.add(second, unenrolmentCount, "Unenrolments");
+			}
 
-	final ExecutionSemester executionSemester = getDomainObject(request, "executionSemesterId");
+			return getOperationsChart(dataset);
+		}
 
-	if (executionSemester != null) {
-	    request.setAttribute("executionSemester", executionSemester);
-
-	    final CurriculumLineLogStatisticsCalculator curriculumLineLogStatisticsCalculator = new CurriculumLineLogStatisticsCalculator(
-		    executionSemester);
-	    request.setAttribute("curriculumLineLogStatisticsCalculator", curriculumLineLogStatisticsCalculator);
-	    return mapping.findForward("viewCurriculumLineLogStatistics");
-	}
-
-	return prepareViewCurriculumLineLogs(mapping, form, request, response);
-    }
-
-    public ActionForward viewCurriculumLineLogStatisticsChartOperations(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws IOException {
-
-	final ExecutionSemester executionSemester = getDomainObject(request, "executionSemesterId");
-
-	if (executionSemester != null) {
-	    final CurriculumLineLogStatisticsCalculator curriculumLineLogStatisticsCalculator = new CurriculumLineLogStatisticsCalculator(
-		    executionSemester);
-
-	    ServletOutputStream writer = null;
-	    try {
-		writer = response.getOutputStream();
-		response.setContentType("image/jpeg");
-		writer.write(curriculumLineLogStatisticsCalculator.getOperationsChart());
-		writer.flush();
-	    } finally {
-		writer.close();
-		response.flushBuffer();
-	    }
+		private byte[] getOperationsChart(final TimeTableXYDataset dataset) throws IOException {
+			final JFreeChart jfreeChart = ChartFactory.createTimeSeriesChart("", "", "", dataset, true, true, true);
+			final BufferedImage bufferedImage = jfreeChart.createBufferedImage(1000, 500);
+			final ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+			ImageIO.write(bufferedImage, "jpg", outputStream);
+			bufferedImage.flush();
+			outputStream.close();
+			return outputStream.toByteArray();
+		}
 
 	}
 
-	return null;
-    }
+	public ActionForward viewCurriculumLineLogStatistics(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) {
+
+		final ExecutionSemester executionSemester = getDomainObject(request, "executionSemesterId");
+
+		if (executionSemester != null) {
+			request.setAttribute("executionSemester", executionSemester);
+
+			final CurriculumLineLogStatisticsCalculator curriculumLineLogStatisticsCalculator =
+					new CurriculumLineLogStatisticsCalculator(executionSemester);
+			request.setAttribute("curriculumLineLogStatisticsCalculator", curriculumLineLogStatisticsCalculator);
+			return mapping.findForward("viewCurriculumLineLogStatistics");
+		}
+
+		return prepareViewCurriculumLineLogs(mapping, form, request, response);
+	}
+
+	public ActionForward viewCurriculumLineLogStatisticsChartOperations(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) throws IOException {
+
+		final ExecutionSemester executionSemester = getDomainObject(request, "executionSemesterId");
+
+		if (executionSemester != null) {
+			final CurriculumLineLogStatisticsCalculator curriculumLineLogStatisticsCalculator =
+					new CurriculumLineLogStatisticsCalculator(executionSemester);
+
+			ServletOutputStream writer = null;
+			try {
+				writer = response.getOutputStream();
+				response.setContentType("image/jpeg");
+				writer.write(curriculumLineLogStatisticsCalculator.getOperationsChart());
+				writer.flush();
+			} finally {
+				writer.close();
+				response.flushBuffer();
+			}
+
+		}
+
+		return null;
+	}
 }

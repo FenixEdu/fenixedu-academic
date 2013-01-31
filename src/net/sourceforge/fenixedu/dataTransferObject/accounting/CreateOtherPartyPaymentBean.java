@@ -8,38 +8,38 @@ import net.sourceforge.fenixedu.util.Money;
 
 public class CreateOtherPartyPaymentBean implements Serializable {
 
-    private Party contributorParty;
+	private Party contributorParty;
 
-    private Event event;
+	private Event event;
 
-    private Money amount;
+	private Money amount;
 
-    public CreateOtherPartyPaymentBean(final Event event) {
-	setEvent(event);
-    }
+	public CreateOtherPartyPaymentBean(final Event event) {
+		setEvent(event);
+	}
 
-    public Party getContributorParty() {
-	return this.contributorParty;
-    }
+	public Party getContributorParty() {
+		return this.contributorParty;
+	}
 
-    public void setContributorParty(Party contributor) {
-	this.contributorParty = contributor;
-    }
+	public void setContributorParty(Party contributor) {
+		this.contributorParty = contributor;
+	}
 
-    public Event getEvent() {
-	return this.event;
-    }
+	public Event getEvent() {
+		return this.event;
+	}
 
-    public void setEvent(Event event) {
-	this.event = event;
-    }
+	public void setEvent(Event event) {
+		this.event = event;
+	}
 
-    public Money getAmount() {
-	return amount;
-    }
+	public Money getAmount() {
+		return amount;
+	}
 
-    public void setAmount(Money amount) {
-	this.amount = amount;
-    }
+	public void setAmount(Money amount) {
+		this.amount = amount;
+	}
 
 }

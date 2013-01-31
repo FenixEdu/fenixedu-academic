@@ -9,38 +9,39 @@ import net.sourceforge.fenixedu.util.PeriodToApplyRestriction;
 
 public class InfoRestrictionPeriodToApply extends InfoRestriction {
 
-    protected PeriodToApplyRestriction periodToApplyRestriction;
+	protected PeriodToApplyRestriction periodToApplyRestriction;
 
-    public InfoRestrictionPeriodToApply() {
-    }
-
-    public PeriodToApplyRestriction getPeriodToApplyRestriction() {
-	return periodToApplyRestriction;
-    }
-
-    public void setPeriodToApplyRestriction(PeriodToApplyRestriction periodToApplyRestriction) {
-	this.periodToApplyRestriction = periodToApplyRestriction;
-    }
-
-    public void copyFromDomain(RestrictionPeriodToApply restriction) {
-	super.copyFromDomain(restriction);
-	this.setPeriodToApplyRestriction(restriction.getPeriodToApplyRestriction());
-	this.setRestrictionKindResourceKey("label.manager.restrictionPeriodToApply");
-    }
-
-    public static InfoRestrictionPeriodToApply newInfoFromDomain(RestrictionPeriodToApply restriction) {
-
-	InfoRestrictionPeriodToApply infoRestriction = null;
-
-	if (restriction != null) {
-	    infoRestriction = new InfoRestrictionPeriodToApply();
-	    infoRestriction.copyFromDomain(restriction);
+	public InfoRestrictionPeriodToApply() {
 	}
 
-	return infoRestriction;
-    }
+	public PeriodToApplyRestriction getPeriodToApplyRestriction() {
+		return periodToApplyRestriction;
+	}
 
-    public String getArg() {
-	return String.valueOf(periodToApplyRestriction.getValue());
-    }
+	public void setPeriodToApplyRestriction(PeriodToApplyRestriction periodToApplyRestriction) {
+		this.periodToApplyRestriction = periodToApplyRestriction;
+	}
+
+	public void copyFromDomain(RestrictionPeriodToApply restriction) {
+		super.copyFromDomain(restriction);
+		this.setPeriodToApplyRestriction(restriction.getPeriodToApplyRestriction());
+		this.setRestrictionKindResourceKey("label.manager.restrictionPeriodToApply");
+	}
+
+	public static InfoRestrictionPeriodToApply newInfoFromDomain(RestrictionPeriodToApply restriction) {
+
+		InfoRestrictionPeriodToApply infoRestriction = null;
+
+		if (restriction != null) {
+			infoRestriction = new InfoRestrictionPeriodToApply();
+			infoRestriction.copyFromDomain(restriction);
+		}
+
+		return infoRestriction;
+	}
+
+	@Override
+	public String getArg() {
+		return String.valueOf(periodToApplyRestriction.getValue());
+	}
 }

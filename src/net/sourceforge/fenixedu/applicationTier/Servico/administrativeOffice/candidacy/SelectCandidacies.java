@@ -18,36 +18,36 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class SelectCandidacies extends FenixService {
 
-    @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
-    @Service
-    public static void run(List<SelectDFACandidacyBean> admittedCandidacies, List<SelectDFACandidacyBean> substituteCandidacies,
-	    List<SelectDFACandidacyBean> notAdmittedCandidacies) {
+	@Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
+	@Service
+	public static void run(List<SelectDFACandidacyBean> admittedCandidacies, List<SelectDFACandidacyBean> substituteCandidacies,
+			List<SelectDFACandidacyBean> notAdmittedCandidacies) {
 
-	createNewCandidacySituations(notAdmittedCandidacies);
-	createNewCandidacySituations(admittedCandidacies);
-	createNewCandidacySituations(substituteCandidacies);
+		createNewCandidacySituations(notAdmittedCandidacies);
+		createNewCandidacySituations(admittedCandidacies);
+		createNewCandidacySituations(substituteCandidacies);
 
-	fillSubstituteCandidaciesOrder(substituteCandidacies);
+		fillSubstituteCandidaciesOrder(substituteCandidacies);
 
-    }
-
-    private static void fillSubstituteCandidaciesOrder(List<SelectDFACandidacyBean> substituteCandidacies) {
-	if (substituteCandidacies != null && !substituteCandidacies.isEmpty()) {
-	    for (SelectDFACandidacyBean candidacyBean : substituteCandidacies) {
-		SubstituteCandidacySituation candidacySituation = (SubstituteCandidacySituation) candidacyBean.getCandidacy()
-			.getActiveCandidacySituation();
-		candidacySituation.setCandidacyOrder(candidacyBean.getOrder());
-	    }
 	}
-    }
 
-    private static void createNewCandidacySituations(List<SelectDFACandidacyBean> candidacies) {
-	if (candidacies != null && !candidacies.isEmpty()) {
-	    for (SelectDFACandidacyBean candidacyBean : candidacies) {
-		StateMachine.execute(candidacyBean.getCandidacy().getActiveCandidacySituation(), candidacyBean);
-		candidacyBean.getCandidacy().getActiveCandidacySituation().setRemarks(candidacyBean.getRemarks());
-	    }
+	private static void fillSubstituteCandidaciesOrder(List<SelectDFACandidacyBean> substituteCandidacies) {
+		if (substituteCandidacies != null && !substituteCandidacies.isEmpty()) {
+			for (SelectDFACandidacyBean candidacyBean : substituteCandidacies) {
+				SubstituteCandidacySituation candidacySituation =
+						(SubstituteCandidacySituation) candidacyBean.getCandidacy().getActiveCandidacySituation();
+				candidacySituation.setCandidacyOrder(candidacyBean.getOrder());
+			}
+		}
 	}
-    }
+
+	private static void createNewCandidacySituations(List<SelectDFACandidacyBean> candidacies) {
+		if (candidacies != null && !candidacies.isEmpty()) {
+			for (SelectDFACandidacyBean candidacyBean : candidacies) {
+				StateMachine.execute(candidacyBean.getCandidacy().getActiveCandidacySituation(), candidacyBean);
+				candidacyBean.getCandidacy().getActiveCandidacySituation().setRemarks(candidacyBean.getRemarks());
+			}
+		}
+	}
 
 }

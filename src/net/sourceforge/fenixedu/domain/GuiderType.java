@@ -7,12 +7,12 @@ package net.sourceforge.fenixedu.domain;
  */
 public enum GuiderType {
 
-    GUIDER,
+	GUIDER,
 
-    ASSISTENT,
+	ASSISTENT,
 
-    EXTERNAL_GUIDER,
+	EXTERNAL_GUIDER,
 
-    EXTERNAL_ASSISTENT;
+	EXTERNAL_ASSISTENT;
 
 }

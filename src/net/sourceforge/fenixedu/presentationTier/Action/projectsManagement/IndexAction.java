@@ -27,19 +27,23 @@ import pt.ist.fenixWebFramework.security.UserView;
  */
 public class IndexAction extends FenixAction {
 
-    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-	    throws FenixFilterException, FenixServiceException {
+	@Override
+	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+			throws FenixFilterException, FenixServiceException {
 
-	final IUserView userView = UserView.getUser();
-	String costCenter = request.getParameter("costCenter");
-	final BackendInstance backendInstance = ProjectRequestUtil.getInstance(request);
-	request.setAttribute("backendInstance", backendInstance);
-	ServiceManagerServiceFactory.executeService("ReviewProjectAccess", new Object[] { userView.getPerson(), costCenter, backendInstance });
+		final IUserView userView = UserView.getUser();
+		String costCenter = request.getParameter("costCenter");
+		final BackendInstance backendInstance = ProjectRequestUtil.getInstance(request);
+		request.setAttribute("backendInstance", backendInstance);
+		ServiceManagerServiceFactory.executeService("ReviewProjectAccess", new Object[] { userView.getPerson(), costCenter,
+				backendInstance });
 
-	if (costCenter != null && !costCenter.equals("")) {
-	    request.setAttribute("infoCostCenter", ServiceUtils.executeService("ReadCostCenter", new Object[] {
-		    userView.getUtilizador(), costCenter, backendInstance }));
+		if (costCenter != null && !costCenter.equals("")) {
+			request.setAttribute(
+					"infoCostCenter",
+					ServiceUtils.executeService("ReadCostCenter", new Object[] { userView.getUtilizador(), costCenter,
+							backendInstance }));
+		}
+		return mapping.findForward("success");
 	}
-	return mapping.findForward("success");
-    }
 }

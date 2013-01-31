@@ -9,19 +9,19 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadExecutionDegreesByExecutionYearAndDegreeInitials extends FenixService {
 
-    @Service
-    public static InfoExecutionDegree run(final InfoExecutionYear infoExecutionYear, final String degreeInitials,
-	    final String nameDegreeCurricularPlan) {
+	@Service
+	public static InfoExecutionDegree run(final InfoExecutionYear infoExecutionYear, final String degreeInitials,
+			final String nameDegreeCurricularPlan) {
 
-	final DegreeCurricularPlan degreeCurricularPlan = DegreeCurricularPlan.readByNameAndDegreeSigla(nameDegreeCurricularPlan,
-		degreeInitials);
-	final ExecutionDegree executionDegree = ExecutionDegree.getByDegreeCurricularPlanAndExecutionYear(degreeCurricularPlan,
-		infoExecutionYear.getYear());
-	return getInfoExecutionDegree(executionDegree);
-    }
+		final DegreeCurricularPlan degreeCurricularPlan =
+				DegreeCurricularPlan.readByNameAndDegreeSigla(nameDegreeCurricularPlan, degreeInitials);
+		final ExecutionDegree executionDegree =
+				ExecutionDegree.getByDegreeCurricularPlanAndExecutionYear(degreeCurricularPlan, infoExecutionYear.getYear());
+		return getInfoExecutionDegree(executionDegree);
+	}
 
-    public static InfoExecutionDegree getInfoExecutionDegree(final ExecutionDegree executionDegree) {
-	return InfoExecutionDegree.newInfoFromDomain(executionDegree);
-    }
+	public static InfoExecutionDegree getInfoExecutionDegree(final ExecutionDegree executionDegree) {
+		return InfoExecutionDegree.newInfoFromDomain(executionDegree);
+	}
 
 }

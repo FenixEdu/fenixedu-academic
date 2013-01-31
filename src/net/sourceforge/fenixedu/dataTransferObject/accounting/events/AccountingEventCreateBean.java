@@ -8,43 +8,43 @@ import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 
 public class AccountingEventCreateBean implements Serializable {
 
-    static private final long serialVersionUID = 5068902775407522276L;
+	static private final long serialVersionUID = 5068902775407522276L;
 
-    private StudentCurricularPlan studentCurricularPlan;
+	private StudentCurricularPlan studentCurricularPlan;
 
-    private ExecutionYear executionYear;
+	private ExecutionYear executionYear;
 
-    private ExecutionSemester executionSemester;
+	private ExecutionSemester executionSemester;
 
-    public AccountingEventCreateBean() {
-    }
-    
-    public AccountingEventCreateBean(final StudentCurricularPlan studentCurricularPlan) {
-	setStudentCurricularPlan(studentCurricularPlan);
-    }
+	public AccountingEventCreateBean() {
+	}
 
-    public StudentCurricularPlan getStudentCurricularPlan() {
-	return this.studentCurricularPlan;
-    }
+	public AccountingEventCreateBean(final StudentCurricularPlan studentCurricularPlan) {
+		setStudentCurricularPlan(studentCurricularPlan);
+	}
 
-    public void setStudentCurricularPlan(StudentCurricularPlan studentCurricularPlan) {
-	this.studentCurricularPlan = studentCurricularPlan;
-    }
+	public StudentCurricularPlan getStudentCurricularPlan() {
+		return this.studentCurricularPlan;
+	}
 
-    public ExecutionYear getExecutionYear() {
-	return this.executionYear;
-    }
+	public void setStudentCurricularPlan(StudentCurricularPlan studentCurricularPlan) {
+		this.studentCurricularPlan = studentCurricularPlan;
+	}
 
-    public void setExecutionYear(ExecutionYear executionYear) {
-	this.executionYear = executionYear;
-    }
+	public ExecutionYear getExecutionYear() {
+		return this.executionYear;
+	}
 
-    public ExecutionSemester getExecutionPeriod() {
-	return this.executionSemester;
-    }
+	public void setExecutionYear(ExecutionYear executionYear) {
+		this.executionYear = executionYear;
+	}
 
-    public void setExecutionPeriod(ExecutionSemester executionSemester) {
-	this.executionSemester = executionSemester;
-    }
+	public ExecutionSemester getExecutionPeriod() {
+		return this.executionSemester;
+	}
+
+	public void setExecutionPeriod(ExecutionSemester executionSemester) {
+		this.executionSemester = executionSemester;
+	}
 
 }

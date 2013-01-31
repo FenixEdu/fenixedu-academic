@@ -8,19 +8,20 @@ import net.sourceforge.fenixedu.domain.MasterDegreeThesisDataVersion;
  */
 public class InfoMasterDegreeThesisDataVersionWithGuidersAndResp extends InfoMasterDegreeThesisDataVersionWithGuiders {
 
-    public void copyFromDomain(MasterDegreeThesisDataVersion masterDegreeThesisDataVersion) {
-	super.copyFromDomain(masterDegreeThesisDataVersion);
-	if (masterDegreeThesisDataVersion != null) {
-	    setInfoResponsibleEmployee(InfoEmployee.newInfoFromDomain(masterDegreeThesisDataVersion.getResponsibleEmployee()));
+	@Override
+	public void copyFromDomain(MasterDegreeThesisDataVersion masterDegreeThesisDataVersion) {
+		super.copyFromDomain(masterDegreeThesisDataVersion);
+		if (masterDegreeThesisDataVersion != null) {
+			setInfoResponsibleEmployee(InfoEmployee.newInfoFromDomain(masterDegreeThesisDataVersion.getResponsibleEmployee()));
+		}
 	}
-    }
 
-    public static InfoMasterDegreeThesisDataVersion newInfoFromDomain(MasterDegreeThesisDataVersion masterDegreeThesisDataVersion) {
-	InfoMasterDegreeThesisDataVersionWithGuidersAndResp infoMasterDegreeThesisDataVersionWithGuidersAndResp = null;
-	if (masterDegreeThesisDataVersion != null) {
-	    infoMasterDegreeThesisDataVersionWithGuidersAndResp = new InfoMasterDegreeThesisDataVersionWithGuidersAndResp();
-	    infoMasterDegreeThesisDataVersionWithGuidersAndResp.copyFromDomain(masterDegreeThesisDataVersion);
+	public static InfoMasterDegreeThesisDataVersion newInfoFromDomain(MasterDegreeThesisDataVersion masterDegreeThesisDataVersion) {
+		InfoMasterDegreeThesisDataVersionWithGuidersAndResp infoMasterDegreeThesisDataVersionWithGuidersAndResp = null;
+		if (masterDegreeThesisDataVersion != null) {
+			infoMasterDegreeThesisDataVersionWithGuidersAndResp = new InfoMasterDegreeThesisDataVersionWithGuidersAndResp();
+			infoMasterDegreeThesisDataVersionWithGuidersAndResp.copyFromDomain(masterDegreeThesisDataVersion);
+		}
+		return infoMasterDegreeThesisDataVersionWithGuidersAndResp;
 	}
-	return infoMasterDegreeThesisDataVersionWithGuidersAndResp;
-    }
 }

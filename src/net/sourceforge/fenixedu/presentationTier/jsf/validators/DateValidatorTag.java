@@ -14,42 +14,43 @@ import javax.servlet.jsp.JspException;
  */
 public class DateValidatorTag extends ValidatorTag {
 
-    /**
+	/**
      * 
      */
-    private static final long serialVersionUID = 2570906320417113147L;
+	private static final long serialVersionUID = 2570906320417113147L;
 
-    private String format;
+	private String format;
 
-    private Boolean strict;
+	private Boolean strict;
 
-    public DateValidatorTag() {
-	super();
-	super.setValidatorId("dateValidator");
-    }
+	public DateValidatorTag() {
+		super();
+		super.setValidatorId("dateValidator");
+	}
 
-    protected Validator createValidator() throws JspException {
-	DateValidator dateValidator = (DateValidator) super.createValidator();
-	dateValidator.setFormat(getFormat());
-	dateValidator.setStrict(getStrict());
+	@Override
+	protected Validator createValidator() throws JspException {
+		DateValidator dateValidator = (DateValidator) super.createValidator();
+		dateValidator.setFormat(getFormat());
+		dateValidator.setStrict(getStrict());
 
-	return dateValidator;
-    }
+		return dateValidator;
+	}
 
-    public String getFormat() {
-	return format;
-    }
+	public String getFormat() {
+		return format;
+	}
 
-    public void setFormat(String format) {
-	this.format = format;
-    }
+	public void setFormat(String format) {
+		this.format = format;
+	}
 
-    public Boolean getStrict() {
-	return strict;
-    }
+	public Boolean getStrict() {
+		return strict;
+	}
 
-    public void setStrict(Boolean strict) {
-	this.strict = strict;
-    }
+	public void setStrict(Boolean strict) {
+		this.strict = strict;
+	}
 
 }

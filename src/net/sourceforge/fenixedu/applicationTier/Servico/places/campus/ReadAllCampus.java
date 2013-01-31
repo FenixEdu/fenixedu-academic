@@ -11,15 +11,15 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadAllCampus extends FenixService {
 
-    @Service
-    public static List run() throws FenixServiceException {
-	List<InfoCampus> result = new ArrayList<InfoCampus>();
+	@Service
+	public static List run() throws FenixServiceException {
+		List<InfoCampus> result = new ArrayList<InfoCampus>();
 
-	for (Campus campus : Campus.getAllActiveCampus()) {
-	    result.add(InfoCampus.newInfoFromDomain(campus));
+		for (Campus campus : Campus.getAllActiveCampus()) {
+			result.add(InfoCampus.newInfoFromDomain(campus));
+		}
+
+		return result;
 	}
-
-	return result;
-    }
 
 }

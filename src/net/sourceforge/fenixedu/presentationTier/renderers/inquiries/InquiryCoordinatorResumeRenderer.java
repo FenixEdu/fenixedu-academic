@@ -25,234 +25,248 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
  */
 public class InquiryCoordinatorResumeRenderer extends InquiryBlocksResumeRenderer {
 
-    private String contextPath;
-    private String action;
-    private String method;
+	private String contextPath;
+	private String action;
+	private String method;
 
-    @Override
-    protected void createFinalCells(HtmlTableRow tableRow, BlockResumeResult blockResumeResult) {
-	CurricularCourseResumeResult courseResumeResult = (CurricularCourseResumeResult) blockResumeResult;
+	@Override
+	protected void createFinalCells(HtmlTableRow tableRow, BlockResumeResult blockResumeResult) {
+		CurricularCourseResumeResult courseResumeResult = (CurricularCourseResumeResult) blockResumeResult;
 
-	HtmlInlineContainer container = new HtmlInlineContainer();
-	HtmlTableCell linksCell = tableRow.createCell();
-	HtmlMenu menu = new HtmlMenu();
-	menu
-		.setOnChange("var value=this.options[this.selectedIndex].value; this.selectedIndex=0; if(value!= ''){ window.open(value,'_blank'); }");
-	menu.setStyle("width: 150px");
-	HtmlMenuOption optionEmpty = menu.createOption(RenderUtils.getResourceString("INQUIRIES_RESOURCES",
-		"label.inquiry.emptyOption"));
+		HtmlInlineContainer container = new HtmlInlineContainer();
+		HtmlTableCell linksCell = tableRow.createCell();
+		HtmlMenu menu = new HtmlMenu();
+		menu.setOnChange("var value=this.options[this.selectedIndex].value; this.selectedIndex=0; if(value!= ''){ window.open(value,'_blank'); }");
+		menu.setStyle("width: 150px");
+		HtmlMenuOption optionEmpty =
+				menu.createOption(RenderUtils.getResourceString("INQUIRIES_RESOURCES", "label.inquiry.emptyOption"));
 
-	createResultsGroup(courseResumeResult, menu);
-	createReportsGroup(courseResumeResult, menu);
+		createResultsGroup(courseResumeResult, menu);
+		createReportsGroup(courseResumeResult, menu);
 
-	container.addChild(menu);
-	ResultClassification forAudit = courseResumeResult.getExecutionCourse().getForAudit(
-		courseResumeResult.getExecutionDegree());
-	createCommentLink(courseResumeResult, container, forAudit);
+		container.addChild(menu);
+		ResultClassification forAudit =
+				courseResumeResult.getExecutionCourse().getForAudit(courseResumeResult.getExecutionDegree());
+		createCommentLink(courseResumeResult, container, forAudit);
 
-	linksCell.setBody(container);
-	linksCell.setClasses("col-actions");
-    }
-
-    protected void createCommentLink(CurricularCourseResumeResult courseResumeResult, HtmlInlineContainer container,
-	    ResultClassification forAudit) {
-	container.addChild(new HtmlText("&nbsp;|&nbsp;", false));
-
-	String commentLinkText = RenderUtils.getResourceString("INQUIRIES_RESOURCES", "link.inquiry.comment");
-	if (courseResumeResult.isShowAllComments() || !courseResumeResult.isAllowComment()) {
-	    commentLinkText = RenderUtils.getResourceString("INQUIRIES_RESOURCES", "link.inquiry.viewResults");
-	} else if (courseResumeResult.getExecutionCourse().hasQucGlobalCommentsMadeBy(courseResumeResult.getPerson(),
-		courseResumeResult.getExecutionDegree(), courseResumeResult.getPersonCategory())) {
-	    commentLinkText = RenderUtils.getResourceString("INQUIRIES_RESOURCES", "link.inquiry.viewComment");
+		linksCell.setBody(container);
+		linksCell.setClasses("col-actions");
 	}
 
-	String fillInParameters = buildFillInParameters(courseResumeResult);
-	HtmlLink commentLink = new HtmlLink();
-	commentLink.setUrl(getAction() + "?method=" + getMethod() + fillInParameters);
-	commentLink.setText(commentLinkText);
-	container.addChild(commentLink);
+	protected void createCommentLink(CurricularCourseResumeResult courseResumeResult, HtmlInlineContainer container,
+			ResultClassification forAudit) {
+		container.addChild(new HtmlText("&nbsp;|&nbsp;", false));
 
-	if (courseResumeResult.getExecutionCourse().hasExecutionCourseAudit()
-		&& courseResumeResult.getExecutionCourse().getExecutionCourseAudit().isProcessAvailable()) {
-	    container.addChild(new HtmlText("&nbsp;|&nbsp;", false));
-	    HtmlLink auditLink = new HtmlLink();
-	    auditLink.setUrl("/auditResult.do?method=viewProcessDetails&" + buildParametersForAudit(courseResumeResult));
-	    auditLink.setText("Ver processo auditoria");
-	    container.addChild(auditLink);
-
-	} else {
-	    if (forAudit != null) {
-		if (forAudit.equals(ResultClassification.RED)) {
-		    container.addChild(new HtmlText(" ("
-			    + RenderUtils.getResourceString("INQUIRIES_RESOURCES", "label.inquiry.audit") + ")"));
-		} else if (forAudit.equals(ResultClassification.YELLOW)) {
-		    container.addChild(new HtmlText(" ("
-			    + RenderUtils.getResourceString("INQUIRIES_RESOURCES", "label.inquiry.inObservation") + ")"));
+		String commentLinkText = RenderUtils.getResourceString("INQUIRIES_RESOURCES", "link.inquiry.comment");
+		if (courseResumeResult.isShowAllComments() || !courseResumeResult.isAllowComment()) {
+			commentLinkText = RenderUtils.getResourceString("INQUIRIES_RESOURCES", "link.inquiry.viewResults");
+		} else if (courseResumeResult.getExecutionCourse().hasQucGlobalCommentsMadeBy(courseResumeResult.getPerson(),
+				courseResumeResult.getExecutionDegree(), courseResumeResult.getPersonCategory())) {
+			commentLinkText = RenderUtils.getResourceString("INQUIRIES_RESOURCES", "link.inquiry.viewComment");
 		}
-	    }
-	}
-    }
 
-    private void createResultsGroup(CurricularCourseResumeResult courseResumeResult, HtmlMenu menu) {
-	HtmlMenuGroup resultsGroup = menu.createGroup(RenderUtils.getResourceString("INQUIRIES_RESOURCES",
-		"label.inquiry.results"));
-	HtmlMenuOption optionUC = resultsGroup.createOption();
-	optionUC.setText(RenderUtils.getResourceString("INQUIRIES_RESOURCES", "label.inquiry.ucResults"));
-	String resultsParameters = buildParametersForResults(courseResumeResult);
-	HtmlLink link = new HtmlLink();
-	link.setModule("/publico");
-	link.setUrl("/viewCourseResults.do?" + resultsParameters + "&" +  net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME + "=" + getContextPath());
-	link.setEscapeAmpersand(false);
-	String calculatedUrl = link.calculateUrl();
-	optionUC.setValue(calculatedUrl
-		+ "&_request_checksum_="
-		+ pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter
-			.calculateChecksum(calculatedUrl));
+		String fillInParameters = buildFillInParameters(courseResumeResult);
+		HtmlLink commentLink = new HtmlLink();
+		commentLink.setUrl(getAction() + "?method=" + getMethod() + fillInParameters);
+		commentLink.setText(commentLinkText);
+		container.addChild(commentLink);
 
-	for (TeacherShiftTypeResultsBean teacherShiftTypeResultsBean : courseResumeResult.getTeachersResults()) {
-	    String teacherResultsParameters = buildParametersForTeacherResults(teacherShiftTypeResultsBean);
-	    HtmlLink teacherLink = new HtmlLink();
-	    teacherLink.setEscapeAmpersand(false);
-	    teacherLink.setModule("/publico");
-	    teacherLink.setUrl("/viewTeacherResults.do?" + teacherResultsParameters + "&" +  net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME + "="
-		    + getContextPath());
-	    calculatedUrl = teacherLink.calculateUrl();
+		if (courseResumeResult.getExecutionCourse().hasExecutionCourseAudit()
+				&& courseResumeResult.getExecutionCourse().getExecutionCourseAudit().isProcessAvailable()) {
+			container.addChild(new HtmlText("&nbsp;|&nbsp;", false));
+			HtmlLink auditLink = new HtmlLink();
+			auditLink.setUrl("/auditResult.do?method=viewProcessDetails&" + buildParametersForAudit(courseResumeResult));
+			auditLink.setText("Ver processo auditoria");
+			container.addChild(auditLink);
 
-	    HtmlMenuOption optionTeacher = resultsGroup.createOption();
-	    optionTeacher.setText(teacherShiftTypeResultsBean.getShiftType().getFullNameTipoAula() + " - "
-		    + teacherShiftTypeResultsBean.getProfessorship().getPerson().getName());
-	    optionTeacher.setValue(calculatedUrl
-		    + "&_request_checksum_="
-		    + pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter
-			    .calculateChecksum(calculatedUrl));
-	}
-    }
-
-    private void createReportsGroup(CurricularCourseResumeResult courseResumeResult, HtmlMenu menu) {
-	String calculatedUrl;
-	HtmlMenuGroup reportsGroup = menu.createGroup(RenderUtils.getResourceString("INQUIRIES_RESOURCES",
-		"label.inquiry.reports"));
-	for (InquiryDelegateAnswer inquiryDelegateAnswer : courseResumeResult.getExecutionCourse()
-		.getInquiryDelegatesAnswersSet()) {
-	    if (inquiryDelegateAnswer.getExecutionDegree() == courseResumeResult.getExecutionDegree()) {
-		String delegateInquiryParameters = buildParametersForDelegateInquiry(inquiryDelegateAnswer);
-		HtmlLink delegateLink = new HtmlLink();
-		delegateLink.setEscapeAmpersand(false);
-		delegateLink.setModule("/publico");
-		delegateLink.setUrl("/viewQUCInquiryAnswers.do?" + delegateInquiryParameters + "&" +  net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME + "="
-			+ getContextPath());
-		calculatedUrl = delegateLink.calculateUrl();
-
-		HtmlMenuOption optionDelegate = reportsGroup.createOption();
-		optionDelegate.setText(RenderUtils.getResourceString("INQUIRIES_RESOURCES", "label.inquiry.delegate"));
-		optionDelegate.setValue(calculatedUrl + "&_request_checksum_="
-			+ pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter
-				.calculateChecksum(calculatedUrl));
-	    }
+		} else {
+			if (forAudit != null) {
+				if (forAudit.equals(ResultClassification.RED)) {
+					container.addChild(new HtmlText(" ("
+							+ RenderUtils.getResourceString("INQUIRIES_RESOURCES", "label.inquiry.audit") + ")"));
+				} else if (forAudit.equals(ResultClassification.YELLOW)) {
+					container.addChild(new HtmlText(" ("
+							+ RenderUtils.getResourceString("INQUIRIES_RESOURCES", "label.inquiry.inObservation") + ")"));
+				}
+			}
+		}
 	}
 
-	for (Professorship professorship : courseResumeResult.getExecutionCourse().getProfessorships()) {
-	    if (professorship.getInquiryTeacherAnswer() != null) {
-		HtmlLink teacherLink = new HtmlLink();
-		teacherLink.setEscapeAmpersand(false);
-		teacherLink.setModule("/publico");
-		teacherLink.setUrl("/viewQUCInquiryAnswers.do?method=showTeacherInquiry&professorshipOID="
-			+ professorship.getExternalId() + "&" +  net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME + "=" + getContextPath());
-		calculatedUrl = teacherLink.calculateUrl();
-		HtmlMenuOption optionTeacher = reportsGroup.createOption();
-		optionTeacher.setText(RenderUtils.getResourceString("INQUIRIES_RESOURCES", "label.teacher") + " ("
-			+ professorship.getPerson().getName() + ")");
-		optionTeacher
-.setValue(calculatedUrl
-			+ "&_request_checksum_="
-			+ pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter
-				.calculateChecksum(calculatedUrl));
-	    }
+	private void createResultsGroup(CurricularCourseResumeResult courseResumeResult, HtmlMenu menu) {
+		HtmlMenuGroup resultsGroup =
+				menu.createGroup(RenderUtils.getResourceString("INQUIRIES_RESOURCES", "label.inquiry.results"));
+		HtmlMenuOption optionUC = resultsGroup.createOption();
+		optionUC.setText(RenderUtils.getResourceString("INQUIRIES_RESOURCES", "label.inquiry.ucResults"));
+		String resultsParameters = buildParametersForResults(courseResumeResult);
+		HtmlLink link = new HtmlLink();
+		link.setModule("/publico");
+		link.setUrl("/viewCourseResults.do?" + resultsParameters + "&"
+				+ net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME
+				+ "=" + getContextPath());
+		link.setEscapeAmpersand(false);
+		String calculatedUrl = link.calculateUrl();
+		optionUC.setValue(calculatedUrl
+				+ "&_request_checksum_="
+				+ pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter
+						.calculateChecksum(calculatedUrl));
+
+		for (TeacherShiftTypeResultsBean teacherShiftTypeResultsBean : courseResumeResult.getTeachersResults()) {
+			String teacherResultsParameters = buildParametersForTeacherResults(teacherShiftTypeResultsBean);
+			HtmlLink teacherLink = new HtmlLink();
+			teacherLink.setEscapeAmpersand(false);
+			teacherLink.setModule("/publico");
+			teacherLink.setUrl("/viewTeacherResults.do?" + teacherResultsParameters + "&"
+					+ net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME
+					+ "=" + getContextPath());
+			calculatedUrl = teacherLink.calculateUrl();
+
+			HtmlMenuOption optionTeacher = resultsGroup.createOption();
+			optionTeacher.setText(teacherShiftTypeResultsBean.getShiftType().getFullNameTipoAula() + " - "
+					+ teacherShiftTypeResultsBean.getProfessorship().getPerson().getName());
+			optionTeacher.setValue(calculatedUrl
+					+ "&_request_checksum_="
+					+ pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter
+							.calculateChecksum(calculatedUrl));
+		}
 	}
 
-	for (Professorship professorship : courseResumeResult.getExecutionCourse().getProfessorships()) {
-	    if (professorship.getInquiryRegentAnswer() != null) {
-		HtmlLink regentLink = new HtmlLink();
-		regentLink.setEscapeAmpersand(false);
-		regentLink.setModule("/publico");
-		regentLink.setUrl("/viewQUCInquiryAnswers.do?method=showRegentInquiry&professorshipOID="
-			+ professorship.getExternalId() + "&" +  net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME + "=" + getContextPath());
-		calculatedUrl = regentLink.calculateUrl();
-		HtmlMenuOption optionRegent = reportsGroup.createOption();
-		optionRegent.setText(RenderUtils.getResourceString("INQUIRIES_RESOURCES", "label.inquiry.regent") + " ("
-			+ professorship.getPerson().getName() + ")");
-		optionRegent.setValue(calculatedUrl
-			+ "&_request_checksum_="
-			+ pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter
-				.calculateChecksum(calculatedUrl));
-	    }
+	private void createReportsGroup(CurricularCourseResumeResult courseResumeResult, HtmlMenu menu) {
+		String calculatedUrl;
+		HtmlMenuGroup reportsGroup =
+				menu.createGroup(RenderUtils.getResourceString("INQUIRIES_RESOURCES", "label.inquiry.reports"));
+		for (InquiryDelegateAnswer inquiryDelegateAnswer : courseResumeResult.getExecutionCourse()
+				.getInquiryDelegatesAnswersSet()) {
+			if (inquiryDelegateAnswer.getExecutionDegree() == courseResumeResult.getExecutionDegree()) {
+				String delegateInquiryParameters = buildParametersForDelegateInquiry(inquiryDelegateAnswer);
+				HtmlLink delegateLink = new HtmlLink();
+				delegateLink.setEscapeAmpersand(false);
+				delegateLink.setModule("/publico");
+				delegateLink
+						.setUrl("/viewQUCInquiryAnswers.do?"
+								+ delegateInquiryParameters
+								+ "&"
+								+ net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME
+								+ "=" + getContextPath());
+				calculatedUrl = delegateLink.calculateUrl();
+
+				HtmlMenuOption optionDelegate = reportsGroup.createOption();
+				optionDelegate.setText(RenderUtils.getResourceString("INQUIRIES_RESOURCES", "label.inquiry.delegate"));
+				optionDelegate.setValue(calculatedUrl
+						+ "&_request_checksum_="
+						+ pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter
+								.calculateChecksum(calculatedUrl));
+			}
+		}
+
+		for (Professorship professorship : courseResumeResult.getExecutionCourse().getProfessorships()) {
+			if (professorship.getInquiryTeacherAnswer() != null) {
+				HtmlLink teacherLink = new HtmlLink();
+				teacherLink.setEscapeAmpersand(false);
+				teacherLink.setModule("/publico");
+				teacherLink
+						.setUrl("/viewQUCInquiryAnswers.do?method=showTeacherInquiry&professorshipOID="
+								+ professorship.getExternalId()
+								+ "&"
+								+ net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME
+								+ "=" + getContextPath());
+				calculatedUrl = teacherLink.calculateUrl();
+				HtmlMenuOption optionTeacher = reportsGroup.createOption();
+				optionTeacher.setText(RenderUtils.getResourceString("INQUIRIES_RESOURCES", "label.teacher") + " ("
+						+ professorship.getPerson().getName() + ")");
+				optionTeacher.setValue(calculatedUrl
+						+ "&_request_checksum_="
+						+ pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter
+								.calculateChecksum(calculatedUrl));
+			}
+		}
+
+		for (Professorship professorship : courseResumeResult.getExecutionCourse().getProfessorships()) {
+			if (professorship.getInquiryRegentAnswer() != null) {
+				HtmlLink regentLink = new HtmlLink();
+				regentLink.setEscapeAmpersand(false);
+				regentLink.setModule("/publico");
+				regentLink
+						.setUrl("/viewQUCInquiryAnswers.do?method=showRegentInquiry&professorshipOID="
+								+ professorship.getExternalId()
+								+ "&"
+								+ net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME
+								+ "=" + getContextPath());
+				calculatedUrl = regentLink.calculateUrl();
+				HtmlMenuOption optionRegent = reportsGroup.createOption();
+				optionRegent.setText(RenderUtils.getResourceString("INQUIRIES_RESOURCES", "label.inquiry.regent") + " ("
+						+ professorship.getPerson().getName() + ")");
+				optionRegent.setValue(calculatedUrl
+						+ "&_request_checksum_="
+						+ pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter
+								.calculateChecksum(calculatedUrl));
+			}
+		}
 	}
-    }
 
-    private String buildParametersForDelegateInquiry(InquiryDelegateAnswer inquiryDelegateAnswer) {
-	StringBuilder builder = new StringBuilder("method=showDelegateInquiry");
-	builder.append("&executionCourseOID=").append(inquiryDelegateAnswer.getExecutionCourse().getExternalId());
-	builder.append("&executionDegreeOID=").append(inquiryDelegateAnswer.getExecutionDegree().getExternalId());
-	return builder.toString();
-    }
+	private String buildParametersForDelegateInquiry(InquiryDelegateAnswer inquiryDelegateAnswer) {
+		StringBuilder builder = new StringBuilder("method=showDelegateInquiry");
+		builder.append("&executionCourseOID=").append(inquiryDelegateAnswer.getExecutionCourse().getExternalId());
+		builder.append("&executionDegreeOID=").append(inquiryDelegateAnswer.getExecutionDegree().getExternalId());
+		return builder.toString();
+	}
 
-    private String buildParametersForTeacherResults(TeacherShiftTypeResultsBean teacherShiftTypeResultsBean) {
-	StringBuilder builder = new StringBuilder();
-	builder.append("shiftType=").append(teacherShiftTypeResultsBean.getShiftType().name());
-	builder.append("&professorshipOID=").append(teacherShiftTypeResultsBean.getProfessorship().getExternalId());
-	return builder.toString();
-    }
+	private String buildParametersForTeacherResults(TeacherShiftTypeResultsBean teacherShiftTypeResultsBean) {
+		StringBuilder builder = new StringBuilder();
+		builder.append("shiftType=").append(teacherShiftTypeResultsBean.getShiftType().name());
+		builder.append("&professorshipOID=").append(teacherShiftTypeResultsBean.getProfessorship().getExternalId());
+		return builder.toString();
+	}
 
-    private String buildFillInParameters(CurricularCourseResumeResult courseResumeResult) {
-	StringBuilder builder = new StringBuilder();
-	builder.append("&executionDegreeOID=").append(courseResumeResult.getExecutionDegree().getExternalId());
-	builder.append("&executionCourseOID=").append(courseResumeResult.getExecutionCourse().getExternalId());
-	builder.append("&degreeCurricularPlanID=").append(
-		courseResumeResult.getExecutionDegree().getDegreeCurricularPlan().getIdInternal());
-	builder.append("&backToResume=").append(courseResumeResult.isBackToResume());
-	builder.append("&showAllComments=").append(courseResumeResult.isShowAllComments());
-	builder.append("&allowComment=").append(courseResumeResult.isAllowComment());
-	return builder.toString();
-    }
+	private String buildFillInParameters(CurricularCourseResumeResult courseResumeResult) {
+		StringBuilder builder = new StringBuilder();
+		builder.append("&executionDegreeOID=").append(courseResumeResult.getExecutionDegree().getExternalId());
+		builder.append("&executionCourseOID=").append(courseResumeResult.getExecutionCourse().getExternalId());
+		builder.append("&degreeCurricularPlanID=").append(
+				courseResumeResult.getExecutionDegree().getDegreeCurricularPlan().getIdInternal());
+		builder.append("&backToResume=").append(courseResumeResult.isBackToResume());
+		builder.append("&showAllComments=").append(courseResumeResult.isShowAllComments());
+		builder.append("&allowComment=").append(courseResumeResult.isAllowComment());
+		return builder.toString();
+	}
 
-    private String buildParametersForResults(CurricularCourseResumeResult courseResumeResult) {
-	StringBuilder builder = new StringBuilder();
-	builder.append("degreeCurricularPlanOID=").append(
-		courseResumeResult.getExecutionDegree().getDegreeCurricularPlan().getExternalId());
-	builder.append("&executionCourseOID=").append(courseResumeResult.getExecutionCourse().getExternalId());
-	return builder.toString();
-    }
+	private String buildParametersForResults(CurricularCourseResumeResult courseResumeResult) {
+		StringBuilder builder = new StringBuilder();
+		builder.append("degreeCurricularPlanOID=").append(
+				courseResumeResult.getExecutionDegree().getDegreeCurricularPlan().getExternalId());
+		builder.append("&executionCourseOID=").append(courseResumeResult.getExecutionCourse().getExternalId());
+		return builder.toString();
+	}
 
-    private String buildParametersForAudit(CurricularCourseResumeResult courseResumeResult) {
-	StringBuilder builder = new StringBuilder();
-	builder.append("degreeCurricularPlanOID=").append(
-		courseResumeResult.getExecutionDegree().getDegreeCurricularPlan().getExternalId());
-	builder.append("&executionCourseAuditOID=").append(
-		courseResumeResult.getExecutionCourse().getExecutionCourseAudit().getExternalId());
-	return builder.toString();
-    }
+	private String buildParametersForAudit(CurricularCourseResumeResult courseResumeResult) {
+		StringBuilder builder = new StringBuilder();
+		builder.append("degreeCurricularPlanOID=").append(
+				courseResumeResult.getExecutionDegree().getDegreeCurricularPlan().getExternalId());
+		builder.append("&executionCourseAuditOID=").append(
+				courseResumeResult.getExecutionCourse().getExecutionCourseAudit().getExternalId());
+		return builder.toString();
+	}
 
-    public String getContextPath() {
-	return contextPath;
-    }
+	public String getContextPath() {
+		return contextPath;
+	}
 
-    public void setContextPath(String contextPath) {
-	this.contextPath = contextPath;
-    }
+	public void setContextPath(String contextPath) {
+		this.contextPath = contextPath;
+	}
 
-    public String getAction() {
-	return action;
-    }
+	public String getAction() {
+		return action;
+	}
 
-    public void setAction(String action) {
-	this.action = action;
-    }
+	public void setAction(String action) {
+		this.action = action;
+	}
 
-    public String getMethod() {
-	return method;
-    }
+	public String getMethod() {
+		return method;
+	}
 
-    public void setMethod(String method) {
-	this.method = method;
-    }
+	public void setMethod(String method) {
+		this.method = method;
+	}
 }

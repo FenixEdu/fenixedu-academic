@@ -18,123 +18,123 @@ import org.w3c.dom.Node;
 import org.xml.sax.SAXException;
 
 public class CanonicalAddressAttribute extends Attribute {
-    private String address;
-    private String city;
-    private String zipCode;
-    private String countryCode;
+	private String address;
+	private String city;
+	private String zipCode;
+	private String countryCode;
 
-    public CanonicalAddressAttribute(Integer id, StorkAttributeType type, Boolean mandatory, String value) {
-	super(id, type, mandatory, value);
+	public CanonicalAddressAttribute(Integer id, StorkAttributeType type, Boolean mandatory, String value) {
+		super(id, type, mandatory, value);
 
-	if (getSemanticValue() != null) {
-	    parseAddressCompounds();
-	}
-    }
-
-    private void parseAddressCompounds() {
-	try {
-	    DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-	    dbf.setNamespaceAware(false);
-	    dbf.setValidating(false);
-	    DocumentBuilder db;
-	    db = dbf.newDocumentBuilder();
-
-	    ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(getValue().getBytes(CharEncoding.UTF_8));
-
-	    Document doc = db.parse(byteArrayInputStream);
-	    setFields(doc);
-	} catch (ParserConfigurationException e) {
-	    throw new StorkRuntimeException(e);
-	} catch (SAXException e) {
-	    throw new StorkRuntimeException(e);
-	} catch (IOException e) {
-	    throw new StorkRuntimeException(e);
-	}
-    }
-
-    private void setFields(Document doc) {
-	/*
-	 * Assuming that root node is 'canonicalResidenceAddress'
-	 */
-	String apartmentNumber = "";
-	String streetNumber = "";
-	Node iterSiblingNode = doc.getFirstChild();
-	while (iterSiblingNode != null) {
-	    if (iterSiblingNode.getNodeName().equals("town")) {
-		city = iterSiblingNode.getNodeValue().trim();
-	    } else if (iterSiblingNode.getNodeName().equals("postalCode")) {
-		zipCode = iterSiblingNode.getNodeValue().trim();
-	    } else if (iterSiblingNode.getNodeName().equals("streetName")) {
-		address = iterSiblingNode.getNodeName().trim();
-	    } else if (iterSiblingNode.getNodeName().equals("streetNumber")) {
-		streetNumber = iterSiblingNode.getNodeValue();
-	    } else if (iterSiblingNode.getNodeName().equals("apartmentNumber")) {
-		apartmentNumber = iterSiblingNode.getNodeValue().trim();
-	    } else if (iterSiblingNode.getNodeName().equals("state")) {
-		countryCode = iterSiblingNode.getNodeName().trim();
-	    }
+		if (getSemanticValue() != null) {
+			parseAddressCompounds();
+		}
 	}
 
-	this.address = String.format("%s %s %s", this.address, streetNumber, apartmentNumber).trim();
-    }
+	private void parseAddressCompounds() {
+		try {
+			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+			dbf.setNamespaceAware(false);
+			dbf.setValidating(false);
+			DocumentBuilder db;
+			db = dbf.newDocumentBuilder();
 
-    public String getAddress() {
-	if (StringUtils.isEmpty(address)) {
-	    return null;
+			ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(getValue().getBytes(CharEncoding.UTF_8));
+
+			Document doc = db.parse(byteArrayInputStream);
+			setFields(doc);
+		} catch (ParserConfigurationException e) {
+			throw new StorkRuntimeException(e);
+		} catch (SAXException e) {
+			throw new StorkRuntimeException(e);
+		} catch (IOException e) {
+			throw new StorkRuntimeException(e);
+		}
 	}
 
-	if ("null".equals(address)) {
-	    return null;
+	private void setFields(Document doc) {
+		/*
+		 * Assuming that root node is 'canonicalResidenceAddress'
+		 */
+		String apartmentNumber = "";
+		String streetNumber = "";
+		Node iterSiblingNode = doc.getFirstChild();
+		while (iterSiblingNode != null) {
+			if (iterSiblingNode.getNodeName().equals("town")) {
+				city = iterSiblingNode.getNodeValue().trim();
+			} else if (iterSiblingNode.getNodeName().equals("postalCode")) {
+				zipCode = iterSiblingNode.getNodeValue().trim();
+			} else if (iterSiblingNode.getNodeName().equals("streetName")) {
+				address = iterSiblingNode.getNodeName().trim();
+			} else if (iterSiblingNode.getNodeName().equals("streetNumber")) {
+				streetNumber = iterSiblingNode.getNodeValue();
+			} else if (iterSiblingNode.getNodeName().equals("apartmentNumber")) {
+				apartmentNumber = iterSiblingNode.getNodeValue().trim();
+			} else if (iterSiblingNode.getNodeName().equals("state")) {
+				countryCode = iterSiblingNode.getNodeName().trim();
+			}
+		}
+
+		this.address = String.format("%s %s %s", this.address, streetNumber, apartmentNumber).trim();
 	}
 
-	return address;
-    }
+	public String getAddress() {
+		if (StringUtils.isEmpty(address)) {
+			return null;
+		}
 
-    public String getCity() {
-	if (StringUtils.isEmpty(city)) {
-	    return null;
+		if ("null".equals(address)) {
+			return null;
+		}
+
+		return address;
 	}
 
-	if ("null".equals(city)) {
-	    return null;
+	public String getCity() {
+		if (StringUtils.isEmpty(city)) {
+			return null;
+		}
+
+		if ("null".equals(city)) {
+			return null;
+		}
+
+		return city;
 	}
 
-	return city;
-    }
+	public String getCountryCode() {
+		if (StringUtils.isEmpty(countryCode)) {
+			return null;
+		}
 
-    public String getCountryCode() {
-	if (StringUtils.isEmpty(countryCode)) {
-	    return null;
+		if ("null".equals(countryCode)) {
+			return null;
+		}
+
+		return countryCode;
 	}
 
-	if ("null".equals(countryCode)) {
-	    return null;
+	public Country getCountry() {
+		if (StringUtils.isEmpty(getCountryCode())) {
+			return null;
+		}
+
+		return Country.readByTwoLetterCode(getCountryCode());
 	}
 
-	return countryCode;
-    }
+	public String getZipCode() {
+		if (StringUtils.isEmpty(zipCode)) {
+			return null;
+		}
 
-    public Country getCountry() {
-	if (StringUtils.isEmpty(getCountryCode())) {
-	    return null;
+		if ("null".equals(zipCode)) {
+			return null;
+		}
+
+		return zipCode;
 	}
 
-	return Country.readByTwoLetterCode(getCountryCode());
-    }
-
-    public String getZipCode() {
-	if (StringUtils.isEmpty(zipCode)) {
-	    return null;
+	public boolean isValidCanonicalAddressAttribute() {
+		return getSemanticValue() != null;
 	}
-
-	if ("null".equals(zipCode)) {
-	    return null;
-	}
-
-	return zipCode;
-    }
-
-    public boolean isValidCanonicalAddressAttribute() {
-	return getSemanticValue() != null;
-    }
 }

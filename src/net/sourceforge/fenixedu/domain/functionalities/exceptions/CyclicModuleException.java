@@ -10,13 +10,13 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
  */
 public class CyclicModuleException extends DomainException {
 
-    /**
-     * Serialization id.
-     */
-    private static final long serialVersionUID = 1L;
+	/**
+	 * Serialization id.
+	 */
+	private static final long serialVersionUID = 1L;
 
-    public CyclicModuleException() {
-	super("functionalities.module.cycle.invalid", new String[0]);
-    }
+	public CyclicModuleException() {
+		super("functionalities.module.cycle.invalid", new String[0]);
+	}
 
 }

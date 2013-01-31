@@ -28,105 +28,106 @@ import net.sourceforge.fenixedu.util.HtmlToTextConverterUtil;
  */
 public abstract class ForumService extends FenixService {
 
-    protected static final Locale DEFAULT_LOCALE = new Locale("pt");
+	protected static final Locale DEFAULT_LOCALE = new Locale("pt");
 
-    protected static final ResourceBundle GLOBAL_RESOURCES = ResourceBundle
-	    .getBundle("resources.GlobalResources", DEFAULT_LOCALE);
+	protected static final ResourceBundle GLOBAL_RESOURCES = ResourceBundle
+			.getBundle("resources.GlobalResources", DEFAULT_LOCALE);
 
-    protected void sendNotifications(ConversationMessage conversationMessage) {
-	this.notifyEmailSubscribers(conversationMessage);
-	this.notifyLastReplier(conversationMessage);
-    }
-
-    private void notifyEmailSubscribers(ConversationMessage conversationMessage) {
-	final Set<Person> readers = conversationMessage.getConversationThread().getForum().getReadersGroup().getElements();
-	final Set<Person> teachers = new HashSet<Person>();
-	final Set<Person> students = new HashSet<Person>();
-	final Set<ForumSubscription> subscriptionsToRemove = new HashSet<ForumSubscription>();
-
-	for (final ForumSubscription subscription : conversationMessage.getConversationThread().getForum()
-		.getForumSubscriptions()) {
-	    Person subscriber = subscription.getPerson();
-	    if (!readers.contains(subscriber)) {
-		subscriptionsToRemove.add(subscription);
-	    }
-
-	    if (subscription.getReceivePostsByEmail()) {
-		if (subscriber.getEmail() == null) {
-		    subscription.setReceivePostsByEmail(false);
-		} else {
-		    if (subscriber.hasRole(RoleType.TEACHER)) {
-			teachers.add(subscriber);
-		    } else {
-			students.add(subscriber);
-		    }
-		}
-	    }
+	protected void sendNotifications(ConversationMessage conversationMessage) {
+		this.notifyEmailSubscribers(conversationMessage);
+		this.notifyLastReplier(conversationMessage);
 	}
 
-	for (final ForumSubscription subscriptionToRemove : subscriptionsToRemove) {
-	    conversationMessage.getConversationThread().getForum().removeForumSubscriptions(subscriptionToRemove);
-	    subscriptionToRemove.delete();
-	}
-
-	sendEmailWithConversationMessage(teachers, students, conversationMessage);
-
-    }
-
-    private void notifyLastReplier(ConversationMessage conversationMessage) {
-	ConversationMessage nextToLastConversationMessage = conversationMessage.getConversationThread()
-		.getNextToLastConversationMessage();
-
-	if (nextToLastConversationMessage != null) {
-	    Person nextToLastMessageReplier = nextToLastConversationMessage.getCreator();
-	    if (!conversationMessage.getConversationThread().getForum()
-		    .isPersonReceivingMessagesByEmail(nextToLastMessageReplier)) {
+	private void notifyEmailSubscribers(ConversationMessage conversationMessage) {
+		final Set<Person> readers = conversationMessage.getConversationThread().getForum().getReadersGroup().getElements();
 		final Set<Person> teachers = new HashSet<Person>();
 		final Set<Person> students = new HashSet<Person>();
-		if (nextToLastMessageReplier.hasRole(RoleType.TEACHER)) {
-		    teachers.add(nextToLastMessageReplier);
-		} else {
-		    students.add(nextToLastMessageReplier);
+		final Set<ForumSubscription> subscriptionsToRemove = new HashSet<ForumSubscription>();
+
+		for (final ForumSubscription subscription : conversationMessage.getConversationThread().getForum()
+				.getForumSubscriptions()) {
+			Person subscriber = subscription.getPerson();
+			if (!readers.contains(subscriber)) {
+				subscriptionsToRemove.add(subscription);
+			}
+
+			if (subscription.getReceivePostsByEmail()) {
+				if (subscriber.getEmail() == null) {
+					subscription.setReceivePostsByEmail(false);
+				} else {
+					if (subscriber.hasRole(RoleType.TEACHER)) {
+						teachers.add(subscriber);
+					} else {
+						students.add(subscriber);
+					}
+				}
+			}
+		}
+
+		for (final ForumSubscription subscriptionToRemove : subscriptionsToRemove) {
+			conversationMessage.getConversationThread().getForum().removeForumSubscriptions(subscriptionToRemove);
+			subscriptionToRemove.delete();
 		}
 
 		sendEmailWithConversationMessage(teachers, students, conversationMessage);
-	    }
+
 	}
 
-    }
+	private void notifyLastReplier(ConversationMessage conversationMessage) {
+		ConversationMessage nextToLastConversationMessage =
+				conversationMessage.getConversationThread().getNextToLastConversationMessage();
 
-    private void sendEmailToPersons(Set<Person> persons, String personsName, String subject, String body) {
-	if (!persons.isEmpty()) {
-	    final Recipient recipient = new Recipient(GLOBAL_RESOURCES.getString("label.teachers"), new FixedSetGroup(persons));
-	    SystemSender systemSender = rootDomainObject.getSystemSender();
-	    new Message(systemSender, systemSender.getConcreteReplyTos(), recipient.asCollection(), subject, body, "");
+		if (nextToLastConversationMessage != null) {
+			Person nextToLastMessageReplier = nextToLastConversationMessage.getCreator();
+			if (!conversationMessage.getConversationThread().getForum()
+					.isPersonReceivingMessagesByEmail(nextToLastMessageReplier)) {
+				final Set<Person> teachers = new HashSet<Person>();
+				final Set<Person> students = new HashSet<Person>();
+				if (nextToLastMessageReplier.hasRole(RoleType.TEACHER)) {
+					teachers.add(nextToLastMessageReplier);
+				} else {
+					students.add(nextToLastMessageReplier);
+				}
+
+				sendEmailWithConversationMessage(teachers, students, conversationMessage);
+			}
+		}
+
 	}
-    }
 
-    private void sendEmailWithConversationMessage(Set<Person> teachers, Set<Person> students,
-	    ConversationMessage conversationMessage) {
-	final String emailSubject = getEmailFormattedSubject(conversationMessage.getConversationThread());
+	private void sendEmailToPersons(Set<Person> persons, String personsName, String subject, String body) {
+		if (!persons.isEmpty()) {
+			final Recipient recipient = new Recipient(GLOBAL_RESOURCES.getString("label.teachers"), new FixedSetGroup(persons));
+			SystemSender systemSender = rootDomainObject.getSystemSender();
+			new Message(systemSender, systemSender.getConcreteReplyTos(), recipient.asCollection(), subject, body, "");
+		}
+	}
 
-	sendEmailToPersons(teachers, GLOBAL_RESOURCES.getString("label.teachers"), emailSubject, getEmailFormattedBody(
-		conversationMessage, true));
-	sendEmailToPersons(students, GLOBAL_RESOURCES.getString("label.students"), emailSubject, getEmailFormattedBody(
-		conversationMessage, false));
-    }
+	private void sendEmailWithConversationMessage(Set<Person> teachers, Set<Person> students,
+			ConversationMessage conversationMessage) {
+		final String emailSubject = getEmailFormattedSubject(conversationMessage.getConversationThread());
 
-    private String getEmailFormattedSubject(ConversationThread conversationThread) {
-	String emailSubject = MessageFormat.format(GLOBAL_RESOURCES.getString("forum.email.subject"), conversationThread
-		.getTitle());
+		sendEmailToPersons(teachers, GLOBAL_RESOURCES.getString("label.teachers"), emailSubject,
+				getEmailFormattedBody(conversationMessage, true));
+		sendEmailToPersons(students, GLOBAL_RESOURCES.getString("label.students"), emailSubject,
+				getEmailFormattedBody(conversationMessage, false));
+	}
 
-	return emailSubject;
-    }
+	private String getEmailFormattedSubject(ConversationThread conversationThread) {
+		String emailSubject =
+				MessageFormat.format(GLOBAL_RESOURCES.getString("forum.email.subject"), conversationThread.getTitle());
 
-    private String getEmailFormattedBody(ConversationMessage conversationMessage, boolean isForTeacher) {
-	String emailBodyAsText = HtmlToTextConverterUtil.convertToText(conversationMessage.getBody().getContent());
+		return emailSubject;
+	}
 
-	String emailFormattedBody = MessageFormat.format(GLOBAL_RESOURCES.getString("forum.email.body"), conversationMessage
-		.getCreator().getName(), conversationMessage.getConversationThread().getTitle(), conversationMessage
-		.getConversationThread().getForum().getName(), emailBodyAsText);
+	private String getEmailFormattedBody(ConversationMessage conversationMessage, boolean isForTeacher) {
+		String emailBodyAsText = HtmlToTextConverterUtil.convertToText(conversationMessage.getBody().getContent());
 
-	return emailFormattedBody;
-    }
+		String emailFormattedBody =
+				MessageFormat.format(GLOBAL_RESOURCES.getString("forum.email.body"), conversationMessage.getCreator().getName(),
+						conversationMessage.getConversationThread().getTitle(), conversationMessage.getConversationThread()
+								.getForum().getName(), emailBodyAsText);
+
+		return emailFormattedBody;
+	}
 }

@@ -25,49 +25,50 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class ReadExecutionCoursesByDegreeAndExecutionPeriodId extends FenixService {
 
-    @Service
-    public static List run(Integer degreeId, AcademicInterval academicInterval) throws FenixServiceException {
-	final List infoExecutionCourses = new ArrayList();
+	@Service
+	public static List run(Integer degreeId, AcademicInterval academicInterval) throws FenixServiceException {
+		final List infoExecutionCourses = new ArrayList();
 
-	if (academicInterval == null) {
-	    throw new InvalidArgumentsServiceException();
-	}
-
-	final Degree degree = rootDomainObject.readDegreeByOID(degreeId);
-	if (degree == null) {
-	    throw new InvalidArgumentsServiceException();
-	}
-	final ExecutionDegree executionDegree = findExecutionDegree(academicInterval, degree);
-	if (executionDegree != null) {
-	    final DegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
-
-	    for (final ExecutionCourse executionCourse : ExecutionCourse.filterByAcademicInterval(academicInterval)) {
-		if (satisfiesCriteria(executionCourse, degreeCurricularPlan)) {
-		    infoExecutionCourses.add(InfoExecutionCourse.newInfoFromDomain(executionCourse));
+		if (academicInterval == null) {
+			throw new InvalidArgumentsServiceException();
 		}
-	    }
+
+		final Degree degree = rootDomainObject.readDegreeByOID(degreeId);
+		if (degree == null) {
+			throw new InvalidArgumentsServiceException();
+		}
+		final ExecutionDegree executionDegree = findExecutionDegree(academicInterval, degree);
+		if (executionDegree != null) {
+			final DegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
+
+			for (final ExecutionCourse executionCourse : ExecutionCourse.filterByAcademicInterval(academicInterval)) {
+				if (satisfiesCriteria(executionCourse, degreeCurricularPlan)) {
+					infoExecutionCourses.add(InfoExecutionCourse.newInfoFromDomain(executionCourse));
+				}
+			}
+		}
+
+		return infoExecutionCourses;
 	}
 
-	return infoExecutionCourses;
-    }
-
-    private static ExecutionDegree findExecutionDegree(final AcademicInterval academicInterval, final Degree degree) {
-	List<ExecutionDegree> all = ExecutionDegree.filterByAcademicInterval(academicInterval);
-	for (ExecutionDegree executionDegree : all) {
-	    if (executionDegree.getDegree().equals(degree))
-		return executionDegree;
+	private static ExecutionDegree findExecutionDegree(final AcademicInterval academicInterval, final Degree degree) {
+		List<ExecutionDegree> all = ExecutionDegree.filterByAcademicInterval(academicInterval);
+		for (ExecutionDegree executionDegree : all) {
+			if (executionDegree.getDegree().equals(degree)) {
+				return executionDegree;
+			}
+		}
+		return null;
 	}
-	return null;
-    }
 
-    private static boolean satisfiesCriteria(final ExecutionCourse executionCourse,
-	    final DegreeCurricularPlan degreeCurricularPlan) {
-	for (final CurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCourses()) {
-	    if (curricularCourse.getDegreeCurricularPlan() == degreeCurricularPlan) {
-		return true;
-	    }
+	private static boolean satisfiesCriteria(final ExecutionCourse executionCourse,
+			final DegreeCurricularPlan degreeCurricularPlan) {
+		for (final CurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCourses()) {
+			if (curricularCourse.getDegreeCurricularPlan() == degreeCurricularPlan) {
+				return true;
+			}
+		}
+		return false;
 	}
-	return false;
-    }
 
 }

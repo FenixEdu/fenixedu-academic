@@ -20,20 +20,21 @@ import org.apache.struts.action.ActionMapping;
  */
 public class ViewAllRoomsForExamsFormAction extends FenixContextAction {
 
-    @Override
-    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-	    throws Exception {
+	@Override
+	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
 
-	super.execute(mapping, form, request, response);
+		super.execute(mapping, form, request, response);
 
-	IUserView userView = getUserView(request);
+		IUserView userView = getUserView(request);
 
-	InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) this.servlet.getServletContext().getAttribute(
-		PresentationConstants.INFO_EXECUTION_PERIOD_KEY);
+		InfoExecutionPeriod infoExecutionPeriod =
+				(InfoExecutionPeriod) this.servlet.getServletContext().getAttribute(
+						PresentationConstants.INFO_EXECUTION_PERIOD_KEY);
 
-	List infoRoomExamsMaps = ReadAllRoomsExamsMap.run(infoExecutionPeriod);
-	request.setAttribute(PresentationConstants.INFO_EXAMS_MAP_LIST, infoRoomExamsMaps);
+		List infoRoomExamsMaps = ReadAllRoomsExamsMap.run(infoExecutionPeriod);
+		request.setAttribute(PresentationConstants.INFO_EXAMS_MAP_LIST, infoRoomExamsMaps);
 
-	return mapping.findForward("Sucess");
-    }
+		return mapping.findForward("Sucess");
+	}
 }

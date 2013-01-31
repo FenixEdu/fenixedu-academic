@@ -14,151 +14,151 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class UnitBasedSender extends UnitBasedSender_Base {
 
-    public void init(final Unit unit, final String fromAddress, final Group members) {
-	setUnit(unit);
-	setFromAddress(fromAddress);
-	setMembers(members);
-    }
-
-    public UnitBasedSender(final Unit unit, final String fromAddress, final Group members) {
-	super();
-	init(unit, fromAddress, members);
-    }
-
-    public UnitBasedSender() {
-	super();
-    }
-
-    @Override
-    public void delete() {
-	removeUnit();
-	super.delete();
-    }
-
-    @Override
-    public String getFromName() {
-	final Unit unit = getUnit();
-	return unit.getName();
-    }
-
-    @Override
-    public List<ReplyTo> getReplyTos() {
-	if (!hasAnyReplyTos()) {
-	    addReplyTos(new CurrentUserReplyTo());
+	public void init(final Unit unit, final String fromAddress, final Group members) {
+		setUnit(unit);
+		setFromAddress(fromAddress);
+		setMembers(members);
 	}
-	return super.getReplyTos();
-    }
 
-    @Service
-    private void createCurrentUserReplyTo() {
-	addReplyTos(new CurrentUserReplyTo());
-    }
-
-    @Override
-    public void setFromName(final String fromName) {
-	throw new Error("method.not.available.for.this.type.of.sender");
-    }
-
-    protected boolean hasRecipientWithToName(final String toName) {
-	for (final Recipient recipient : super.getRecipientsSet()) {
-	    if (recipient.getToName().equals(toName)) {
-		return true;
-	    }
+	public UnitBasedSender(final Unit unit, final String fromAddress, final Group members) {
+		super();
+		init(unit, fromAddress, members);
 	}
-	return false;
-    }
 
-    private boolean hasPersistentGroup(final String toName) {
-	final Unit unit = getUnit();
-	for (final PersistentGroupMembers persistentGroupMembers : unit.getPersistentGroupsSet()) {
-	    if (persistentGroupMembers.getName().equals(toName)) {
-		return true;
-	    }
+	public UnitBasedSender() {
+		super();
 	}
-	return false;
-    }
 
-    @Service
-    private void updateRecipients() {
-	final Unit unit = getUnit();
-	if (unit != null) {
+	@Override
+	public void delete() {
+		removeUnit();
+		super.delete();
+	}
 
-	    for (final IGroup group : unit.getGroups()) {
-		if (!hasRecipientWithToName(group.getName())) {
-		    createRecipient(group);
+	@Override
+	public String getFromName() {
+		final Unit unit = getUnit();
+		return unit.getName();
+	}
+
+	@Override
+	public List<ReplyTo> getReplyTos() {
+		if (!hasAnyReplyTos()) {
+			addReplyTos(new CurrentUserReplyTo());
 		}
-	    }
+		return super.getReplyTos();
+	}
 
-	    for (final PersistentGroupMembers persistentGroupMembers : unit.getPersistentGroupsSet()) {
-		if (!hasRecipientWithToName(persistentGroupMembers.getName())) {
-		    createRecipient(persistentGroupMembers);
-		}
-	    }
-	    for (final Recipient recipient : super.getRecipientsSet()) {
-		if (recipient.getMembers() instanceof PersistentGroup) {
-		    if (!hasPersistentGroup(recipient.getToName())) {
-			if (recipient.getMessagesSet().isEmpty()) {
-			    recipient.delete();
-			} else {
-			    removeRecipients(recipient);
+	@Service
+	private void createCurrentUserReplyTo() {
+		addReplyTos(new CurrentUserReplyTo());
+	}
+
+	@Override
+	public void setFromName(final String fromName) {
+		throw new Error("method.not.available.for.this.type.of.sender");
+	}
+
+	protected boolean hasRecipientWithToName(final String toName) {
+		for (final Recipient recipient : super.getRecipientsSet()) {
+			if (recipient.getToName().equals(toName)) {
+				return true;
 			}
-		    }
 		}
-	    }
+		return false;
 	}
-    }
 
-    public Set<Recipient> getRecipientsWithoutUpdate() {
-	return super.getRecipientsSet();
-    }
+	private boolean hasPersistentGroup(final String toName) {
+		final Unit unit = getUnit();
+		for (final PersistentGroupMembers persistentGroupMembers : unit.getPersistentGroupsSet()) {
+			if (persistentGroupMembers.getName().equals(toName)) {
+				return true;
+			}
+		}
+		return false;
+	}
 
-    @Override
-    public List<Recipient> getRecipients() {
-	updateRecipients();
-	return super.getRecipients();
-    }
+	@Service
+	private void updateRecipients() {
+		final Unit unit = getUnit();
+		if (unit != null) {
 
-    @Override
-    public Set<Recipient> getRecipientsSet() {
-	updateRecipients();
-	return super.getRecipientsSet();
-    }
+			for (final IGroup group : unit.getGroups()) {
+				if (!hasRecipientWithToName(group.getName())) {
+					createRecipient(group);
+				}
+			}
 
-    @Override
-    public int getRecipientsCount() {
-	updateRecipients();
-	return super.getRecipientsCount();
-    }
+			for (final PersistentGroupMembers persistentGroupMembers : unit.getPersistentGroupsSet()) {
+				if (!hasRecipientWithToName(persistentGroupMembers.getName())) {
+					createRecipient(persistentGroupMembers);
+				}
+			}
+			for (final Recipient recipient : super.getRecipientsSet()) {
+				if (recipient.getMembers() instanceof PersistentGroup) {
+					if (!hasPersistentGroup(recipient.getToName())) {
+						if (recipient.getMessagesSet().isEmpty()) {
+							recipient.delete();
+						} else {
+							removeRecipients(recipient);
+						}
+					}
+				}
+			}
+		}
+	}
 
-    @Override
-    public Iterator<Recipient> getRecipientsIterator() {
-	updateRecipients();
-	return super.getRecipientsIterator();
-    }
+	public Set<Recipient> getRecipientsWithoutUpdate() {
+		return super.getRecipientsSet();
+	}
 
-    @Service
-    @Override
-    public void addRecipients(final Recipient recipients) {
-	super.addRecipients(recipients);
-    }
+	@Override
+	public List<Recipient> getRecipients() {
+		updateRecipients();
+		return super.getRecipients();
+	}
 
-    @Service
-    @Override
-    public void removeRecipients(final Recipient recipients) {
-	super.removeRecipients(recipients);
-    }
+	@Override
+	public Set<Recipient> getRecipientsSet() {
+		updateRecipients();
+		return super.getRecipientsSet();
+	}
 
-    @Service
-    protected void createRecipient(final PersistentGroupMembers persistentGroupMembers) {
-	addRecipients(new Recipient(null, new PersistentGroup(persistentGroupMembers)));
-    }
+	@Override
+	public int getRecipientsCount() {
+		updateRecipients();
+		return super.getRecipientsCount();
+	}
 
-    protected void createRecipient(final IGroup group) {
-	addRecipients(new Recipient(null, (Group) group));
-    }
+	@Override
+	public Iterator<Recipient> getRecipientsIterator() {
+		updateRecipients();
+		return super.getRecipientsIterator();
+	}
 
-    @Service
-    public static UnitBasedSender newInstance(Unit unit) {
-	return new UnitBasedSender(unit, Sender.getNoreplyMail(), new UnitMembersGroup(unit));
-    }
+	@Service
+	@Override
+	public void addRecipients(final Recipient recipients) {
+		super.addRecipients(recipients);
+	}
+
+	@Service
+	@Override
+	public void removeRecipients(final Recipient recipients) {
+		super.removeRecipients(recipients);
+	}
+
+	@Service
+	protected void createRecipient(final PersistentGroupMembers persistentGroupMembers) {
+		addRecipients(new Recipient(null, new PersistentGroup(persistentGroupMembers)));
+	}
+
+	protected void createRecipient(final IGroup group) {
+		addRecipients(new Recipient(null, (Group) group));
+	}
+
+	@Service
+	public static UnitBasedSender newInstance(Unit unit) {
+		return new UnitBasedSender(unit, Sender.getNoreplyMail(), new UnitMembersGroup(unit));
+	}
 }

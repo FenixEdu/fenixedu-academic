@@ -20,105 +20,112 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
-@Mapping(module = "coordinator", path = "/viewStudentCurriculumSearch", attribute = "viewStudentCurriculumForm", formBean = "viewStudentCurriculumForm", scope = "request", parameter = "method")
+@Mapping(
+		module = "coordinator",
+		path = "/viewStudentCurriculumSearch",
+		attribute = "viewStudentCurriculumForm",
+		formBean = "viewStudentCurriculumForm",
+		scope = "request",
+		parameter = "method")
 @Forwards(value = {
-	@Forward(name = "chooseStudent", path = "/coordinator/student/curriculum/chooseStudent.jsp", tileProperties = @Tile(title = "private.coordinator.management.courses.students.curriculum")),
-	@Forward(name = "chooseCurriculumType", path = "/coordinator/student/curriculum/chooseCurriculumType.jsp") })
+		@Forward(name = "chooseStudent", path = "/coordinator/student/curriculum/chooseStudent.jsp", tileProperties = @Tile(
+				title = "private.coordinator.management.courses.students.curriculum")),
+		@Forward(name = "chooseCurriculumType", path = "/coordinator/student/curriculum/chooseCurriculumType.jsp") })
 public class ViewStudentCurriculumDA extends FenixDispatchAction {
 
-    @Override
-    public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-	CoordinatedDegreeInfo.setCoordinatorContext(request);
-	return super.execute(mapping, actionForm, request, response);
-    }
-
-    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
-
-	setDegreeCurricularPlanId(form, getDegreeCurricularPlanId(request));
-	setExecutionDegreeId(form, getExecutionDegreeId(request));
-
-	return mapping.findForward("chooseStudent");
-    }
-
-    public ActionForward showStudentCurriculum(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) {
-	final Student student = getStudent(actionForm);
-
-	if (student == null) {
-	    addActionMessage(request, "label.coordinator.viewStudentCurriculum.noStudent");
-	    return mapping.findForward("chooseStudent");
+	@Override
+	public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		CoordinatedDegreeInfo.setCoordinatorContext(request);
+		return super.execute(mapping, actionForm, request, response);
 	}
 
-	if (!getDegreeCurricularPlan(actionForm).isBolonhaDegree()) {
+	public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
 
-	    if (!student.hasTransitionRegistrations()) {
-		return getOldCurriculumRedirect(actionForm, student);
-	    }
+		setDegreeCurricularPlanId(form, getDegreeCurricularPlanId(request));
+		setExecutionDegreeId(form, getExecutionDegreeId(request));
 
-	    request.setAttribute("student", student);
-
-	    return mapping.findForward("chooseCurriculumType");
-	} else {
-	    return getOldCurriculumRedirect(actionForm, student);
+		return mapping.findForward("chooseStudent");
 	}
 
-    }
+	public ActionForward showStudentCurriculum(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) {
+		final Student student = getStudent(actionForm);
 
-    private ActionForward getBolonhaTransitionRedirect(final ActionForm actionForm, final Student student) {
-	final ActionForward actionForward = new ActionForward();
-	actionForward.setPath("/bolonhaTransitionManagement.do?method=prepare&studentId=" + student.getIdInternal());
+		if (student == null) {
+			addActionMessage(request, "label.coordinator.viewStudentCurriculum.noStudent");
+			return mapping.findForward("chooseStudent");
+		}
 
-	return actionForward;
+		if (!getDegreeCurricularPlan(actionForm).isBolonhaDegree()) {
 
-    }
+			if (!student.hasTransitionRegistrations()) {
+				return getOldCurriculumRedirect(actionForm, student);
+			}
 
-    private ActionForward getOldCurriculumRedirect(final ActionForm actionForm, final Student student) {
-	final ActionForward actionForward = new ActionForward();
-	actionForward.setPath("/viewCurriculum.do?method=prepareReadByStudentNumber&studentNumber=" + student.getNumber()
-		+ "&executionDegreeId=" + getExecutionDegreeId(actionForm) + "&degreeCurricularPlanID="
-		+ getDegreeCurricularPlanId(actionForm));
+			request.setAttribute("student", student);
 
-	return actionForward;
+			return mapping.findForward("chooseCurriculumType");
+		} else {
+			return getOldCurriculumRedirect(actionForm, student);
+		}
 
-    }
-
-    private Integer getExecutionDegreeId(final HttpServletRequest request) {
-	return getRequestParameterAsInteger(request, "executionDegreeId");
-    }
-
-    private Integer getExecutionDegreeId(final ActionForm actionForm) {
-	return (Integer) ((DynaActionForm) actionForm).get("executionDegreeId");
-    }
-
-    private void setExecutionDegreeId(final ActionForm actionForm, final Integer id) {
-	((DynaActionForm) actionForm).set("executionDegreeId", id);
-    }
-
-    private DegreeCurricularPlan getDegreeCurricularPlan(final ActionForm form) {
-	return rootDomainObject.readDegreeCurricularPlanByOID(getDegreeCurricularPlanId(form));
-    }
-
-    private Integer getDegreeCurricularPlanId(final HttpServletRequest request) {
-	return getRequestParameterAsInteger(request, "degreeCurricularPlanID");
-    }
-
-    private void setDegreeCurricularPlanId(final ActionForm actionForm, final Integer id) {
-	((DynaActionForm) actionForm).set("degreeCurricularPlanId", id);
-    }
-
-    private Integer getDegreeCurricularPlanId(final ActionForm actionForm) {
-	return (Integer) ((DynaActionForm) actionForm).get("degreeCurricularPlanId");
-    }
-
-    private Student getStudent(final ActionForm actionForm) {
-	final String studentNumberString = ((DynaActionForm) actionForm).getString("studentNumber");
-
-	if (!StringUtils.isEmpty(studentNumberString) && NumberUtils.isNumber(studentNumberString)) {
-	    return Student.readStudentByNumber(Integer.valueOf(studentNumberString));
 	}
 
-	return null;
-    }
+	private ActionForward getBolonhaTransitionRedirect(final ActionForm actionForm, final Student student) {
+		final ActionForward actionForward = new ActionForward();
+		actionForward.setPath("/bolonhaTransitionManagement.do?method=prepare&studentId=" + student.getIdInternal());
+
+		return actionForward;
+
+	}
+
+	private ActionForward getOldCurriculumRedirect(final ActionForm actionForm, final Student student) {
+		final ActionForward actionForward = new ActionForward();
+		actionForward.setPath("/viewCurriculum.do?method=prepareReadByStudentNumber&studentNumber=" + student.getNumber()
+				+ "&executionDegreeId=" + getExecutionDegreeId(actionForm) + "&degreeCurricularPlanID="
+				+ getDegreeCurricularPlanId(actionForm));
+
+		return actionForward;
+
+	}
+
+	private Integer getExecutionDegreeId(final HttpServletRequest request) {
+		return getRequestParameterAsInteger(request, "executionDegreeId");
+	}
+
+	private Integer getExecutionDegreeId(final ActionForm actionForm) {
+		return (Integer) ((DynaActionForm) actionForm).get("executionDegreeId");
+	}
+
+	private void setExecutionDegreeId(final ActionForm actionForm, final Integer id) {
+		((DynaActionForm) actionForm).set("executionDegreeId", id);
+	}
+
+	private DegreeCurricularPlan getDegreeCurricularPlan(final ActionForm form) {
+		return rootDomainObject.readDegreeCurricularPlanByOID(getDegreeCurricularPlanId(form));
+	}
+
+	private Integer getDegreeCurricularPlanId(final HttpServletRequest request) {
+		return getRequestParameterAsInteger(request, "degreeCurricularPlanID");
+	}
+
+	private void setDegreeCurricularPlanId(final ActionForm actionForm, final Integer id) {
+		((DynaActionForm) actionForm).set("degreeCurricularPlanId", id);
+	}
+
+	private Integer getDegreeCurricularPlanId(final ActionForm actionForm) {
+		return (Integer) ((DynaActionForm) actionForm).get("degreeCurricularPlanId");
+	}
+
+	private Student getStudent(final ActionForm actionForm) {
+		final String studentNumberString = ((DynaActionForm) actionForm).getString("studentNumber");
+
+		if (!StringUtils.isEmpty(studentNumberString) && NumberUtils.isNumber(studentNumberString)) {
+			return Student.readStudentByNumber(Integer.valueOf(studentNumberString));
+		}
+
+		return null;
+	}
 
 }

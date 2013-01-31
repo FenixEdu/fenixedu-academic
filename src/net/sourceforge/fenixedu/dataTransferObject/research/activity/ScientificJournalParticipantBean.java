@@ -4,33 +4,33 @@ import java.io.Serializable;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.DomainObject;
-import net.sourceforge.fenixedu.domain.research.activity.ScientificJournal;
 import net.sourceforge.fenixedu.domain.research.activity.Participation.ResearchActivityParticipationRole;
+import net.sourceforge.fenixedu.domain.research.activity.ScientificJournal;
 
 public class ScientificJournalParticipantBean extends ParticipantBean implements Serializable {
 
-    ScientificJournal scientificJournal;
+	ScientificJournal scientificJournal;
 
-    public ScientificJournalParticipantBean() {
-	super();
-	setScientificJournal(null);
-    }
+	public ScientificJournalParticipantBean() {
+		super();
+		setScientificJournal(null);
+	}
 
-    public ScientificJournal getScientificJournal() {
-	return this.scientificJournal;
-    }
+	public ScientificJournal getScientificJournal() {
+		return this.scientificJournal;
+	}
 
-    public void setScientificJournal(ScientificJournal journal) {
-	this.scientificJournal = journal;
-    }
+	public void setScientificJournal(ScientificJournal journal) {
+		this.scientificJournal = journal;
+	}
 
-    @Override
-    public List<ResearchActivityParticipationRole> getAllowedRoles() {
-	return ResearchActivityParticipationRole.getAllScientificJournalParticipationRoles();
-    }
+	@Override
+	public List<ResearchActivityParticipationRole> getAllowedRoles() {
+		return ResearchActivityParticipationRole.getAllScientificJournalParticipationRoles();
+	}
 
-    @Override
-    public DomainObject getActivity() {
-	return getScientificJournal();
-    }
+	@Override
+	public DomainObject getActivity() {
+		return getScientificJournal();
+	}
 }

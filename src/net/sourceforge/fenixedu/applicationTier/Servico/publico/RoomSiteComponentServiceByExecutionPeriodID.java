@@ -28,30 +28,30 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class RoomSiteComponentServiceByExecutionPeriodID extends FenixService {
 
-    @Service
-    public static Object run(ISiteComponent bodyComponent, RoomKey roomKey, Calendar someDay, Integer executionPeriodID)
-	    throws Exception {
-	final Calendar day = findMonday(someDay);
-	final ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(executionPeriodID);
-	return (executionSemester != null) ? runService(bodyComponent, roomKey, day, executionSemester)
-		: RoomSiteComponentService.run(bodyComponent, roomKey, day);
-    }
+	@Service
+	public static Object run(ISiteComponent bodyComponent, RoomKey roomKey, Calendar someDay, Integer executionPeriodID)
+			throws Exception {
+		final Calendar day = findMonday(someDay);
+		final ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(executionPeriodID);
+		return (executionSemester != null) ? runService(bodyComponent, roomKey, day, executionSemester) : RoomSiteComponentService
+				.run(bodyComponent, roomKey, day);
+	}
 
-    private static Calendar findMonday(final Calendar someDay) {
-	final DateTime dateTime = new DateTime(someDay.getTimeInMillis());
-	return dateTime.withField(DateTimeFieldType.dayOfWeek(), 1).toCalendar(null);
-    }
+	private static Calendar findMonday(final Calendar someDay) {
+		final DateTime dateTime = new DateTime(someDay.getTimeInMillis());
+		return dateTime.withField(DateTimeFieldType.dayOfWeek(), 1).toCalendar(null);
+	}
 
-    public static Object runService(ISiteComponent bodyComponent, RoomKey roomKey, Calendar day,
-	    ExecutionSemester executionSemester) throws Exception {
-	SiteView siteView = null;
+	public static Object runService(ISiteComponent bodyComponent, RoomKey roomKey, Calendar day,
+			ExecutionSemester executionSemester) throws Exception {
+		SiteView siteView = null;
 
-	AllocatableSpace room = AllocatableSpace.findAllocatableSpaceForEducationByName(roomKey.getNomeSala());
-	RoomSiteComponentBuilder componentBuilder = RoomSiteComponentBuilder.getInstance();
-	bodyComponent = componentBuilder.getComponent(bodyComponent, day, room, executionSemester);
+		AllocatableSpace room = AllocatableSpace.findAllocatableSpaceForEducationByName(roomKey.getNomeSala());
+		RoomSiteComponentBuilder componentBuilder = RoomSiteComponentBuilder.getInstance();
+		bodyComponent = componentBuilder.getComponent(bodyComponent, day, room, executionSemester);
 
-	siteView = new SiteView(bodyComponent);
+		siteView = new SiteView(bodyComponent);
 
-	return siteView;
-    }
+		return siteView;
+	}
 }

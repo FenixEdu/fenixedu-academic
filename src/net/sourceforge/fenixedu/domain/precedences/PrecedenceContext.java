@@ -10,36 +10,36 @@ import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
  */
 
 public class PrecedenceContext {
-    private List curricularCourses2Enroll;
+	private List curricularCourses2Enroll;
 
-    private ExecutionSemester executionSemester;
+	private ExecutionSemester executionSemester;
 
-    private StudentCurricularPlan studentCurricularPlan;
+	private StudentCurricularPlan studentCurricularPlan;
 
-    public PrecedenceContext() {
-    }
+	public PrecedenceContext() {
+	}
 
-    public ExecutionSemester getExecutionPeriod() {
-	return executionSemester;
-    }
+	public ExecutionSemester getExecutionPeriod() {
+		return executionSemester;
+	}
 
-    public void setExecutionPeriod(ExecutionSemester executionSemester) {
-	this.executionSemester = executionSemester;
-    }
+	public void setExecutionPeriod(ExecutionSemester executionSemester) {
+		this.executionSemester = executionSemester;
+	}
 
-    public List getCurricularCourses2Enroll() {
-	return curricularCourses2Enroll;
-    }
+	public List getCurricularCourses2Enroll() {
+		return curricularCourses2Enroll;
+	}
 
-    public void setCurricularCourses2Enroll(List curricularCourses2Enroll) {
-	this.curricularCourses2Enroll = curricularCourses2Enroll;
-    }
+	public void setCurricularCourses2Enroll(List curricularCourses2Enroll) {
+		this.curricularCourses2Enroll = curricularCourses2Enroll;
+	}
 
-    public StudentCurricularPlan getStudentCurricularPlan() {
-	return studentCurricularPlan;
-    }
+	public StudentCurricularPlan getStudentCurricularPlan() {
+		return studentCurricularPlan;
+	}
 
-    public void setStudentCurricularPlan(StudentCurricularPlan studentCurricularPlan) {
-	this.studentCurricularPlan = studentCurricularPlan;
-    }
+	public void setStudentCurricularPlan(StudentCurricularPlan studentCurricularPlan) {
+		this.studentCurricularPlan = studentCurricularPlan;
+	}
 }

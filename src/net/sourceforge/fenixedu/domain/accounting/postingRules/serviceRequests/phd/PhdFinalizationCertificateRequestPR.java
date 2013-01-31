@@ -12,35 +12,35 @@ import org.joda.time.DateTime;
 
 public class PhdFinalizationCertificateRequestPR extends PhdFinalizationCertificateRequestPR_Base {
 
-    protected PhdFinalizationCertificateRequestPR() {
-	super();
-    }
+	protected PhdFinalizationCertificateRequestPR() {
+		super();
+	}
 
-    public PhdFinalizationCertificateRequestPR(DateTime startDate, DateTime endDate,
-	    ServiceAgreementTemplate serviceAgreementTemplate, Money fixedAmount) {
-	this();
-	init(EntryType.PHD_FINALIZATION_CERTIFICATE_REQUEST_FEE, EventType.PHD_FINALIZATION_CERTIFICATE_REQUEST, startDate,
-		endDate, serviceAgreementTemplate, fixedAmount);
-    }
+	public PhdFinalizationCertificateRequestPR(DateTime startDate, DateTime endDate,
+			ServiceAgreementTemplate serviceAgreementTemplate, Money fixedAmount) {
+		this();
+		init(EntryType.PHD_FINALIZATION_CERTIFICATE_REQUEST_FEE, EventType.PHD_FINALIZATION_CERTIFICATE_REQUEST, startDate,
+				endDate, serviceAgreementTemplate, fixedAmount);
+	}
 
-    @Override
-    protected Money doCalculationForAmountToPay(Event event, DateTime when, boolean applyDiscount) {
-	AcademicServiceRequestEvent academicServiceRequestEvent = (AcademicServiceRequestEvent) event;
-	AcademicServiceRequest academicServiceRequest = academicServiceRequestEvent.getAcademicServiceRequest();
+	@Override
+	protected Money doCalculationForAmountToPay(Event event, DateTime when, boolean applyDiscount) {
+		AcademicServiceRequestEvent academicServiceRequestEvent = (AcademicServiceRequestEvent) event;
+		AcademicServiceRequest academicServiceRequest = academicServiceRequestEvent.getAcademicServiceRequest();
 
-	return super.doCalculationForAmountToPay(academicServiceRequestEvent, when, applyDiscount).multiply(
-		academicServiceRequest.isUrgentRequest() ? 2 : 1);
-    }
+		return super.doCalculationForAmountToPay(academicServiceRequestEvent, when, applyDiscount).multiply(
+				academicServiceRequest.isUrgentRequest() ? 2 : 1);
+	}
 
-    @Override
-    public PhdFinalizationCertificateRequestPR edit(final Money fixedAmount) {
+	@Override
+	public PhdFinalizationCertificateRequestPR edit(final Money fixedAmount) {
 
-	deactivate();
-	return new PhdFinalizationCertificateRequestPR(new DateTime().minus(1000), null, getServiceAgreementTemplate(),
-		fixedAmount);
-    }
+		deactivate();
+		return new PhdFinalizationCertificateRequestPR(new DateTime().minus(1000), null, getServiceAgreementTemplate(),
+				fixedAmount);
+	}
 
-    public Money getUrgentAmount() {
-	return super.getFixedAmount();
-    }
+	public Money getUrgentAmount() {
+		return super.getFixedAmount();
+	}
 }

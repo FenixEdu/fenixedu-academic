@@ -13,21 +13,22 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class DistrictsProviderAsString implements DataProvider {
 
-    public Converter getConverter() {
-	return null;
-    }
-
-    @Override
-    public Object provide(Object source, Object currentValue) {
-	final List<String> result = new ArrayList<String>();
-
-	Collator ptsCollator = Collator.getInstance(new Locale("pt"));
-	for (final District each : RootDomainObject.getInstance().getDistricts()) {
-	    result.add(each.getName());
+	@Override
+	public Converter getConverter() {
+		return null;
 	}
 
-	Collections.sort(result, ptsCollator);
-	return result;
-    }
+	@Override
+	public Object provide(Object source, Object currentValue) {
+		final List<String> result = new ArrayList<String>();
+
+		Collator ptsCollator = Collator.getInstance(new Locale("pt"));
+		for (final District each : RootDomainObject.getInstance().getDistricts()) {
+			result.add(each.getName());
+		}
+
+		Collections.sort(result, ptsCollator);
+		return result;
+	}
 
 }

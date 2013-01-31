@@ -14,26 +14,26 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class GetBranchListByCandidateID extends FenixService {
 
-    @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
-    @Service
-    public static List<InfoBranch> run(Integer candidateID) throws FenixServiceException {
-	List<InfoBranch> result = new ArrayList<InfoBranch>();
+	@Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
+	@Service
+	public static List<InfoBranch> run(Integer candidateID) throws FenixServiceException {
+		List<InfoBranch> result = new ArrayList<InfoBranch>();
 
-	MasterDegreeCandidate masterDegreeCandidate = rootDomainObject.readMasterDegreeCandidateByOID(candidateID);
-	List<Branch> branches = masterDegreeCandidate.getExecutionDegree().getDegreeCurricularPlan().getAreas();
-	if (branches == null) {
-	    InfoBranchEditor infoBranch = new InfoBranchEditor();
-	    infoBranch.setName("Tronco Comum");
-	    result.add(infoBranch);
-	    return result;
+		MasterDegreeCandidate masterDegreeCandidate = rootDomainObject.readMasterDegreeCandidateByOID(candidateID);
+		List<Branch> branches = masterDegreeCandidate.getExecutionDegree().getDegreeCurricularPlan().getAreas();
+		if (branches == null) {
+			InfoBranchEditor infoBranch = new InfoBranchEditor();
+			infoBranch.setName("Tronco Comum");
+			result.add(infoBranch);
+			return result;
+		}
+
+		for (Branch branch : branches) {
+			InfoBranch infoBranch = InfoBranch.newInfoFromDomain(branch);
+			result.add(infoBranch);
+		}
+
+		return result;
 	}
-
-	for (Branch branch : branches) {
-	    InfoBranch infoBranch = InfoBranch.newInfoFromDomain(branch);
-	    result.add(infoBranch);
-	}
-
-	return result;
-    }
 
 }

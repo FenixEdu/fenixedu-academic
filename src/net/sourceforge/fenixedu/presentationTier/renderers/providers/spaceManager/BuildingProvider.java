@@ -12,20 +12,22 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class BuildingProvider implements DataProvider {
 
-    public Object provide(Object source, Object currentValue) {
+	@Override
+	public Object provide(Object source, Object currentValue) {
 
-	Set<Building> result = new HashSet<Building>();
-	FindSpacesBean bean = (FindSpacesBean) source;
-	Campus campus = bean.getCampus();
+		Set<Building> result = new HashSet<Building>();
+		FindSpacesBean bean = (FindSpacesBean) source;
+		Campus campus = bean.getCampus();
 
-	if (campus != null) {
-	    return campus.getActiveContainedSpacesByType(Building.class);
+		if (campus != null) {
+			return campus.getActiveContainedSpacesByType(Building.class);
+		}
+
+		return result;
 	}
 
-	return result;
-    }
-
-    public Converter getConverter() {
-	return new DomainObjectKeyConverter();
-    }
+	@Override
+	public Converter getConverter() {
+		return new DomainObjectKeyConverter();
+	}
 }

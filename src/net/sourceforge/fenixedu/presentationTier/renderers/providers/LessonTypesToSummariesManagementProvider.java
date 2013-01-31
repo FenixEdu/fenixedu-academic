@@ -13,25 +13,27 @@ import pt.ist.fenixWebFramework.renderers.converters.EnumConverter;
 
 public class LessonTypesToSummariesManagementProvider implements DataProvider {
 
-    public Object provide(Object source, Object currentValue) {
+	@Override
+	public Object provide(Object source, Object currentValue) {
 
-	SummariesManagementBean bean = (SummariesManagementBean) source;
-	Lesson lesson = bean.getLesson();
-	Summary summary = bean.getSummary();
-	Set<ShiftType> shiftTypes = new HashSet<ShiftType>();
+		SummariesManagementBean bean = (SummariesManagementBean) source;
+		Lesson lesson = bean.getLesson();
+		Summary summary = bean.getSummary();
+		Set<ShiftType> shiftTypes = new HashSet<ShiftType>();
 
-	if (summary != null && summary.getSummaryType() != null) {
-	    shiftTypes.add(summary.getSummaryType());
+		if (summary != null && summary.getSummaryType() != null) {
+			shiftTypes.add(summary.getSummaryType());
+		}
+
+		if (lesson != null) {
+			shiftTypes.addAll(lesson.getShift().getTypes());
+		}
+
+		return shiftTypes;
 	}
 
-	if (lesson != null) {
-	    shiftTypes.addAll(lesson.getShift().getTypes());
+	@Override
+	public Converter getConverter() {
+		return new EnumConverter();
 	}
-
-	return shiftTypes;
-    }
-
-    public Converter getConverter() {
-	return new EnumConverter();
-    }
 }

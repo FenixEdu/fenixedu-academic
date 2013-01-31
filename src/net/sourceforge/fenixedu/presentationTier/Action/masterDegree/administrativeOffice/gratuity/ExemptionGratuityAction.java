@@ -48,223 +48,226 @@ import pt.ist.fenixWebFramework.security.UserView;
  */
 public class ExemptionGratuityAction extends FenixDispatchAction {
 
-    public ActionForward prepareReadStudent(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-	ActionErrors errors = new ActionErrors();
+	public ActionForward prepareReadStudent(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		ActionErrors errors = new ActionErrors();
 
-	// execution years
-	List executionYears = null;
+		// execution years
+		List executionYears = null;
 
-	executionYears = ReadNotClosedExecutionYears.run();
-	if (executionYears == null || executionYears.size() <= 0) {
-	    errors.add("noExecutionYears", new ActionError("error.impossible.insertExemptionGratuity"));
-	    saveErrors(request, errors);
-	    return mapping.getInputForward();
-	}
-
-	ComparatorChain comparator = new ComparatorChain();
-	comparator.addComparator(new BeanComparator("year"), true);
-	Collections.sort(executionYears, comparator);
-
-	List executionYearLabels = buildLabelValueBeanForJsp(executionYears);
-	request.setAttribute("executionYears", executionYearLabels);
-
-	DynaActionForm studentForm = (DynaActionForm) actionForm;
-	studentForm.set("studentNumber", null);
-
-	return mapping.findForward("chooseStudent");
-    }
-
-    private List buildLabelValueBeanForJsp(List infoExecutionYears) {
-	List executionYearLabels = new ArrayList();
-	CollectionUtils.collect(infoExecutionYears, new Transformer() {
-	    public Object transform(Object arg0) {
-		InfoExecutionYear infoExecutionYear = (InfoExecutionYear) arg0;
-
-		LabelValueBean executionYear = new LabelValueBean(infoExecutionYear.getYear(), infoExecutionYear.getYear());
-		return executionYear;
-	    }
-	}, executionYearLabels);
-	return executionYearLabels;
-    }
-
-    public ActionForward readStudent(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-	ActionErrors errors = new ActionErrors();
-	IUserView userView = UserView.getUser();
-
-	// Read parameters
-	String executionYearStr = request.getParameter("executionYear");
-	request.setAttribute("executionYear", executionYearStr);
-
-	ExecutionYear executionYear = ExecutionYear.readExecutionYearByName(executionYearStr);
-
-	String parameter = request.getParameter("studentNumber");
-	Integer studentNumber = null;
-	try {
-	    studentNumber = new Integer(parameter);
-	} catch (NumberFormatException e) {
-	    errors.add("errors", new ActionError("error.tutor.numberAndRequired"));
-	    saveErrors(request, errors);
-	    return mapping.getInputForward();
-	}
-	request.setAttribute("studentNumber", studentNumber);
-
-	List<InfoStudentCurricularPlan> infoStudentCurricularPlans = new ArrayList<InfoStudentCurricularPlan>();
-
-	try {
-	    List<StudentCurricularPlan> studentCurricularPlans = (List) ReadStudentCurricularPlansByNumberAndDegreeType.run(
-		    studentNumber, DegreeType.MASTER_DEGREE);
-
-	    for (StudentCurricularPlan studentCurricularPlan : studentCurricularPlans) {
-		if (studentCurricularPlan.getDegreeCurricularPlan().getExecutionYears().contains(executionYear)) {
-		    infoStudentCurricularPlans.add(InfoStudentCurricularPlan.newInfoFromDomain(studentCurricularPlan));
+		executionYears = ReadNotClosedExecutionYears.run();
+		if (executionYears == null || executionYears.size() <= 0) {
+			errors.add("noExecutionYears", new ActionError("error.impossible.insertExemptionGratuity"));
+			saveErrors(request, errors);
+			return mapping.getInputForward();
 		}
-	    }
 
-	} catch (FenixServiceException fenixServiceException) {
-	    fenixServiceException.printStackTrace();
-	    errors.add("noStudentCurricularPlans", new ActionError("error.impossible.readStudent"));
-	    saveErrors(request, errors);
-	    return mapping.getInputForward();
+		ComparatorChain comparator = new ComparatorChain();
+		comparator.addComparator(new BeanComparator("year"), true);
+		Collections.sort(executionYears, comparator);
+
+		List executionYearLabels = buildLabelValueBeanForJsp(executionYears);
+		request.setAttribute("executionYears", executionYearLabels);
+
+		DynaActionForm studentForm = (DynaActionForm) actionForm;
+		studentForm.set("studentNumber", null);
+
+		return mapping.findForward("chooseStudent");
 	}
 
-	if (infoStudentCurricularPlans.size() == 1) {
-	    request.setAttribute("studentCurricularPlanID", (infoStudentCurricularPlans.get(0)).getIdInternal());
-	    return mapping.findForward("readExemptionGratuity");
+	private List buildLabelValueBeanForJsp(List infoExecutionYears) {
+		List executionYearLabels = new ArrayList();
+		CollectionUtils.collect(infoExecutionYears, new Transformer() {
+			@Override
+			public Object transform(Object arg0) {
+				InfoExecutionYear infoExecutionYear = (InfoExecutionYear) arg0;
+
+				LabelValueBean executionYear = new LabelValueBean(infoExecutionYear.getYear(), infoExecutionYear.getYear());
+				return executionYear;
+			}
+		}, executionYearLabels);
+		return executionYearLabels;
 	}
 
-	request.setAttribute("studentCurricularPlans", infoStudentCurricularPlans);
-	return mapping.findForward("chooseStudentCurricularPlan");
+	public ActionForward readStudent(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		ActionErrors errors = new ActionErrors();
+		IUserView userView = UserView.getUser();
 
-    }
+		// Read parameters
+		String executionYearStr = request.getParameter("executionYear");
+		request.setAttribute("executionYear", executionYearStr);
 
-    public ActionForward readExemptionGratuity(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-	ActionErrors errors = new ActionErrors();
+		ExecutionYear executionYear = ExecutionYear.readExecutionYearByName(executionYearStr);
 
-	IUserView userView = getUserView(request);
-
-	request.setAttribute("percentageOfExemption", ExemptionGratuityType.percentageOfExemption());
-	request.setAttribute("exemptionGratuityList", ExemptionGratuityType.values());
-
-	// Read executionYear
-	String executionYear = (String) request.getAttribute("executionYear");
-	if (executionYear == null) {
-	    executionYear = request.getParameter("executionYear");
-	}
-	request.setAttribute("executionYear", executionYear);
-
-	Integer studentCurricularPlanID = getFromRequest("studentCurricularPlanID", request);
-	request.setAttribute("studentCurricularPlanID", studentCurricularPlanID);
-
-	// read student curricular plan only for show in jsp
-	InfoStudentCurricularPlan infoStudentCurricularPlan = null;
-
-	try {
-	    infoStudentCurricularPlan = (InfoStudentCurricularPlan) ReadStudentCurricularPlan.run(studentCurricularPlanID);
-	} catch (FenixServiceException fenixServiceException) {
-	    fenixServiceException.printStackTrace();
-	    errors.add("noStudentCurricularPlans", new ActionError("error.impossible.readStudent"));
-	    saveErrors(request, errors);
-	    return mapping.getInputForward();
-	}
-	request.setAttribute("studentCurricularPlan", infoStudentCurricularPlan);
-
-	// read gratuity values of the execution course
-	InfoGratuityValues infoGratuityValues = null;
-
-	try {
-	    infoGratuityValues = (InfoGratuityValues) ReadGratuityValuesByDegreeCurricularPlanAndExecutionYear.run(
-		    infoStudentCurricularPlan.getInfoDegreeCurricularPlan().getIdInternal(), executionYear);
-	} catch (FenixServiceException fenixServiceException) {
-	    fenixServiceException.printStackTrace();
-	    errors.add("noGratuitySituation", new ActionError("error.impossible.insertExemptionGratuity"));
-	    errors.add("noGratuityValues", new ActionError("error.impossible.problemsWithDegree", infoStudentCurricularPlan
-		    .getInfoDegreeCurricularPlan().getInfoDegree().getNome()));
-	    saveErrors(request, errors);
-	    return mapping.findForward("chooseStudent");
-	}
-	// if infoGratuityValues is null than it will be informed to the user
-	// that this degree hasn't gratuity values defined
-	if (infoGratuityValues == null) {
-	    request.setAttribute("noGratuityValues", "true");
-	    errors.add("noGratuityValues", new ActionError("error.impossible.noGratuityValues"));
-	    saveErrors(request, errors);
-	    return mapping.findForward("chooseStudent");
-	}
-
-	request.setAttribute("gratuityValuesID", infoGratuityValues.getIdInternal());
-
-	// read gratuity situation of the student
-	InfoGratuitySituation infoGratuitySituation = null;
-
-	try {
-	    infoGratuitySituation = (InfoGratuitySituation) ReadGratuitySituationByStudentCurricularPlanByGratuityValues.run(
-		    studentCurricularPlanID, infoGratuityValues.getIdInternal());
-	} catch (FenixServiceException fenixServiceException) {
-	    fenixServiceException.printStackTrace();
-	    errors.add("noGratuitySituation", new ActionError("error.impossible.insertExemptionGratuity"));
-	    saveErrors(request, errors);
-	    return mapping.getInputForward();
-	}
-	// if infoGratuitySituation is null than it will be created in next step
-	if (infoGratuitySituation != null) {
-	    request.setAttribute("gratuitySituationID", infoGratuitySituation.getIdInternal());
-	}
-
-	DynaActionForm exemptionGrauityForm = (DynaActionForm) actionForm;
-	fillForm(infoGratuitySituation, request, exemptionGrauityForm);
-
-	return mapping.findForward("manageExemptionGratuity");
-    }
-
-    private void fillForm(InfoGratuitySituation infoGratuitySituation, HttpServletRequest request,
-	    DynaActionForm exemptionGrauityForm) {
-	if (infoGratuitySituation != null) {
-	    Integer exemptionPercentage = infoGratuitySituation.getExemptionPercentage();
-	    if (exemptionPercentage != null) {
-		if (ExemptionGratuityType.percentageOfExemption().contains(exemptionPercentage)) {
-		    exemptionGrauityForm.set("valueExemptionGratuity", String.valueOf(exemptionPercentage));
-		} else if (exemptionPercentage.intValue() > 0) {
-		    exemptionGrauityForm.set("valueExemptionGratuity", "-1");
-		    exemptionGrauityForm.set("otherValueExemptionGratuity", String.valueOf(exemptionPercentage));
-		}
-	    }
-
-	    if (infoGratuitySituation.getExemptionValue() != null) {
-		exemptionGrauityForm.set("adHocValueExemptionGratuity", infoGratuitySituation.getExemptionValue());
-	    }
-
-	    if (infoGratuitySituation.getExemptionType() != null) {
-		exemptionGrauityForm.set("justificationExemptionGratuity", infoGratuitySituation.getExemptionType().name());
-	    }
-	    exemptionGrauityForm.set("otherJustificationExemptionGratuity", infoGratuitySituation.getExemptionDescription());
-	}
-    }
-
-    private Integer getFromRequest(String parameter, HttpServletRequest request) {
-	Integer parameterCode = null;
-	String parameterCodeString = request.getParameter(parameter);
-	if (parameterCodeString != null) // parameter
-	{
-	    try {
-		parameterCode = new Integer(parameterCodeString);
-	    } catch (Exception exception) {
-		return null;
-	    }
-	} else // request
-	{
-	    if (request.getAttribute(parameter) instanceof String) {
+		String parameter = request.getParameter("studentNumber");
+		Integer studentNumber = null;
 		try {
-		    parameterCode = new Integer((String) request.getAttribute(parameter));
-		} catch (Exception exception) {
-		    return null;
+			studentNumber = new Integer(parameter);
+		} catch (NumberFormatException e) {
+			errors.add("errors", new ActionError("error.tutor.numberAndRequired"));
+			saveErrors(request, errors);
+			return mapping.getInputForward();
 		}
-	    } else if (request.getAttribute(parameter) instanceof Integer) {
-		parameterCode = (Integer) request.getAttribute(parameter);
-	    }
+		request.setAttribute("studentNumber", studentNumber);
+
+		List<InfoStudentCurricularPlan> infoStudentCurricularPlans = new ArrayList<InfoStudentCurricularPlan>();
+
+		try {
+			List<StudentCurricularPlan> studentCurricularPlans =
+					ReadStudentCurricularPlansByNumberAndDegreeType.run(studentNumber, DegreeType.MASTER_DEGREE);
+
+			for (StudentCurricularPlan studentCurricularPlan : studentCurricularPlans) {
+				if (studentCurricularPlan.getDegreeCurricularPlan().getExecutionYears().contains(executionYear)) {
+					infoStudentCurricularPlans.add(InfoStudentCurricularPlan.newInfoFromDomain(studentCurricularPlan));
+				}
+			}
+
+		} catch (FenixServiceException fenixServiceException) {
+			fenixServiceException.printStackTrace();
+			errors.add("noStudentCurricularPlans", new ActionError("error.impossible.readStudent"));
+			saveErrors(request, errors);
+			return mapping.getInputForward();
+		}
+
+		if (infoStudentCurricularPlans.size() == 1) {
+			request.setAttribute("studentCurricularPlanID", (infoStudentCurricularPlans.get(0)).getIdInternal());
+			return mapping.findForward("readExemptionGratuity");
+		}
+
+		request.setAttribute("studentCurricularPlans", infoStudentCurricularPlans);
+		return mapping.findForward("chooseStudentCurricularPlan");
+
 	}
-	return parameterCode;
-    }
+
+	public ActionForward readExemptionGratuity(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		ActionErrors errors = new ActionErrors();
+
+		IUserView userView = getUserView(request);
+
+		request.setAttribute("percentageOfExemption", ExemptionGratuityType.percentageOfExemption());
+		request.setAttribute("exemptionGratuityList", ExemptionGratuityType.values());
+
+		// Read executionYear
+		String executionYear = (String) request.getAttribute("executionYear");
+		if (executionYear == null) {
+			executionYear = request.getParameter("executionYear");
+		}
+		request.setAttribute("executionYear", executionYear);
+
+		Integer studentCurricularPlanID = getFromRequest("studentCurricularPlanID", request);
+		request.setAttribute("studentCurricularPlanID", studentCurricularPlanID);
+
+		// read student curricular plan only for show in jsp
+		InfoStudentCurricularPlan infoStudentCurricularPlan = null;
+
+		try {
+			infoStudentCurricularPlan = ReadStudentCurricularPlan.run(studentCurricularPlanID);
+		} catch (FenixServiceException fenixServiceException) {
+			fenixServiceException.printStackTrace();
+			errors.add("noStudentCurricularPlans", new ActionError("error.impossible.readStudent"));
+			saveErrors(request, errors);
+			return mapping.getInputForward();
+		}
+		request.setAttribute("studentCurricularPlan", infoStudentCurricularPlan);
+
+		// read gratuity values of the execution course
+		InfoGratuityValues infoGratuityValues = null;
+
+		try {
+			infoGratuityValues =
+					(InfoGratuityValues) ReadGratuityValuesByDegreeCurricularPlanAndExecutionYear.run(infoStudentCurricularPlan
+							.getInfoDegreeCurricularPlan().getIdInternal(), executionYear);
+		} catch (FenixServiceException fenixServiceException) {
+			fenixServiceException.printStackTrace();
+			errors.add("noGratuitySituation", new ActionError("error.impossible.insertExemptionGratuity"));
+			errors.add("noGratuityValues", new ActionError("error.impossible.problemsWithDegree", infoStudentCurricularPlan
+					.getInfoDegreeCurricularPlan().getInfoDegree().getNome()));
+			saveErrors(request, errors);
+			return mapping.findForward("chooseStudent");
+		}
+		// if infoGratuityValues is null than it will be informed to the user
+		// that this degree hasn't gratuity values defined
+		if (infoGratuityValues == null) {
+			request.setAttribute("noGratuityValues", "true");
+			errors.add("noGratuityValues", new ActionError("error.impossible.noGratuityValues"));
+			saveErrors(request, errors);
+			return mapping.findForward("chooseStudent");
+		}
+
+		request.setAttribute("gratuityValuesID", infoGratuityValues.getIdInternal());
+
+		// read gratuity situation of the student
+		InfoGratuitySituation infoGratuitySituation = null;
+
+		try {
+			infoGratuitySituation =
+					(InfoGratuitySituation) ReadGratuitySituationByStudentCurricularPlanByGratuityValues.run(
+							studentCurricularPlanID, infoGratuityValues.getIdInternal());
+		} catch (FenixServiceException fenixServiceException) {
+			fenixServiceException.printStackTrace();
+			errors.add("noGratuitySituation", new ActionError("error.impossible.insertExemptionGratuity"));
+			saveErrors(request, errors);
+			return mapping.getInputForward();
+		}
+		// if infoGratuitySituation is null than it will be created in next step
+		if (infoGratuitySituation != null) {
+			request.setAttribute("gratuitySituationID", infoGratuitySituation.getIdInternal());
+		}
+
+		DynaActionForm exemptionGrauityForm = (DynaActionForm) actionForm;
+		fillForm(infoGratuitySituation, request, exemptionGrauityForm);
+
+		return mapping.findForward("manageExemptionGratuity");
+	}
+
+	private void fillForm(InfoGratuitySituation infoGratuitySituation, HttpServletRequest request,
+			DynaActionForm exemptionGrauityForm) {
+		if (infoGratuitySituation != null) {
+			Integer exemptionPercentage = infoGratuitySituation.getExemptionPercentage();
+			if (exemptionPercentage != null) {
+				if (ExemptionGratuityType.percentageOfExemption().contains(exemptionPercentage)) {
+					exemptionGrauityForm.set("valueExemptionGratuity", String.valueOf(exemptionPercentage));
+				} else if (exemptionPercentage.intValue() > 0) {
+					exemptionGrauityForm.set("valueExemptionGratuity", "-1");
+					exemptionGrauityForm.set("otherValueExemptionGratuity", String.valueOf(exemptionPercentage));
+				}
+			}
+
+			if (infoGratuitySituation.getExemptionValue() != null) {
+				exemptionGrauityForm.set("adHocValueExemptionGratuity", infoGratuitySituation.getExemptionValue());
+			}
+
+			if (infoGratuitySituation.getExemptionType() != null) {
+				exemptionGrauityForm.set("justificationExemptionGratuity", infoGratuitySituation.getExemptionType().name());
+			}
+			exemptionGrauityForm.set("otherJustificationExemptionGratuity", infoGratuitySituation.getExemptionDescription());
+		}
+	}
+
+	private Integer getFromRequest(String parameter, HttpServletRequest request) {
+		Integer parameterCode = null;
+		String parameterCodeString = request.getParameter(parameter);
+		if (parameterCodeString != null) // parameter
+		{
+			try {
+				parameterCode = new Integer(parameterCodeString);
+			} catch (Exception exception) {
+				return null;
+			}
+		} else // request
+		{
+			if (request.getAttribute(parameter) instanceof String) {
+				try {
+					parameterCode = new Integer((String) request.getAttribute(parameter));
+				} catch (Exception exception) {
+					return null;
+				}
+			} else if (request.getAttribute(parameter) instanceof Integer) {
+				parameterCode = (Integer) request.getAttribute(parameter);
+			}
+		}
+		return parameterCode;
+	}
 }

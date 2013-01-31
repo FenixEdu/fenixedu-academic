@@ -6,23 +6,24 @@ package net.sourceforge.fenixedu.applicationTier.Servico.exceptions;
  */
 public class NoChangeMadeServiceException extends FenixServiceException {
 
-    public NoChangeMadeServiceException() {
-    }
+	public NoChangeMadeServiceException() {
+	}
 
-    public NoChangeMadeServiceException(Throwable cause) {
-	super(cause);
-    }
+	public NoChangeMadeServiceException(Throwable cause) {
+		super(cause);
+	}
 
-    public NoChangeMadeServiceException(String message, Throwable cause) {
-	super(message, cause);
-    }
+	public NoChangeMadeServiceException(String message, Throwable cause) {
+		super(message, cause);
+	}
 
-    public String toString() {
-	String result = "[NoChangeMadeServiceException\n";
-	result += "message" + this.getMessage() + "\n";
-	result += "cause" + this.getCause() + "\n";
-	result += "]";
-	return result;
-    }
+	@Override
+	public String toString() {
+		String result = "[NoChangeMadeServiceException\n";
+		result += "message" + this.getMessage() + "\n";
+		result += "cause" + this.getCause() + "\n";
+		result += "]";
+		return result;
+	}
 
 }

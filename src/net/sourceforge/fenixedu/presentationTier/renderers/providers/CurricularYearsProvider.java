@@ -13,23 +13,25 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class CurricularYearsProvider implements DataProvider {
 
-    public Object provide(Object source, Object currentValue) {
+	@Override
+	public Object provide(Object source, Object currentValue) {
 
-	Integer index = null;
+		Integer index = null;
 
-	if (source instanceof HasExecutionDegree) {
-	    HasExecutionDegree bean = (HasExecutionDegree) source;
-	    index = bean.getExecutionDegree() != null ? bean.getExecutionDegree().getDegree().getDegreeType().getYears() : null;
+		if (source instanceof HasExecutionDegree) {
+			HasExecutionDegree bean = (HasExecutionDegree) source;
+			index = bean.getExecutionDegree() != null ? bean.getExecutionDegree().getDegree().getDegreeType().getYears() : null;
+		}
+
+		List<CurricularYear> curricularYearsSet = new ArrayList<CurricularYear>();
+		curricularYearsSet.addAll(RootDomainObject.getInstance().getCurricularYears());
+		Collections.sort(curricularYearsSet, CurricularYear.CURRICULAR_YEAR_COMPARATORY_BY_YEAR);
+		return index == null ? curricularYearsSet : curricularYearsSet.subList(0, index);
 	}
 
-	List<CurricularYear> curricularYearsSet = new ArrayList<CurricularYear>();
-	curricularYearsSet.addAll(RootDomainObject.getInstance().getCurricularYears());
-	Collections.sort(curricularYearsSet, CurricularYear.CURRICULAR_YEAR_COMPARATORY_BY_YEAR);
-	return index == null ? curricularYearsSet : curricularYearsSet.subList(0, index);
-    }
-
-    public Converter getConverter() {
-	return new DomainObjectKeyConverter();
-    }
+	@Override
+	public Converter getConverter() {
+		return new DomainObjectKeyConverter();
+	}
 
 }

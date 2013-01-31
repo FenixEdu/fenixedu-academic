@@ -21,20 +21,21 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class ReadActiveDegreeCurricularPlansByDegreeType extends FenixService {
 
-    @Service
-    public static Collection<InfoDegreeCurricularPlan> run(final DegreeType degreeType) {
+	@Service
+	public static Collection<InfoDegreeCurricularPlan> run(final DegreeType degreeType) {
 
-	List<DegreeCurricularPlan> degreeCurricularPlans = DegreeCurricularPlan.readByDegreeTypeAndState(degreeType,
-		DegreeCurricularPlanState.ACTIVE);
-	return CollectionUtils.collect(degreeCurricularPlans, new Transformer() {
+		List<DegreeCurricularPlan> degreeCurricularPlans =
+				DegreeCurricularPlan.readByDegreeTypeAndState(degreeType, DegreeCurricularPlanState.ACTIVE);
+		return CollectionUtils.collect(degreeCurricularPlans, new Transformer() {
 
-	    public Object transform(Object arg0) {
-		DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) arg0;
-		return InfoDegreeCurricularPlan.newInfoFromDomain(degreeCurricularPlan);
-	    }
+			@Override
+			public Object transform(Object arg0) {
+				DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) arg0;
+				return InfoDegreeCurricularPlan.newInfoFromDomain(degreeCurricularPlan);
+			}
 
-	});
+		});
 
-    }
+	}
 
 }

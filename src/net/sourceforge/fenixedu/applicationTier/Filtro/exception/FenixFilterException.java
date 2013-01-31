@@ -12,33 +12,33 @@ import pt.utl.ist.berserk.logic.filterManager.exceptions.FilterException;
  * 
  */
 abstract public class FenixFilterException extends FilterException {
-    /**
+	/**
      *  
      */
-    public FenixFilterException() {
-	super();
-    }
+	public FenixFilterException() {
+		super();
+	}
 
-    /**
-     * @param message
-     */
-    public FenixFilterException(String message) {
-	super(message);
-    }
+	/**
+	 * @param message
+	 */
+	public FenixFilterException(String message) {
+		super(message);
+	}
 
-    /**
-     * @param message
-     * @param cause
-     */
-    public FenixFilterException(String message, Throwable cause) {
-	super(message, cause);
-    }
+	/**
+	 * @param message
+	 * @param cause
+	 */
+	public FenixFilterException(String message, Throwable cause) {
+		super(message, cause);
+	}
 
-    /**
-     * @param cause
-     */
-    public FenixFilterException(Throwable cause) {
-	super(cause);
-    }
+	/**
+	 * @param cause
+	 */
+	public FenixFilterException(Throwable cause) {
+		super(cause);
+	}
 
 }

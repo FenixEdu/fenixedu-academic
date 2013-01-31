@@ -29,83 +29,87 @@ import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
 
 @Mapping(path = "/qucCoordinatorsStatus", module = "pedagogicalCouncil")
-@Forwards({ @Forward(name = "viewQucCoordinatorsState", path = "/pedagogicalCouncil/inquiries/viewQucCoordinatorsStatus.jsp", tileProperties = @Tile(title = "private.pedagogiccouncil.control.coordinatorsstatusresponse")) })
+@Forwards({ @Forward(
+		name = "viewQucCoordinatorsState",
+		path = "/pedagogicalCouncil/inquiries/viewQucCoordinatorsStatus.jsp",
+		tileProperties = @Tile(title = "private.pedagogiccouncil.control.coordinatorsstatusresponse")) })
 public class ViewQucCoordinatorsStatus extends FenixDispatchAction {
 
-    public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
+	public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
 
-	final CoordinatorInquiryTemplate coordinatorInquiryTemplate = CoordinatorInquiryTemplate
-		.getTemplateByExecutionPeriod(ExecutionSemester.readActualExecutionSemester().getPreviousExecutionPeriod());
-	if (coordinatorInquiryTemplate != null) {
-	    request.setAttribute("coordinatorInquiryOID", coordinatorInquiryTemplate.getExternalId());
-	}
-	return mapping.findForward("viewQucCoordinatorsState");
-    }
-
-    public ActionForward dowloadReport(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-
-	final CoordinatorInquiryTemplate coordinatorInquiryTemplate = AbstractDomainObject.fromExternalId(getFromRequest(request,
-		"coordinatorInquiryOID").toString());
-	final ExecutionSemester executionPeriod = coordinatorInquiryTemplate.getExecutionPeriod();
-
-	final Set<Coordinator> coordinatorsSet = new HashSet<Coordinator>();
-	for (ExecutionDegree executionDegree : executionPeriod.getExecutionYear().getExecutionDegrees()) {
-	    if (executionDegree.hasAnyInquiryResults()) {
-		for (Coordinator coordinator : executionDegree.getCoordinatorsListSet()) {
-		    if (coordinator.getResponsible()
-		    // há casos em que a secretária está não só como
-		    // coordenadora de curso mas também como responsável...
-			    && coordinator.getPerson().hasTeacher()) {
-			InquiryCoordinatorAnswer inquiryCoordinatorAnswer = null;
-			if (coordinatorInquiryTemplate.getShared()) {
-			    inquiryCoordinatorAnswer = executionDegree.getInquiryCoordinationAnswers(executionPeriod);
-			} else {
-			    inquiryCoordinatorAnswer = coordinator.getInquiryCoordinatorAnswer(executionPeriod);
-			}
-			if (inquiryCoordinatorAnswer == null
-				|| inquiryCoordinatorAnswer.hasRequiredQuestionsToAnswer(coordinatorInquiryTemplate)) {
-			    coordinatorsSet.add(coordinator);
-			}
-		    }
+		final CoordinatorInquiryTemplate coordinatorInquiryTemplate =
+				CoordinatorInquiryTemplate.getTemplateByExecutionPeriod(ExecutionSemester.readActualExecutionSemester()
+						.getPreviousExecutionPeriod());
+		if (coordinatorInquiryTemplate != null) {
+			request.setAttribute("coordinatorInquiryOID", coordinatorInquiryTemplate.getExternalId());
 		}
-	    }
+		return mapping.findForward("viewQucCoordinatorsState");
 	}
 
-	Spreadsheet spreadsheet = createReport(coordinatorsSet);
-	StringBuilder filename = new StringBuilder("Coordenadores_em_falta_");
-	filename.append(new DateTime().toString("yyyy_MM_dd_HH_mm"));
+	public ActionForward dowloadReport(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
 
-	response.setContentType("application/vnd.ms-excel");
-	response.setHeader("Content-disposition", "attachment; filename=" + filename + ".xls");
+		final CoordinatorInquiryTemplate coordinatorInquiryTemplate =
+				AbstractDomainObject.fromExternalId(getFromRequest(request, "coordinatorInquiryOID").toString());
+		final ExecutionSemester executionPeriod = coordinatorInquiryTemplate.getExecutionPeriod();
 
-	OutputStream outputStream = response.getOutputStream();
-	spreadsheet.exportToXLSSheet(outputStream);
-	outputStream.flush();
-	outputStream.close();
-	return null;
-    }
+		final Set<Coordinator> coordinatorsSet = new HashSet<Coordinator>();
+		for (ExecutionDegree executionDegree : executionPeriod.getExecutionYear().getExecutionDegrees()) {
+			if (executionDegree.hasAnyInquiryResults()) {
+				for (Coordinator coordinator : executionDegree.getCoordinatorsListSet()) {
+					if (coordinator.getResponsible()
+					// há casos em que a secretária está não só como
+					// coordenadora de curso mas também como responsável...
+							&& coordinator.getPerson().hasTeacher()) {
+						InquiryCoordinatorAnswer inquiryCoordinatorAnswer = null;
+						if (coordinatorInquiryTemplate.getShared()) {
+							inquiryCoordinatorAnswer = executionDegree.getInquiryCoordinationAnswers(executionPeriod);
+						} else {
+							inquiryCoordinatorAnswer = coordinator.getInquiryCoordinatorAnswer(executionPeriod);
+						}
+						if (inquiryCoordinatorAnswer == null
+								|| inquiryCoordinatorAnswer.hasRequiredQuestionsToAnswer(coordinatorInquiryTemplate)) {
+							coordinatorsSet.add(coordinator);
+						}
+					}
+				}
+			}
+		}
 
-    private Spreadsheet createReport(Set<Coordinator> coordinatorsSet) throws IOException {
-	Spreadsheet spreadsheet = new Spreadsheet("Coordenadores em falta");
-	spreadsheet.setHeader("Tipo Curso");
-	spreadsheet.setHeader("Nome Curso");
-	spreadsheet.setHeader("Coordenador");
-	spreadsheet.setHeader("ISTid");
-	spreadsheet.setHeader("Telefone");
-	spreadsheet.setHeader("Email");
+		Spreadsheet spreadsheet = createReport(coordinatorsSet);
+		StringBuilder filename = new StringBuilder("Coordenadores_em_falta_");
+		filename.append(new DateTime().toString("yyyy_MM_dd_HH_mm"));
 
-	for (Coordinator coordinator : coordinatorsSet) {
-	    Row row = spreadsheet.addRow();
-	    row.setCell(coordinator.getExecutionDegree().getDegreeType().getFilteredName());
-	    row.setCell(coordinator.getExecutionDegree().getDegree().getNameI18N().toString());
-	    row.setCell(coordinator.getPerson().getName());
-	    row.setCell(coordinator.getPerson().getUsername());
-	    row.setCell(coordinator.getPerson().getDefaultMobilePhoneNumber());
-	    row.setCell(coordinator.getPerson().getDefaultEmailAddressValue());
+		response.setContentType("application/vnd.ms-excel");
+		response.setHeader("Content-disposition", "attachment; filename=" + filename + ".xls");
+
+		OutputStream outputStream = response.getOutputStream();
+		spreadsheet.exportToXLSSheet(outputStream);
+		outputStream.flush();
+		outputStream.close();
+		return null;
 	}
 
-	return spreadsheet;
-    }
+	private Spreadsheet createReport(Set<Coordinator> coordinatorsSet) throws IOException {
+		Spreadsheet spreadsheet = new Spreadsheet("Coordenadores em falta");
+		spreadsheet.setHeader("Tipo Curso");
+		spreadsheet.setHeader("Nome Curso");
+		spreadsheet.setHeader("Coordenador");
+		spreadsheet.setHeader("ISTid");
+		spreadsheet.setHeader("Telefone");
+		spreadsheet.setHeader("Email");
+
+		for (Coordinator coordinator : coordinatorsSet) {
+			Row row = spreadsheet.addRow();
+			row.setCell(coordinator.getExecutionDegree().getDegreeType().getFilteredName());
+			row.setCell(coordinator.getExecutionDegree().getDegree().getNameI18N().toString());
+			row.setCell(coordinator.getPerson().getName());
+			row.setCell(coordinator.getPerson().getUsername());
+			row.setCell(coordinator.getPerson().getDefaultMobilePhoneNumber());
+			row.setCell(coordinator.getPerson().getDefaultEmailAddressValue());
+		}
+
+		return spreadsheet;
+	}
 }

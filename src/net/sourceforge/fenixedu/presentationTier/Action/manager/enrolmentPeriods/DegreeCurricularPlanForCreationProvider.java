@@ -18,58 +18,58 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class DegreeCurricularPlanForCreationProvider implements DataProvider {
 
-    @Override
-    public Converter getConverter() {
-	return new DomainObjectKeyArrayConverter();
-    }
-
-    @Override
-    public Object provide(Object source, Object currentValue) {
-
-	EnrolmentPeriodManagementBean bean = (EnrolmentPeriodManagementBean) source;
-
-	List<DegreeCurricularPlan> activeDegreeCurricularPlans = readActiveDegreeCurricularPlanWithoutPeriod(bean);
-
-	return activeDegreeCurricularPlans;
-    }
-
-    private List<DegreeCurricularPlan> readActiveDegreeCurricularPlanWithoutPeriod(final EnrolmentPeriodManagementBean bean) {
-
-	DegreeType degreeType = bean.getDegreeType();
-	EnrolmentPeriodType type = bean.getType();
-
-	if (degreeType == null || type == null) {
-	    return new ArrayList<DegreeCurricularPlan>();
+	@Override
+	public Converter getConverter() {
+		return new DomainObjectKeyArrayConverter();
 	}
 
-	ExecutionSemester executionSemester = bean.getExecutionSemester();
-	Collection<ExecutionDegree> executionDegrees = executionSemester.getExecutionYear().getExecutionDegreesByType(degreeType);
+	@Override
+	public Object provide(Object source, Object currentValue) {
 
-	List<DegreeCurricularPlan> result = new ArrayList<DegreeCurricularPlan>();
+		EnrolmentPeriodManagementBean bean = (EnrolmentPeriodManagementBean) source;
 
-	if (degreeType.isBolonhaType()) {
+		List<DegreeCurricularPlan> activeDegreeCurricularPlans = readActiveDegreeCurricularPlanWithoutPeriod(bean);
 
-	    for (ExecutionDegree executionDegree : executionDegrees) {
-		DegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
-
-		List<EnrolmentPeriod> enrolmentPeriods = degreeCurricularPlan.getEnrolmentPeriods();
-
-		boolean hasPeriod = false;
-		for (EnrolmentPeriod enrolmentPeriod : enrolmentPeriods) {
-		    if (type.is(enrolmentPeriod) && enrolmentPeriod.getExecutionPeriod() == executionSemester) {
-			hasPeriod = true;
-		    }
-		}
-
-		if (!hasPeriod) {
-		    result.add(degreeCurricularPlan);
-		}
-	    }
-	} else {
-	    result.addAll(DegreeCurricularPlan.readByDegreeTypeAndState(degreeType, DegreeCurricularPlanState.PAST));
+		return activeDegreeCurricularPlans;
 	}
 
-	return result;
-    }
+	private List<DegreeCurricularPlan> readActiveDegreeCurricularPlanWithoutPeriod(final EnrolmentPeriodManagementBean bean) {
+
+		DegreeType degreeType = bean.getDegreeType();
+		EnrolmentPeriodType type = bean.getType();
+
+		if (degreeType == null || type == null) {
+			return new ArrayList<DegreeCurricularPlan>();
+		}
+
+		ExecutionSemester executionSemester = bean.getExecutionSemester();
+		Collection<ExecutionDegree> executionDegrees = executionSemester.getExecutionYear().getExecutionDegreesByType(degreeType);
+
+		List<DegreeCurricularPlan> result = new ArrayList<DegreeCurricularPlan>();
+
+		if (degreeType.isBolonhaType()) {
+
+			for (ExecutionDegree executionDegree : executionDegrees) {
+				DegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
+
+				List<EnrolmentPeriod> enrolmentPeriods = degreeCurricularPlan.getEnrolmentPeriods();
+
+				boolean hasPeriod = false;
+				for (EnrolmentPeriod enrolmentPeriod : enrolmentPeriods) {
+					if (type.is(enrolmentPeriod) && enrolmentPeriod.getExecutionPeriod() == executionSemester) {
+						hasPeriod = true;
+					}
+				}
+
+				if (!hasPeriod) {
+					result.add(degreeCurricularPlan);
+				}
+			}
+		} else {
+			result.addAll(DegreeCurricularPlan.readByDegreeTypeAndState(degreeType, DegreeCurricularPlanState.PAST));
+		}
+
+		return result;
+	}
 
 }

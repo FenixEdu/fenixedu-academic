@@ -17,15 +17,15 @@ import net.sourceforge.fenixedu.domain.teacher.ExternalActivity;
  */
 public class EditExternalActivity extends FenixService {
 
-    public void run(Integer externalActivityId, InfoExternalActivity infoExternalActivity) throws FenixServiceException {
-	ExternalActivity externalActivity = rootDomainObject.readExternalActivityByOID(externalActivityId);
-	// If it doesn't exist in the database, a new one has to be created
-	if (externalActivity == null) {
-	    Teacher teacher = rootDomainObject.readTeacherByOID(infoExternalActivity.getInfoTeacher().getIdInternal());
-	    externalActivity = new ExternalActivity(teacher, infoExternalActivity);
+	public void run(Integer externalActivityId, InfoExternalActivity infoExternalActivity) throws FenixServiceException {
+		ExternalActivity externalActivity = rootDomainObject.readExternalActivityByOID(externalActivityId);
+		// If it doesn't exist in the database, a new one has to be created
+		if (externalActivity == null) {
+			Teacher teacher = rootDomainObject.readTeacherByOID(infoExternalActivity.getInfoTeacher().getIdInternal());
+			externalActivity = new ExternalActivity(teacher, infoExternalActivity);
 
-	} else {
-	    externalActivity.edit(infoExternalActivity);
+		} else {
+			externalActivity.edit(infoExternalActivity);
+		}
 	}
-    }
 }

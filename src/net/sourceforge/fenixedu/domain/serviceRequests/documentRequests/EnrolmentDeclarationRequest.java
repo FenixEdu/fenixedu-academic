@@ -9,57 +9,59 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 public class EnrolmentDeclarationRequest extends EnrolmentDeclarationRequest_Base {
 
-    private static final int MAX_FREE_DECLARATIONS_PER_EXECUTION_YEAR = 4;
+	private static final int MAX_FREE_DECLARATIONS_PER_EXECUTION_YEAR = 4;
 
-    protected EnrolmentDeclarationRequest() {
-	super();
-    }
-
-    public EnrolmentDeclarationRequest(final DocumentRequestCreateBean bean) {
-	this();
-	super.init(bean);
-
-	checkRulesToCreate(bean);
-    }
-
-    private void checkRulesToCreate(final DocumentRequestCreateBean bean) {
-	final ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
-	if (!bean.getRegistration().hasAnyEnrolmentsIn(currentExecutionYear)) {
-	    throw new DomainException("EnrolmentDeclarationRequest.no.enrolments.for.registration.in.current.executionYear");
+	protected EnrolmentDeclarationRequest() {
+		super();
 	}
-    }
 
-    @Override
-    final public DocumentRequestType getDocumentRequestType() {
-	return DocumentRequestType.ENROLMENT_DECLARATION;
-    }
+	public EnrolmentDeclarationRequest(final DocumentRequestCreateBean bean) {
+		this();
+		super.init(bean);
 
-    @Override
-    final public String getDocumentTemplateKey() {
-	return getClass().getName();
-    }
+		checkRulesToCreate(bean);
+	}
 
-    @Override
-    final public EventType getEventType() {
-	return EventType.ENROLMENT_DECLARATION_REQUEST;
-    }
+	private void checkRulesToCreate(final DocumentRequestCreateBean bean) {
+		final ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
+		if (!bean.getRegistration().hasAnyEnrolmentsIn(currentExecutionYear)) {
+			throw new DomainException("EnrolmentDeclarationRequest.no.enrolments.for.registration.in.current.executionYear");
+		}
+	}
 
-    @Override
-    public boolean hasPersonalInfo() {
-	return true;
-    }
+	@Override
+	final public DocumentRequestType getDocumentRequestType() {
+		return DocumentRequestType.ENROLMENT_DECLARATION;
+	}
 
-    @Override
-    protected boolean hasFreeDeclarationRequests() {
-	final ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
+	@Override
+	final public String getDocumentTemplateKey() {
+		return getClass().getName();
+	}
 
-	final Set<DocumentRequest> schoolRegistrationDeclarations = getRegistration().getSucessfullyFinishedDocumentRequestsBy(
-		currentExecutionYear, DocumentRequestType.SCHOOL_REGISTRATION_DECLARATION, false);
+	@Override
+	final public EventType getEventType() {
+		return EventType.ENROLMENT_DECLARATION_REQUEST;
+	}
 
-	final Set<DocumentRequest> enrolmentDeclarations = getRegistration().getSucessfullyFinishedDocumentRequestsBy(
-		currentExecutionYear, DocumentRequestType.ENROLMENT_DECLARATION, false);
+	@Override
+	public boolean hasPersonalInfo() {
+		return true;
+	}
 
-	return ((schoolRegistrationDeclarations.size() + enrolmentDeclarations.size()) < MAX_FREE_DECLARATIONS_PER_EXECUTION_YEAR);
-    }
+	@Override
+	protected boolean hasFreeDeclarationRequests() {
+		final ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
+
+		final Set<DocumentRequest> schoolRegistrationDeclarations =
+				getRegistration().getSucessfullyFinishedDocumentRequestsBy(currentExecutionYear,
+						DocumentRequestType.SCHOOL_REGISTRATION_DECLARATION, false);
+
+		final Set<DocumentRequest> enrolmentDeclarations =
+				getRegistration().getSucessfullyFinishedDocumentRequestsBy(currentExecutionYear,
+						DocumentRequestType.ENROLMENT_DECLARATION, false);
+
+		return ((schoolRegistrationDeclarations.size() + enrolmentDeclarations.size()) < MAX_FREE_DECLARATIONS_PER_EXECUTION_YEAR);
+	}
 
 }

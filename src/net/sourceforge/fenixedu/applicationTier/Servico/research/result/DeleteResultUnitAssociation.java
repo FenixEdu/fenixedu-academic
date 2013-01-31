@@ -8,11 +8,11 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class DeleteResultUnitAssociation extends FenixService {
 
-    @Service
-    public static void run(Integer oid) {
-	final ResultUnitAssociation association = ResultUnitAssociation.readByOid(oid);
-	final ResearchResult result = association.getResult();
-	result.removeUnitAssociation(association);
-	ResearchResultMetaDataManager.updateMetaDataInStorageFor(result);
-    }
+	@Service
+	public static void run(Integer oid) {
+		final ResultUnitAssociation association = ResultUnitAssociation.readByOid(oid);
+		final ResearchResult result = association.getResult();
+		result.removeUnitAssociation(association);
+		ResearchResultMetaDataManager.updateMetaDataInStorageFor(result);
+	}
 }

@@ -35,12 +35,6 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
  * @author lmac1
@@ -48,64 +42,72 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
 @Mapping(module = "manager", path = "/readCurricularCourse", input = "/readDegreeCurricularPlan.do", scope = "session")
 @Forwards(value = {
 		@Forward(name = "readDegreeCurricularPlan", path = "/readDegreeCurricularPlan.do"),
-		@Forward(name = "viewCurricularCourse", path = "/manager/readCurricularCourse_bd.jsp", tileProperties = @Tile(navLocal = "/manager/degreeCurricularPlanNavLocalManager.jsp")) })
-@Exceptions(value = { @ExceptionHandling(type = net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException.class, key = "resources.Action.exceptions.NonExistingActionException", handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class, scope = "request") })
+		@Forward(name = "viewCurricularCourse", path = "/manager/readCurricularCourse_bd.jsp", tileProperties = @Tile(
+				navLocal = "/manager/degreeCurricularPlanNavLocalManager.jsp")) })
+@Exceptions(value = { @ExceptionHandling(
+		type = net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException.class,
+		key = "resources.Action.exceptions.NonExistingActionException",
+		handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class,
+		scope = "request") })
 public class ReadCurricularCourseAction extends FenixAction {
 
-    @Override
-    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-	    throws FenixActionException, FenixFilterException {
+	@Override
+	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+			throws FenixActionException, FenixFilterException {
 
-	IUserView userView = UserView.getUser();
-	Integer curricularCourseId = new Integer(request.getParameter("curricularCourseId"));
+		IUserView userView = UserView.getUser();
+		Integer curricularCourseId = new Integer(request.getParameter("curricularCourseId"));
 
-	request.setAttribute("degreeId", request.getParameter("degreeId"));
-	request.setAttribute("degreeCurricularPlanId", request.getParameter("degreeCurricularPlanId"));
-	request.setAttribute("curricularCourseId", curricularCourseId);
+		request.setAttribute("degreeId", request.getParameter("degreeId"));
+		request.setAttribute("degreeCurricularPlanId", request.getParameter("degreeCurricularPlanId"));
+		request.setAttribute("curricularCourseId", curricularCourseId);
 
-	InfoCurricularCourse infoCurricularCourse = null;
+		InfoCurricularCourse infoCurricularCourse = null;
 
-	try {
-	    infoCurricularCourse = (InfoCurricularCourse) ServiceUtils.executeService("ReadCurricularCourse",
-		    new Object[] { curricularCourseId });
+		try {
+			infoCurricularCourse =
+					(InfoCurricularCourse) ServiceUtils.executeService("ReadCurricularCourse",
+							new Object[] { curricularCourseId });
 
-	} catch (NonExistingServiceException e) {
-	    throw new NonExistingActionException("message.nonExistingCurricularCourse", "", e);
-	} catch (FenixServiceException fenixServiceException) {
-	    throw new FenixActionException(fenixServiceException.getMessage());
+		} catch (NonExistingServiceException e) {
+			throw new NonExistingActionException("message.nonExistingCurricularCourse", "", e);
+		} catch (FenixServiceException fenixServiceException) {
+			throw new FenixActionException(fenixServiceException.getMessage());
+		}
+
+		// in case the curricular course really exists
+		List executionCourses = null;
+		try {
+			executionCourses = ReadExecutionCoursesByCurricularCourse.run(curricularCourseId);
+		} catch (FenixServiceException e) {
+			throw new FenixActionException(e);
+		}
+		if (executionCourses != null) {
+			Collections.sort(executionCourses, new BeanComparator("nome"));
+		}
+
+		List curricularCourseScopes = new ArrayList();
+		try {
+			curricularCourseScopes = ReadInterminatedCurricularCourseScopes.run(curricularCourseId);
+
+		} catch (FenixServiceException e) {
+			throw new FenixActionException(e);
+		}
+		if (curricularCourseScopes != null) {
+			ComparatorChain comparatorChain = new ComparatorChain();
+			comparatorChain.addComparator(new BeanComparator("infoCurricularSemester.infoCurricularYear.year"));
+			comparatorChain.addComparator(new BeanComparator("infoCurricularSemester.semester"));
+			Collections.sort(curricularCourseScopes, comparatorChain);
+		}
+
+		if (infoCurricularCourse.getBasic().booleanValue()) {
+			request.setAttribute("basic", "");
+		}
+
+		request.setAttribute("executionCoursesList", executionCourses);
+
+		request.setAttribute("infoCurricularCourse", infoCurricularCourse);
+		request.setAttribute("curricularCourseScopesList", curricularCourseScopes);
+		return mapping.findForward("viewCurricularCourse");
 	}
-
-	// in case the curricular course really exists
-	List executionCourses = null;
-	try {
-	    executionCourses = ReadExecutionCoursesByCurricularCourse.run(curricularCourseId);
-	} catch (FenixServiceException e) {
-	    throw new FenixActionException(e);
-	}
-	if (executionCourses != null)
-	    Collections.sort(executionCourses, new BeanComparator("nome"));
-
-	List curricularCourseScopes = new ArrayList();
-	try {
-	    curricularCourseScopes = (List) ReadInterminatedCurricularCourseScopes.run(curricularCourseId);
-
-	} catch (FenixServiceException e) {
-	    throw new FenixActionException(e);
-	}
-	if (curricularCourseScopes != null) {
-	    ComparatorChain comparatorChain = new ComparatorChain();
-	    comparatorChain.addComparator(new BeanComparator("infoCurricularSemester.infoCurricularYear.year"));
-	    comparatorChain.addComparator(new BeanComparator("infoCurricularSemester.semester"));
-	    Collections.sort(curricularCourseScopes, comparatorChain);
-	}
-
-	if (infoCurricularCourse.getBasic().booleanValue())
-	    request.setAttribute("basic", "");
-
-	request.setAttribute("executionCoursesList", executionCourses);
-
-	request.setAttribute("infoCurricularCourse", infoCurricularCourse);
-	request.setAttribute("curricularCourseScopesList", curricularCourseScopes);
-	return mapping.findForward("viewCurricularCourse");
-    }
 }

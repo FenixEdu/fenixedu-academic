@@ -17,16 +17,17 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class InsertBranch extends FenixService {
 
-    @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
-    @Service
-    public static void run(InfoBranch infoBranch) throws NonExistingServiceException {
-	final Integer degreeCurricularPlanId = infoBranch.getInfoDegreeCurricularPlan().getIdInternal();
-	final DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanId);
+	@Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
+	@Service
+	public static void run(InfoBranch infoBranch) throws NonExistingServiceException {
+		final Integer degreeCurricularPlanId = infoBranch.getInfoDegreeCurricularPlan().getIdInternal();
+		final DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanId);
 
-	if (degreeCurricularPlan == null)
-	    throw new NonExistingServiceException();
+		if (degreeCurricularPlan == null) {
+			throw new NonExistingServiceException();
+		}
 
-	new Branch(infoBranch.getName(), infoBranch.getNameEn(), infoBranch.getCode(), degreeCurricularPlan);
-    }
+		new Branch(infoBranch.getName(), infoBranch.getNameEn(), infoBranch.getCode(), degreeCurricularPlan);
+	}
 
 }

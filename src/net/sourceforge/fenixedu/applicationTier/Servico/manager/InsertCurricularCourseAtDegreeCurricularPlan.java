@@ -18,85 +18,88 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class InsertCurricularCourseAtDegreeCurricularPlan extends FenixService {
 
-    @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
-    @Service
-    public static void run(InfoCurricularCourseEditor infoCurricularCourse) throws FenixServiceException {
+	@Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
+	@Service
+	public static void run(InfoCurricularCourseEditor infoCurricularCourse) throws FenixServiceException {
 
-	Integer degreeCurricularPlanId = infoCurricularCourse.getInfoDegreeCurricularPlan().getIdInternal();
-	DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanId);
-	if (degreeCurricularPlan == null)
-	    throw new NonExistingServiceException();
+		Integer degreeCurricularPlanId = infoCurricularCourse.getInfoDegreeCurricularPlan().getIdInternal();
+		DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanId);
+		if (degreeCurricularPlan == null) {
+			throw new NonExistingServiceException();
+		}
 
-	String name = infoCurricularCourse.getName();
-	String nameEn = infoCurricularCourse.getNameEn();
-	String code = infoCurricularCourse.getCode();
-	final String acronym = infoCurricularCourse.getAcronym();
+		String name = infoCurricularCourse.getName();
+		String nameEn = infoCurricularCourse.getNameEn();
+		String code = infoCurricularCourse.getCode();
+		final String acronym = infoCurricularCourse.getAcronym();
 
-	List curricularCourses = null;
-	curricularCourses = degreeCurricularPlan.getCurricularCourses();
+		List curricularCourses = null;
+		curricularCourses = degreeCurricularPlan.getCurricularCourses();
 
-	CurricularCourse cCourse = (CurricularCourse) CollectionUtils.find(curricularCourses, new Predicate() {
+		CurricularCourse cCourse = (CurricularCourse) CollectionUtils.find(curricularCourses, new Predicate() {
 
-	    @Override
-	    public boolean evaluate(Object arg0) {
-		CurricularCourse curricularCourse = (CurricularCourse) arg0;
-		if (acronym.equalsIgnoreCase(curricularCourse.getAcronym()))
-		    return true;
-		return false;
-	    }
-	});
+			@Override
+			public boolean evaluate(Object arg0) {
+				CurricularCourse curricularCourse = (CurricularCourse) arg0;
+				if (acronym.equalsIgnoreCase(curricularCourse.getAcronym())) {
+					return true;
+				}
+				return false;
+			}
+		});
 
-	if (cCourse == null) {
-	    CurricularCourse curricularCourse = degreeCurricularPlan.createCurricularCourse(name, code, infoCurricularCourse
-		    .getAcronym(), infoCurricularCourse.getEnrollmentAllowed(), CurricularStage.OLD);
-	    curricularCourse.setBasic(infoCurricularCourse.getBasic());
-	    curricularCourse.setMandatory(infoCurricularCourse.getMandatory());
-	    curricularCourse.setNameEn(nameEn);
-	    curricularCourse.setType(infoCurricularCourse.getType());
-	    curricularCourse.setTheoreticalHours(infoCurricularCourse.getTheoreticalHours());
-	    curricularCourse.setTheoPratHours(infoCurricularCourse.getTheoPratHours());
-	    curricularCourse.setPraticalHours(infoCurricularCourse.getPraticalHours());
-	    curricularCourse.setLabHours(infoCurricularCourse.getLabHours());
-	    curricularCourse.setMaximumValueForAcumulatedEnrollments(infoCurricularCourse
-		    .getMaximumValueForAcumulatedEnrollments());
-	    curricularCourse.setMinimumValueForAcumulatedEnrollments(infoCurricularCourse
-		    .getMinimumValueForAcumulatedEnrollments());
-	    curricularCourse.setCredits(infoCurricularCourse.getCredits());
-	    curricularCourse.setEctsCredits(infoCurricularCourse.getEctsCredits());
-	    curricularCourse.setEnrollmentWeigth(infoCurricularCourse.getEnrollmentWeigth());
-	    curricularCourse.setWeigth(infoCurricularCourse.getWeigth());
-	    curricularCourse.setMandatoryEnrollment(infoCurricularCourse.getMandatoryEnrollment());
-	    curricularCourse.setGradeScale(infoCurricularCourse.getGradeScale());
-	} else {
-	    throw new ExistingAcronymException();
-	}
-    }
-
-    public static class ExistingAcronymException extends FenixServiceException {
-
-	public ExistingAcronymException() {
+		if (cCourse == null) {
+			CurricularCourse curricularCourse =
+					degreeCurricularPlan.createCurricularCourse(name, code, infoCurricularCourse.getAcronym(),
+							infoCurricularCourse.getEnrollmentAllowed(), CurricularStage.OLD);
+			curricularCourse.setBasic(infoCurricularCourse.getBasic());
+			curricularCourse.setMandatory(infoCurricularCourse.getMandatory());
+			curricularCourse.setNameEn(nameEn);
+			curricularCourse.setType(infoCurricularCourse.getType());
+			curricularCourse.setTheoreticalHours(infoCurricularCourse.getTheoreticalHours());
+			curricularCourse.setTheoPratHours(infoCurricularCourse.getTheoPratHours());
+			curricularCourse.setPraticalHours(infoCurricularCourse.getPraticalHours());
+			curricularCourse.setLabHours(infoCurricularCourse.getLabHours());
+			curricularCourse.setMaximumValueForAcumulatedEnrollments(infoCurricularCourse
+					.getMaximumValueForAcumulatedEnrollments());
+			curricularCourse.setMinimumValueForAcumulatedEnrollments(infoCurricularCourse
+					.getMinimumValueForAcumulatedEnrollments());
+			curricularCourse.setCredits(infoCurricularCourse.getCredits());
+			curricularCourse.setEctsCredits(infoCurricularCourse.getEctsCredits());
+			curricularCourse.setEnrollmentWeigth(infoCurricularCourse.getEnrollmentWeigth());
+			curricularCourse.setWeigth(infoCurricularCourse.getWeigth());
+			curricularCourse.setMandatoryEnrollment(infoCurricularCourse.getMandatoryEnrollment());
+			curricularCourse.setGradeScale(infoCurricularCourse.getGradeScale());
+		} else {
+			throw new ExistingAcronymException();
+		}
 	}
 
-	public ExistingAcronymException(String message) {
-	    super(message);
-	}
+	public static class ExistingAcronymException extends FenixServiceException {
 
-	public ExistingAcronymException(Throwable cause) {
-	    super(cause);
-	}
+		public ExistingAcronymException() {
+		}
 
-	public ExistingAcronymException(String message, Throwable cause) {
-	    super(message, cause);
-	}
+		public ExistingAcronymException(String message) {
+			super(message);
+		}
 
-	@Override
-	public String toString() {
-	    String result = "[ExistingAcronymException\n";
-	    result += "message" + this.getMessage() + "\n";
-	    result += "cause" + this.getCause() + "\n";
-	    result += "]";
-	    return result;
+		public ExistingAcronymException(Throwable cause) {
+			super(cause);
+		}
+
+		public ExistingAcronymException(String message, Throwable cause) {
+			super(message, cause);
+		}
+
+		@Override
+		public String toString() {
+			String result = "[ExistingAcronymException\n";
+			result += "message" + this.getMessage() + "\n";
+			result += "cause" + this.getCause() + "\n";
+			result += "]";
+			return result;
+		}
 	}
-    }
 
 }

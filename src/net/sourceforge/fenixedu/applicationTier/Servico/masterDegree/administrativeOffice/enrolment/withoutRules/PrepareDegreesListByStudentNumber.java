@@ -11,22 +11,22 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 
 public class PrepareDegreesListByStudentNumber extends FenixService {
 
-    // student and degreeType used by filter
-    public List<ExecutionDegree> run(final Registration registration, final DegreeType degreeType,
-	    final ExecutionSemester executionSemester) throws FenixServiceException {
+	// student and degreeType used by filter
+	public List<ExecutionDegree> run(final Registration registration, final DegreeType degreeType,
+			final ExecutionSemester executionSemester) throws FenixServiceException {
 
-	if (registration.getDegreeType().equals(DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA)) {
-	    return ExecutionDegree.getAllByExecutionYearAndDegreeType(executionSemester.getExecutionYear(),
-		    DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA);
+		if (registration.getDegreeType().equals(DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA)) {
+			return ExecutionDegree.getAllByExecutionYearAndDegreeType(executionSemester.getExecutionYear(),
+					DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA);
+		}
+
+		final List<ExecutionDegree> executionDegrees =
+				(degreeType == null) ? ExecutionDegree.getAllByExecutionYear(executionSemester.getExecutionYear()) : ExecutionDegree
+						.getAllByExecutionYearAndDegreeType(executionSemester.getExecutionYear(), degreeType);
+
+		if (executionDegrees.isEmpty()) {
+			throw new FenixServiceException("errors.impossible.operation");
+		}
+		return executionDegrees;
 	}
-
-	final List<ExecutionDegree> executionDegrees = (degreeType == null) ? ExecutionDegree
-		.getAllByExecutionYear(executionSemester.getExecutionYear()) : ExecutionDegree
-		.getAllByExecutionYearAndDegreeType(executionSemester.getExecutionYear(), degreeType);
-
-	if (executionDegrees.isEmpty()) {
-	    throw new FenixServiceException("errors.impossible.operation");
-	}
-	return executionDegrees;
-    }
 }

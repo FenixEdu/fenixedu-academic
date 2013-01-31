@@ -19,346 +19,346 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class GanttDiagram {
 
-    public final static Comparator<Interval> INTERVAL_COMPARATOR_BY_BEGIN = new Comparator<Interval>() {
+	public final static Comparator<Interval> INTERVAL_COMPARATOR_BY_BEGIN = new Comparator<Interval>() {
 
-	@Override
-	public int compare(Interval o1, Interval o2) {
-	    return o1.getStart().compareTo(o2.getStart());
-	}
-
-    };
-    public final static Comparator<Interval> INTERVAL_COMPARATOR_BY_END = new Comparator<Interval>() {
-
-	@Override
-	public int compare(Interval o1, Interval o2) {
-	    return o1.getEnd().compareTo(o2.getEnd());
-	}
-
-    };
-
-    private Locale locale;
-
-    private List<? extends GanttDiagramEvent> events;
-
-    private ViewType viewType;
-
-    private DateTime firstInstant, lastInstant;
-
-    private Map<Integer, Integer> yearsView;
-
-    private Map<YearMonthDay, Integer> monthsView;
-
-    private List<DateTime> months, days;
-
-    public static GanttDiagram getNewTotalGanttDiagram(List<? extends GanttDiagramEvent> events_) throws InvalidArgumentException {
-	return new GanttDiagram(events_, ViewType.TOTAL);
-    }
-
-    public static GanttDiagram getNewTotalGanttDiagram(List<? extends GanttDiagramEvent> events_, YearMonthDay begin,
-	    YearMonthDay end) throws InvalidArgumentException {
-	return new GanttDiagram(events_, ViewType.TOTAL, begin, end);
-    }
-
-    public static GanttDiagram getNewWeeklyGanttDiagram(List<? extends GanttDiagramEvent> events_, YearMonthDay begin)
-	    throws InvalidArgumentException {
-	return new GanttDiagram(events_, ViewType.WEEKLY, begin);
-    }
-
-    public static GanttDiagram getNewDailyGanttDiagram(List<? extends GanttDiagramEvent> events_, YearMonthDay begin)
-	    throws InvalidArgumentException {
-	return new GanttDiagram(events_, ViewType.DAILY, begin);
-    }
-
-    public static GanttDiagram getNewMonthlyGanttDiagram(List<? extends GanttDiagramEvent> events_, YearMonthDay begin)
-	    throws InvalidArgumentException {
-	return new GanttDiagram(events_, ViewType.MONTHLY, begin);
-    }
-
-    public static GanttDiagram getNewMonthlyTotalGanttDiagram(List<? extends GanttDiagramEvent> events_, YearMonthDay begin)
-	    throws InvalidArgumentException {
-	return new GanttDiagram(events_, ViewType.MONTHLY_TOTAL, begin);
-    }
-
-    public static GanttDiagram getNewYearDailyGanttDiagram(List<? extends GanttDiagramEvent> events_, YearMonthDay begin)
-	    throws InvalidArgumentException {
-	return new GanttDiagram(events_, ViewType.YEAR_DAILY, begin);
-    }
-
-    private GanttDiagram(List<? extends GanttDiagramEvent> events_, ViewType type) throws InvalidArgumentException {
-	setViewType(type);
-	setEvents(events_);
-	init(type, null, null);
-    }
-
-    private GanttDiagram(List<? extends GanttDiagramEvent> events_, ViewType type, YearMonthDay begin)
-	    throws InvalidArgumentException {
-	setViewType(type);
-	setEvents(events_);
-	init(type, begin, null);
-    }
-
-    private GanttDiagram(List<? extends GanttDiagramEvent> events_, ViewType type, YearMonthDay begin, YearMonthDay end)
-	    throws InvalidArgumentException {
-	setViewType(type);
-	setEvents(events_);
-	init(type, begin, end);
-    }
-
-    private void init(ViewType type, YearMonthDay begin, YearMonthDay end) throws InvalidArgumentException {
-	switch (type) {
-
-	case TOTAL:
-	    calculateFirstAndLastInstantInTotalMode(begin, end);
-	    generateYearsViewAndMonths();
-	    break;
-
-	case MONTHLY_TOTAL:
-	    calculateFirstAndLastInstantInMonthlyMode(begin);
-	    generateYearsViewAndMonths();
-	    break;
-
-	case MONTHLY:
-	    calculateFirstAndLastInstantInMonthlyMode(begin);
-	    generateYearsViewMonthsViewAndDays();
-	    break;
-
-	case WEEKLY:
-	    calculateFirstAndLastInstantInWeeklyMode(begin);
-	    generateYearsViewMonthsViewAndDays();
-	    break;
-
-	case DAILY:
-	    calculateFirstAndLastInstantInDailyMode(begin);
-	    generateYearsViewMonthsViewAndDays();
-	    break;
-
-	case YEAR_DAILY:
-	    calculateFirstAndLastInstantInMonthlyMode(begin);
-	    generateYearsViewMonthsViewAndDays();
-	    break;
-
-	default:
-	    break;
-	}
-    }
-
-    private void calculateFirstAndLastInstantInMonthlyMode(YearMonthDay begin) throws InvalidArgumentException {
-	if (begin == null) {
-	    throw new InvalidArgumentException();
-	}
-	DateTime beginDateTime = begin.toDateTimeAtMidnight();
-	beginDateTime = (beginDateTime.getDayOfMonth() != 1) ? beginDateTime.withDayOfMonth(1) : beginDateTime;
-	setFirstInstant(beginDateTime);
-	setLastInstant(beginDateTime.plusMonths(1).minusDays(1));
-    }
-
-    private void calculateFirstAndLastInstantInDailyMode(YearMonthDay begin) throws InvalidArgumentException {
-	if (begin == null) {
-	    throw new InvalidArgumentException();
-	}
-	setFirstInstant(begin.toDateTimeAtMidnight());
-	setLastInstant(begin.toDateTimeAtMidnight());
-    }
-
-    private void calculateFirstAndLastInstantInWeeklyMode(YearMonthDay begin) throws InvalidArgumentException {
-	if (begin == null) {
-	    throw new InvalidArgumentException();
-	}
-	DateTime beginDateTime = begin.toDateTimeAtMidnight();
-	beginDateTime = (beginDateTime.getDayOfWeek() != 1) ? beginDateTime.withDayOfWeek(1) : beginDateTime;
-	setFirstInstant(beginDateTime);
-	setLastInstant(beginDateTime.plusDays(6));
-    }
-
-    private void calculateFirstAndLastInstantInTotalMode(YearMonthDay begin, YearMonthDay end) throws InvalidArgumentException {
-
-	if ((begin != null && end == null) || (end != null && begin == null)) {
-	    throw new InvalidArgumentException();
-	}
-
-	if (begin == null) {
-
-	    SortedSet<Interval> allIntervalsSortedByBeginDate = new TreeSet<Interval>(INTERVAL_COMPARATOR_BY_BEGIN);
-	    for (GanttDiagramEvent event : getEvents()) {
-		allIntervalsSortedByBeginDate.addAll(event.getGanttDiagramEventSortedIntervals());
-	    }
-	    if (!allIntervalsSortedByBeginDate.isEmpty()) {
-		setFirstInstant(allIntervalsSortedByBeginDate.first().getStart().toDateMidnight().toDateTime());
-	    }
-
-	    SortedSet<Interval> allIntervalsSortedByEndDate = new TreeSet<Interval>(INTERVAL_COMPARATOR_BY_END);
-	    for (GanttDiagramEvent event : getEvents()) {
-		allIntervalsSortedByEndDate.addAll(event.getGanttDiagramEventSortedIntervals());
-	    }
-	    if (!allIntervalsSortedByEndDate.isEmpty()) {
-		setLastInstant(allIntervalsSortedByEndDate.last().getEnd().toDateMidnight().toDateTime());
-	    }
-
-	} else {
-	    setFirstInstant(begin.toDateTimeAtMidnight());
-	    setLastInstant(end.toDateTimeAtMidnight());
-	}
-
-	if ((getFirstInstant() != null && getLastInstant() != null)
-		&& (getFirstInstant().isAfter(getLastInstant()) || getLastInstant().isBefore(getFirstInstant()))) {
-	    throw new InvalidArgumentException();
-	}
-    }
-
-    private void generateYearsViewMonthsViewAndDays() {
-
-	DateTime firstMonthDateTime = getFirstInstant();
-	DateTime lastMontDateTime = getLastInstant();
-
-	if (firstMonthDateTime != null && lastMontDateTime != null) {
-	    while ((firstMonthDateTime.getYear() < lastMontDateTime.getYear())
-		    || (firstMonthDateTime.getYear() == lastMontDateTime.getYear() && firstMonthDateTime.getDayOfYear() <= lastMontDateTime
-			    .getDayOfYear())) {
-
-		getDays().add(firstMonthDateTime);
-
-		YearMonthDay day = firstMonthDateTime.toYearMonthDay().withDayOfMonth(1);
-		if (getMonthsView().containsKey(day)) {
-		    getMonthsView().put(day, getMonthsView().get(day) + 1);
-		} else {
-		    getMonthsView().put(day, 1);
+		@Override
+		public int compare(Interval o1, Interval o2) {
+			return o1.getStart().compareTo(o2.getStart());
 		}
 
-		if (getYearsView().containsKey(Integer.valueOf(firstMonthDateTime.getYear()))) {
-		    getYearsView().put(Integer.valueOf(firstMonthDateTime.getYear()),
-			    getYearsView().get(Integer.valueOf(firstMonthDateTime.getYear())) + 1);
-		} else {
-		    getYearsView().put(Integer.valueOf(firstMonthDateTime.getYear()), 1);
+	};
+	public final static Comparator<Interval> INTERVAL_COMPARATOR_BY_END = new Comparator<Interval>() {
+
+		@Override
+		public int compare(Interval o1, Interval o2) {
+			return o1.getEnd().compareTo(o2.getEnd());
 		}
 
-		firstMonthDateTime = firstMonthDateTime.plusDays(1);
-	    }
+	};
+
+	private Locale locale;
+
+	private List<? extends GanttDiagramEvent> events;
+
+	private ViewType viewType;
+
+	private DateTime firstInstant, lastInstant;
+
+	private Map<Integer, Integer> yearsView;
+
+	private Map<YearMonthDay, Integer> monthsView;
+
+	private List<DateTime> months, days;
+
+	public static GanttDiagram getNewTotalGanttDiagram(List<? extends GanttDiagramEvent> events_) throws InvalidArgumentException {
+		return new GanttDiagram(events_, ViewType.TOTAL);
 	}
-    }
 
-    private void generateYearsViewAndMonths() {
+	public static GanttDiagram getNewTotalGanttDiagram(List<? extends GanttDiagramEvent> events_, YearMonthDay begin,
+			YearMonthDay end) throws InvalidArgumentException {
+		return new GanttDiagram(events_, ViewType.TOTAL, begin, end);
+	}
 
-	DateTime firstMonthDateTime = getFirstInstant();
-	DateTime lastMontDateTime = getLastInstant();
+	public static GanttDiagram getNewWeeklyGanttDiagram(List<? extends GanttDiagramEvent> events_, YearMonthDay begin)
+			throws InvalidArgumentException {
+		return new GanttDiagram(events_, ViewType.WEEKLY, begin);
+	}
 
-	if (firstMonthDateTime != null && lastMontDateTime != null) {
-	    while ((firstMonthDateTime.getYear() < lastMontDateTime.getYear())
-		    || (firstMonthDateTime.getYear() == lastMontDateTime.getYear() && firstMonthDateTime.getMonthOfYear() <= lastMontDateTime
-			    .getMonthOfYear())) {
+	public static GanttDiagram getNewDailyGanttDiagram(List<? extends GanttDiagramEvent> events_, YearMonthDay begin)
+			throws InvalidArgumentException {
+		return new GanttDiagram(events_, ViewType.DAILY, begin);
+	}
 
-		getMonths().add(firstMonthDateTime);
+	public static GanttDiagram getNewMonthlyGanttDiagram(List<? extends GanttDiagramEvent> events_, YearMonthDay begin)
+			throws InvalidArgumentException {
+		return new GanttDiagram(events_, ViewType.MONTHLY, begin);
+	}
 
-		if (getYearsView().containsKey(Integer.valueOf(firstMonthDateTime.getYear()))) {
-		    getYearsView().put(Integer.valueOf(firstMonthDateTime.getYear()),
-			    getYearsView().get(Integer.valueOf(firstMonthDateTime.getYear())) + 1);
-		} else {
-		    getYearsView().put(Integer.valueOf(firstMonthDateTime.getYear()), 1);
+	public static GanttDiagram getNewMonthlyTotalGanttDiagram(List<? extends GanttDiagramEvent> events_, YearMonthDay begin)
+			throws InvalidArgumentException {
+		return new GanttDiagram(events_, ViewType.MONTHLY_TOTAL, begin);
+	}
+
+	public static GanttDiagram getNewYearDailyGanttDiagram(List<? extends GanttDiagramEvent> events_, YearMonthDay begin)
+			throws InvalidArgumentException {
+		return new GanttDiagram(events_, ViewType.YEAR_DAILY, begin);
+	}
+
+	private GanttDiagram(List<? extends GanttDiagramEvent> events_, ViewType type) throws InvalidArgumentException {
+		setViewType(type);
+		setEvents(events_);
+		init(type, null, null);
+	}
+
+	private GanttDiagram(List<? extends GanttDiagramEvent> events_, ViewType type, YearMonthDay begin)
+			throws InvalidArgumentException {
+		setViewType(type);
+		setEvents(events_);
+		init(type, begin, null);
+	}
+
+	private GanttDiagram(List<? extends GanttDiagramEvent> events_, ViewType type, YearMonthDay begin, YearMonthDay end)
+			throws InvalidArgumentException {
+		setViewType(type);
+		setEvents(events_);
+		init(type, begin, end);
+	}
+
+	private void init(ViewType type, YearMonthDay begin, YearMonthDay end) throws InvalidArgumentException {
+		switch (type) {
+
+		case TOTAL:
+			calculateFirstAndLastInstantInTotalMode(begin, end);
+			generateYearsViewAndMonths();
+			break;
+
+		case MONTHLY_TOTAL:
+			calculateFirstAndLastInstantInMonthlyMode(begin);
+			generateYearsViewAndMonths();
+			break;
+
+		case MONTHLY:
+			calculateFirstAndLastInstantInMonthlyMode(begin);
+			generateYearsViewMonthsViewAndDays();
+			break;
+
+		case WEEKLY:
+			calculateFirstAndLastInstantInWeeklyMode(begin);
+			generateYearsViewMonthsViewAndDays();
+			break;
+
+		case DAILY:
+			calculateFirstAndLastInstantInDailyMode(begin);
+			generateYearsViewMonthsViewAndDays();
+			break;
+
+		case YEAR_DAILY:
+			calculateFirstAndLastInstantInMonthlyMode(begin);
+			generateYearsViewMonthsViewAndDays();
+			break;
+
+		default:
+			break;
+		}
+	}
+
+	private void calculateFirstAndLastInstantInMonthlyMode(YearMonthDay begin) throws InvalidArgumentException {
+		if (begin == null) {
+			throw new InvalidArgumentException();
+		}
+		DateTime beginDateTime = begin.toDateTimeAtMidnight();
+		beginDateTime = (beginDateTime.getDayOfMonth() != 1) ? beginDateTime.withDayOfMonth(1) : beginDateTime;
+		setFirstInstant(beginDateTime);
+		setLastInstant(beginDateTime.plusMonths(1).minusDays(1));
+	}
+
+	private void calculateFirstAndLastInstantInDailyMode(YearMonthDay begin) throws InvalidArgumentException {
+		if (begin == null) {
+			throw new InvalidArgumentException();
+		}
+		setFirstInstant(begin.toDateTimeAtMidnight());
+		setLastInstant(begin.toDateTimeAtMidnight());
+	}
+
+	private void calculateFirstAndLastInstantInWeeklyMode(YearMonthDay begin) throws InvalidArgumentException {
+		if (begin == null) {
+			throw new InvalidArgumentException();
+		}
+		DateTime beginDateTime = begin.toDateTimeAtMidnight();
+		beginDateTime = (beginDateTime.getDayOfWeek() != 1) ? beginDateTime.withDayOfWeek(1) : beginDateTime;
+		setFirstInstant(beginDateTime);
+		setLastInstant(beginDateTime.plusDays(6));
+	}
+
+	private void calculateFirstAndLastInstantInTotalMode(YearMonthDay begin, YearMonthDay end) throws InvalidArgumentException {
+
+		if ((begin != null && end == null) || (end != null && begin == null)) {
+			throw new InvalidArgumentException();
 		}
 
-		firstMonthDateTime = firstMonthDateTime.plusMonths(1);
-	    }
+		if (begin == null) {
+
+			SortedSet<Interval> allIntervalsSortedByBeginDate = new TreeSet<Interval>(INTERVAL_COMPARATOR_BY_BEGIN);
+			for (GanttDiagramEvent event : getEvents()) {
+				allIntervalsSortedByBeginDate.addAll(event.getGanttDiagramEventSortedIntervals());
+			}
+			if (!allIntervalsSortedByBeginDate.isEmpty()) {
+				setFirstInstant(allIntervalsSortedByBeginDate.first().getStart().toDateMidnight().toDateTime());
+			}
+
+			SortedSet<Interval> allIntervalsSortedByEndDate = new TreeSet<Interval>(INTERVAL_COMPARATOR_BY_END);
+			for (GanttDiagramEvent event : getEvents()) {
+				allIntervalsSortedByEndDate.addAll(event.getGanttDiagramEventSortedIntervals());
+			}
+			if (!allIntervalsSortedByEndDate.isEmpty()) {
+				setLastInstant(allIntervalsSortedByEndDate.last().getEnd().toDateMidnight().toDateTime());
+			}
+
+		} else {
+			setFirstInstant(begin.toDateTimeAtMidnight());
+			setLastInstant(end.toDateTimeAtMidnight());
+		}
+
+		if ((getFirstInstant() != null && getLastInstant() != null)
+				&& (getFirstInstant().isAfter(getLastInstant()) || getLastInstant().isBefore(getFirstInstant()))) {
+			throw new InvalidArgumentException();
+		}
 	}
-    }
 
-    public List<? extends GanttDiagramEvent> getEvents() {
-	return events;
-    }
+	private void generateYearsViewMonthsViewAndDays() {
 
-    public void setEvents(List<? extends GanttDiagramEvent> events) {
-	this.events = events;
-    }
+		DateTime firstMonthDateTime = getFirstInstant();
+		DateTime lastMontDateTime = getLastInstant();
 
-    public DateTime getFirstInstant() {
-	return firstInstant;
-    }
+		if (firstMonthDateTime != null && lastMontDateTime != null) {
+			while ((firstMonthDateTime.getYear() < lastMontDateTime.getYear())
+					|| (firstMonthDateTime.getYear() == lastMontDateTime.getYear() && firstMonthDateTime.getDayOfYear() <= lastMontDateTime
+							.getDayOfYear())) {
 
-    public void setFirstInstant(DateTime firstInstant) {
-	this.firstInstant = firstInstant;
-    }
+				getDays().add(firstMonthDateTime);
 
-    public DateTime getLastInstant() {
-	return lastInstant;
-    }
+				YearMonthDay day = firstMonthDateTime.toYearMonthDay().withDayOfMonth(1);
+				if (getMonthsView().containsKey(day)) {
+					getMonthsView().put(day, getMonthsView().get(day) + 1);
+				} else {
+					getMonthsView().put(day, 1);
+				}
 
-    public void setLastInstant(DateTime lastInstant) {
-	this.lastInstant = lastInstant;
-    }
+				if (getYearsView().containsKey(Integer.valueOf(firstMonthDateTime.getYear()))) {
+					getYearsView().put(Integer.valueOf(firstMonthDateTime.getYear()),
+							getYearsView().get(Integer.valueOf(firstMonthDateTime.getYear())) + 1);
+				} else {
+					getYearsView().put(Integer.valueOf(firstMonthDateTime.getYear()), 1);
+				}
 
-    public List<DateTime> getMonths() {
-	if (months == null) {
-	    months = new ArrayList<DateTime>();
+				firstMonthDateTime = firstMonthDateTime.plusDays(1);
+			}
+		}
 	}
-	return months;
-    }
 
-    public void setMonths(List<DateTime> months) {
-	this.months = months;
-    }
+	private void generateYearsViewAndMonths() {
 
-    public int getMonthsDaysSize() {
-	int result = 0;
-	for (DateTime month : getMonths()) {
-	    DateTime firstDayOfMonth = (month.getDayOfMonth() != 1) ? month.withDayOfMonth(1) : month;
-	    DateTime lastDayOfMonth = firstDayOfMonth.plusMonths(1).minusDays(1);
-	    int monthNumberOfDays = Days.daysBetween(firstDayOfMonth, lastDayOfMonth).getDays() + 1;
-	    result += monthNumberOfDays;
+		DateTime firstMonthDateTime = getFirstInstant();
+		DateTime lastMontDateTime = getLastInstant();
+
+		if (firstMonthDateTime != null && lastMontDateTime != null) {
+			while ((firstMonthDateTime.getYear() < lastMontDateTime.getYear())
+					|| (firstMonthDateTime.getYear() == lastMontDateTime.getYear() && firstMonthDateTime.getMonthOfYear() <= lastMontDateTime
+							.getMonthOfYear())) {
+
+				getMonths().add(firstMonthDateTime);
+
+				if (getYearsView().containsKey(Integer.valueOf(firstMonthDateTime.getYear()))) {
+					getYearsView().put(Integer.valueOf(firstMonthDateTime.getYear()),
+							getYearsView().get(Integer.valueOf(firstMonthDateTime.getYear())) + 1);
+				} else {
+					getYearsView().put(Integer.valueOf(firstMonthDateTime.getYear()), 1);
+				}
+
+				firstMonthDateTime = firstMonthDateTime.plusMonths(1);
+			}
+		}
 	}
-	return result;
-    }
 
-    public Map<Integer, Integer> getYearsView() {
-	if (yearsView == null) {
-	    yearsView = new TreeMap<Integer, Integer>();
+	public List<? extends GanttDiagramEvent> getEvents() {
+		return events;
 	}
-	return yearsView;
-    }
 
-    public void setYearsView(Map<Integer, Integer> years) {
-	this.yearsView = years;
-    }
-
-    public Map<YearMonthDay, Integer> getMonthsView() {
-	if (monthsView == null) {
-	    monthsView = new TreeMap<YearMonthDay, Integer>();
+	public void setEvents(List<? extends GanttDiagramEvent> events) {
+		this.events = events;
 	}
-	return monthsView;
-    }
 
-    public void setMonthsView(Map<YearMonthDay, Integer> monthsView) {
-	this.monthsView = monthsView;
-    }
-
-    public ViewType getViewType() {
-	return viewType;
-    }
-
-    public void setViewType(ViewType viewType) {
-	this.viewType = viewType;
-    }
-
-    public Locale getLocale() {
-	if (locale == null) {
-	    locale = Language.getLocale();
+	public DateTime getFirstInstant() {
+		return firstInstant;
 	}
-	return locale;
-    }
 
-    public void setLocale(Locale locale) {
-	this.locale = locale;
-    }
-
-    public List<DateTime> getDays() {
-	if (days == null) {
-	    days = new ArrayList<DateTime>();
+	public void setFirstInstant(DateTime firstInstant) {
+		this.firstInstant = firstInstant;
 	}
-	return days;
-    }
 
-    public void setDays(List<DateTime> days) {
-	this.days = days;
-    }
+	public DateTime getLastInstant() {
+		return lastInstant;
+	}
 
-    public enum ViewType {
-	TOTAL, MONTHLY, MONTHLY_TOTAL, WEEKLY, DAILY, YEAR_DAILY;
-    }
+	public void setLastInstant(DateTime lastInstant) {
+		this.lastInstant = lastInstant;
+	}
+
+	public List<DateTime> getMonths() {
+		if (months == null) {
+			months = new ArrayList<DateTime>();
+		}
+		return months;
+	}
+
+	public void setMonths(List<DateTime> months) {
+		this.months = months;
+	}
+
+	public int getMonthsDaysSize() {
+		int result = 0;
+		for (DateTime month : getMonths()) {
+			DateTime firstDayOfMonth = (month.getDayOfMonth() != 1) ? month.withDayOfMonth(1) : month;
+			DateTime lastDayOfMonth = firstDayOfMonth.plusMonths(1).minusDays(1);
+			int monthNumberOfDays = Days.daysBetween(firstDayOfMonth, lastDayOfMonth).getDays() + 1;
+			result += monthNumberOfDays;
+		}
+		return result;
+	}
+
+	public Map<Integer, Integer> getYearsView() {
+		if (yearsView == null) {
+			yearsView = new TreeMap<Integer, Integer>();
+		}
+		return yearsView;
+	}
+
+	public void setYearsView(Map<Integer, Integer> years) {
+		this.yearsView = years;
+	}
+
+	public Map<YearMonthDay, Integer> getMonthsView() {
+		if (monthsView == null) {
+			monthsView = new TreeMap<YearMonthDay, Integer>();
+		}
+		return monthsView;
+	}
+
+	public void setMonthsView(Map<YearMonthDay, Integer> monthsView) {
+		this.monthsView = monthsView;
+	}
+
+	public ViewType getViewType() {
+		return viewType;
+	}
+
+	public void setViewType(ViewType viewType) {
+		this.viewType = viewType;
+	}
+
+	public Locale getLocale() {
+		if (locale == null) {
+			locale = Language.getLocale();
+		}
+		return locale;
+	}
+
+	public void setLocale(Locale locale) {
+		this.locale = locale;
+	}
+
+	public List<DateTime> getDays() {
+		if (days == null) {
+			days = new ArrayList<DateTime>();
+		}
+		return days;
+	}
+
+	public void setDays(List<DateTime> days) {
+		this.days = days;
+	}
+
+	public enum ViewType {
+		TOTAL, MONTHLY, MONTHLY_TOTAL, WEEKLY, DAILY, YEAR_DAILY;
+	}
 }

@@ -6,9 +6,9 @@ import net.sourceforge.fenixedu.domain.Grouping;
 
 public class VerifyIfGroupPropertiesHasProjectProposal extends FenixService {
 
-    public Boolean run(Integer executionCourseId, Integer groupPropertiesId) {
-	final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);
-	final Grouping grouping = rootDomainObject.readGroupingByOID(groupPropertiesId);
-	return executionCourse.hasExportGrouping(grouping);
-    }
+	public Boolean run(Integer executionCourseId, Integer groupPropertiesId) {
+		final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);
+		final Grouping grouping = rootDomainObject.readGroupingByOID(groupPropertiesId);
+		return executionCourse.hasExportGrouping(grouping);
+	}
 }

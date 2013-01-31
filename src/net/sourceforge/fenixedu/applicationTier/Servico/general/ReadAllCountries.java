@@ -12,20 +12,20 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadAllCountries extends FenixService {
 
-    @Service
-    public static Object run() throws ExcepcaoInexistente, FenixServiceException {
-	List<InfoCountry> result = new ArrayList<InfoCountry>();
+	@Service
+	public static Object run() throws ExcepcaoInexistente, FenixServiceException {
+		List<InfoCountry> result = new ArrayList<InfoCountry>();
 
-	List<Country> countries = rootDomainObject.getCountrys();
-	if (countries.isEmpty()) {
-	    throw new ExcepcaoInexistente("Non existing Countries !!");
+		List<Country> countries = rootDomainObject.getCountrys();
+		if (countries.isEmpty()) {
+			throw new ExcepcaoInexistente("Non existing Countries !!");
+		}
+
+		for (Country country : countries) {
+			result.add(InfoCountry.newInfoFromDomain(country));
+		}
+
+		return result;
 	}
-
-	for (Country country : countries) {
-	    result.add(InfoCountry.newInfoFromDomain(country));
-	}
-
-	return result;
-    }
 
 }

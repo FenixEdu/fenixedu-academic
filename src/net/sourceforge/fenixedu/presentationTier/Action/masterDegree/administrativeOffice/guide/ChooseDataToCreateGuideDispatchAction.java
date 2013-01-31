@@ -25,72 +25,72 @@ import org.apache.struts.action.ActionMapping;
  */
 public class ChooseDataToCreateGuideDispatchAction extends FenixDispatchAction {
 
-    public ActionForward chooseDegreeFromList(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
+	public ActionForward chooseDegreeFromList(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
 
-	DegreeType degreeType = DegreeType.MASTER_DEGREE;
+		DegreeType degreeType = DegreeType.MASTER_DEGREE;
 
-	List result = null;
-	try {
-	    result = (List) ReadAllMasterDegrees.run(degreeType);
-	} catch (NonExistingServiceException e) {
-	    throw new NonExistingActionException("O Degree de Mestrado", e);
+		List result = null;
+		try {
+			result = ReadAllMasterDegrees.run(degreeType);
+		} catch (NonExistingServiceException e) {
+			throw new NonExistingActionException("O Degree de Mestrado", e);
+		}
+
+		if ((result != null) && (result.size() > 0)) {
+			request.setAttribute(PresentationConstants.MASTER_DEGREE_LIST, result);
+		}
+
+		return mapping.findForward("DisplayMasterDegreeList");
+
 	}
 
-	if ((result != null) && (result.size() > 0)) {
-	    request.setAttribute(PresentationConstants.MASTER_DEGREE_LIST, result);
+	public ActionForward chooseMasterDegreeCurricularPlanFromList(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+		// Get the Chosen Master Degree
+		Integer masterDegreeID = new Integer(request.getParameter("degreeID"));
+		if (masterDegreeID == null) {
+			masterDegreeID = (Integer) request.getAttribute("degreeID");
+		}
+
+		List result = null;
+
+		try {
+
+			result = ReadCPlanFromChosenMasterDegree.run(masterDegreeID);
+
+		} catch (NonExistingServiceException e) {
+			throw new NonExistingActionException("O plano curricular ", e);
+		}
+
+		if ((result != null) && (result.size() > 0)) {
+			request.setAttribute(PresentationConstants.MASTER_DEGREE_CURRICULAR_PLAN_LIST, result);
+		}
+
+		return mapping.findForward("DisplayMasterDegreeCurricularPlanList");
 	}
 
-	return mapping.findForward("DisplayMasterDegreeList");
+	public ActionForward chooseExecutionDegreeFromList(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
 
-    }
+		// Get execution degrees for given degree curricular plan
+		Integer curricularPlanID = new Integer(request.getParameter("curricularPlanID"));
+		if (curricularPlanID == null) {
+			curricularPlanID = (Integer) request.getAttribute("curricularPlanID");
+		}
 
-    public ActionForward chooseMasterDegreeCurricularPlanFromList(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+		Object args[] = { curricularPlanID };
+		List result = null;
 
-	// Get the Chosen Master Degree
-	Integer masterDegreeID = new Integer(request.getParameter("degreeID"));
-	if (masterDegreeID == null) {
-	    masterDegreeID = (Integer) request.getAttribute("degreeID");
+		result = (List) ServiceManagerServiceFactory.executeService("ReadExecutionDegreesByDegreeCurricularPlanID", args);
+
+		if ((result != null) && (result.size() > 0)) {
+			request.setAttribute(PresentationConstants.EXECUTION_DEGREE_LIST, result);
+		}
+
+		return mapping.findForward("DisplayExecutionDegreeList");
+
 	}
-
-	List result = null;
-
-	try {
-
-	    result = (List) ReadCPlanFromChosenMasterDegree.run(masterDegreeID);
-
-	} catch (NonExistingServiceException e) {
-	    throw new NonExistingActionException("O plano curricular ", e);
-	}
-
-	if ((result != null) && (result.size() > 0)) {
-	    request.setAttribute(PresentationConstants.MASTER_DEGREE_CURRICULAR_PLAN_LIST, result);
-	}
-
-	return mapping.findForward("DisplayMasterDegreeCurricularPlanList");
-    }
-
-    public ActionForward chooseExecutionDegreeFromList(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-
-	// Get execution degrees for given degree curricular plan
-	Integer curricularPlanID = new Integer(request.getParameter("curricularPlanID"));
-	if (curricularPlanID == null) {
-	    curricularPlanID = (Integer) request.getAttribute("curricularPlanID");
-	}
-
-	Object args[] = { curricularPlanID };
-	List result = null;
-
-	result = (List) ServiceManagerServiceFactory.executeService("ReadExecutionDegreesByDegreeCurricularPlanID", args);
-
-	if ((result != null) && (result.size() > 0)) {
-	    request.setAttribute(PresentationConstants.EXECUTION_DEGREE_LIST, result);
-	}
-
-	return mapping.findForward("DisplayExecutionDegreeList");
-
-    }
 
 }

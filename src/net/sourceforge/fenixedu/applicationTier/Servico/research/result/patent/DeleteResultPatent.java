@@ -6,9 +6,9 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class DeleteResultPatent extends FenixService {
 
-    @Service
-    public static void run(Integer oid) {
-	ResearchResultPatent patent = (ResearchResultPatent) rootDomainObject.readResearchResultByOID(oid);
-	patent.delete();
-    }
+	@Service
+	public static void run(Integer oid) {
+		ResearchResultPatent patent = (ResearchResultPatent) rootDomainObject.readResearchResultByOID(oid);
+		patent.delete();
+	}
 }

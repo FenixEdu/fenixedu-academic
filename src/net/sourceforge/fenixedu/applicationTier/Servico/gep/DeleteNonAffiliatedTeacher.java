@@ -12,8 +12,8 @@ import net.sourceforge.fenixedu.domain.NonAffiliatedTeacher;
  */
 public class DeleteNonAffiliatedTeacher extends FenixService {
 
-    public void run(NonAffiliatedTeacher nonAffiliatedTeacher) {
-	nonAffiliatedTeacher.delete();
-    }
+	public void run(NonAffiliatedTeacher nonAffiliatedTeacher) {
+		nonAffiliatedTeacher.delete();
+	}
 
 }

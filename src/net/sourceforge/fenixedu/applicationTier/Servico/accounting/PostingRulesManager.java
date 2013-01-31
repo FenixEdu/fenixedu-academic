@@ -25,122 +25,122 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class PostingRulesManager {
 
-    @Service
-    @Checked("AcademicPredicates.MANAGE_PAYMENTS")
-    static public void createGraduationGratuityPostingRule(final CreateGratuityPostingRuleBean bean) {
+	@Service
+	@Checked("AcademicPredicates.MANAGE_PAYMENTS")
+	static public void createGraduationGratuityPostingRule(final CreateGratuityPostingRuleBean bean) {
 
-	if (bean.getRule() == GratuityWithPaymentPlanPR.class) {
+		if (bean.getRule() == GratuityWithPaymentPlanPR.class) {
 
-	    for (final DegreeCurricularPlan dcp : bean.getDegreeCurricularPlans()) {
-		if (dcp.isPast()) {
-		    continue;
+			for (final DegreeCurricularPlan dcp : bean.getDegreeCurricularPlans()) {
+				if (dcp.isPast()) {
+					continue;
+				}
+				deactivateExistingPostingRule(EventType.GRATUITY, bean.getStartDate(), dcp.getServiceAgreementTemplate());
+				new GratuityWithPaymentPlanPR(bean.getStartDate(), null, dcp.getServiceAgreementTemplate());
+			}
+
+		} else if (bean.getRule() == PastDegreeGratuityPR.class) {
+
+			for (final DegreeCurricularPlan dcp : bean.getDegreeCurricularPlans()) {
+				if (!dcp.isPast()) {
+					continue;
+				}
+				deactivateExistingPostingRule(EventType.GRATUITY, bean.getStartDate(), dcp.getServiceAgreementTemplate());
+				new PastDegreeGratuityPR(bean.getStartDate(), null, dcp.getServiceAgreementTemplate());
+			}
+
+		} else {
+			throw new RuntimeException("Unexpected rule type for gratuity posting rule");
 		}
-		deactivateExistingPostingRule(EventType.GRATUITY, bean.getStartDate(), dcp.getServiceAgreementTemplate());
-		new GratuityWithPaymentPlanPR(bean.getStartDate(), null, dcp.getServiceAgreementTemplate());
-	    }
 
-	} else if (bean.getRule() == PastDegreeGratuityPR.class) {
+	}
 
-	    for (final DegreeCurricularPlan dcp : bean.getDegreeCurricularPlans()) {
-		if (!dcp.isPast()) {
-		    continue;
+	@Service
+	@Checked("AcademicPredicates.MANAGE_PAYMENTS")
+	static public void createStandaloneGraduationGratuityPostingRule(final CreateStandaloneEnrolmentGratuityPRBean bean) {
+
+		if (bean.getRule() == StandaloneEnrolmentGratuityPR.class) {
+			for (final DegreeCurricularPlan degreeCurricularPlan : bean.getDegreeCurricularPlans()) {
+				final ServiceAgreementTemplate serviceAgreementTemplate = degreeCurricularPlan.getServiceAgreementTemplate();
+				deactivateExistingPostingRule(EventType.STANDALONE_ENROLMENT_GRATUITY, bean.getStartDate(),
+						serviceAgreementTemplate);
+				new StandaloneEnrolmentGratuityPR(bean.getStartDate(), null, serviceAgreementTemplate, bean.getEctsForYear(),
+						bean.getGratuityFactor(), bean.getEctsFactor());
+			}
+		} else {
+			throw new RuntimeException("Unexpected rule type for gratuity posting rule");
 		}
-		deactivateExistingPostingRule(EventType.GRATUITY, bean.getStartDate(), dcp.getServiceAgreementTemplate());
-		new PastDegreeGratuityPR(bean.getStartDate(), null, dcp.getServiceAgreementTemplate());
-	    }
 
-	} else {
-	    throw new RuntimeException("Unexpected rule type for gratuity posting rule");
 	}
 
-    }
+	private static void deactivateExistingPostingRule(final EventType eventType, final DateTime when,
+			final ServiceAgreementTemplate serviceAgreementTemplate) {
+		if (!serviceAgreementTemplate.hasPostingRuleFor(eventType, when)) {
+			return;
+		}
 
-    @Service
-    @Checked("AcademicPredicates.MANAGE_PAYMENTS")
-    static public void createStandaloneGraduationGratuityPostingRule(final CreateStandaloneEnrolmentGratuityPRBean bean) {
+		final PostingRule existingPostingRule = serviceAgreementTemplate.findPostingRuleByEventTypeAndDate(eventType, when);
 
-	if (bean.getRule() == StandaloneEnrolmentGratuityPR.class) {
-	    for (final DegreeCurricularPlan degreeCurricularPlan : bean.getDegreeCurricularPlans()) {
-		final ServiceAgreementTemplate serviceAgreementTemplate = degreeCurricularPlan.getServiceAgreementTemplate();
-		deactivateExistingPostingRule(EventType.STANDALONE_ENROLMENT_GRATUITY, bean.getStartDate(),
-			serviceAgreementTemplate);
-		new StandaloneEnrolmentGratuityPR(bean.getStartDate(), null, serviceAgreementTemplate, bean.getEctsForYear(),
-			bean.getGratuityFactor(), bean.getEctsFactor());
-	    }
-	} else {
-	    throw new RuntimeException("Unexpected rule type for gratuity posting rule");
+		if (existingPostingRule != null) {
+			existingPostingRule.deactivate(when);
+		}
 	}
 
-    }
-
-    private static void deactivateExistingPostingRule(final EventType eventType, final DateTime when,
-	    final ServiceAgreementTemplate serviceAgreementTemplate) {
-	if (!serviceAgreementTemplate.hasPostingRuleFor(eventType, when)) {
-	    return;
+	@Service
+	@Checked("AcademicPredicates.MANAGE_PAYMENTS")
+	static public void createDFAGratuityPostingRule(final CreateDFAGratuityPostingRuleBean bean) {
+		if (bean.getRule() == DFAGratuityByAmountPerEctsPR.class) {
+			new DFAGratuityByAmountPerEctsPR(bean.getStartDate(), null, bean.getServiceAgreementTemplate(),
+					bean.getTotalAmount(), bean.getPartialAcceptedPercentage(), bean.getAmountPerEctsCredit());
+		} else if (bean.getRule() == DFAGratuityByNumberOfEnrolmentsPR.class) {
+			new DFAGratuityByNumberOfEnrolmentsPR(bean.getStartDate(), null, bean.getServiceAgreementTemplate(),
+					bean.getTotalAmount(), bean.getPartialAcceptedPercentage());
+		} else {
+			throw new RuntimeException("Unexpected rule type for DFA gratuity posting rule");
+		}
 	}
 
-	final PostingRule existingPostingRule = serviceAgreementTemplate.findPostingRuleByEventTypeAndDate(eventType, when);
-
-	if (existingPostingRule != null) {
-	    existingPostingRule.deactivate(when);
+	@Service
+	@Checked("AcademicPredicates.MANAGE_PAYMENTS")
+	static public void createSpecializationDegreeGratuityPostingRule(final CreateSpecializationDegreeGratuityPostingRuleBean bean) {
+		if (bean.getRule() == SpecializationDegreeGratuityByAmountPerEctsPR.class) {
+			new SpecializationDegreeGratuityByAmountPerEctsPR(bean.getStartDate(), null, bean.getServiceAgreementTemplate(),
+					bean.getTotalAmount(), bean.getPartialAcceptedPercentage(), bean.getAmountPerEctsCredit());
+		} else {
+			throw new RuntimeException("Unexpected rule type for Specialization Degree gratuity posting rule");
+		}
 	}
-    }
 
-    @Service
-    @Checked("AcademicPredicates.MANAGE_PAYMENTS")
-    static public void createDFAGratuityPostingRule(final CreateDFAGratuityPostingRuleBean bean) {
-	if (bean.getRule() == DFAGratuityByAmountPerEctsPR.class) {
-	    new DFAGratuityByAmountPerEctsPR(bean.getStartDate(), null, bean.getServiceAgreementTemplate(),
-		    bean.getTotalAmount(), bean.getPartialAcceptedPercentage(), bean.getAmountPerEctsCredit());
-	} else if (bean.getRule() == DFAGratuityByNumberOfEnrolmentsPR.class) {
-	    new DFAGratuityByNumberOfEnrolmentsPR(bean.getStartDate(), null, bean.getServiceAgreementTemplate(), bean
-		    .getTotalAmount(), bean.getPartialAcceptedPercentage());
-	} else {
-	    throw new RuntimeException("Unexpected rule type for DFA gratuity posting rule");
+	@Service
+	@Checked("AcademicPredicates.MANAGE_PAYMENTS")
+	static public void deletePostingRule(final PostingRule postingRule) {
+		postingRule.delete();
 	}
-    }
 
-    @Service
-    @Checked("AcademicPredicates.MANAGE_PAYMENTS")
-    static public void createSpecializationDegreeGratuityPostingRule(final CreateSpecializationDegreeGratuityPostingRuleBean bean) {
-	if (bean.getRule() == SpecializationDegreeGratuityByAmountPerEctsPR.class) {
-	    new SpecializationDegreeGratuityByAmountPerEctsPR(bean.getStartDate(), null, bean.getServiceAgreementTemplate(), bean
-		    .getTotalAmount(), bean.getPartialAcceptedPercentage(), bean.getAmountPerEctsCredit());
-	} else {
-	    throw new RuntimeException("Unexpected rule type for Specialization Degree gratuity posting rule");
+	@Service
+	@Checked("AcademicPredicates.MANAGE_PAYMENTS")
+	public static void createDEAGratuityPostingRule(PaymentPlanBean paymentPlanBean) {
+		CreateGratuityPostingRuleBean createGratuityPostingRuleBean = new CreateGratuityPostingRuleBean();
+		createGratuityPostingRuleBean.setExecutionYear(paymentPlanBean.getExecutionYear());
+		createGratuityPostingRuleBean.setDegreeCurricularPlans(paymentPlanBean.getDegreeCurricularPlans());
+
+		DateTime minStartDate = null;
+		for (InstallmentBean installmentBean : paymentPlanBean.getInstallments()) {
+			if (minStartDate == null) {
+				minStartDate = installmentBean.getStartDate().toDateMidnight().toDateTime();
+				continue;
+			}
+
+			if (installmentBean.getStartDate().toDateMidnight().toDateTime().isBefore(minStartDate)) {
+				minStartDate = installmentBean.getStartDate().toDateMidnight().toDateTime();
+			}
+		}
+
+		createGratuityPostingRuleBean.setStartDate(minStartDate);
+		createGratuityPostingRuleBean.setRule(GratuityWithPaymentPlanPR.class);
+
+		createGraduationGratuityPostingRule(createGratuityPostingRuleBean);
+		GratuityPaymentPlanManager.create(paymentPlanBean);
 	}
-    }
-
-    @Service
-    @Checked("AcademicPredicates.MANAGE_PAYMENTS")
-    static public void deletePostingRule(final PostingRule postingRule) {
-	postingRule.delete();
-    }
-
-    @Service
-    @Checked("AcademicPredicates.MANAGE_PAYMENTS")
-    public static void createDEAGratuityPostingRule(PaymentPlanBean paymentPlanBean) {
-	CreateGratuityPostingRuleBean createGratuityPostingRuleBean = new CreateGratuityPostingRuleBean();
-	createGratuityPostingRuleBean.setExecutionYear(paymentPlanBean.getExecutionYear());
-	createGratuityPostingRuleBean.setDegreeCurricularPlans(paymentPlanBean.getDegreeCurricularPlans());
-
-	DateTime minStartDate = null;
-	for (InstallmentBean installmentBean : paymentPlanBean.getInstallments()) {
-	    if (minStartDate == null) {
-		minStartDate = installmentBean.getStartDate().toDateMidnight().toDateTime();
-		continue;
-	    }
-
-	    if (installmentBean.getStartDate().toDateMidnight().toDateTime().isBefore(minStartDate)) {
-		minStartDate = installmentBean.getStartDate().toDateMidnight().toDateTime();
-	    }
-	}
-	
-	createGratuityPostingRuleBean.setStartDate(minStartDate);
-	createGratuityPostingRuleBean.setRule(GratuityWithPaymentPlanPR.class);
-
-	createGraduationGratuityPostingRule(createGratuityPostingRuleBean);
-	GratuityPaymentPlanManager.create(paymentPlanBean);
-    }
 
 }

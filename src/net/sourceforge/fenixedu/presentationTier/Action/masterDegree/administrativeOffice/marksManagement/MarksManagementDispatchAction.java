@@ -35,119 +35,118 @@ import pt.ist.fenixWebFramework.security.UserView;
  *  
  */
 public class MarksManagementDispatchAction extends FenixDispatchAction {
-    public ActionForward prepareChooseMasterDegree(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-	ActionErrors errors = new ActionErrors();
+	public ActionForward prepareChooseMasterDegree(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		ActionErrors errors = new ActionErrors();
 
-	List masterDegrees = null;
-	IUserView userView = UserView.getUser();
-	DegreeType degreeType = DegreeType.MASTER_DEGREE;
+		List masterDegrees = null;
+		IUserView userView = UserView.getUser();
+		DegreeType degreeType = DegreeType.MASTER_DEGREE;
 
-	try {
-	    masterDegrees = (List) ReadAllMasterDegrees.run(degreeType);
-	} catch (NonExistingServiceException e) {
-	    errors.add("noMasterDegree", new ActionError("error.masterDegree.noDegrees"));
-	    saveErrors(request, errors);
-	    return mapping.getInputForward();
+		try {
+			masterDegrees = ReadAllMasterDegrees.run(degreeType);
+		} catch (NonExistingServiceException e) {
+			errors.add("noMasterDegree", new ActionError("error.masterDegree.noDegrees"));
+			saveErrors(request, errors);
+			return mapping.getInputForward();
+		}
+
+		request.setAttribute(PresentationConstants.MASTER_DEGREE_LIST, masterDegrees);
+
+		return mapping.findForward("showMasterDegrees");
 	}
 
-	request.setAttribute(PresentationConstants.MASTER_DEGREE_LIST, masterDegrees);
+	public ActionForward prepareChooseDegreeCurricularPlan(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		ActionErrors errors = new ActionErrors();
 
-	return mapping.findForward("showMasterDegrees");
-    }
+		String masterDegreeId = getFromRequest("degreeId", request);
 
-    public ActionForward prepareChooseDegreeCurricularPlan(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-	ActionErrors errors = new ActionErrors();
+		List degreeCurricularPlans = null;
+		IUserView userView = UserView.getUser();
 
-	String masterDegreeId = getFromRequest("degreeId", request);
+		try {
 
-	List degreeCurricularPlans = null;
-	IUserView userView = UserView.getUser();
+			degreeCurricularPlans = ReadCPlanFromChosenMasterDegree.run(Integer.valueOf(masterDegreeId));
 
-	try {
+		} catch (NonExistingServiceException e) {
+			errors.add("noDegreeCurricularPlan", new ActionError("error.masterDegree.noDegreeCurricularPlan"));
+			saveErrors(request, errors);
+			return prepareChooseMasterDegree(mapping, form, request, response);
+		}
 
-	    degreeCurricularPlans = (List) ReadCPlanFromChosenMasterDegree.run(Integer.valueOf(masterDegreeId));
+		Collections.sort(degreeCurricularPlans, new BeanComparator("name"));
 
-	} catch (NonExistingServiceException e) {
-	    errors.add("noDegreeCurricularPlan", new ActionError("error.masterDegree.noDegreeCurricularPlan"));
-	    saveErrors(request, errors);
-	    return prepareChooseMasterDegree(mapping, form, request, response);
+		request.setAttribute("degreeCurricularPlans", degreeCurricularPlans);
+
+		return mapping.findForward("showDegreeCurricularPlans");
 	}
 
-	Collections.sort(degreeCurricularPlans, new BeanComparator("name"));
+	public ActionForward chooseCurricularCourses(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
 
-	request.setAttribute("degreeCurricularPlans", degreeCurricularPlans);
+		String degreeCurricularPlanId = getFromRequest("objectCode", request);
+		getFromRequest("degreeId", request);
 
-	return mapping.findForward("showDegreeCurricularPlans");
-    }
+		IUserView userView = UserView.getUser();
+		List curricularCourseList = null;
+		try {
+			curricularCourseList = ReadCurricularCoursesByDegreeCurricularPlan.run(Integer.valueOf(degreeCurricularPlanId));
+		} catch (FenixServiceException e) {
+			throw new FenixActionException(e);
+		}
 
-    public ActionForward chooseCurricularCourses(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
+		Collections.sort(curricularCourseList, new BeanComparator("name"));
+		request.setAttribute("curricularCourses", curricularCourseList);
 
-	String degreeCurricularPlanId = getFromRequest("objectCode", request);
-	getFromRequest("degreeId", request);
-
-	IUserView userView = UserView.getUser();
-	List curricularCourseList = null;
-	try {
-	    curricularCourseList = (List) ReadCurricularCoursesByDegreeCurricularPlan
-		    .run(Integer.valueOf(degreeCurricularPlanId));
-	} catch (FenixServiceException e) {
-	    throw new FenixActionException(e);
+		return mapping.findForward("showCurricularCourses");
 	}
 
-	Collections.sort(curricularCourseList, new BeanComparator("name"));
-	request.setAttribute("curricularCourses", curricularCourseList);
+	public ActionForward getStudentMarksList(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		String curricularCourseId = getFromRequest("courseId", request);
+		getFromRequest("objectCode", request);
+		getFromRequest("degreeId", request);
 
-	return mapping.findForward("showCurricularCourses");
-    }
+		List listEnrolmentEvaluation = null;
+		IUserView userView = UserView.getUser();
+		Object args[] = { userView, Integer.valueOf(curricularCourseId), null };
+		try {
+			listEnrolmentEvaluation =
+					(List) ServiceManagerServiceFactory.executeService("ReadStudentMarksListByCurricularCourse", args);
+		} catch (NotAuthorizedException e) {
+			return mapping.findForward("NotAuthorized");
+		} catch (NonExistingServiceException e) {
+			ActionErrors errors = new ActionErrors();
+			errors.add("nonExisting", new ActionError("error.exception.noStudents"));
+			saveErrors(request, errors);
+			return chooseCurricularCourses(mapping, form, request, response);
+		} catch (FenixServiceException e) {
+			throw new FenixActionException(e);
+		}
 
-    public ActionForward getStudentMarksList(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-	String curricularCourseId = getFromRequest("courseId", request);
-	getFromRequest("objectCode", request);
-	getFromRequest("degreeId", request);
+		if (listEnrolmentEvaluation.size() == 0) {
+			ActionErrors actionErrors = new ActionErrors();
+			actionErrors.add("StudentNotEnroled", new ActionError("error.students.Mark.NotAvailable"));
+			saveErrors(request, actionErrors);
+			return chooseCurricularCourses(mapping, form, request, response);
+		}
 
-	List listEnrolmentEvaluation = null;
-	IUserView userView = UserView.getUser();
-	Object args[] = { userView, Integer.valueOf(curricularCourseId), null };
-	try {
-	    listEnrolmentEvaluation = (List) ServiceManagerServiceFactory.executeService(
-		    "ReadStudentMarksListByCurricularCourse", args);
-	} catch (NotAuthorizedException e) {
-	    return mapping.findForward("NotAuthorized");
-	} catch (NonExistingServiceException e) {
-	    ActionErrors errors = new ActionErrors();
-	    errors.add("nonExisting", new ActionError("error.exception.noStudents"));
-	    saveErrors(request, errors);
-	    return chooseCurricularCourses(mapping, form, request, response);
-	} catch (FenixServiceException e) {
-	    throw new FenixActionException(e);
+		InfoEnrolment oneInfoEnrollment = (InfoEnrolment) listEnrolmentEvaluation.get(0);
+		request.setAttribute("oneInfoEnrollment", oneInfoEnrollment);
+
+		return mapping.findForward("showMarksManagementMenu");
 	}
 
-	if (listEnrolmentEvaluation.size() == 0) {
-	    ActionErrors actionErrors = new ActionErrors();
-	    actionErrors.add("StudentNotEnroled", new ActionError("error.students.Mark.NotAvailable"));
-	    saveErrors(request, actionErrors);
-	    return chooseCurricularCourses(mapping, form, request, response);
+	public static String getFromRequest(String parameter, HttpServletRequest request) {
+		String parameterString = request.getParameter(parameter);
+		if (parameterString == null) {
+			parameterString = (String) request.getAttribute(parameter);
+		}
+		if (parameterString != null) {
+			request.setAttribute(parameter, parameterString);
+		}
+		return parameterString;
 	}
-
-	InfoEnrolment oneInfoEnrollment = (InfoEnrolment) listEnrolmentEvaluation.get(0);
-	request.setAttribute("oneInfoEnrollment", oneInfoEnrollment);
-
-	return mapping.findForward("showMarksManagementMenu");
-    }
-
-    public static String getFromRequest(String parameter, HttpServletRequest request) {
-	String parameterString = request.getParameter(parameter);
-	if (parameterString == null) {
-	    parameterString = (String) request.getAttribute(parameter);
-	}
-	if (parameterString != null) {
-	    request.setAttribute(parameter, parameterString);
-	}
-	return parameterString;
-    }
 
 }

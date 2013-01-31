@@ -13,78 +13,78 @@ import org.joda.time.YearMonthDay;
 
 public class RegistrationCurriculumBean extends RegistrationSelectExecutionYearBean implements Serializable, IRegistrationBean {
 
-    private static final long serialVersionUID = 5825221957160251388L;
+	private static final long serialVersionUID = 5825221957160251388L;
 
-    private CycleCurriculumGroup cycleCurriculumGroup;
+	private CycleCurriculumGroup cycleCurriculumGroup;
 
-    public RegistrationCurriculumBean(Registration registration) {
-	setRegistration(registration);
+	public RegistrationCurriculumBean(Registration registration) {
+		setRegistration(registration);
 
-	if (registration.isBolonha()) {
-	    final List<CycleCurriculumGroup> internalCycleCurriculumGrops = registration.getLastStudentCurricularPlan()
-		    .getInternalCycleCurriculumGrops();
-	    if (internalCycleCurriculumGrops.size() == 1) {
-		setCycleCurriculumGroup(internalCycleCurriculumGrops.iterator().next());
-	    }
+		if (registration.isBolonha()) {
+			final List<CycleCurriculumGroup> internalCycleCurriculumGrops =
+					registration.getLastStudentCurricularPlan().getInternalCycleCurriculumGrops();
+			if (internalCycleCurriculumGrops.size() == 1) {
+				setCycleCurriculumGroup(internalCycleCurriculumGrops.iterator().next());
+			}
+		}
 	}
-    }
 
-    public CycleCurriculumGroup getCycleCurriculumGroup() {
-	return this.cycleCurriculumGroup;
-    }
-
-    public void setCycleCurriculumGroup(CycleCurriculumGroup cycleCurriculumGroup) {
-	this.cycleCurriculumGroup = cycleCurriculumGroup;
-    }
-
-    public boolean hasCycleCurriculumGroup() {
-	return cycleCurriculumGroup != null;
-    }
-
-    public Integer getFinalAverage() {
-	if (hasCycleCurriculumGroup() && getCycleCurriculumGroup().isConclusionProcessed()) {
-	    return getCycleCurriculumGroup().getFinalAverage();
-	} else if (getRegistration().isRegistrationConclusionProcessed()) {
-	    return getRegistration().getFinalAverage();
-	} else {
-	    return null;
+	public CycleCurriculumGroup getCycleCurriculumGroup() {
+		return this.cycleCurriculumGroup;
 	}
-    }
 
-    public BigDecimal getAverage() {
-	return hasCycleCurriculumGroup() ? getCycleCurriculumGroup().calculateAverage() : getRegistration().calculateAverage();
-    }
-
-    public YearMonthDay getConclusionDate() {
-	if (hasCycleCurriculumGroup() && getCycleCurriculumGroup().isConclusionProcessed()) {
-	    return getCycleCurriculumGroup().getConclusionDate();
-	} else if (getRegistration().isRegistrationConclusionProcessed()) {
-	    return getRegistration().getConclusionDate();
-	} else {
-	    return null;
+	public void setCycleCurriculumGroup(CycleCurriculumGroup cycleCurriculumGroup) {
+		this.cycleCurriculumGroup = cycleCurriculumGroup;
 	}
-    }
 
-    public double getEctsCredits() {
-	return hasCycleCurriculumGroup() ? getCycleCurriculumGroup().getCreditsConcluded() : getRegistration().getEctsCredits();
-    }
+	public boolean hasCycleCurriculumGroup() {
+		return cycleCurriculumGroup != null;
+	}
 
-    public ICurriculum getCurriculum(final ExecutionYear executionYear) {
-	return hasCycleCurriculumGroup() ? getCycleCurriculumGroup().getCurriculum(executionYear) : getRegistration()
-		.getCurriculum(executionYear);
-    }
+	public Integer getFinalAverage() {
+		if (hasCycleCurriculumGroup() && getCycleCurriculumGroup().isConclusionProcessed()) {
+			return getCycleCurriculumGroup().getFinalAverage();
+		} else if (getRegistration().isRegistrationConclusionProcessed()) {
+			return getRegistration().getFinalAverage();
+		} else {
+			return null;
+		}
+	}
 
-    public ICurriculum getCurriculum() {
-	return hasCycleCurriculumGroup() ? getCycleCurriculumGroup().getCurriculum() : getRegistration().getCurriculum();
-    }
+	public BigDecimal getAverage() {
+		return hasCycleCurriculumGroup() ? getCycleCurriculumGroup().calculateAverage() : getRegistration().calculateAverage();
+	}
 
-    public boolean isConcluded() {
-	return hasCycleCurriculumGroup() ? getCycleCurriculumGroup().isConcluded() : getRegistration().hasConcluded();
-    }
+	public YearMonthDay getConclusionDate() {
+		if (hasCycleCurriculumGroup() && getCycleCurriculumGroup().isConclusionProcessed()) {
+			return getCycleCurriculumGroup().getConclusionDate();
+		} else if (getRegistration().isRegistrationConclusionProcessed()) {
+			return getRegistration().getConclusionDate();
+		} else {
+			return null;
+		}
+	}
 
-    public boolean isConclusionProcessed() {
-	return hasCycleCurriculumGroup() ? getCycleCurriculumGroup().isConclusionProcessed() : getRegistration()
-		.isRegistrationConclusionProcessed();
-    }
+	public double getEctsCredits() {
+		return hasCycleCurriculumGroup() ? getCycleCurriculumGroup().getCreditsConcluded() : getRegistration().getEctsCredits();
+	}
+
+	public ICurriculum getCurriculum(final ExecutionYear executionYear) {
+		return hasCycleCurriculumGroup() ? getCycleCurriculumGroup().getCurriculum(executionYear) : getRegistration()
+				.getCurriculum(executionYear);
+	}
+
+	public ICurriculum getCurriculum() {
+		return hasCycleCurriculumGroup() ? getCycleCurriculumGroup().getCurriculum() : getRegistration().getCurriculum();
+	}
+
+	public boolean isConcluded() {
+		return hasCycleCurriculumGroup() ? getCycleCurriculumGroup().isConcluded() : getRegistration().hasConcluded();
+	}
+
+	public boolean isConclusionProcessed() {
+		return hasCycleCurriculumGroup() ? getCycleCurriculumGroup().isConclusionProcessed() : getRegistration()
+				.isRegistrationConclusionProcessed();
+	}
 
 }

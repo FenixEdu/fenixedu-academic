@@ -8,12 +8,12 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class DeleteBlueprintVersion extends FenixService {
 
-    @Checked("RolePredicates.SPACE_MANAGER_PREDICATE")
-    @Service
-    public static void run(Blueprint blueprint) {
-	if (blueprint == null) {
-	    throw new DomainException("error.delete.blueprint.no.blueprint");
+	@Checked("RolePredicates.SPACE_MANAGER_PREDICATE")
+	@Service
+	public static void run(Blueprint blueprint) {
+		if (blueprint == null) {
+			throw new DomainException("error.delete.blueprint.no.blueprint");
+		}
+		blueprint.delete();
 	}
-	blueprint.delete();
-    }
 }

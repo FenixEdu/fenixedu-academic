@@ -14,8 +14,9 @@ import pt.ist.fenixWebFramework.renderers.plugin.RenderersRequestProcessor;
  */
 public class FenixRequestProcessorWithTiles extends RenderersRequestProcessor {
 
-    protected boolean processPreprocess(HttpServletRequest request, HttpServletResponse response) {
-	return true;
-    }
+	@Override
+	protected boolean processPreprocess(HttpServletRequest request, HttpServletResponse response) {
+		return true;
+	}
 
 }

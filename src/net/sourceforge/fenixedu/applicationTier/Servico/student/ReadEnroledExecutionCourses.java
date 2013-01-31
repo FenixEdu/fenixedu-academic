@@ -18,49 +18,49 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadEnroledExecutionCourses extends FenixService {
 
-    @Checked("RolePredicates.STUDENT_PREDICATE")
-    @Service
-    public static List<ExecutionCourse> run(final Registration registration) {
+	@Checked("RolePredicates.STUDENT_PREDICATE")
+	@Service
+	public static List<ExecutionCourse> run(final Registration registration) {
 
-	final ExecutionSemester executionSemester = ExecutionSemester.readActualExecutionSemester();
-	final List<ExecutionCourse> result = new ArrayList<ExecutionCourse>();
+		final ExecutionSemester executionSemester = ExecutionSemester.readActualExecutionSemester();
+		final List<ExecutionCourse> result = new ArrayList<ExecutionCourse>();
 
-	for (final Attends attend : registration.getAssociatedAttendsSet()) {
-	    final ExecutionCourse executionCourse = attend.getExecutionCourse();
+		for (final Attends attend : registration.getAssociatedAttendsSet()) {
+			final ExecutionCourse executionCourse = attend.getExecutionCourse();
 
-	    if (executionCourse.getExecutionPeriod() == executionSemester) {
-		final List<Grouping> groupings = executionCourse.getGroupings();
+			if (executionCourse.getExecutionPeriod() == executionSemester) {
+				final List<Grouping> groupings = executionCourse.getGroupings();
 
-		if (checkPeriodEnrollment(groupings) && checkStudentInAttendsSet(groupings, registration)) {
-		    result.add(executionCourse);
+				if (checkPeriodEnrollment(groupings) && checkStudentInAttendsSet(groupings, registration)) {
+					result.add(executionCourse);
+				}
+			}
 		}
-	    }
+		return result;
 	}
-	return result;
-    }
 
-    private static boolean checkPeriodEnrollment(final Grouping grouping) {
-	final IGroupEnrolmentStrategyFactory enrolmentGroupPolicyStrategyFactory = GroupEnrolmentStrategyFactory.getInstance();
-	final IGroupEnrolmentStrategy strategy = enrolmentGroupPolicyStrategyFactory.getGroupEnrolmentStrategyInstance(grouping);
-	return strategy.checkEnrolmentDate(grouping, Calendar.getInstance());
-    }
-
-    private static boolean checkPeriodEnrollment(final List<Grouping> allGroupProperties) {
-	for (final Grouping grouping : allGroupProperties) {
-	    if (checkPeriodEnrollment(grouping)) {
-		return true;
-	    }
+	private static boolean checkPeriodEnrollment(final Grouping grouping) {
+		final IGroupEnrolmentStrategyFactory enrolmentGroupPolicyStrategyFactory = GroupEnrolmentStrategyFactory.getInstance();
+		final IGroupEnrolmentStrategy strategy = enrolmentGroupPolicyStrategyFactory.getGroupEnrolmentStrategyInstance(grouping);
+		return strategy.checkEnrolmentDate(grouping, Calendar.getInstance());
 	}
-	return false;
-    }
 
-    private static boolean checkStudentInAttendsSet(final List<Grouping> allGroupProperties, final Registration registration) {
-	for (final Grouping grouping : allGroupProperties) {
-	    if (grouping.getStudentAttend(registration) != null) {
-		return true;
-	    }
+	private static boolean checkPeriodEnrollment(final List<Grouping> allGroupProperties) {
+		for (final Grouping grouping : allGroupProperties) {
+			if (checkPeriodEnrollment(grouping)) {
+				return true;
+			}
+		}
+		return false;
 	}
-	return false;
-    }
+
+	private static boolean checkStudentInAttendsSet(final List<Grouping> allGroupProperties, final Registration registration) {
+		for (final Grouping grouping : allGroupProperties) {
+			if (grouping.getStudentAttend(registration) != null) {
+				return true;
+			}
+		}
+		return false;
+	}
 
 }

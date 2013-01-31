@@ -7,18 +7,18 @@ import net.sourceforge.fenixedu.domain.phd.notification.PhdNotification;
 import net.sourceforge.fenixedu.domain.phd.notification.PhdNotificationBean;
 
 public class AddNotification extends PhdProgramCandidacyProcessActivity {
-    @Override
-    protected void activityPreConditions(PhdProgramCandidacyProcess process, IUserView userView) {
-	if (!process.isAllowedToManageProcess(userView)) {
-	    throw new PreConditionNotValidException();
+	@Override
+	protected void activityPreConditions(PhdProgramCandidacyProcess process, IUserView userView) {
+		if (!process.isAllowedToManageProcess(userView)) {
+			throw new PreConditionNotValidException();
+		}
 	}
-    }
 
-    @Override
-    protected PhdProgramCandidacyProcess executeActivity(PhdProgramCandidacyProcess process, IUserView userView, Object object) {
-	new PhdNotification((PhdNotificationBean) object);
+	@Override
+	protected PhdProgramCandidacyProcess executeActivity(PhdProgramCandidacyProcess process, IUserView userView, Object object) {
+		new PhdNotification((PhdNotificationBean) object);
 
-	return process;
-    }
+		return process;
+	}
 
 }

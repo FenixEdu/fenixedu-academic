@@ -15,17 +15,17 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class SwitchPublishedExamsFlag extends FenixService {
 
-    @Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
-    @Service
-    public static void run(AcademicInterval academicInterval) {
-	final List<ExecutionDegree> executionDegrees = ExecutionDegree.filterByAcademicInterval(academicInterval);
+	@Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
+	@Service
+	public static void run(AcademicInterval academicInterval) {
+		final List<ExecutionDegree> executionDegrees = ExecutionDegree.filterByAcademicInterval(academicInterval);
 
-	if (!executionDegrees.isEmpty()) {
-	    final Boolean examsPublicationState = new Boolean(!executionDegrees.get(0).getTemporaryExamMap().booleanValue());
+		if (!executionDegrees.isEmpty()) {
+			final Boolean examsPublicationState = new Boolean(!executionDegrees.get(0).getTemporaryExamMap().booleanValue());
 
-	    for (final ExecutionDegree executionDegree : executionDegrees) {
-		executionDegree.setTemporaryExamMap(examsPublicationState);
-	    }
+			for (final ExecutionDegree executionDegree : executionDegrees) {
+				executionDegree.setTemporaryExamMap(examsPublicationState);
+			}
+		}
 	}
-    }
 }

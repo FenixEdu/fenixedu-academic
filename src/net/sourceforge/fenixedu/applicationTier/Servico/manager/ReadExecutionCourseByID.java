@@ -8,13 +8,13 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 
 public class ReadExecutionCourseByID extends FenixService {
 
-    public InfoExecutionCourse run(Integer idInternal) throws FenixServiceException {
-	ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(idInternal);
-	if (executionCourse == null) {
-	    throw new NonExistingServiceException();
-	}
+	public InfoExecutionCourse run(Integer idInternal) throws FenixServiceException {
+		ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(idInternal);
+		if (executionCourse == null) {
+			throw new NonExistingServiceException();
+		}
 
-	return InfoExecutionCourse.newInfoFromDomain(executionCourse);
-    }
+		return InfoExecutionCourse.newInfoFromDomain(executionCourse);
+	}
 
 }

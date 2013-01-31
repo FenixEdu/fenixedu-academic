@@ -7,11 +7,11 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class CreateSupportRequest extends FenixService {
 
-    @Service
-    public static void run(Person person, SupportRequestBean bean) {
+	@Service
+	public static void run(Person person, SupportRequestBean bean) {
 
-	SupportRequestFactory.createSupportRequest(bean.getRequestType(), bean.getRequestContext(), bean.getRequestPriority(),
-		person, bean.getResponseEmail(), bean.getSubject(), bean.getMessage(), bean.getErrorLog());
-    }
+		SupportRequestFactory.createSupportRequest(bean.getRequestType(), bean.getRequestContext(), bean.getRequestPriority(),
+				person, bean.getResponseEmail(), bean.getSubject(), bean.getMessage(), bean.getErrorLog());
+	}
 
 }

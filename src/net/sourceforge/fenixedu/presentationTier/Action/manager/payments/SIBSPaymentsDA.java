@@ -39,284 +39,284 @@ import pt.utl.ist.fenix.tools.util.StringNormalizer;
 @Forwards({ @Forward(name = "prepareUploadSIBSPaymentFiles", path = "/manager/payments/prepareUploadSIBSPaymentFiles.jsp") })
 public class SIBSPaymentsDA extends FenixDispatchAction {
 
-    static private final String PAYMENT_FILE_EXTENSION = "INP";
-    static private final String ZIP_FILE_EXTENSION = "ZIP";
+	static private final String PAYMENT_FILE_EXTENSION = "INP";
+	static private final String ZIP_FILE_EXTENSION = "ZIP";
 
-    static public class UploadBean implements Serializable {
-	private static final long serialVersionUID = 3625314688141697558L;
+	static public class UploadBean implements Serializable {
+		private static final long serialVersionUID = 3625314688141697558L;
 
-	private transient InputStream inputStream;
+		private transient InputStream inputStream;
 
-	private String filename;
+		private String filename;
 
-	public InputStream getInputStream() {
-	    return inputStream;
-	}
-
-	public void setInputStream(InputStream inputStream) {
-	    this.inputStream = inputStream;
-	}
-
-	public String getFilename() {
-	    return filename;
-	}
-
-	public void setFilename(String filename) {
-	    this.filename = StringNormalizer.normalize(filename);
-	}
-    }
-
-    private class ProcessResult {
-
-	private final HttpServletRequest request;
-	private boolean processFailed = false;
-
-	public ProcessResult(HttpServletRequest request) {
-	    this.request = request;
-	}
-
-	public void addMessage(String message, String... args) {
-	    addActionMessage("message", request, message, args);
-	}
-
-	public void addError(String message, String... args) {
-	    addActionMessage("message", request, message, args);
-	    reportFailure();
-	}
-
-	protected void reportFailure() {
-	    processFailed = true;
-	}
-
-	public boolean hasFailed() {
-	    return processFailed;
-	}
-    }
-
-    public ActionForward prepareUploadSIBSPaymentFiles(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
-
-	UploadBean bean = getRenderedObject("uploadBean");
-	RenderUtils.invalidateViewState("uploadBean");
-	if (bean == null) {
-	    bean = new UploadBean();
-	}
-
-	request.setAttribute("uploadBean", bean);
-	return mapping.findForward("prepareUploadSIBSPaymentFiles");
-    }
-
-    public ActionForward uploadSIBSPaymentFiles(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws IOException {
-
-	UploadBean bean = getRenderedObject("uploadBean");
-	RenderUtils.invalidateViewState("uploadBean");
-
-	if (bean == null) {
-	    return prepareUploadSIBSPaymentFiles(mapping, form, request, response);
-	}
-
-	if (StringUtils.endsWithIgnoreCase(bean.getFilename(), ZIP_FILE_EXTENSION)) {
-	    File zipFile = pt.utl.ist.fenix.tools.util.FileUtils.copyToTemporaryFile(bean.getInputStream());
-	    File unzipDir = null;
-	    try {
-		unzipDir = pt.utl.ist.fenix.tools.file.utils.FileUtils.unzipFile(zipFile);
-		if (!unzipDir.isDirectory()) {
-		    addActionMessage("error", request, "error.manager.SIBS.zipException", bean.getFilename());
-		    return prepareUploadSIBSPaymentFiles(mapping, form, request, response);
-		}
-	    } catch (Exception e) {
-		addActionMessage("error", request, "error.manager.SIBS.zipException", getMessage(e));
-		return prepareUploadSIBSPaymentFiles(mapping, form, request, response);
-	    } finally {
-		zipFile.delete();
-	    }
-
-	    recursiveZipProcess(unzipDir, request);
-
-	} else if (StringUtils.endsWithIgnoreCase(bean.getFilename(), PAYMENT_FILE_EXTENSION)) {
-	    File file = pt.utl.ist.fenix.tools.util.FileUtils.copyToTemporaryFile(bean.getInputStream(), bean.getFilename());
-	    ProcessResult result = new ProcessResult(request);
-	    result.addMessage("label.manager.SIBS.processingFile", file.getName());
-	    try {
-		processFile(file, request);
-	    } catch (FileNotFoundException e) {
-		addActionMessage("error", request, "error.manager.SIBS.zipException", getMessage(e));
-	    } catch (IOException e) {
-		addActionMessage("error", request, "error.manager.SIBS.IOException", getMessage(e));
-	    } catch (Exception e) {
-		addActionMessage("error", request, "error.manager.SIBS.fileException", getMessage(e));
-	    } finally {
-		file.delete();
-	    }
-	} else {
-	    addActionMessage("error", request, "error.manager.SIBS.notSupportedExtension", bean.getFilename());
-	}
-	return prepareUploadSIBSPaymentFiles(mapping, form, request, response);
-    }
-
-    private static String getMessage(Exception ex) {
-	String message = (ex.getMessage() == null) ? ex.getClass().getSimpleName() : ex.getMessage();
-
-	ResourceBundle bundle = ResourceBundle.getBundle("resources/ManagerResources");
-	if (bundle.containsKey(message)) {
-	    return bundle.getString(message);
-	}
-
-	return message;
-    }
-
-    private void recursiveZipProcess(File unzipDir, HttpServletRequest request) {
-	File[] filesInZip = unzipDir.listFiles();
-	Arrays.sort(filesInZip);
-
-	for (File file : filesInZip) {
-
-	    if (file.isDirectory()) {
-		recursiveZipProcess(file, request);
-
-	    } else {
-
-		if (!StringUtils.endsWithIgnoreCase(file.getName(), PAYMENT_FILE_EXTENSION)) {
-		    file.delete();
-		    continue;
+		public InputStream getInputStream() {
+			return inputStream;
 		}
 
-		try {
-
-		    processFile(file, request);
-
-		} catch (FileNotFoundException e) {
-		    addActionMessage("message", request, "error.manager.SIBS.zipException", getMessage(e));
-		} catch (IOException e) {
-		    addActionMessage("message", request, "error.manager.SIBS.IOException", getMessage(e));
-		} catch (Exception e) {
-		    addActionMessage("message", request, "error.manager.SIBS.fileException", getMessage(e));
-		} finally {
-		    file.delete();
+		public void setInputStream(InputStream inputStream) {
+			this.inputStream = inputStream;
 		}
-	    }
+
+		public String getFilename() {
+			return filename;
+		}
+
+		public void setFilename(String filename) {
+			this.filename = StringNormalizer.normalize(filename);
+		}
 	}
 
-	unzipDir.delete();
-    }
+	private class ProcessResult {
 
-    private void processFile(File file, HttpServletRequest request) throws IOException {
-	final ProcessResult result = new ProcessResult(request);
-	result.addMessage("label.manager.SIBS.processingFile", file.getName());
+		private final HttpServletRequest request;
+		private boolean processFailed = false;
 
-	FileInputStream fileInputStream = null;
-	try {
-	    fileInputStream = new FileInputStream(file);
-	    final Person person = AccessControl.getPerson();
-	    final SibsIncommingPaymentFile sibsFile = SibsIncommingPaymentFile.parse(file.getName(), fileInputStream);
-
-	    result.addMessage("label.manager.SIBS.linesFound", String.valueOf(sibsFile.getDetailLines().size()));
-	    result.addMessage("label.manager.SIBS.startingProcess");
-
-	    for (final SibsIncommingPaymentFileDetailLine detailLine : sibsFile.getDetailLines()) {
-		try {
-		    processCode(detailLine, person, result);
-		} catch (Exception e) {
-		    result.addError("error.manager.SIBS.processException", detailLine.getCode(), getMessage(e));
+		public ProcessResult(HttpServletRequest request) {
+			this.request = request;
 		}
-	    }
 
-	    result.addMessage("label.manager.SIBS.creatingReport");
+		public void addMessage(String message, String... args) {
+			addActionMessage("message", request, message, args);
+		}
 
-	    if (!result.hasFailed()) {
-		if (SibsPaymentFileProcessReport.hasAny(sibsFile.getWhenProcessedBySibs(), sibsFile.getVersion())) {
-		    result.addMessage("warning.manager.SIBS.reportAlreadyProcessed");
+		public void addError(String message, String... args) {
+			addActionMessage("message", request, message, args);
+			reportFailure();
+		}
+
+		protected void reportFailure() {
+			processFailed = true;
+		}
+
+		public boolean hasFailed() {
+			return processFailed;
+		}
+	}
+
+	public ActionForward prepareUploadSIBSPaymentFiles(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) {
+
+		UploadBean bean = getRenderedObject("uploadBean");
+		RenderUtils.invalidateViewState("uploadBean");
+		if (bean == null) {
+			bean = new UploadBean();
+		}
+
+		request.setAttribute("uploadBean", bean);
+		return mapping.findForward("prepareUploadSIBSPaymentFiles");
+	}
+
+	public ActionForward uploadSIBSPaymentFiles(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws IOException {
+
+		UploadBean bean = getRenderedObject("uploadBean");
+		RenderUtils.invalidateViewState("uploadBean");
+
+		if (bean == null) {
+			return prepareUploadSIBSPaymentFiles(mapping, form, request, response);
+		}
+
+		if (StringUtils.endsWithIgnoreCase(bean.getFilename(), ZIP_FILE_EXTENSION)) {
+			File zipFile = pt.utl.ist.fenix.tools.util.FileUtils.copyToTemporaryFile(bean.getInputStream());
+			File unzipDir = null;
+			try {
+				unzipDir = pt.utl.ist.fenix.tools.file.utils.FileUtils.unzipFile(zipFile);
+				if (!unzipDir.isDirectory()) {
+					addActionMessage("error", request, "error.manager.SIBS.zipException", bean.getFilename());
+					return prepareUploadSIBSPaymentFiles(mapping, form, request, response);
+				}
+			} catch (Exception e) {
+				addActionMessage("error", request, "error.manager.SIBS.zipException", getMessage(e));
+				return prepareUploadSIBSPaymentFiles(mapping, form, request, response);
+			} finally {
+				zipFile.delete();
+			}
+
+			recursiveZipProcess(unzipDir, request);
+
+		} else if (StringUtils.endsWithIgnoreCase(bean.getFilename(), PAYMENT_FILE_EXTENSION)) {
+			File file = pt.utl.ist.fenix.tools.util.FileUtils.copyToTemporaryFile(bean.getInputStream(), bean.getFilename());
+			ProcessResult result = new ProcessResult(request);
+			result.addMessage("label.manager.SIBS.processingFile", file.getName());
+			try {
+				processFile(file, request);
+			} catch (FileNotFoundException e) {
+				addActionMessage("error", request, "error.manager.SIBS.zipException", getMessage(e));
+			} catch (IOException e) {
+				addActionMessage("error", request, "error.manager.SIBS.IOException", getMessage(e));
+			} catch (Exception e) {
+				addActionMessage("error", request, "error.manager.SIBS.fileException", getMessage(e));
+			} finally {
+				file.delete();
+			}
 		} else {
-		    try {
-			createSibsFileReport(sibsFile, result);
-		    } catch (Exception ex) {
-			result.addError("error.manager.SIBS.reportException", getMessage(ex));
-		    }
+			addActionMessage("error", request, "error.manager.SIBS.notSupportedExtension", bean.getFilename());
 		}
-	    } else {
-		result.addError("error.manager.SIBS.nonProcessedCodes");
-	    }
-
-	    result.addMessage("label.manager.SIBS.done");
-
-	} finally {
-	    if (fileInputStream != null) {
-		fileInputStream.close();
-	    }
-	}
-    }
-
-    private void processCode(SibsIncommingPaymentFileDetailLine detailLine, Person person, ProcessResult result) throws Exception {
-
-	final PaymentCode paymentCode = getPaymentCode(detailLine, result);
-
-	if (paymentCode == null) {
-	    result.addMessage("error.manager.SIBS.codeNotFound", detailLine.getCode());
-	    throw new Exception();
+		return prepareUploadSIBSPaymentFiles(mapping, form, request, response);
 	}
 
-	final PaymentCode codeToProcess = getPaymentCodeToProcess(paymentCode,
-		ExecutionYear.readByDateTime(detailLine.getWhenOccuredTransaction()), result);
+	private static String getMessage(Exception ex) {
+		String message = (ex.getMessage() == null) ? ex.getClass().getSimpleName() : ex.getMessage();
 
-	if (codeToProcess.getState() == PaymentCodeState.INVALID) {
-	    result.addMessage("warning.manager.SIBS.invalidCode", codeToProcess.getCode());
+		ResourceBundle bundle = ResourceBundle.getBundle("resources/ManagerResources");
+		if (bundle.containsKey(message)) {
+			return bundle.getString(message);
+		}
+
+		return message;
 	}
 
-	if (codeToProcess.isProcessed() && codeToProcess.getWhenUpdated().isBefore(detailLine.getWhenOccuredTransaction())) {
-	    result.addMessage("warning.manager.SIBS.codeAlreadyProcessed", codeToProcess.getCode());
+	private void recursiveZipProcess(File unzipDir, HttpServletRequest request) {
+		File[] filesInZip = unzipDir.listFiles();
+		Arrays.sort(filesInZip);
+
+		for (File file : filesInZip) {
+
+			if (file.isDirectory()) {
+				recursiveZipProcess(file, request);
+
+			} else {
+
+				if (!StringUtils.endsWithIgnoreCase(file.getName(), PAYMENT_FILE_EXTENSION)) {
+					file.delete();
+					continue;
+				}
+
+				try {
+
+					processFile(file, request);
+
+				} catch (FileNotFoundException e) {
+					addActionMessage("message", request, "error.manager.SIBS.zipException", getMessage(e));
+				} catch (IOException e) {
+					addActionMessage("message", request, "error.manager.SIBS.IOException", getMessage(e));
+				} catch (Exception e) {
+					addActionMessage("message", request, "error.manager.SIBS.fileException", getMessage(e));
+				} finally {
+					file.delete();
+				}
+			}
+		}
+
+		unzipDir.delete();
 	}
 
-	codeToProcess.process(person, detailLine.getAmount(), detailLine.getWhenOccuredTransaction(),
-		detailLine.getSibsTransactionId(), StringUtils.EMPTY);
+	private void processFile(File file, HttpServletRequest request) throws IOException {
+		final ProcessResult result = new ProcessResult(request);
+		result.addMessage("label.manager.SIBS.processingFile", file.getName());
 
-    }
+		FileInputStream fileInputStream = null;
+		try {
+			fileInputStream = new FileInputStream(file);
+			final Person person = AccessControl.getPerson();
+			final SibsIncommingPaymentFile sibsFile = SibsIncommingPaymentFile.parse(file.getName(), fileInputStream);
 
-    private void createSibsFileReport(SibsIncommingPaymentFile sibsIncomingPaymentFile, ProcessResult result) throws Exception {
-	final SibsPaymentFileProcessReportDTO reportDTO = new SibsPaymentFileProcessReportDTO(sibsIncomingPaymentFile);
-	for (final SibsIncommingPaymentFileDetailLine detailLine : sibsIncomingPaymentFile.getDetailLines()) {
-	    reportDTO.addAmount(detailLine, getPaymentCode(detailLine, result));
+			result.addMessage("label.manager.SIBS.linesFound", String.valueOf(sibsFile.getDetailLines().size()));
+			result.addMessage("label.manager.SIBS.startingProcess");
+
+			for (final SibsIncommingPaymentFileDetailLine detailLine : sibsFile.getDetailLines()) {
+				try {
+					processCode(detailLine, person, result);
+				} catch (Exception e) {
+					result.addError("error.manager.SIBS.processException", detailLine.getCode(), getMessage(e));
+				}
+			}
+
+			result.addMessage("label.manager.SIBS.creatingReport");
+
+			if (!result.hasFailed()) {
+				if (SibsPaymentFileProcessReport.hasAny(sibsFile.getWhenProcessedBySibs(), sibsFile.getVersion())) {
+					result.addMessage("warning.manager.SIBS.reportAlreadyProcessed");
+				} else {
+					try {
+						createSibsFileReport(sibsFile, result);
+					} catch (Exception ex) {
+						result.addError("error.manager.SIBS.reportException", getMessage(ex));
+					}
+				}
+			} else {
+				result.addError("error.manager.SIBS.nonProcessedCodes");
+			}
+
+			result.addMessage("label.manager.SIBS.done");
+
+		} finally {
+			if (fileInputStream != null) {
+				fileInputStream.close();
+			}
+		}
 	}
-	SibsPaymentFileProcessReport.create(reportDTO);
-	result.addMessage("label.manager.SIBS.reportCreated");
-    }
 
-    private PaymentCode getPaymentCodeToProcess(final PaymentCode paymentCode, ExecutionYear executionYear, ProcessResult result) {
+	private void processCode(SibsIncommingPaymentFileDetailLine detailLine, Person person, ProcessResult result) throws Exception {
 
-	final PaymentCodeMapping mapping = paymentCode.getOldPaymentCodeMapping(executionYear);
+		final PaymentCode paymentCode = getPaymentCode(detailLine, result);
 
-	final PaymentCode codeToProcess;
-	if (mapping != null) {
+		if (paymentCode == null) {
+			result.addMessage("error.manager.SIBS.codeNotFound", detailLine.getCode());
+			throw new Exception();
+		}
 
-	    result.addMessage("warning.manager.SIBS.foundMapping", paymentCode.getCode(), mapping.getNewPaymentCode().getCode());
-	    result.addMessage("warning.manager.SIBS.invalidating", paymentCode.getCode());
+		final PaymentCode codeToProcess =
+				getPaymentCodeToProcess(paymentCode, ExecutionYear.readByDateTime(detailLine.getWhenOccuredTransaction()), result);
 
-	    codeToProcess = mapping.getNewPaymentCode();
-	    paymentCode.setState(PaymentCodeState.INVALID);
+		if (codeToProcess.getState() == PaymentCodeState.INVALID) {
+			result.addMessage("warning.manager.SIBS.invalidCode", codeToProcess.getCode());
+		}
 
-	} else {
-	    codeToProcess = paymentCode;
+		if (codeToProcess.isProcessed() && codeToProcess.getWhenUpdated().isBefore(detailLine.getWhenOccuredTransaction())) {
+			result.addMessage("warning.manager.SIBS.codeAlreadyProcessed", codeToProcess.getCode());
+		}
+
+		codeToProcess.process(person, detailLine.getAmount(), detailLine.getWhenOccuredTransaction(),
+				detailLine.getSibsTransactionId(), StringUtils.EMPTY);
+
 	}
 
-	return codeToProcess;
-    }
+	private void createSibsFileReport(SibsIncommingPaymentFile sibsIncomingPaymentFile, ProcessResult result) throws Exception {
+		final SibsPaymentFileProcessReportDTO reportDTO = new SibsPaymentFileProcessReportDTO(sibsIncomingPaymentFile);
+		for (final SibsIncommingPaymentFileDetailLine detailLine : sibsIncomingPaymentFile.getDetailLines()) {
+			reportDTO.addAmount(detailLine, getPaymentCode(detailLine, result));
+		}
+		SibsPaymentFileProcessReport.create(reportDTO);
+		result.addMessage("label.manager.SIBS.reportCreated");
+	}
 
-    private PaymentCode getPaymentCode(final SibsIncommingPaymentFileDetailLine detailLine, ProcessResult result) {
-	return getPaymentCode(detailLine.getCode(), result);
-    }
+	private PaymentCode getPaymentCodeToProcess(final PaymentCode paymentCode, ExecutionYear executionYear, ProcessResult result) {
 
-    private PaymentCode getPaymentCode(final String code, ProcessResult result) {
-	/*
-	 * TODO:
-	 * 
-	 * 09/07/2009 - Payments are not related only to students. readAll() may
-	 * be heavy to get the PaymentCode.
-	 * 
-	 * 
-	 * Ask Nadir and Joao what is best way to deal with PaymentCode
-	 * retrieval.
-	 */
+		final PaymentCodeMapping mapping = paymentCode.getOldPaymentCodeMapping(executionYear);
 
-	return PaymentCode.readByCode(code);
-    }
+		final PaymentCode codeToProcess;
+		if (mapping != null) {
+
+			result.addMessage("warning.manager.SIBS.foundMapping", paymentCode.getCode(), mapping.getNewPaymentCode().getCode());
+			result.addMessage("warning.manager.SIBS.invalidating", paymentCode.getCode());
+
+			codeToProcess = mapping.getNewPaymentCode();
+			paymentCode.setState(PaymentCodeState.INVALID);
+
+		} else {
+			codeToProcess = paymentCode;
+		}
+
+		return codeToProcess;
+	}
+
+	private PaymentCode getPaymentCode(final SibsIncommingPaymentFileDetailLine detailLine, ProcessResult result) {
+		return getPaymentCode(detailLine.getCode(), result);
+	}
+
+	private PaymentCode getPaymentCode(final String code, ProcessResult result) {
+		/*
+		 * TODO:
+		 * 
+		 * 09/07/2009 - Payments are not related only to students. readAll() may
+		 * be heavy to get the PaymentCode.
+		 * 
+		 * 
+		 * Ask Nadir and Joao what is best way to deal with PaymentCode
+		 * retrieval.
+		 */
+
+		return PaymentCode.readByCode(code);
+	}
 }

@@ -30,152 +30,152 @@ import org.apache.commons.lang.StringUtils;
  * 
  */
 public class CurricularPlansMembersManagementBackingBean extends FenixBackingBean {
-    private final ResourceBundle scouncilBundle = getResourceBundle("resources/ScientificCouncilResources");
+	private final ResourceBundle scouncilBundle = getResourceBundle("resources/ScientificCouncilResources");
 
-    private Integer[] selectedPersonsIDsToAdd;
-    private Integer[] selectedPersonsIDsToRemove;
+	private Integer[] selectedPersonsIDsToAdd;
+	private Integer[] selectedPersonsIDsToRemove;
 
-    private String istIdToAdd;
+	private String istIdToAdd;
 
-    public void addMembers(ActionEvent event) throws FenixFilterException, FenixServiceException {
-	if (!StringUtils.isEmpty(this.istIdToAdd)) {
-	    Person person = Person.findByUsername(this.istIdToAdd);
+	public void addMembers(ActionEvent event) throws FenixFilterException, FenixServiceException {
+		if (!StringUtils.isEmpty(this.istIdToAdd)) {
+			Person person = Person.findByUsername(this.istIdToAdd);
 
-	    if (person != null) {
-		Integer[] personToAdd = new Integer[] { person.getIdInternal() };
+			if (person != null) {
+				Integer[] personToAdd = new Integer[] { person.getIdInternal() };
 
-		UpdateDegreeCurricularPlanMembersGroup.run(getDegreeCurricularPlan(), personToAdd, null);
-	    }
-	}
-
-	selectedPersonsIDsToAdd = null;
-	selectedPersonsIDsToRemove = null;
-    }
-
-    public void removeMembers(ActionEvent event) throws FenixFilterException, FenixServiceException {
-	if (selectedPersonsIDsToRemove != null) {
-
-	    UpdateDegreeCurricularPlanMembersGroup.run(getDegreeCurricularPlan(), null, selectedPersonsIDsToRemove);
-	}
-	// avoid preset check-boxes after action
-	selectedPersonsIDsToAdd = null;
-	selectedPersonsIDsToRemove = null;
-    }
-
-    public DegreeCurricularPlan getDegreeCurricularPlan() {
-	return rootDomainObject.readDegreeCurricularPlanByOID(getSelectedCurricularPlanID());
-    }
-
-    private Department getDepartment() {
-	if (getSelectedDepartmentID() != null) {
-	    return rootDomainObject.readDepartmentByOID(getSelectedDepartmentID());
-	}
-	return null;
-    }
-
-    public List<SelectItem> getDepartments() {
-	List<SelectItem> result = new ArrayList<SelectItem>();
-	result.add(new SelectItem(0, scouncilBundle.getString("choose")));
-	for (Department department : rootDomainObject.getDepartments()) {
-	    result.add(new SelectItem(department.getIdInternal(), department.getRealName()));
-	}
-
-	return result;
-    }
-
-    public List<SelectItem> getGroupMembers() {
-	List<SelectItem> result = new ArrayList<SelectItem>();
-
-	Group curricularPlanMembersGroup = getDegreeCurricularPlan().getCurricularPlanMembersGroup();
-	if (curricularPlanMembersGroup != null) {
-	    for (Person person : curricularPlanMembersGroup.getElements()) {
-		result.add(new SelectItem(person.getIdInternal(), person.getName() + " (" + person.getUsername() + ")"));
-	    }
-	}
-
-	return result;
-    }
-
-    public List<String> getGroupMembersLabels() {
-	List<String> result = new ArrayList<String>();
-
-	Group curricularPlanMembersGroup = getDegreeCurricularPlan().getCurricularPlanMembersGroup();
-	if (curricularPlanMembersGroup != null) {
-	    for (Person person : curricularPlanMembersGroup.getElements()) {
-		result.add(person.getName() + " (" + person.getUsername() + ")");
-	    }
-	}
-
-	return result;
-    }
-
-    public List<SelectItem> getDepartmentEmployees() {
-	List<SelectItem> result = new ArrayList<SelectItem>();
-
-	Department department = getDepartment();
-	if (department != null) {
-	    List<Employee> employees = new ArrayList<Employee>(getDepartment().getAllCurrentActiveWorkingEmployees());
-	    ComparatorChain chainComparator = new ComparatorChain();
-	    chainComparator.addComparator(new BeanComparator("person.name"), false);
-	    chainComparator.addComparator(new BeanComparator("employeeNumber"), false);
-	    Collections.sort(employees, chainComparator);
-
-	    Group curricularPlanMembersGroup = this.getDegreeCurricularPlan().getCurricularPlanMembersGroup();
-	    for (Employee departmentEmployee : employees) {
-		Person person = departmentEmployee.getPerson();
-		if (curricularPlanMembersGroup == null || !curricularPlanMembersGroup.isMember(person)) {
-		    result.add(new SelectItem(person.getIdInternal(), person.getName() + " (" + person.getUsername() + ")"));
+				UpdateDegreeCurricularPlanMembersGroup.run(getDegreeCurricularPlan(), personToAdd, null);
+			}
 		}
-	    }
+
+		selectedPersonsIDsToAdd = null;
+		selectedPersonsIDsToRemove = null;
 	}
 
-	return result;
-    }
+	public void removeMembers(ActionEvent event) throws FenixFilterException, FenixServiceException {
+		if (selectedPersonsIDsToRemove != null) {
 
-    public Integer[] getSelectedPersonsIDsToRemove() {
-	return selectedPersonsIDsToRemove;
-    }
-
-    public void setSelectedPersonsIDsToRemove(Integer[] selectedPersonsIDsToRemove) {
-	this.selectedPersonsIDsToRemove = selectedPersonsIDsToRemove;
-    }
-
-    public Integer[] getSelectedPersonsIDsToAdd() {
-	return selectedPersonsIDsToAdd;
-    }
-
-    public void setSelectedPersonsIDsToAdd(Integer[] selectedPersonsIDsToAdd) {
-	this.selectedPersonsIDsToAdd = selectedPersonsIDsToAdd;
-    }
-
-    public Integer getSelectedCurricularPlanID() {
-	if (this.getViewState().getAttribute("selectedCurricularPlanID") != null) {
-	    return (Integer) this.getViewState().getAttribute("selectedCurricularPlanID");
-	} else if (getAndHoldIntegerParameter("dcpId") != null) {
-	    return (Integer) getAndHoldIntegerParameter("dcpId");
-	} else {
-	    return (Integer) getAndHoldIntegerParameter("degreeCurricularPlanID");
+			UpdateDegreeCurricularPlanMembersGroup.run(getDegreeCurricularPlan(), null, selectedPersonsIDsToRemove);
+		}
+		// avoid preset check-boxes after action
+		selectedPersonsIDsToAdd = null;
+		selectedPersonsIDsToRemove = null;
 	}
-    }
 
-    public void setSelectedCurricularPlanID(Integer selectedCurricularPlanID) {
-	this.getViewState().setAttribute("selectedCurricularPlanID", selectedCurricularPlanID);
-    }
+	public DegreeCurricularPlan getDegreeCurricularPlan() {
+		return rootDomainObject.readDegreeCurricularPlanByOID(getSelectedCurricularPlanID());
+	}
 
-    public Integer getSelectedDepartmentID() {
-	return (Integer) this.getViewState().getAttribute("selectedDepartmentID");
-    }
+	private Department getDepartment() {
+		if (getSelectedDepartmentID() != null) {
+			return rootDomainObject.readDepartmentByOID(getSelectedDepartmentID());
+		}
+		return null;
+	}
 
-    public void setSelectedDepartmentID(Integer selectedDepartmentID) {
-	this.getViewState().setAttribute("selectedDepartmentID", selectedDepartmentID);
-    }
+	public List<SelectItem> getDepartments() {
+		List<SelectItem> result = new ArrayList<SelectItem>();
+		result.add(new SelectItem(0, scouncilBundle.getString("choose")));
+		for (Department department : rootDomainObject.getDepartments()) {
+			result.add(new SelectItem(department.getIdInternal(), department.getRealName()));
+		}
 
-    public String getIstIdToAdd() {
-	return istIdToAdd;
-    }
+		return result;
+	}
 
-    public void setIstIdToAdd(String istIdToAdd) {
-	this.istIdToAdd = istIdToAdd;
-    }
+	public List<SelectItem> getGroupMembers() {
+		List<SelectItem> result = new ArrayList<SelectItem>();
+
+		Group curricularPlanMembersGroup = getDegreeCurricularPlan().getCurricularPlanMembersGroup();
+		if (curricularPlanMembersGroup != null) {
+			for (Person person : curricularPlanMembersGroup.getElements()) {
+				result.add(new SelectItem(person.getIdInternal(), person.getName() + " (" + person.getUsername() + ")"));
+			}
+		}
+
+		return result;
+	}
+
+	public List<String> getGroupMembersLabels() {
+		List<String> result = new ArrayList<String>();
+
+		Group curricularPlanMembersGroup = getDegreeCurricularPlan().getCurricularPlanMembersGroup();
+		if (curricularPlanMembersGroup != null) {
+			for (Person person : curricularPlanMembersGroup.getElements()) {
+				result.add(person.getName() + " (" + person.getUsername() + ")");
+			}
+		}
+
+		return result;
+	}
+
+	public List<SelectItem> getDepartmentEmployees() {
+		List<SelectItem> result = new ArrayList<SelectItem>();
+
+		Department department = getDepartment();
+		if (department != null) {
+			List<Employee> employees = new ArrayList<Employee>(getDepartment().getAllCurrentActiveWorkingEmployees());
+			ComparatorChain chainComparator = new ComparatorChain();
+			chainComparator.addComparator(new BeanComparator("person.name"), false);
+			chainComparator.addComparator(new BeanComparator("employeeNumber"), false);
+			Collections.sort(employees, chainComparator);
+
+			Group curricularPlanMembersGroup = this.getDegreeCurricularPlan().getCurricularPlanMembersGroup();
+			for (Employee departmentEmployee : employees) {
+				Person person = departmentEmployee.getPerson();
+				if (curricularPlanMembersGroup == null || !curricularPlanMembersGroup.isMember(person)) {
+					result.add(new SelectItem(person.getIdInternal(), person.getName() + " (" + person.getUsername() + ")"));
+				}
+			}
+		}
+
+		return result;
+	}
+
+	public Integer[] getSelectedPersonsIDsToRemove() {
+		return selectedPersonsIDsToRemove;
+	}
+
+	public void setSelectedPersonsIDsToRemove(Integer[] selectedPersonsIDsToRemove) {
+		this.selectedPersonsIDsToRemove = selectedPersonsIDsToRemove;
+	}
+
+	public Integer[] getSelectedPersonsIDsToAdd() {
+		return selectedPersonsIDsToAdd;
+	}
+
+	public void setSelectedPersonsIDsToAdd(Integer[] selectedPersonsIDsToAdd) {
+		this.selectedPersonsIDsToAdd = selectedPersonsIDsToAdd;
+	}
+
+	public Integer getSelectedCurricularPlanID() {
+		if (this.getViewState().getAttribute("selectedCurricularPlanID") != null) {
+			return (Integer) this.getViewState().getAttribute("selectedCurricularPlanID");
+		} else if (getAndHoldIntegerParameter("dcpId") != null) {
+			return getAndHoldIntegerParameter("dcpId");
+		} else {
+			return getAndHoldIntegerParameter("degreeCurricularPlanID");
+		}
+	}
+
+	public void setSelectedCurricularPlanID(Integer selectedCurricularPlanID) {
+		this.getViewState().setAttribute("selectedCurricularPlanID", selectedCurricularPlanID);
+	}
+
+	public Integer getSelectedDepartmentID() {
+		return (Integer) this.getViewState().getAttribute("selectedDepartmentID");
+	}
+
+	public void setSelectedDepartmentID(Integer selectedDepartmentID) {
+		this.getViewState().setAttribute("selectedDepartmentID", selectedDepartmentID);
+	}
+
+	public String getIstIdToAdd() {
+		return istIdToAdd;
+	}
+
+	public void setIstIdToAdd(String istIdToAdd) {
+		this.istIdToAdd = istIdToAdd;
+	}
 
 }

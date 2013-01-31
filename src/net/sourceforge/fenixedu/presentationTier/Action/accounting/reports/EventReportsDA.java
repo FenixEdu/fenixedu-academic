@@ -18,90 +18,90 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 public abstract class EventReportsDA extends FenixDispatchAction {
 
-    public ActionForward listReports(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request,
-	    final HttpServletResponse response) {
-	List<EventReportQueueJob> doneJobs = readDoneReports();
-	List<EventReportQueueJob> pendingOrCancelledJobs = readPendingOrCancelledJobs();
-	
-	request.setAttribute("doneJobs", doneJobs);
-	request.setAttribute("pendingOrCancelledJobs", pendingOrCancelledJobs);
+	public ActionForward listReports(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request,
+			final HttpServletResponse response) {
+		List<EventReportQueueJob> doneJobs = readDoneReports();
+		List<EventReportQueueJob> pendingOrCancelledJobs = readPendingOrCancelledJobs();
 
-	return mapping.findForward("listReports");
-    }
+		request.setAttribute("doneJobs", doneJobs);
+		request.setAttribute("pendingOrCancelledJobs", pendingOrCancelledJobs);
 
-    protected abstract List<EventReportQueueJob> readPendingOrCancelledJobs();
-
-    protected abstract List<EventReportQueueJob> readDoneReports();
-
-    public ActionForward prepareCreateReportRequest(final ActionMapping mapping, final ActionForm form,
-	    final HttpServletRequest request, final HttpServletResponse response) {
-	EventReportQueueJobBean bean = createEventReportQueueJobBean();
-
-	request.setAttribute("bean", bean);
-
-	return mapping.findForward("createReportRequest");
-    }
-
-    protected abstract EventReportQueueJobBean createEventReportQueueJobBean();
-
-    public ActionForward createReportRequest(final ActionMapping mapping, final ActionForm form,
-	    final HttpServletRequest request, final HttpServletResponse response) {
-	EventReportQueueJobBean bean = getRenderedObject("bean");
-
-	try {
-	    EventReportQueueJob.createRequest(bean);
-	} catch (DomainException e) {
-	    addActionMessage("error", request, e.getKey(), e.getArgs());
-	    return createReportRequestInvalid(mapping, form, request, response);
-	}
-	
-	return listReports(mapping, form, request, response);
-    }
-
-    public ActionForward createReportRequestPostback(final ActionMapping mapping, final ActionForm form,
-	    final HttpServletRequest request, final HttpServletResponse response) {
-	EventReportQueueJobBean bean = getRenderedObject("bean");
-
-	request.setAttribute("bean", bean);
-	RenderUtils.invalidateViewState();
-
-	return mapping.findForward("createReportRequest");
-    }
-
-    public ActionForward createReportRequestInvalid(final ActionMapping mapping, final ActionForm form,
-	    final HttpServletRequest request, final HttpServletResponse response) {
-	EventReportQueueJobBean bean = getRenderedObject("bean");
-
-	request.setAttribute("bean", bean);
-
-	return mapping.findForward("createReportRequest");
-    }
-
-    public ActionForward cancelReportRequest(final ActionMapping mapping, final ActionForm form,
-	    final HttpServletRequest request, final HttpServletResponse response) {
-	EventReportQueueJob job = readEventReportQueueJob(request);
-
-	try {
-	    job.cancel();
-	} catch (DomainException e) {
-	    addActionMessage("error", request, e.getKey(), e.getArgs());
-	    return listReports(mapping, form, request, response);
+		return mapping.findForward("listReports");
 	}
 
-	return listReports(mapping, form, request, response);
-    }
+	protected abstract List<EventReportQueueJob> readPendingOrCancelledJobs();
 
-    public ActionForward viewRequest(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request,
-	    final HttpServletResponse response) {
-	EventReportQueueJob queueJob = readEventReportQueueJob(request);
+	protected abstract List<EventReportQueueJob> readDoneReports();
 
-	request.setAttribute("queueJob", queueJob);
+	public ActionForward prepareCreateReportRequest(final ActionMapping mapping, final ActionForm form,
+			final HttpServletRequest request, final HttpServletResponse response) {
+		EventReportQueueJobBean bean = createEventReportQueueJobBean();
 
-	return mapping.findForward("viewRequest");
-    }
+		request.setAttribute("bean", bean);
 
-    public EventReportQueueJob readEventReportQueueJob(HttpServletRequest request) {
-	return getDomainObject(request, "queueJobId");
-    }
+		return mapping.findForward("createReportRequest");
+	}
+
+	protected abstract EventReportQueueJobBean createEventReportQueueJobBean();
+
+	public ActionForward createReportRequest(final ActionMapping mapping, final ActionForm form,
+			final HttpServletRequest request, final HttpServletResponse response) {
+		EventReportQueueJobBean bean = getRenderedObject("bean");
+
+		try {
+			EventReportQueueJob.createRequest(bean);
+		} catch (DomainException e) {
+			addActionMessage("error", request, e.getKey(), e.getArgs());
+			return createReportRequestInvalid(mapping, form, request, response);
+		}
+
+		return listReports(mapping, form, request, response);
+	}
+
+	public ActionForward createReportRequestPostback(final ActionMapping mapping, final ActionForm form,
+			final HttpServletRequest request, final HttpServletResponse response) {
+		EventReportQueueJobBean bean = getRenderedObject("bean");
+
+		request.setAttribute("bean", bean);
+		RenderUtils.invalidateViewState();
+
+		return mapping.findForward("createReportRequest");
+	}
+
+	public ActionForward createReportRequestInvalid(final ActionMapping mapping, final ActionForm form,
+			final HttpServletRequest request, final HttpServletResponse response) {
+		EventReportQueueJobBean bean = getRenderedObject("bean");
+
+		request.setAttribute("bean", bean);
+
+		return mapping.findForward("createReportRequest");
+	}
+
+	public ActionForward cancelReportRequest(final ActionMapping mapping, final ActionForm form,
+			final HttpServletRequest request, final HttpServletResponse response) {
+		EventReportQueueJob job = readEventReportQueueJob(request);
+
+		try {
+			job.cancel();
+		} catch (DomainException e) {
+			addActionMessage("error", request, e.getKey(), e.getArgs());
+			return listReports(mapping, form, request, response);
+		}
+
+		return listReports(mapping, form, request, response);
+	}
+
+	public ActionForward viewRequest(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request,
+			final HttpServletResponse response) {
+		EventReportQueueJob queueJob = readEventReportQueueJob(request);
+
+		request.setAttribute("queueJob", queueJob);
+
+		return mapping.findForward("viewRequest");
+	}
+
+	public EventReportQueueJob readEventReportQueueJob(HttpServletRequest request) {
+		return getDomainObject(request, "queueJobId");
+	}
 
 }

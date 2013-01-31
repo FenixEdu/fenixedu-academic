@@ -16,35 +16,35 @@ import org.joda.time.YearMonthDay;
  */
 public class RegisterCandidacyBean implements Serializable {
 
-    private EnrolmentModel enrolmentModel;
+	private EnrolmentModel enrolmentModel;
 
-    private YearMonthDay startDate = new YearMonthDay();
+	private YearMonthDay startDate = new YearMonthDay();
 
-    private StudentCandidacy candidacy;
+	private StudentCandidacy candidacy;
 
-    public RegisterCandidacyBean(StudentCandidacy candidacy) {
-	super();
-	this.candidacy = candidacy;
-    }
+	public RegisterCandidacyBean(StudentCandidacy candidacy) {
+		super();
+		this.candidacy = candidacy;
+	}
 
-    public EnrolmentModel getEnrolmentModel() {
-	return enrolmentModel;
-    }
+	public EnrolmentModel getEnrolmentModel() {
+		return enrolmentModel;
+	}
 
-    public void setEnrolmentModel(EnrolmentModel enrolmentModel) {
-	this.enrolmentModel = enrolmentModel;
-    }
+	public void setEnrolmentModel(EnrolmentModel enrolmentModel) {
+		this.enrolmentModel = enrolmentModel;
+	}
 
-    public YearMonthDay getStartDate() {
-	return startDate;
-    }
+	public YearMonthDay getStartDate() {
+		return startDate;
+	}
 
-    public void setStartDate(YearMonthDay startDate) {
-	this.startDate = startDate;
-    }
+	public void setStartDate(YearMonthDay startDate) {
+		this.startDate = startDate;
+	}
 
-    public StudentCandidacy getCandidacy() {
-	return candidacy;
-    }
+	public StudentCandidacy getCandidacy() {
+		return candidacy;
+	}
 
 }

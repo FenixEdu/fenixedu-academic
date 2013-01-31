@@ -10,27 +10,27 @@ import pt.utl.ist.berserk.ServiceResponse;
 
 public class StudentThesisAuthorizationFilter extends Filtro {
 
-    @Override
-    public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
-	Student student = getStudent(request);
+	@Override
+	public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
+		Student student = getStudent(request);
 
-	if (student == null) {
-	    abort();
+		if (student == null) {
+			abort();
+		}
+
+		Thesis thesis = (Thesis) request.getServiceParameters().getParameter(0);
+		if (thesis.getStudent() != student) {
+			abort();
+		}
 	}
 
-	Thesis thesis = (Thesis) request.getServiceParameters().getParameter(0);
-	if (thesis.getStudent() != student) {
-	    abort();
+	private void abort() throws NotAuthorizedFilterException {
+		throw new NotAuthorizedFilterException();
 	}
-    }
 
-    private void abort() throws NotAuthorizedFilterException {
-	throw new NotAuthorizedFilterException();
-    }
-
-    private Student getStudent(ServiceRequest request) {
-	IUserView userView = getRemoteUser(request);
-	return userView.getPerson().getStudent();
-    }
+	private Student getStudent(ServiceRequest request) {
+		IUserView userView = getRemoteUser(request);
+		return userView.getPerson().getStudent();
+	}
 
 }

@@ -18,74 +18,76 @@ import org.apache.struts.action.ActionMapping;
 
 public class ManageExecutionCourseSiteDA extends SiteManagementDA {
 
-    public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-	propageContextIds(request);
+	@Override
+	public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		propageContextIds(request);
 
-	return super.execute(mapping, actionForm, request, response);
-    }
-
-    public ExecutionCourse getExecutionCourse(HttpServletRequest request) {
-	return (ExecutionCourse) request.getAttribute("executionCourse");
-    }
-
-    public static void propageContextIds(final HttpServletRequest request) {
-	String executionCourseIDString = request.getParameter("executionCourseID");
-
-	if (executionCourseIDString == null || executionCourseIDString.length() == 0) {
-	    executionCourseIDString = request.getParameter("objectCode");
+		return super.execute(mapping, actionForm, request, response);
 	}
 
-	if (executionCourseIDString != null && executionCourseIDString.length() > 0) {
-	    final ExecutionCourse executionCourse = findExecutionCourse(request, Integer.valueOf(executionCourseIDString));
-	    request.setAttribute("executionCourse", executionCourse);
+	public ExecutionCourse getExecutionCourse(HttpServletRequest request) {
+		return (ExecutionCourse) request.getAttribute("executionCourse");
 	}
-    }
 
-    private static ExecutionCourse findExecutionCourse(final HttpServletRequest request, final Integer executionCourseID) {
-	final IUserView userView = getUserView(request);
+	public static void propageContextIds(final HttpServletRequest request) {
+		String executionCourseIDString = request.getParameter("executionCourseID");
 
-	if (userView != null) {
-	    final Person person = userView.getPerson();
-	    if (person != null) {
-		for (final Professorship professorship : person.getProfessorshipsSet()) {
-		    final ExecutionCourse executionCourse = professorship.getExecutionCourse();
-		    if (executionCourse.getIdInternal().equals(executionCourseID)) {
-			return executionCourse;
-		    }
+		if (executionCourseIDString == null || executionCourseIDString.length() == 0) {
+			executionCourseIDString = request.getParameter("objectCode");
 		}
-	    }
+
+		if (executionCourseIDString != null && executionCourseIDString.length() > 0) {
+			final ExecutionCourse executionCourse = findExecutionCourse(request, Integer.valueOf(executionCourseIDString));
+			request.setAttribute("executionCourse", executionCourse);
+		}
 	}
 
-	return null;
-    }
+	private static ExecutionCourse findExecutionCourse(final HttpServletRequest request, final Integer executionCourseID) {
+		final IUserView userView = getUserView(request);
 
-    @Override
-    protected String getAuthorNameForFile(HttpServletRequest request) {
-	return getExecutionCourse(request).getNome();
-    }
+		if (userView != null) {
+			final Person person = userView.getPerson();
+			if (person != null) {
+				for (final Professorship professorship : person.getProfessorshipsSet()) {
+					final ExecutionCourse executionCourse = professorship.getExecutionCourse();
+					if (executionCourse.getIdInternal().equals(executionCourseID)) {
+						return executionCourse;
+					}
+				}
+			}
+		}
 
-    protected Site getSite(HttpServletRequest request) {
-	ExecutionCourse executionCourse = (ExecutionCourse) request.getAttribute("executionCourse");
-
-	if (executionCourse != null) {
-	    return executionCourse.getSite();
-	} else {
-	    return null;
-	}
-    }
-
-    @Override
-    protected String getItemLocationForFile(HttpServletRequest request, Item item, Section section) {
-
-	String path = section.getSite().getReversePath();
-	if (path == null) {
-	    return null;
+		return null;
 	}
 
-	String resourceLocation = request.getScheme() + "://" + request.getServerName() + request.getContextPath() + path
-		+ item.getReversePath();
-	return resourceLocation;
-    }
+	@Override
+	protected String getAuthorNameForFile(HttpServletRequest request) {
+		return getExecutionCourse(request).getNome();
+	}
+
+	@Override
+	protected Site getSite(HttpServletRequest request) {
+		ExecutionCourse executionCourse = (ExecutionCourse) request.getAttribute("executionCourse");
+
+		if (executionCourse != null) {
+			return executionCourse.getSite();
+		} else {
+			return null;
+		}
+	}
+
+	@Override
+	protected String getItemLocationForFile(HttpServletRequest request, Item item, Section section) {
+
+		String path = section.getSite().getReversePath();
+		if (path == null) {
+			return null;
+		}
+
+		String resourceLocation =
+				request.getScheme() + "://" + request.getServerName() + request.getContextPath() + path + item.getReversePath();
+		return resourceLocation;
+	}
 
 }

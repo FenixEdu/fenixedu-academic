@@ -16,13 +16,13 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
  */
 public class ReadCoordinationResponsibility extends FenixService {
 
-    public Boolean run(Integer executionDegreeId, IUserView userView) throws FenixServiceException {
-	ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeId);
-	Coordinator coordinator = executionDegree.getCoordinatorByTeacher(userView.getPerson());
+	public Boolean run(Integer executionDegreeId, IUserView userView) throws FenixServiceException {
+		ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeId);
+		Coordinator coordinator = executionDegree.getCoordinatorByTeacher(userView.getPerson());
 
-	if (coordinator == null || !coordinator.getResponsible().booleanValue()) {
-	    return Boolean.FALSE;
+		if (coordinator == null || !coordinator.getResponsible().booleanValue()) {
+			return Boolean.FALSE;
+		}
+		return Boolean.TRUE;
 	}
-	return Boolean.TRUE;
-    }
 }

@@ -2,12 +2,12 @@ package net.sourceforge.fenixedu.domain;
 
 public enum GraduationType {
 
-    MAJOR_DEGREE,
+	MAJOR_DEGREE,
 
-    MASTER_DEGREE;
+	MASTER_DEGREE;
 
-    public String getName() {
-	return name();
-    }
+	public String getName() {
+		return name();
+	}
 
 }

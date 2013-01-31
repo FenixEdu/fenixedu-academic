@@ -13,22 +13,22 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 
 public class DegreeCurricularPlanAuthorizationFilter extends DomainObjectAuthorizationFilter {
 
-    @Override
-    protected RoleType getRoleType() {
-	return RoleType.COORDINATOR;
-    }
-
-    @Override
-    protected boolean verifyCondition(IUserView id, Integer degreeCurricularPlanID) {
-	final Person person = id.getPerson();
-	final Teacher teacher = person == null ? null : person.getTeacher();
-
-	for (final Coordinator coordinator : person.getCoordinators()) {
-	    if (coordinator.getExecutionDegree().getDegreeCurricularPlan().getIdInternal().equals(degreeCurricularPlanID)) {
-		return true;
-	    }
+	@Override
+	protected RoleType getRoleType() {
+		return RoleType.COORDINATOR;
 	}
-	return false;
-    }
+
+	@Override
+	protected boolean verifyCondition(IUserView id, Integer degreeCurricularPlanID) {
+		final Person person = id.getPerson();
+		final Teacher teacher = person == null ? null : person.getTeacher();
+
+		for (final Coordinator coordinator : person.getCoordinators()) {
+			if (coordinator.getExecutionDegree().getDegreeCurricularPlan().getIdInternal().equals(degreeCurricularPlanID)) {
+				return true;
+			}
+		}
+		return false;
+	}
 
 }

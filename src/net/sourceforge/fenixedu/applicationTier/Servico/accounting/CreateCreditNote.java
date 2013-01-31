@@ -9,11 +9,11 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class CreateCreditNote {
 
-    @Checked("AcademicPredicates.MANAGE_STUDENT_PAYMENTS")
-    @Service
-    public static CreditNote run(final Person responsible, final CreateCreditNoteBean createCreditNoteBean) {
-	return createCreditNoteBean.getReceipt().createCreditNote(responsible, PaymentMode.CASH,
-		createCreditNoteBean.getSelectedEntries());
-    }
+	@Checked("AcademicPredicates.MANAGE_STUDENT_PAYMENTS")
+	@Service
+	public static CreditNote run(final Person responsible, final CreateCreditNoteBean createCreditNoteBean) {
+		return createCreditNoteBean.getReceipt().createCreditNote(responsible, PaymentMode.CASH,
+				createCreditNoteBean.getSelectedEntries());
+	}
 
 }

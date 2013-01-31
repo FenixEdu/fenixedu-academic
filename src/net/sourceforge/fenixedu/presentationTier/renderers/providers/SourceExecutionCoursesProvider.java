@@ -13,42 +13,42 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class SourceExecutionCoursesProvider implements DataProvider {
 
-    @Override
-    public Object provide(Object source, Object currentValue) {
+	@Override
+	public Object provide(Object source, Object currentValue) {
 
-	final DegreesMergeBean degreeBean = (DegreesMergeBean) source;
+		final DegreesMergeBean degreeBean = (DegreesMergeBean) source;
 
-	Degree sourceDegree = degreeBean.getSourceDegree();
+		Degree sourceDegree = degreeBean.getSourceDegree();
 
-	List<ExecutionCourse> sourceExecutionCourses = sourceDegree.getExecutionCourses(degreeBean.getAcademicInterval());
+		List<ExecutionCourse> sourceExecutionCourses = sourceDegree.getExecutionCourses(degreeBean.getAcademicInterval());
 
-	Collections.sort(sourceExecutionCourses, ExecutionCourse.COMPARATOR_BY_ID);
+		Collections.sort(sourceExecutionCourses, ExecutionCourse.COMPARATOR_BY_ID);
 
-	removeDuplicates(sourceExecutionCourses);
+		removeDuplicates(sourceExecutionCourses);
 
-	Collections.sort(sourceExecutionCourses, ExecutionCourse.EXECUTION_COURSE_COMPARATOR_BY_EXECUTION_PERIOD_AND_NAME);
+		Collections.sort(sourceExecutionCourses, ExecutionCourse.EXECUTION_COURSE_COMPARATOR_BY_EXECUTION_PERIOD_AND_NAME);
 
-	return sourceExecutionCourses;
-    }
-
-    public static void removeDuplicates(final List<ExecutionCourse> beanList) {
-	if (beanList.isEmpty()) {
-	    return;
+		return sourceExecutionCourses;
 	}
 
-	final Iterator<ExecutionCourse> iter = beanList.iterator();
-	ExecutionCourse prev = iter.next();
-	while (iter.hasNext()) {
-	    final ExecutionCourse curr = iter.next();
-	    if (curr.equals(prev)) {
-		iter.remove();
-	    }
-	    prev = curr;
-	}
-    }
+	public static void removeDuplicates(final List<ExecutionCourse> beanList) {
+		if (beanList.isEmpty()) {
+			return;
+		}
 
-    @Override
-    public Converter getConverter() {
-	return new DomainObjectKeyConverter();
-    }
+		final Iterator<ExecutionCourse> iter = beanList.iterator();
+		ExecutionCourse prev = iter.next();
+		while (iter.hasNext()) {
+			final ExecutionCourse curr = iter.next();
+			if (curr.equals(prev)) {
+				iter.remove();
+			}
+			prev = curr;
+		}
+	}
+
+	@Override
+	public Converter getConverter() {
+		return new DomainObjectKeyConverter();
+	}
 }

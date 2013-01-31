@@ -25,36 +25,39 @@ import pt.utl.ist.berserk.ServiceResponse;
  */
 public class EditCourseInformationAuthorizationFilter extends AuthorizationByRoleFilter {
 
-    protected RoleType getRoleType() {
-	return RoleType.TEACHER;
-    }
-
-    public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
-	IUserView id = getRemoteUser(request);
-	Object[] arguments = getServiceCallArguments(request);
-
-	try {
-	    if (((id != null && id.getRoleTypes() != null && !id.hasRoleType(getRoleType()))) || (id == null)
-		    || (id.getRoleTypes() == null) || (!isResponsibleFor(id, (InfoCourseReport) arguments[1]))) {
-		throw new NotAuthorizedException();
-	    }
-	} catch (RuntimeException e) {
-	    throw new NotAuthorizedException(e.getMessage());
+	@Override
+	protected RoleType getRoleType() {
+		return RoleType.TEACHER;
 	}
-    }
 
-    private boolean isResponsibleFor(IUserView id, InfoCourseReport infoCourseReport) {
-	final Person person = id.getPerson();
+	@Override
+	public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
+		IUserView id = getRemoteUser(request);
+		Object[] arguments = getServiceCallArguments(request);
 
-	InfoExecutionCourse infoExecutionCourse = infoCourseReport.getInfoExecutionCourse();
-	ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(infoExecutionCourse.getIdInternal());
-
-	List<Professorship> responsiblesFor = executionCourse.responsibleFors();
-
-	for (Professorship professorship : responsiblesFor) {
-	    if (professorship.getPerson() == person)
-		return true;
+		try {
+			if (((id != null && id.getRoleTypes() != null && !id.hasRoleType(getRoleType()))) || (id == null)
+					|| (id.getRoleTypes() == null) || (!isResponsibleFor(id, (InfoCourseReport) arguments[1]))) {
+				throw new NotAuthorizedException();
+			}
+		} catch (RuntimeException e) {
+			throw new NotAuthorizedException(e.getMessage());
+		}
 	}
-	return false;
-    }
+
+	private boolean isResponsibleFor(IUserView id, InfoCourseReport infoCourseReport) {
+		final Person person = id.getPerson();
+
+		InfoExecutionCourse infoExecutionCourse = infoCourseReport.getInfoExecutionCourse();
+		ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(infoExecutionCourse.getIdInternal());
+
+		List<Professorship> responsiblesFor = executionCourse.responsibleFors();
+
+		for (Professorship professorship : responsiblesFor) {
+			if (professorship.getPerson() == person) {
+				return true;
+			}
+		}
+		return false;
+	}
 }

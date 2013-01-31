@@ -9,15 +9,15 @@ import net.sourceforge.fenixedu.domain.phd.PhdProgramProcess;
 
 public class PhdLog {
 
-    public static PhdLogEntry logActivity(final Activity activity, final PhdProgramProcess process,
-	    final IUserView userView, final Object object) {
+	public static PhdLogEntry logActivity(final Activity activity, final PhdProgramProcess process, final IUserView userView,
+			final Object object) {
 
-	ResourceBundle bundle = ResourceBundle.getBundle("resources/PhdResources", new Locale("pt", "PT"));
+		ResourceBundle bundle = ResourceBundle.getBundle("resources/PhdResources", new Locale("pt", "PT"));
 
-	String className = activity.getClass().getName();
-	String message = bundle.getString("label." + className);
+		String className = activity.getClass().getName();
+		String message = bundle.getString("label." + className);
 
-	return PhdLogEntry.createLog(className, message, process);
-    }
+		return PhdLogEntry.createLog(className, message, process);
+	}
 
 }

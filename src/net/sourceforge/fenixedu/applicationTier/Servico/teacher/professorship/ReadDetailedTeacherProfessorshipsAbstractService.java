@@ -25,63 +25,65 @@ import org.apache.commons.collections.Transformer;
  */
 public class ReadDetailedTeacherProfessorshipsAbstractService extends FenixService {
 
-    private final class Professorships2DetailProfessorship implements Transformer {
-	private Professorships2DetailProfessorship() {
-	    super();
+	private final class Professorships2DetailProfessorship implements Transformer {
+		private Professorships2DetailProfessorship() {
+			super();
+		}
+
+		@Override
+		public Object transform(Object input) {
+			Professorship professorship = (Professorship) input;
+			InfoProfessorship infoProfessorShip = InfoProfessorship.newInfoFromDomain(professorship);
+
+			final DetailedProfessorship detailedProfessorship = new DetailedProfessorship();
+
+			ExecutionCourse executionCourse = professorship.getExecutionCourse();
+			List executionCourseCurricularCoursesList = getInfoCurricularCourses(detailedProfessorship, executionCourse);
+
+			detailedProfessorship.setResponsibleFor(professorship.getResponsibleFor());
+
+			detailedProfessorship.setInfoProfessorship(infoProfessorShip);
+			detailedProfessorship.setExecutionCourseCurricularCoursesList(executionCourseCurricularCoursesList);
+
+			return detailedProfessorship;
+		}
+
+		private List getInfoCurricularCourses(final DetailedProfessorship detailedProfessorship, ExecutionCourse executionCourse) {
+
+			List infoCurricularCourses =
+					(List) CollectionUtils.collect(executionCourse.getAssociatedCurricularCourses(), new Transformer() {
+
+						@Override
+						public Object transform(Object input) {
+							CurricularCourse curricularCourse = (CurricularCourse) input;
+							InfoCurricularCourse infoCurricularCourse = InfoCurricularCourse.newInfoFromDomain(curricularCourse);
+							DegreeType degreeType = curricularCourse.getDegreeCurricularPlan().getDegree().getDegreeType();
+							if (degreeType.equals(DegreeType.DEGREE)) {
+								detailedProfessorship.setMasterDegreeOnly(Boolean.FALSE);
+							}
+							return infoCurricularCourse;
+						}
+					});
+			return infoCurricularCourses;
+		}
 	}
 
-	public Object transform(Object input) {
-	    Professorship professorship = (Professorship) input;
-	    InfoProfessorship infoProfessorShip = InfoProfessorship.newInfoFromDomain(professorship);
+	public class NotFoundTeacher extends FenixServiceException {
 
-	    final DetailedProfessorship detailedProfessorship = new DetailedProfessorship();
-
-	    ExecutionCourse executionCourse = professorship.getExecutionCourse();
-	    List executionCourseCurricularCoursesList = getInfoCurricularCourses(detailedProfessorship, executionCourse);
-
-	    detailedProfessorship.setResponsibleFor(professorship.getResponsibleFor());
-
-	    detailedProfessorship.setInfoProfessorship(infoProfessorShip);
-	    detailedProfessorship.setExecutionCourseCurricularCoursesList(executionCourseCurricularCoursesList);
-
-	    return detailedProfessorship;
 	}
 
-	private List getInfoCurricularCourses(final DetailedProfessorship detailedProfessorship, ExecutionCourse executionCourse) {
+	protected List getDetailedProfessorships(List professorships, final List responsibleFors) {
 
-	    List infoCurricularCourses = (List) CollectionUtils.collect(executionCourse.getAssociatedCurricularCourses(),
-		    new Transformer() {
+		List detailedProfessorshipList = (List) CollectionUtils.collect(professorships, new Professorships2DetailProfessorship());
 
-			public Object transform(Object input) {
-			    CurricularCourse curricularCourse = (CurricularCourse) input;
-			    InfoCurricularCourse infoCurricularCourse = InfoCurricularCourse.newInfoFromDomain(curricularCourse);
-			    DegreeType degreeType = curricularCourse.getDegreeCurricularPlan().getDegree().getDegreeType();
-			    if (degreeType.equals(DegreeType.DEGREE)) {
-				detailedProfessorship.setMasterDegreeOnly(Boolean.FALSE);
-			    }
-			    return infoCurricularCourse;
-			}
-		    });
-	    return infoCurricularCourses;
+		return detailedProfessorshipList;
 	}
-    }
 
-    public class NotFoundTeacher extends FenixServiceException {
-
-    }
-
-    protected List getDetailedProfessorships(List professorships, final List responsibleFors) {
-
-	List detailedProfessorshipList = (List) CollectionUtils.collect(professorships, new Professorships2DetailProfessorship());
-
-	return detailedProfessorshipList;
-    }
-
-    protected Teacher readTeacher(Integer teacherId) throws NotFoundTeacher {
-	final Teacher teacher = rootDomainObject.readTeacherByOID(teacherId);
-	if (teacher == null) {
-	    throw new NotFoundTeacher();
+	protected Teacher readTeacher(Integer teacherId) throws NotFoundTeacher {
+		final Teacher teacher = rootDomainObject.readTeacherByOID(teacherId);
+		if (teacher == null) {
+			throw new NotFoundTeacher();
+		}
+		return teacher;
 	}
-	return teacher;
-    }
 }

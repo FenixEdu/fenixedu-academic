@@ -31,197 +31,200 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Mapping(path = "/degreeCurricularPlan/studentEquivalencyPlan", module = "manager")
 @Forwards({ @Forward(name = "showPlan", path = "/academicAdminOffice/degreeCurricularPlan/showStudentEquivalencyPlan.jsp"),
-	@Forward(name = "addEquivalency", path = "/academicAdminOffice/degreeCurricularPlan/addStudentEquivalency.jsp") })
+		@Forward(name = "addEquivalency", path = "/academicAdminOffice/degreeCurricularPlan/addStudentEquivalency.jsp") })
 public class StudentEquivalencyPlanDA extends FenixDispatchAction {
 
-    @Override
-    public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
+	@Override
+	public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
 
-	final DegreeCurricularPlan selectedDegreeCurricularPlan = getSelectedDegreeCurricularPlan(request);
-	if (selectedDegreeCurricularPlan == null) {
-	    final Set<DegreeType> degreeTypes = new HashSet<DegreeType>();
-	    degreeTypes.add(DegreeType.BOLONHA_DEGREE);
-	    degreeTypes.add(DegreeType.BOLONHA_MASTER_DEGREE);
-	    degreeTypes.add(DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE);
-	    request.setAttribute("degreeCurricularPlans", selectedDegreeCurricularPlan.getDegreeCurricularPlans(degreeTypes));
-	} else {
-	    request.setAttribute("selectedDegreeCurricularPlan", selectedDegreeCurricularPlan);
-	}
-
-	final DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan(request);
-	request.setAttribute("degreeCurricularPlan", degreeCurricularPlan != null ? degreeCurricularPlan
-		: selectedDegreeCurricularPlan);
-
-	return super.execute(mapping, actionForm, request, response);
-    }
-
-    public ActionForward showPlan(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-	final Student student = getStudent(request);
-	if (student != null) {
-	    final StudentCurricularPlanEquivalencePlan studentCurricularPlanEquivalencePlan = getStudentCurricularPlanEquivalencePlan(
-		    request, student);
-	    if (studentCurricularPlanEquivalencePlan != null) {
-
-		final DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) request
-			.getAttribute("selectedDegreeCurricularPlan");
-		if (degreeCurricularPlan != null) {
-		    request.setAttribute("studentCurricularPlanEquivalencePlan", studentCurricularPlanEquivalencePlan);
-		    studentCurricularPlanEquivalencePlan.getRootEquivalencyPlanEntryCurriculumModuleWrapper(degreeCurricularPlan);
-		    request.setAttribute("rootEquivalencyPlanEntryCurriculumModuleWrapper", studentCurricularPlanEquivalencePlan
-			    .getRootEquivalencyPlanEntryCurriculumModuleWrapper(degreeCurricularPlan));
+		final DegreeCurricularPlan selectedDegreeCurricularPlan = getSelectedDegreeCurricularPlan(request);
+		if (selectedDegreeCurricularPlan == null) {
+			final Set<DegreeType> degreeTypes = new HashSet<DegreeType>();
+			degreeTypes.add(DegreeType.BOLONHA_DEGREE);
+			degreeTypes.add(DegreeType.BOLONHA_MASTER_DEGREE);
+			degreeTypes.add(DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE);
+			request.setAttribute("degreeCurricularPlans", selectedDegreeCurricularPlan.getDegreeCurricularPlans(degreeTypes));
+		} else {
+			request.setAttribute("selectedDegreeCurricularPlan", selectedDegreeCurricularPlan);
 		}
 
-	    }
-	}
-	return mapping.findForward("showPlan");
-    }
+		final DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan(request);
+		request.setAttribute("degreeCurricularPlan",
+				degreeCurricularPlan != null ? degreeCurricularPlan : selectedDegreeCurricularPlan);
 
-    public ActionForward showTable(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-	final Student student = getStudent(request);
-	if (student != null) {
-	    final StudentCurricularPlanEquivalencePlan studentCurricularPlanEquivalencePlan = getStudentCurricularPlanEquivalencePlan(
-		    request, student);
-	    if (studentCurricularPlanEquivalencePlan != null) {
-		request.setAttribute("studentCurricularPlanEquivalencePlan", studentCurricularPlanEquivalencePlan);
-		final DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) request
-			.getAttribute("selectedDegreeCurricularPlan");
+		return super.execute(mapping, actionForm, request, response);
+	}
+
+	public ActionForward showPlan(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		final Student student = getStudent(request);
+		if (student != null) {
+			final StudentCurricularPlanEquivalencePlan studentCurricularPlanEquivalencePlan =
+					getStudentCurricularPlanEquivalencePlan(request, student);
+			if (studentCurricularPlanEquivalencePlan != null) {
+
+				final DegreeCurricularPlan degreeCurricularPlan =
+						(DegreeCurricularPlan) request.getAttribute("selectedDegreeCurricularPlan");
+				if (degreeCurricularPlan != null) {
+					request.setAttribute("studentCurricularPlanEquivalencePlan", studentCurricularPlanEquivalencePlan);
+					studentCurricularPlanEquivalencePlan.getRootEquivalencyPlanEntryCurriculumModuleWrapper(degreeCurricularPlan);
+					request.setAttribute("rootEquivalencyPlanEntryCurriculumModuleWrapper", studentCurricularPlanEquivalencePlan
+							.getRootEquivalencyPlanEntryCurriculumModuleWrapper(degreeCurricularPlan));
+				}
+
+			}
+		}
+		return mapping.findForward("showPlan");
+	}
+
+	public ActionForward showTable(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		final Student student = getStudent(request);
+		if (student != null) {
+			final StudentCurricularPlanEquivalencePlan studentCurricularPlanEquivalencePlan =
+					getStudentCurricularPlanEquivalencePlan(request, student);
+			if (studentCurricularPlanEquivalencePlan != null) {
+				request.setAttribute("studentCurricularPlanEquivalencePlan", studentCurricularPlanEquivalencePlan);
+				final DegreeCurricularPlan degreeCurricularPlan =
+						(DegreeCurricularPlan) request.getAttribute("selectedDegreeCurricularPlan");
+				final CurriculumModule curriculumModule = getCurriculumModule(request);
+				request.setAttribute("equivalencePlanEntryWrappers", studentCurricularPlanEquivalencePlan
+						.getEquivalencePlanEntryWrappers(degreeCurricularPlan, curriculumModule));
+			}
+		}
+		return mapping.findForward("showPlan");
+	}
+
+	public ActionForward prepareAddEquivalency(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		final Student student = getStudent(request);
+		final StudentCurricularPlanEquivalencePlan studentCurricularPlanEquivalencePlan =
+				getStudentCurricularPlanEquivalencePlan(request, student);
+		final DegreeCurricularPlan degreeCurricularPlan =
+				(DegreeCurricularPlan) request.getAttribute("selectedDegreeCurricularPlan");
+
+		StudentEquivalencyPlanEntryCreator studentEquivalencyPlanEntryCreator = getRenderedObject();
+		if (studentEquivalencyPlanEntryCreator == null) {
+			studentEquivalencyPlanEntryCreator =
+					new StudentEquivalencyPlanEntryCreator(studentCurricularPlanEquivalencePlan,
+							degreeCurricularPlan.getEquivalencePlan());
+		}
+
 		final CurriculumModule curriculumModule = getCurriculumModule(request);
-		request.setAttribute("equivalencePlanEntryWrappers", studentCurricularPlanEquivalencePlan
-			.getEquivalencePlanEntryWrappers(degreeCurricularPlan, curriculumModule));
-	    }
-	}
-	return mapping.findForward("showPlan");
-    }
+		if (curriculumModule != null) {
+			studentEquivalencyPlanEntryCreator.setOriginDegreeModuleToAdd(curriculumModule.getDegreeModule());
+			studentEquivalencyPlanEntryCreator.addOrigin(curriculumModule.getDegreeModule());
+		}
 
-    public ActionForward prepareAddEquivalency(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-	final Student student = getStudent(request);
-	final StudentCurricularPlanEquivalencePlan studentCurricularPlanEquivalencePlan = getStudentCurricularPlanEquivalencePlan(
-		request, student);
-	final DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) request
-		.getAttribute("selectedDegreeCurricularPlan");
-
-	StudentEquivalencyPlanEntryCreator studentEquivalencyPlanEntryCreator = getRenderedObject();
-	if (studentEquivalencyPlanEntryCreator == null) {
-	    studentEquivalencyPlanEntryCreator = new StudentEquivalencyPlanEntryCreator(studentCurricularPlanEquivalencePlan,
-		    degreeCurricularPlan.getEquivalencePlan());
+		request.setAttribute("studentEquivalencyPlanEntryCreator", studentEquivalencyPlanEntryCreator);
+		return mapping.findForward("addEquivalency");
 	}
 
-	final CurriculumModule curriculumModule = getCurriculumModule(request);
-	if (curriculumModule != null) {
-	    studentEquivalencyPlanEntryCreator.setOriginDegreeModuleToAdd(curriculumModule.getDegreeModule());
-	    studentEquivalencyPlanEntryCreator.addOrigin(curriculumModule.getDegreeModule());
+	public ActionForward deleteEquivalency(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		getStudent(request);
+		final EquivalencePlanEntry equivalencePlanEntry = getEquivalencePlanEntry(request);
+		final Object[] args = { equivalencePlanEntry };
+		executeService("DeleteEquivalencePlanEntry", args);
+		return showTable(mapping, actionForm, request, response);
 	}
 
-	request.setAttribute("studentEquivalencyPlanEntryCreator", studentEquivalencyPlanEntryCreator);
-	return mapping.findForward("addEquivalency");
-    }
-
-    public ActionForward deleteEquivalency(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-	getStudent(request);
-	final EquivalencePlanEntry equivalencePlanEntry = getEquivalencePlanEntry(request);
-	final Object[] args = { equivalencePlanEntry };
-	executeService("DeleteEquivalencePlanEntry", args);
-	return showTable(mapping, actionForm, request, response);
-    }
-
-    public ActionForward activate(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-	return changeActiveState(mapping, actionForm, request, response, "ActivateEquivalencePlanEntry");
-    }
-
-    public ActionForward deactivate(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-	return changeActiveState(mapping, actionForm, request, response, "DeActivateEquivalencePlanEntry");
-    }
-
-    public ActionForward changeActiveState(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response, final String service) throws Exception {
-	final Student student = getStudent(request);
-	final StudentCurricularPlanEquivalencePlan studentCurricularPlanEquivalencePlan = getStudentCurricularPlanEquivalencePlan(
-		request, student);
-	final EquivalencePlanEntry equivalencePlanEntry = getEquivalencePlanEntry(request);
-	final Object[] args = { studentCurricularPlanEquivalencePlan, equivalencePlanEntry };
-	executeService(service, args);
-	return showTable(mapping, actionForm, request, response);
-    }
-
-    private EquivalencePlanEntry getEquivalencePlanEntry(HttpServletRequest request) {
-	final String equivalencePlanEntryIDString = request.getParameter("equivalencePlanEntryID");
-	final Integer equivalencePlanEntryID = getInteger(equivalencePlanEntryIDString);
-	return equivalencePlanEntryID == null ? null : (EquivalencePlanEntry) RootDomainObject.getInstance()
-		.readEquivalencePlanEntryByOID(equivalencePlanEntryID);
-    }
-
-    private StudentCurricularPlanEquivalencePlan getStudentCurricularPlanEquivalencePlan(final HttpServletRequest request,
-	    final Student student) throws FenixFilterException, FenixServiceException {
-	return CreateStudentCurricularPlanEquivalencePlan.run(student);
-    }
-
-    private Student getStudent(final HttpServletRequest request) {
-	StudentSearchBean studentSearchBean = getRenderedObject("net.sourceforge.fenixedu.domain.util.search.StudentSearchBeanWithDegreeCurricularPlan");
-	if (studentSearchBean == null) {
-	    studentSearchBean = getRenderedObject("net.sourceforge.fenixedu.domain.util.search.StudentSearchBean");
-	}
-	if (studentSearchBean == null) {
-	    studentSearchBean = new StudentSearchBean();
-	    final String studentNumber = request.getParameter("studentNumber");
-	    if (studentNumber != null && studentNumber.length() > 0) {
-		studentSearchBean.setStudentNumber(Integer.valueOf(studentNumber));
-	    }
-
-	    studentSearchBean
-		    .setDegreeCurricularPlan((DegreeCurricularPlan) request.getAttribute("selectedDegreeCurricularPlan"));
-
-	    studentSearchBean.setOldDegreeCurricularPlan((DegreeCurricularPlan) request.getAttribute("degreeCurricularPlan"));
-
-	} else {
-	    final DegreeCurricularPlan degreeCurricularPlan = studentSearchBean.getDegreeCurricularPlan();
-	    if (degreeCurricularPlan != null) {
-		request.setAttribute("selectedDegreeCurricularPlan", degreeCurricularPlan);
-	    }
-	}
-	request.setAttribute("studentSearchBean", studentSearchBean);
-	final Student student = studentSearchBean.search();
-	if (student != null) {
-	    request.setAttribute("student", student);
+	public ActionForward activate(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		return changeActiveState(mapping, actionForm, request, response, "ActivateEquivalencePlanEntry");
 	}
 
-	return student;
-    }
+	public ActionForward deactivate(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		return changeActiveState(mapping, actionForm, request, response, "DeActivateEquivalencePlanEntry");
+	}
 
-    private CurriculumModule getCurriculumModule(final HttpServletRequest request) {
-	final String curriculumModuleIDString = request.getParameter("curriculumModuleID");
-	final Integer curriculumModuleID = getInteger(curriculumModuleIDString);
-	return curriculumModuleID == null ? null : rootDomainObject.readCurriculumModuleByOID(curriculumModuleID);
-    }
+	public ActionForward changeActiveState(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response, final String service) throws Exception {
+		final Student student = getStudent(request);
+		final StudentCurricularPlanEquivalencePlan studentCurricularPlanEquivalencePlan =
+				getStudentCurricularPlanEquivalencePlan(request, student);
+		final EquivalencePlanEntry equivalencePlanEntry = getEquivalencePlanEntry(request);
+		final Object[] args = { studentCurricularPlanEquivalencePlan, equivalencePlanEntry };
+		executeService(service, args);
+		return showTable(mapping, actionForm, request, response);
+	}
 
-    private DegreeCurricularPlan getDegreeCurricularPlan(final HttpServletRequest request) {
-	return getDegreeCurricularPlan(request, "degreeCurricularPlanID");
-    }
+	private EquivalencePlanEntry getEquivalencePlanEntry(HttpServletRequest request) {
+		final String equivalencePlanEntryIDString = request.getParameter("equivalencePlanEntryID");
+		final Integer equivalencePlanEntryID = getInteger(equivalencePlanEntryIDString);
+		return equivalencePlanEntryID == null ? null : (EquivalencePlanEntry) RootDomainObject.getInstance()
+				.readEquivalencePlanEntryByOID(equivalencePlanEntryID);
+	}
 
-    private DegreeCurricularPlan getSelectedDegreeCurricularPlan(final HttpServletRequest request) {
-	final StudentSearchBean studentSearchBean = getRenderedObject("net.sourceforge.fenixedu.domain.util.search.StudentSearchBeanWithDegreeCurricularPlan");
-	return studentSearchBean != null ? studentSearchBean.getDegreeCurricularPlan() : getDegreeCurricularPlan(request,
-		"selectedDegreeCurricularPlanID");
-    }
+	private StudentCurricularPlanEquivalencePlan getStudentCurricularPlanEquivalencePlan(final HttpServletRequest request,
+			final Student student) throws FenixFilterException, FenixServiceException {
+		return CreateStudentCurricularPlanEquivalencePlan.run(student);
+	}
 
-    private DegreeCurricularPlan getDegreeCurricularPlan(final HttpServletRequest request, final String attrName) {
-	final String degreeCurricularPlanIDString = request.getParameter(attrName);
-	final Integer degreeCurricularPlanID = getInteger(degreeCurricularPlanIDString);
-	return degreeCurricularPlanID == null ? null : rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanID);
-    }
+	private Student getStudent(final HttpServletRequest request) {
+		StudentSearchBean studentSearchBean =
+				getRenderedObject("net.sourceforge.fenixedu.domain.util.search.StudentSearchBeanWithDegreeCurricularPlan");
+		if (studentSearchBean == null) {
+			studentSearchBean = getRenderedObject("net.sourceforge.fenixedu.domain.util.search.StudentSearchBean");
+		}
+		if (studentSearchBean == null) {
+			studentSearchBean = new StudentSearchBean();
+			final String studentNumber = request.getParameter("studentNumber");
+			if (studentNumber != null && studentNumber.length() > 0) {
+				studentSearchBean.setStudentNumber(Integer.valueOf(studentNumber));
+			}
 
-    private Integer getInteger(final String string) {
-	return isValidNumber(string) ? Integer.valueOf(string) : null;
-    }
+			studentSearchBean
+					.setDegreeCurricularPlan((DegreeCurricularPlan) request.getAttribute("selectedDegreeCurricularPlan"));
 
-    private boolean isValidNumber(final String string) {
-	return string != null && string.length() > 0 && StringUtils.isNumeric(string);
-    }
+			studentSearchBean.setOldDegreeCurricularPlan((DegreeCurricularPlan) request.getAttribute("degreeCurricularPlan"));
+
+		} else {
+			final DegreeCurricularPlan degreeCurricularPlan = studentSearchBean.getDegreeCurricularPlan();
+			if (degreeCurricularPlan != null) {
+				request.setAttribute("selectedDegreeCurricularPlan", degreeCurricularPlan);
+			}
+		}
+		request.setAttribute("studentSearchBean", studentSearchBean);
+		final Student student = studentSearchBean.search();
+		if (student != null) {
+			request.setAttribute("student", student);
+		}
+
+		return student;
+	}
+
+	private CurriculumModule getCurriculumModule(final HttpServletRequest request) {
+		final String curriculumModuleIDString = request.getParameter("curriculumModuleID");
+		final Integer curriculumModuleID = getInteger(curriculumModuleIDString);
+		return curriculumModuleID == null ? null : rootDomainObject.readCurriculumModuleByOID(curriculumModuleID);
+	}
+
+	private DegreeCurricularPlan getDegreeCurricularPlan(final HttpServletRequest request) {
+		return getDegreeCurricularPlan(request, "degreeCurricularPlanID");
+	}
+
+	private DegreeCurricularPlan getSelectedDegreeCurricularPlan(final HttpServletRequest request) {
+		final StudentSearchBean studentSearchBean =
+				getRenderedObject("net.sourceforge.fenixedu.domain.util.search.StudentSearchBeanWithDegreeCurricularPlan");
+		return studentSearchBean != null ? studentSearchBean.getDegreeCurricularPlan() : getDegreeCurricularPlan(request,
+				"selectedDegreeCurricularPlanID");
+	}
+
+	private DegreeCurricularPlan getDegreeCurricularPlan(final HttpServletRequest request, final String attrName) {
+		final String degreeCurricularPlanIDString = request.getParameter(attrName);
+		final Integer degreeCurricularPlanID = getInteger(degreeCurricularPlanIDString);
+		return degreeCurricularPlanID == null ? null : rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanID);
+	}
+
+	private Integer getInteger(final String string) {
+		return isValidNumber(string) ? Integer.valueOf(string) : null;
+	}
+
+	private boolean isValidNumber(final String string) {
+		return string != null && string.length() > 0 && StringUtils.isNumeric(string);
+	}
 
 }

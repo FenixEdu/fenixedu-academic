@@ -21,141 +21,142 @@ import pt.ist.fenixWebFramework.security.accessControl.Checked;
 
 public class WrittenEvaluationSpaceOccupation extends WrittenEvaluationSpaceOccupation_Base {
 
-    // @Checked(
-    // "SpacePredicates.checkPermissionsToManageWrittenEvaluationSpaceOccupations"
-    // )
-    public WrittenEvaluationSpaceOccupation(AllocatableSpace allocatableSpace) {
+	// @Checked(
+	// "SpacePredicates.checkPermissionsToManageWrittenEvaluationSpaceOccupations"
+	// )
+	public WrittenEvaluationSpaceOccupation(AllocatableSpace allocatableSpace) {
 
-	super();
+		super();
 
-	ResourceAllocation allocation = allocatableSpace
-		.getFirstOccurrenceOfResourceAllocationByClass(WrittenEvaluationSpaceOccupation.class);
-	if (allocation != null) {
-	    throw new DomainException("error.WrittenEvaluationSpaceOccupation.occupation.for.this.space.already.exists");
+		ResourceAllocation allocation =
+				allocatableSpace.getFirstOccurrenceOfResourceAllocationByClass(WrittenEvaluationSpaceOccupation.class);
+		if (allocation != null) {
+			throw new DomainException("error.WrittenEvaluationSpaceOccupation.occupation.for.this.space.already.exists");
+		}
+
+		setResource(allocatableSpace);
 	}
 
-	setResource(allocatableSpace);
-    }
+	// @Checked(
+	// "SpacePredicates.checkPermissionsToManageWrittenEvaluationSpaceOccupations"
+	// )
+	public void edit(WrittenEvaluation writtenEvaluation) {
 
-    // @Checked(
-    // "SpacePredicates.checkPermissionsToManageWrittenEvaluationSpaceOccupations"
-    // )
-    public void edit(WrittenEvaluation writtenEvaluation) {
+		if (hasWrittenEvaluations(writtenEvaluation)) {
+			removeWrittenEvaluations(writtenEvaluation);
+		}
 
-	if (hasWrittenEvaluations(writtenEvaluation)) {
-	    removeWrittenEvaluations(writtenEvaluation);
+		if (!writtenEvaluation.canBeAssociatedToRoom(getRoom())) {
+			throw new DomainException("error.roomOccupied", getRoom().getName());
+		}
+
+		addWrittenEvaluations(writtenEvaluation);
 	}
 
-	if (!writtenEvaluation.canBeAssociatedToRoom(getRoom())) {
-	    throw new DomainException("error.roomOccupied", getRoom().getName());
+	@Override
+	@Checked("SpacePredicates.checkPermissionsToManageWrittenEvaluationSpaceOccupations")
+	public void delete() {
+		if (canBeDeleted()) {
+			super.delete();
+		}
 	}
 
-	addWrittenEvaluations(writtenEvaluation);
-    }
-
-    @Checked("SpacePredicates.checkPermissionsToManageWrittenEvaluationSpaceOccupations")
-    public void delete() {
-	if (canBeDeleted()) {
-	    super.delete();
+	private boolean canBeDeleted() {
+		return !hasAnyWrittenEvaluations();
 	}
-    }
 
-    private boolean canBeDeleted() {
-	return !hasAnyWrittenEvaluations();
-    }
+	@Override
+	public List<Interval> getEventSpaceOccupationIntervals(YearMonthDay startDateToSearch, YearMonthDay endDateToSearch) {
 
-    @Override
-    public List<Interval> getEventSpaceOccupationIntervals(YearMonthDay startDateToSearch, YearMonthDay endDateToSearch) {
+		List<Interval> result = new ArrayList<Interval>();
+		List<WrittenEvaluation> writtenEvaluations = getWrittenEvaluations();
 
-	List<Interval> result = new ArrayList<Interval>();
-	List<WrittenEvaluation> writtenEvaluations = getWrittenEvaluations();
+		for (WrittenEvaluation writtenEvaluation : writtenEvaluations) {
+			YearMonthDay writtenEvaluationDay = writtenEvaluation.getDayDateYearMonthDay();
+			if (startDateToSearch == null
+					|| (!writtenEvaluationDay.isBefore(startDateToSearch) && !writtenEvaluationDay.isAfter(endDateToSearch))) {
 
-	for (WrittenEvaluation writtenEvaluation : writtenEvaluations) {
-	    YearMonthDay writtenEvaluationDay = writtenEvaluation.getDayDateYearMonthDay();
-	    if (startDateToSearch == null
-		    || (!writtenEvaluationDay.isBefore(startDateToSearch) && !writtenEvaluationDay.isAfter(endDateToSearch))) {
-
-		result.add(createNewInterval(writtenEvaluationDay, writtenEvaluationDay,
-			writtenEvaluation.getBeginningDateHourMinuteSecond(), writtenEvaluation.getEndDateHourMinuteSecond()));
-	    }
+				result.add(createNewInterval(writtenEvaluationDay, writtenEvaluationDay,
+						writtenEvaluation.getBeginningDateHourMinuteSecond(), writtenEvaluation.getEndDateHourMinuteSecond()));
+			}
+		}
+		return result;
 	}
-	return result;
-    }
 
-    @Override
-    public boolean isWrittenEvaluationSpaceOccupation() {
-	return true;
-    }
-
-    @Override
-    protected boolean intersects(YearMonthDay startDate, YearMonthDay endDate) {
-	return true;
-    }
-
-    @Override
-    public Group getAccessGroup() {
-	return getSpace().getWrittenEvaluationOccupationsAccessGroupWithChainOfResponsibility();
-    }
-
-    @Override
-    public YearMonthDay getBeginDate() {
-	return null;
-    }
-
-    @Override
-    public YearMonthDay getEndDate() {
-	return null;
-    }
-
-    @Override
-    public HourMinuteSecond getStartTimeDateHourMinuteSecond() {
-	return null;
-    }
-
-    @Override
-    public HourMinuteSecond getEndTimeDateHourMinuteSecond() {
-	return null;
-    }
-
-    @Override
-    public Boolean getDailyFrequencyMarkSaturday() {
-	return null;
-    }
-
-    @Override
-    public Boolean getDailyFrequencyMarkSunday() {
-	return null;
-    }
-
-    @Override
-    public DiaSemana getDayOfWeek() {
-	return null;
-    }
-
-    @Override
-    public FrequencyType getFrequency() {
-	return null;
-    }
-
-    @Override
-    public boolean isOccupiedByExecutionCourse(final ExecutionCourse executionCourse, final DateTime start, final DateTime end) {
-	for (final WrittenEvaluation writtenEvaluation : getWrittenEvaluationsSet()) {
-	    if (writtenEvaluation.getAssociatedExecutionCoursesSet().contains(executionCourse)
-		    && start.isBefore(writtenEvaluation.getEndDateTime())
-		    && end.isAfter(writtenEvaluation.getBeginningDateTime())) {
+	@Override
+	public boolean isWrittenEvaluationSpaceOccupation() {
 		return true;
-	    }
 	}
-	return false;
-    }
 
-    @Override
-    public String getPresentationString() {
-	if (!hasAnyWrittenEvaluations()) {
-	    return StringUtils.EMPTY;
+	@Override
+	protected boolean intersects(YearMonthDay startDate, YearMonthDay endDate) {
+		return true;
 	}
-	final WrittenEvaluation eval = getWrittenEvaluations().get(0);
-	return String.format("(%s) %s", eval.getEvaluationType(), eval.getName());
-    }
+
+	@Override
+	public Group getAccessGroup() {
+		return getSpace().getWrittenEvaluationOccupationsAccessGroupWithChainOfResponsibility();
+	}
+
+	@Override
+	public YearMonthDay getBeginDate() {
+		return null;
+	}
+
+	@Override
+	public YearMonthDay getEndDate() {
+		return null;
+	}
+
+	@Override
+	public HourMinuteSecond getStartTimeDateHourMinuteSecond() {
+		return null;
+	}
+
+	@Override
+	public HourMinuteSecond getEndTimeDateHourMinuteSecond() {
+		return null;
+	}
+
+	@Override
+	public Boolean getDailyFrequencyMarkSaturday() {
+		return null;
+	}
+
+	@Override
+	public Boolean getDailyFrequencyMarkSunday() {
+		return null;
+	}
+
+	@Override
+	public DiaSemana getDayOfWeek() {
+		return null;
+	}
+
+	@Override
+	public FrequencyType getFrequency() {
+		return null;
+	}
+
+	@Override
+	public boolean isOccupiedByExecutionCourse(final ExecutionCourse executionCourse, final DateTime start, final DateTime end) {
+		for (final WrittenEvaluation writtenEvaluation : getWrittenEvaluationsSet()) {
+			if (writtenEvaluation.getAssociatedExecutionCoursesSet().contains(executionCourse)
+					&& start.isBefore(writtenEvaluation.getEndDateTime())
+					&& end.isAfter(writtenEvaluation.getBeginningDateTime())) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	@Override
+	public String getPresentationString() {
+		if (!hasAnyWrittenEvaluations()) {
+			return StringUtils.EMPTY;
+		}
+		final WrittenEvaluation eval = getWrittenEvaluations().get(0);
+		return String.format("(%s) %s", eval.getEvaluationType(), eval.getName());
+	}
 
 }

@@ -17,20 +17,21 @@ import net.sourceforge.fenixedu.domain.Seminaries.CourseEquivalency;
  */
 public class InfoEquivalencyWithCurricularCourse extends InfoEquivalency {
 
-    public void copyFromDomain(CourseEquivalency courseEquivalency) {
-	super.copyFromDomain(courseEquivalency);
-	if (courseEquivalency != null) {
-	    setCurricularCourse(InfoCurricularCourse.newInfoFromDomain(courseEquivalency.getCurricularCourse()));
+	@Override
+	public void copyFromDomain(CourseEquivalency courseEquivalency) {
+		super.copyFromDomain(courseEquivalency);
+		if (courseEquivalency != null) {
+			setCurricularCourse(InfoCurricularCourse.newInfoFromDomain(courseEquivalency.getCurricularCourse()));
+		}
 	}
-    }
 
-    public static InfoEquivalencyWithCurricularCourse newInfoFromDomain(CourseEquivalency courseEquivalency) {
-	InfoEquivalencyWithCurricularCourse infoEquivalency = null;
-	if (courseEquivalency != null) {
-	    infoEquivalency = new InfoEquivalencyWithCurricularCourse();
-	    infoEquivalency.copyFromDomain(courseEquivalency);
+	public static InfoEquivalencyWithCurricularCourse newInfoFromDomain(CourseEquivalency courseEquivalency) {
+		InfoEquivalencyWithCurricularCourse infoEquivalency = null;
+		if (courseEquivalency != null) {
+			infoEquivalency = new InfoEquivalencyWithCurricularCourse();
+			infoEquivalency.copyFromDomain(courseEquivalency);
+		}
+		return infoEquivalency;
 	}
-	return infoEquivalency;
-    }
 
 }

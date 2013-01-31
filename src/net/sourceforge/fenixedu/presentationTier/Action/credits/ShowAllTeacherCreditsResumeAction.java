@@ -26,26 +26,26 @@ import org.apache.commons.beanutils.BeanComparator;
 
 public class ShowAllTeacherCreditsResumeAction extends FenixDispatchAction {
 
-    protected void readAllTeacherCredits(HttpServletRequest request, Teacher teacher) throws FenixActionException {
+	protected void readAllTeacherCredits(HttpServletRequest request, Teacher teacher) throws FenixActionException {
 
-	request.setAttribute("teacher", teacher);
-	Department department = teacher.getCurrentWorkingDepartment();
-	if (department != null) {
-	    request.setAttribute("department", department.getRealName());
+		request.setAttribute("teacher", teacher);
+		Department department = teacher.getCurrentWorkingDepartment();
+		if (department != null) {
+			request.setAttribute("department", department.getRealName());
+		}
+
+		List<CreditLineDTO> creditsLines;
+		try {
+			creditsLines = ReadAllTeacherCredits.run(teacher.getIdInternal());
+		} catch (ParseException e) {
+			throw new FenixActionException(e);
+		}
+
+		request.setAttribute("creditsLinesSize", creditsLines.size());
+
+		BeanComparator dateComparator = new BeanComparator("executionPeriod.beginDate");
+		Iterator orderedCreditsLines = new OrderedIterator(creditsLines.iterator(), dateComparator);
+
+		request.setAttribute("creditsLines", orderedCreditsLines);
 	}
-
-	List<CreditLineDTO> creditsLines;
-	try {
-	    creditsLines = ReadAllTeacherCredits.run(teacher.getIdInternal());
-	} catch (ParseException e) {
-	    throw new FenixActionException(e);
-	}
-
-	request.setAttribute("creditsLinesSize", creditsLines.size());
-
-	BeanComparator dateComparator = new BeanComparator("executionPeriod.beginDate");
-	Iterator orderedCreditsLines = new OrderedIterator(creditsLines.iterator(), dateComparator);
-
-	request.setAttribute("creditsLines", orderedCreditsLines);
-    }
 }

@@ -11,13 +11,14 @@ import net.sourceforge.fenixedu.applicationTier.Servico.teacher.DeleteProfessors
  */
 public class RemoveProfessorship extends DeleteProfessorship {
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see
-     * ServidorAplicacao.Servico.teacher.DeleteTeacher#canDeleteResponsibleFor()
-     */
-    protected boolean canDeleteResponsibleFor() {
-	return true;
-    }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * ServidorAplicacao.Servico.teacher.DeleteTeacher#canDeleteResponsibleFor()
+	 */
+	@Override
+	protected boolean canDeleteResponsibleFor() {
+		return true;
+	}
 }

@@ -30,20 +30,21 @@ import pt.ist.fenixWebFramework.security.UserView;
 
 public class ShowAllTeacherCreditsResumeAction extends FenixAction {
 
-    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-	    throws Exception {
-	IUserView userView = UserView.getUser();
+	@Override
+	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+		IUserView userView = UserView.getUser();
 
-	Teacher teacher = userView.getPerson().getTeacher();
-	request.setAttribute("teacher", teacher);
+		Teacher teacher = userView.getPerson().getTeacher();
+		request.setAttribute("teacher", teacher);
 
-	List<CreditLine> creditsLines = (List) ReadAllTeacherCredits.run(teacher.getIdInternal());
-	request.setAttribute("creditsLinesSize", creditsLines.size());
+		List<CreditLine> creditsLines = (List) ReadAllTeacherCredits.run(teacher.getIdInternal());
+		request.setAttribute("creditsLinesSize", creditsLines.size());
 
-	BeanComparator dateComparator = new BeanComparator("executionPeriod.beginDate");
-	Iterator orderedCreditsLines = new OrderedIterator(creditsLines.iterator(), dateComparator);
+		BeanComparator dateComparator = new BeanComparator("executionPeriod.beginDate");
+		Iterator orderedCreditsLines = new OrderedIterator(creditsLines.iterator(), dateComparator);
 
-	request.setAttribute("creditsLines", orderedCreditsLines);
-	return mapping.findForward("show-all-credits-resume");
-    }
+		request.setAttribute("creditsLines", orderedCreditsLines);
+		return mapping.findForward("show-all-credits-resume");
+	}
 }

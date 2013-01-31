@@ -6,16 +6,16 @@ import pt.ist.fenixWebFramework.renderers.taglib.CreateObjectTag;
 
 public class FenixCreateObjectTag extends CreateObjectTag {
 
-    @Override
-    protected MetaObject createMetaObject(Object targetObject, Schema schema) {
-	MetaObject metaObject = super.createMetaObject(targetObject, schema);
+	@Override
+	protected MetaObject createMetaObject(Object targetObject, Schema schema) {
+		MetaObject metaObject = super.createMetaObject(targetObject, schema);
 
-	return metaObject;
-    }
+		return metaObject;
+	}
 
-    @Override
-    public void release() {
-	super.release();
-    }
+	@Override
+	public void release() {
+		super.release();
+	}
 
 }

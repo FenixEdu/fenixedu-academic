@@ -15,17 +15,19 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class ExecutionCoursesForExamCoordinator implements DataProvider {
 
-    public Object provide(Object source, Object currentValue) {
-	ConvokeBean bean = (ConvokeBean) source;
-	ExamCoordinator coordinator = bean.getExamCoordinator();
-	List<ExecutionCourse> courses = coordinator.getAssociatedExecutionCourses();
+	@Override
+	public Object provide(Object source, Object currentValue) {
+		ConvokeBean bean = (ConvokeBean) source;
+		ExamCoordinator coordinator = bean.getExamCoordinator();
+		List<ExecutionCourse> courses = coordinator.getAssociatedExecutionCourses();
 
-	Collections.sort(courses, new BeanComparator("nome"));
-	return courses;
-    }
+		Collections.sort(courses, new BeanComparator("nome"));
+		return courses;
+	}
 
-    public Converter getConverter() {
-	return new DomainObjectKeyConverter();
-    }
+	@Override
+	public Converter getConverter() {
+		return new DomainObjectKeyConverter();
+	}
 
 }

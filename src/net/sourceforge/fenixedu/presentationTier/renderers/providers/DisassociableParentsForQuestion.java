@@ -10,22 +10,24 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class DisassociableParentsForQuestion implements DataProvider {
 
-    public Object provide(Object source, Object currentValue) {
-	GroupElementBean groupElementBean = (GroupElementBean) source;
+	@Override
+	public Object provide(Object source, Object currentValue) {
+		GroupElementBean groupElementBean = (GroupElementBean) source;
 
-	List<NewQuestionGroup> allParents;
+		List<NewQuestionGroup> allParents;
 
-	if (groupElementBean.getChild().getParentQuestionGroups().size() == 1) {
-	    allParents = new ArrayList<NewQuestionGroup>();
-	} else {
-	    allParents = groupElementBean.getChild().getParentQuestionGroups();
+		if (groupElementBean.getChild().getParentQuestionGroups().size() == 1) {
+			allParents = new ArrayList<NewQuestionGroup>();
+		} else {
+			allParents = groupElementBean.getChild().getParentQuestionGroups();
+		}
+
+		return allParents;
 	}
 
-	return allParents;
-    }
-
-    public Converter getConverter() {
-	return null;
-    }
+	@Override
+	public Converter getConverter() {
+		return null;
+	}
 
 }

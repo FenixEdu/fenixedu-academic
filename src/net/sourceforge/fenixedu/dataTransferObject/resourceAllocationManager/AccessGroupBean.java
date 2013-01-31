@@ -7,26 +7,26 @@ import net.sourceforge.fenixedu.domain.ResourceAllocationRole.ResourceAllocation
 
 public class AccessGroupBean implements Serializable {
 
-    private Person personReference;
+	private Person personReference;
 
-    private ResourceAllocationAccessGroupType accessGroupType;
+	private ResourceAllocationAccessGroupType accessGroupType;
 
-    public AccessGroupBean() {
-    }
+	public AccessGroupBean() {
+	}
 
-    public Person getPerson() {
-	return this.personReference;
-    }
+	public Person getPerson() {
+		return this.personReference;
+	}
 
-    public void setPerson(Person Person) {
-	this.personReference = Person;
-    }
+	public void setPerson(Person Person) {
+		this.personReference = Person;
+	}
 
-    public ResourceAllocationAccessGroupType getAccessGroupType() {
-	return accessGroupType;
-    }
+	public ResourceAllocationAccessGroupType getAccessGroupType() {
+		return accessGroupType;
+	}
 
-    public void setAccessGroupType(ResourceAllocationAccessGroupType accessGroupType) {
-	this.accessGroupType = accessGroupType;
-    }
+	public void setAccessGroupType(ResourceAllocationAccessGroupType accessGroupType) {
+		this.accessGroupType = accessGroupType;
+	}
 }

@@ -43,83 +43,94 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
  * @author <a href="mailto:naat@ist.utl.pt">Nadir Tarmahomed </a>
  * 
  */
-@Mapping(module = "masterDegreeAdministrativeOffice", path = "/visualizeExternalPersons", input = "/visualizeExternalPersons.do?page=0&method=prepare", attribute = "visualizeExternalPersonsForm", formBean = "visualizeExternalPersonsForm", scope = "request", parameter = "method")
+@Mapping(
+		module = "masterDegreeAdministrativeOffice",
+		path = "/visualizeExternalPersons",
+		input = "/visualizeExternalPersons.do?page=0&method=prepare",
+		attribute = "visualizeExternalPersonsForm",
+		formBean = "visualizeExternalPersonsForm",
+		scope = "request",
+		parameter = "method")
 @Forwards(value = {
-	@Forward(name = "error", path = "df.page.showExternalPersons_Error", tileProperties = @Tile(title = "teste29")),
-	@Forward(name = "start", path = "df.page.visualizeExternalPersons", tileProperties = @Tile(title = "teste30")),
-	@Forward(name = "success", path = "df.page.showExternalPersons", tileProperties = @Tile(title = "teste31")) })
-@Exceptions(value = { @ExceptionHandling(type = net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException.class, key = "resources.Action.exceptions.ExistingActionException", handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class, scope = "request") })
+		@Forward(name = "error", path = "df.page.showExternalPersons_Error", tileProperties = @Tile(title = "teste29")),
+		@Forward(name = "start", path = "df.page.visualizeExternalPersons", tileProperties = @Tile(title = "teste30")),
+		@Forward(name = "success", path = "df.page.showExternalPersons", tileProperties = @Tile(title = "teste31")) })
+@Exceptions(value = { @ExceptionHandling(
+		type = net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException.class,
+		key = "resources.Action.exceptions.ExistingActionException",
+		handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class,
+		scope = "request") })
 public class VisualizeExternalPersonsDispatchAction extends FenixDispatchAction {
 
-    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-	    throws Exception {
-	IUserView userView = UserView.getUser();
-	ActionErrors actionErrors = new ActionErrors();
+	public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+		IUserView userView = UserView.getUser();
+		ActionErrors actionErrors = new ActionErrors();
 
-	try {
-	    List infoInstitutions = (List) ReadAllInstitutions.run();
+		try {
+			List infoInstitutions = (List) ReadAllInstitutions.run();
 
-	    if (infoInstitutions != null) {
-		if (infoInstitutions.isEmpty() == false) {
-		    Collections.sort(infoInstitutions, new BeanComparator("name"));
-		    List infoInstitutionsValueBeanList = new ArrayList();
-		    Iterator it = infoInstitutions.iterator();
-		    Unit infoInstitution = null;
+			if (infoInstitutions != null) {
+				if (infoInstitutions.isEmpty() == false) {
+					Collections.sort(infoInstitutions, new BeanComparator("name"));
+					List infoInstitutionsValueBeanList = new ArrayList();
+					Iterator it = infoInstitutions.iterator();
+					Unit infoInstitution = null;
 
-		    while (it.hasNext()) {
-			infoInstitution = (Unit) it.next();
-			infoInstitutionsValueBeanList.add(new LabelValueBean(infoInstitution.getName(), infoInstitution
-				.getIdInternal().toString()));
-		    }
+					while (it.hasNext()) {
+						infoInstitution = (Unit) it.next();
+						infoInstitutionsValueBeanList.add(new LabelValueBean(infoInstitution.getName(), infoInstitution
+								.getIdInternal().toString()));
+					}
 
-		    request.setAttribute(PresentationConstants.WORK_LOCATIONS_LIST, infoInstitutionsValueBeanList);
+					request.setAttribute(PresentationConstants.WORK_LOCATIONS_LIST, infoInstitutionsValueBeanList);
+				}
+			}
+
+			if ((infoInstitutions == null) || (infoInstitutions.isEmpty())) {
+				actionErrors.add("label.masterDegree.administrativeOffice.nonExistingInstitutions", new ActionError(
+						"label.masterDegree.administrativeOffice.nonExistingInstitutions"));
+
+				saveErrors(request, actionErrors);
+				return mapping.findForward("error");
+			}
+		} catch (FenixServiceException e) {
+			throw new FenixActionException(e.getMessage(), mapping.findForward("error"));
 		}
-	    }
 
-	    if ((infoInstitutions == null) || (infoInstitutions.isEmpty())) {
-		actionErrors.add("label.masterDegree.administrativeOffice.nonExistingInstitutions", new ActionError(
-			"label.masterDegree.administrativeOffice.nonExistingInstitutions"));
+		return mapping.findForward("start");
 
-		saveErrors(request, actionErrors);
-		return mapping.findForward("error");
-	    }
-	} catch (FenixServiceException e) {
-	    throw new FenixActionException(e.getMessage(), mapping.findForward("error"));
 	}
 
-	return mapping.findForward("start");
+	public ActionForward visualize(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		IUserView userView = UserView.getUser();
 
-    }
+		DynaActionForm visualizeExternalPersonsForm = (DynaActionForm) form;
+		Integer institutionId = (Integer) visualizeExternalPersonsForm.get("institutionId");
 
-    public ActionForward visualize(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-	IUserView userView = UserView.getUser();
+		List infoExternalPersons = null;
 
-	DynaActionForm visualizeExternalPersonsForm = (DynaActionForm) form;
-	Integer institutionId = (Integer) visualizeExternalPersonsForm.get("institutionId");
+		ActionErrors actionErrors = new ActionErrors();
 
-	List infoExternalPersons = null;
+		try {
 
-	ActionErrors actionErrors = new ActionErrors();
+			infoExternalPersons = ReadExternalPersonsByInstitution.run(institutionId);
 
-	try {
+			if ((infoExternalPersons == null) || (infoExternalPersons.isEmpty())) {
+				actionErrors.add("label.masterDegree.administrativeOffice.nonExistingExternalPersons", new ActionError(
+						"label.masterDegree.administrativeOffice.nonExistingExternalPersons"));
 
-	    infoExternalPersons = ReadExternalPersonsByInstitution.run(institutionId);
+				saveErrors(request, actionErrors);
+				return mapping.findForward("error");
+			}
 
-	    if ((infoExternalPersons == null) || (infoExternalPersons.isEmpty())) {
-		actionErrors.add("label.masterDegree.administrativeOffice.nonExistingExternalPersons", new ActionError(
-			"label.masterDegree.administrativeOffice.nonExistingExternalPersons"));
+			request.setAttribute(PresentationConstants.EXTERNAL_PERSONS_LIST, infoExternalPersons);
 
-		saveErrors(request, actionErrors);
-		return mapping.findForward("error");
-	    }
+		} catch (FenixServiceException e) {
+			throw new FenixActionException(e.getMessage(), mapping.findForward("error"));
+		}
 
-	    request.setAttribute(PresentationConstants.EXTERNAL_PERSONS_LIST, infoExternalPersons);
-
-	} catch (FenixServiceException e) {
-	    throw new FenixActionException(e.getMessage(), mapping.findForward("error"));
+		return mapping.findForward("success");
 	}
-
-	return mapping.findForward("success");
-    }
 }

@@ -7,11 +7,11 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class DeletePersistentGroup extends FenixService {
 
-    @Checked("RolePredicates.MANAGER_PREDICATE")
-    @Service
-    public static void run(PersistentGroupMembers groupMembers) {
-	if (groupMembers != null) {
-	    groupMembers.delete();
+	@Checked("RolePredicates.MANAGER_PREDICATE")
+	@Service
+	public static void run(PersistentGroupMembers groupMembers) {
+		if (groupMembers != null) {
+			groupMembers.delete();
+		}
 	}
-    }
 }

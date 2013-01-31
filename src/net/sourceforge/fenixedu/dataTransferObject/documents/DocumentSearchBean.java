@@ -12,55 +12,55 @@ import org.joda.time.LocalDate;
  * @author Pedro Santos (pmrsa)
  */
 public class DocumentSearchBean implements Serializable {
-    private static final long serialVersionUID = 1360357466011500899L;
+	private static final long serialVersionUID = 1360357466011500899L;
 
-    private PersonBean addressee = new PersonBean();
+	private PersonBean addressee = new PersonBean();
 
-    private PersonBean operator = new PersonBean();
+	private PersonBean operator = new PersonBean();
 
-    private GeneratedDocumentType type;
+	private GeneratedDocumentType type;
 
-    private LocalDate uploadTime = new LocalDate();
+	private LocalDate uploadTime = new LocalDate();
 
-    public PersonBean getAddressee() {
-	return addressee;
-    }
+	public PersonBean getAddressee() {
+		return addressee;
+	}
 
-    public void setAddressee(PersonBean addressee) {
-	this.addressee = addressee;
-    }
+	public void setAddressee(PersonBean addressee) {
+		this.addressee = addressee;
+	}
 
-    public boolean hasAddressee() {
-	return StringUtils.isNotEmpty(getAddressee().getUsername()) || StringUtils.isNotEmpty(getAddressee().getName())
-		|| StringUtils.isNotEmpty(getAddressee().getDocumentIdNumber());
-    }
+	public boolean hasAddressee() {
+		return StringUtils.isNotEmpty(getAddressee().getUsername()) || StringUtils.isNotEmpty(getAddressee().getName())
+				|| StringUtils.isNotEmpty(getAddressee().getDocumentIdNumber());
+	}
 
-    public PersonBean getOperator() {
-	return operator;
-    }
+	public PersonBean getOperator() {
+		return operator;
+	}
 
-    public void setOperator(PersonBean operator) {
-	this.operator = operator;
-    }
+	public void setOperator(PersonBean operator) {
+		this.operator = operator;
+	}
 
-    public boolean hasOperator() {
-	return StringUtils.isNotEmpty(getOperator().getUsername()) || StringUtils.isNotEmpty(getOperator().getName())
-		|| StringUtils.isNotEmpty(getOperator().getDocumentIdNumber());
-    }
+	public boolean hasOperator() {
+		return StringUtils.isNotEmpty(getOperator().getUsername()) || StringUtils.isNotEmpty(getOperator().getName())
+				|| StringUtils.isNotEmpty(getOperator().getDocumentIdNumber());
+	}
 
-    public GeneratedDocumentType getType() {
-	return type;
-    }
+	public GeneratedDocumentType getType() {
+		return type;
+	}
 
-    public void setType(GeneratedDocumentType type) {
-	this.type = type;
-    }
+	public void setType(GeneratedDocumentType type) {
+		this.type = type;
+	}
 
-    public LocalDate getUploadTime() {
-	return uploadTime;
-    }
+	public LocalDate getUploadTime() {
+		return uploadTime;
+	}
 
-    public void setUploadTime(LocalDate uploadTime) {
-	this.uploadTime = uploadTime;
-    }
+	public void setUploadTime(LocalDate uploadTime) {
+		this.uploadTime = uploadTime;
+	}
 }

@@ -23,17 +23,17 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class ReadExecutionDegreesByDegreeCurricularPlanID extends FenixService {
 
-    @Service
-    public static List<InfoExecutionDegree> run(Integer degreeCurricularPlanID) {
-	DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanID);
+	@Service
+	public static List<InfoExecutionDegree> run(Integer degreeCurricularPlanID) {
+		DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanID);
 
-	List<InfoExecutionDegree> result = new ArrayList<InfoExecutionDegree>();
+		List<InfoExecutionDegree> result = new ArrayList<InfoExecutionDegree>();
 
-	for (final ExecutionDegree executionDegree : degreeCurricularPlan.getExecutionDegrees()) {
-	    result.add(InfoExecutionDegree.newInfoFromDomain(executionDegree));
+		for (final ExecutionDegree executionDegree : degreeCurricularPlan.getExecutionDegrees()) {
+			result.add(InfoExecutionDegree.newInfoFromDomain(executionDegree));
+		}
+
+		return result;
 	}
-
-	return result;
-    }
 
 }

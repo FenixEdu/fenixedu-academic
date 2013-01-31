@@ -10,18 +10,18 @@ import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
 
 public class ReadFinalDegreeWorkProposalHeadersForDegreeCurricularPlan extends FenixService {
 
-    public List run(final ExecutionDegree executionDegree) {
-	final List<FinalDegreeWorkProposalHeader> result = new ArrayList<FinalDegreeWorkProposalHeader>();
+	public List run(final ExecutionDegree executionDegree) {
+		final List<FinalDegreeWorkProposalHeader> result = new ArrayList<FinalDegreeWorkProposalHeader>();
 
-	if (executionDegree.hasScheduling()) {
-	    final List<Proposal> finalDegreeWorkProposals = executionDegree.getScheduling().getProposals();
+		if (executionDegree.hasScheduling()) {
+			final List<Proposal> finalDegreeWorkProposals = executionDegree.getScheduling().getProposals();
 
-	    for (final Proposal proposal : finalDegreeWorkProposals) {
-		result.add(FinalDegreeWorkProposalHeader.newInfoFromDomain(proposal, executionDegree));
-	    }
+			for (final Proposal proposal : finalDegreeWorkProposals) {
+				result.add(FinalDegreeWorkProposalHeader.newInfoFromDomain(proposal, executionDegree));
+			}
+		}
+
+		return result;
 	}
-
-	return result;
-    }
 
 }

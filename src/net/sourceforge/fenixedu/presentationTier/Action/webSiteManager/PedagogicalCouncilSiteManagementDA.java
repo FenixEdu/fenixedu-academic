@@ -1,22 +1,13 @@
 package net.sourceforge.fenixedu.presentationTier.Action.webSiteManager;
 
 import javax.servlet.http.HttpServletRequest;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(module = "webSiteManager", path = "/managePedagogicalCouncilSite", scope = "session", parameter = "method")
-@Forwards(value = {
-		@Forward(name = "confirmDeleteFunction", path = "pedagogicalCouncil-confirmDeleteFunction"),
+@Forwards(value = { @Forward(name = "confirmDeleteFunction", path = "pedagogicalCouncil-confirmDeleteFunction"),
 		@Forward(name = "changePersonFunctions", path = "pedagogicalCouncil-changePersonFunctions"),
 		@Forward(name = "createPersonFunction", path = "pedagogicalCouncil-createPersonFunction"),
 		@Forward(name = "editSideBanner", path = "pedagogicalCouncil-edit-side-banner"),
@@ -57,9 +48,9 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
 		@Forward(name = "editPersonFunction", path = "pedagogicalCouncil-editPersonFunction") })
 public class PedagogicalCouncilSiteManagementDA extends CustomUnitSiteManagementDA {
 
-    @Override
-    protected String getAuthorNameForFile(HttpServletRequest request) {
-	return getUserView(request).getPerson().getName();
-    }
+	@Override
+	protected String getAuthorNameForFile(HttpServletRequest request) {
+		return getUserView(request).getPerson().getName();
+	}
 
 }

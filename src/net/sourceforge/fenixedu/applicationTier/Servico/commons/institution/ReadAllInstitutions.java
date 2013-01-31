@@ -11,8 +11,8 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class ReadAllInstitutions extends FenixService {
 
-    @Service
-    public static Object run() throws FenixServiceException {
-	return UnitUtils.readAllExternalInstitutionUnits();
-    }
+	@Service
+	public static Object run() throws FenixServiceException {
+		return UnitUtils.readAllExternalInstitutionUnits();
+	}
 }

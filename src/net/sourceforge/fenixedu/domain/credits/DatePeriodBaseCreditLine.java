@@ -10,13 +10,14 @@ import net.sourceforge.fenixedu.domain.ExecutionSemester;
  */
 public abstract class DatePeriodBaseCreditLine extends DatePeriodBaseCreditLine_Base {
 
-    public DatePeriodBaseCreditLine() {
-	super();
-    }
+	public DatePeriodBaseCreditLine() {
+		super();
+	}
 
-    public boolean belongsToExecutionPeriod(ExecutionSemester executionSemester) {
-	return (getEnd().isAfter(executionSemester.getBeginDateYearMonthDay()) && getStart().isBefore(
-		executionSemester.getEndDateYearMonthDay()));
-    }
+	@Override
+	public boolean belongsToExecutionPeriod(ExecutionSemester executionSemester) {
+		return (getEnd().isAfter(executionSemester.getBeginDateYearMonthDay()) && getStart().isBefore(
+				executionSemester.getEndDateYearMonthDay()));
+	}
 
 }

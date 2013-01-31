@@ -14,80 +14,76 @@ import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
-@Mapping(module = "manager", path = "/registrationConclusion", input = "show.markSheetManagement.search.page", scope = "request", parameter = "method")
-@Forwards(value = {
-		@Forward(name = "editForRegistration", path = "/manager/registration/conclusion/editForRegistration.jsp"),
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+
+@Mapping(
+		module = "manager",
+		path = "/registrationConclusion",
+		input = "show.markSheetManagement.search.page",
+		scope = "request",
+		parameter = "method")
+@Forwards(value = { @Forward(name = "editForRegistration", path = "/manager/registration/conclusion/editForRegistration.jsp"),
 		@Forward(name = "showForRegistration", path = "/manager/registration/conclusion/showForRegistration.jsp"),
 		@Forward(name = "showByCycles", path = "/manager/registration/conclusion/showByCycles.jsp"),
 		@Forward(name = "editForCycle", path = "/manager/registration/conclusion/editForCycle.jsp") })
 public class RegistrationConclusionDA extends FenixDispatchAction {
 
-    public ActionForward show(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
-	final Registration registration = getRegistration(request);
-	if (registration.isBolonha()) {
-	    request.setAttribute("student", registration.getStudent());
-	    request.setAttribute("registrationConclusionBeans", buildRegistrationConclusionBeansForCycles(registration));
-	    return mapping.findForward("showByCycles");
-	} else {
-	    request.setAttribute("registrationConclusionBean", new RegistrationConclusionBean(registration));
-	    return mapping.findForward("showForRegistration");
+	public ActionForward show(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+		final Registration registration = getRegistration(request);
+		if (registration.isBolonha()) {
+			request.setAttribute("student", registration.getStudent());
+			request.setAttribute("registrationConclusionBeans", buildRegistrationConclusionBeansForCycles(registration));
+			return mapping.findForward("showByCycles");
+		} else {
+			request.setAttribute("registrationConclusionBean", new RegistrationConclusionBean(registration));
+			return mapping.findForward("showForRegistration");
+		}
+
 	}
 
-    }
+	private List<RegistrationConclusionBean> buildRegistrationConclusionBeansForCycles(final Registration registration) {
+		final List<RegistrationConclusionBean> result = new ArrayList<RegistrationConclusionBean>();
+		for (final CycleCurriculumGroup cycleCurriculumGroup : registration.getLastStudentCurricularPlan()
+				.getInternalCycleCurriculumGrops()) {
+			result.add(new RegistrationConclusionBean(registration, cycleCurriculumGroup));
+		}
 
-    private List<RegistrationConclusionBean> buildRegistrationConclusionBeansForCycles(final Registration registration) {
-	final List<RegistrationConclusionBean> result = new ArrayList<RegistrationConclusionBean>();
-	for (final CycleCurriculumGroup cycleCurriculumGroup : registration.getLastStudentCurricularPlan()
-		.getInternalCycleCurriculumGrops()) {
-	    result.add(new RegistrationConclusionBean(registration, cycleCurriculumGroup));
+		return result;
 	}
 
-	return result;
-    }
+	private Registration getRegistration(final HttpServletRequest request) {
+		return rootDomainObject.readRegistrationByOID(getIntegerFromRequest(request, "registrationId"));
+	}
 
-    private Registration getRegistration(final HttpServletRequest request) {
-	return rootDomainObject.readRegistrationByOID(getIntegerFromRequest(request, "registrationId"));
-    }
+	public ActionForward prepareEditForRegistration(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) {
 
-    public ActionForward prepareEditForRegistration(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
+		request.setAttribute("registration", getRegistration(request));
 
-	request.setAttribute("registration", getRegistration(request));
+		return mapping.findForward("editForRegistration");
+	}
 
-	return mapping.findForward("editForRegistration");
-    }
+	public ActionForward prepareRemoveConclusionForRegistration(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) {
 
-    public ActionForward prepareRemoveConclusionForRegistration(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) {
+		request.setAttribute("registration", getRegistration(request));
 
-	request.setAttribute("registration", getRegistration(request));
+		return mapping.findForward("confirmRemoveConclusion");
+	}
 
-	return mapping.findForward("confirmRemoveConclusion");
-    }
+	public ActionForward prepareEditForCycle(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) {
 
-    public ActionForward prepareEditForCycle(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
+		request.setAttribute("cycleCurriculumGroup", getCycleCurriculumGroup(request));
 
-	request.setAttribute("cycleCurriculumGroup", getCycleCurriculumGroup(request));
+		return mapping.findForward("editForCycle");
+	}
 
-	return mapping.findForward("editForCycle");
-    }
-
-    private CycleCurriculumGroup getCycleCurriculumGroup(HttpServletRequest request) {
-	return (CycleCurriculumGroup) rootDomainObject.readCurriculumModuleByOID(getIntegerFromRequest(request,
-		"cycleCurriculumGroupId"));
-    }
+	private CycleCurriculumGroup getCycleCurriculumGroup(HttpServletRequest request) {
+		return (CycleCurriculumGroup) rootDomainObject.readCurriculumModuleByOID(getIntegerFromRequest(request,
+				"cycleCurriculumGroupId"));
+	}
 }

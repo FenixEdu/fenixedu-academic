@@ -6,14 +6,13 @@ import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcessBean;
 
 public class EditIndividualProcessInformation extends PhdIndividualProgramProcessActivity {
 
-    @Override
-    protected void activityPreConditions(PhdIndividualProgramProcess arg0, IUserView arg1) {
-        // no precondition to check
-    }
+	@Override
+	protected void activityPreConditions(PhdIndividualProgramProcess arg0, IUserView arg1) {
+		// no precondition to check
+	}
 
-    @Override
-    protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView,
-    	Object object) {
-        return process.edit(userView, (PhdIndividualProgramProcessBean) object);
-    }
+	@Override
+	protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView, Object object) {
+		return process.edit(userView, (PhdIndividualProgramProcessBean) object);
+	}
 }

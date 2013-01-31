@@ -31,173 +31,174 @@ import dml.runtime.RelationAdapter;
 
 public class Over23CandidacyProcess extends Over23CandidacyProcess_Base {
 
-    static {
-	CandidacyPeriodCandidacyProcess.addListener(new RelationAdapter<CandidacyProcess, CandidacyProcessCandidacyPeriod>() {
-	    @Override
-	    public void beforeAdd(CandidacyProcess candidacyProcess, CandidacyProcessCandidacyPeriod candidacyPeriod) {
-		super.beforeAdd(candidacyProcess, candidacyPeriod);
+	static {
+		CandidacyPeriodCandidacyProcess.addListener(new RelationAdapter<CandidacyProcess, CandidacyProcessCandidacyPeriod>() {
+			@Override
+			public void beforeAdd(CandidacyProcess candidacyProcess, CandidacyProcessCandidacyPeriod candidacyPeriod) {
+				super.beforeAdd(candidacyProcess, candidacyPeriod);
 
-		if (candidacyProcess != null && candidacyPeriod != null && candidacyPeriod instanceof Over23CandidacyPeriod) {
-		    if (candidacyPeriod.hasAnyCandidacyProcesses()) {
-			throw new DomainException("error.Over23CandidacyProcess.candidacy.period.already.has.process");
-		    }
+				if (candidacyProcess != null && candidacyPeriod != null && candidacyPeriod instanceof Over23CandidacyPeriod) {
+					if (candidacyPeriod.hasAnyCandidacyProcesses()) {
+						throw new DomainException("error.Over23CandidacyProcess.candidacy.period.already.has.process");
+					}
+				}
+			}
+		});
+	}
+
+	static private List<Activity> activities = new ArrayList<Activity>();
+	static {
+		activities.add(new EditCandidacyPeriod());
+		activities.add(new SendInformationToJury());
+		activities.add(new PrintCandidacies());
+	}
+
+	private Over23CandidacyProcess() {
+		super();
+	}
+
+	private Over23CandidacyProcess(final ExecutionYear executionYear, final DateTime start, final DateTime end) {
+		this();
+		checkParameters(executionYear, start, end);
+		setState(CandidacyProcessState.STAND_BY);
+		new Over23CandidacyPeriod(this, executionYear, start, end);
+	}
+
+	private void checkParameters(final ExecutionInterval executionInterval, final DateTime start, final DateTime end) {
+		if (executionInterval == null) {
+			throw new DomainException("error.Over23CandidacyProcess.invalid.executionInterval");
 		}
-	    }
-	});
-    }
 
-    static private List<Activity> activities = new ArrayList<Activity>();
-    static {
-	activities.add(new EditCandidacyPeriod());
-	activities.add(new SendInformationToJury());
-	activities.add(new PrintCandidacies());
-    }
-
-    private Over23CandidacyProcess() {
-	super();
-    }
-
-    private Over23CandidacyProcess(final ExecutionYear executionYear, final DateTime start, final DateTime end) {
-	this();
-	checkParameters(executionYear, start, end);
-	setState(CandidacyProcessState.STAND_BY);
-	new Over23CandidacyPeriod(this, executionYear, start, end);
-    }
-
-    private void checkParameters(final ExecutionInterval executionInterval, final DateTime start, final DateTime end) {
-	if (executionInterval == null) {
-	    throw new DomainException("error.Over23CandidacyProcess.invalid.executionInterval");
+		if (start == null || end == null || start.isAfter(end)) {
+			throw new DomainException("error.Over23CandidacyProcess.invalid.interval");
+		}
 	}
 
-	if (start == null || end == null || start.isAfter(end)) {
-	    throw new DomainException("error.Over23CandidacyProcess.invalid.interval");
-	}
-    }
-
-    private void edit(final DateTime start, final DateTime end) {
-	checkParameters(getCandidacyPeriod().getExecutionInterval(), start, end);
-	getCandidacyPeriod().edit(start, end);
-    }
-
-    @Override
-    public boolean canExecuteActivity(IUserView userView) {
-	return isAllowedToManageProcess(userView) || userView.hasRoleType(RoleType.SCIENTIFIC_COUNCIL);
-    }
-
-    @Override
-    public List<Activity> getActivities() {
-	return activities;
-    }
-
-    public List<Over23IndividualCandidacyProcess> getOver23IndividualCandidaciesThatCanBeSendToJury() {
-	final List<Over23IndividualCandidacyProcess> result = new ArrayList<Over23IndividualCandidacyProcess>();
-	for (final IndividualCandidacyProcess child : getChildProcesses()) {
-	    final Over23IndividualCandidacyProcess over23CP = (Over23IndividualCandidacyProcess) child;
-	    if (over23CP.isCandidacyValid()) {
-		result.add(over23CP);
-	    }
-	}
-	return result;
-    }
-
-    public List<Over23IndividualCandidacyProcess> getAcceptedOver23IndividualCandidacies() {
-	final List<Over23IndividualCandidacyProcess> result = new ArrayList<Over23IndividualCandidacyProcess>();
-	for (final IndividualCandidacyProcess child : getChildProcesses()) {
-	    if (child.isCandidacyValid() && child.isCandidacyAccepted()) {
-		result.add((Over23IndividualCandidacyProcess) child);
-	    }
-	}
-	return result;
-    }
-
-    // static information
-
-    private static final Set<DegreeType> ALLOWED_DEGREE_TYPES = Sets.newHashSet(DegreeType.BOLONHA_DEGREE,
-	    DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE);
-
-    static private boolean isAllowedToManageProcess(IUserView userView) {
-	for (AcademicProgram program : AcademicAuthorizationGroup.getProgramsForOperation(userView.getPerson(),
-		AcademicOperationType.MANAGE_CANDIDACY_PROCESSES)) {
-	    if (program.getDegreeType() != null && ALLOWED_DEGREE_TYPES.contains(program.getDegreeType()))
-		return true;
-	}
-	return false;
-    }
-
-    @StartActivity
-    static public class CreateCandidacyPeriod extends Activity<Over23CandidacyProcess> {
-
-	@Override
-	public void checkPreConditions(Over23CandidacyProcess process, IUserView userView) {
-	    if (!isAllowedToManageProcess(userView)) {
-		throw new PreConditionNotValidException();
-	    }
+	private void edit(final DateTime start, final DateTime end) {
+		checkParameters(getCandidacyPeriod().getExecutionInterval(), start, end);
+		getCandidacyPeriod().edit(start, end);
 	}
 
 	@Override
-	protected Over23CandidacyProcess executeActivity(Over23CandidacyProcess process, IUserView userView, Object object) {
-	    final CandidacyProcessBean bean = (CandidacyProcessBean) object;
-	    return new Over23CandidacyProcess((ExecutionYear) bean.getExecutionInterval(), bean.getStart(), bean.getEnd());
-	}
-    }
-
-    static private class EditCandidacyPeriod extends Activity<Over23CandidacyProcess> {
-
-	@Override
-	public void checkPreConditions(Over23CandidacyProcess process, IUserView userView) {
-	    if (!isAllowedToManageProcess(userView)) {
-		throw new PreConditionNotValidException();
-	    }
+	public boolean canExecuteActivity(IUserView userView) {
+		return isAllowedToManageProcess(userView) || userView.hasRoleType(RoleType.SCIENTIFIC_COUNCIL);
 	}
 
 	@Override
-	protected Over23CandidacyProcess executeActivity(Over23CandidacyProcess process, IUserView userView, Object object) {
-	    final CandidacyProcessBean bean = (CandidacyProcessBean) object;
-	    process.edit(bean.getStart(), bean.getEnd());
-	    return process;
-	}
-    }
-
-    static private class SendInformationToJury extends Activity<Over23CandidacyProcess> {
-
-	@Override
-	public void checkPreConditions(Over23CandidacyProcess process, IUserView userView) {
-	    if (!isAllowedToManageProcess(userView)) {
-		throw new PreConditionNotValidException();
-	    }
-
-	    if (!process.isInStandBy()) {
-		throw new PreConditionNotValidException();
-	    }
-
-	    if (!process.hasCandidacyPeriod() || !process.hasStarted() || process.hasOpenCandidacyPeriod()) {
-		throw new PreConditionNotValidException();
-	    }
+	public List<Activity> getActivities() {
+		return activities;
 	}
 
-	@Override
-	protected Over23CandidacyProcess executeActivity(Over23CandidacyProcess process, IUserView userView, Object object) {
-	    process.setState(CandidacyProcessState.SENT_TO_JURY);
-	    return process;
-	}
-    }
-
-    static private class PrintCandidacies extends Activity<Over23CandidacyProcess> {
-
-	@Override
-	public void checkPreConditions(Over23CandidacyProcess process, IUserView userView) {
-	    if (!isAllowedToManageProcess(userView)) {
-		throw new PreConditionNotValidException();
-	    }
-	    if (process.isInStandBy()) {
-		throw new PreConditionNotValidException();
-	    }
+	public List<Over23IndividualCandidacyProcess> getOver23IndividualCandidaciesThatCanBeSendToJury() {
+		final List<Over23IndividualCandidacyProcess> result = new ArrayList<Over23IndividualCandidacyProcess>();
+		for (final IndividualCandidacyProcess child : getChildProcesses()) {
+			final Over23IndividualCandidacyProcess over23CP = (Over23IndividualCandidacyProcess) child;
+			if (over23CP.isCandidacyValid()) {
+				result.add(over23CP);
+			}
+		}
+		return result;
 	}
 
-	@Override
-	protected Over23CandidacyProcess executeActivity(Over23CandidacyProcess process, IUserView userView, Object object) {
-	    return process; // for now, nothing to be done
+	public List<Over23IndividualCandidacyProcess> getAcceptedOver23IndividualCandidacies() {
+		final List<Over23IndividualCandidacyProcess> result = new ArrayList<Over23IndividualCandidacyProcess>();
+		for (final IndividualCandidacyProcess child : getChildProcesses()) {
+			if (child.isCandidacyValid() && child.isCandidacyAccepted()) {
+				result.add((Over23IndividualCandidacyProcess) child);
+			}
+		}
+		return result;
 	}
-    }
+
+	// static information
+
+	private static final Set<DegreeType> ALLOWED_DEGREE_TYPES = Sets.newHashSet(DegreeType.BOLONHA_DEGREE,
+			DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE);
+
+	static private boolean isAllowedToManageProcess(IUserView userView) {
+		for (AcademicProgram program : AcademicAuthorizationGroup.getProgramsForOperation(userView.getPerson(),
+				AcademicOperationType.MANAGE_CANDIDACY_PROCESSES)) {
+			if (program.getDegreeType() != null && ALLOWED_DEGREE_TYPES.contains(program.getDegreeType())) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	@StartActivity
+	static public class CreateCandidacyPeriod extends Activity<Over23CandidacyProcess> {
+
+		@Override
+		public void checkPreConditions(Over23CandidacyProcess process, IUserView userView) {
+			if (!isAllowedToManageProcess(userView)) {
+				throw new PreConditionNotValidException();
+			}
+		}
+
+		@Override
+		protected Over23CandidacyProcess executeActivity(Over23CandidacyProcess process, IUserView userView, Object object) {
+			final CandidacyProcessBean bean = (CandidacyProcessBean) object;
+			return new Over23CandidacyProcess((ExecutionYear) bean.getExecutionInterval(), bean.getStart(), bean.getEnd());
+		}
+	}
+
+	static private class EditCandidacyPeriod extends Activity<Over23CandidacyProcess> {
+
+		@Override
+		public void checkPreConditions(Over23CandidacyProcess process, IUserView userView) {
+			if (!isAllowedToManageProcess(userView)) {
+				throw new PreConditionNotValidException();
+			}
+		}
+
+		@Override
+		protected Over23CandidacyProcess executeActivity(Over23CandidacyProcess process, IUserView userView, Object object) {
+			final CandidacyProcessBean bean = (CandidacyProcessBean) object;
+			process.edit(bean.getStart(), bean.getEnd());
+			return process;
+		}
+	}
+
+	static private class SendInformationToJury extends Activity<Over23CandidacyProcess> {
+
+		@Override
+		public void checkPreConditions(Over23CandidacyProcess process, IUserView userView) {
+			if (!isAllowedToManageProcess(userView)) {
+				throw new PreConditionNotValidException();
+			}
+
+			if (!process.isInStandBy()) {
+				throw new PreConditionNotValidException();
+			}
+
+			if (!process.hasCandidacyPeriod() || !process.hasStarted() || process.hasOpenCandidacyPeriod()) {
+				throw new PreConditionNotValidException();
+			}
+		}
+
+		@Override
+		protected Over23CandidacyProcess executeActivity(Over23CandidacyProcess process, IUserView userView, Object object) {
+			process.setState(CandidacyProcessState.SENT_TO_JURY);
+			return process;
+		}
+	}
+
+	static private class PrintCandidacies extends Activity<Over23CandidacyProcess> {
+
+		@Override
+		public void checkPreConditions(Over23CandidacyProcess process, IUserView userView) {
+			if (!isAllowedToManageProcess(userView)) {
+				throw new PreConditionNotValidException();
+			}
+			if (process.isInStandBy()) {
+				throw new PreConditionNotValidException();
+			}
+		}
+
+		@Override
+		protected Over23CandidacyProcess executeActivity(Over23CandidacyProcess process, IUserView userView, Object object) {
+			return process; // for now, nothing to be done
+		}
+	}
 
 }

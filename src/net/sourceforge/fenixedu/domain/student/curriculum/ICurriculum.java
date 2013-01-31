@@ -8,31 +8,31 @@ import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 
 public interface ICurriculum {
 
-    abstract public Collection<ICurriculumEntry> getCurriculumEntries();
+	abstract public Collection<ICurriculumEntry> getCurriculumEntries();
 
-    abstract public Set<ICurriculumEntry> getCurricularYearEntries();
+	abstract public Set<ICurriculumEntry> getCurricularYearEntries();
 
-    abstract public BigDecimal getSumPiCi();
+	abstract public BigDecimal getSumPiCi();
 
-    abstract public BigDecimal getSumPi();
+	abstract public BigDecimal getSumPi();
 
-    abstract public BigDecimal getAverage();
+	abstract public BigDecimal getAverage();
 
-    abstract public Integer getRoundedAverage();
+	abstract public Integer getRoundedAverage();
 
-    abstract public BigDecimal getSumEctsCredits();
+	abstract public BigDecimal getSumEctsCredits();
 
-    abstract public Integer getCurricularYear();
+	abstract public Integer getCurricularYear();
 
-    abstract public Integer getTotalCurricularYears();
+	abstract public Integer getTotalCurricularYears();
 
-    abstract public boolean isEmpty();
+	abstract public boolean isEmpty();
 
-    abstract public BigDecimal getRemainingCredits();
+	abstract public BigDecimal getRemainingCredits();
 
-    abstract public StudentCurricularPlan getStudentCurricularPlan();
+	abstract public StudentCurricularPlan getStudentCurricularPlan();
 
-    abstract public void setAverageType(AverageType averageType);
+	abstract public void setAverageType(AverageType averageType);
 
-    abstract public boolean hasAnyExternalApprovedEnrolment();
+	abstract public boolean hasAnyExternalApprovedEnrolment();
 }

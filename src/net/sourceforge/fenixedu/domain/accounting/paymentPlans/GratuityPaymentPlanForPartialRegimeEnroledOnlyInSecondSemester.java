@@ -11,31 +11,31 @@ import net.sourceforge.fenixedu.domain.accounting.paymentPlanRules.PaymentPlanRu
 import net.sourceforge.fenixedu.domain.accounting.serviceAgreementTemplates.DegreeCurricularPlanServiceAgreementTemplate;
 
 public class GratuityPaymentPlanForPartialRegimeEnroledOnlyInSecondSemester extends
-	GratuityPaymentPlanForPartialRegimeEnroledOnlyInSecondSemester_Base {
+		GratuityPaymentPlanForPartialRegimeEnroledOnlyInSecondSemester_Base {
 
-    protected GratuityPaymentPlanForPartialRegimeEnroledOnlyInSecondSemester() {
-	super();
-    }
+	protected GratuityPaymentPlanForPartialRegimeEnroledOnlyInSecondSemester() {
+		super();
+	}
 
-    public GratuityPaymentPlanForPartialRegimeEnroledOnlyInSecondSemester(final ExecutionYear executionYear,
-	    final DegreeCurricularPlanServiceAgreementTemplate serviceAgreementTemplate, final Boolean defaultPaymentPlan) {
-	this();
-	init(executionYear, serviceAgreementTemplate, defaultPaymentPlan);
-    }
+	public GratuityPaymentPlanForPartialRegimeEnroledOnlyInSecondSemester(final ExecutionYear executionYear,
+			final DegreeCurricularPlanServiceAgreementTemplate serviceAgreementTemplate, final Boolean defaultPaymentPlan) {
+		this();
+		init(executionYear, serviceAgreementTemplate, defaultPaymentPlan);
+	}
 
-    @Override
-    protected Collection<PaymentPlanRule> getSpecificPaymentPlanRules() {
-	return Arrays.asList(
+	@Override
+	protected Collection<PaymentPlanRule> getSpecificPaymentPlanRules() {
+		return Arrays.asList(
 
-	PaymentPlanRuleFactory.create(IsPartialRegimePaymentPlanRule.class),
+		PaymentPlanRuleFactory.create(IsPartialRegimePaymentPlanRule.class),
 
-	PaymentPlanRuleFactory.create(HasEnrolmentsOnlyInSecondSemesterPaymentPlanRule.class)
+		PaymentPlanRuleFactory.create(HasEnrolmentsOnlyInSecondSemesterPaymentPlanRule.class)
 
-	);
-    }
+		);
+	}
 
-    @Override
-    public boolean isForPartialRegime() {
-	return true;
-    }
+	@Override
+	public boolean isForPartialRegime() {
+		return true;
+	}
 }

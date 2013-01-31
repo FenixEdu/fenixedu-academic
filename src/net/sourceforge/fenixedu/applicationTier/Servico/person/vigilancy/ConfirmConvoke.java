@@ -6,9 +6,9 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class ConfirmConvoke extends FenixService {
 
-    @Service
-    public static void run(OtherCourseVigilancy convoke) {
-	convoke.setConfirmed(true);
-    }
+	@Service
+	public static void run(OtherCourseVigilancy convoke) {
+		convoke.setConfirmed(true);
+	}
 
 }

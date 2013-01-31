@@ -12,117 +12,119 @@ import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
 
 public class InfoEnrolment extends InfoObject {
 
-    private Enrolment enrolment;
+	private Enrolment enrolment;
 
-    protected InfoEnrolment() {
-    }
-
-    protected InfoEnrolment(Enrolment enrolment) {
-	this.enrolment = enrolment;
-    }
-
-    public static InfoEnrolment newInfoFromDomain(Enrolment enrolment) {
-	return (enrolment != null) ? new InfoEnrolment(enrolment) : null;
-    }
-
-    public Enrolment getEnrolment() {
-	return enrolment;
-    }
-
-    @Override
-    public Integer getIdInternal() {
-	return enrolment.getIdInternal();
-    }
-
-    @Override
-    public void setIdInternal(Integer integer) {
-	throw new Error("Method should not be called!");
-    }
-
-    public Integer getAccumulatedWeight() {
-	return enrolment.getAccumulatedWeight();
-    }
-
-    public String getEnrollmentTypeResourceKey() {
-	return enrolment.getEnrolmentTypeName();
-    }
-
-    public InfoCurricularCourse getInfoCurricularCourse() {
-	return InfoCurricularCourse.newInfoFromDomain(enrolment.getCurricularCourse());
-    }
-
-    public InfoExecutionPeriod getInfoExecutionPeriod() {
-	return InfoExecutionPeriod.newInfoFromDomain(enrolment.getExecutionPeriod());
-    }
-
-    public InfoStudentCurricularPlan getInfoStudentCurricularPlan() {
-	return InfoStudentCurricularPlan.newInfoFromDomain(enrolment.getStudentCurricularPlan());
-    }
-
-    public EnrollmentState getEnrollmentState() {
-	return enrolment.getEnrollmentState();
-    }
-
-    public EnrolmentEvaluationType getEnrolmentEvaluationType() {
-	return enrolment.getEnrolmentEvaluationType();
-    }
-
-    public List<InfoEnrolmentEvaluation> getInfoEvaluations() {
-	final List<InfoEnrolmentEvaluation> result = new ArrayList<InfoEnrolmentEvaluation>(enrolment.getEvaluationsCount());
-	for (final EnrolmentEvaluation enrolmentEvaluation : enrolment.getEvaluationsSet()) {
-	    result.add(InfoEnrolmentEvaluationWithResponsibleForGrade.newInfoFromDomain(enrolmentEvaluation));
+	protected InfoEnrolment() {
 	}
-	return result;
-    }
 
-    public InfoEnrolmentEvaluation getInfoEnrolmentEvaluation() {
-	return InfoEnrolmentEvaluationWithResponsibleForGrade.newInfoFromDomain(enrolment.getLatestEnrolmentEvaluation());
-    }
+	protected InfoEnrolment(Enrolment enrolment) {
+		this.enrolment = enrolment;
+	}
 
-    public Date getCreationDate() {
-	return enrolment.getCreationDateDateTime().toDate();
-    }
+	public static InfoEnrolment newInfoFromDomain(Enrolment enrolment) {
+		return (enrolment != null) ? new InfoEnrolment(enrolment) : null;
+	}
 
-    public EnrollmentCondition getCondition() {
-	return enrolment.getEnrolmentCondition();
-    }
+	public Enrolment getEnrolment() {
+		return enrolment;
+	}
 
-    public InfoEnrolmentEvaluation getInfoNormalEnrolmentEvaluation() {
-	return InfoEnrolmentEvaluationWithResponsibleForGrade.newInfoFromDomain(enrolment
-		.getLatestEnrolmentEvaluationBy(EnrolmentEvaluationType.NORMAL));
-    }
+	@Override
+	public Integer getIdInternal() {
+		return enrolment.getIdInternal();
+	}
 
-    public InfoEnrolmentEvaluation getInfoImprovmentEnrolmentEvaluation() {
-	return InfoEnrolmentEvaluationWithResponsibleForGrade.newInfoFromDomain(enrolment
-		.getLatestEnrolmentEvaluationBy(EnrolmentEvaluationType.IMPROVEMENT));
-    }
+	@Override
+	public void setIdInternal(Integer integer) {
+		throw new Error("Method should not be called!");
+	}
 
-    public InfoEnrolmentEvaluation getInfoSpecialSeasonEnrolmentEvaluation() {
-	return InfoEnrolmentEvaluationWithResponsibleForGrade.newInfoFromDomain(enrolment
-		.getLatestEnrolmentEvaluationBy(EnrolmentEvaluationType.SPECIAL_SEASON));
-    }
+	public Integer getAccumulatedWeight() {
+		return enrolment.getAccumulatedWeight();
+	}
 
-    public InfoEnrolmentEvaluation getInfoEquivalenceEnrolmentEvaluation() {
-	return InfoEnrolmentEvaluationWithResponsibleForGrade.newInfoFromDomain(enrolment
-		.getLatestEnrolmentEvaluationBy(EnrolmentEvaluationType.EQUIVALENCE));
-    }
+	public String getEnrollmentTypeResourceKey() {
+		return enrolment.getEnrolmentTypeName();
+	}
 
-    public String getGradeValue() {
-	return enrolment.getGradeValue();
-    }
+	public InfoCurricularCourse getInfoCurricularCourse() {
+		return InfoCurricularCourse.newInfoFromDomain(enrolment.getCurricularCourse());
+	}
 
-    public boolean equals(Object obj) {
-	return (obj instanceof InfoEnrolment) ? this.enrolment == ((InfoEnrolment) obj).getEnrolment() : false;
-    }
+	public InfoExecutionPeriod getInfoExecutionPeriod() {
+		return InfoExecutionPeriod.newInfoFromDomain(enrolment.getExecutionPeriod());
+	}
 
-    public String toString() {
-	String result = "[" + this.getClass().getName() + "; ";
-	result += "infoStudentCurricularPlan = " + getInfoStudentCurricularPlan() + "; ";
-	result += "infoExecutionPeriod = " + getInfoExecutionPeriod() + "; ";
-	result += "state = " + getEnrollmentState() + "; ";
-	result += "infoCurricularCourse = " + getInfoCurricularCourse() + "; ";
-	result += "enrolmentEvaluationType = " + getEnrolmentEvaluationType() + "; ";
-	result += "infoEvaluations = " + getInfoEvaluations() + "]\n";
-	return result;
-    }
+	public InfoStudentCurricularPlan getInfoStudentCurricularPlan() {
+		return InfoStudentCurricularPlan.newInfoFromDomain(enrolment.getStudentCurricularPlan());
+	}
+
+	public EnrollmentState getEnrollmentState() {
+		return enrolment.getEnrollmentState();
+	}
+
+	public EnrolmentEvaluationType getEnrolmentEvaluationType() {
+		return enrolment.getEnrolmentEvaluationType();
+	}
+
+	public List<InfoEnrolmentEvaluation> getInfoEvaluations() {
+		final List<InfoEnrolmentEvaluation> result = new ArrayList<InfoEnrolmentEvaluation>(enrolment.getEvaluationsCount());
+		for (final EnrolmentEvaluation enrolmentEvaluation : enrolment.getEvaluationsSet()) {
+			result.add(InfoEnrolmentEvaluationWithResponsibleForGrade.newInfoFromDomain(enrolmentEvaluation));
+		}
+		return result;
+	}
+
+	public InfoEnrolmentEvaluation getInfoEnrolmentEvaluation() {
+		return InfoEnrolmentEvaluationWithResponsibleForGrade.newInfoFromDomain(enrolment.getLatestEnrolmentEvaluation());
+	}
+
+	public Date getCreationDate() {
+		return enrolment.getCreationDateDateTime().toDate();
+	}
+
+	public EnrollmentCondition getCondition() {
+		return enrolment.getEnrolmentCondition();
+	}
+
+	public InfoEnrolmentEvaluation getInfoNormalEnrolmentEvaluation() {
+		return InfoEnrolmentEvaluationWithResponsibleForGrade.newInfoFromDomain(enrolment
+				.getLatestEnrolmentEvaluationBy(EnrolmentEvaluationType.NORMAL));
+	}
+
+	public InfoEnrolmentEvaluation getInfoImprovmentEnrolmentEvaluation() {
+		return InfoEnrolmentEvaluationWithResponsibleForGrade.newInfoFromDomain(enrolment
+				.getLatestEnrolmentEvaluationBy(EnrolmentEvaluationType.IMPROVEMENT));
+	}
+
+	public InfoEnrolmentEvaluation getInfoSpecialSeasonEnrolmentEvaluation() {
+		return InfoEnrolmentEvaluationWithResponsibleForGrade.newInfoFromDomain(enrolment
+				.getLatestEnrolmentEvaluationBy(EnrolmentEvaluationType.SPECIAL_SEASON));
+	}
+
+	public InfoEnrolmentEvaluation getInfoEquivalenceEnrolmentEvaluation() {
+		return InfoEnrolmentEvaluationWithResponsibleForGrade.newInfoFromDomain(enrolment
+				.getLatestEnrolmentEvaluationBy(EnrolmentEvaluationType.EQUIVALENCE));
+	}
+
+	public String getGradeValue() {
+		return enrolment.getGradeValue();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		return (obj instanceof InfoEnrolment) ? this.enrolment == ((InfoEnrolment) obj).getEnrolment() : false;
+	}
+
+	@Override
+	public String toString() {
+		String result = "[" + this.getClass().getName() + "; ";
+		result += "infoStudentCurricularPlan = " + getInfoStudentCurricularPlan() + "; ";
+		result += "infoExecutionPeriod = " + getInfoExecutionPeriod() + "; ";
+		result += "state = " + getEnrollmentState() + "; ";
+		result += "infoCurricularCourse = " + getInfoCurricularCourse() + "; ";
+		result += "enrolmentEvaluationType = " + getEnrolmentEvaluationType() + "; ";
+		result += "infoEvaluations = " + getInfoEvaluations() + "]\n";
+		return result;
+	}
 }

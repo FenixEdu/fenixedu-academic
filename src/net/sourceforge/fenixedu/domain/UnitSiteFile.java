@@ -8,18 +8,19 @@ import pt.utl.ist.fenix.tools.file.VirtualPath;
 
 public class UnitSiteFile extends UnitSiteFile_Base {
 
-    public UnitSiteFile() {
-	super();
-    }
+	public UnitSiteFile() {
+		super();
+	}
 
-    public UnitSiteFile(VirtualPath path, String filename, String displayName, Collection<FileSetMetaData> metadata,
-	    byte[] content, Group group) {
-	init(path, filename, displayName, metadata, content, group);
-    }
+	public UnitSiteFile(VirtualPath path, String filename, String displayName, Collection<FileSetMetaData> metadata,
+			byte[] content, Group group) {
+		init(path, filename, displayName, metadata, content, group);
+	}
 
-    public void delete() {
-	removeUnitSite();
-	super.delete();
-    }
+	@Override
+	public void delete() {
+		removeUnitSite();
+		super.delete();
+	}
 
 }

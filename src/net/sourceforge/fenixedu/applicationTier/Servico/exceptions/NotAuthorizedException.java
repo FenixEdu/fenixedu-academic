@@ -2,12 +2,12 @@ package net.sourceforge.fenixedu.applicationTier.Servico.exceptions;
 
 public class NotAuthorizedException extends FenixServiceException {
 
-    public NotAuthorizedException() {
-    }
+	public NotAuthorizedException() {
+	}
 
-    public NotAuthorizedException(String s) {
-	super(s);
-    }
+	public NotAuthorizedException(String s) {
+		super(s);
+	}
 
 }
 

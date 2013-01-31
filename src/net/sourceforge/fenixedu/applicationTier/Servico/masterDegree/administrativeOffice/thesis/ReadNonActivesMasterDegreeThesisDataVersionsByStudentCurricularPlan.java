@@ -19,21 +19,21 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class ReadNonActivesMasterDegreeThesisDataVersionsByStudentCurricularPlan extends FenixService {
 
-    @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
-    @Service
-    public static List run(InfoStudentCurricularPlan infoStudentCurricularPlan) {
+	@Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
+	@Service
+	public static List run(InfoStudentCurricularPlan infoStudentCurricularPlan) {
 
-	StudentCurricularPlan studentCurricularPlan = rootDomainObject.readStudentCurricularPlanByOID(infoStudentCurricularPlan
-		.getIdInternal());
+		StudentCurricularPlan studentCurricularPlan =
+				rootDomainObject.readStudentCurricularPlanByOID(infoStudentCurricularPlan.getIdInternal());
 
-	List masterDegreeThesisDataVersions = studentCurricularPlan.readNotActiveMasterDegreeThesisDataVersions();
+		List masterDegreeThesisDataVersions = studentCurricularPlan.readNotActiveMasterDegreeThesisDataVersions();
 
-	List infoMasterDegreeThesisDataVersions = new ArrayList(masterDegreeThesisDataVersions.size());
-	for (MasterDegreeThesisDataVersion masterDegreeThesisDataVersion : (List<MasterDegreeThesisDataVersion>) masterDegreeThesisDataVersions) {
-	    infoMasterDegreeThesisDataVersions.add(InfoMasterDegreeThesisDataVersionWithGuidersAndResp
-		    .newInfoFromDomain(masterDegreeThesisDataVersion));
+		List infoMasterDegreeThesisDataVersions = new ArrayList(masterDegreeThesisDataVersions.size());
+		for (MasterDegreeThesisDataVersion masterDegreeThesisDataVersion : (List<MasterDegreeThesisDataVersion>) masterDegreeThesisDataVersions) {
+			infoMasterDegreeThesisDataVersions.add(InfoMasterDegreeThesisDataVersionWithGuidersAndResp
+					.newInfoFromDomain(masterDegreeThesisDataVersion));
+		}
+
+		return infoMasterDegreeThesisDataVersions;
 	}
-
-	return infoMasterDegreeThesisDataVersions;
-    }
 }

@@ -24,131 +24,131 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class EstablishFinalDegreeWorkStudentGroup extends FenixService {
 
-    @Checked("RolePredicates.STUDENT_PREDICATE")
-    @Service
-    public static Boolean run(Person person, final ExecutionDegree executionDegree) throws FenixServiceException {
-	final Registration registration = getRegistrationForExecutionDegree(person, executionDegree);
-	if (registration == null) {
-	    throw new StudentCannotBeACandidateForSelectedDegree("Student.Cannot.Be.A.Candidate.For.Selected.Degree");
-	}
-	FinalDegreeWorkGroup group = registration.findFinalDegreeWorkGroupForExecutionYear(executionDegree);
-	if (group == null) {
-	    group = new FinalDegreeWorkGroup();
-	    GroupStudent groupStudent = new GroupStudent();
-	    groupStudent.setRegistration(registration);
-	    groupStudent.setFinalDegreeDegreeWorkGroup(group);
-	    // } else {
-	    // if (!group.getGroupProposals().isEmpty()) {
-	    // throw new GroupProposalCandidaciesExistException();
-	    // }
-	    // if (group.getGroupStudents().size() > 1) {
-	    // throw new GroupStudentCandidaciesExistException();
-	    // }
-	}
-
-	if (group.getExecutionDegree() == null || group.getExecutionDegree() != executionDegree) {
-	    if (executionDegree != null) {
-		group.setExecutionDegree(executionDegree);
-	    }
-	}
-
-	return true;
-    }
-
-    private static Registration getRegistrationForExecutionDegree(final Person person, final ExecutionDegree executionDegree) {
-	final Student student = person.getStudent();
-	final DegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
-	for (final Registration registration : student.getRegistrationsSet()) {
-	    if (registration.isActive()) {
-		for (final StudentCurricularPlan studentCurricularPlan : registration.getStudentCurricularPlansSet()) {
-		    if (degreeCurricularPlan == studentCurricularPlan.getDegreeCurricularPlan()) {
-			return registration;
-		    }
+	@Checked("RolePredicates.STUDENT_PREDICATE")
+	@Service
+	public static Boolean run(Person person, final ExecutionDegree executionDegree) throws FenixServiceException {
+		final Registration registration = getRegistrationForExecutionDegree(person, executionDegree);
+		if (registration == null) {
+			throw new StudentCannotBeACandidateForSelectedDegree("Student.Cannot.Be.A.Candidate.For.Selected.Degree");
 		}
-	    }
-	}
-	for (final Registration registration : student.getRegistrationsSet()) {
-	    if (registration.isActive()) {
-		for (final StudentCurricularPlan studentCurricularPlan : registration.getStudentCurricularPlansSet()) {
-		    final CycleCurriculumGroup cycleCurriculumGroup = studentCurricularPlan.getSecondCycle();
-		    if (cycleCurriculumGroup != null
-			    && cycleCurriculumGroup.getDegreeCurricularPlanOfDegreeModule() == degreeCurricularPlan) {
-			return registration;
-		    }
+		FinalDegreeWorkGroup group = registration.findFinalDegreeWorkGroupForExecutionYear(executionDegree);
+		if (group == null) {
+			group = new FinalDegreeWorkGroup();
+			GroupStudent groupStudent = new GroupStudent();
+			groupStudent.setRegistration(registration);
+			groupStudent.setFinalDegreeDegreeWorkGroup(group);
+			// } else {
+			// if (!group.getGroupProposals().isEmpty()) {
+			// throw new GroupProposalCandidaciesExistException();
+			// }
+			// if (group.getGroupStudents().size() > 1) {
+			// throw new GroupStudentCandidaciesExistException();
+			// }
 		}
-	    }
-	}
-	return null;
-    }
 
-    public static class StudentCannotBeACandidateForSelectedDegree extends FenixServiceException {
+		if (group.getExecutionDegree() == null || group.getExecutionDegree() != executionDegree) {
+			if (executionDegree != null) {
+				group.setExecutionDegree(executionDegree);
+			}
+		}
 
-	public StudentCannotBeACandidateForSelectedDegree() {
-	    super();
-	}
-
-	public StudentCannotBeACandidateForSelectedDegree(int errorType) {
-	    super(errorType);
+		return true;
 	}
 
-	public StudentCannotBeACandidateForSelectedDegree(String s) {
-	    super(s);
+	private static Registration getRegistrationForExecutionDegree(final Person person, final ExecutionDegree executionDegree) {
+		final Student student = person.getStudent();
+		final DegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
+		for (final Registration registration : student.getRegistrationsSet()) {
+			if (registration.isActive()) {
+				for (final StudentCurricularPlan studentCurricularPlan : registration.getStudentCurricularPlansSet()) {
+					if (degreeCurricularPlan == studentCurricularPlan.getDegreeCurricularPlan()) {
+						return registration;
+					}
+				}
+			}
+		}
+		for (final Registration registration : student.getRegistrationsSet()) {
+			if (registration.isActive()) {
+				for (final StudentCurricularPlan studentCurricularPlan : registration.getStudentCurricularPlansSet()) {
+					final CycleCurriculumGroup cycleCurriculumGroup = studentCurricularPlan.getSecondCycle();
+					if (cycleCurriculumGroup != null
+							&& cycleCurriculumGroup.getDegreeCurricularPlanOfDegreeModule() == degreeCurricularPlan) {
+						return registration;
+					}
+				}
+			}
+		}
+		return null;
 	}
 
-	public StudentCannotBeACandidateForSelectedDegree(Throwable cause) {
-	    super(cause);
+	public static class StudentCannotBeACandidateForSelectedDegree extends FenixServiceException {
+
+		public StudentCannotBeACandidateForSelectedDegree() {
+			super();
+		}
+
+		public StudentCannotBeACandidateForSelectedDegree(int errorType) {
+			super(errorType);
+		}
+
+		public StudentCannotBeACandidateForSelectedDegree(String s) {
+			super(s);
+		}
+
+		public StudentCannotBeACandidateForSelectedDegree(Throwable cause) {
+			super(cause);
+		}
+
+		public StudentCannotBeACandidateForSelectedDegree(String message, Throwable cause) {
+			super(message, cause);
+		}
+
 	}
 
-	public StudentCannotBeACandidateForSelectedDegree(String message, Throwable cause) {
-	    super(message, cause);
+	public class GroupStudentCandidaciesExistException extends FenixServiceException {
+
+		public GroupStudentCandidaciesExistException() {
+			super();
+		}
+
+		public GroupStudentCandidaciesExistException(int errorType) {
+			super(errorType);
+		}
+
+		public GroupStudentCandidaciesExistException(String s) {
+			super(s);
+		}
+
+		public GroupStudentCandidaciesExistException(Throwable cause) {
+			super(cause);
+		}
+
+		public GroupStudentCandidaciesExistException(String message, Throwable cause) {
+			super(message, cause);
+		}
 	}
 
-    }
+	public class GroupProposalCandidaciesExistException extends FenixServiceException {
 
-    public class GroupStudentCandidaciesExistException extends FenixServiceException {
+		public GroupProposalCandidaciesExistException() {
+			super();
+		}
 
-	public GroupStudentCandidaciesExistException() {
-	    super();
+		public GroupProposalCandidaciesExistException(int errorType) {
+			super(errorType);
+		}
+
+		public GroupProposalCandidaciesExistException(String s) {
+			super(s);
+		}
+
+		public GroupProposalCandidaciesExistException(Throwable cause) {
+			super(cause);
+		}
+
+		public GroupProposalCandidaciesExistException(String message, Throwable cause) {
+			super(message, cause);
+		}
 	}
-
-	public GroupStudentCandidaciesExistException(int errorType) {
-	    super(errorType);
-	}
-
-	public GroupStudentCandidaciesExistException(String s) {
-	    super(s);
-	}
-
-	public GroupStudentCandidaciesExistException(Throwable cause) {
-	    super(cause);
-	}
-
-	public GroupStudentCandidaciesExistException(String message, Throwable cause) {
-	    super(message, cause);
-	}
-    }
-
-    public class GroupProposalCandidaciesExistException extends FenixServiceException {
-
-	public GroupProposalCandidaciesExistException() {
-	    super();
-	}
-
-	public GroupProposalCandidaciesExistException(int errorType) {
-	    super(errorType);
-	}
-
-	public GroupProposalCandidaciesExistException(String s) {
-	    super(s);
-	}
-
-	public GroupProposalCandidaciesExistException(Throwable cause) {
-	    super(cause);
-	}
-
-	public GroupProposalCandidaciesExistException(String message, Throwable cause) {
-	    super(message, cause);
-	}
-    }
 
 }

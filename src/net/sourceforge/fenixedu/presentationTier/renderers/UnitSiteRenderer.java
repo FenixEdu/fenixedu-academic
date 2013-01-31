@@ -28,171 +28,176 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderKit;
  */
 public class UnitSiteRenderer extends OutputRenderer {
 
-    private String classes;
+	private String classes;
 
-    private String unitSchema;
+	private String unitSchema;
 
-    private String unitLayout;
+	private String unitLayout;
 
-    private boolean parenteShown;
+	private boolean parenteShown;
 
-    private boolean targetBlank;
+	private boolean targetBlank;
 
-    private boolean moduleRelative;
+	private boolean moduleRelative;
 
-    private boolean contextRelative;
+	private boolean contextRelative;
 
-    private String separator;
+	private String separator;
 
-    private String style;
+	private String style;
 
-    public boolean isContextRelative() {
-	return contextRelative;
-    }
+	public boolean isContextRelative() {
+		return contextRelative;
+	}
 
-    public void setContextRelative(boolean contextRelative) {
-	this.contextRelative = contextRelative;
-    }
+	public void setContextRelative(boolean contextRelative) {
+		this.contextRelative = contextRelative;
+	}
 
-    public boolean isModuleRelative() {
-	return moduleRelative;
-    }
+	public boolean isModuleRelative() {
+		return moduleRelative;
+	}
 
-    public void setModuleRelative(boolean moduleRelative) {
-	this.moduleRelative = moduleRelative;
-    }
-
-    public String getClasses() {
-	return classes;
-    }
-
-    public void setClasses(String classes) {
-	this.classes = classes;
-    }
-
-    public boolean isParenteShown() {
-	return parenteShown;
-    }
-
-    public void setParenteShown(boolean parenteShown) {
-	this.parenteShown = parenteShown;
-    }
-
-    public boolean isTargetBlank() {
-	return targetBlank;
-    }
-
-    public void setTargetBlank(boolean targetBlank) {
-	this.targetBlank = targetBlank;
-    }
-
-    public String getUnitSchema() {
-	return unitSchema;
-    }
-
-    public void setUnitSchema(String unitSchema) {
-	this.unitSchema = unitSchema;
-    }
-
-    public String getUnitLayout() {
-	return unitLayout;
-    }
-
-    public void setUnitLayout(String unitLayout) {
-	this.unitLayout = unitLayout;
-    }
-
-    @Override
-    protected Layout getLayout(Object object, Class type) {
-	return new UnitSiteLayout();
-    }
-
-    private class UnitSiteLayout extends Layout {
-
-	private Schema findSchema() {
-	    return RenderKit.getInstance().findSchema(getUnitSchema());
+	public void setModuleRelative(boolean moduleRelative) {
+		this.moduleRelative = moduleRelative;
 	}
 
 	@Override
-	public HtmlComponent createComponent(Object object, Class type) {
-	    Unit unit = (Unit) object;
-	    HtmlBlockContainer unitPresentation = new HtmlBlockContainer();
-	    final boolean isPublic = unit.hasSite() ? unit.getSite().isPublic() : false;
-	    unitPresentation.addChild(getUnitComponent(unit, isPublic));
-	    if (isParenteShown()) {
+	public String getClasses() {
+		return classes;
+	}
 
-		Collection<Unit> parentUnits = CollectionUtils.select(unit.getParentUnits(), new Predicate() {
-		    public boolean evaluate(Object arg0) {
-			return !((Unit) arg0).isAggregateUnit();
-		    }
+	@Override
+	public void setClasses(String classes) {
+		this.classes = classes;
+	}
 
-		});
+	public boolean isParenteShown() {
+		return parenteShown;
+	}
 
-		if (!parentUnits.isEmpty()) {
-		    unitPresentation.addChild(new HtmlText(getSeparator(), false));
-		    int i = 0;
-		    int size = parentUnits.size();
-		    for (Unit parentUnit : parentUnits) {
-			unitPresentation.addChild(getUnitComponent(parentUnit, isPublic));
-			if (i < size - 1) {
-			    unitPresentation.addChild(new HtmlText(","));
+	public void setParenteShown(boolean parenteShown) {
+		this.parenteShown = parenteShown;
+	}
+
+	public boolean isTargetBlank() {
+		return targetBlank;
+	}
+
+	public void setTargetBlank(boolean targetBlank) {
+		this.targetBlank = targetBlank;
+	}
+
+	public String getUnitSchema() {
+		return unitSchema;
+	}
+
+	public void setUnitSchema(String unitSchema) {
+		this.unitSchema = unitSchema;
+	}
+
+	public String getUnitLayout() {
+		return unitLayout;
+	}
+
+	public void setUnitLayout(String unitLayout) {
+		this.unitLayout = unitLayout;
+	}
+
+	@Override
+	protected Layout getLayout(Object object, Class type) {
+		return new UnitSiteLayout();
+	}
+
+	private class UnitSiteLayout extends Layout {
+
+		private Schema findSchema() {
+			return RenderKit.getInstance().findSchema(getUnitSchema());
+		}
+
+		@Override
+		public HtmlComponent createComponent(Object object, Class type) {
+			Unit unit = (Unit) object;
+			HtmlBlockContainer unitPresentation = new HtmlBlockContainer();
+			final boolean isPublic = unit.hasSite() ? unit.getSite().isPublic() : false;
+			unitPresentation.addChild(getUnitComponent(unit, isPublic));
+			if (isParenteShown()) {
+
+				Collection<Unit> parentUnits = CollectionUtils.select(unit.getParentUnits(), new Predicate() {
+					@Override
+					public boolean evaluate(Object arg0) {
+						return !((Unit) arg0).isAggregateUnit();
+					}
+
+				});
+
+				if (!parentUnits.isEmpty()) {
+					unitPresentation.addChild(new HtmlText(getSeparator(), false));
+					int i = 0;
+					int size = parentUnits.size();
+					for (Unit parentUnit : parentUnits) {
+						unitPresentation.addChild(getUnitComponent(parentUnit, isPublic));
+						if (i < size - 1) {
+							unitPresentation.addChild(new HtmlText(","));
+						}
+						i++;
+					}
+				}
 			}
-			i++;
-		    }
+			return unitPresentation;
 		}
-	    }
-	    return unitPresentation;
-	}
 
-	private HtmlComponent getUnitComponent(Unit unit, final boolean isPublic) {
-	    HtmlComponent component;
-	    if (unitHasSite(unit)) {
-		final String preapendedComment = isPublic ? pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX
-			: pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestRewriter.HAS_CONTEXT_PREFIX;
-		HtmlLink link = new HtmlLinkWithPreprendedComment(preapendedComment);
+		private HtmlComponent getUnitComponent(Unit unit, final boolean isPublic) {
+			HtmlComponent component;
+			if (unitHasSite(unit)) {
+				final String preapendedComment =
+						isPublic ? pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX : pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestRewriter.HAS_CONTEXT_PREFIX;
+				HtmlLink link = new HtmlLinkWithPreprendedComment(preapendedComment);
 
-		link.setUrl(resolveUnitURL(unit));
-		link.setBody(renderValue(unit, findSchema(), getUnitLayout()));
-		if (isTargetBlank()) {
-		    link.setTarget("_blank");
+				link.setUrl(resolveUnitURL(unit));
+				link.setBody(renderValue(unit, findSchema(), getUnitLayout()));
+				if (isTargetBlank()) {
+					link.setTarget("_blank");
+				}
+				link.setModuleRelative(isModuleRelative());
+				link.setContextRelative(isContextRelative());
+				component = link;
+			} else {
+				component = renderValue(unit, findSchema(), getUnitLayout());
+			}
+			return component;
 		}
-		link.setModuleRelative(isModuleRelative());
-		link.setContextRelative(isContextRelative());
-		component = link;
-	    } else {
-		component = renderValue(unit, findSchema(), getUnitLayout());
-	    }
-	    return component;
+
+		private boolean unitHasSite(Unit unit) {
+			return (unit.isDegreeUnit()) ? unit.getDegree().hasSite() : unit.hasSite();
+		}
+
+		private String resolveUnitURL(Unit unit) {
+			Site site = unit.getSite();
+			if (site == null) {
+				return "";
+			}
+
+			return site.getReversePath();
+		}
 	}
 
-	private boolean unitHasSite(Unit unit) {
-	    return (unit.isDegreeUnit()) ? unit.getDegree().hasSite() : unit.hasSite();
+	public String getSeparator() {
+		return separator;
 	}
 
-	private String resolveUnitURL(Unit unit) {
-	    Site site = unit.getSite();
-	    if (site == null) {
-		return "";
-	    }
-
-	    return site.getReversePath();
+	public void setSeparator(String separator) {
+		this.separator = separator;
 	}
-    }
 
-    public String getSeparator() {
-	return separator;
-    }
+	@Override
+	public String getStyle() {
+		return style;
+	}
 
-    public void setSeparator(String separator) {
-	this.separator = separator;
-    }
-
-    public String getStyle() {
-	return style;
-    }
-
-    public void setStyle(String style) {
-	this.style = style;
-    }
+	@Override
+	public void setStyle(String style) {
+		this.style = style;
+	}
 
 }

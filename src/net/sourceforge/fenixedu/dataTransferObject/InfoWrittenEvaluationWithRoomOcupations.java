@@ -18,35 +18,37 @@ import org.apache.commons.collections.Transformer;
  */
 public class InfoWrittenEvaluationWithRoomOcupations extends InfoWrittenEvaluation {
 
-    public void copyFromDomain(WrittenEvaluation writtenEvaluation) {
-	super.copyFromDomain(writtenEvaluation);
-	if (writtenEvaluation != null) {
-	    setWrittenEvaluationSpaceOccupations(copyIRoomOccupation2InfoRoomOccupation(writtenEvaluation
-		    .getWrittenEvaluationSpaceOccupations()));
+	@Override
+	public void copyFromDomain(WrittenEvaluation writtenEvaluation) {
+		super.copyFromDomain(writtenEvaluation);
+		if (writtenEvaluation != null) {
+			setWrittenEvaluationSpaceOccupations(copyIRoomOccupation2InfoRoomOccupation(writtenEvaluation
+					.getWrittenEvaluationSpaceOccupations()));
+		}
 	}
-    }
 
-    private List<InfoRoomOccupation> copyIRoomOccupation2InfoRoomOccupation(
-	    List<WrittenEvaluationSpaceOccupation> associatedRoomOccupation) {
-	List<InfoRoomOccupation> infoRoomOccupation = null;
+	private List<InfoRoomOccupation> copyIRoomOccupation2InfoRoomOccupation(
+			List<WrittenEvaluationSpaceOccupation> associatedRoomOccupation) {
+		List<InfoRoomOccupation> infoRoomOccupation = null;
 
-	infoRoomOccupation = (List<InfoRoomOccupation>) CollectionUtils.collect(associatedRoomOccupation, new Transformer() {
+		infoRoomOccupation = (List<InfoRoomOccupation>) CollectionUtils.collect(associatedRoomOccupation, new Transformer() {
 
-	    public Object transform(Object arg0) {
-		WrittenEvaluationSpaceOccupation roomOccupation = (WrittenEvaluationSpaceOccupation) arg0;
-		return InfoRoomOccupation.newInfoFromDomain(roomOccupation);
-	    }
-	});
+			@Override
+			public Object transform(Object arg0) {
+				WrittenEvaluationSpaceOccupation roomOccupation = (WrittenEvaluationSpaceOccupation) arg0;
+				return InfoRoomOccupation.newInfoFromDomain(roomOccupation);
+			}
+		});
 
-	return infoRoomOccupation;
-    }
-
-    public static InfoWrittenEvaluation newInfoFromDomain(WrittenEvaluation writtenEvaluation) {
-	InfoWrittenEvaluationWithRoomOcupations infoWrittenEvaluation = null;
-	if (writtenEvaluation != null) {
-	    infoWrittenEvaluation = new InfoWrittenEvaluationWithRoomOcupations();
-	    infoWrittenEvaluation.copyFromDomain(writtenEvaluation);
+		return infoRoomOccupation;
 	}
-	return infoWrittenEvaluation;
-    }
+
+	public static InfoWrittenEvaluation newInfoFromDomain(WrittenEvaluation writtenEvaluation) {
+		InfoWrittenEvaluationWithRoomOcupations infoWrittenEvaluation = null;
+		if (writtenEvaluation != null) {
+			infoWrittenEvaluation = new InfoWrittenEvaluationWithRoomOcupations();
+			infoWrittenEvaluation.copyFromDomain(writtenEvaluation);
+		}
+		return infoWrittenEvaluation;
+	}
 }

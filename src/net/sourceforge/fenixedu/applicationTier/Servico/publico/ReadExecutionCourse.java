@@ -12,16 +12,16 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class ReadExecutionCourse extends FenixService {
 
-    @Service
-    public static Object run(InfoExecutionPeriod infoExecutionPeriod, String code) {
-	final ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(infoExecutionPeriod
-		.getIdInternal());
-	ExecutionCourse iExecCourse = executionSemester.getExecutionCourseByInitials(code);
+	@Service
+	public static Object run(InfoExecutionPeriod infoExecutionPeriod, String code) {
+		final ExecutionSemester executionSemester =
+				rootDomainObject.readExecutionSemesterByOID(infoExecutionPeriod.getIdInternal());
+		ExecutionCourse iExecCourse = executionSemester.getExecutionCourseByInitials(code);
 
-	if (iExecCourse != null) {
-	    return InfoExecutionCourse.newInfoFromDomain(iExecCourse);
+		if (iExecCourse != null) {
+			return InfoExecutionCourse.newInfoFromDomain(iExecCourse);
+		}
+		return null;
 	}
-	return null;
-    }
 
 }

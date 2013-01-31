@@ -8,43 +8,43 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public enum MobilityProgram {
 
-    SOCRATES,
+	SOCRATES,
 
-    ERASMUS,
+	ERASMUS,
 
-    MINERVA,
+	MINERVA,
 
-    COVENANT_WITH_AZORES,
+	COVENANT_WITH_AZORES,
 
-    COVENANT_WITH_INSTITUTION {
+	COVENANT_WITH_INSTITUTION {
 
-	@Override
+		@Override
+		protected String getSpecificDescription(final Locale locale) {
+			return ResourceBundle.getBundle("resources.EnumerationResources", Language.getLocale()).getString(getQualifiedName())
+					+ UniversityUnit.getInstitutionsUniversityUnit().getName();
+		}
+
+	};
+
+	public String getQualifiedName() {
+		Class<?> enumClass = this.getClass();
+		if (!enumClass.isEnum() && Enum.class.isAssignableFrom(enumClass)) {
+			enumClass = enumClass.getEnclosingClass();
+		}
+
+		return enumClass.getSimpleName() + "." + name();
+	}
+
 	protected String getSpecificDescription(final Locale locale) {
-	    return ResourceBundle.getBundle("resources.EnumerationResources", Language.getLocale()).getString(getQualifiedName())
-		    + UniversityUnit.getInstitutionsUniversityUnit().getName();
+		return ResourceBundle.getBundle("resources.EnumerationResources", locale).getString(getQualifiedName());
 	}
 
-    };
-
-    public String getQualifiedName() {
-	Class<?> enumClass = this.getClass();
-	if (!enumClass.isEnum() && Enum.class.isAssignableFrom(enumClass)) {
-	    enumClass = enumClass.getEnclosingClass();
+	public String getDescription() {
+		return getSpecificDescription(Language.getLocale());
 	}
 
-	return enumClass.getSimpleName() + "." + name();
-    }
-
-    protected String getSpecificDescription(final Locale locale) {
-	return ResourceBundle.getBundle("resources.EnumerationResources", locale).getString(getQualifiedName());
-    }
-
-    public String getDescription() {
-	return getSpecificDescription(Language.getLocale());
-    }
-
-    public String getDescription(final Locale locale) {
-	return getSpecificDescription(locale);
-    }
+	public String getDescription(final Locale locale) {
+		return getSpecificDescription(locale);
+	}
 
 }

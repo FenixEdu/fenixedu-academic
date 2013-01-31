@@ -19,120 +19,122 @@ import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class EPFLPhdCandidacyPeriod extends EPFLPhdCandidacyPeriod_Base {
 
-    protected EPFLPhdCandidacyPeriod() {
-	super();
-    }
-
-    protected EPFLPhdCandidacyPeriod(final ExecutionYear executionYear, final DateTime start, final DateTime end,
-	    PhdCandidacyPeriodType type) {
-	this();
-
-	init(executionYear, start, end, type);
-    }
-
-    @Override
-    protected void init(final ExecutionYear executionYear, final DateTime start, final DateTime end, PhdCandidacyPeriodType type) {
-	checkIfCanCreate(start, end);
-
-	if (!PhdCandidacyPeriodType.EPFL.equals(type)) {
-	    throw new DomainException("error.EPFLPhdCandidacyPeriod.type.must.be.epfl");
+	protected EPFLPhdCandidacyPeriod() {
+		super();
 	}
 
-	super.init(executionYear, start, end, type);
-    }
+	protected EPFLPhdCandidacyPeriod(final ExecutionYear executionYear, final DateTime start, final DateTime end,
+			PhdCandidacyPeriodType type) {
+		this();
 
-    private void checkIfCanCreate(final DateTime start, final DateTime end) {
-	for (final CandidacyPeriod period : RootDomainObject.getInstance().getCandidacyPeriods()) {
-	    if (!period.equals(this) && period.isEpflCandidacyPeriod() && period.intercept(start, end)) {
-		throw new DomainException(
-			"error.EPFLInstitutionPhdCandidacyPeriod.already.contains.candidacyPeriod.in.given.dates");
-	    }
-	}
-    }
-
-    @Override
-    public boolean isEpflCandidacyPeriod() {
-	return true;
-    }
-
-    @Service
-    public static EPFLPhdCandidacyPeriod create(final PhdCandidacyPeriodBean phdCandidacyPeriodBean) {
-	final ExecutionYear executionYear = phdCandidacyPeriodBean.getExecutionYear();
-	final DateTime start = phdCandidacyPeriodBean.getStart();
-	final DateTime end = phdCandidacyPeriodBean.getEnd();
-	final PhdCandidacyPeriodType type = phdCandidacyPeriodBean.getType();
-
-	return new EPFLPhdCandidacyPeriod(executionYear, start, end, type);
-    }
-
-    public static boolean isAnyEPFLPhdCandidacyPeriodActive() {
-	return isAnyEPFLPhdCandidacyPeriodActive(new DateTime());
-    }
-
-    public static boolean isAnyEPFLPhdCandidacyPeriodActive(final DateTime date) {
-	return readEPFLPhdCandidacyPeriodForDateTime(date) != null;
-    }
-
-    public static EPFLPhdCandidacyPeriod readEPFLPhdCandidacyPeriodForDateTime(final DateTime date) {
-	for (final CandidacyPeriod period : RootDomainObject.getInstance().getCandidacyPeriods()) {
-	    if (period.isEpflCandidacyPeriod() && period.contains(date)) {
-		return (EPFLPhdCandidacyPeriod) period;
-	    }
+		init(executionYear, start, end, type);
 	}
 
-	return null;
-    }
+	@Override
+	protected void init(final ExecutionYear executionYear, final DateTime start, final DateTime end, PhdCandidacyPeriodType type) {
+		checkIfCanCreate(start, end);
 
-    static public EPFLPhdCandidacyPeriod getMostRecentCandidacyPeriod() {
-	PhdCandidacyPeriod mostRecentCandidacyPeriod = null;
+		if (!PhdCandidacyPeriodType.EPFL.equals(type)) {
+			throw new DomainException("error.EPFLPhdCandidacyPeriod.type.must.be.epfl");
+		}
 
-	for (CandidacyPeriod candidacyPeriod : RootDomainObject.getInstance().getCandidacyPeriods()) {
-	    if (!candidacyPeriod.isEpflCandidacyPeriod()) {
-		continue;
-	    }
-
-	    if (candidacyPeriod.getStart().isAfterNow()) {
-		continue;
-	    }
-
-	    if (mostRecentCandidacyPeriod == null) {
-		mostRecentCandidacyPeriod = (PhdCandidacyPeriod) candidacyPeriod;
-		continue;
-	    }
-
-	    if (candidacyPeriod.getStart().isAfter(mostRecentCandidacyPeriod.getStart())) {
-		mostRecentCandidacyPeriod = (PhdCandidacyPeriod) candidacyPeriod;
-	    }
+		super.init(executionYear, start, end, type);
 	}
 
-	return (EPFLPhdCandidacyPeriod) mostRecentCandidacyPeriod;
-    }
+	private void checkIfCanCreate(final DateTime start, final DateTime end) {
+		for (final CandidacyPeriod period : RootDomainObject.getInstance().getCandidacyPeriods()) {
+			if (!period.equals(this) && period.isEpflCandidacyPeriod() && period.intercept(start, end)) {
+				throw new DomainException(
+						"error.EPFLInstitutionPhdCandidacyPeriod.already.contains.candidacyPeriod.in.given.dates");
+			}
+		}
+	}
 
-    @Override
-    public String getEmailMessageBodyForRefereeForm(final PhdCandidacyReferee referee) {
-	Locale locale = Language.getLocale();
-	final ResourceBundle bundle = ResourceBundle.getBundle("resources.PhdResources", locale);
+	@Override
+	public boolean isEpflCandidacyPeriod() {
+		return true;
+	}
 
-	return String.format(bundle.getString("message.phd.epfl.email.body.referee"),
-		EPFLPhdCandidacyProcessProperties.getPublicCandidacyRefereeFormLink(), referee.getValue());
-    }
+	@Service
+	public static EPFLPhdCandidacyPeriod create(final PhdCandidacyPeriodBean phdCandidacyPeriodBean) {
+		final ExecutionYear executionYear = phdCandidacyPeriodBean.getExecutionYear();
+		final DateTime start = phdCandidacyPeriodBean.getStart();
+		final DateTime end = phdCandidacyPeriodBean.getEnd();
+		final PhdCandidacyPeriodType type = phdCandidacyPeriodBean.getType();
 
-    @Override
-    public MultiLanguageString getEmailMessageSubjectForMissingCandidacyValidation(PhdIndividualProgramProcess process) {
-	final ResourceBundle bundle = getResourceBundle(Locale.ENGLISH);
-	return new MultiLanguageString().with(Language.en,
-		bundle.getString("message.phd.epfl.email.subject.missing.candidacy.validation"));
-    }
+		return new EPFLPhdCandidacyPeriod(executionYear, start, end, type);
+	}
 
-    @Override
-    public MultiLanguageString getEmailMessageBodyForMissingCandidacyValidation(PhdIndividualProgramProcess process) {
-	final ResourceBundle bundle = getResourceBundle(Locale.ENGLISH);
-	final String body = String.format(bundle.getString("message.phd.epfl.email.body.missing.candidacy.validation"),
-		PhdProperties.getPublicCandidacyAccessLink(), process.getCandidacyProcess().getCandidacyHashCode().getValue());
-	return new MultiLanguageString().with(Language.en, body);
-    }
+	public static boolean isAnyEPFLPhdCandidacyPeriodActive() {
+		return isAnyEPFLPhdCandidacyPeriodActive(new DateTime());
+	}
 
-    final protected ResourceBundle getResourceBundle(final Locale locale) {
-	return ResourceBundle.getBundle("resources.PhdResources", locale);
-    }
+	public static boolean isAnyEPFLPhdCandidacyPeriodActive(final DateTime date) {
+		return readEPFLPhdCandidacyPeriodForDateTime(date) != null;
+	}
+
+	public static EPFLPhdCandidacyPeriod readEPFLPhdCandidacyPeriodForDateTime(final DateTime date) {
+		for (final CandidacyPeriod period : RootDomainObject.getInstance().getCandidacyPeriods()) {
+			if (period.isEpflCandidacyPeriod() && period.contains(date)) {
+				return (EPFLPhdCandidacyPeriod) period;
+			}
+		}
+
+		return null;
+	}
+
+	static public EPFLPhdCandidacyPeriod getMostRecentCandidacyPeriod() {
+		PhdCandidacyPeriod mostRecentCandidacyPeriod = null;
+
+		for (CandidacyPeriod candidacyPeriod : RootDomainObject.getInstance().getCandidacyPeriods()) {
+			if (!candidacyPeriod.isEpflCandidacyPeriod()) {
+				continue;
+			}
+
+			if (candidacyPeriod.getStart().isAfterNow()) {
+				continue;
+			}
+
+			if (mostRecentCandidacyPeriod == null) {
+				mostRecentCandidacyPeriod = (PhdCandidacyPeriod) candidacyPeriod;
+				continue;
+			}
+
+			if (candidacyPeriod.getStart().isAfter(mostRecentCandidacyPeriod.getStart())) {
+				mostRecentCandidacyPeriod = (PhdCandidacyPeriod) candidacyPeriod;
+			}
+		}
+
+		return (EPFLPhdCandidacyPeriod) mostRecentCandidacyPeriod;
+	}
+
+	@Override
+	public String getEmailMessageBodyForRefereeForm(final PhdCandidacyReferee referee) {
+		Locale locale = Language.getLocale();
+		final ResourceBundle bundle = ResourceBundle.getBundle("resources.PhdResources", locale);
+
+		return String.format(bundle.getString("message.phd.epfl.email.body.referee"),
+				EPFLPhdCandidacyProcessProperties.getPublicCandidacyRefereeFormLink(), referee.getValue());
+	}
+
+	@Override
+	public MultiLanguageString getEmailMessageSubjectForMissingCandidacyValidation(PhdIndividualProgramProcess process) {
+		final ResourceBundle bundle = getResourceBundle(Locale.ENGLISH);
+		return new MultiLanguageString().with(Language.en,
+				bundle.getString("message.phd.epfl.email.subject.missing.candidacy.validation"));
+	}
+
+	@Override
+	public MultiLanguageString getEmailMessageBodyForMissingCandidacyValidation(PhdIndividualProgramProcess process) {
+		final ResourceBundle bundle = getResourceBundle(Locale.ENGLISH);
+		final String body =
+				String.format(bundle.getString("message.phd.epfl.email.body.missing.candidacy.validation"),
+						PhdProperties.getPublicCandidacyAccessLink(), process.getCandidacyProcess().getCandidacyHashCode()
+								.getValue());
+		return new MultiLanguageString().with(Language.en, body);
+	}
+
+	final protected ResourceBundle getResourceBundle(final Locale locale) {
+		return ResourceBundle.getBundle("resources.PhdResources", locale);
+	}
 }

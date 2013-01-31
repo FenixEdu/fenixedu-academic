@@ -27,207 +27,206 @@ import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public abstract class NoCourseGroupCurriculumGroup extends NoCourseGroupCurriculumGroup_Base {
 
-    protected NoCourseGroupCurriculumGroup() {
-	super();
-    }
-
-    protected void init(final RootCurriculumGroup curriculumGroup) {
-	checkParameters(curriculumGroup);
-	this.setCurriculumGroup(curriculumGroup);
-    }
-
-    private void checkParameters(final RootCurriculumGroup curriculumGroup) {
-	if (curriculumGroup == null) {
-	    throw new DomainException("error.NoCourseGroupCurriculumGroup.invalid.curriculumGroup");
+	protected NoCourseGroupCurriculumGroup() {
+		super();
 	}
-    }
 
-    public static NoCourseGroupCurriculumGroup create(final NoCourseGroupCurriculumGroupType groupType,
-	    final RootCurriculumGroup curriculumGroup) {
-	switch (groupType) {
-
-	case PROPAEDEUTICS:
-	    return new PropaedeuticsCurriculumGroup(curriculumGroup);
-
-	case EXTRA_CURRICULAR:
-	    return new ExtraCurriculumGroup(curriculumGroup);
-
-	case STANDALONE:
-	    return new StandaloneCurriculumGroup(curriculumGroup);
-
-	case INTERNAL_CREDITS_SOURCE_GROUP:
-	    return new InternalCreditsSourceCurriculumGroup(curriculumGroup);
-
-	default:
-	    throw new DomainException("error.unknown.NoCourseGroupCurriculumGroupType");
+	protected void init(final RootCurriculumGroup curriculumGroup) {
+		checkParameters(curriculumGroup);
+		this.setCurriculumGroup(curriculumGroup);
 	}
-    }
 
-    @Override
-    public boolean isNoCourseGroupCurriculumGroup() {
-	return true;
-    }
-
-    @Override
-    public MultiLanguageString getName() {
-	final MultiLanguageString result = new MultiLanguageString();
-
-	result.setContent(Language.pt, getNoCourseGroupCurriculumGroupType().getLocalizedName(new Locale(Language.pt.name())));
-	result.setContent(Language.en, getNoCourseGroupCurriculumGroupType().getLocalizedName(new Locale(Language.en.name())));
-
-	return result;
-    }
-
-    @Override
-    public List<Context> getCurricularCourseContextsToEnrol(ExecutionSemester executionSemester) {
-	return Collections.emptyList();
-    }
-
-    @Override
-    public List<Context> getCourseGroupContextsToEnrol(ExecutionSemester executionSemester) {
-	return Collections.emptyList();
-    }
-
-    @Override
-    public Collection<CurricularCourse> getCurricularCoursesToDismissal(final ExecutionSemester executionSemester) {
-	return Collections.emptyList();
-    }
-
-    @Override
-    public boolean hasDegreeModule(DegreeModule degreeModule) {
-	for (final CurriculumModule curriculumModule : this.getCurriculumModules()) {
-	    if (curriculumModule.hasDegreeModule(degreeModule)) {
-		return true;
-	    }
-	}
-	return false;
-    }
-
-    @Override
-    public boolean hasCourseGroup(CourseGroup courseGroup) {
-	for (final CurriculumModule curriculumModule : getCurriculumModules()) {
-	    if (!curriculumModule.isLeaf()) {
-		final CurriculumGroup group = (CurriculumGroup) curriculumModule;
-		if (group.hasCourseGroup(courseGroup)) {
-		    return true;
+	private void checkParameters(final RootCurriculumGroup curriculumGroup) {
+		if (curriculumGroup == null) {
+			throw new DomainException("error.NoCourseGroupCurriculumGroup.invalid.curriculumGroup");
 		}
-	    }
 	}
 
-	return false;
-    }
+	public static NoCourseGroupCurriculumGroup create(final NoCourseGroupCurriculumGroupType groupType,
+			final RootCurriculumGroup curriculumGroup) {
+		switch (groupType) {
 
-    /**
-     * Flat structure below NoCourseGroupCurriculumGroup
-     */
-    @Override
-    public CurriculumGroup findCurriculumGroupFor(final CourseGroup courseGroup) {
-	for (final CurriculumModule each : getCurriculumModulesSet()) {
-	    if (!each.isLeaf() && each.getDegreeModule() == courseGroup) {
-		return (CurriculumGroup) each;
-	    }
+		case PROPAEDEUTICS:
+			return new PropaedeuticsCurriculumGroup(curriculumGroup);
+
+		case EXTRA_CURRICULAR:
+			return new ExtraCurriculumGroup(curriculumGroup);
+
+		case STANDALONE:
+			return new StandaloneCurriculumGroup(curriculumGroup);
+
+		case INTERNAL_CREDITS_SOURCE_GROUP:
+			return new InternalCreditsSourceCurriculumGroup(curriculumGroup);
+
+		default:
+			throw new DomainException("error.unknown.NoCourseGroupCurriculumGroupType");
+		}
 	}
-	return null;
-    }
 
-    @Override
-    public Integer getChildOrder(final ExecutionSemester executionSemester) {
-	return Integer.MAX_VALUE;
-    }
+	@Override
+	public boolean isNoCourseGroupCurriculumGroup() {
+		return true;
+	}
 
-    @Override
-    protected Integer searchChildOrderForChild(final CurriculumGroup child, final ExecutionSemester executionSemester) {
-	final List<CurriculumModule> result = new ArrayList<CurriculumModule>(getCurriculumModulesSet());
-	Collections.sort(result, CurriculumModule.COMPARATOR_BY_NAME_AND_ID);
-	return result.indexOf(child);
-    }
+	@Override
+	public MultiLanguageString getName() {
+		final MultiLanguageString result = new MultiLanguageString();
 
-    @Override
-    public Set<IDegreeModuleToEvaluate> getDegreeModulesToEvaluate(ExecutionSemester executionSemester) {
-	return Collections.emptySet();
-    }
+		result.setContent(Language.pt, getNoCourseGroupCurriculumGroupType().getLocalizedName(new Locale(Language.pt.name())));
+		result.setContent(Language.en, getNoCourseGroupCurriculumGroupType().getLocalizedName(new Locale(Language.en.name())));
 
-    @Override
-    public Set<ICurricularRule> getCurricularRules(ExecutionSemester executionSemester) {
-	return Collections.emptySet();
-    }
+		return result;
+	}
 
-    @Override
-    public ConclusionValue isConcluded(ExecutionYear executionYear) {
-	return ConclusionValue.CONCLUDED;
-    }
+	@Override
+	public List<Context> getCurricularCourseContextsToEnrol(ExecutionSemester executionSemester) {
+		return Collections.emptyList();
+	}
 
-    @Override
-    final public Curriculum getCurriculum(final DateTime when, final ExecutionYear executionYear) {
-	return Curriculum.createEmpty(this, executionYear);
-    }
+	@Override
+	public List<Context> getCourseGroupContextsToEnrol(ExecutionSemester executionSemester) {
+		return Collections.emptyList();
+	}
 
-    @Override
-    public Double getCreditsConcluded(ExecutionYear executionYear) {
-	return Double.valueOf(0d);
-    }
+	@Override
+	public Collection<CurricularCourse> getCurricularCoursesToDismissal(final ExecutionSemester executionSemester) {
+		return Collections.emptyList();
+	}
 
-    @Override
-    public boolean canAdd(CurriculumLine curriculumLine) {
-	return false;
-    }
+	@Override
+	public boolean hasDegreeModule(DegreeModule degreeModule) {
+		for (final CurriculumModule curriculumModule : this.getCurriculumModules()) {
+			if (curriculumModule.hasDegreeModule(degreeModule)) {
+				return true;
+			}
+		}
+		return false;
+	}
 
-    @Override
-    public Collection<CurriculumGroup> getCurricularCoursePossibleGroups(CurricularCourse curricularCourse) {
-	return Collections.singleton((CurriculumGroup) this);
-    }
+	@Override
+	public boolean hasCourseGroup(CourseGroup courseGroup) {
+		for (final CurriculumModule curriculumModule : getCurriculumModules()) {
+			if (!curriculumModule.isLeaf()) {
+				final CurriculumGroup group = (CurriculumGroup) curriculumModule;
+				if (group.hasCourseGroup(courseGroup)) {
+					return true;
+				}
+			}
+		}
 
-    @Override
-    public Collection<CurriculumGroup> getCurricularCoursePossibleGroupsWithoutNoCourseGroupCurriculumGroups(
-	    CurricularCourse curricularCourse) {
-	return Collections.emptyList();
-    }
+		return false;
+	}
 
-    @Override
-    public Double getAprovedEctsCredits() {
-	return Double.valueOf(0d);
-    }
+	/**
+	 * Flat structure below NoCourseGroupCurriculumGroup
+	 */
+	@Override
+	public CurriculumGroup findCurriculumGroupFor(final CourseGroup courseGroup) {
+		for (final CurriculumModule each : getCurriculumModulesSet()) {
+			if (!each.isLeaf() && each.getDegreeModule() == courseGroup) {
+				return (CurriculumGroup) each;
+			}
+		}
+		return null;
+	}
 
-    @Override
-    public Collection<NoCourseGroupCurriculumGroup> getNoCourseGroupCurriculumGroups() {
-	Collection<NoCourseGroupCurriculumGroup> res = new HashSet<NoCourseGroupCurriculumGroup>();
-	res.add(this);
-	res.addAll(super.getNoCourseGroupCurriculumGroups());
-	return res;
-    }
+	@Override
+	public Integer getChildOrder(final ExecutionSemester executionSemester) {
+		return Integer.MAX_VALUE;
+	}
 
-    @Override
-    public ICurricularRule getMostRecentActiveCurricularRule(final CurricularRuleType ruleType, final ExecutionYear executionYear) {
-	return null;
-    }
+	@Override
+	protected Integer searchChildOrderForChild(final CurriculumGroup child, final ExecutionSemester executionSemester) {
+		final List<CurriculumModule> result = new ArrayList<CurriculumModule>(getCurriculumModulesSet());
+		Collections.sort(result, CurriculumModule.COMPARATOR_BY_NAME_AND_ID);
+		return result.indexOf(child);
+	}
 
-    abstract public NoCourseGroupCurriculumGroupType getNoCourseGroupCurriculumGroupType();
+	@Override
+	public Set<IDegreeModuleToEvaluate> getDegreeModulesToEvaluate(ExecutionSemester executionSemester) {
+		return Collections.emptySet();
+	}
 
-    @Override
-    public int getNumberOfAllApprovedCurriculumLines() {
-	return 0;
-    }
+	@Override
+	public Set<ICurricularRule> getCurricularRules(ExecutionSemester executionSemester) {
+		return Collections.emptySet();
+	}
 
-    @Override
-    public int getNumberOfAllApprovedEnrolments(ExecutionSemester executionSemester) {
-	return 0;
-    }
+	@Override
+	public ConclusionValue isConcluded(ExecutionYear executionYear) {
+		return ConclusionValue.CONCLUDED;
+	}
 
-    /**
-     * Used to check if enrolment childs can give accumulated ects credits
-     * correct value
-     */
-    public boolean allowAccumulatedEctsCredits() {
-	return false;
-    }
+	@Override
+	final public Curriculum getCurriculum(final DateTime when, final ExecutionYear executionYear) {
+		return Curriculum.createEmpty(this, executionYear);
+	}
 
-    @Override
-    public Set<CurriculumGroup> getAllCurriculumGroupsWithoutNoCourseGroupCurriculumGroups() {
-	return Collections.emptySet();
-    }
+	@Override
+	public Double getCreditsConcluded(ExecutionYear executionYear) {
+		return Double.valueOf(0d);
+	}
 
+	@Override
+	public boolean canAdd(CurriculumLine curriculumLine) {
+		return false;
+	}
 
-    public boolean isVisible() {
-	return true;
-    }
+	@Override
+	public Collection<CurriculumGroup> getCurricularCoursePossibleGroups(CurricularCourse curricularCourse) {
+		return Collections.singleton((CurriculumGroup) this);
+	}
+
+	@Override
+	public Collection<CurriculumGroup> getCurricularCoursePossibleGroupsWithoutNoCourseGroupCurriculumGroups(
+			CurricularCourse curricularCourse) {
+		return Collections.emptyList();
+	}
+
+	@Override
+	public Double getAprovedEctsCredits() {
+		return Double.valueOf(0d);
+	}
+
+	@Override
+	public Collection<NoCourseGroupCurriculumGroup> getNoCourseGroupCurriculumGroups() {
+		Collection<NoCourseGroupCurriculumGroup> res = new HashSet<NoCourseGroupCurriculumGroup>();
+		res.add(this);
+		res.addAll(super.getNoCourseGroupCurriculumGroups());
+		return res;
+	}
+
+	@Override
+	public ICurricularRule getMostRecentActiveCurricularRule(final CurricularRuleType ruleType, final ExecutionYear executionYear) {
+		return null;
+	}
+
+	abstract public NoCourseGroupCurriculumGroupType getNoCourseGroupCurriculumGroupType();
+
+	@Override
+	public int getNumberOfAllApprovedCurriculumLines() {
+		return 0;
+	}
+
+	@Override
+	public int getNumberOfAllApprovedEnrolments(ExecutionSemester executionSemester) {
+		return 0;
+	}
+
+	/**
+	 * Used to check if enrolment childs can give accumulated ects credits
+	 * correct value
+	 */
+	public boolean allowAccumulatedEctsCredits() {
+		return false;
+	}
+
+	@Override
+	public Set<CurriculumGroup> getAllCurriculumGroupsWithoutNoCourseGroupCurriculumGroups() {
+		return Collections.emptySet();
+	}
+
+	public boolean isVisible() {
+		return true;
+	}
 }

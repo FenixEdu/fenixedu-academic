@@ -20,19 +20,19 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class ListGuidesByState extends FenixService {
 
-    @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
-    @Service
-    public static List run(Integer guideYear, GuideState situationOfGuide) throws Exception {
-	List guides = Guide.readByYearAndState(guideYear, situationOfGuide);
+	@Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
+	@Service
+	public static List run(Integer guideYear, GuideState situationOfGuide) throws Exception {
+		List guides = Guide.readByYearAndState(guideYear, situationOfGuide);
 
-	Iterator iterator = guides.iterator();
+		Iterator iterator = guides.iterator();
 
-	List result = new ArrayList();
-	while (iterator.hasNext()) {
-	    result.add(InfoGuideWithPersonAndExecutionDegreeAndContributor.newInfoFromDomain((Guide) iterator.next()));
+		List result = new ArrayList();
+		while (iterator.hasNext()) {
+			result.add(InfoGuideWithPersonAndExecutionDegreeAndContributor.newInfoFromDomain((Guide) iterator.next()));
+		}
+
+		return result;
 	}
-
-	return result;
-    }
 
 }

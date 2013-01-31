@@ -17,41 +17,42 @@ import pt.ist.fenixWebFramework.services.Service;
 
 final public class DocumentRequestCreator extends DocumentRequestCreateBean implements FactoryExecutor {
 
-    static private final long serialVersionUID = 1L;
+	static private final long serialVersionUID = 1L;
 
-    public DocumentRequestCreator(Registration registration) {
-	super(registration);
-    }
-
-    @Service
-    public Object execute() {
-
-	if (getChosenDocumentRequestType().isCertificate()) {
-	    return CertificateRequest.create(this);
-
-	} else if (getChosenDocumentRequestType().isDeclaration()) {
-	    if (this.getExecutionYear() == null) {
-		this.setExecutionYear(ExecutionYear.readCurrentExecutionYear());
-	    }
-	    return DeclarationRequest.create(this);
-
-	} else if (getChosenDocumentRequestType().isDiploma()) {
-	    return new DiplomaRequest(this);
-
-	} else if (getChosenDocumentRequestType().isRegistryDiploma()) {
-	    return new RegistryDiplomaRequest(this);
-
-	} else if (getChosenDocumentRequestType().isPastDiploma()) {
-	    return CreatePastDiplomaRequest.create(this);
-
-	} else if (getChosenDocumentRequestType().isDiplomaSupplement()) {
-	    return new DiplomaSupplementRequest(this);
-
-	} else if (getChosenDocumentRequestType() == DocumentRequestType.UNDER_23_TRANSPORTS_REQUEST) {
-	    return new Under23TransportsDeclarationRequest(this);
+	public DocumentRequestCreator(Registration registration) {
+		super(registration);
 	}
 
-	throw new DomainException("error.DocumentRequestCreator.unexpected.document.request.type");
-    }
+	@Override
+	@Service
+	public Object execute() {
+
+		if (getChosenDocumentRequestType().isCertificate()) {
+			return CertificateRequest.create(this);
+
+		} else if (getChosenDocumentRequestType().isDeclaration()) {
+			if (this.getExecutionYear() == null) {
+				this.setExecutionYear(ExecutionYear.readCurrentExecutionYear());
+			}
+			return DeclarationRequest.create(this);
+
+		} else if (getChosenDocumentRequestType().isDiploma()) {
+			return new DiplomaRequest(this);
+
+		} else if (getChosenDocumentRequestType().isRegistryDiploma()) {
+			return new RegistryDiplomaRequest(this);
+
+		} else if (getChosenDocumentRequestType().isPastDiploma()) {
+			return CreatePastDiplomaRequest.create(this);
+
+		} else if (getChosenDocumentRequestType().isDiplomaSupplement()) {
+			return new DiplomaSupplementRequest(this);
+
+		} else if (getChosenDocumentRequestType() == DocumentRequestType.UNDER_23_TRANSPORTS_REQUEST) {
+			return new Under23TransportsDeclarationRequest(this);
+		}
+
+		throw new DomainException("error.DocumentRequestCreator.unexpected.document.request.type");
+	}
 
 }

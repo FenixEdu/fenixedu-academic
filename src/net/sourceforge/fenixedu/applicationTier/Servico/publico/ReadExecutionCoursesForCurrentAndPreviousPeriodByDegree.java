@@ -13,24 +13,24 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadExecutionCoursesForCurrentAndPreviousPeriodByDegree extends FenixService {
 
-    @Service
-    public static Set<ExecutionCourseView> run(final Degree degree) {
-	final ExecutionSemester currentExecutionPeriod = ExecutionSemester.readActualExecutionSemester();
-	final ExecutionSemester nextExecutionSemester = currentExecutionPeriod.getNextExecutionPeriod();
-	final ExecutionSemester previousExecutionPeriod;
-	if (nextExecutionSemester != null && nextExecutionSemester.getState().equals(PeriodState.OPEN)) {
-	    previousExecutionPeriod = nextExecutionSemester;
-	} else {
-	    previousExecutionPeriod = currentExecutionPeriod.getPreviousExecutionPeriod();
-	}
+	@Service
+	public static Set<ExecutionCourseView> run(final Degree degree) {
+		final ExecutionSemester currentExecutionPeriod = ExecutionSemester.readActualExecutionSemester();
+		final ExecutionSemester nextExecutionSemester = currentExecutionPeriod.getNextExecutionPeriod();
+		final ExecutionSemester previousExecutionPeriod;
+		if (nextExecutionSemester != null && nextExecutionSemester.getState().equals(PeriodState.OPEN)) {
+			previousExecutionPeriod = nextExecutionSemester;
+		} else {
+			previousExecutionPeriod = currentExecutionPeriod.getPreviousExecutionPeriod();
+		}
 
-	final Set<ExecutionCourseView> result = new HashSet<ExecutionCourseView>();
-	for (final DegreeCurricularPlan degreeCurricularPlan : degree.getDegreeCurricularPlans()) {
-	    if (degreeCurricularPlan.isActive()) {
-		degreeCurricularPlan.addExecutionCourses(result, currentExecutionPeriod, previousExecutionPeriod);
-	    }
+		final Set<ExecutionCourseView> result = new HashSet<ExecutionCourseView>();
+		for (final DegreeCurricularPlan degreeCurricularPlan : degree.getDegreeCurricularPlans()) {
+			if (degreeCurricularPlan.isActive()) {
+				degreeCurricularPlan.addExecutionCourses(result, currentExecutionPeriod, previousExecutionPeriod);
+			}
+		}
+		return result;
 	}
-	return result;
-    }
 
 }

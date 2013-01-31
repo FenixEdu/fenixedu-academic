@@ -8,12 +8,12 @@ import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 
 public class EditWrittenEvaluationEnrolmentPeriod extends FenixService {
 
-    public void run(Integer executionCourseID, Integer writtenEvaluationID, Date beginDate, Date endDate, Date beginTime,
-	    Date endTime) throws FenixServiceException {
-	final WrittenEvaluation writtenEvaluation = (WrittenEvaluation) rootDomainObject.readEvaluationByOID(writtenEvaluationID);
-	if (writtenEvaluation == null) {
-	    throw new FenixServiceException("error.noWrittenEvaluation");
+	public void run(Integer executionCourseID, Integer writtenEvaluationID, Date beginDate, Date endDate, Date beginTime,
+			Date endTime) throws FenixServiceException {
+		final WrittenEvaluation writtenEvaluation = (WrittenEvaluation) rootDomainObject.readEvaluationByOID(writtenEvaluationID);
+		if (writtenEvaluation == null) {
+			throw new FenixServiceException("error.noWrittenEvaluation");
+		}
+		writtenEvaluation.editEnrolmentPeriod(beginDate, endDate, beginTime, endTime);
 	}
-	writtenEvaluation.editEnrolmentPeriod(beginDate, endDate, beginTime, endTime);
-    }
 }

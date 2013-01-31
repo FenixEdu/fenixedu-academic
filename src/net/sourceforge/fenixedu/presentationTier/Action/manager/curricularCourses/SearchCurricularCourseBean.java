@@ -17,102 +17,102 @@ import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class SearchCurricularCourseBean implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    private DegreeCurricularPlan degreeCurricularPlan;
-    private ExecutionYear beginExecutionYear;
-    private ExecutionYear endExecutionYear;
-    private String name;
+	private DegreeCurricularPlan degreeCurricularPlan;
+	private ExecutionYear beginExecutionYear;
+	private ExecutionYear endExecutionYear;
+	private String name;
 
-    public SearchCurricularCourseBean(DegreeCurricularPlan degreeCurricularPlan) {
-	this.degreeCurricularPlan = degreeCurricularPlan;
-    }
+	public SearchCurricularCourseBean(DegreeCurricularPlan degreeCurricularPlan) {
+		this.degreeCurricularPlan = degreeCurricularPlan;
+	}
 
-    public Set<Context> search() {
-	Set<Context> result = new HashSet<Context>();
-	RootCourseGroup root = getDegreeCurricularPlan().getRoot();
-	searchRecursive(root, result);
+	public Set<Context> search() {
+		Set<Context> result = new HashSet<Context>();
+		RootCourseGroup root = getDegreeCurricularPlan().getRoot();
+		searchRecursive(root, result);
 
-	return result;
-    }
+		return result;
+	}
 
-    private void searchRecursive(final CourseGroup courseGroup, Set<Context> result) {
-	List<Context> childContexts = courseGroup.getChildContexts();
+	private void searchRecursive(final CourseGroup courseGroup, Set<Context> result) {
+		List<Context> childContexts = courseGroup.getChildContexts();
 
-	for (Context context : childContexts) {
-	    DegreeModule childDegreeModule = context.getChildDegreeModule();
+		for (Context context : childContexts) {
+			DegreeModule childDegreeModule = context.getChildDegreeModule();
 
-	    if (childDegreeModule.isCourseGroup()) {
-		searchRecursive((CourseGroup) childDegreeModule, result);
-		continue;
-	    }
+			if (childDegreeModule.isCourseGroup()) {
+				searchRecursive((CourseGroup) childDegreeModule, result);
+				continue;
+			}
 
-	    if (getBeginExecutionYear() != null
-		    && context.getBeginExecutionPeriod().getExecutionYear().isBefore(getBeginExecutionYear())) {
-		continue;
-	    }
+			if (getBeginExecutionYear() != null
+					&& context.getBeginExecutionPeriod().getExecutionYear().isBefore(getBeginExecutionYear())) {
+				continue;
+			}
 
-	    if (getEndExecutionYear() != null
-		    && context.getEndExecutionPeriod().getExecutionYear().isAfter(getEndExecutionYear())) {
-		continue;
-	    }
+			if (getEndExecutionYear() != null
+					&& context.getEndExecutionPeriod().getExecutionYear().isAfter(getEndExecutionYear())) {
+				continue;
+			}
 
-	    MultiLanguageString nameI18N = childDegreeModule.getNameI18N();
-	    Collection<String> allContents = nameI18N.getAllContents();
-	    
-	    Pattern searchPattern = getSearchRegex();
-	    
-	    for (String degreeModuleName : allContents) {
-		if (searchPattern.matcher(degreeModuleName).matches()) {
-		    result.add(context);
+			MultiLanguageString nameI18N = childDegreeModule.getNameI18N();
+			Collection<String> allContents = nameI18N.getAllContents();
+
+			Pattern searchPattern = getSearchRegex();
+
+			for (String degreeModuleName : allContents) {
+				if (searchPattern.matcher(degreeModuleName).matches()) {
+					result.add(context);
+				}
+			}
 		}
-	    }
-	}
-    }
-
-    public DegreeCurricularPlan getDegreeCurricularPlan() {
-	return degreeCurricularPlan;
-    }
-
-    public String getName() {
-	return name;
-    }
-
-    public void setName(String name) {
-	this.name = name;
-    }
-
-    public Pattern getSearchRegex() {
-	String[] split = getName().split("\\s+");
-
-	StringBuilder sb = new StringBuilder();
-
-	for (int i = 0; i < split.length; i++) {
-	    String compound = split[i];
-	    sb.append("(.*").append(compound).append(".*)");
-
-	    if (i < split.length - 1) {
-		sb.append("(\\s+)");
-	    }
 	}
 
-	Pattern searchPattern = Pattern.compile(sb.toString());
-	return searchPattern;
-    }
+	public DegreeCurricularPlan getDegreeCurricularPlan() {
+		return degreeCurricularPlan;
+	}
 
-    public ExecutionYear getBeginExecutionYear() {
-	return beginExecutionYear;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public void setBeginExecutionYear(ExecutionYear beginExecutionYear) {
-	this.beginExecutionYear = beginExecutionYear;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    public ExecutionYear getEndExecutionYear() {
-	return endExecutionYear;
-    }
+	public Pattern getSearchRegex() {
+		String[] split = getName().split("\\s+");
 
-    public void setEndExecutionYear(ExecutionYear endExecutionYear) {
-	this.endExecutionYear = endExecutionYear;
-    }
+		StringBuilder sb = new StringBuilder();
+
+		for (int i = 0; i < split.length; i++) {
+			String compound = split[i];
+			sb.append("(.*").append(compound).append(".*)");
+
+			if (i < split.length - 1) {
+				sb.append("(\\s+)");
+			}
+		}
+
+		Pattern searchPattern = Pattern.compile(sb.toString());
+		return searchPattern;
+	}
+
+	public ExecutionYear getBeginExecutionYear() {
+		return beginExecutionYear;
+	}
+
+	public void setBeginExecutionYear(ExecutionYear beginExecutionYear) {
+		this.beginExecutionYear = beginExecutionYear;
+	}
+
+	public ExecutionYear getEndExecutionYear() {
+		return endExecutionYear;
+	}
+
+	public void setEndExecutionYear(ExecutionYear endExecutionYear) {
+		this.endExecutionYear = endExecutionYear;
+	}
 }

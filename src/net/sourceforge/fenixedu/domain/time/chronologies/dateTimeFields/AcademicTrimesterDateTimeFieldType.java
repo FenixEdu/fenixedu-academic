@@ -10,39 +10,39 @@ import org.joda.time.DurationFieldType;
 
 public class AcademicTrimesterDateTimeFieldType extends DateTimeFieldType {
 
-    private static final AcademicTrimesterDateTimeFieldType ACADEMIC_TRIMESTER_TYPE;
-    static {
-	ACADEMIC_TRIMESTER_TYPE = new AcademicTrimesterDateTimeFieldType("academicSemester");
-    }
-
-    private AcademicTrimesterDateTimeFieldType(String name) {
-	super(name);
-    }
-
-    public static DateTimeFieldType academicTrimester() {
-	return ACADEMIC_TRIMESTER_TYPE;
-    }
-
-    @Override
-    public DurationFieldType getDurationType() {
-	return AcademicTrimestersDurationFieldType.academicTrimesters();
-    }
-
-    @Override
-    public DateTimeField getField(Chronology chronology) {
-	if (chronology instanceof AcademicChronology) {
-	    return ((AcademicChronology) chronology).academicYear();
+	private static final AcademicTrimesterDateTimeFieldType ACADEMIC_TRIMESTER_TYPE;
+	static {
+		ACADEMIC_TRIMESTER_TYPE = new AcademicTrimesterDateTimeFieldType("academicSemester");
 	}
-	throw unsupported();
-    }
 
-    @Override
-    public DurationFieldType getRangeDurationType() {
-	return null;
-    }
+	private AcademicTrimesterDateTimeFieldType(String name) {
+		super(name);
+	}
 
-    private UnsupportedOperationException unsupported() {
-	return new UnsupportedOperationException(ACADEMIC_TRIMESTER_TYPE.getName() + " field is unsupported");
-    }
+	public static DateTimeFieldType academicTrimester() {
+		return ACADEMIC_TRIMESTER_TYPE;
+	}
+
+	@Override
+	public DurationFieldType getDurationType() {
+		return AcademicTrimestersDurationFieldType.academicTrimesters();
+	}
+
+	@Override
+	public DateTimeField getField(Chronology chronology) {
+		if (chronology instanceof AcademicChronology) {
+			return ((AcademicChronology) chronology).academicYear();
+		}
+		throw unsupported();
+	}
+
+	@Override
+	public DurationFieldType getRangeDurationType() {
+		return null;
+	}
+
+	private UnsupportedOperationException unsupported() {
+		return new UnsupportedOperationException(ACADEMIC_TRIMESTER_TYPE.getName() + " field is unsupported");
+	}
 
 }

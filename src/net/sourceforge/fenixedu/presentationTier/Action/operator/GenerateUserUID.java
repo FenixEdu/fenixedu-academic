@@ -28,73 +28,77 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.utl.ist.fenix.tools.util.CollectionPager;
 
 @Mapping(module = "operator", path = "/generateUserUID", scope = "request", parameter = "method")
-@Forwards(value = { @Forward(name = "prepareSearchPerson", path = "/operator/userUID/searchPersonToGenerateUserUID.jsp", tileProperties = @Tile(title = "private.operator.institutionalgenerateusername")) })
+@Forwards(value = { @Forward(
+		name = "prepareSearchPerson",
+		path = "/operator/userUID/searchPersonToGenerateUserUID.jsp",
+		tileProperties = @Tile(title = "private.operator.institutionalgenerateusername")) })
 public class GenerateUserUID extends FenixDispatchAction {
 
-    public ActionForward prepareSearchPerson(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
+	public ActionForward prepareSearchPerson(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
 
-	request.setAttribute("personBean", new PersonBean());
-	return mapping.findForward("prepareSearchPerson");
-    }
-
-    public ActionForward searchPerson(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-
-	PersonBean personBean = getRenderedObject("personBeanID");
-	readAndSetResultPersons(request, personBean);
-	return mapping.findForward("prepareSearchPerson");
-    }
-
-    public ActionForward generateUserUID(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-
-	Person person = getPersonFromParameter(request);
-	Login login = person.getLoginIdentification();
-
-	LoginAliasBean bean = null;
-	if (login != null) {
-	    bean = new LoginAliasBean(login, LoginAliasType.INSTITUTION_ALIAS);
-	    try {
-		executeService("CreateNewLoginAlias", new Object[] { bean });
-
-	    } catch (DomainException e) {
-		addActionMessage(request, e.getMessage());
-	    }
-
-	    if (login.getInstitutionalLoginAlias() == null) {
-		addActionMessage(request, "error.no.conditions.create.institutional.alias");
-	    }
-
-	} else {
-	    addActionMessage(request, "error.person.without.login.identification");
+		request.setAttribute("personBean", new PersonBean());
+		return mapping.findForward("prepareSearchPerson");
 	}
 
-	PersonBean personBean = new PersonBean(person.getName(), person.getUsername(), person.getDocumentIdNumber().toString());
-	readAndSetResultPersons(request, personBean);
+	public ActionForward searchPerson(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
 
-	return mapping.findForward("prepareSearchPerson");
-    }
+		PersonBean personBean = getRenderedObject("personBeanID");
+		readAndSetResultPersons(request, personBean);
+		return mapping.findForward("prepareSearchPerson");
+	}
 
-    // Private Methods
+	public ActionForward generateUserUID(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
 
-    private void readAndSetResultPersons(HttpServletRequest request, PersonBean personBean) throws FenixFilterException,
-	    FenixServiceException {
+		Person person = getPersonFromParameter(request);
+		Login login = person.getLoginIdentification();
 
-	SearchPerson.SearchParameters parameters = new SearchParameters(personBean.getName(), null, personBean.getUsername(),
-		personBean.getDocumentIdNumber(), null, null, null, null, null, null, null, null, (String) null);
-	SearchPersonPredicate predicate = new SearchPerson.SearchPersonPredicate(parameters);
+		LoginAliasBean bean = null;
+		if (login != null) {
+			bean = new LoginAliasBean(login, LoginAliasType.INSTITUTION_ALIAS);
+			try {
+				executeService("CreateNewLoginAlias", new Object[] { bean });
 
-	CollectionPager<Person> persons = (CollectionPager<Person>) executeService("SearchPerson", new Object[] { parameters,
-		predicate });
+			} catch (DomainException e) {
+				addActionMessage(request, e.getMessage());
+			}
 
-	request.setAttribute("resultPersons", persons.getCollection());
-	request.setAttribute("personBean", personBean);
-    }
+			if (login.getInstitutionalLoginAlias() == null) {
+				addActionMessage(request, "error.no.conditions.create.institutional.alias");
+			}
 
-    private Person getPersonFromParameter(HttpServletRequest request) {
-	String personIDString = request.getParameter("personID");
-	return (Person) ((StringUtils.isEmpty(personIDString)) ? null : rootDomainObject.readPartyByOID(Integer
-		.valueOf(personIDString)));
-    }
+		} else {
+			addActionMessage(request, "error.person.without.login.identification");
+		}
+
+		PersonBean personBean = new PersonBean(person.getName(), person.getUsername(), person.getDocumentIdNumber().toString());
+		readAndSetResultPersons(request, personBean);
+
+		return mapping.findForward("prepareSearchPerson");
+	}
+
+	// Private Methods
+
+	private void readAndSetResultPersons(HttpServletRequest request, PersonBean personBean) throws FenixFilterException,
+			FenixServiceException {
+
+		SearchPerson.SearchParameters parameters =
+				new SearchParameters(personBean.getName(), null, personBean.getUsername(), personBean.getDocumentIdNumber(),
+						null, null, null, null, null, null, null, null, (String) null);
+		SearchPersonPredicate predicate = new SearchPerson.SearchPersonPredicate(parameters);
+
+		CollectionPager<Person> persons =
+				(CollectionPager<Person>) executeService("SearchPerson", new Object[] { parameters, predicate });
+
+		request.setAttribute("resultPersons", persons.getCollection());
+		request.setAttribute("personBean", personBean);
+	}
+
+	private Person getPersonFromParameter(HttpServletRequest request) {
+		String personIDString = request.getParameter("personID");
+		return (Person) ((StringUtils.isEmpty(personIDString)) ? null : rootDomainObject.readPartyByOID(Integer
+				.valueOf(personIDString)));
+	}
 }

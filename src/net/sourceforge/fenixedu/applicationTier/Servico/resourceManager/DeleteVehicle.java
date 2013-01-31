@@ -7,11 +7,11 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class DeleteVehicle extends FenixService {
 
-    @Checked("RolePredicates.RESOURCE_MANAGER_PREDICATE")
-    @Service
-    public static void run(Vehicle vehicle) {
-	if (vehicle != null) {
-	    vehicle.delete();
+	@Checked("RolePredicates.RESOURCE_MANAGER_PREDICATE")
+	@Service
+	public static void run(Vehicle vehicle) {
+		if (vehicle != null) {
+			vehicle.delete();
+		}
 	}
-    }
 }

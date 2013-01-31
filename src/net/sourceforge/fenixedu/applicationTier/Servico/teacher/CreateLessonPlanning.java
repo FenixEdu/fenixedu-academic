@@ -8,9 +8,9 @@ import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class CreateLessonPlanning extends FenixService {
 
-    public void run(Integer executionCourseId, MultiLanguageString title, MultiLanguageString planning, ShiftType lessonType,
-	    ExecutionCourse executionCourse) {
+	public void run(Integer executionCourseId, MultiLanguageString title, MultiLanguageString planning, ShiftType lessonType,
+			ExecutionCourse executionCourse) {
 
-	new LessonPlanning(title, planning, lessonType, executionCourse);
-    }
+		new LessonPlanning(title, planning, lessonType, executionCourse);
+	}
 }

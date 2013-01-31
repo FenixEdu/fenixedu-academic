@@ -20,392 +20,395 @@ import org.apache.struts.actions.LookupDispatchAction;
 
 public class CreateOrEditMasterDegreeThesisLookupDispatchAction extends LookupDispatchAction {
 
-    public ActionForward addGuider(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixActionException {
+	public ActionForward addGuider(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws FenixActionException {
 
-	MasterDegreeThesisOperations operations = new MasterDegreeThesisOperations();
-	ActionErrors actionErrors = new ActionErrors();
+		MasterDegreeThesisOperations operations = new MasterDegreeThesisOperations();
+		ActionErrors actionErrors = new ActionErrors();
 
-	try {
-	    operations.getTeachersByNumbers(form, request, "guidersNumbers", PresentationConstants.GUIDERS_LIST, actionErrors);
-	    operations.getTeachersByNumbers(form, request, "assistentGuidersNumbers",
-		    PresentationConstants.ASSISTENT_GUIDERS_LIST, actionErrors);
-	    operations.getStudentByNumberAndDegreeType(form, request, actionErrors);
-	    operations.getExternalPersonsByIDs(form, request, "externalAssistentGuidersIDs",
-		    PresentationConstants.EXTERNAL_ASSISTENT_GUIDERS_LIST, actionErrors);
-	    operations.getExternalPersonsByIDs(form, request, "externalGuidersIDs", PresentationConstants.EXTERNAL_GUIDERS_LIST,
-		    actionErrors);
+		try {
+			operations.getTeachersByNumbers(form, request, "guidersNumbers", PresentationConstants.GUIDERS_LIST, actionErrors);
+			operations.getTeachersByNumbers(form, request, "assistentGuidersNumbers",
+					PresentationConstants.ASSISTENT_GUIDERS_LIST, actionErrors);
+			operations.getStudentByNumberAndDegreeType(form, request, actionErrors);
+			operations.getExternalPersonsByIDs(form, request, "externalAssistentGuidersIDs",
+					PresentationConstants.EXTERNAL_ASSISTENT_GUIDERS_LIST, actionErrors);
+			operations.getExternalPersonsByIDs(form, request, "externalGuidersIDs", PresentationConstants.EXTERNAL_GUIDERS_LIST,
+					actionErrors);
 
-	} catch (Exception e1) {
-	    throw new FenixActionException(e1);
-	} finally {
-	    saveErrors(request, actionErrors);
+		} catch (Exception e1) {
+			throw new FenixActionException(e1);
+		} finally {
+			saveErrors(request, actionErrors);
+		}
+
+		return mapping.findForward("start");
+
 	}
 
-	return mapping.findForward("start");
+	public ActionForward addAssistentGuider(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws FenixActionException {
 
-    }
+		MasterDegreeThesisOperations operations = new MasterDegreeThesisOperations();
+		ActionErrors actionErrors = new ActionErrors();
 
-    public ActionForward addAssistentGuider(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixActionException {
+		try {
+			operations.getTeachersByNumbers(form, request, "guidersNumbers", PresentationConstants.GUIDERS_LIST, actionErrors);
+			operations.getTeachersByNumbers(form, request, "assistentGuidersNumbers",
+					PresentationConstants.ASSISTENT_GUIDERS_LIST, actionErrors);
+			operations.getStudentByNumberAndDegreeType(form, request, actionErrors);
+			operations.getExternalPersonsByIDs(form, request, "externalAssistentGuidersIDs",
+					PresentationConstants.EXTERNAL_ASSISTENT_GUIDERS_LIST, actionErrors);
+			operations.getExternalPersonsByIDs(form, request, "externalGuidersIDs", PresentationConstants.EXTERNAL_GUIDERS_LIST,
+					actionErrors);
 
-	MasterDegreeThesisOperations operations = new MasterDegreeThesisOperations();
-	ActionErrors actionErrors = new ActionErrors();
+		} catch (Exception e1) {
+			throw new FenixActionException(e1);
+		} finally {
+			saveErrors(request, actionErrors);
+		}
 
-	try {
-	    operations.getTeachersByNumbers(form, request, "guidersNumbers", PresentationConstants.GUIDERS_LIST, actionErrors);
-	    operations.getTeachersByNumbers(form, request, "assistentGuidersNumbers",
-		    PresentationConstants.ASSISTENT_GUIDERS_LIST, actionErrors);
-	    operations.getStudentByNumberAndDegreeType(form, request, actionErrors);
-	    operations.getExternalPersonsByIDs(form, request, "externalAssistentGuidersIDs",
-		    PresentationConstants.EXTERNAL_ASSISTENT_GUIDERS_LIST, actionErrors);
-	    operations.getExternalPersonsByIDs(form, request, "externalGuidersIDs", PresentationConstants.EXTERNAL_GUIDERS_LIST,
-		    actionErrors);
+		return mapping.findForward("start");
 
-	} catch (Exception e1) {
-	    throw new FenixActionException(e1);
-	} finally {
-	    saveErrors(request, actionErrors);
 	}
 
-	return mapping.findForward("start");
+	public ActionForward removeGuiders(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws FenixActionException {
 
-    }
+		DynaActionForm createMasterDegreeForm = (DynaActionForm) form;
 
-    public ActionForward removeGuiders(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixActionException {
+		Integer[] teachersNumbersList = (Integer[]) createMasterDegreeForm.get("guidersNumbers");
+		Integer[] removedGuiders = (Integer[]) createMasterDegreeForm.get("removedGuidersNumbers");
 
-	DynaActionForm createMasterDegreeForm = (DynaActionForm) form;
+		createMasterDegreeForm.set("guidersNumbers", subtractArray(teachersNumbersList, removedGuiders));
 
-	Integer[] teachersNumbersList = (Integer[]) createMasterDegreeForm.get("guidersNumbers");
-	Integer[] removedGuiders = (Integer[]) createMasterDegreeForm.get("removedGuidersNumbers");
+		MasterDegreeThesisOperations operations = new MasterDegreeThesisOperations();
+		ActionErrors actionErrors = new ActionErrors();
 
-	createMasterDegreeForm.set("guidersNumbers", subtractArray(teachersNumbersList, removedGuiders));
+		try {
+			operations.getTeachersByNumbers(form, request, "guidersNumbers", PresentationConstants.GUIDERS_LIST, actionErrors);
+			operations.getTeachersByNumbers(form, request, "assistentGuidersNumbers",
+					PresentationConstants.ASSISTENT_GUIDERS_LIST, actionErrors);
+			operations.getStudentByNumberAndDegreeType(form, request, actionErrors);
+			operations.getExternalPersonsByIDs(form, request, "externalAssistentGuidersIDs",
+					PresentationConstants.EXTERNAL_ASSISTENT_GUIDERS_LIST, actionErrors);
+			operations.getExternalPersonsByIDs(form, request, "externalGuidersIDs", PresentationConstants.EXTERNAL_GUIDERS_LIST,
+					actionErrors);
 
-	MasterDegreeThesisOperations operations = new MasterDegreeThesisOperations();
-	ActionErrors actionErrors = new ActionErrors();
+		} catch (Exception e1) {
+			throw new FenixActionException(e1);
+		} finally {
+			saveErrors(request, actionErrors);
+		}
 
-	try {
-	    operations.getTeachersByNumbers(form, request, "guidersNumbers", PresentationConstants.GUIDERS_LIST, actionErrors);
-	    operations.getTeachersByNumbers(form, request, "assistentGuidersNumbers",
-		    PresentationConstants.ASSISTENT_GUIDERS_LIST, actionErrors);
-	    operations.getStudentByNumberAndDegreeType(form, request, actionErrors);
-	    operations.getExternalPersonsByIDs(form, request, "externalAssistentGuidersIDs",
-		    PresentationConstants.EXTERNAL_ASSISTENT_GUIDERS_LIST, actionErrors);
-	    operations.getExternalPersonsByIDs(form, request, "externalGuidersIDs", PresentationConstants.EXTERNAL_GUIDERS_LIST,
-		    actionErrors);
+		return mapping.findForward("start");
 
-	} catch (Exception e1) {
-	    throw new FenixActionException(e1);
-	} finally {
-	    saveErrors(request, actionErrors);
 	}
 
-	return mapping.findForward("start");
+	public ActionForward externalAssitentGuider(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws FenixActionException {
 
-    }
+		// to display the external persons search form
+		request.setAttribute(PresentationConstants.SEARCH_EXTERNAL_ASSISTENT_GUIDERS, new Boolean(true));
 
-    public ActionForward externalAssitentGuider(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixActionException {
+		MasterDegreeThesisOperations operations = new MasterDegreeThesisOperations();
+		ActionErrors actionErrors = new ActionErrors();
 
-	// to display the external persons search form
-	request.setAttribute(PresentationConstants.SEARCH_EXTERNAL_ASSISTENT_GUIDERS, new Boolean(true));
+		try {
+			operations.getTeachersByNumbers(form, request, "guidersNumbers", PresentationConstants.GUIDERS_LIST, actionErrors);
+			operations.getTeachersByNumbers(form, request, "assistentGuidersNumbers",
+					PresentationConstants.ASSISTENT_GUIDERS_LIST, actionErrors);
+			operations.getStudentByNumberAndDegreeType(form, request, actionErrors);
+			operations.getExternalPersonsByIDs(form, request, "externalAssistentGuidersIDs",
+					PresentationConstants.EXTERNAL_ASSISTENT_GUIDERS_LIST, actionErrors);
+			operations.getExternalPersonsByIDs(form, request, "externalGuidersIDs", PresentationConstants.EXTERNAL_GUIDERS_LIST,
+					actionErrors);
 
-	MasterDegreeThesisOperations operations = new MasterDegreeThesisOperations();
-	ActionErrors actionErrors = new ActionErrors();
+		} catch (Exception e1) {
+			throw new FenixActionException(e1);
+		} finally {
+			saveErrors(request, actionErrors);
+		}
 
-	try {
-	    operations.getTeachersByNumbers(form, request, "guidersNumbers", PresentationConstants.GUIDERS_LIST, actionErrors);
-	    operations.getTeachersByNumbers(form, request, "assistentGuidersNumbers",
-		    PresentationConstants.ASSISTENT_GUIDERS_LIST, actionErrors);
-	    operations.getStudentByNumberAndDegreeType(form, request, actionErrors);
-	    operations.getExternalPersonsByIDs(form, request, "externalAssistentGuidersIDs",
-		    PresentationConstants.EXTERNAL_ASSISTENT_GUIDERS_LIST, actionErrors);
-	    operations.getExternalPersonsByIDs(form, request, "externalGuidersIDs", PresentationConstants.EXTERNAL_GUIDERS_LIST,
-		    actionErrors);
+		return mapping.findForward("start");
 
-	} catch (Exception e1) {
-	    throw new FenixActionException(e1);
-	} finally {
-	    saveErrors(request, actionErrors);
 	}
 
-	return mapping.findForward("start");
+	public ActionForward externalGuider(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws FenixActionException {
 
-    }
+		// to display the external persons search form
+		request.setAttribute(PresentationConstants.SEARCH_EXTERNAL_GUIDERS, new Boolean(true));
 
-    public ActionForward externalGuider(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixActionException {
+		MasterDegreeThesisOperations operations = new MasterDegreeThesisOperations();
+		ActionErrors actionErrors = new ActionErrors();
 
-	// to display the external persons search form
-	request.setAttribute(PresentationConstants.SEARCH_EXTERNAL_GUIDERS, new Boolean(true));
+		try {
+			operations.getTeachersByNumbers(form, request, "guidersNumbers", PresentationConstants.GUIDERS_LIST, actionErrors);
+			operations.getTeachersByNumbers(form, request, "assistentGuidersNumbers",
+					PresentationConstants.ASSISTENT_GUIDERS_LIST, actionErrors);
+			operations.getStudentByNumberAndDegreeType(form, request, actionErrors);
+			operations.getExternalPersonsByIDs(form, request, "externalAssistentGuidersIDs",
+					PresentationConstants.EXTERNAL_ASSISTENT_GUIDERS_LIST, actionErrors);
+			operations.getExternalPersonsByIDs(form, request, "externalGuidersIDs", PresentationConstants.EXTERNAL_GUIDERS_LIST,
+					actionErrors);
 
-	MasterDegreeThesisOperations operations = new MasterDegreeThesisOperations();
-	ActionErrors actionErrors = new ActionErrors();
+		} catch (Exception e1) {
+			throw new FenixActionException(e1);
+		} finally {
+			saveErrors(request, actionErrors);
+		}
 
-	try {
-	    operations.getTeachersByNumbers(form, request, "guidersNumbers", PresentationConstants.GUIDERS_LIST, actionErrors);
-	    operations.getTeachersByNumbers(form, request, "assistentGuidersNumbers",
-		    PresentationConstants.ASSISTENT_GUIDERS_LIST, actionErrors);
-	    operations.getStudentByNumberAndDegreeType(form, request, actionErrors);
-	    operations.getExternalPersonsByIDs(form, request, "externalAssistentGuidersIDs",
-		    PresentationConstants.EXTERNAL_ASSISTENT_GUIDERS_LIST, actionErrors);
-	    operations.getExternalPersonsByIDs(form, request, "externalGuidersIDs", PresentationConstants.EXTERNAL_GUIDERS_LIST,
-		    actionErrors);
+		return mapping.findForward("start");
 
-	} catch (Exception e1) {
-	    throw new FenixActionException(e1);
-	} finally {
-	    saveErrors(request, actionErrors);
 	}
 
-	return mapping.findForward("start");
+	public ActionForward searchExternalAssitentGuider(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws FenixActionException {
 
-    }
+		MasterDegreeThesisOperations operations = new MasterDegreeThesisOperations();
+		ActionErrors actionErrors = new ActionErrors();
 
-    public ActionForward searchExternalAssitentGuider(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixActionException {
+		try {
+			operations.getTeachersByNumbers(form, request, "guidersNumbers", PresentationConstants.GUIDERS_LIST, actionErrors);
+			operations.getTeachersByNumbers(form, request, "assistentGuidersNumbers",
+					PresentationConstants.ASSISTENT_GUIDERS_LIST, actionErrors);
+			operations.getExternalPersonsByIDs(form, request, "externalAssistentGuidersIDs",
+					PresentationConstants.EXTERNAL_ASSISTENT_GUIDERS_LIST, actionErrors);
+			operations.getStudentByNumberAndDegreeType(form, request, actionErrors);
+			operations.getExternalPersonsByName(form, request, "externalAssistentGuiderName",
+					PresentationConstants.EXTERNAL_ASSISTENT_GUIDERS_SEARCH_RESULTS, actionErrors);
+			operations.getExternalPersonsByIDs(form, request, "externalGuidersIDs", PresentationConstants.EXTERNAL_GUIDERS_LIST,
+					actionErrors);
+		} catch (Exception e1) {
+			throw new FenixActionException(e1);
+		} finally {
+			saveErrors(request, actionErrors);
+		}
 
-	MasterDegreeThesisOperations operations = new MasterDegreeThesisOperations();
-	ActionErrors actionErrors = new ActionErrors();
+		return mapping.findForward("start");
 
-	try {
-	    operations.getTeachersByNumbers(form, request, "guidersNumbers", PresentationConstants.GUIDERS_LIST, actionErrors);
-	    operations.getTeachersByNumbers(form, request, "assistentGuidersNumbers",
-		    PresentationConstants.ASSISTENT_GUIDERS_LIST, actionErrors);
-	    operations.getExternalPersonsByIDs(form, request, "externalAssistentGuidersIDs",
-		    PresentationConstants.EXTERNAL_ASSISTENT_GUIDERS_LIST, actionErrors);
-	    operations.getStudentByNumberAndDegreeType(form, request, actionErrors);
-	    operations.getExternalPersonsByName(form, request, "externalAssistentGuiderName",
-		    PresentationConstants.EXTERNAL_ASSISTENT_GUIDERS_SEARCH_RESULTS, actionErrors);
-	    operations.getExternalPersonsByIDs(form, request, "externalGuidersIDs", PresentationConstants.EXTERNAL_GUIDERS_LIST,
-		    actionErrors);
-	} catch (Exception e1) {
-	    throw new FenixActionException(e1);
-	} finally {
-	    saveErrors(request, actionErrors);
 	}
 
-	return mapping.findForward("start");
+	public ActionForward searchExternalGuider(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws FenixActionException {
 
-    }
+		MasterDegreeThesisOperations operations = new MasterDegreeThesisOperations();
+		ActionErrors actionErrors = new ActionErrors();
 
-    public ActionForward searchExternalGuider(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixActionException {
+		try {
+			operations.getTeachersByNumbers(form, request, "guidersNumbers", PresentationConstants.GUIDERS_LIST, actionErrors);
+			operations.getTeachersByNumbers(form, request, "assistentGuidersNumbers",
+					PresentationConstants.ASSISTENT_GUIDERS_LIST, actionErrors);
+			operations.getExternalPersonsByIDs(form, request, "externalAssistentGuidersIDs",
+					PresentationConstants.EXTERNAL_ASSISTENT_GUIDERS_LIST, actionErrors);
+			operations.getExternalPersonsByIDs(form, request, "externalGuidersIDs", PresentationConstants.EXTERNAL_GUIDERS_LIST,
+					actionErrors);
+			operations.getStudentByNumberAndDegreeType(form, request, actionErrors);
+			operations.getExternalPersonsByName(form, request, "externalGuiderName",
+					PresentationConstants.EXTERNAL_GUIDERS_SEARCH_RESULTS, actionErrors);
 
-	MasterDegreeThesisOperations operations = new MasterDegreeThesisOperations();
-	ActionErrors actionErrors = new ActionErrors();
+		} catch (Exception e1) {
+			throw new FenixActionException(e1);
+		} finally {
+			saveErrors(request, actionErrors);
+		}
 
-	try {
-	    operations.getTeachersByNumbers(form, request, "guidersNumbers", PresentationConstants.GUIDERS_LIST, actionErrors);
-	    operations.getTeachersByNumbers(form, request, "assistentGuidersNumbers",
-		    PresentationConstants.ASSISTENT_GUIDERS_LIST, actionErrors);
-	    operations.getExternalPersonsByIDs(form, request, "externalAssistentGuidersIDs",
-		    PresentationConstants.EXTERNAL_ASSISTENT_GUIDERS_LIST, actionErrors);
-	    operations.getExternalPersonsByIDs(form, request, "externalGuidersIDs", PresentationConstants.EXTERNAL_GUIDERS_LIST,
-		    actionErrors);
-	    operations.getStudentByNumberAndDegreeType(form, request, actionErrors);
-	    operations.getExternalPersonsByName(form, request, "externalGuiderName",
-		    PresentationConstants.EXTERNAL_GUIDERS_SEARCH_RESULTS, actionErrors);
+		return mapping.findForward("start");
 
-	} catch (Exception e1) {
-	    throw new FenixActionException(e1);
-	} finally {
-	    saveErrors(request, actionErrors);
 	}
 
-	return mapping.findForward("start");
+	public ActionForward addExternalAssistentGuider(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws FenixActionException {
 
-    }
+		MasterDegreeThesisOperations operations = new MasterDegreeThesisOperations();
+		ActionErrors actionErrors = new ActionErrors();
 
-    public ActionForward addExternalAssistentGuider(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixActionException {
+		try {
+			operations.getTeachersByNumbers(form, request, "guidersNumbers", PresentationConstants.GUIDERS_LIST, actionErrors);
+			operations.getTeachersByNumbers(form, request, "assistentGuidersNumbers",
+					PresentationConstants.ASSISTENT_GUIDERS_LIST, actionErrors);
+			operations.getExternalPersonsByIDs(form, request, "externalAssistentGuidersIDs",
+					PresentationConstants.EXTERNAL_ASSISTENT_GUIDERS_LIST, actionErrors);
+			operations.getStudentByNumberAndDegreeType(form, request, actionErrors);
+			operations.getExternalPersonsByIDs(form, request, "externalGuidersIDs", PresentationConstants.EXTERNAL_GUIDERS_LIST,
+					actionErrors);
+		} catch (Exception e1) {
+			throw new FenixActionException(e1);
+		} finally {
+			saveErrors(request, actionErrors);
+		}
 
-	MasterDegreeThesisOperations operations = new MasterDegreeThesisOperations();
-	ActionErrors actionErrors = new ActionErrors();
+		return mapping.findForward("start");
 
-	try {
-	    operations.getTeachersByNumbers(form, request, "guidersNumbers", PresentationConstants.GUIDERS_LIST, actionErrors);
-	    operations.getTeachersByNumbers(form, request, "assistentGuidersNumbers",
-		    PresentationConstants.ASSISTENT_GUIDERS_LIST, actionErrors);
-	    operations.getExternalPersonsByIDs(form, request, "externalAssistentGuidersIDs",
-		    PresentationConstants.EXTERNAL_ASSISTENT_GUIDERS_LIST, actionErrors);
-	    operations.getStudentByNumberAndDegreeType(form, request, actionErrors);
-	    operations.getExternalPersonsByIDs(form, request, "externalGuidersIDs", PresentationConstants.EXTERNAL_GUIDERS_LIST,
-		    actionErrors);
-	} catch (Exception e1) {
-	    throw new FenixActionException(e1);
-	} finally {
-	    saveErrors(request, actionErrors);
 	}
 
-	return mapping.findForward("start");
+	public ActionForward addExternalGuider(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws FenixActionException {
 
-    }
+		MasterDegreeThesisOperations operations = new MasterDegreeThesisOperations();
+		ActionErrors actionErrors = new ActionErrors();
 
-    public ActionForward addExternalGuider(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixActionException {
+		try {
+			operations.getTeachersByNumbers(form, request, "guidersNumbers", PresentationConstants.GUIDERS_LIST, actionErrors);
+			operations.getTeachersByNumbers(form, request, "assistentGuidersNumbers",
+					PresentationConstants.ASSISTENT_GUIDERS_LIST, actionErrors);
+			operations.getExternalPersonsByIDs(form, request, "externalAssistentGuidersIDs",
+					PresentationConstants.EXTERNAL_ASSISTENT_GUIDERS_LIST, actionErrors);
+			operations.getExternalPersonsByIDs(form, request, "externalGuidersIDs", PresentationConstants.EXTERNAL_GUIDERS_LIST,
+					actionErrors);
+			operations.getStudentByNumberAndDegreeType(form, request, actionErrors);
 
-	MasterDegreeThesisOperations operations = new MasterDegreeThesisOperations();
-	ActionErrors actionErrors = new ActionErrors();
+		} catch (Exception e1) {
+			throw new FenixActionException(e1);
+		} finally {
+			saveErrors(request, actionErrors);
+		}
 
-	try {
-	    operations.getTeachersByNumbers(form, request, "guidersNumbers", PresentationConstants.GUIDERS_LIST, actionErrors);
-	    operations.getTeachersByNumbers(form, request, "assistentGuidersNumbers",
-		    PresentationConstants.ASSISTENT_GUIDERS_LIST, actionErrors);
-	    operations.getExternalPersonsByIDs(form, request, "externalAssistentGuidersIDs",
-		    PresentationConstants.EXTERNAL_ASSISTENT_GUIDERS_LIST, actionErrors);
-	    operations.getExternalPersonsByIDs(form, request, "externalGuidersIDs", PresentationConstants.EXTERNAL_GUIDERS_LIST,
-		    actionErrors);
-	    operations.getStudentByNumberAndDegreeType(form, request, actionErrors);
+		return mapping.findForward("start");
 
-	} catch (Exception e1) {
-	    throw new FenixActionException(e1);
-	} finally {
-	    saveErrors(request, actionErrors);
 	}
 
-	return mapping.findForward("start");
+	public ActionForward removeAssistentGuiders(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws FenixActionException {
 
-    }
+		DynaActionForm createMasterDegreeForm = (DynaActionForm) form;
 
-    public ActionForward removeAssistentGuiders(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixActionException {
+		Integer[] teachersNumbersList = (Integer[]) createMasterDegreeForm.get("assistentGuidersNumbers");
+		Integer[] removedAssistentGuiders = (Integer[]) createMasterDegreeForm.get("removedAssistentGuidersNumbers");
 
-	DynaActionForm createMasterDegreeForm = (DynaActionForm) form;
+		createMasterDegreeForm.set("assistentGuidersNumbers", subtractArray(teachersNumbersList, removedAssistentGuiders));
 
-	Integer[] teachersNumbersList = (Integer[]) createMasterDegreeForm.get("assistentGuidersNumbers");
-	Integer[] removedAssistentGuiders = (Integer[]) createMasterDegreeForm.get("removedAssistentGuidersNumbers");
+		MasterDegreeThesisOperations operations = new MasterDegreeThesisOperations();
+		ActionErrors actionErrors = new ActionErrors();
 
-	createMasterDegreeForm.set("assistentGuidersNumbers", subtractArray(teachersNumbersList, removedAssistentGuiders));
+		try {
+			operations.getTeachersByNumbers(form, request, "guidersNumbers", PresentationConstants.GUIDERS_LIST, actionErrors);
+			operations.getTeachersByNumbers(form, request, "assistentGuidersNumbers",
+					PresentationConstants.ASSISTENT_GUIDERS_LIST, actionErrors);
+			operations.getStudentByNumberAndDegreeType(form, request, actionErrors);
+			operations.getExternalPersonsByIDs(form, request, "externalAssistentGuidersIDs",
+					PresentationConstants.EXTERNAL_ASSISTENT_GUIDERS_LIST, actionErrors);
+			operations.getExternalPersonsByIDs(form, request, "externalGuidersIDs", PresentationConstants.EXTERNAL_GUIDERS_LIST,
+					actionErrors);
 
-	MasterDegreeThesisOperations operations = new MasterDegreeThesisOperations();
-	ActionErrors actionErrors = new ActionErrors();
+		} catch (Exception e1) {
+			throw new FenixActionException(e1);
+		} finally {
+			saveErrors(request, actionErrors);
+		}
 
-	try {
-	    operations.getTeachersByNumbers(form, request, "guidersNumbers", PresentationConstants.GUIDERS_LIST, actionErrors);
-	    operations.getTeachersByNumbers(form, request, "assistentGuidersNumbers",
-		    PresentationConstants.ASSISTENT_GUIDERS_LIST, actionErrors);
-	    operations.getStudentByNumberAndDegreeType(form, request, actionErrors);
-	    operations.getExternalPersonsByIDs(form, request, "externalAssistentGuidersIDs",
-		    PresentationConstants.EXTERNAL_ASSISTENT_GUIDERS_LIST, actionErrors);
-	    operations.getExternalPersonsByIDs(form, request, "externalGuidersIDs", PresentationConstants.EXTERNAL_GUIDERS_LIST,
-		    actionErrors);
+		return mapping.findForward("start");
 
-	} catch (Exception e1) {
-	    throw new FenixActionException(e1);
-	} finally {
-	    saveErrors(request, actionErrors);
 	}
 
-	return mapping.findForward("start");
+	public ActionForward removeExternalAssistentGuiders(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws FenixActionException {
 
-    }
+		DynaActionForm createMasterDegreeForm = (DynaActionForm) form;
 
-    public ActionForward removeExternalAssistentGuiders(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixActionException {
+		Integer[] externalPersonsIDsList = (Integer[]) createMasterDegreeForm.get("externalAssistentGuidersIDs");
+		Integer[] removedExternalAssistentGuiders = (Integer[]) createMasterDegreeForm.get("removedExternalAssistentGuidersIDs");
 
-	DynaActionForm createMasterDegreeForm = (DynaActionForm) form;
+		createMasterDegreeForm.set("externalAssistentGuidersIDs",
+				subtractArray(externalPersonsIDsList, removedExternalAssistentGuiders));
 
-	Integer[] externalPersonsIDsList = (Integer[]) createMasterDegreeForm.get("externalAssistentGuidersIDs");
-	Integer[] removedExternalAssistentGuiders = (Integer[]) createMasterDegreeForm.get("removedExternalAssistentGuidersIDs");
+		MasterDegreeThesisOperations operations = new MasterDegreeThesisOperations();
+		ActionErrors actionErrors = new ActionErrors();
 
-	createMasterDegreeForm.set("externalAssistentGuidersIDs", subtractArray(externalPersonsIDsList,
-		removedExternalAssistentGuiders));
+		try {
+			operations.getTeachersByNumbers(form, request, "guidersNumbers", PresentationConstants.GUIDERS_LIST, actionErrors);
+			operations.getTeachersByNumbers(form, request, "assistentGuidersNumbers",
+					PresentationConstants.ASSISTENT_GUIDERS_LIST, actionErrors);
+			operations.getStudentByNumberAndDegreeType(form, request, actionErrors);
+			operations.getExternalPersonsByIDs(form, request, "externalAssistentGuidersIDs",
+					PresentationConstants.EXTERNAL_ASSISTENT_GUIDERS_LIST, actionErrors);
+			operations.getExternalPersonsByIDs(form, request, "externalGuidersIDs", PresentationConstants.EXTERNAL_GUIDERS_LIST,
+					actionErrors);
 
-	MasterDegreeThesisOperations operations = new MasterDegreeThesisOperations();
-	ActionErrors actionErrors = new ActionErrors();
+		} catch (Exception e1) {
+			throw new FenixActionException(e1);
+		} finally {
+			saveErrors(request, actionErrors);
+		}
 
-	try {
-	    operations.getTeachersByNumbers(form, request, "guidersNumbers", PresentationConstants.GUIDERS_LIST, actionErrors);
-	    operations.getTeachersByNumbers(form, request, "assistentGuidersNumbers",
-		    PresentationConstants.ASSISTENT_GUIDERS_LIST, actionErrors);
-	    operations.getStudentByNumberAndDegreeType(form, request, actionErrors);
-	    operations.getExternalPersonsByIDs(form, request, "externalAssistentGuidersIDs",
-		    PresentationConstants.EXTERNAL_ASSISTENT_GUIDERS_LIST, actionErrors);
-	    operations.getExternalPersonsByIDs(form, request, "externalGuidersIDs", PresentationConstants.EXTERNAL_GUIDERS_LIST,
-		    actionErrors);
+		return mapping.findForward("start");
 
-	} catch (Exception e1) {
-	    throw new FenixActionException(e1);
-	} finally {
-	    saveErrors(request, actionErrors);
 	}
 
-	return mapping.findForward("start");
+	public ActionForward removeExternalGuiders(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws FenixActionException {
 
-    }
+		DynaActionForm createMasterDegreeForm = (DynaActionForm) form;
 
-    public ActionForward removeExternalGuiders(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixActionException {
+		Integer[] externalPersonsIDsList = (Integer[]) createMasterDegreeForm.get("externalGuidersIDs");
+		Integer[] removedExternalGuiders = (Integer[]) createMasterDegreeForm.get("removedExternalGuidersIDs");
 
-	DynaActionForm createMasterDegreeForm = (DynaActionForm) form;
+		createMasterDegreeForm.set("externalGuidersIDs", subtractArray(externalPersonsIDsList, removedExternalGuiders));
 
-	Integer[] externalPersonsIDsList = (Integer[]) createMasterDegreeForm.get("externalGuidersIDs");
-	Integer[] removedExternalGuiders = (Integer[]) createMasterDegreeForm.get("removedExternalGuidersIDs");
+		MasterDegreeThesisOperations operations = new MasterDegreeThesisOperations();
+		ActionErrors actionErrors = new ActionErrors();
 
-	createMasterDegreeForm.set("externalGuidersIDs", subtractArray(externalPersonsIDsList, removedExternalGuiders));
+		try {
+			operations.getTeachersByNumbers(form, request, "guidersNumbers", PresentationConstants.GUIDERS_LIST, actionErrors);
+			operations.getTeachersByNumbers(form, request, "assistentGuidersNumbers",
+					PresentationConstants.ASSISTENT_GUIDERS_LIST, actionErrors);
+			operations.getStudentByNumberAndDegreeType(form, request, actionErrors);
+			operations.getExternalPersonsByIDs(form, request, "externalAssistentGuidersIDs",
+					PresentationConstants.EXTERNAL_ASSISTENT_GUIDERS_LIST, actionErrors);
+			operations.getExternalPersonsByIDs(form, request, "externalGuidersIDs", PresentationConstants.EXTERNAL_GUIDERS_LIST,
+					actionErrors);
 
-	MasterDegreeThesisOperations operations = new MasterDegreeThesisOperations();
-	ActionErrors actionErrors = new ActionErrors();
+		} catch (Exception e1) {
+			throw new FenixActionException(e1);
+		} finally {
+			saveErrors(request, actionErrors);
+		}
 
-	try {
-	    operations.getTeachersByNumbers(form, request, "guidersNumbers", PresentationConstants.GUIDERS_LIST, actionErrors);
-	    operations.getTeachersByNumbers(form, request, "assistentGuidersNumbers",
-		    PresentationConstants.ASSISTENT_GUIDERS_LIST, actionErrors);
-	    operations.getStudentByNumberAndDegreeType(form, request, actionErrors);
-	    operations.getExternalPersonsByIDs(form, request, "externalAssistentGuidersIDs",
-		    PresentationConstants.EXTERNAL_ASSISTENT_GUIDERS_LIST, actionErrors);
-	    operations.getExternalPersonsByIDs(form, request, "externalGuidersIDs", PresentationConstants.EXTERNAL_GUIDERS_LIST,
-		    actionErrors);
+		return mapping.findForward("start");
 
-	} catch (Exception e1) {
-	    throw new FenixActionException(e1);
-	} finally {
-	    saveErrors(request, actionErrors);
 	}
 
-	return mapping.findForward("start");
+	private Integer[] subtractArray(Integer[] originalArray, Integer[] arrayToSubtract) {
+		List tmp = new ArrayList();
 
-    }
+		for (Integer element : originalArray) {
+			tmp.add(element);
+		}
 
-    private Integer[] subtractArray(Integer[] originalArray, Integer[] arrayToSubtract) {
-	List tmp = new ArrayList();
+		for (Integer element : arrayToSubtract) {
+			tmp.remove(element);
+		}
 
-	for (int i = 0; i < originalArray.length; i++)
-	    tmp.add(originalArray[i]);
+		originalArray = (Integer[]) tmp.toArray(new Integer[] {});
+		return originalArray;
+	}
 
-	for (int i = 0; i < arrayToSubtract.length; i++)
-	    tmp.remove(arrayToSubtract[i]);
+	@Override
+	protected Map getKeyMethodMap() {
+		Map map = new HashMap();
+		map.put("button.submit.masterDegree.thesis.addGuider", "addGuider");
+		map.put("button.submit.masterDegree.thesis.removeGuiders", "removeGuiders");
+		map.put("button.submit.masterDegree.thesis.externalAssitentGuider", "externalAssitentGuider");
+		map.put("button.submit.masterDegree.thesis.searchExternalAssitentGuider", "searchExternalAssitentGuider");
+		map.put("button.submit.masterDegree.thesis.addExternalAssistentGuider", "addExternalAssistentGuider");
+		map.put("button.submit.masterDegree.thesis.externalGuider", "externalGuider");
+		map.put("button.submit.masterDegree.thesis.searchExternalGuider", "searchExternalGuider");
+		map.put("button.submit.masterDegree.thesis.addExternalGuider", "addExternalGuider");
+		map.put("button.submit.masterDegree.thesis.removeExternalGuiders", "removeExternalGuiders");
+		map.put("button.submit.masterDegree.thesis.addAssistentGuider", "addAssistentGuider");
+		map.put("button.submit.masterDegree.thesis.removeAssistentGuiders", "removeAssistentGuiders");
+		map.put("button.submit.masterDegree.thesis.removeExternalAssistentGuiders", "removeExternalAssistentGuiders");
+		map.put("button.submit.masterDegree.thesis.createThesis", "createMasterDegreeThesis");
+		map.put("button.cancel", "cancelCreateMasterDegreeThesis");
+		return map;
+	}
 
-	originalArray = (Integer[]) tmp.toArray(new Integer[] {});
-	return originalArray;
-    }
+	public ActionForward cancelMasterDegreeThesis(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		PrepareStudentDataForThesisOperationsDispatchAction prepareStudentDataForThesisOperations =
+				new PrepareStudentDataForThesisOperationsDispatchAction();
+		return prepareStudentDataForThesisOperations.getStudentAndDegreeTypeForThesisOperations(mapping, form, request, response);
 
-    @Override
-    protected Map getKeyMethodMap() {
-	Map map = new HashMap();
-	map.put("button.submit.masterDegree.thesis.addGuider", "addGuider");
-	map.put("button.submit.masterDegree.thesis.removeGuiders", "removeGuiders");
-	map.put("button.submit.masterDegree.thesis.externalAssitentGuider", "externalAssitentGuider");
-	map.put("button.submit.masterDegree.thesis.searchExternalAssitentGuider", "searchExternalAssitentGuider");
-	map.put("button.submit.masterDegree.thesis.addExternalAssistentGuider", "addExternalAssistentGuider");
-	map.put("button.submit.masterDegree.thesis.externalGuider", "externalGuider");
-	map.put("button.submit.masterDegree.thesis.searchExternalGuider", "searchExternalGuider");
-	map.put("button.submit.masterDegree.thesis.addExternalGuider", "addExternalGuider");
-	map.put("button.submit.masterDegree.thesis.removeExternalGuiders", "removeExternalGuiders");
-	map.put("button.submit.masterDegree.thesis.addAssistentGuider", "addAssistentGuider");
-	map.put("button.submit.masterDegree.thesis.removeAssistentGuiders", "removeAssistentGuiders");
-	map.put("button.submit.masterDegree.thesis.removeExternalAssistentGuiders", "removeExternalAssistentGuiders");
-	map.put("button.submit.masterDegree.thesis.createThesis", "createMasterDegreeThesis");
-	map.put("button.cancel", "cancelCreateMasterDegreeThesis");
-	return map;
-    }
-
-    public ActionForward cancelMasterDegreeThesis(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-	PrepareStudentDataForThesisOperationsDispatchAction prepareStudentDataForThesisOperations = new PrepareStudentDataForThesisOperationsDispatchAction();
-	return prepareStudentDataForThesisOperations.getStudentAndDegreeTypeForThesisOperations(mapping, form, request, response);
-
-    }
+	}
 }

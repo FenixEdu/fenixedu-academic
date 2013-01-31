@@ -10,21 +10,21 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class EditInstitution extends FenixService {
 
-    @Service
-    public static void run(Integer oldInstitutionOID, String newInstitutionName) throws FenixServiceException {
+	@Service
+	public static void run(Integer oldInstitutionOID, String newInstitutionName) throws FenixServiceException {
 
-	Unit storedInstitution = UnitUtils.readExternalInstitutionUnitByName(newInstitutionName);
+		Unit storedInstitution = UnitUtils.readExternalInstitutionUnitByName(newInstitutionName);
 
-	Unit oldInstitution = (Unit) rootDomainObject.readPartyByOID(oldInstitutionOID);
-	if (oldInstitution == null) {
-	    throw new NonExistingServiceException("error.exception.commons.institution.institutionNotFound");
+		Unit oldInstitution = (Unit) rootDomainObject.readPartyByOID(oldInstitutionOID);
+		if (oldInstitution == null) {
+			throw new NonExistingServiceException("error.exception.commons.institution.institutionNotFound");
+		}
+
+		if ((storedInstitution != null) && (!storedInstitution.equals(oldInstitution))) {
+			throw new ExistingServiceException("error.exception.commons.institution.institutionAlreadyExists");
+		}
+
+		oldInstitution.setName(newInstitutionName);
 	}
-
-	if ((storedInstitution != null) && (!storedInstitution.equals(oldInstitution))) {
-	    throw new ExistingServiceException("error.exception.commons.institution.institutionAlreadyExists");
-	}
-
-	oldInstitution.setName(newInstitutionName);
-    }
 
 }

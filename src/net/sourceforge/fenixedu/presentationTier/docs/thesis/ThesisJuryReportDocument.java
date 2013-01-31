@@ -12,40 +12,40 @@ import org.joda.time.DateTime;
 
 public class ThesisJuryReportDocument extends ThesisDocument {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    public ThesisJuryReportDocument(Thesis thesis) {
-	super(thesis);
-    }
-
-    @Override
-    public void fillGeneric() {
-	Thesis thesis = getThesis();
-	String discussed;
-
-	if (thesis.getDiscussed() != null) {
-	    DateTime discussedTime = thesis.getDiscussed();
-	    discussed = discussedTime.getDayOfMonth() + " / " + discussedTime.getMonthOfYear() + " / " + discussedTime.getYear();
-	} else {
-	    discussed = EMPTY_STR;
+	public ThesisJuryReportDocument(Thesis thesis) {
+		super(thesis);
 	}
 
-	addParameter("date", discussed);
-	addParameter("grade", neverNull(getThesis().getMark()));
-    }
+	@Override
+	public void fillGeneric() {
+		Thesis thesis = getThesis();
+		String discussed;
 
-    @Override
-    public String getReportFileName() {
-	return "acta-juri-tese-" + getThesis().getStudent().getNumber();
-    }
+		if (thesis.getDiscussed() != null) {
+			DateTime discussedTime = thesis.getDiscussed();
+			discussed = discussedTime.getDayOfMonth() + " / " + discussedTime.getMonthOfYear() + " / " + discussedTime.getYear();
+		} else {
+			discussed = EMPTY_STR;
+		}
 
-    @Override
-    protected String neverNull(String value) {
-	return value == null ? EMPTY_STR : value;
-    }
+		addParameter("date", discussed);
+		addParameter("grade", neverNull(getThesis().getMark()));
+	}
 
-    protected String neverNull(Integer value) {
-	return value == null ? EMPTY_STR : value.toString();
-    }
+	@Override
+	public String getReportFileName() {
+		return "acta-juri-tese-" + getThesis().getStudent().getNumber();
+	}
+
+	@Override
+	protected String neverNull(String value) {
+		return value == null ? EMPTY_STR : value;
+	}
+
+	protected String neverNull(Integer value) {
+		return value == null ? EMPTY_STR : value.toString();
+	}
 
 }

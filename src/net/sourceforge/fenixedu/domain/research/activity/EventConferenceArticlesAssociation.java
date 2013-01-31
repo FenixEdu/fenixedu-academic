@@ -7,38 +7,38 @@ import dml.runtime.RelationAdapter;
 
 public class EventConferenceArticlesAssociation extends EventConferenceArticlesAssociation_Base {
 
-    static {
-	EventEditionEventConferenceArticlesAssociation
-		.addListener(new RelationAdapter<EventConferenceArticlesAssociation, EventEdition>() {
+	static {
+		EventEditionEventConferenceArticlesAssociation
+				.addListener(new RelationAdapter<EventConferenceArticlesAssociation, EventEdition>() {
 
-		    @Override
-		    public void afterRemove(EventConferenceArticlesAssociation association, EventEdition eventEdition) {
-			super.afterRemove(association, eventEdition);
+					@Override
+					public void afterRemove(EventConferenceArticlesAssociation association, EventEdition eventEdition) {
+						super.afterRemove(association, eventEdition);
 
-			if (eventEdition != null && association != null
-				&& !eventEdition.hasAnyEventConferenceArticlesAssociations()
-				&& !eventEdition.hasAnyParticipations() && !eventEdition.hasAnyAssociatedProjects()) {
-			    eventEdition.delete();
-			}
-		    }
+						if (eventEdition != null && association != null
+								&& !eventEdition.hasAnyEventConferenceArticlesAssociations()
+								&& !eventEdition.hasAnyParticipations() && !eventEdition.hasAnyAssociatedProjects()) {
+							eventEdition.delete();
+						}
+					}
 
-		});
-    }
+				});
+	}
 
-    public EventConferenceArticlesAssociation(EventEdition eventEdition, ConferenceArticles article, Person person) {
-	super();
-	setRootDomainObject(RootDomainObject.getInstance());
-	this.setEventEdition(eventEdition);
-	this.setConferenceArticle(article);
-	this.setPerson(person);
-    }
+	public EventConferenceArticlesAssociation(EventEdition eventEdition, ConferenceArticles article, Person person) {
+		super();
+		setRootDomainObject(RootDomainObject.getInstance());
+		this.setEventEdition(eventEdition);
+		this.setConferenceArticle(article);
+		this.setPerson(person);
+	}
 
-    public void delete() {
-	removeConferenceArticle();
-	removePerson();
-	removeEventEdition();
-	removeRootDomainObject();
-	super.deleteDomainObject();
-    }
+	public void delete() {
+		removeConferenceArticle();
+		removePerson();
+		removeEventEdition();
+		removeRootDomainObject();
+		super.deleteDomainObject();
+	}
 
 }

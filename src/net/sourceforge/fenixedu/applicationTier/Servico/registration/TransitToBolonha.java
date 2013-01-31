@@ -11,10 +11,10 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class TransitToBolonha extends FenixService {
 
-    @Checked("RolePredicates.MANAGER_PREDICATE")
-    @Service
-    public static void run(final Person person, final Registration sourceRegistrationForTransition, final DateTime dateTime) {
-	sourceRegistrationForTransition.transitToBolonha(person, dateTime);
-    }
+	@Checked("RolePredicates.MANAGER_PREDICATE")
+	@Service
+	public static void run(final Person person, final Registration sourceRegistrationForTransition, final DateTime dateTime) {
+		sourceRegistrationForTransition.transitToBolonha(person, dateTime);
+	}
 
 }

@@ -21,116 +21,114 @@ import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(module = "departmentMember", path = "/evaluateExpectations", scope = "request", parameter = "method")
-@Forwards(value = {
-		@Forward(name = "chooseTeacher", path = "/departmentMember/expectationManagement/listTeachersToEvaluateExpectation.jsp"),
-		@Forward(name = "seeTeacherPersonalExpectations", path = "/departmentMember/expectationManagement/seeTeacherPersonalExpectationsToEvaluate.jsp"),
-		@Forward(name = "prepareEditEvaluation", path = "/departmentMember/expectationManagement/editExpectationEvaluation.jsp") })
+@Forwards(
+		value = {
+				@Forward(
+						name = "chooseTeacher",
+						path = "/departmentMember/expectationManagement/listTeachersToEvaluateExpectation.jsp"),
+				@Forward(
+						name = "seeTeacherPersonalExpectations",
+						path = "/departmentMember/expectationManagement/seeTeacherPersonalExpectationsToEvaluate.jsp"),
+				@Forward(
+						name = "prepareEditEvaluation",
+						path = "/departmentMember/expectationManagement/editExpectationEvaluation.jsp") })
 public class ExpectationsEvaluationDA extends FenixDispatchAction {
 
-    public ActionForward chooseTeacher(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
+	public ActionForward chooseTeacher(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) {
 
-	Teacher teacher = getLoggedTeacher(request);
-	ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
+		Teacher teacher = getLoggedTeacher(request);
+		ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
 
-	readAndSetEvaluatedTeachersWithExpectations(request, teacher, executionYear);
+		readAndSetEvaluatedTeachersWithExpectations(request, teacher, executionYear);
 
-	return mapping.findForward("chooseTeacher");
-    }
-
-    public ActionForward chooseTeacherInSelectedExecutionYear(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
-
-	Teacher teacher = getLoggedTeacher(request);
-	IViewState viewState = RenderUtils.getViewState("executionYear");
-	ExecutionYear executionYear = (ExecutionYear) viewState.getMetaObject().getObject();
-
-	readAndSetEvaluatedTeachersWithExpectations(request, teacher, executionYear);
-
-	return mapping.findForward("chooseTeacher");
-    }
-
-    public ActionForward chooseTeacherInExecutionYear(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
-
-	Teacher teacher = getLoggedTeacher(request);
-	ExecutionYear executionYear = getExecutionYearFromParameter(request);
-
-	readAndSetEvaluatedTeachersWithExpectations(request, teacher, executionYear);
-
-	return mapping.findForward("chooseTeacher");
-    }
-
-    public ActionForward prepareEditExpectationEvaluation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
-
-	TeacherPersonalExpectation expectation = getTeacherPersonalExpectationFromParameter(request);
-	if (expectation != null) {
-	    Teacher teacher = getLoggedTeacher(request);
-	    ExecutionYear executionYear = expectation.getExecutionYear();
-	    if (teacher.hasExpectationEvaluatedTeacher(expectation.getTeacher(), executionYear)) {
-		request.setAttribute("teacherPersonalExpectation", expectation);
-	    }
+		return mapping.findForward("chooseTeacher");
 	}
-	return mapping.findForward("prepareEditEvaluation");
-    }
 
-    public ActionForward seeTeacherPersonalExpectation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
+	public ActionForward chooseTeacherInSelectedExecutionYear(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) {
 
-	TeacherPersonalExpectation teacherPersonalExpectation = getTeacherPersonalExpectationFromParameter(request);
-	Teacher loggedTeacher = getLoggedTeacher(request);
-	if (teacherPersonalExpectation != null
-		&& loggedTeacher.hasExpectationEvaluatedTeacher(teacherPersonalExpectation.getTeacher(),
-			teacherPersonalExpectation.getExecutionYear())) {
-	    request.setAttribute("noEdit", true);
-	    request.setAttribute("teacherPersonalExpectation", teacherPersonalExpectation);
+		Teacher teacher = getLoggedTeacher(request);
+		IViewState viewState = RenderUtils.getViewState("executionYear");
+		ExecutionYear executionYear = (ExecutionYear) viewState.getMetaObject().getObject();
+
+		readAndSetEvaluatedTeachersWithExpectations(request, teacher, executionYear);
+
+		return mapping.findForward("chooseTeacher");
 	}
-	return mapping.findForward("seeTeacherPersonalExpectations");
-    }
 
-    private TeacherPersonalExpectation getTeacherPersonalExpectationFromParameter(final HttpServletRequest request) {
-	final String teacherPersonalExpectationIDString = request.getParameter("teacherPersonalExpectationID");
-	final Integer teacherPersonalExpectationID = Integer.valueOf(teacherPersonalExpectationIDString);
-	return rootDomainObject.readTeacherPersonalExpectationByOID(teacherPersonalExpectationID);
-    }
+	public ActionForward chooseTeacherInExecutionYear(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) {
 
-    private ExecutionYear getExecutionYearFromParameter(final HttpServletRequest request) {
-	final String executionYearIDString = request.getParameter("executionYearID");
-	final Integer executionYearID = Integer.valueOf(executionYearIDString);
-	return rootDomainObject.readExecutionYearByOID(executionYearID);
-    }
+		Teacher teacher = getLoggedTeacher(request);
+		ExecutionYear executionYear = getExecutionYearFromParameter(request);
 
-    private void readAndSetEvaluatedTeachersWithExpectations(HttpServletRequest request, Teacher teacher,
-	    ExecutionYear executionYear) {
-	Map<Teacher, TeacherPersonalExpectation> result = new TreeMap<Teacher, TeacherPersonalExpectation>(
-		Teacher.TEACHER_COMPARATOR_BY_CATEGORY_AND_NUMBER);
-	List<ExpectationEvaluationGroup> groups = teacher.getEvaluatedExpectationEvaluationGroups(executionYear);
-	for (ExpectationEvaluationGroup group : groups) {
-	    TeacherPersonalExpectation evaluatedTeacherExpectation = group.getEvaluated()
-		    .getTeacherPersonalExpectationByExecutionYear(executionYear);
-	    result.put(group.getEvaluated(), evaluatedTeacherExpectation);
+		readAndSetEvaluatedTeachersWithExpectations(request, teacher, executionYear);
+
+		return mapping.findForward("chooseTeacher");
 	}
-	request.setAttribute("evaluatedTeachers", result);
-	request.setAttribute("executionYearBean", new ExecutionYearBean(executionYear));
-    }
 
-    private Teacher getLoggedTeacher(HttpServletRequest request) {
-	Person loggedPerson = getLoggedPerson(request);
-	return (loggedPerson != null) ? loggedPerson.getTeacher() : null;
-    }
+	public ActionForward prepareEditExpectationEvaluation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) {
+
+		TeacherPersonalExpectation expectation = getTeacherPersonalExpectationFromParameter(request);
+		if (expectation != null) {
+			Teacher teacher = getLoggedTeacher(request);
+			ExecutionYear executionYear = expectation.getExecutionYear();
+			if (teacher.hasExpectationEvaluatedTeacher(expectation.getTeacher(), executionYear)) {
+				request.setAttribute("teacherPersonalExpectation", expectation);
+			}
+		}
+		return mapping.findForward("prepareEditEvaluation");
+	}
+
+	public ActionForward seeTeacherPersonalExpectation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+
+		TeacherPersonalExpectation teacherPersonalExpectation = getTeacherPersonalExpectationFromParameter(request);
+		Teacher loggedTeacher = getLoggedTeacher(request);
+		if (teacherPersonalExpectation != null
+				&& loggedTeacher.hasExpectationEvaluatedTeacher(teacherPersonalExpectation.getTeacher(),
+						teacherPersonalExpectation.getExecutionYear())) {
+			request.setAttribute("noEdit", true);
+			request.setAttribute("teacherPersonalExpectation", teacherPersonalExpectation);
+		}
+		return mapping.findForward("seeTeacherPersonalExpectations");
+	}
+
+	private TeacherPersonalExpectation getTeacherPersonalExpectationFromParameter(final HttpServletRequest request) {
+		final String teacherPersonalExpectationIDString = request.getParameter("teacherPersonalExpectationID");
+		final Integer teacherPersonalExpectationID = Integer.valueOf(teacherPersonalExpectationIDString);
+		return rootDomainObject.readTeacherPersonalExpectationByOID(teacherPersonalExpectationID);
+	}
+
+	private ExecutionYear getExecutionYearFromParameter(final HttpServletRequest request) {
+		final String executionYearIDString = request.getParameter("executionYearID");
+		final Integer executionYearID = Integer.valueOf(executionYearIDString);
+		return rootDomainObject.readExecutionYearByOID(executionYearID);
+	}
+
+	private void readAndSetEvaluatedTeachersWithExpectations(HttpServletRequest request, Teacher teacher,
+			ExecutionYear executionYear) {
+		Map<Teacher, TeacherPersonalExpectation> result =
+				new TreeMap<Teacher, TeacherPersonalExpectation>(Teacher.TEACHER_COMPARATOR_BY_CATEGORY_AND_NUMBER);
+		List<ExpectationEvaluationGroup> groups = teacher.getEvaluatedExpectationEvaluationGroups(executionYear);
+		for (ExpectationEvaluationGroup group : groups) {
+			TeacherPersonalExpectation evaluatedTeacherExpectation =
+					group.getEvaluated().getTeacherPersonalExpectationByExecutionYear(executionYear);
+			result.put(group.getEvaluated(), evaluatedTeacherExpectation);
+		}
+		request.setAttribute("evaluatedTeachers", result);
+		request.setAttribute("executionYearBean", new ExecutionYearBean(executionYear));
+	}
+
+	private Teacher getLoggedTeacher(HttpServletRequest request) {
+		Person loggedPerson = getLoggedPerson(request);
+		return (loggedPerson != null) ? loggedPerson.getTeacher() : null;
+	}
 }

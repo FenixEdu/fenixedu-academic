@@ -14,17 +14,19 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class PartyContactsForResearcher implements DataProvider {
 
-    public Converter getConverter() {
-	return null;
-    }
+	@Override
+	public Converter getConverter() {
+		return null;
+	}
 
-    public Object provide(Object source, Object currentValue) {
-	Person person = ((Researcher) source).getPerson();
-	List<PartyContact> contacts = new ArrayList<PartyContact>();
-	contacts.addAll(person.getPartyContacts(Phone.class));
-	contacts.addAll(person.getPartyContacts(EmailAddress.class));
-	contacts.addAll(person.getPartyContacts(MobilePhone.class));
-	return contacts;
-    }
+	@Override
+	public Object provide(Object source, Object currentValue) {
+		Person person = ((Researcher) source).getPerson();
+		List<PartyContact> contacts = new ArrayList<PartyContact>();
+		contacts.addAll(person.getPartyContacts(Phone.class));
+		contacts.addAll(person.getPartyContacts(EmailAddress.class));
+		contacts.addAll(person.getPartyContacts(MobilePhone.class));
+		return contacts;
+	}
 
 }

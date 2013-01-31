@@ -15,96 +15,96 @@ import net.sourceforge.fenixedu.domain.grant.contract.GrantContractMovement;
  */
 
 public class InfoGrantContractMovement extends InfoObject {
-    private String location;
+	private String location;
 
-    private Date departureDate;
+	private Date departureDate;
 
-    private Date arrivalDate;
+	private Date arrivalDate;
 
-    private InfoGrantContract infoGrantContract;
+	private InfoGrantContract infoGrantContract;
 
-    /**
-     * @return Returns the arrivalDate.
-     */
-    public Date getArrivalDate() {
-	return this.arrivalDate;
-    }
-
-    /**
-     * @param arrivalDate
-     *            The arrivalDate to set.
-     */
-    public void setArrivalDate(Date arrivalDate) {
-	this.arrivalDate = arrivalDate;
-    }
-
-    /**
-     * @return Returns the departureDate.
-     */
-    public Date getDepartureDate() {
-	return this.departureDate;
-    }
-
-    /**
-     * @param departureDate
-     *            The departureDate to set.
-     */
-    public void setDepartureDate(Date departureDate) {
-	this.departureDate = departureDate;
-    }
-
-    /**
-     * @return Returns the infoGrantContract.
-     */
-    public InfoGrantContract getInfoGrantContract() {
-	return this.infoGrantContract;
-    }
-
-    /**
-     * @param infoGrantContract
-     *            The infoGrantContract to set.
-     */
-    public void setInfoGrantContract(InfoGrantContract infoGrantContract) {
-	this.infoGrantContract = infoGrantContract;
-    }
-
-    /**
-     * @return Returns the location.
-     */
-    public String getLocation() {
-	return this.location;
-    }
-
-    /**
-     * @param location
-     *            The location to set.
-     */
-    public void setLocation(String location) {
-	this.location = location;
-    }
-
-    /**
-     * @param GrantMovement
-     */
-    public void copyFromDomain(GrantContractMovement grantMovement) {
-	super.copyFromDomain(grantMovement);
-	if (grantMovement != null) {
-	    setLocation(grantMovement.getLocation());
-	    setArrivalDate(grantMovement.getArrivalDate());
-	    setDepartureDate(grantMovement.getDepartureDate());
+	/**
+	 * @return Returns the arrivalDate.
+	 */
+	public Date getArrivalDate() {
+		return this.arrivalDate;
 	}
-    }
 
-    /**
-     * @param GrantMovement
-     * @return
-     */
-    public static InfoGrantContractMovement newInfoFromDomain(GrantContractMovement grantMovement) {
-	InfoGrantContractMovement infoGrantMovement = null;
-	if (grantMovement != null) {
-	    infoGrantMovement = new InfoGrantContractMovement();
-	    infoGrantMovement.copyFromDomain(grantMovement);
+	/**
+	 * @param arrivalDate
+	 *            The arrivalDate to set.
+	 */
+	public void setArrivalDate(Date arrivalDate) {
+		this.arrivalDate = arrivalDate;
 	}
-	return infoGrantMovement;
-    }
+
+	/**
+	 * @return Returns the departureDate.
+	 */
+	public Date getDepartureDate() {
+		return this.departureDate;
+	}
+
+	/**
+	 * @param departureDate
+	 *            The departureDate to set.
+	 */
+	public void setDepartureDate(Date departureDate) {
+		this.departureDate = departureDate;
+	}
+
+	/**
+	 * @return Returns the infoGrantContract.
+	 */
+	public InfoGrantContract getInfoGrantContract() {
+		return this.infoGrantContract;
+	}
+
+	/**
+	 * @param infoGrantContract
+	 *            The infoGrantContract to set.
+	 */
+	public void setInfoGrantContract(InfoGrantContract infoGrantContract) {
+		this.infoGrantContract = infoGrantContract;
+	}
+
+	/**
+	 * @return Returns the location.
+	 */
+	public String getLocation() {
+		return this.location;
+	}
+
+	/**
+	 * @param location
+	 *            The location to set.
+	 */
+	public void setLocation(String location) {
+		this.location = location;
+	}
+
+	/**
+	 * @param GrantMovement
+	 */
+	public void copyFromDomain(GrantContractMovement grantMovement) {
+		super.copyFromDomain(grantMovement);
+		if (grantMovement != null) {
+			setLocation(grantMovement.getLocation());
+			setArrivalDate(grantMovement.getArrivalDate());
+			setDepartureDate(grantMovement.getDepartureDate());
+		}
+	}
+
+	/**
+	 * @param GrantMovement
+	 * @return
+	 */
+	public static InfoGrantContractMovement newInfoFromDomain(GrantContractMovement grantMovement) {
+		InfoGrantContractMovement infoGrantMovement = null;
+		if (grantMovement != null) {
+			infoGrantMovement = new InfoGrantContractMovement();
+			infoGrantMovement.copyFromDomain(grantMovement);
+		}
+		return infoGrantMovement;
+	}
 }

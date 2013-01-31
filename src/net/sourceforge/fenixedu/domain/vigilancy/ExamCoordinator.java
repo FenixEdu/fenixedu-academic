@@ -16,106 +16,106 @@ import org.joda.time.DateTime;
 
 public class ExamCoordinator extends ExamCoordinator_Base {
 
-    public ExamCoordinator() {
-	super();
-	setRootDomainObject(RootDomainObject.getInstance());
-    }
-
-    private ExamCoordinator(Person person) {
-	this();
-	this.setPerson(person);
-    }
-
-    public ExamCoordinator(Person person, ExecutionYear executionYear, Unit unit) {
-	this(person);
-	this.setExecutionYear(executionYear);
-	this.setUnit(unit);
-	this.setAllowedToCreateGroups(true);
-    }
-
-    public String getEmail() {
-	return this.getPerson().getEmail();
-    }
-
-    public List<Vigilancy> getConvokesThatCanManage() {
-	List<VigilantGroup> groups = this.getVigilantGroups();
-	Set<Vigilancy> convokes = new HashSet<Vigilancy>();
-
-	for (VigilantGroup group : groups) {
-	    convokes.addAll(group.getVigilancies());
+	public ExamCoordinator() {
+		super();
+		setRootDomainObject(RootDomainObject.getInstance());
 	}
 
-	return new ArrayList<Vigilancy>(convokes);
-    }
-
-    public List<UnavailablePeriod> getUnavailablePeriodsThatCanManage() {
-	Set<UnavailablePeriod> unavailablePeriods = new HashSet<UnavailablePeriod>();
-	for (VigilantGroup group : this.getVigilantGroups()) {
-	    unavailablePeriods.addAll(group.getUnavailablePeriodsOfVigilantsInGroup());
-	}
-	return new ArrayList<UnavailablePeriod>(unavailablePeriods);
-    }
-
-    public List<VigilantWrapper> getVigilantsThatCanManage() {
-	List<VigilantWrapper> vigilants = new ArrayList<VigilantWrapper>();
-	List<VigilantGroup> groups = this.getVigilantGroups();
-
-	for (VigilantGroup group : groups) {
-	    vigilants.addAll(group.getVigilantWrappers());
+	private ExamCoordinator(Person person) {
+		this();
+		this.setPerson(person);
 	}
 
-	return new ArrayList<VigilantWrapper>(vigilants);
-    }
-
-    public Boolean isAllowedToCreateGroups() {
-	return this.getAllowedToCreateGroups();
-    }
-
-    public boolean managesGivenVigilantGroup(VigilantGroup group) {
-	List<VigilantGroup> groups = this.getVigilantGroups();
-	return groups.contains(group);
-    }
-
-    public List<ExecutionCourse> getAssociatedExecutionCourses() {
-	List<ExecutionCourse> courses = new ArrayList<ExecutionCourse>();
-	for (VigilantGroup group : this.getVigilantGroups()) {
-	    courses.addAll(group.getExecutionCourses());
+	public ExamCoordinator(Person person, ExecutionYear executionYear, Unit unit) {
+		this(person);
+		this.setExecutionYear(executionYear);
+		this.setUnit(unit);
+		this.setAllowedToCreateGroups(true);
 	}
-	return courses;
-    }
 
-    public List<WrittenEvaluation> getAssociatedWrittenEvaluations() {
-	List<VigilantGroup> groups = this.getVigilantGroups();
-	Set<WrittenEvaluation> evaluations = new HashSet<WrittenEvaluation>();
-	for (VigilantGroup group : groups) {
-	    evaluations.addAll(group.getAllAssociatedWrittenEvaluations());
+	public String getEmail() {
+		return this.getPerson().getEmail();
 	}
-	return new ArrayList<WrittenEvaluation>(evaluations);
-    }
 
-    public List<WrittenEvaluation> getAssociatedWrittenEvaluationsAfterDate(DateTime date) {
-	List<VigilantGroup> groups = this.getVigilantGroups();
-	Set<WrittenEvaluation> evaluations = new HashSet<WrittenEvaluation>();
-	for (VigilantGroup group : groups) {
-	    evaluations.addAll(group.getWrittenEvaluationsAfterDate(date));
+	public List<Vigilancy> getConvokesThatCanManage() {
+		List<VigilantGroup> groups = this.getVigilantGroups();
+		Set<Vigilancy> convokes = new HashSet<Vigilancy>();
+
+		for (VigilantGroup group : groups) {
+			convokes.addAll(group.getVigilancies());
+		}
+
+		return new ArrayList<Vigilancy>(convokes);
 	}
-	return new ArrayList<WrittenEvaluation>(evaluations);
-    }
 
-    public List<WrittenEvaluation> getAssociatedWrittenEvaluationsBeforeDate(DateTime date) {
-	List<VigilantGroup> groups = this.getVigilantGroups();
-	Set<WrittenEvaluation> evaluations = new HashSet<WrittenEvaluation>();
-	for (VigilantGroup group : groups) {
-	    evaluations.addAll(group.getWrittenEvaluationsBeforeDate(date));
+	public List<UnavailablePeriod> getUnavailablePeriodsThatCanManage() {
+		Set<UnavailablePeriod> unavailablePeriods = new HashSet<UnavailablePeriod>();
+		for (VigilantGroup group : this.getVigilantGroups()) {
+			unavailablePeriods.addAll(group.getUnavailablePeriodsOfVigilantsInGroup());
+		}
+		return new ArrayList<UnavailablePeriod>(unavailablePeriods);
 	}
-	return new ArrayList<WrittenEvaluation>(evaluations);
-    }
 
-    public void delete() {
-	removeUnit();
-	removeRootDomainObject();
-	removePerson();
-	removeExecutionYear();
-	super.deleteDomainObject();
-    }
+	public List<VigilantWrapper> getVigilantsThatCanManage() {
+		List<VigilantWrapper> vigilants = new ArrayList<VigilantWrapper>();
+		List<VigilantGroup> groups = this.getVigilantGroups();
+
+		for (VigilantGroup group : groups) {
+			vigilants.addAll(group.getVigilantWrappers());
+		}
+
+		return new ArrayList<VigilantWrapper>(vigilants);
+	}
+
+	public Boolean isAllowedToCreateGroups() {
+		return this.getAllowedToCreateGroups();
+	}
+
+	public boolean managesGivenVigilantGroup(VigilantGroup group) {
+		List<VigilantGroup> groups = this.getVigilantGroups();
+		return groups.contains(group);
+	}
+
+	public List<ExecutionCourse> getAssociatedExecutionCourses() {
+		List<ExecutionCourse> courses = new ArrayList<ExecutionCourse>();
+		for (VigilantGroup group : this.getVigilantGroups()) {
+			courses.addAll(group.getExecutionCourses());
+		}
+		return courses;
+	}
+
+	public List<WrittenEvaluation> getAssociatedWrittenEvaluations() {
+		List<VigilantGroup> groups = this.getVigilantGroups();
+		Set<WrittenEvaluation> evaluations = new HashSet<WrittenEvaluation>();
+		for (VigilantGroup group : groups) {
+			evaluations.addAll(group.getAllAssociatedWrittenEvaluations());
+		}
+		return new ArrayList<WrittenEvaluation>(evaluations);
+	}
+
+	public List<WrittenEvaluation> getAssociatedWrittenEvaluationsAfterDate(DateTime date) {
+		List<VigilantGroup> groups = this.getVigilantGroups();
+		Set<WrittenEvaluation> evaluations = new HashSet<WrittenEvaluation>();
+		for (VigilantGroup group : groups) {
+			evaluations.addAll(group.getWrittenEvaluationsAfterDate(date));
+		}
+		return new ArrayList<WrittenEvaluation>(evaluations);
+	}
+
+	public List<WrittenEvaluation> getAssociatedWrittenEvaluationsBeforeDate(DateTime date) {
+		List<VigilantGroup> groups = this.getVigilantGroups();
+		Set<WrittenEvaluation> evaluations = new HashSet<WrittenEvaluation>();
+		for (VigilantGroup group : groups) {
+			evaluations.addAll(group.getWrittenEvaluationsBeforeDate(date));
+		}
+		return new ArrayList<WrittenEvaluation>(evaluations);
+	}
+
+	public void delete() {
+		removeUnit();
+		removeRootDomainObject();
+		removePerson();
+		removeExecutionYear();
+		super.deleteDomainObject();
+	}
 }

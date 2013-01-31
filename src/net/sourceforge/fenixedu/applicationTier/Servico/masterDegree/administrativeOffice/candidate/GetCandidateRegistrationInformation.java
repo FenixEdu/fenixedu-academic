@@ -17,36 +17,36 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class GetCandidateRegistrationInformation extends FenixService {
 
-    @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
-    @Service
-    public static InfoCandidateRegistration run(Integer candidateID) {
+	@Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
+	@Service
+	public static InfoCandidateRegistration run(Integer candidateID) {
 
-	MasterDegreeCandidate masterDegreeCandidate = rootDomainObject.readMasterDegreeCandidateByOID(candidateID);
+		MasterDegreeCandidate masterDegreeCandidate = rootDomainObject.readMasterDegreeCandidateByOID(candidateID);
 
-	Registration registration = masterDegreeCandidate.getPerson().readStudentByDegreeType(DegreeType.MASTER_DEGREE);
+		Registration registration = masterDegreeCandidate.getPerson().readStudentByDegreeType(DegreeType.MASTER_DEGREE);
 
-	StudentCurricularPlan studentCurricularPlan = null;
-	if (registration != null) {
-	    studentCurricularPlan = registration.getActiveStudentCurricularPlan();
+		StudentCurricularPlan studentCurricularPlan = null;
+		if (registration != null) {
+			studentCurricularPlan = registration.getActiveStudentCurricularPlan();
+		}
+
+		final InfoCandidateRegistration infoCandidateRegistration = new InfoCandidateRegistration();
+
+		infoCandidateRegistration.setInfoMasterDegreeCandidate(InfoMasterDegreeCandidateWithInfoPerson
+				.newInfoFromDomain(masterDegreeCandidate));
+		infoCandidateRegistration
+				.setInfoStudentCurricularPlan(InfoStudentCurricularPlan.newInfoFromDomain(studentCurricularPlan));
+
+		if (studentCurricularPlan.getEnrolmentsCount() == 0) {
+			infoCandidateRegistration.setEnrolments(null);
+
+		} else {
+			infoCandidateRegistration.setEnrolments(new ArrayList());
+			for (final Enrolment enrolment : studentCurricularPlan.getEnrolmentsSet()) {
+				infoCandidateRegistration.getEnrolments().add(InfoEnrolment.newInfoFromDomain(enrolment));
+			}
+		}
+
+		return infoCandidateRegistration;
 	}
-
-	final InfoCandidateRegistration infoCandidateRegistration = new InfoCandidateRegistration();
-
-	infoCandidateRegistration.setInfoMasterDegreeCandidate(InfoMasterDegreeCandidateWithInfoPerson
-		.newInfoFromDomain(masterDegreeCandidate));
-	infoCandidateRegistration
-		.setInfoStudentCurricularPlan(InfoStudentCurricularPlan.newInfoFromDomain(studentCurricularPlan));
-
-	if (studentCurricularPlan.getEnrolmentsCount() == 0) {
-	    infoCandidateRegistration.setEnrolments(null);
-
-	} else {
-	    infoCandidateRegistration.setEnrolments(new ArrayList());
-	    for (final Enrolment enrolment : studentCurricularPlan.getEnrolmentsSet()) {
-		infoCandidateRegistration.getEnrolments().add(InfoEnrolment.newInfoFromDomain(enrolment));
-	    }
-	}
-
-	return infoCandidateRegistration;
-    }
 }

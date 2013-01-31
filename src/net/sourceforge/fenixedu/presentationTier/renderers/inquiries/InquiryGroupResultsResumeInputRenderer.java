@@ -29,102 +29,105 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderKit;
  */
 public class InquiryGroupResultsResumeInputRenderer extends InquiryGroupResultsResumeRenderer {
 
-    private MetaObject metaObject;
+	private MetaObject metaObject;
 
-    public void setMetaObject(MetaObject metaObject) {
-	this.metaObject = metaObject;
-    }
+	public void setMetaObject(MetaObject metaObject) {
+		this.metaObject = metaObject;
+	}
 
-    public MetaObject getMetaObject() {
-	return metaObject;
-    }
-
-    @Override
-    public boolean isShowComments() {
-	return true;
-    }
-
-    @Override
-    protected Layout getLayout(Object object, Class type) {
-	return new InquiryGroupResultLayout(object);
-    }
-
-    private class InquiryGroupResultLayout extends Layout {
-
-	public InquiryGroupResultLayout(Object object) {
+	public MetaObject getMetaObject() {
+		return metaObject;
 	}
 
 	@Override
-	public HtmlComponent createComponent(Object object, Class type) {
-	    return renderComponent(object);
+	public boolean isShowComments() {
+		return true;
 	}
 
 	@Override
-	public String getClasses() {
-	    return getTopClass();
+	protected Layout getLayout(Object object, Class type) {
+		return new InquiryGroupResultLayout(object);
 	}
-    }
 
-    protected HtmlComponent prepareAndRenderScaledGroups(GroupResultsSummaryBean groupResultsSummaryBean) {
-	MetaObject metaObject = MetaObjectFactory.createObject(groupResultsSummaryBean.getQuestionsResults(), RenderKit
-		.getInstance().findSchema("questionResultsSummaryBean.input"));
-	getContext().getViewState().setMetaObject(metaObject);
-	setMetaObject(metaObject);
-	return super.prepareAndRenderScaledGroups(groupResultsSummaryBean);
-    }
+	private class InquiryGroupResultLayout extends Layout {
 
-    @Override
-    protected void renderComments(final HtmlTable mainTable, QuestionResultsSummaryBean questionResultsSummaryBean,
-	    HtmlTableRow row) {
-	if (questionResultsSummaryBean.getResultClassification() != null
-		&& questionResultsSummaryBean.getResultClassification().isMandatoryComment()) {
+		public InquiryGroupResultLayout(Object object) {
+		}
 
-	    MetaSlot metaSlot = getMetaSlot(getMetaObject(), questionResultsSummaryBean);
-	    createCommentsRow(mainTable, row, metaSlot, questionResultsSummaryBean);
+		@Override
+		public HtmlComponent createComponent(Object object, Class type) {
+			return renderComponent(object);
+		}
+
+		@Override
+		public String getClasses() {
+			return getTopClass();
+		}
 	}
-    }
 
-    private MetaSlot getMetaSlot(MetaObject metaObject, QuestionResultsSummaryBean questionResultsSummaryBean) {
-	for (MetaSlot metaSlot : metaObject.getAllSlots()) {
-	    QuestionResultsSummaryBean bean = (QuestionResultsSummaryBean) metaSlot.getMetaObject().getObject();
-	    if (bean.getInquiryQuestion() == questionResultsSummaryBean.getInquiryQuestion()) {
-		return metaSlot;
-	    }
+	@Override
+	protected HtmlComponent prepareAndRenderScaledGroups(GroupResultsSummaryBean groupResultsSummaryBean) {
+		MetaObject metaObject =
+				MetaObjectFactory.createObject(groupResultsSummaryBean.getQuestionsResults(),
+						RenderKit.getInstance().findSchema("questionResultsSummaryBean.input"));
+		getContext().getViewState().setMetaObject(metaObject);
+		setMetaObject(metaObject);
+		return super.prepareAndRenderScaledGroups(groupResultsSummaryBean);
 	}
-	return null;
-    }
 
-    private void createCommentsRow(final HtmlTable mainTable, final HtmlTableRow row, MetaSlot metaSlot,
-	    QuestionResultsSummaryBean questionResultsSummaryBean) {
-	HtmlTableRow commentRow = mainTable.createRow();
-	HtmlTableCell commentCell = commentRow.createCell();
-	commentCell.setColspan(row.getCells().size());
-	commentCell.setClasses("comment");
+	@Override
+	protected void renderComments(final HtmlTable mainTable, QuestionResultsSummaryBean questionResultsSummaryBean,
+			HtmlTableRow row) {
+		if (questionResultsSummaryBean.getResultClassification() != null
+				&& questionResultsSummaryBean.getResultClassification().isMandatoryComment()) {
 
-	HtmlBlockContainer allCommentsBlock = super.createComments(questionResultsSummaryBean);
-
-	HtmlBlockContainer commentBlock = new HtmlBlockContainer();
-	String commentHeader = "Comentário";
-	if (questionResultsSummaryBean.getPersonCategory().equals(ResultPersonCategory.REGENT)
-		&& questionResultsSummaryBean.getQuestionResult().getProfessorship() != null) {
-	    InquiryResultComment resultComment = questionResultsSummaryBean.getQuestionResult().getInquiryResultComment(
-		    questionResultsSummaryBean.getCommentPerson(), ResultPersonCategory.TEACHER);
-	    if (resultComment != null && !StringUtils.isEmpty(resultComment.getComment())) {
-		commentHeader = "Se desejar, pode acrescentar um comentário (opcional)";
-	    }
+			MetaSlot metaSlot = getMetaSlot(getMetaObject(), questionResultsSummaryBean);
+			createCommentsRow(mainTable, row, metaSlot, questionResultsSummaryBean);
+		}
 	}
-	HtmlText commentText = new HtmlText("<p class=\"mbottom05\">" + commentHeader + "</p>");
-	commentText.setEscaped(false);
-	HtmlTextArea commentTextArea = new HtmlTextArea();
-	commentTextArea.setColumns(70);
-	commentTextArea.setRows(5);
-	commentTextArea.setValue(metaSlot.getObject() != null ? metaSlot.getObject().toString() : null);
-	commentTextArea.bind(metaSlot);
 
-	commentBlock.addChild(commentText);
-	commentBlock.addChild(commentTextArea);
+	private MetaSlot getMetaSlot(MetaObject metaObject, QuestionResultsSummaryBean questionResultsSummaryBean) {
+		for (MetaSlot metaSlot : metaObject.getAllSlots()) {
+			QuestionResultsSummaryBean bean = (QuestionResultsSummaryBean) metaSlot.getMetaObject().getObject();
+			if (bean.getInquiryQuestion() == questionResultsSummaryBean.getInquiryQuestion()) {
+				return metaSlot;
+			}
+		}
+		return null;
+	}
 
-	allCommentsBlock.addChild(commentBlock);
-	commentCell.setBody(allCommentsBlock);
-    }
+	private void createCommentsRow(final HtmlTable mainTable, final HtmlTableRow row, MetaSlot metaSlot,
+			QuestionResultsSummaryBean questionResultsSummaryBean) {
+		HtmlTableRow commentRow = mainTable.createRow();
+		HtmlTableCell commentCell = commentRow.createCell();
+		commentCell.setColspan(row.getCells().size());
+		commentCell.setClasses("comment");
+
+		HtmlBlockContainer allCommentsBlock = super.createComments(questionResultsSummaryBean);
+
+		HtmlBlockContainer commentBlock = new HtmlBlockContainer();
+		String commentHeader = "Comentário";
+		if (questionResultsSummaryBean.getPersonCategory().equals(ResultPersonCategory.REGENT)
+				&& questionResultsSummaryBean.getQuestionResult().getProfessorship() != null) {
+			InquiryResultComment resultComment =
+					questionResultsSummaryBean.getQuestionResult().getInquiryResultComment(
+							questionResultsSummaryBean.getCommentPerson(), ResultPersonCategory.TEACHER);
+			if (resultComment != null && !StringUtils.isEmpty(resultComment.getComment())) {
+				commentHeader = "Se desejar, pode acrescentar um comentário (opcional)";
+			}
+		}
+		HtmlText commentText = new HtmlText("<p class=\"mbottom05\">" + commentHeader + "</p>");
+		commentText.setEscaped(false);
+		HtmlTextArea commentTextArea = new HtmlTextArea();
+		commentTextArea.setColumns(70);
+		commentTextArea.setRows(5);
+		commentTextArea.setValue(metaSlot.getObject() != null ? metaSlot.getObject().toString() : null);
+		commentTextArea.bind(metaSlot);
+
+		commentBlock.addChild(commentText);
+		commentBlock.addChild(commentTextArea);
+
+		allCommentsBlock.addChild(commentBlock);
+		commentCell.setBody(allCommentsBlock);
+	}
 }

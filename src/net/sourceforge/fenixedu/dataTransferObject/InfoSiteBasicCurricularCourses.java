@@ -17,69 +17,69 @@ import java.util.List;
  */
 public class InfoSiteBasicCurricularCourses extends DataTranferObject implements ISiteComponent {
 
-    private List basicCurricularCourses;
+	private List basicCurricularCourses;
 
-    private List nonBasicCurricularCourses;
+	private List nonBasicCurricularCourses;
 
-    private InfoDegreeCurricularPlan infoDegreeCurricularPlan;
+	private InfoDegreeCurricularPlan infoDegreeCurricularPlan;
 
-    /**
-     * @return
-     */
-    public List getNonBasicCurricularCourses() {
-	return nonBasicCurricularCourses;
-    }
-
-    public List getBasicCurricularCoursesIds() {
-	Iterator iter = basicCurricularCourses.iterator();
-	List result = new ArrayList();
-	while (iter.hasNext()) {
-	    result.add(((InfoCurricularCourse) iter.next()).getIdInternal());
+	/**
+	 * @return
+	 */
+	public List getNonBasicCurricularCourses() {
+		return nonBasicCurricularCourses;
 	}
-	return result;
-    }
 
-    /**
-     * @param nonBasicCurricularCourses
-     */
-    public void setNonBasicCurricularCourses(List nonBasicCurricularCourses) {
-	this.nonBasicCurricularCourses = nonBasicCurricularCourses;
-    }
+	public List getBasicCurricularCoursesIds() {
+		Iterator iter = basicCurricularCourses.iterator();
+		List result = new ArrayList();
+		while (iter.hasNext()) {
+			result.add(((InfoCurricularCourse) iter.next()).getIdInternal());
+		}
+		return result;
+	}
 
-    /**
-     * @return
-     */
-    public List getBasicCurricularCourses() {
-	return basicCurricularCourses;
-    }
+	/**
+	 * @param nonBasicCurricularCourses
+	 */
+	public void setNonBasicCurricularCourses(List nonBasicCurricularCourses) {
+		this.nonBasicCurricularCourses = nonBasicCurricularCourses;
+	}
 
-    /**
-     * @param curricularCourses
-     */
-    public void setBasicCurricularCourses(List curricularCourses) {
-	this.basicCurricularCourses = curricularCourses;
-	// TODO: uncomment the sort when the test data is fixed
-	// Collections.sort(this.curricularCourses);
-    }
+	/**
+	 * @return
+	 */
+	public List getBasicCurricularCourses() {
+		return basicCurricularCourses;
+	}
 
-    /**
+	/**
+	 * @param curricularCourses
+	 */
+	public void setBasicCurricularCourses(List curricularCourses) {
+		this.basicCurricularCourses = curricularCourses;
+		// TODO: uncomment the sort when the test data is fixed
+		// Collections.sort(this.curricularCourses);
+	}
+
+	/**
      *  
      */
-    public InfoSiteBasicCurricularCourses() {
-    }
+	public InfoSiteBasicCurricularCourses() {
+	}
 
-    /**
-     * @return
-     */
-    public InfoDegreeCurricularPlan getInfoDegreeCurricularPlan() {
-	return infoDegreeCurricularPlan;
-    }
+	/**
+	 * @return
+	 */
+	public InfoDegreeCurricularPlan getInfoDegreeCurricularPlan() {
+		return infoDegreeCurricularPlan;
+	}
 
-    /**
-     * @param plan
-     */
-    public void setInfoDegreeCurricularPlan(InfoDegreeCurricularPlan plan) {
-	infoDegreeCurricularPlan = plan;
-    }
+	/**
+	 * @param plan
+	 */
+	public void setInfoDegreeCurricularPlan(InfoDegreeCurricularPlan plan) {
+		infoDegreeCurricularPlan = plan;
+	}
 
 }

@@ -11,37 +11,39 @@ import net.sourceforge.fenixedu.domain.util.workflow.Operation;
 
 public abstract class CandidacyOperation extends Operation {
 
-    public static Comparator<CandidacyOperation> COMPARATOR_BY_TYPE = new Comparator<CandidacyOperation>() {
-	public int compare(CandidacyOperation leftCandidacyOperation, CandidacyOperation rightCandidacyOperation) {
-	    return leftCandidacyOperation.getType().compareTo(rightCandidacyOperation.getType());
+	public static Comparator<CandidacyOperation> COMPARATOR_BY_TYPE = new Comparator<CandidacyOperation>() {
+		@Override
+		public int compare(CandidacyOperation leftCandidacyOperation, CandidacyOperation rightCandidacyOperation) {
+			return leftCandidacyOperation.getType().compareTo(rightCandidacyOperation.getType());
 
+		}
+	};
+
+	private Candidacy candidacy;
+
+	protected CandidacyOperation(Set<RoleType> roleTypes, Candidacy candidacy) {
+		super(roleTypes);
+		setCandidacy(candidacy);
 	}
-    };
 
-    private Candidacy candidacy;
+	public Candidacy getCandidacy() {
+		return this.candidacy;
+	}
 
-    protected CandidacyOperation(Set<RoleType> roleTypes, Candidacy candidacy) {
-	super(roleTypes);
-	setCandidacy(candidacy);
-    }
+	private void setCandidacy(Candidacy candidacy) {
+		this.candidacy = candidacy;
+	}
 
-    public Candidacy getCandidacy() {
-	return this.candidacy;
-    }
+	@Override
+	public IStateWithOperations getState() {
+		return getCandidacy().getActiveCandidacySituation();
+	}
 
-    private void setCandidacy(Candidacy candidacy) {
-	this.candidacy = candidacy;
-    }
+	@Override
+	public int compareTo(Operation operation) {
+		return ((CandidacyOperation) operation).getType().compareTo(getType());
+	}
 
-    @Override
-    public IStateWithOperations getState() {
-	return getCandidacy().getActiveCandidacySituation();
-    }
-
-    public int compareTo(Operation operation) {
-	return ((CandidacyOperation) operation).getType().compareTo(getType());
-    }
-
-    public abstract CandidacyOperationType getType();
+	public abstract CandidacyOperationType getType();
 
 }

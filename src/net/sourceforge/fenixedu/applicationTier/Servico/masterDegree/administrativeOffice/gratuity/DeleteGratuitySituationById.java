@@ -16,20 +16,20 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class DeleteGratuitySituationById extends FenixService {
 
-    @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
-    @Service
-    public static Boolean run(Integer gratuitySituationID) throws FenixServiceException {
-	GratuitySituation gratuitySituation = rootDomainObject.readGratuitySituationByOID(gratuitySituationID);
-	if (gratuitySituation == null) {
-	    return Boolean.TRUE;
+	@Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
+	@Service
+	public static Boolean run(Integer gratuitySituationID) throws FenixServiceException {
+		GratuitySituation gratuitySituation = rootDomainObject.readGratuitySituationByOID(gratuitySituationID);
+		if (gratuitySituation == null) {
+			return Boolean.TRUE;
+		}
+
+		gratuitySituation.setExemptionPercentage(null);
+		gratuitySituation.setExemptionValue(null);
+		gratuitySituation.setExemptionType(null);
+		gratuitySituation.setExemptionDescription(null);
+
+		return Boolean.TRUE;
 	}
-
-	gratuitySituation.setExemptionPercentage(null);
-	gratuitySituation.setExemptionValue(null);
-	gratuitySituation.setExemptionType(null);
-	gratuitySituation.setExemptionDescription(null);
-
-	return Boolean.TRUE;
-    }
 
 }

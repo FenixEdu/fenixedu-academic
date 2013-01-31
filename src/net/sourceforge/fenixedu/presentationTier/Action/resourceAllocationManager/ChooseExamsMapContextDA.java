@@ -39,152 +39,154 @@ import pt.ist.fenixWebFramework.security.UserView;
  */
 public class ChooseExamsMapContextDA extends FenixContextDispatchAction {
 
-    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-	    throws Exception {
+	public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
 
-	InfoExecutionPeriod infoExecutionPeriod = setExecutionContext(request);
+		InfoExecutionPeriod infoExecutionPeriod = setExecutionContext(request);
 
-	/* Criar o bean de semestres */
-	List semestres = new ArrayList();
-	semestres.add(new LabelValueBean("escolher", ""));
-	semestres.add(new LabelValueBean("1 º", "1"));
-	semestres.add(new LabelValueBean("2 º", "2"));
-	request.setAttribute("semestres", semestres);
+		/* Criar o bean de semestres */
+		List semestres = new ArrayList();
+		semestres.add(new LabelValueBean("escolher", ""));
+		semestres.add(new LabelValueBean("1 º", "1"));
+		semestres.add(new LabelValueBean("2 º", "2"));
+		request.setAttribute("semestres", semestres);
 
-	List curricularYearsList = new ArrayList();
-	curricularYearsList.add("1");
-	curricularYearsList.add("2");
-	curricularYearsList.add("3");
-	curricularYearsList.add("4");
-	curricularYearsList.add("5");
-	request.setAttribute(PresentationConstants.CURRICULAR_YEAR_LIST_KEY, curricularYearsList);
+		List curricularYearsList = new ArrayList();
+		curricularYearsList.add("1");
+		curricularYearsList.add("2");
+		curricularYearsList.add("3");
+		curricularYearsList.add("4");
+		curricularYearsList.add("5");
+		request.setAttribute(PresentationConstants.CURRICULAR_YEAR_LIST_KEY, curricularYearsList);
 
-	/* Cria o form bean com as licenciaturas em execucao. */
+		/* Cria o form bean com as licenciaturas em execucao. */
 
-	List executionDegreeList = ReadExecutionDegreesByExecutionYear.run(infoExecutionPeriod.getInfoExecutionYear());
+		List executionDegreeList = ReadExecutionDegreesByExecutionYear.run(infoExecutionPeriod.getInfoExecutionYear());
 
-	Collections.sort(executionDegreeList, new ComparatorByNameForInfoExecutionDegree());
+		Collections.sort(executionDegreeList, new ComparatorByNameForInfoExecutionDegree());
 
-	List licenciaturas = new ArrayList();
+		List licenciaturas = new ArrayList();
 
-	licenciaturas.add(new LabelValueBean("escolher", ""));
+		licenciaturas.add(new LabelValueBean("escolher", ""));
 
-	Iterator iterator = executionDegreeList.iterator();
+		Iterator iterator = executionDegreeList.iterator();
 
-	int index = 0;
-	while (iterator.hasNext()) {
-	    InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) iterator.next();
-	    String name = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getNome();
+		int index = 0;
+		while (iterator.hasNext()) {
+			InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) iterator.next();
+			String name = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getNome();
 
-	    name = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getDegreeType().toString() + " de " + name;
+			name = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getDegreeType().toString() + " de " + name;
 
-	    name += duplicateInfoDegree(executionDegreeList, infoExecutionDegree) ? "-"
-		    + infoExecutionDegree.getInfoDegreeCurricularPlan().getName() : "";
+			name +=
+					duplicateInfoDegree(executionDegreeList, infoExecutionDegree) ? "-"
+							+ infoExecutionDegree.getInfoDegreeCurricularPlan().getName() : "";
 
-	    licenciaturas.add(new LabelValueBean(name, String.valueOf(index++)));
+			licenciaturas.add(new LabelValueBean(name, String.valueOf(index++)));
+		}
+
+		request.setAttribute(PresentationConstants.INFO_EXECUTION_DEGREE_LIST_KEY, executionDegreeList);
+
+		request.setAttribute(PresentationConstants.DEGREES, licenciaturas);
+
+		return mapping.findForward("chooseExamsMapContext");
 	}
 
-	request.setAttribute(PresentationConstants.INFO_EXECUTION_DEGREE_LIST_KEY, executionDegreeList);
+	public ActionForward choose(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+		DynaActionForm chooseExamContextoForm = (DynaActionForm) form;
 
-	request.setAttribute(PresentationConstants.DEGREES, licenciaturas);
+		String[] selectedCurricularYears = (String[]) chooseExamContextoForm.get("selectedCurricularYears");
 
-	return mapping.findForward("chooseExamsMapContext");
-    }
+		Boolean selectAllCurricularYears = (Boolean) chooseExamContextoForm.get("selectAllCurricularYears");
 
-    public ActionForward choose(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-	    throws Exception {
-	DynaActionForm chooseExamContextoForm = (DynaActionForm) form;
+		if ((selectAllCurricularYears != null) && selectAllCurricularYears.booleanValue()) {
+			String[] allCurricularYears = { "1", "2", "3", "4", "5" };
+			selectedCurricularYears = allCurricularYears;
+		}
 
-	String[] selectedCurricularYears = (String[]) chooseExamContextoForm.get("selectedCurricularYears");
+		List curricularYears = new ArrayList(selectedCurricularYears.length);
+		for (String selectedCurricularYear : selectedCurricularYears) {
+			curricularYears.add(new Integer(selectedCurricularYear));
+			if (selectedCurricularYear.equals("1")) {
+				request.setAttribute(PresentationConstants.CURRICULAR_YEARS_1, "1");
+			}
+			if (selectedCurricularYear.equals("2")) {
+				request.setAttribute(PresentationConstants.CURRICULAR_YEARS_2, "2");
+			}
+			if (selectedCurricularYear.equals("3")) {
+				request.setAttribute(PresentationConstants.CURRICULAR_YEARS_3, "3");
+			}
+			if (selectedCurricularYear.equals("4")) {
+				request.setAttribute(PresentationConstants.CURRICULAR_YEARS_4, "4");
+			}
+			if (selectedCurricularYear.equals("5")) {
+				request.setAttribute(PresentationConstants.CURRICULAR_YEARS_5, "5");
+			}
+		}
 
-	Boolean selectAllCurricularYears = (Boolean) chooseExamContextoForm.get("selectAllCurricularYears");
+		request.setAttribute(PresentationConstants.CURRICULAR_YEARS_LIST, curricularYears);
 
-	if ((selectAllCurricularYears != null) && selectAllCurricularYears.booleanValue()) {
-	    String[] allCurricularYears = { "1", "2", "3", "4", "5" };
-	    selectedCurricularYears = allCurricularYears;
-	}
+		int index = Integer.parseInt((String) chooseExamContextoForm.get("index"));
 
-	List curricularYears = new ArrayList(selectedCurricularYears.length);
-	for (int i = 0; i < selectedCurricularYears.length; i++) {
-	    curricularYears.add(new Integer(selectedCurricularYears[i]));
-	    if (selectedCurricularYears[i].equals("1")) {
-		request.setAttribute(PresentationConstants.CURRICULAR_YEARS_1, "1");
-	    }
-	    if (selectedCurricularYears[i].equals("2")) {
-		request.setAttribute(PresentationConstants.CURRICULAR_YEARS_2, "2");
-	    }
-	    if (selectedCurricularYears[i].equals("3")) {
-		request.setAttribute(PresentationConstants.CURRICULAR_YEARS_3, "3");
-	    }
-	    if (selectedCurricularYears[i].equals("4")) {
-		request.setAttribute(PresentationConstants.CURRICULAR_YEARS_4, "4");
-	    }
-	    if (selectedCurricularYears[i].equals("5")) {
-		request.setAttribute(PresentationConstants.CURRICULAR_YEARS_5, "5");
-	    }
-	}
+		InfoExecutionPeriod infoExecutionPeriod =
+				(InfoExecutionPeriod) request.getAttribute(PresentationConstants.EXECUTION_PERIOD);
 
-	request.setAttribute(PresentationConstants.CURRICULAR_YEARS_LIST, curricularYears);
+		List executionDegreeList = ReadExecutionDegreesByExecutionYear.run(infoExecutionPeriod.getInfoExecutionYear());
+		Collections.sort(executionDegreeList, new ComparatorByNameForInfoExecutionDegree());
+		// ////////
 
-	int index = Integer.parseInt((String) chooseExamContextoForm.get("index"));
+		InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) executionDegreeList.get(index);
 
-	InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request
-		.getAttribute(PresentationConstants.EXECUTION_PERIOD);
+		if (infoExecutionDegree != null) {
+			request.setAttribute(PresentationConstants.EXECUTION_DEGREE, infoExecutionDegree);
+			request.setAttribute(PresentationConstants.EXECUTION_DEGREE_OID, infoExecutionDegree.getIdInternal().toString());
+		} else {
+			return mapping.findForward("Licenciatura execucao inexistente");
+		}
 
-	List executionDegreeList = ReadExecutionDegreesByExecutionYear.run(infoExecutionPeriod.getInfoExecutionYear());
-	Collections.sort(executionDegreeList, new ComparatorByNameForInfoExecutionDegree());
-	// ////////
-
-	InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) executionDegreeList.get(index);
-
-	if (infoExecutionDegree != null) {
-	    request.setAttribute(PresentationConstants.EXECUTION_DEGREE, infoExecutionDegree);
-	    request.setAttribute(PresentationConstants.EXECUTION_DEGREE_OID, infoExecutionDegree.getIdInternal().toString());
-	} else {
-	    return mapping.findForward("Licenciatura execucao inexistente");
-	}
-
-	return mapping.findForward("showExamsMap");
-
-    }
-
-    /**
-     * Method existencesOfInfoDegree.
-     * 
-     * @param executionDegreeList
-     * @param infoExecutionDegree
-     * @return int
-     */
-    private boolean duplicateInfoDegree(List executionDegreeList, InfoExecutionDegree infoExecutionDegree) {
-	InfoDegree infoDegree = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree();
-	Iterator iterator = executionDegreeList.iterator();
-
-	while (iterator.hasNext()) {
-	    InfoExecutionDegree infoExecutionDegree2 = (InfoExecutionDegree) iterator.next();
-	    if (infoDegree.equals(infoExecutionDegree2.getInfoDegreeCurricularPlan().getInfoDegree())
-		    && !(infoExecutionDegree.equals(infoExecutionDegree2)))
-		return true;
+		return mapping.findForward("showExamsMap");
 
 	}
-	return false;
-    }
 
-    /**
-     * Method setExecutionContext.
-     * 
-     * @param request
-     */
-    private InfoExecutionPeriod setExecutionContext(HttpServletRequest request) throws Exception {
+	/**
+	 * Method existencesOfInfoDegree.
+	 * 
+	 * @param executionDegreeList
+	 * @param infoExecutionDegree
+	 * @return int
+	 */
+	private boolean duplicateInfoDegree(List executionDegreeList, InfoExecutionDegree infoExecutionDegree) {
+		InfoDegree infoDegree = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree();
+		Iterator iterator = executionDegreeList.iterator();
 
-	InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request
-		.getAttribute(PresentationConstants.INFO_EXECUTION_PERIOD_KEY);
-	if (infoExecutionPeriod == null) {
-	    IUserView userView = UserView.getUser();
-	    infoExecutionPeriod = ReadCurrentExecutionPeriod.run();
+		while (iterator.hasNext()) {
+			InfoExecutionDegree infoExecutionDegree2 = (InfoExecutionDegree) iterator.next();
+			if (infoDegree.equals(infoExecutionDegree2.getInfoDegreeCurricularPlan().getInfoDegree())
+					&& !(infoExecutionDegree.equals(infoExecutionDegree2))) {
+				return true;
+			}
 
-	    request.setAttribute(PresentationConstants.INFO_EXECUTION_PERIOD_KEY, infoExecutionPeriod);
+		}
+		return false;
 	}
-	return infoExecutionPeriod;
-    }
+
+	/**
+	 * Method setExecutionContext.
+	 * 
+	 * @param request
+	 */
+	private InfoExecutionPeriod setExecutionContext(HttpServletRequest request) throws Exception {
+
+		InfoExecutionPeriod infoExecutionPeriod =
+				(InfoExecutionPeriod) request.getAttribute(PresentationConstants.INFO_EXECUTION_PERIOD_KEY);
+		if (infoExecutionPeriod == null) {
+			IUserView userView = UserView.getUser();
+			infoExecutionPeriod = ReadCurrentExecutionPeriod.run();
+
+			request.setAttribute(PresentationConstants.INFO_EXECUTION_PERIOD_KEY, infoExecutionPeriod);
+		}
+		return infoExecutionPeriod;
+	}
 
 }

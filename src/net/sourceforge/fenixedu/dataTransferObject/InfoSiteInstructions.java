@@ -6,9 +6,10 @@ package net.sourceforge.fenixedu.dataTransferObject;
  */
 public class InfoSiteInstructions extends DataTranferObject implements ISiteComponent {
 
-    public boolean equals(Object objectToCompare) {
+	@Override
+	public boolean equals(Object objectToCompare) {
 
-	return (objectToCompare instanceof InfoSiteInstructions);
+		return (objectToCompare instanceof InfoSiteInstructions);
 
-    }
+	}
 }

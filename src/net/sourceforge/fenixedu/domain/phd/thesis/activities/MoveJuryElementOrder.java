@@ -14,32 +14,32 @@ import pt.utl.ist.fenix.tools.util.Pair;
 
 public class MoveJuryElementOrder extends PhdThesisActivity {
 
-    @Override
-    protected void activityPreConditions(PhdThesisProcess process, IUserView userView) {
+	@Override
+	protected void activityPreConditions(PhdThesisProcess process, IUserView userView) {
 
-	if (!process.isAllowedToManageProcess(userView)) {
-	    throw new PreConditionNotValidException();
-	}
-    }
-
-    @Override
-    @SuppressWarnings("unchecked")
-    protected PhdThesisProcess executeActivity(PhdThesisProcess process, IUserView userView, Object object) {
-
-	final Pair<ThesisJuryElement, Integer> elementInfo = (Pair<ThesisJuryElement, Integer>) object;
-	final List<ThesisJuryElement> elements = new ArrayList<ThesisJuryElement>(process.getOrderedThesisJuryElements());
-
-	int order = elementInfo.getValue().intValue();
-	if (order >= 0 || order < elements.size()) {
-	    elements.remove(elementInfo.getKey());
-	    elements.add(order, elementInfo.getKey());
-
-	    for (int i = 0; i < elements.size(); i++) {
-		elements.get(i).setElementOrder(i + 1);
-	    }
+		if (!process.isAllowedToManageProcess(userView)) {
+			throw new PreConditionNotValidException();
+		}
 	}
 
-	return process;
-    }
+	@Override
+	@SuppressWarnings("unchecked")
+	protected PhdThesisProcess executeActivity(PhdThesisProcess process, IUserView userView, Object object) {
+
+		final Pair<ThesisJuryElement, Integer> elementInfo = (Pair<ThesisJuryElement, Integer>) object;
+		final List<ThesisJuryElement> elements = new ArrayList<ThesisJuryElement>(process.getOrderedThesisJuryElements());
+
+		int order = elementInfo.getValue().intValue();
+		if (order >= 0 || order < elements.size()) {
+			elements.remove(elementInfo.getKey());
+			elements.add(order, elementInfo.getKey());
+
+			for (int i = 0; i < elements.size(); i++) {
+				elements.get(i).setElementOrder(i + 1);
+			}
+		}
+
+		return process;
+	}
 
 }

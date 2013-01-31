@@ -19,126 +19,126 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class AddFinalDegreeWorkProposalCandidacyForGroup extends FenixService {
 
-    @Checked("RolePredicates.STUDENT_PREDICATE")
-    @Service
-    public static Boolean run(final FinalDegreeWorkGroup group, Integer proposalOID) throws FenixServiceException {
-	Proposal proposal = rootDomainObject.readProposalByOID(proposalOID);
-	if (group != null && group.getGroupProposals() != null
-	/* && !CollectionUtils.exists(group.getStudents(), ) */) {
-	    Scheduleing scheduleing = group.getExecutionDegree().getScheduling();
-	    if (scheduleing == null || scheduleing.getMaximumNumberOfProposalCandidaciesPerGroup() == null) {
-		throw new MaximumNumberOfProposalCandidaciesPerGroupUndefinedException();
-	    } else if (scheduleing.getMaximumNumberOfProposalCandidaciesPerGroup().intValue() <= group.getGroupProposals().size()) {
-		throw new MaximumNumberOfProposalCandidaciesPerGroupReachedException(scheduleing
-			.getMaximumNumberOfProposalCandidaciesPerGroup().toString());
-	    }
-	    if (scheduleing == null || scheduleing.getMinimumNumberOfStudents() == null) {
-		throw new MinimumNumberOfStudentsUndefinedException();
-	    } else if (scheduleing.getMinimumNumberOfStudents().intValue() > group.getGroupStudents().size()) {
-		throw new MinimumNumberOfStudentsNotReachedException(scheduleing.getMinimumNumberOfStudents().toString());
-	    }
+	@Checked("RolePredicates.STUDENT_PREDICATE")
+	@Service
+	public static Boolean run(final FinalDegreeWorkGroup group, Integer proposalOID) throws FenixServiceException {
+		Proposal proposal = rootDomainObject.readProposalByOID(proposalOID);
+		if (group != null && group.getGroupProposals() != null
+		/* && !CollectionUtils.exists(group.getStudents(), ) */) {
+			Scheduleing scheduleing = group.getExecutionDegree().getScheduling();
+			if (scheduleing == null || scheduleing.getMaximumNumberOfProposalCandidaciesPerGroup() == null) {
+				throw new MaximumNumberOfProposalCandidaciesPerGroupUndefinedException();
+			} else if (scheduleing.getMaximumNumberOfProposalCandidaciesPerGroup().intValue() <= group.getGroupProposals().size()) {
+				throw new MaximumNumberOfProposalCandidaciesPerGroupReachedException(scheduleing
+						.getMaximumNumberOfProposalCandidaciesPerGroup().toString());
+			}
+			if (scheduleing == null || scheduleing.getMinimumNumberOfStudents() == null) {
+				throw new MinimumNumberOfStudentsUndefinedException();
+			} else if (scheduleing.getMinimumNumberOfStudents().intValue() > group.getGroupStudents().size()) {
+				throw new MinimumNumberOfStudentsNotReachedException(scheduleing.getMinimumNumberOfStudents().toString());
+			}
 
-	    GroupProposal groupProposal = new GroupProposal();
-	    groupProposal.setFinalDegreeWorkProposal(proposal);
-	    groupProposal.setFinalDegreeDegreeWorkGroup(group);
-	    groupProposal.setOrderOfPreference(Integer.valueOf(group.getGroupProposals().size()));
-	    return true;
+			GroupProposal groupProposal = new GroupProposal();
+			groupProposal.setFinalDegreeWorkProposal(proposal);
+			groupProposal.setFinalDegreeDegreeWorkGroup(group);
+			groupProposal.setOrderOfPreference(Integer.valueOf(group.getGroupProposals().size()));
+			return true;
+		}
+
+		return false;
+
 	}
 
-	return false;
+	public static class MaximumNumberOfProposalCandidaciesPerGroupUndefinedException extends FenixServiceException {
 
-    }
+		public MaximumNumberOfProposalCandidaciesPerGroupUndefinedException() {
+			super();
+		}
 
-    public static class MaximumNumberOfProposalCandidaciesPerGroupUndefinedException extends FenixServiceException {
+		public MaximumNumberOfProposalCandidaciesPerGroupUndefinedException(int errorType) {
+			super(errorType);
+		}
 
-	public MaximumNumberOfProposalCandidaciesPerGroupUndefinedException() {
-	    super();
+		public MaximumNumberOfProposalCandidaciesPerGroupUndefinedException(String s) {
+			super(s);
+		}
+
+		public MaximumNumberOfProposalCandidaciesPerGroupUndefinedException(Throwable cause) {
+			super(cause);
+		}
+
+		public MaximumNumberOfProposalCandidaciesPerGroupUndefinedException(String message, Throwable cause) {
+			super(message, cause);
+		}
 	}
 
-	public MaximumNumberOfProposalCandidaciesPerGroupUndefinedException(int errorType) {
-	    super(errorType);
+	public static class MaximumNumberOfProposalCandidaciesPerGroupReachedException extends FenixServiceException {
+
+		public MaximumNumberOfProposalCandidaciesPerGroupReachedException() {
+			super();
+		}
+
+		public MaximumNumberOfProposalCandidaciesPerGroupReachedException(int errorType) {
+			super(errorType);
+		}
+
+		public MaximumNumberOfProposalCandidaciesPerGroupReachedException(String s) {
+			super(s);
+		}
+
+		public MaximumNumberOfProposalCandidaciesPerGroupReachedException(Throwable cause) {
+			super(cause);
+		}
+
+		public MaximumNumberOfProposalCandidaciesPerGroupReachedException(String message, Throwable cause) {
+			super(message, cause);
+		}
 	}
 
-	public MaximumNumberOfProposalCandidaciesPerGroupUndefinedException(String s) {
-	    super(s);
+	public static class MinimumNumberOfStudentsUndefinedException extends FenixServiceException {
+
+		public MinimumNumberOfStudentsUndefinedException() {
+			super();
+		}
+
+		public MinimumNumberOfStudentsUndefinedException(int errorType) {
+			super(errorType);
+		}
+
+		public MinimumNumberOfStudentsUndefinedException(String s) {
+			super(s);
+		}
+
+		public MinimumNumberOfStudentsUndefinedException(Throwable cause) {
+			super(cause);
+		}
+
+		public MinimumNumberOfStudentsUndefinedException(String message, Throwable cause) {
+			super(message, cause);
+		}
 	}
 
-	public MaximumNumberOfProposalCandidaciesPerGroupUndefinedException(Throwable cause) {
-	    super(cause);
+	public static class MinimumNumberOfStudentsNotReachedException extends FenixServiceException {
+
+		public MinimumNumberOfStudentsNotReachedException() {
+			super();
+		}
+
+		public MinimumNumberOfStudentsNotReachedException(int errorType) {
+			super(errorType);
+		}
+
+		public MinimumNumberOfStudentsNotReachedException(String s) {
+			super(s);
+		}
+
+		public MinimumNumberOfStudentsNotReachedException(Throwable cause) {
+			super(cause);
+		}
+
+		public MinimumNumberOfStudentsNotReachedException(String message, Throwable cause) {
+			super(message, cause);
+		}
 	}
-
-	public MaximumNumberOfProposalCandidaciesPerGroupUndefinedException(String message, Throwable cause) {
-	    super(message, cause);
-	}
-    }
-
-    public static class MaximumNumberOfProposalCandidaciesPerGroupReachedException extends FenixServiceException {
-
-	public MaximumNumberOfProposalCandidaciesPerGroupReachedException() {
-	    super();
-	}
-
-	public MaximumNumberOfProposalCandidaciesPerGroupReachedException(int errorType) {
-	    super(errorType);
-	}
-
-	public MaximumNumberOfProposalCandidaciesPerGroupReachedException(String s) {
-	    super(s);
-	}
-
-	public MaximumNumberOfProposalCandidaciesPerGroupReachedException(Throwable cause) {
-	    super(cause);
-	}
-
-	public MaximumNumberOfProposalCandidaciesPerGroupReachedException(String message, Throwable cause) {
-	    super(message, cause);
-	}
-    }
-
-    public static class MinimumNumberOfStudentsUndefinedException extends FenixServiceException {
-
-	public MinimumNumberOfStudentsUndefinedException() {
-	    super();
-	}
-
-	public MinimumNumberOfStudentsUndefinedException(int errorType) {
-	    super(errorType);
-	}
-
-	public MinimumNumberOfStudentsUndefinedException(String s) {
-	    super(s);
-	}
-
-	public MinimumNumberOfStudentsUndefinedException(Throwable cause) {
-	    super(cause);
-	}
-
-	public MinimumNumberOfStudentsUndefinedException(String message, Throwable cause) {
-	    super(message, cause);
-	}
-    }
-
-    public static class MinimumNumberOfStudentsNotReachedException extends FenixServiceException {
-
-	public MinimumNumberOfStudentsNotReachedException() {
-	    super();
-	}
-
-	public MinimumNumberOfStudentsNotReachedException(int errorType) {
-	    super(errorType);
-	}
-
-	public MinimumNumberOfStudentsNotReachedException(String s) {
-	    super(s);
-	}
-
-	public MinimumNumberOfStudentsNotReachedException(Throwable cause) {
-	    super(cause);
-	}
-
-	public MinimumNumberOfStudentsNotReachedException(String message, Throwable cause) {
-	    super(message, cause);
-	}
-    }
 
 }

@@ -7,19 +7,19 @@ import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 public abstract class Form implements Serializable {
 
-    public abstract List<LabelFormatter> validate();
+	public abstract List<LabelFormatter> validate();
 
-    public abstract String getFormName();
+	public abstract String getFormName();
 
-    public String getSchemaName() {
-	return getClass().getSimpleName();
-    }
+	public String getSchemaName() {
+		return getClass().getSimpleName();
+	}
 
-    public String getFormDescription() {
-	return "";
-    }
+	public String getFormDescription() {
+		return "";
+	}
 
-    public boolean isInput() {
-	return true;
-    }
+	public boolean isInput() {
+		return true;
+	}
 }

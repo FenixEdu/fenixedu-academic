@@ -4,14 +4,14 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 
 public abstract class TeacherServiceItem extends TeacherServiceItem_Base {
 
-    public TeacherServiceItem() {
-	super();
-	setRootDomainObject(RootDomainObject.getInstance());
-    }
+	public TeacherServiceItem() {
+		super();
+		setRootDomainObject(RootDomainObject.getInstance());
+	}
 
-    public void delete() {
-	removeTeacherService();
-	removeRootDomainObject();
-	deleteDomainObject();
-    }
+	public void delete() {
+		removeTeacherService();
+		removeRootDomainObject();
+		deleteDomainObject();
+	}
 }

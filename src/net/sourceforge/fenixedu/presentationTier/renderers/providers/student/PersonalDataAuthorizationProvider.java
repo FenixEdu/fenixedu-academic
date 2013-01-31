@@ -7,11 +7,13 @@ import pt.ist.fenixWebFramework.renderers.converters.EnumConverter;
 
 public class PersonalDataAuthorizationProvider implements DataProvider {
 
-    public Object provide(Object source, Object currentValue) {
-	return StudentPersonalDataAuthorizationChoice.getGeneralPersonalDataAuthorizationsTypes();
-    }
+	@Override
+	public Object provide(Object source, Object currentValue) {
+		return StudentPersonalDataAuthorizationChoice.getGeneralPersonalDataAuthorizationsTypes();
+	}
 
-    public Converter getConverter() {
-	return new EnumConverter();
-    }
+	@Override
+	public Converter getConverter() {
+		return new EnumConverter();
+	}
 }

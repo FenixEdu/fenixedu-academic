@@ -9,24 +9,25 @@ import net.sourceforge.fenixedu.injectionCode.AccessControlPredicate;
 
 public class RegistrationPredicates {
 
-    public static final AccessControlPredicate<Registration> TRANSIT_TO_BOLONHA = new AccessControlPredicate<Registration>() {
-	@Override
-	public boolean evaluate(final Registration registration) {
-	    return AccessControl.getPerson().hasRole(RoleType.MANAGER);
+	public static final AccessControlPredicate<Registration> TRANSIT_TO_BOLONHA = new AccessControlPredicate<Registration>() {
+		@Override
+		public boolean evaluate(final Registration registration) {
+			return AccessControl.getPerson().hasRole(RoleType.MANAGER);
+		};
 	};
-    };
 
-    public static final AccessControlPredicate<Registration> MANAGE_CONCLUSION_PROCESS = new AccessControlPredicate<Registration>() {
+	public static final AccessControlPredicate<Registration> MANAGE_CONCLUSION_PROCESS =
+			new AccessControlPredicate<Registration>() {
 
-	@Override
-	public boolean evaluate(final Registration registration) {
-	    if (AccessControl.getPerson().hasRole(RoleType.MANAGER)) {
-		return true;
-	    }
+				@Override
+				public boolean evaluate(final Registration registration) {
+					if (AccessControl.getPerson().hasRole(RoleType.MANAGER)) {
+						return true;
+					}
 
-	    return AcademicAuthorizationGroup.getProgramsForOperation(AccessControl.getPerson(),
-		    AcademicOperationType.MANAGE_CONCLUSION).contains(registration.getDegree());
-	}
-    };
+					return AcademicAuthorizationGroup.getProgramsForOperation(AccessControl.getPerson(),
+							AcademicOperationType.MANAGE_CONCLUSION).contains(registration.getDegree());
+				}
+			};
 
 }

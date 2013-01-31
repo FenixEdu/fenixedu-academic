@@ -20,16 +20,16 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class ReadExecutionDegreesByExecutionYearAndDegree extends FenixService {
 
-    @Service
-    public static List<InfoExecutionDegree> run(Degree curso, ExecutionYear year) {
-	List<InfoExecutionDegree> result = new ArrayList<InfoExecutionDegree>();
+	@Service
+	public static List<InfoExecutionDegree> run(Degree curso, ExecutionYear year) {
+		List<InfoExecutionDegree> result = new ArrayList<InfoExecutionDegree>();
 
-	List<ExecutionDegree> executionDegrees = ExecutionDegree.getAllByDegreeAndExecutionYear(curso, year.getYear());
-	for (ExecutionDegree executionDegree : executionDegrees) {
-	    result.add(InfoExecutionDegree.newInfoFromDomain(executionDegree));
+		List<ExecutionDegree> executionDegrees = ExecutionDegree.getAllByDegreeAndExecutionYear(curso, year.getYear());
+		for (ExecutionDegree executionDegree : executionDegrees) {
+			result.add(InfoExecutionDegree.newInfoFromDomain(executionDegree));
+		}
+
+		return result;
 	}
-
-	return result;
-    }
 
 }

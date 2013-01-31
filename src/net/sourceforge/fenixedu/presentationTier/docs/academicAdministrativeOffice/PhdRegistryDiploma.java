@@ -5,21 +5,21 @@ import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.IDocumen
 
 public class PhdRegistryDiploma extends RegistryDiploma {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    protected PhdRegistryDiploma(IDocumentRequest documentRequest) {
-	super(documentRequest);
-    }
+	protected PhdRegistryDiploma(IDocumentRequest documentRequest) {
+		super(documentRequest);
+	}
 
-    @Override
-    protected PhdRegistryDiplomaRequest getDocumentRequest() {
-	return (PhdRegistryDiplomaRequest) super.getDocumentRequest();
-    }
+	@Override
+	protected PhdRegistryDiplomaRequest getDocumentRequest() {
+		return (PhdRegistryDiplomaRequest) super.getDocumentRequest();
+	}
 
-    @Override
-    protected void fillReport() {
-	super.fillReport();
-	addParameter("thesisTitle", getDocumentRequest().getPhdIndividualProgramProcess().getThesisTitle());
-    }
+	@Override
+	protected void fillReport() {
+		super.fillReport();
+		addParameter("thesisTitle", getDocumentRequest().getPhdIndividualProgramProcess().getThesisTitle());
+	}
 
 }

@@ -13,24 +13,18 @@ import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.pstm.AbstractDomainObject;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(path = "/retrievePersonalPhoto", module = "publico")
 public class PhotographRetrievalOnPublicSpaceDA extends RetrievePersonalPhotoAction {
-    public ActionForward retrievePhotographOnPublicSpace(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) {
-	Person person = AbstractDomainObject.fromExternalId(request.getParameter("personId"));
-	return retrievePhotograph(request, response, person);
-    }
+	public ActionForward retrievePhotographOnPublicSpace(ActionMapping mapping, ActionForm actionForm,
+			HttpServletRequest request, HttpServletResponse response) {
+		Person person = AbstractDomainObject.fromExternalId(request.getParameter("personId"));
+		return retrievePhotograph(request, response, person);
+	}
 
-    public ActionForward retrieveByIstId(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) {
-	User user = User.readUserByUserUId(request.getParameter("istId"));
-	return retrievePhotograph(request, response, user.getPerson());
-    }
+	public ActionForward retrieveByIstId(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) {
+		User user = User.readUserByUserUId(request.getParameter("istId"));
+		return retrievePhotograph(request, response, user.getPerson());
+	}
 }

@@ -5,10 +5,10 @@ import net.sourceforge.fenixedu.domain.ExecutionSemester;
 
 public class InquiryCoordinatorAnswer extends InquiryCoordinatorAnswer_Base {
 
-    public InquiryCoordinatorAnswer(ExecutionDegree executionDegree, ExecutionSemester executionSemester) {
-	super();
-	setExecutionDegree(executionDegree);
-	setExecutionSemester(executionSemester);
-    }
+	public InquiryCoordinatorAnswer(ExecutionDegree executionDegree, ExecutionSemester executionSemester) {
+		super();
+		setExecutionDegree(executionDegree);
+		setExecutionSemester(executionSemester);
+	}
 
 }

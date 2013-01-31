@@ -6,17 +6,17 @@ import org.apache.struts.action.ActionForm;
 
 public final class TestForm extends ActionForm {
 
-    public TestForm() {
-	super();
-    }
+	public TestForm() {
+		super();
+	}
 
-    private Response[] question;
+	private Response[] question;
 
-    public Response[] getQuestion() {
-	return question;
-    }
+	public Response[] getQuestion() {
+		return question;
+	}
 
-    public void setQuestion(Response[] op) {
-	this.question = op;
-    }
+	public void setQuestion(Response[] op) {
+		this.question = op;
+	}
 }

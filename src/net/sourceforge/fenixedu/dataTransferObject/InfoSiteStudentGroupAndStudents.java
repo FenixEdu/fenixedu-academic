@@ -12,35 +12,35 @@ import java.util.List;
  */
 public class InfoSiteStudentGroupAndStudents extends DataTranferObject implements ISiteComponent {
 
-    private List infoSiteStudentsAndShiftByStudentGroupList;
-    private InfoSiteShiftsAndGroups infoSiteShiftsAndGroups;
+	private List infoSiteStudentsAndShiftByStudentGroupList;
+	private InfoSiteShiftsAndGroups infoSiteShiftsAndGroups;
 
-    /**
-     * @return
-     */
-    public List getInfoSiteStudentsAndShiftByStudentGroupList() {
-	return infoSiteStudentsAndShiftByStudentGroupList;
-    }
+	/**
+	 * @return
+	 */
+	public List getInfoSiteStudentsAndShiftByStudentGroupList() {
+		return infoSiteStudentsAndShiftByStudentGroupList;
+	}
 
-    /**
-     * @param list
-     */
-    public void setInfoSiteStudentsAndShiftByStudentGroupList(List infoSiteStudentsAndShiftByStudentGroupList) {
-	this.infoSiteStudentsAndShiftByStudentGroupList = infoSiteStudentsAndShiftByStudentGroupList;
-    }
+	/**
+	 * @param list
+	 */
+	public void setInfoSiteStudentsAndShiftByStudentGroupList(List infoSiteStudentsAndShiftByStudentGroupList) {
+		this.infoSiteStudentsAndShiftByStudentGroupList = infoSiteStudentsAndShiftByStudentGroupList;
+	}
 
-    /**
-     * @return
-     */
-    public InfoSiteShiftsAndGroups getInfoSiteShiftsAndGroups() {
-	return infoSiteShiftsAndGroups;
-    }
+	/**
+	 * @return
+	 */
+	public InfoSiteShiftsAndGroups getInfoSiteShiftsAndGroups() {
+		return infoSiteShiftsAndGroups;
+	}
 
-    /**
-     * @param list
-     */
-    public void setInfoSiteShiftsAndGroups(InfoSiteShiftsAndGroups infoSiteShiftsAndGroups) {
-	this.infoSiteShiftsAndGroups = infoSiteShiftsAndGroups;
-    }
+	/**
+	 * @param list
+	 */
+	public void setInfoSiteShiftsAndGroups(InfoSiteShiftsAndGroups infoSiteShiftsAndGroups) {
+		this.infoSiteShiftsAndGroups = infoSiteShiftsAndGroups;
+	}
 
 }

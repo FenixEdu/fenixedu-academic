@@ -15,35 +15,35 @@ import org.joda.time.LocalDate;
 
 public class ExemptPublicPresentationSeminarComission extends PhdIndividualProgramProcessActivity {
 
-    @Override
-    protected void activityPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
-	if (process.hasSeminarProcess() || process.getActiveState() != PhdIndividualProgramProcessState.WORK_DEVELOPMENT) {
-	    throw new PreConditionNotValidException();
+	@Override
+	protected void activityPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
+		if (process.hasSeminarProcess() || process.getActiveState() != PhdIndividualProgramProcessState.WORK_DEVELOPMENT) {
+			throw new PreConditionNotValidException();
+		}
 	}
-    }
 
-    @Override
-    protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView, Object object) {
-	PublicPresentationSeminarProcessBean bean = (PublicPresentationSeminarProcessBean) object;
-	bean.setPresentationRequestDate(new LocalDate());
-	bean.setPhdIndividualProgramProcess(process);
+	@Override
+	protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView, Object object) {
+		PublicPresentationSeminarProcessBean bean = (PublicPresentationSeminarProcessBean) object;
+		bean.setPresentationRequestDate(new LocalDate());
+		bean.setPhdIndividualProgramProcess(process);
 
-	final PublicPresentationSeminarProcess seminarProcess = Process.createNewProcess(userView,
-		PublicPresentationSeminarProcess.class, object);
+		final PublicPresentationSeminarProcess seminarProcess =
+				Process.createNewProcess(userView, PublicPresentationSeminarProcess.class, object);
 
-	seminarProcess.createState(PublicPresentationSeminarProcessStateType.EXEMPTED, userView.getPerson(), "");
+		seminarProcess.createState(PublicPresentationSeminarProcessStateType.EXEMPTED, userView.getPerson(), "");
 
-	discardPublicSeminarAlerts(process);
+		discardPublicSeminarAlerts(process);
 
-	return process;
-    }
-
-    private void discardPublicSeminarAlerts(final PhdIndividualProgramProcess process) {
-	for (final PhdAlert alert : process.getActiveAlerts()) {
-	    if (alert instanceof PhdPublicPresentationSeminarAlert) {
-		alert.discard();
-	    }
+		return process;
 	}
-    }
+
+	private void discardPublicSeminarAlerts(final PhdIndividualProgramProcess process) {
+		for (final PhdAlert alert : process.getActiveAlerts()) {
+			if (alert instanceof PhdPublicPresentationSeminarAlert) {
+				alert.discard();
+			}
+		}
+	}
 
 }

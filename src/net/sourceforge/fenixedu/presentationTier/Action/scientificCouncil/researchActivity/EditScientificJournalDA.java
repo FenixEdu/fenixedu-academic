@@ -21,23 +21,23 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 public class EditScientificJournalDA extends EditResearchActivityDA {
 
-    @Override
-    protected List getObjects() {
-	List<ScientificJournal> scientificJournals = new ArrayList<ScientificJournal>(rootDomainObject.getScientificJournals());
-	Collections.sort(scientificJournals, new BeanComparator("name", Collator.getInstance()));
-	return scientificJournals;
-    }
+	@Override
+	protected List getObjects() {
+		List<ScientificJournal> scientificJournals = new ArrayList<ScientificJournal>(rootDomainObject.getScientificJournals());
+		Collections.sort(scientificJournals, new BeanComparator("name", Collator.getInstance()));
+		return scientificJournals;
+	}
 
-    public ActionForward prepareChooseJournalIssueToMerge(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
-	PageContainerBean pageContainerBean = getRenderedObject("pageContainerBean");
-	RenderUtils.invalidateViewState();
+	public ActionForward prepareChooseJournalIssueToMerge(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) {
+		PageContainerBean pageContainerBean = getRenderedObject("pageContainerBean");
+		RenderUtils.invalidateViewState();
 
-	MergeJournalIssuePageContainerBean mergeJournalIssuePageContainerBean = new MergeJournalIssuePageContainerBean(
-		(ScientificJournal) pageContainerBean.getSelected());
-	request.setAttribute("mergeBean", mergeJournalIssuePageContainerBean);
+		MergeJournalIssuePageContainerBean mergeJournalIssuePageContainerBean =
+				new MergeJournalIssuePageContainerBean((ScientificJournal) pageContainerBean.getSelected());
+		request.setAttribute("mergeBean", mergeJournalIssuePageContainerBean);
 
-	return mapping.findForward("prepareChooseJournalIssueToMerge");
-    }
+		return mapping.findForward("prepareChooseJournalIssueToMerge");
+	}
 
 }

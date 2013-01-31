@@ -20,50 +20,50 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadCurriculumByCurricularCourseCode extends FenixService {
 
-    @Service
-    public static InfoCurriculum run(final Integer curricularCourseCode) throws FenixServiceException {
+	@Service
+	public static InfoCurriculum run(final Integer curricularCourseCode) throws FenixServiceException {
 
-	if (curricularCourseCode == null) {
-	    throw new FenixServiceException("nullCurricularCourse");
+		if (curricularCourseCode == null) {
+			throw new FenixServiceException("nullCurricularCourse");
+		}
+
+		final CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(curricularCourseCode);
+		if (curricularCourse == null) {
+			throw new NonExistingServiceException();
+		}
+
+		final Curriculum curriculum = curricularCourse.findLatestCurriculum();
+		final InfoCurriculum infoCurriculum =
+				(curriculum != null) ? InfoCurriculum.newInfoFromDomain(curriculum) : new InfoCurriculum();
+		infoCurriculum.setInfoCurricularCourse(InfoCurricularCourse.newInfoFromDomain(curricularCourse));
+
+		List infoExecutionCourses = buildExecutionCourses(curricularCourse);
+		infoCurriculum.getInfoCurricularCourse().setInfoAssociatedExecutionCourses(infoExecutionCourses);
+
+		List activeInfoScopes = buildActiveScopes(curricularCourse);
+		infoCurriculum.getInfoCurricularCourse().setInfoScopes(activeInfoScopes);
+
+		return infoCurriculum;
 	}
 
-	final CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(curricularCourseCode);
-	if (curricularCourse == null) {
-	    throw new NonExistingServiceException();
+	private static List buildExecutionCourses(final CurricularCourse curricularCourse) {
+		final List<InfoExecutionCourse> infoExecutionCourses = new ArrayList<InfoExecutionCourse>();
+		for (final ExecutionCourse executionCourse : curricularCourse.getAssociatedExecutionCourses()) {
+			final ExecutionSemester executionSemester = executionCourse.getExecutionPeriod();
+			if (executionSemester.getState().equals(PeriodState.OPEN) || executionSemester.getState().equals(PeriodState.CURRENT)) {
+				infoExecutionCourses.add(InfoExecutionCourse.newInfoFromDomain(executionCourse));
+			}
+		}
+		return infoExecutionCourses;
 	}
 
-	final Curriculum curriculum = curricularCourse.findLatestCurriculum();
-	final InfoCurriculum infoCurriculum = (curriculum != null) ? InfoCurriculum.newInfoFromDomain(curriculum)
-		: new InfoCurriculum();
-	infoCurriculum.setInfoCurricularCourse(InfoCurricularCourse.newInfoFromDomain(curricularCourse));
-
-	List infoExecutionCourses = buildExecutionCourses(curricularCourse);
-	infoCurriculum.getInfoCurricularCourse().setInfoAssociatedExecutionCourses(infoExecutionCourses);
-
-	List activeInfoScopes = buildActiveScopes(curricularCourse);
-	infoCurriculum.getInfoCurricularCourse().setInfoScopes(activeInfoScopes);
-
-	return infoCurriculum;
-    }
-
-    private static List buildExecutionCourses(final CurricularCourse curricularCourse) {
-	final List<InfoExecutionCourse> infoExecutionCourses = new ArrayList<InfoExecutionCourse>();
-	for (final ExecutionCourse executionCourse : curricularCourse.getAssociatedExecutionCourses()) {
-	    final ExecutionSemester executionSemester = executionCourse.getExecutionPeriod();
-	    if (executionSemester.getState().equals(PeriodState.OPEN) || executionSemester.getState().equals(PeriodState.CURRENT)) {
-		infoExecutionCourses.add(InfoExecutionCourse.newInfoFromDomain(executionCourse));
-	    }
+	private static List<InfoCurricularCourseScope> buildActiveScopes(final CurricularCourse curricularCourse) {
+		final List<InfoCurricularCourseScope> activeInfoCurricularCourseScopes = new ArrayList<InfoCurricularCourseScope>();
+		for (final CurricularCourseScope curricularCourseScope : curricularCourse.getScopes()) {
+			if (curricularCourseScope.isActive()) {
+				activeInfoCurricularCourseScopes.add(InfoCurricularCourseScope.newInfoFromDomain(curricularCourseScope));
+			}
+		}
+		return activeInfoCurricularCourseScopes;
 	}
-	return infoExecutionCourses;
-    }
-
-    private static List<InfoCurricularCourseScope> buildActiveScopes(final CurricularCourse curricularCourse) {
-	final List<InfoCurricularCourseScope> activeInfoCurricularCourseScopes = new ArrayList<InfoCurricularCourseScope>();
-	for (final CurricularCourseScope curricularCourseScope : curricularCourse.getScopes()) {
-	    if (curricularCourseScope.isActive()) {
-		activeInfoCurricularCourseScopes.add(InfoCurricularCourseScope.newInfoFromDomain(curricularCourseScope));
-	    }
-	}
-	return activeInfoCurricularCourseScopes;
-    }
 }

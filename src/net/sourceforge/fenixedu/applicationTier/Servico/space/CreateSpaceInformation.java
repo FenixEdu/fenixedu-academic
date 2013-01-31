@@ -6,10 +6,10 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class CreateSpaceInformation extends FenixService {
 
-    @Service
-    public static void run(final Integer spaceInformationID) {
-	final SpaceInformation spaceInformation = rootDomainObject.readSpaceInformationByOID(spaceInformationID);
-	// spaceInformation.createNewSpaceInformation();
-    }
+	@Service
+	public static void run(final Integer spaceInformationID) {
+		final SpaceInformation spaceInformation = rootDomainObject.readSpaceInformationByOID(spaceInformationID);
+		// spaceInformation.createNewSpaceInformation();
+	}
 
 }

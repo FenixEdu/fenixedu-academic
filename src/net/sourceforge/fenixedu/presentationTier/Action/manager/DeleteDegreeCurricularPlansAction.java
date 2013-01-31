@@ -26,54 +26,52 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
 import pt.ist.fenixWebFramework.security.UserView;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
  * @author lmac1
  */
 
-@Mapping(module = "manager", path = "/deleteDegreeCurricularPlans", input = "/readDegreeInput.do", attribute = "degreeCurricularPlanForm", formBean = "degreeCurricularPlanForm", scope = "request")
+@Mapping(
+		module = "manager",
+		path = "/deleteDegreeCurricularPlans",
+		input = "/readDegreeInput.do",
+		attribute = "degreeCurricularPlanForm",
+		formBean = "degreeCurricularPlanForm",
+		scope = "request")
 @Forwards(value = { @Forward(name = "readDegree", path = "/readDegree.do") })
 public class DeleteDegreeCurricularPlansAction extends FenixAction {
 
-    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-	    throws FenixActionException, FenixFilterException {
+	@Override
+	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+			throws FenixActionException, FenixFilterException {
 
-	IUserView userView = UserView.getUser();
-	DynaActionForm deleteForm = (DynaActionForm) form;
+		IUserView userView = UserView.getUser();
+		DynaActionForm deleteForm = (DynaActionForm) form;
 
-	List degreeCurricularPlansIds = Arrays.asList((Integer[]) deleteForm.get("internalIds"));
+		List degreeCurricularPlansIds = Arrays.asList((Integer[]) deleteForm.get("internalIds"));
 
-	List errorNames = new ArrayList();
+		List errorNames = new ArrayList();
 
-	try {
-	    errorNames = (List) DeleteDegreeCurricularPlans.run(degreeCurricularPlansIds);
-	} catch (FenixServiceException fenixServiceException) {
-	    throw new FenixActionException(fenixServiceException);
+		try {
+			errorNames = DeleteDegreeCurricularPlans.run(degreeCurricularPlansIds);
+		} catch (FenixServiceException fenixServiceException) {
+			throw new FenixActionException(fenixServiceException);
+		}
+
+		if (!errorNames.isEmpty()) {
+			ActionErrors actionErrors = new ActionErrors();
+			Iterator namesIter = errorNames.iterator();
+			ActionError error = null;
+			while (namesIter.hasNext()) {
+				// Create an ACTION_ERROR for each DEGREE_CURRICULAR_PLAN
+				error = new ActionError("errors.invalid.delete.not.empty.degree.curricular.plan", namesIter.next());
+				actionErrors.add("errors.invalid.delete.not.empty.degree.curricular.plan", error);
+			}
+			saveErrors(request, actionErrors);
+		}
+		return mapping.findForward("readDegree");
 	}
-
-	if (!errorNames.isEmpty()) {
-	    ActionErrors actionErrors = new ActionErrors();
-	    Iterator namesIter = errorNames.iterator();
-	    ActionError error = null;
-	    while (namesIter.hasNext()) {
-		// Create an ACTION_ERROR for each DEGREE_CURRICULAR_PLAN
-		error = new ActionError("errors.invalid.delete.not.empty.degree.curricular.plan", namesIter.next());
-		actionErrors.add("errors.invalid.delete.not.empty.degree.curricular.plan", error);
-	    }
-	    saveErrors(request, actionErrors);
-	}
-	return mapping.findForward("readDegree");
-    }
 }

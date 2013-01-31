@@ -14,71 +14,71 @@ import org.joda.time.YearMonthDay;
 
 public class GratuitySituationPaymentCode extends GratuitySituationPaymentCode_Base {
 
-    protected GratuitySituationPaymentCode() {
-	super();
-    }
-
-    private GratuitySituationPaymentCode(final PaymentCodeType paymentCodeType, final YearMonthDay startDate,
-	    final YearMonthDay endDate, final Money minAmount, final Money maxAmount, final Student student,
-	    final GratuitySituation gratuitySituation) {
-	this();
-	init(paymentCodeType, startDate, endDate, minAmount, maxAmount, student, gratuitySituation);
-    }
-
-    private void init(PaymentCodeType paymentCodeType, YearMonthDay startDate, YearMonthDay endDate, Money minAmount,
-	    Money maxAmount, Student student, GratuitySituation gratuitySituation) {
-
-	super.init(paymentCodeType, startDate, endDate, minAmount, maxAmount, student.getPerson());
-
-	checkParameters(gratuitySituation, student);
-	super.setGratuitySituation(gratuitySituation);
-
-    }
-
-    private void checkParameters(GratuitySituation gratuitySituation, final Student student) {
-	if (gratuitySituation == null) {
-	    throw new DomainException(
-		    "error.accounting.paymentCodes.GratuitySituationPaymentCode.gratuitySituation.cannot.be.null");
+	protected GratuitySituationPaymentCode() {
+		super();
 	}
 
-	if (student == null) {
-	    throw new DomainException("error.accounting.paymentCodes.GratuitySituationPaymentCode.student.cannot.be.null");
-	}
-    }
-
-    public static GratuitySituationPaymentCode create(final PaymentCodeType paymentCodeType, final YearMonthDay startDate,
-	    final YearMonthDay endDate, final Money minAmount, final Money maxAmount, final Student student,
-	    final GratuitySituation gratuitySituation) {
-
-	if (PaymentCode.canGenerateNewCode(GratuitySituationPaymentCode.class, paymentCodeType, student.getPerson())) {
-	    return new GratuitySituationPaymentCode(paymentCodeType, startDate, endDate, minAmount, maxAmount, student,
-		    gratuitySituation);
+	private GratuitySituationPaymentCode(final PaymentCodeType paymentCodeType, final YearMonthDay startDate,
+			final YearMonthDay endDate, final Money minAmount, final Money maxAmount, final Student student,
+			final GratuitySituation gratuitySituation) {
+		this();
+		init(paymentCodeType, startDate, endDate, minAmount, maxAmount, student, gratuitySituation);
 	}
 
-	throw new DomainException("error.accounting.paymentCodes.MasterDegreeInsurancePaymentCode.could.not.generate.new.code");
-    }
+	private void init(PaymentCodeType paymentCodeType, YearMonthDay startDate, YearMonthDay endDate, Money minAmount,
+			Money maxAmount, Student student, GratuitySituation gratuitySituation) {
 
-    @Override
-    public void setGratuitySituation(GratuitySituation gratuitySituation) {
-	throw new DomainException("error.accounting.paymentCodes.GratuitySituationPaymentCode.cannot.modify.gratuitySituation");
-    }
+		super.init(paymentCodeType, startDate, endDate, minAmount, maxAmount, student.getPerson());
 
-    @Override
-    protected void internalProcess(Person responsiblePerson, Money amount, DateTime whenRegistered, String sibsTransactionId,
-	    String comments) {
-	getGratuitySituation().processAmount(responsiblePerson, amount, whenRegistered, PaymentType.SIBS);
-    }
+		checkParameters(gratuitySituation, student);
+		super.setGratuitySituation(gratuitySituation);
 
-    @Override
-    public void delete() {
-	super.setGratuitySituation(null);
+	}
 
-	super.delete();
-    }
+	private void checkParameters(GratuitySituation gratuitySituation, final Student student) {
+		if (gratuitySituation == null) {
+			throw new DomainException(
+					"error.accounting.paymentCodes.GratuitySituationPaymentCode.gratuitySituation.cannot.be.null");
+		}
 
-    @Override
-    public void setPerson(Person student) {
-	throw new DomainException("error.net.sourceforge.fenixedu.domain.accounting.PaymentCode.cannot.modify.person");
-    }
+		if (student == null) {
+			throw new DomainException("error.accounting.paymentCodes.GratuitySituationPaymentCode.student.cannot.be.null");
+		}
+	}
+
+	public static GratuitySituationPaymentCode create(final PaymentCodeType paymentCodeType, final YearMonthDay startDate,
+			final YearMonthDay endDate, final Money minAmount, final Money maxAmount, final Student student,
+			final GratuitySituation gratuitySituation) {
+
+		if (PaymentCode.canGenerateNewCode(GratuitySituationPaymentCode.class, paymentCodeType, student.getPerson())) {
+			return new GratuitySituationPaymentCode(paymentCodeType, startDate, endDate, minAmount, maxAmount, student,
+					gratuitySituation);
+		}
+
+		throw new DomainException("error.accounting.paymentCodes.MasterDegreeInsurancePaymentCode.could.not.generate.new.code");
+	}
+
+	@Override
+	public void setGratuitySituation(GratuitySituation gratuitySituation) {
+		throw new DomainException("error.accounting.paymentCodes.GratuitySituationPaymentCode.cannot.modify.gratuitySituation");
+	}
+
+	@Override
+	protected void internalProcess(Person responsiblePerson, Money amount, DateTime whenRegistered, String sibsTransactionId,
+			String comments) {
+		getGratuitySituation().processAmount(responsiblePerson, amount, whenRegistered, PaymentType.SIBS);
+	}
+
+	@Override
+	public void delete() {
+		super.setGratuitySituation(null);
+
+		super.delete();
+	}
+
+	@Override
+	public void setPerson(Person student) {
+		throw new DomainException("error.net.sourceforge.fenixedu.domain.accounting.PaymentCode.cannot.modify.person");
+	}
 
 }

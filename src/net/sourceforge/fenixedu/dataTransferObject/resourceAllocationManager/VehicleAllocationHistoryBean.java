@@ -4,15 +4,15 @@ import net.sourceforge.fenixedu.domain.resource.Vehicle;
 
 public class VehicleAllocationHistoryBean extends RoomsPunctualSchedulingHistoryBean {
 
-    public VehicleAllocationHistoryBean() {
-	super();
-    }
+	public VehicleAllocationHistoryBean() {
+		super();
+	}
 
-    public Vehicle getVehicle() {
-	return (Vehicle) getResource();
-    }
+	public Vehicle getVehicle() {
+		return (Vehicle) getResource();
+	}
 
-    public void setVehicle(Vehicle vehicle) {
-	setResource(vehicle);
-    }
+	public void setVehicle(Vehicle vehicle) {
+		setResource(vehicle);
+	}
 }

@@ -14,102 +14,104 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class SpecialSeasonRequest extends SpecialSeasonRequest_Base {
 
-    public SpecialSeasonRequest() {
-	super();
-    }
-
-    public SpecialSeasonRequest(final RegistrationAcademicServiceRequestCreateBean bean) {
-	this();
-	super.init(bean);
-
-	super.setBeginExecutionPeriod(bean.getExecutionYear().getFirstExecutionPeriod());
-	super.setEndExecutionPeriod(bean.getExecutionYear().getLastExecutionPeriod());
-    }
-
-    @Override
-    protected void createAcademicServiceRequestSituations(AcademicServiceRequestBean academicServiceRequestBean) {
-	super.createAcademicServiceRequestSituations(academicServiceRequestBean);
-
-	if (academicServiceRequestBean.isNew()) {
-	    AcademicServiceRequestSituation.create(this, new AcademicServiceRequestBean(
-		    AcademicServiceRequestSituationType.PROCESSING, academicServiceRequestBean.getResponsible()));
+	public SpecialSeasonRequest() {
+		super();
 	}
 
-	if (academicServiceRequestBean.isToConclude()) {
-	    AcademicServiceRequestSituation.create(this, new AcademicServiceRequestBean(
-		    AcademicServiceRequestSituationType.DELIVERED, academicServiceRequestBean.getResponsible()));
+	public SpecialSeasonRequest(final RegistrationAcademicServiceRequestCreateBean bean) {
+		this();
+		super.init(bean);
+
+		super.setBeginExecutionPeriod(bean.getExecutionYear().getFirstExecutionPeriod());
+		super.setEndExecutionPeriod(bean.getExecutionYear().getLastExecutionPeriod());
 	}
 
-    }
+	@Override
+	protected void createAcademicServiceRequestSituations(AcademicServiceRequestBean academicServiceRequestBean) {
+		super.createAcademicServiceRequestSituations(academicServiceRequestBean);
 
-    @Override
-    protected void internalChangeState(AcademicServiceRequestBean academicServiceRequestBean) {
-	super.internalChangeState(academicServiceRequestBean);
+		if (academicServiceRequestBean.isNew()) {
+			AcademicServiceRequestSituation.create(this, new AcademicServiceRequestBean(
+					AcademicServiceRequestSituationType.PROCESSING, academicServiceRequestBean.getResponsible()));
+		}
 
-	if (academicServiceRequestBean.isToConclude()) {
+		if (academicServiceRequestBean.isToConclude()) {
+			AcademicServiceRequestSituation.create(this, new AcademicServiceRequestBean(
+					AcademicServiceRequestSituationType.DELIVERED, academicServiceRequestBean.getResponsible()));
+		}
 
-	    Student student = getRegistration().getStudent();
-
-	    if (getDeferred() != null && getDeferred() == true)
-		new StudentStatute(student, StudentStatuteType.SPECIAL_SEASON_GRANTED_BY_REQUEST, getBeginExecutionPeriod(),
-			getEndExecutionPeriod());
 	}
 
-    }
+	@Override
+	protected void internalChangeState(AcademicServiceRequestBean academicServiceRequestBean) {
+		super.internalChangeState(academicServiceRequestBean);
 
-    public String getDefermentDescription() {
-	if (getDeferred() == null)
-	    return "-";
-	if (getDeferred() == true) {
-	    return ResourceBundle.getBundle("resources.AcademicAdminOffice", Language.getLocale()).getString("request.granted");
-	} else {
-	    return ResourceBundle.getBundle("resources.AcademicAdminOffice", Language.getLocale()).getString("request.declined");
+		if (academicServiceRequestBean.isToConclude()) {
+
+			Student student = getRegistration().getStudent();
+
+			if (getDeferred() != null && getDeferred() == true) {
+				new StudentStatute(student, StudentStatuteType.SPECIAL_SEASON_GRANTED_BY_REQUEST, getBeginExecutionPeriod(),
+						getEndExecutionPeriod());
+			}
+		}
+
 	}
-    }
 
-    @Service
-    public void setDeferment(Boolean deferred) {
-	this.setDeferred(deferred);
-    }
+	public String getDefermentDescription() {
+		if (getDeferred() == null) {
+			return "-";
+		}
+		if (getDeferred() == true) {
+			return ResourceBundle.getBundle("resources.AcademicAdminOffice", Language.getLocale()).getString("request.granted");
+		} else {
+			return ResourceBundle.getBundle("resources.AcademicAdminOffice", Language.getLocale()).getString("request.declined");
+		}
+	}
 
-    @Override
-    public boolean isAvailableForTransitedRegistrations() {
-	return false;
-    }
+	@Service
+	public void setDeferment(Boolean deferred) {
+		this.setDeferred(deferred);
+	}
 
-    @Override
-    public AcademicServiceRequestType getAcademicServiceRequestType() {
-	return AcademicServiceRequestType.SPECIAL_SEASON_REQUEST;
-    }
+	@Override
+	public boolean isAvailableForTransitedRegistrations() {
+		return false;
+	}
 
-    @Override
-    public EventType getEventType() {
-	return null;
-    }
+	@Override
+	public AcademicServiceRequestType getAcademicServiceRequestType() {
+		return AcademicServiceRequestType.SPECIAL_SEASON_REQUEST;
+	}
 
-    @Override
-    public boolean hasPersonalInfo() {
-	return false;
-    }
+	@Override
+	public EventType getEventType() {
+		return null;
+	}
 
-    @Override
-    public boolean isPayedUponCreation() {
-	return false;
-    }
+	@Override
+	public boolean hasPersonalInfo() {
+		return false;
+	}
 
-    @Override
-    public boolean isPossibleToSendToOtherEntity() {
-	return false;
-    }
+	@Override
+	public boolean isPayedUponCreation() {
+		return false;
+	}
 
-    @Override
-    public boolean isManagedWithRectorateSubmissionBatch() {
-	return false;
-    }
+	@Override
+	public boolean isPossibleToSendToOtherEntity() {
+		return false;
+	}
 
-    @Override
-    public boolean isToPrint() {
-	return false;
-    }
+	@Override
+	public boolean isManagedWithRectorateSubmissionBatch() {
+		return false;
+	}
+
+	@Override
+	public boolean isToPrint() {
+		return false;
+	}
 
 }

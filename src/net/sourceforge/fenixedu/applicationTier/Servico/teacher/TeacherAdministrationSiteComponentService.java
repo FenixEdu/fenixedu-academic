@@ -15,17 +15,17 @@ import net.sourceforge.fenixedu.domain.ExecutionCourseSite;
  */
 public class TeacherAdministrationSiteComponentService extends FenixService {
 
-    public Object run(Integer infoExecutionCourseCode, ISiteComponent commonComponent, ISiteComponent bodyComponent,
-	    Integer infoSiteCode, Object obj1, Object obj2) throws FenixServiceException {
+	public Object run(Integer infoExecutionCourseCode, ISiteComponent commonComponent, ISiteComponent bodyComponent,
+			Integer infoSiteCode, Object obj1, Object obj2) throws FenixServiceException {
 
-	final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(infoExecutionCourseCode);
-	final ExecutionCourseSite site = executionCourse.getSite();
+		final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(infoExecutionCourseCode);
+		final ExecutionCourseSite site = executionCourse.getSite();
 
-	final TeacherAdministrationSiteComponentBuilder componentBuilder = TeacherAdministrationSiteComponentBuilder
-		.getInstance();
-	commonComponent = componentBuilder.getComponent(commonComponent, site, null, null, null);
-	bodyComponent = componentBuilder.getComponent(bodyComponent, site, commonComponent, obj1, obj2);
+		final TeacherAdministrationSiteComponentBuilder componentBuilder =
+				TeacherAdministrationSiteComponentBuilder.getInstance();
+		commonComponent = componentBuilder.getComponent(commonComponent, site, null, null, null);
+		bodyComponent = componentBuilder.getComponent(bodyComponent, site, commonComponent, obj1, obj2);
 
-	return new TeacherAdministrationSiteView(commonComponent, bodyComponent);
-    }
+		return new TeacherAdministrationSiteView(commonComponent, bodyComponent);
+	}
 }

@@ -4,14 +4,14 @@ import javax.servlet.http.HttpServletResponse;
 
 public class UnauthorizedRequest extends InvalidRequest {
 
-    @Override
-    protected int getStatus() {
-	return HttpServletResponse.SC_UNAUTHORIZED;
-    }
+	@Override
+	protected int getStatus() {
+		return HttpServletResponse.SC_UNAUTHORIZED;
+	}
 
-    @Override
-    protected String getDescription() {
-	return "Not Authorized";
-    }
+	@Override
+	protected String getDescription() {
+		return "Not Authorized";
+	}
 
 }

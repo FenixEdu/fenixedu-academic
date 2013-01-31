@@ -6,8 +6,8 @@ import net.sourceforge.fenixedu.domain.tests.NewTestGroup;
 import pt.ist.fenixWebFramework.services.Service;
 
 public class CorrectTestGroup extends FenixService {
-    @Service
-    public static void run(NewTestGroup testGroup) throws FenixServiceException {
-	testGroup.correct();
-    }
+	@Service
+	public static void run(NewTestGroup testGroup) throws FenixServiceException {
+		testGroup.correct();
+	}
 }

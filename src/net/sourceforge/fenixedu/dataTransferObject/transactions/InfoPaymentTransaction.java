@@ -12,57 +12,57 @@ import net.sourceforge.fenixedu.domain.transactions.PaymentTransaction;
  */
 public abstract class InfoPaymentTransaction extends InfoTransaction {
 
-    private InfoGuideEntry infoGuideEntry;
+	private InfoGuideEntry infoGuideEntry;
 
-    public InfoPaymentTransaction() {
-
-    }
-
-    public static InfoPaymentTransaction newInfoFromDomain(PaymentTransaction paymentTransaction) {
-
-	if (paymentTransaction == null) {
-	    return null;
-	}
-
-	InfoPaymentTransaction infoPaymentTransaction = null;
-
-	if (paymentTransaction instanceof GratuityTransaction) {
-
-	    infoPaymentTransaction = InfoGratuityTransaction.newInfoFromDomain((GratuityTransaction) paymentTransaction);
-
-	} else if (paymentTransaction instanceof InsuranceTransaction) {
-
-	    infoPaymentTransaction = InfoInsuranceTransaction.newInfoFromDomain((InsuranceTransaction) paymentTransaction);
+	public InfoPaymentTransaction() {
 
 	}
 
-	return infoPaymentTransaction;
-    }
+	public static InfoPaymentTransaction newInfoFromDomain(PaymentTransaction paymentTransaction) {
 
-    protected void copyFromDomain(PaymentTransaction paymentTransaction) {
+		if (paymentTransaction == null) {
+			return null;
+		}
 
-	super.copyFromDomain(paymentTransaction);
+		InfoPaymentTransaction infoPaymentTransaction = null;
 
-	InfoGuideEntry infoGuideEntry = null;
-	if (paymentTransaction.getGuideEntry() != null) {
-	    infoGuideEntry = InfoGuideEntry.newInfoFromDomain(paymentTransaction.getGuideEntry());
+		if (paymentTransaction instanceof GratuityTransaction) {
+
+			infoPaymentTransaction = InfoGratuityTransaction.newInfoFromDomain((GratuityTransaction) paymentTransaction);
+
+		} else if (paymentTransaction instanceof InsuranceTransaction) {
+
+			infoPaymentTransaction = InfoInsuranceTransaction.newInfoFromDomain((InsuranceTransaction) paymentTransaction);
+
+		}
+
+		return infoPaymentTransaction;
 	}
 
-	this.infoGuideEntry = infoGuideEntry;
-    }
+	protected void copyFromDomain(PaymentTransaction paymentTransaction) {
 
-    /**
-     * @return Returns the infoGuideEntry.
-     */
-    public InfoGuideEntry getInfoGuideEntry() {
-	return infoGuideEntry;
-    }
+		super.copyFromDomain(paymentTransaction);
 
-    /**
-     * @param infoGuideEntry
-     *            The infoGuideEntry to set.
-     */
-    public void setInfoGuideEntry(InfoGuideEntry infoGuideEntry) {
-	this.infoGuideEntry = infoGuideEntry;
-    }
+		InfoGuideEntry infoGuideEntry = null;
+		if (paymentTransaction.getGuideEntry() != null) {
+			infoGuideEntry = InfoGuideEntry.newInfoFromDomain(paymentTransaction.getGuideEntry());
+		}
+
+		this.infoGuideEntry = infoGuideEntry;
+	}
+
+	/**
+	 * @return Returns the infoGuideEntry.
+	 */
+	public InfoGuideEntry getInfoGuideEntry() {
+		return infoGuideEntry;
+	}
+
+	/**
+	 * @param infoGuideEntry
+	 *            The infoGuideEntry to set.
+	 */
+	public void setInfoGuideEntry(InfoGuideEntry infoGuideEntry) {
+		this.infoGuideEntry = infoGuideEntry;
+	}
 }

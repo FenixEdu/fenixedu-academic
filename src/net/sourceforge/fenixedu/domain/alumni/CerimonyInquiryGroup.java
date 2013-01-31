@@ -13,57 +13,60 @@ import net.sourceforge.fenixedu.domain.accessControl.groups.language.operators.I
 
 public class CerimonyInquiryGroup extends DomainBackedGroup<CerimonyInquiry> {
 
-    public CerimonyInquiryGroup(final CerimonyInquiry cerimonyInquiry) {
-	super(cerimonyInquiry);
-    }
-
-    @Override
-    public Set<Person> getElements() {
-	final Set<Person> people = new HashSet<Person>();
-	for (final CerimonyInquiryPerson cerimonyInquiryPerson : getObject().getCerimonyInquiryPersonSet()) {
-	    final Person person = cerimonyInquiryPerson.getPerson();
-	    people.add(person);
-	}
-	return people;
-    }
-
-    @Override
-    public boolean isMember(final Person person) {
-	for (final CerimonyInquiryPerson cerimonyInquiryPerson : person.getCerimonyInquiryPersonSet()) {
-	    if (cerimonyInquiryPerson.getCerimonyInquiry() == getObject()) {
-		return true;
-	    }
-	}
-	return false;
-    }
-
-    @Override
-    protected Argument[] getExpressionArguments() {
-	return new Argument[] { new IdOperator(getObject()) };
-    }
-
-    public static class Builder implements GroupBuilder {
-
-	public Group build(Object[] arguments) {
-	    CerimonyInquiry cerimonyInquiry;
-
-	    try {
-		cerimonyInquiry = (CerimonyInquiry) arguments[0];
-	    } catch (ClassCastException e) {
-		throw new WrongTypeOfArgumentException(0, CerimonyInquiry.class, arguments[0].getClass());
-	    }
-
-	    return new CerimonyInquiryGroup(cerimonyInquiry);
+	public CerimonyInquiryGroup(final CerimonyInquiry cerimonyInquiry) {
+		super(cerimonyInquiry);
 	}
 
-	public int getMinArguments() {
-	    return 1;
+	@Override
+	public Set<Person> getElements() {
+		final Set<Person> people = new HashSet<Person>();
+		for (final CerimonyInquiryPerson cerimonyInquiryPerson : getObject().getCerimonyInquiryPersonSet()) {
+			final Person person = cerimonyInquiryPerson.getPerson();
+			people.add(person);
+		}
+		return people;
 	}
 
-	public int getMaxArguments() {
-	    return 1;
+	@Override
+	public boolean isMember(final Person person) {
+		for (final CerimonyInquiryPerson cerimonyInquiryPerson : person.getCerimonyInquiryPersonSet()) {
+			if (cerimonyInquiryPerson.getCerimonyInquiry() == getObject()) {
+				return true;
+			}
+		}
+		return false;
 	}
 
-    }
+	@Override
+	protected Argument[] getExpressionArguments() {
+		return new Argument[] { new IdOperator(getObject()) };
+	}
+
+	public static class Builder implements GroupBuilder {
+
+		@Override
+		public Group build(Object[] arguments) {
+			CerimonyInquiry cerimonyInquiry;
+
+			try {
+				cerimonyInquiry = (CerimonyInquiry) arguments[0];
+			} catch (ClassCastException e) {
+				throw new WrongTypeOfArgumentException(0, CerimonyInquiry.class, arguments[0].getClass());
+			}
+
+			return new CerimonyInquiryGroup(cerimonyInquiry);
+		}
+
+		@Override
+		public int getMinArguments() {
+			return 1;
+		}
+
+		@Override
+		public int getMaxArguments() {
+			return 1;
+		}
+
+	}
 
 }

@@ -18,17 +18,17 @@ import net.sourceforge.fenixedu.persistenceTierOracle.Oracle.PersistentProject;
  */
 public class ReadProjectWithoutPersonAccess extends FenixService {
 
-    public List run(String userName, String costCenter, List<InfoProjectAccess> projectAccessList, BackendInstance instance, String userNumber)
-	    throws ExcepcaoPersistencia {
-	Integer coordinatorId = new Integer(userNumber);
+	public List run(String userName, String costCenter, List<InfoProjectAccess> projectAccessList, BackendInstance instance,
+			String userNumber) throws ExcepcaoPersistencia {
+		Integer coordinatorId = new Integer(userNumber);
 
-	List<String> projectCodes = new ArrayList<String>();
+		List<String> projectCodes = new ArrayList<String>();
 
-	for (InfoProjectAccess infoProjectAccess : projectAccessList) {
-	    projectCodes.add(infoProjectAccess.getKeyProject());
+		for (InfoProjectAccess infoProjectAccess : projectAccessList) {
+			projectCodes.add(infoProjectAccess.getKeyProject());
+		}
+
+		return new PersistentProject().readByCoordinatorAndNotProjectsCodes(coordinatorId, projectCodes, instance);
 	}
-
-	return new PersistentProject().readByCoordinatorAndNotProjectsCodes(coordinatorId, projectCodes, instance);
-    }
 
 }

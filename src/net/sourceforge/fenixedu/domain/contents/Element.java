@@ -16,38 +16,38 @@ import java.util.List;
  */
 public abstract class Element extends Element_Base {
 
-    public Element() {
-	super();
-    }
-
-    @Override
-    public boolean isParentAccepted(Container parent) {
-	return true;
-    }
-
-    @Override
-    public List<Content> getPathTo(Content target) {
-	if (this.equals(target)) {
-	    List<Content> contents = new ArrayList<Content>();
-	    contents.add((Content) target);
-	    return contents;
-	} else {
-	    return Collections.emptyList();
+	public Element() {
+		super();
 	}
-    }
 
-    @Override
-    public final Collection<MenuEntry> getMenu() {
-	return Collections.emptyList();
-    }
+	@Override
+	public boolean isParentAccepted(Container parent) {
+		return true;
+	}
 
-    @Override
-    public boolean isContainer() {
-	return false;
-    }
+	@Override
+	public List<Content> getPathTo(Content target) {
+		if (this.equals(target)) {
+			List<Content> contents = new ArrayList<Content>();
+			contents.add(target);
+			return contents;
+		} else {
+			return Collections.emptyList();
+		}
+	}
 
-    @Override
-    public boolean isElement() {
-	return true;
-    }
+	@Override
+	public final Collection<MenuEntry> getMenu() {
+		return Collections.emptyList();
+	}
+
+	@Override
+	public boolean isContainer() {
+		return false;
+	}
+
+	@Override
+	public boolean isElement() {
+		return true;
+	}
 }

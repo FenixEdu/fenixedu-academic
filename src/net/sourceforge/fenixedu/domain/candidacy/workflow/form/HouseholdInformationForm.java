@@ -11,76 +11,76 @@ import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 public class HouseholdInformationForm extends Form {
 
-    private SchoolLevelType motherSchoolLevel;
+	private SchoolLevelType motherSchoolLevel;
 
-    private ProfessionType motherProfessionType;
+	private ProfessionType motherProfessionType;
 
-    private ProfessionalSituationConditionType motherProfessionalCondition;
+	private ProfessionalSituationConditionType motherProfessionalCondition;
 
-    private SchoolLevelType fatherSchoolLevel;
+	private SchoolLevelType fatherSchoolLevel;
 
-    private ProfessionType fatherProfessionType;
+	private ProfessionType fatherProfessionType;
 
-    private ProfessionalSituationConditionType fatherProfessionalCondition;
+	private ProfessionalSituationConditionType fatherProfessionalCondition;
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    @Override
-    public String getFormName() {
-	return "label.candidacy.workflow.householdInformationForm";
-    }
+	@Override
+	public String getFormName() {
+		return "label.candidacy.workflow.householdInformationForm";
+	}
 
-    @Override
-    public List<LabelFormatter> validate() {
-	return Collections.emptyList();
-    }
+	@Override
+	public List<LabelFormatter> validate() {
+		return Collections.emptyList();
+	}
 
-    public SchoolLevelType getMotherSchoolLevel() {
-	return motherSchoolLevel;
-    }
+	public SchoolLevelType getMotherSchoolLevel() {
+		return motherSchoolLevel;
+	}
 
-    public void setMotherSchoolLevel(SchoolLevelType motherSchoolLevel) {
-	this.motherSchoolLevel = motherSchoolLevel;
-    }
+	public void setMotherSchoolLevel(SchoolLevelType motherSchoolLevel) {
+		this.motherSchoolLevel = motherSchoolLevel;
+	}
 
-    public ProfessionType getMotherProfessionType() {
-	return motherProfessionType;
-    }
+	public ProfessionType getMotherProfessionType() {
+		return motherProfessionType;
+	}
 
-    public void setMotherProfessionType(ProfessionType motherProfessionType) {
-	this.motherProfessionType = motherProfessionType;
-    }
+	public void setMotherProfessionType(ProfessionType motherProfessionType) {
+		this.motherProfessionType = motherProfessionType;
+	}
 
-    public ProfessionalSituationConditionType getMotherProfessionalCondition() {
-	return motherProfessionalCondition;
-    }
+	public ProfessionalSituationConditionType getMotherProfessionalCondition() {
+		return motherProfessionalCondition;
+	}
 
-    public void setMotherProfessionalCondition(ProfessionalSituationConditionType motherProfessionalCondition) {
-	this.motherProfessionalCondition = motherProfessionalCondition;
-    }
+	public void setMotherProfessionalCondition(ProfessionalSituationConditionType motherProfessionalCondition) {
+		this.motherProfessionalCondition = motherProfessionalCondition;
+	}
 
-    public SchoolLevelType getFatherSchoolLevel() {
-	return fatherSchoolLevel;
-    }
+	public SchoolLevelType getFatherSchoolLevel() {
+		return fatherSchoolLevel;
+	}
 
-    public void setFatherSchoolLevel(SchoolLevelType fatherSchoolLevel) {
-	this.fatherSchoolLevel = fatherSchoolLevel;
-    }
+	public void setFatherSchoolLevel(SchoolLevelType fatherSchoolLevel) {
+		this.fatherSchoolLevel = fatherSchoolLevel;
+	}
 
-    public ProfessionType getFatherProfessionType() {
-	return fatherProfessionType;
-    }
+	public ProfessionType getFatherProfessionType() {
+		return fatherProfessionType;
+	}
 
-    public void setFatherProfessionType(ProfessionType fatherProfessionType) {
-	this.fatherProfessionType = fatherProfessionType;
-    }
+	public void setFatherProfessionType(ProfessionType fatherProfessionType) {
+		this.fatherProfessionType = fatherProfessionType;
+	}
 
-    public ProfessionalSituationConditionType getFatherProfessionalCondition() {
-	return fatherProfessionalCondition;
-    }
+	public ProfessionalSituationConditionType getFatherProfessionalCondition() {
+		return fatherProfessionalCondition;
+	}
 
-    public void setFatherProfessionalCondition(ProfessionalSituationConditionType fatherProfessionalCondition) {
-	this.fatherProfessionalCondition = fatherProfessionalCondition;
-    }
+	public void setFatherProfessionalCondition(ProfessionalSituationConditionType fatherProfessionalCondition) {
+		this.fatherProfessionalCondition = fatherProfessionalCondition;
+	}
 
 }

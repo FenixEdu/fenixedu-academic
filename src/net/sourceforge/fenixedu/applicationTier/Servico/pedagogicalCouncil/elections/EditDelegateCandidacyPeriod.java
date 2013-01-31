@@ -11,34 +11,34 @@ import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
 
 public class EditDelegateCandidacyPeriod extends FenixService {
-    @Checked("RolePredicates.PEDAGOGICAL_COUNCIL_PREDICATE")
-    @Service
-    public static void run(ElectionPeriodBean bean) throws FenixServiceException {
-	DelegateElection election = bean.getElection();
+	@Checked("RolePredicates.PEDAGOGICAL_COUNCIL_PREDICATE")
+	@Service
+	public static void run(ElectionPeriodBean bean) throws FenixServiceException {
+		DelegateElection election = bean.getElection();
 
-	try {
-	    election.editCandidacyPeriod(bean.getStartDate(), bean.getEndDate());
-	} catch (DomainException ex) {
-	    throw new FenixServiceException(ex.getMessage(), ex.getArgs());
-	}
-    }
-
-    @Checked("RolePredicates.PEDAGOGICAL_COUNCIL_PREDICATE")
-    @Service
-    public static void run(ElectionPeriodBean bean, String degreeOID) throws FenixServiceException {
-	final ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
-	final Degree degree = rootDomainObject.readDegreeByOID(Integer.parseInt(degreeOID));
-
-	DelegateElection electionToEdit = degree.getYearDelegateElectionWithLastCandidacyPeriod(executionYear, bean
-		.getCurricularYear());
-
-	if (electionToEdit != null) {
-	    bean.setElection(electionToEdit);
-	} else {
-	    throw new FenixServiceException("error.elections.edit.electionNotFound", new String[] { degree.getSigla(),
-		    bean.getCurricularYear().getYear().toString() });
+		try {
+			election.editCandidacyPeriod(bean.getStartDate(), bean.getEndDate());
+		} catch (DomainException ex) {
+			throw new FenixServiceException(ex.getMessage(), ex.getArgs());
+		}
 	}
 
-	run(bean);
-    }
+	@Checked("RolePredicates.PEDAGOGICAL_COUNCIL_PREDICATE")
+	@Service
+	public static void run(ElectionPeriodBean bean, String degreeOID) throws FenixServiceException {
+		final ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
+		final Degree degree = rootDomainObject.readDegreeByOID(Integer.parseInt(degreeOID));
+
+		DelegateElection electionToEdit =
+				degree.getYearDelegateElectionWithLastCandidacyPeriod(executionYear, bean.getCurricularYear());
+
+		if (electionToEdit != null) {
+			bean.setElection(electionToEdit);
+		} else {
+			throw new FenixServiceException("error.elections.edit.electionNotFound", new String[] { degree.getSigla(),
+					bean.getCurricularYear().getYear().toString() });
+		}
+
+		run(bean);
+	}
 }

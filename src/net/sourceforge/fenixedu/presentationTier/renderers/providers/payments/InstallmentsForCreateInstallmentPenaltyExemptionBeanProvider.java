@@ -7,13 +7,15 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class InstallmentsForCreateInstallmentPenaltyExemptionBeanProvider implements DataProvider {
 
-    public Object provide(Object source, Object currentValue) {
-	return ((CreateInstallmentPenaltyExemptionBean) source).getGratuityEventWithPaymentPlan().getGratuityPaymentPlan()
-		.getInstallmentsSortedByEndDate();
-    }
+	@Override
+	public Object provide(Object source, Object currentValue) {
+		return ((CreateInstallmentPenaltyExemptionBean) source).getGratuityEventWithPaymentPlan().getGratuityPaymentPlan()
+				.getInstallmentsSortedByEndDate();
+	}
 
-    public Converter getConverter() {
-	return new DomainObjectKeyArrayConverter();
-    }
+	@Override
+	public Converter getConverter() {
+		return new DomainObjectKeyArrayConverter();
+	}
 
 }

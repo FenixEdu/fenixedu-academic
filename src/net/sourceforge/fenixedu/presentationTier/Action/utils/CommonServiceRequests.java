@@ -26,43 +26,44 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionEx
  */
 public class CommonServiceRequests {
 
-    public static List getBranchesByDegreeCurricularPlan(IUserView userView, Integer degreeCurricularPlanOID)
-	    throws FenixActionException, FenixFilterException {
+	public static List getBranchesByDegreeCurricularPlan(IUserView userView, Integer degreeCurricularPlanOID)
+			throws FenixActionException, FenixFilterException {
 
-	List branches = null;
-	try {
-	    branches = ReadBranchesByDegreeCurricularPlan.run(degreeCurricularPlanOID);
-	} catch (FenixServiceException fse) {
-	    throw new FenixActionException(fse);
+		List branches = null;
+		try {
+			branches = ReadBranchesByDegreeCurricularPlan.run(degreeCurricularPlanOID);
+		} catch (FenixServiceException fse) {
+			throw new FenixActionException(fse);
+		}
+
+		List newBranches = new ArrayList();
+		if (branches != null) {
+			Iterator iterator = branches.iterator();
+			while (iterator.hasNext()) {
+				InfoBranch infoBranch = (InfoBranch) iterator.next();
+				if (infoBranch != null && infoBranch.getBranchType() != null
+						&& !infoBranch.getBranchType().equals(BranchType.COMNBR)) {
+					newBranches.add(infoBranch);
+				}
+			}
+		}
+		return newBranches;
 	}
 
-	List newBranches = new ArrayList();
-	if (branches != null) {
-	    Iterator iterator = branches.iterator();
-	    while (iterator.hasNext()) {
-		InfoBranch infoBranch = (InfoBranch) iterator.next();
-		if (infoBranch != null && infoBranch.getBranchType() != null
-			&& !infoBranch.getBranchType().equals(BranchType.COMNBR))
-		    newBranches.add(infoBranch);
-	    }
+	/**
+	 * @param degreeOID
+	 * @return
+	 */
+	public static InfoExecutionDegree getInfoExecutionDegree(IUserView userView, Integer degreeOID) throws FenixActionException,
+			FenixFilterException {
+		InfoExecutionDegree infoExecutionDegree = null;
+
+		infoExecutionDegree = ReadExecutionDegreeByOID.run(degreeOID);
+		return infoExecutionDegree;
 	}
-	return newBranches;
-    }
 
-    /**
-     * @param degreeOID
-     * @return
-     */
-    public static InfoExecutionDegree getInfoExecutionDegree(IUserView userView, Integer degreeOID) throws FenixActionException,
-	    FenixFilterException {
-	InfoExecutionDegree infoExecutionDegree = null;
-
-	infoExecutionDegree = ReadExecutionDegreeByOID.run(degreeOID);
-	return infoExecutionDegree;
-    }
-
-    public static List<InfoExecutionYear> getInfoExecutionYears() throws FenixFilterException, FenixServiceException {
-	return ReadExecutionYearsService.run();
-    }
+	public static List<InfoExecutionYear> getInfoExecutionYears() throws FenixFilterException, FenixServiceException {
+		return ReadExecutionYearsService.run();
+	}
 
 }

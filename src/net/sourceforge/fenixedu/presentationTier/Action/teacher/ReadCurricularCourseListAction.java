@@ -22,30 +22,31 @@ import org.apache.struts.action.ActionMapping;
  */
 public class ReadCurricularCourseListAction extends FenixDispatchAction {
 
-    public ActionForward read(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-	    throws FenixActionException, FenixFilterException {
-	Integer objectCode = null;
-	String objectCodeString = request.getParameter("objectCode");
-	if (objectCodeString == null) {
-	    objectCodeString = (String) request.getAttribute("objectCode");
+	public ActionForward read(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+			throws FenixActionException, FenixFilterException {
+		Integer objectCode = null;
+		String objectCodeString = request.getParameter("objectCode");
+		if (objectCodeString == null) {
+			objectCodeString = (String) request.getAttribute("objectCode");
+		}
+		objectCode = new Integer(objectCodeString);
+
+		IUserView userView = getUserView(request);
+
+		Object args[] = { objectCode };
+
+		TeacherAdministrationSiteView siteView = null;
+		try {
+			siteView =
+					(TeacherAdministrationSiteView) ServiceManagerServiceFactory.executeService(
+							"ReadCurricularCourseListByExecutionCourseCode", args);
+		} catch (FenixServiceException e) {
+			throw new FenixActionException(e);
+		}
+
+		request.setAttribute("siteView", siteView);
+		request.setAttribute("objectCode", objectCode);
+
+		return mapping.findForward("success");
 	}
-	objectCode = new Integer(objectCodeString);
-
-	IUserView userView = getUserView(request);
-
-	Object args[] = { objectCode };
-
-	TeacherAdministrationSiteView siteView = null;
-	try {
-	    siteView = (TeacherAdministrationSiteView) ServiceManagerServiceFactory.executeService(
-		    "ReadCurricularCourseListByExecutionCourseCode", args);
-	} catch (FenixServiceException e) {
-	    throw new FenixActionException(e);
-	}
-
-	request.setAttribute("siteView", siteView);
-	request.setAttribute("objectCode", objectCode);
-
-	return mapping.findForward("success");
-    }
 }

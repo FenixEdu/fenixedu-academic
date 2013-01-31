@@ -5,17 +5,17 @@ import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 
 public class IsPartialRegimePaymentPlanRule implements PaymentPlanRule {
 
-    IsPartialRegimePaymentPlanRule() {
-    }
+	IsPartialRegimePaymentPlanRule() {
+	}
 
-    @Override
-    public boolean isEvaluatedInNotSpecificPaymentRules() {
-	return true;
-    }
+	@Override
+	public boolean isEvaluatedInNotSpecificPaymentRules() {
+		return true;
+	}
 
-    @Override
-    public boolean isAppliableFor(StudentCurricularPlan studentCurricularPlan, ExecutionYear executionYear) {
-	return studentCurricularPlan.getRegistration().isPartialRegime(executionYear);
-    }
+	@Override
+	public boolean isAppliableFor(StudentCurricularPlan studentCurricularPlan, ExecutionYear executionYear) {
+		return studentCurricularPlan.getRegistration().isPartialRegime(executionYear);
+	}
 
 }

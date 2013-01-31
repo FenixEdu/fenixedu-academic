@@ -14,45 +14,45 @@ import pt.ist.fenixWebFramework.security.accessControl.Checked;
 
 public class GratuityReportingService {
 
-    @Checked("RolePredicates.DIRECTIVE_COUNCIL_PREDICATE")
-    public GratuityReport createGratuityReport(final ExecutionYear executionYear, final LocalDate startDate,
-	    final LocalDate endDate, final Collection<DegreeType> degreeTypes) {
+	@Checked("RolePredicates.DIRECTIVE_COUNCIL_PREDICATE")
+	public GratuityReport createGratuityReport(final ExecutionYear executionYear, final LocalDate startDate,
+			final LocalDate endDate, final Collection<DegreeType> degreeTypes) {
 
-	final GratuityReport report = new GratuityReport();
+		final GratuityReport report = new GratuityReport();
 
-	for (final AnnualEvent event : executionYear.getAnnualEvents()) {
+		for (final AnnualEvent event : executionYear.getAnnualEvents()) {
 
-	    if (event instanceof GratuityEvent) {
-		final GratuityEvent gratuityEvent = (GratuityEvent) event;
-		if (!degreeTypes.isEmpty() && !degreeTypes.contains(gratuityEvent.getDegree().getDegreeType())) {
-		    continue;
+			if (event instanceof GratuityEvent) {
+				final GratuityEvent gratuityEvent = (GratuityEvent) event;
+				if (!degreeTypes.isEmpty() && !degreeTypes.contains(gratuityEvent.getDegree().getDegreeType())) {
+					continue;
+				}
+
+				for (final AccountingTransaction transaction : event.getNonAdjustingTransactions()) {
+					if (startDate != null && endDate != null) {
+						if (transaction.isInsidePeriod(startDate, endDate)) {
+							report.addGratuityAmount(transaction.getWhenRegistered().toLocalDate(),
+									transaction.getAmountWithAdjustment());
+						}
+					} else if (startDate != null) {
+						if (!transaction.getWhenRegistered().toLocalDate().isBefore(startDate)) {
+							report.addGratuityAmount(transaction.getWhenRegistered().toLocalDate(),
+									transaction.getAmountWithAdjustment());
+						}
+					} else if (endDate != null) {
+						if (!transaction.getWhenRegistered().toLocalDate().isAfter(endDate)) {
+							report.addGratuityAmount(transaction.getWhenRegistered().toLocalDate(),
+									transaction.getAmountWithAdjustment());
+						}
+					} else {
+						report.addGratuityAmount(transaction.getWhenRegistered().toLocalDate(),
+								transaction.getAmountWithAdjustment());
+					}
+				}
+
+			}
 		}
 
-		for (final AccountingTransaction transaction : event.getNonAdjustingTransactions()) {
-		    if (startDate != null && endDate != null) {
-			if (transaction.isInsidePeriod(startDate, endDate)) {
-			    report.addGratuityAmount(transaction.getWhenRegistered().toLocalDate(), transaction
-				    .getAmountWithAdjustment());
-			}
-		    } else if (startDate != null) {
-			if (!transaction.getWhenRegistered().toLocalDate().isBefore(startDate)) {
-			    report.addGratuityAmount(transaction.getWhenRegistered().toLocalDate(), transaction
-				    .getAmountWithAdjustment());
-			}
-		    } else if (endDate != null) {
-			if (!transaction.getWhenRegistered().toLocalDate().isAfter(endDate)) {
-			    report.addGratuityAmount(transaction.getWhenRegistered().toLocalDate(), transaction
-				    .getAmountWithAdjustment());
-			}
-		    } else {
-			report.addGratuityAmount(transaction.getWhenRegistered().toLocalDate(), transaction
-				.getAmountWithAdjustment());
-		    }
-		}
-
-	    }
+		return report;
 	}
-
-	return report;
-    }
 }

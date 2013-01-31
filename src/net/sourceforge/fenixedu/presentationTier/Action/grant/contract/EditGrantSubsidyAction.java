@@ -32,156 +32,182 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
  * @author Barbosa
  * @author Pica
  */
-@Mapping(module = "facultyAdmOffice", path = "/editGrantSubsidy", input = "/editGrantSubsidy.do?page=0&method=prepareEditGrantSubsidyForm", attribute = "editGrantSubsidyForm", formBean = "editGrantSubsidyForm", scope = "request", parameter = "method")
+@Mapping(
+		module = "facultyAdmOffice",
+		path = "/editGrantSubsidy",
+		input = "/editGrantSubsidy.do?page=0&method=prepareEditGrantSubsidyForm",
+		attribute = "editGrantSubsidyForm",
+		formBean = "editGrantSubsidyForm",
+		scope = "request",
+		parameter = "method")
 @Forwards(value = {
-	@Forward(name = "edit-grant-subsidy", path = "/facultyAdmOffice/grant/contract/editGrantSubsidy.jsp", tileProperties = @Tile(title = "private.teachingstaffandresearcher.miscellaneousmanagement.costcenter")),
-	@Forward(name = "manage-grant-subsidy", path = "/manageGrantSubsidy.do?method=prepareManageGrantSubsidyForm", tileProperties = @Tile(title = "private.teachingstaffandresearcher.miscellaneousmanagement.costcenter")) })
+		@Forward(
+				name = "edit-grant-subsidy",
+				path = "/facultyAdmOffice/grant/contract/editGrantSubsidy.jsp",
+				tileProperties = @Tile(title = "private.teachingstaffandresearcher.miscellaneousmanagement.costcenter")),
+		@Forward(
+				name = "manage-grant-subsidy",
+				path = "/manageGrantSubsidy.do?method=prepareManageGrantSubsidyForm",
+				tileProperties = @Tile(title = "private.teachingstaffandresearcher.miscellaneousmanagement.costcenter")) })
 public class EditGrantSubsidyAction extends FenixDispatchAction {
-    /*
-     * Fills the form with the correspondent data
-     */
-    public ActionForward prepareEditGrantSubsidyForm(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
+	/*
+	 * Fills the form with the correspondent data
+	 */
+	public ActionForward prepareEditGrantSubsidyForm(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
 
-	Integer idSubsidy = null;
-	Integer idContract = null;
-	try
-	// Probably a validation error
-	{
-	    if (!verifyParameterInRequest(request, "idSubsidy")) {
-		// Check if is a new subsidy
-		idContract = new Integer(request.getParameter("idContract"));
-	    } else {
-		idSubsidy = new Integer(request.getParameter("idSubsidy"));
-	    }
-	} catch (Exception e) {
-	    request.setAttribute("idGrantOwner", new Integer(request.getParameter("idGrantOwner")));
-	    request.setAttribute("contractNumber", request.getParameter("contractNumber"));
-	    request.setAttribute("grantTypeName", request.getParameter("grantTypeName"));
-	    if (verifyParameterInRequest(request, "idSubsidy"))
-		request.setAttribute("idSubsidy", new Integer(request.getParameter("idSubsidy")));
-	    return mapping.findForward("edit-grant-subsidy");
+		Integer idSubsidy = null;
+		Integer idContract = null;
+		try
+		// Probably a validation error
+		{
+			if (!verifyParameterInRequest(request, "idSubsidy")) {
+				// Check if is a new subsidy
+				idContract = new Integer(request.getParameter("idContract"));
+			} else {
+				idSubsidy = new Integer(request.getParameter("idSubsidy"));
+			}
+		} catch (Exception e) {
+			request.setAttribute("idGrantOwner", new Integer(request.getParameter("idGrantOwner")));
+			request.setAttribute("contractNumber", request.getParameter("contractNumber"));
+			request.setAttribute("grantTypeName", request.getParameter("grantTypeName"));
+			if (verifyParameterInRequest(request, "idSubsidy")) {
+				request.setAttribute("idSubsidy", new Integer(request.getParameter("idSubsidy")));
+			}
+			return mapping.findForward("edit-grant-subsidy");
+		}
+
+		IUserView userView = UserView.getUser();
+		DynaValidatorForm grantSubsidyForm = (DynaValidatorForm) form;
+
+		try {
+			InfoGrantContract infoGrantContract = null;
+
+			if (idContract != null) // if is a new Subsidy
+			{
+				// Read the contract
+				Object[] args3 = { idContract };
+				infoGrantContract = (InfoGrantContract) ServiceUtils.executeService("ReadGrantContract", args3);
+				if (infoGrantContract != null) {
+					request.setAttribute("contractNumber", infoGrantContract.getContractNumber());
+					request.setAttribute("grantTypeName", infoGrantContract.getGrantTypeInfo().getName());
+					grantSubsidyForm.set("state", new Integer(-1));
+				}
+			} else {
+				// Read the subsidy
+
+				InfoGrantSubsidy infoGrantSubsidy = (InfoGrantSubsidy) ReadGrantSubsidy.run(idSubsidy);
+
+				idContract = infoGrantSubsidy.getInfoGrantContract().getIdInternal();
+				// Read the contract
+				Object[] args2 = { idContract };
+				infoGrantContract = (InfoGrantContract) ServiceUtils.executeService("ReadGrantContract", args2);
+				if (infoGrantContract != null) {
+					request.setAttribute("contractNumber", infoGrantContract.getContractNumber());
+					request.setAttribute("grantTypeName", infoGrantContract.getGrantTypeInfo().getName());
+				}
+				// Populate the form
+				if (infoGrantSubsidy != null) {
+					setFormGrantSubsidy(grantSubsidyForm, infoGrantSubsidy);
+					request.setAttribute("idSubsidy", infoGrantSubsidy.getIdInternal());
+				}
+			}
+			grantSubsidyForm.set("idContract", idContract);
+			request.setAttribute("idContract", idContract);
+			grantSubsidyForm.set("idGrantOwner", infoGrantContract.getGrantOwnerInfo().getIdInternal());
+			request.setAttribute("idGrantOwner", infoGrantContract.getGrantOwnerInfo().getIdInternal());
+		} catch (FenixServiceException e) {
+			return setError(request, mapping, "errors.grant.subsidy.read", "manage-grant-contract", null);
+		}
+		return mapping.findForward("edit-grant-subsidy");
 	}
 
-	IUserView userView = UserView.getUser();
-	DynaValidatorForm grantSubsidyForm = (DynaValidatorForm) form;
+	public ActionForward doEdit(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+		try {
 
-	try {
-	    InfoGrantContract infoGrantContract = null;
+			DynaValidatorForm editGrantSubsidyForm = (DynaValidatorForm) form;
+			InfoGrantSubsidy infoGrantSubsidy = populateInfoFromForm(editGrantSubsidyForm);
 
-	    if (idContract != null) // if is a new Subsidy
-	    {
-		// Read the contract
-		Object[] args3 = { idContract };
-		infoGrantContract = (InfoGrantContract) ServiceUtils.executeService("ReadGrantContract", args3);
-		if (infoGrantContract != null) {
-		    request.setAttribute("contractNumber", infoGrantContract.getContractNumber());
-		    request.setAttribute("grantTypeName", infoGrantContract.getGrantTypeInfo().getName());
-		    grantSubsidyForm.set("state", new Integer(-1));
+			if (infoGrantSubsidy.getDateBeginSubsidy().after(infoGrantSubsidy.getDateEndSubsidy())) {
+				return setError(request, mapping, "errors.grant.subsidy.conflictdates", null, null);
+			}
+
+			IUserView userView = UserView.getUser();
+			if (infoGrantSubsidy.getState().equals(Integer.valueOf(-1))) {
+				// If is a new Subsidy
+				infoGrantSubsidy.setState(new Integer(1)); // Active the subsidy
+			}
+
+			// Save the subsidy
+			Object[] args = { infoGrantSubsidy };
+			ServiceUtils.executeService("EditGrantSubsidy", args);
+			request.setAttribute("idInternal", editGrantSubsidyForm.get("idGrantOwner"));
+
+		} catch (FenixServiceException e) {
+			return setError(request, mapping, "errors.grant.subsidy.edit", null, null);
 		}
-	    } else {
-		// Read the subsidy
-
-		InfoGrantSubsidy infoGrantSubsidy = (InfoGrantSubsidy) ReadGrantSubsidy.run(idSubsidy);
-
-		idContract = infoGrantSubsidy.getInfoGrantContract().getIdInternal();
-		// Read the contract
-		Object[] args2 = { idContract };
-		infoGrantContract = (InfoGrantContract) ServiceUtils.executeService("ReadGrantContract", args2);
-		if (infoGrantContract != null) {
-		    request.setAttribute("contractNumber", infoGrantContract.getContractNumber());
-		    request.setAttribute("grantTypeName", infoGrantContract.getGrantTypeInfo().getName());
-		}
-		// Populate the form
-		if (infoGrantSubsidy != null) {
-		    setFormGrantSubsidy(grantSubsidyForm, infoGrantSubsidy);
-		    request.setAttribute("idSubsidy", infoGrantSubsidy.getIdInternal());
-		}
-	    }
-	    grantSubsidyForm.set("idContract", idContract);
-	    request.setAttribute("idContract", idContract);
-	    grantSubsidyForm.set("idGrantOwner", infoGrantContract.getGrantOwnerInfo().getIdInternal());
-	    request.setAttribute("idGrantOwner", infoGrantContract.getGrantOwnerInfo().getIdInternal());
-	} catch (FenixServiceException e) {
-	    return setError(request, mapping, "errors.grant.subsidy.read", "manage-grant-contract", null);
+		return mapping.findForward("manage-grant-subsidy");
 	}
-	return mapping.findForward("edit-grant-subsidy");
-    }
 
-    public ActionForward doEdit(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-	    throws Exception {
-	try {
+	/*
+	 * Populates form from InfoSubsidy
+	 */
+	private void setFormGrantSubsidy(DynaValidatorForm form, InfoGrantSubsidy infoGrantSubsidy) throws Exception {
+		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
 
-	    DynaValidatorForm editGrantSubsidyForm = (DynaValidatorForm) form;
-	    InfoGrantSubsidy infoGrantSubsidy = populateInfoFromForm(editGrantSubsidyForm);
-
-	    if (infoGrantSubsidy.getDateBeginSubsidy().after(infoGrantSubsidy.getDateEndSubsidy())) {
-		return setError(request, mapping, "errors.grant.subsidy.conflictdates", null, null);
-	    }
-
-	    IUserView userView = UserView.getUser();
-	    if (infoGrantSubsidy.getState().equals(Integer.valueOf(-1))) {
-		// If is a new Subsidy
-		infoGrantSubsidy.setState(new Integer(1)); // Active the subsidy
-	    }
-
-	    // Save the subsidy
-	    Object[] args = { infoGrantSubsidy };
-	    ServiceUtils.executeService("EditGrantSubsidy", args);
-	    request.setAttribute("idInternal", editGrantSubsidyForm.get("idGrantOwner"));
-
-	} catch (FenixServiceException e) {
-	    return setError(request, mapping, "errors.grant.subsidy.edit", null, null);
+		form.set("idGrantSubsidy", infoGrantSubsidy.getIdInternal());
+		if (infoGrantSubsidy.getValue() != null) {
+			form.set("value", infoGrantSubsidy.getValue().toString());
+		}
+		if (infoGrantSubsidy.getValueFullName() != null) {
+			form.set("valueFullName", infoGrantSubsidy.getValueFullName());
+		}
+		if (infoGrantSubsidy.getTotalCost() != null) {
+			form.set("totalCost", infoGrantSubsidy.getTotalCost().toString());
+		}
+		if (infoGrantSubsidy.getDateBeginSubsidy() != null) {
+			form.set("dateBeginSubsidy", sdf.format(infoGrantSubsidy.getDateBeginSubsidy()));
+		}
+		if (infoGrantSubsidy.getDateEndSubsidy() != null) {
+			form.set("dateEndSubsidy", sdf.format(infoGrantSubsidy.getDateEndSubsidy()));
+		}
+		// In case state is null.. than this is a new subsidy, put the state -1
+		if (infoGrantSubsidy.getState() != null) {
+			form.set("state", infoGrantSubsidy.getState());
+		} else {
+			form.set("state", new Integer(-1));
+		}
 	}
-	return mapping.findForward("manage-grant-subsidy");
-    }
 
-    /*
-     * Populates form from InfoSubsidy
-     */
-    private void setFormGrantSubsidy(DynaValidatorForm form, InfoGrantSubsidy infoGrantSubsidy) throws Exception {
-	SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+	private InfoGrantSubsidy populateInfoFromForm(DynaValidatorForm editGrantSubsidyForm) throws Exception {
 
-	form.set("idGrantSubsidy", infoGrantSubsidy.getIdInternal());
-	if (infoGrantSubsidy.getValue() != null)
-	    form.set("value", infoGrantSubsidy.getValue().toString());
-	if (infoGrantSubsidy.getValueFullName() != null)
-	    form.set("valueFullName", infoGrantSubsidy.getValueFullName());
-	if (infoGrantSubsidy.getTotalCost() != null)
-	    form.set("totalCost", infoGrantSubsidy.getTotalCost().toString());
-	if (infoGrantSubsidy.getDateBeginSubsidy() != null)
-	    form.set("dateBeginSubsidy", sdf.format(infoGrantSubsidy.getDateBeginSubsidy()));
-	if (infoGrantSubsidy.getDateEndSubsidy() != null)
-	    form.set("dateEndSubsidy", sdf.format(infoGrantSubsidy.getDateEndSubsidy()));
-	// In case state is null.. than this is a new subsidy, put the state -1
-	if (infoGrantSubsidy.getState() != null)
-	    form.set("state", infoGrantSubsidy.getState());
-	else
-	    form.set("state", new Integer(-1));
-    }
+		InfoGrantSubsidy infoGrantSubsidy = new InfoGrantSubsidy();
+		InfoGrantContract infoGrantContract = new InfoGrantContract();
+		if (verifyStringParameterInForm(editGrantSubsidyForm, "idGrantSubsidy")) {
+			infoGrantSubsidy.setIdInternal((Integer) editGrantSubsidyForm.get("idGrantSubsidy"));
+		}
+		if (verifyStringParameterInForm(editGrantSubsidyForm, "value")) {
+			infoGrantSubsidy.setValue(new Double((String) editGrantSubsidyForm.get("value")));
+		}
+		if (verifyStringParameterInForm(editGrantSubsidyForm, "valueFullName")) {
+			infoGrantSubsidy.setValueFullName((String) editGrantSubsidyForm.get("valueFullName"));
+		}
+		if (verifyStringParameterInForm(editGrantSubsidyForm, "totalCost")) {
+			infoGrantSubsidy.setTotalCost(new Double((String) editGrantSubsidyForm.get("totalCost")));
+		}
+		infoGrantContract.setIdInternal((Integer) editGrantSubsidyForm.get("idContract"));
 
-    private InfoGrantSubsidy populateInfoFromForm(DynaValidatorForm editGrantSubsidyForm) throws Exception {
+		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+		if (verifyStringParameterInForm(editGrantSubsidyForm, "dateBeginSubsidy")) {
+			infoGrantSubsidy.setDateBeginSubsidy(sdf.parse((String) editGrantSubsidyForm.get("dateBeginSubsidy")));
+		}
+		if (verifyStringParameterInForm(editGrantSubsidyForm, "dateEndSubsidy")) {
+			infoGrantSubsidy.setDateEndSubsidy(sdf.parse((String) editGrantSubsidyForm.get("dateEndSubsidy")));
+		}
 
-	InfoGrantSubsidy infoGrantSubsidy = new InfoGrantSubsidy();
-	InfoGrantContract infoGrantContract = new InfoGrantContract();
-	if (verifyStringParameterInForm(editGrantSubsidyForm, "idGrantSubsidy"))
-	    infoGrantSubsidy.setIdInternal((Integer) editGrantSubsidyForm.get("idGrantSubsidy"));
-	if (verifyStringParameterInForm(editGrantSubsidyForm, "value"))
-	    infoGrantSubsidy.setValue(new Double((String) editGrantSubsidyForm.get("value")));
-	if (verifyStringParameterInForm(editGrantSubsidyForm, "valueFullName"))
-	    infoGrantSubsidy.setValueFullName((String) editGrantSubsidyForm.get("valueFullName"));
-	if (verifyStringParameterInForm(editGrantSubsidyForm, "totalCost"))
-	    infoGrantSubsidy.setTotalCost(new Double((String) editGrantSubsidyForm.get("totalCost")));
-	infoGrantContract.setIdInternal((Integer) editGrantSubsidyForm.get("idContract"));
-
-	SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-	if (verifyStringParameterInForm(editGrantSubsidyForm, "dateBeginSubsidy"))
-	    infoGrantSubsidy.setDateBeginSubsidy(sdf.parse((String) editGrantSubsidyForm.get("dateBeginSubsidy")));
-	if (verifyStringParameterInForm(editGrantSubsidyForm, "dateEndSubsidy"))
-	    infoGrantSubsidy.setDateEndSubsidy(sdf.parse((String) editGrantSubsidyForm.get("dateEndSubsidy")));
-
-	infoGrantSubsidy.setInfoGrantContract(infoGrantContract);
-	infoGrantSubsidy.setState((Integer) editGrantSubsidyForm.get("state"));
-	return infoGrantSubsidy;
-    }
+		infoGrantSubsidy.setInfoGrantContract(infoGrantContract);
+		infoGrantSubsidy.setState((Integer) editGrantSubsidyForm.get("state"));
+		return infoGrantSubsidy;
+	}
 }

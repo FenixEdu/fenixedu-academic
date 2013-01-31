@@ -10,21 +10,21 @@ import pt.ist.fenixWebFramework.renderers.converters.EnumConverter;
 
 public class ProfessionalSituationConditionTypeProviderForRaides2011 implements DataProvider {
 
-    @Override
-    public Converter getConverter() {
-	return new EnumConverter();
-    }
-
-    @Override
-    public Object provide(Object source, Object currentValue) {
-	List<ProfessionalSituationConditionType> results = new ArrayList<ProfessionalSituationConditionType>();
-	for (ProfessionalSituationConditionType type : ProfessionalSituationConditionType.values()) {
-	    if (!type.equals(ProfessionalSituationConditionType.MILITARY_SERVICE)
-		    && !type.equals(ProfessionalSituationConditionType.UNKNOWN)) {
-		results.add(type);
-	    }
+	@Override
+	public Converter getConverter() {
+		return new EnumConverter();
 	}
-	return results;
-    }
+
+	@Override
+	public Object provide(Object source, Object currentValue) {
+		List<ProfessionalSituationConditionType> results = new ArrayList<ProfessionalSituationConditionType>();
+		for (ProfessionalSituationConditionType type : ProfessionalSituationConditionType.values()) {
+			if (!type.equals(ProfessionalSituationConditionType.MILITARY_SERVICE)
+					&& !type.equals(ProfessionalSituationConditionType.UNKNOWN)) {
+				results.add(type);
+			}
+		}
+		return results;
+	}
 
 }

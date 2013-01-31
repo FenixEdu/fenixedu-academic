@@ -47,100 +47,106 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
  * @author <a href="mailto:naat@ist.utl.pt">Nadir Tarmahomed </a>
  * 
  */
-@Mapping(path = "/createReimbursementGuide", module = "masterDegreeAdministrativeOffice", formBean = "createReimbursementGuideForm")
+@Mapping(
+		path = "/createReimbursementGuide",
+		module = "masterDegreeAdministrativeOffice",
+		formBean = "createReimbursementGuideForm")
 @Forwards({ @Forward(name = "start", path = "df.page.createReimbursementGuide", tileProperties = @Tile(title = "teste63")),
-	@Forward(name = "error", path = "df.page.reimbursementGuide_Error", tileProperties = @Tile(title = "teste64")),
-	@Forward(name = "success", path = "df.page.createReimbursementGuide_Success", tileProperties = @Tile(title = "teste65")) })
+		@Forward(name = "error", path = "df.page.reimbursementGuide_Error", tileProperties = @Tile(title = "teste64")),
+		@Forward(name = "success", path = "df.page.createReimbursementGuide_Success", tileProperties = @Tile(title = "teste65")) })
 @Exceptions({ @ExceptionHandling(type = FenixActionException.class, handler = FenixErrorExceptionHandler.class),
-	@ExceptionHandling(type = NoEntryChosenActionException.class, handler = FenixErrorExceptionHandler.class),
-	@ExceptionHandling(type = InvalidSituationActionException.class, handler = FenixErrorExceptionHandler.class) })
+		@ExceptionHandling(type = NoEntryChosenActionException.class, handler = FenixErrorExceptionHandler.class),
+		@ExceptionHandling(type = InvalidSituationActionException.class, handler = FenixErrorExceptionHandler.class) })
 public class CreateReimbursementGuideDispatchAction extends FenixDispatchAction {
 
-    @Input
-    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-	    throws FenixActionException, FenixFilterException {
+	@Input
+	public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+			throws FenixActionException, FenixFilterException {
 
-	IUserView userView = UserView.getUser();
+		IUserView userView = UserView.getUser();
 
-	Integer guideNumber = new Integer(this.getFromRequest("number", request));
-	Integer guideYear = new Integer(this.getFromRequest("year", request));
-	Integer guideVersion = new Integer(this.getFromRequest("version", request));
+		Integer guideNumber = new Integer(this.getFromRequest("number", request));
+		Integer guideYear = new Integer(this.getFromRequest("year", request));
+		Integer guideVersion = new Integer(this.getFromRequest("version", request));
 
-	InfoGuide infoGuide = null;
+		InfoGuide infoGuide = null;
 
-	Object args[] = { guideNumber, guideYear, guideVersion };
-	try {
-	    infoGuide = (InfoGuide) ServiceUtils.executeService("ChooseGuide", args);
+		Object args[] = { guideNumber, guideYear, guideVersion };
+		try {
+			infoGuide = (InfoGuide) ServiceUtils.executeService("ChooseGuide", args);
 
-	    request.setAttribute(PresentationConstants.GUIDE, infoGuide);
-	} catch (FenixServiceException e) {
-	    throw new FenixActionException(e);
+			request.setAttribute(PresentationConstants.GUIDE, infoGuide);
+		} catch (FenixServiceException e) {
+			throw new FenixActionException(e);
+		}
+
+		if (infoGuide.getInfoGuideSituation().getSituation().equals(GuideState.PAYED)) {
+			return mapping.findForward("start");
+		}
+
+		throw new InvalidGuideSituationActionException(mapping.findForward("error"));
+
 	}
 
-	if (infoGuide.getInfoGuideSituation().getSituation().equals(GuideState.PAYED)) {
-	    return mapping.findForward("start");
+	public ActionForward create(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+			throws FenixActionException, FenixFilterException {
+		IUserView userView = UserView.getUser();
+		DynaActionForm createReimbursementGuideForm = (DynaActionForm) form;
+
+		Double[] valuesList = (Double[]) createReimbursementGuideForm.get("values");
+		String[] justificationsList = (String[]) createReimbursementGuideForm.get("justifications");
+		String remarks = (String) createReimbursementGuideForm.get("remarks");
+		Integer number = (Integer) createReimbursementGuideForm.get("number");
+		Integer version = (Integer) createReimbursementGuideForm.get("version");
+		Integer year = (Integer) createReimbursementGuideForm.get("year");
+
+		try {
+			Object args[] = { number, year, version };
+			InfoGuide infoGuide = (InfoGuide) ServiceUtils.executeService("ChooseGuide", args);
+
+			if (infoGuide.getInfoGuideEntries().size() != valuesList.length) {
+				throw new FenixActionException("Incoerent guide entries number", mapping.findForward("start"));
+				// HOUSTON, we have a problem...
+			}
+
+			Iterator it = infoGuide.getInfoGuideEntries().iterator();
+			InfoReimbursementGuideEntry infoReimbursementGuideEntry = null;
+			List infoReimbursementGuideEntries = new ArrayList();
+
+			for (int i = 0; i < valuesList.length; i++) {
+				infoReimbursementGuideEntry = new InfoReimbursementGuideEntry();
+				infoReimbursementGuideEntry.setInfoGuideEntry((InfoGuideEntry) it.next());
+				infoReimbursementGuideEntry.setJustification(justificationsList[i]);
+				infoReimbursementGuideEntry.setValue(valuesList[i]);
+
+				if ((justificationsList[i].length() > 0) && (valuesList[i].doubleValue() > 0)) {
+					infoReimbursementGuideEntries.add(infoReimbursementGuideEntry);
+				}
+			}
+
+			if (infoReimbursementGuideEntries.size() == 0) {
+				throw new NoEntryChosenActionException(); // ,mapping.findForward
+				// ("error")
+			}
+
+			Integer reimbursementGuideID =
+					CreateReimbursementGuide.run(infoGuide.getIdInternal(), remarks, infoReimbursementGuideEntries, userView);
+
+			request.setAttribute(PresentationConstants.REIMBURSEMENT_GUIDE, reimbursementGuideID);
+
+		} catch (FenixServiceException e) {
+			throw new FenixActionException(e.getMessage(), mapping.findForward("start"));
+		}
+
+		return mapping.findForward("success");
 	}
 
-	throw new InvalidGuideSituationActionException(mapping.findForward("error"));
-
-    }
-
-    public ActionForward create(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-	    throws FenixActionException, FenixFilterException {
-	IUserView userView = UserView.getUser();
-	DynaActionForm createReimbursementGuideForm = (DynaActionForm) form;
-
-	Double[] valuesList = (Double[]) createReimbursementGuideForm.get("values");
-	String[] justificationsList = (String[]) createReimbursementGuideForm.get("justifications");
-	String remarks = (String) createReimbursementGuideForm.get("remarks");
-	Integer number = (Integer) createReimbursementGuideForm.get("number");
-	Integer version = (Integer) createReimbursementGuideForm.get("version");
-	Integer year = (Integer) createReimbursementGuideForm.get("year");
-
-	try {
-	    Object args[] = { number, year, version };
-	    InfoGuide infoGuide = (InfoGuide) ServiceUtils.executeService("ChooseGuide", args);
-
-	    if (infoGuide.getInfoGuideEntries().size() != valuesList.length)
-		throw new FenixActionException("Incoerent guide entries number", mapping.findForward("start"));
-	    // HOUSTON, we have a problem...
-
-	    Iterator it = infoGuide.getInfoGuideEntries().iterator();
-	    InfoReimbursementGuideEntry infoReimbursementGuideEntry = null;
-	    List infoReimbursementGuideEntries = new ArrayList();
-
-	    for (int i = 0; i < valuesList.length; i++) {
-		infoReimbursementGuideEntry = new InfoReimbursementGuideEntry();
-		infoReimbursementGuideEntry.setInfoGuideEntry((InfoGuideEntry) it.next());
-		infoReimbursementGuideEntry.setJustification(justificationsList[i]);
-		infoReimbursementGuideEntry.setValue(valuesList[i]);
-
-		if ((justificationsList[i].length() > 0) && (valuesList[i].doubleValue() > 0))
-		    infoReimbursementGuideEntries.add(infoReimbursementGuideEntry);
-	    }
-
-	    if (infoReimbursementGuideEntries.size() == 0)
-		throw new NoEntryChosenActionException(); // ,mapping.findForward
-	    // ("error")
-
-	    Integer reimbursementGuideID = CreateReimbursementGuide.run(infoGuide.getIdInternal(), remarks,
-		    infoReimbursementGuideEntries, userView);
-
-	    request.setAttribute(PresentationConstants.REIMBURSEMENT_GUIDE, reimbursementGuideID);
-
-	} catch (FenixServiceException e) {
-	    throw new FenixActionException(e.getMessage(), mapping.findForward("start"));
+	private String getFromRequest(String parameter, HttpServletRequest request) {
+		String parameterString = request.getParameter(parameter);
+		if (parameterString == null) {
+			parameterString = (String) request.getAttribute(parameter);
+		}
+		return parameterString;
 	}
-
-	return mapping.findForward("success");
-    }
-
-    private String getFromRequest(String parameter, HttpServletRequest request) {
-	String parameterString = request.getParameter(parameter);
-	if (parameterString == null) {
-	    parameterString = (String) request.getAttribute(parameter);
-	}
-	return parameterString;
-    }
 
 }

@@ -20,16 +20,16 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class ReadCurricularCourseByOIdService extends FenixService {
 
-    @Service
-    public static SiteView run(Integer curricularCourseId) throws FenixServiceException {
-	CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(curricularCourseId);
+	@Service
+	public static SiteView run(Integer curricularCourseId) throws FenixServiceException {
+		CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(curricularCourseId);
 
-	InfoCurricularCourse infoCurricularCourse = InfoCurricularCourse.newInfoFromDomain(curricularCourse);
+		InfoCurricularCourse infoCurricularCourse = InfoCurricularCourse.newInfoFromDomain(curricularCourse);
 
-	SiteView siteView = new SiteView(infoCurricularCourse);
+		SiteView siteView = new SiteView(infoCurricularCourse);
 
-	return siteView;
+		return siteView;
 
-    }
+	}
 
 }

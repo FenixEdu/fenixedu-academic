@@ -11,24 +11,24 @@ import net.sourceforge.fenixedu.domain.curricularRules.CurricularRulesManager;
 
 public class EditCurricularRule extends FenixService {
 
-    public void run(Integer curricularRuleID, Integer beginExecutionPeriodID, Integer endExecutionPeriodID)
-	    throws FenixServiceException {
+	public void run(Integer curricularRuleID, Integer beginExecutionPeriodID, Integer endExecutionPeriodID)
+			throws FenixServiceException {
 
-	final CurricularRule curricularRule = rootDomainObject.readCurricularRuleByOID(curricularRuleID);
-	if (curricularRule == null) {
-	    throw new FenixServiceException("error.noCurricularRule");
+		final CurricularRule curricularRule = rootDomainObject.readCurricularRuleByOID(curricularRuleID);
+		if (curricularRule == null) {
+			throw new FenixServiceException("error.noCurricularRule");
+		}
+
+		final ExecutionSemester beginExecutionPeriod;
+		if (beginExecutionPeriodID == null) {
+			beginExecutionPeriod = ExecutionSemester.readActualExecutionSemester();
+		} else {
+			beginExecutionPeriod = rootDomainObject.readExecutionSemesterByOID(beginExecutionPeriodID);
+		}
+
+		final ExecutionSemester endExecutionPeriod =
+				(endExecutionPeriodID == null) ? null : rootDomainObject.readExecutionSemesterByOID(endExecutionPeriodID);
+
+		CurricularRulesManager.editCurricularRule(curricularRule, beginExecutionPeriod, endExecutionPeriod);
 	}
-
-	final ExecutionSemester beginExecutionPeriod;
-	if (beginExecutionPeriodID == null) {
-	    beginExecutionPeriod = ExecutionSemester.readActualExecutionSemester();
-	} else {
-	    beginExecutionPeriod = rootDomainObject.readExecutionSemesterByOID(beginExecutionPeriodID);
-	}
-
-	final ExecutionSemester endExecutionPeriod = (endExecutionPeriodID == null) ? null : rootDomainObject
-		.readExecutionSemesterByOID(endExecutionPeriodID);
-
-	CurricularRulesManager.editCurricularRule(curricularRule, beginExecutionPeriod, endExecutionPeriod);
-    }
 }

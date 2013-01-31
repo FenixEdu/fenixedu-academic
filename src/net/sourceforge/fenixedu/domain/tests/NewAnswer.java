@@ -13,66 +13,66 @@ import org.joda.time.DateTime;
 
 public class NewAnswer extends NewAnswer_Base {
 
-    public NewAnswer() {
-	super();
+	public NewAnswer() {
+		super();
 
-	this.setRootDomainObject(RootDomainObject.getInstance());
-	this.setConcreteAnswer(new NullAnswer());
-    }
-
-    public NewAnswer(NewAtomicQuestion atomicQuestion, Person person) {
-	this();
-
-	this.setAtomicQuestion(atomicQuestion);
-	this.setPerson(person);
-    }
-
-    public void delete() {
-	this.removeAtomicQuestion();
-	this.removePerson();
-	this.removeRootDomainObject();
-
-	super.deleteDomainObject();
-    }
-
-    @Override
-    public void setConcreteAnswer(ConcreteAnswer concreteAnswer) {
-	super.setConcreteAnswer(concreteAnswer);
-
-	if (concreteAnswer instanceof NullAnswer) {
-	    return;
+		this.setRootDomainObject(RootDomainObject.getInstance());
+		this.setConcreteAnswer(new NullAnswer());
 	}
 
-	Predicate validator = this.getAtomicQuestion().getValidator();
+	public NewAnswer(NewAtomicQuestion atomicQuestion, Person person) {
+		this();
 
-	if (validator != null && !validator.evaluate(this.getAtomicQuestion(), this.getPerson())) {
-	    throw new DomainException("validator.failed");
-	}
-    }
-
-    public TestsGrade getCalculatedGrade() {
-	if (this.getPercentage() == null) {
-	    return new TestsGrade(0, this.getAtomicQuestion().getGrade().getScale());
+		this.setAtomicQuestion(atomicQuestion);
+		this.setPerson(person);
 	}
 
-	return new TestsGrade((this.getPercentage().doubleValue() / ((double) 100))
-		* this.getAtomicQuestion().getGrade().getValue(), this.getAtomicQuestion().getGrade().getScale());
-    }
+	public void delete() {
+		this.removeAtomicQuestion();
+		this.removePerson();
+		this.removeRootDomainObject();
 
-    public String getStringAnswer() {
-	return (String) this.getConcreteAnswer().getAnswer();
-    }
+		super.deleteDomainObject();
+	}
 
-    public Double getNumericAnswer() {
-	return (Double) this.getConcreteAnswer().getAnswer();
-    }
+	@Override
+	public void setConcreteAnswer(ConcreteAnswer concreteAnswer) {
+		super.setConcreteAnswer(concreteAnswer);
 
-    public DateTime getDateAnswer() {
-	return (DateTime) this.getConcreteAnswer().getAnswer();
-    }
+		if (concreteAnswer instanceof NullAnswer) {
+			return;
+		}
 
-    public List<NewChoice> getMultipleChoiceAnswer() {
-	return (List<NewChoice>) this.getConcreteAnswer().getAnswer();
-    }
+		Predicate validator = this.getAtomicQuestion().getValidator();
+
+		if (validator != null && !validator.evaluate(this.getAtomicQuestion(), this.getPerson())) {
+			throw new DomainException("validator.failed");
+		}
+	}
+
+	public TestsGrade getCalculatedGrade() {
+		if (this.getPercentage() == null) {
+			return new TestsGrade(0, this.getAtomicQuestion().getGrade().getScale());
+		}
+
+		return new TestsGrade((this.getPercentage().doubleValue() / (100)) * this.getAtomicQuestion().getGrade().getValue(), this
+				.getAtomicQuestion().getGrade().getScale());
+	}
+
+	public String getStringAnswer() {
+		return (String) this.getConcreteAnswer().getAnswer();
+	}
+
+	public Double getNumericAnswer() {
+		return (Double) this.getConcreteAnswer().getAnswer();
+	}
+
+	public DateTime getDateAnswer() {
+		return (DateTime) this.getConcreteAnswer().getAnswer();
+	}
+
+	public List<NewChoice> getMultipleChoiceAnswer() {
+		return (List<NewChoice>) this.getConcreteAnswer().getAnswer();
+	}
 
 }

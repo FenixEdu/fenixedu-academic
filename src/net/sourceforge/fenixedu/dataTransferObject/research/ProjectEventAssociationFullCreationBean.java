@@ -7,35 +7,35 @@ import net.sourceforge.fenixedu.domain.research.project.ProjectEventAssociation.
 
 public class ProjectEventAssociationFullCreationBean implements Serializable {
 
-    private String role;
-    private String eventName;
-    private String eventType;
+	private String role;
+	private String eventName;
+	private String eventType;
 
-    public ProjectEventAssociationFullCreationBean() {
-	eventType = EventType.getDefaultType().toString();
-    }
+	public ProjectEventAssociationFullCreationBean() {
+		eventType = EventType.getDefaultType().toString();
+	}
 
-    public ProjectEventAssociationRole getRole() {
-	return ProjectEventAssociationRole.valueOf(role);
-    }
+	public ProjectEventAssociationRole getRole() {
+		return ProjectEventAssociationRole.valueOf(role);
+	}
 
-    public void setRole(ProjectEventAssociationRole associationRole) {
-	this.role = associationRole.toString();
-    }
+	public void setRole(ProjectEventAssociationRole associationRole) {
+		this.role = associationRole.toString();
+	}
 
-    public String getEventName() {
-	return eventName;
-    }
+	public String getEventName() {
+		return eventName;
+	}
 
-    public void setEventName(String name) {
-	this.eventName = name;
-    }
+	public void setEventName(String name) {
+		this.eventName = name;
+	}
 
-    public EventType getEventType() {
-	return EventType.valueOf(eventType);
-    }
+	public EventType getEventType() {
+		return EventType.valueOf(eventType);
+	}
 
-    public void setEventType(EventType eventType) {
-	this.eventType = eventType.toString();
-    }
+	public void setEventType(EventType eventType) {
+		this.eventType = eventType.toString();
+	}
 }

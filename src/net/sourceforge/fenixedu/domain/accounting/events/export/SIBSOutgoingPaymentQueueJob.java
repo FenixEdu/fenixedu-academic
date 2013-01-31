@@ -15,43 +15,43 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class SIBSOutgoingPaymentQueueJob extends SIBSOutgoingPaymentQueueJob_Base {
 
-    public SIBSOutgoingPaymentQueueJob(DateTime lastSuccessfulSentPaymentFileDate) {
-	super();
-	setLastSuccessfulSentPaymentFileDate(lastSuccessfulSentPaymentFileDate);
-    }
+	public SIBSOutgoingPaymentQueueJob(DateTime lastSuccessfulSentPaymentFileDate) {
+		super();
+		setLastSuccessfulSentPaymentFileDate(lastSuccessfulSentPaymentFileDate);
+	}
 
-    @Override
-    public QueueJobResult execute() throws Exception {
-	new SIBSOutgoingPaymentFile(getLastSuccessfulSentPaymentFileDate());
-	QueueJobResult queueJobResult = new QueueJobResult();
-	queueJobResult.setDone(true);
-	return queueJobResult;
-    }
+	@Override
+	public QueueJobResult execute() throws Exception {
+		new SIBSOutgoingPaymentFile(getLastSuccessfulSentPaymentFileDate());
+		QueueJobResult queueJobResult = new QueueJobResult();
+		queueJobResult.setDone(true);
+		return queueJobResult;
+	}
 
-    @Service
-    public static SIBSOutgoingPaymentQueueJob launchJob(DateTime lastSuccessfulSentPaymentFileDate) {
-	return new SIBSOutgoingPaymentQueueJob(lastSuccessfulSentPaymentFileDate);
-    }
+	@Service
+	public static SIBSOutgoingPaymentQueueJob launchJob(DateTime lastSuccessfulSentPaymentFileDate) {
+		return new SIBSOutgoingPaymentQueueJob(lastSuccessfulSentPaymentFileDate);
+	}
 
-    public static List<SIBSOutgoingPaymentQueueJob> readAllSIBSOutgoingPaymentQueueJobs() {
-	return new ArrayList<SIBSOutgoingPaymentQueueJob>(RootDomainObject
-		.readAllDomainObjects(SIBSOutgoingPaymentQueueJob.class));
-    }
+	public static List<SIBSOutgoingPaymentQueueJob> readAllSIBSOutgoingPaymentQueueJobs() {
+		return new ArrayList<SIBSOutgoingPaymentQueueJob>(
+				RootDomainObject.readAllDomainObjects(SIBSOutgoingPaymentQueueJob.class));
+	}
 
-    public static SIBSOutgoingPaymentQueueJob getQueueJobNotDoneAndNotCancelled() {
-	List<SIBSOutgoingPaymentQueueJob> jobList = readAllSIBSOutgoingPaymentQueueJobs();
+	public static SIBSOutgoingPaymentQueueJob getQueueJobNotDoneAndNotCancelled() {
+		List<SIBSOutgoingPaymentQueueJob> jobList = readAllSIBSOutgoingPaymentQueueJobs();
 
-	return (SIBSOutgoingPaymentQueueJob) CollectionUtils.find(jobList, new Predicate() {
+		return (SIBSOutgoingPaymentQueueJob) CollectionUtils.find(jobList, new Predicate() {
 
-	    @Override
-	    public boolean evaluate(Object arg0) {
-		return ((QueueJob) arg0).getIsNotDoneAndNotCancelled();
-	    }
+			@Override
+			public boolean evaluate(Object arg0) {
+				return ((QueueJob) arg0).getIsNotDoneAndNotCancelled();
+			}
 
-	});
-    }
+		});
+	}
 
-    public static boolean hasExportationQueueJobToRun() {
-	return getQueueJobNotDoneAndNotCancelled() != null;
-    }
+	public static boolean hasExportationQueueJobToRun() {
+		return getQueueJobNotDoneAndNotCancelled() != null;
+	}
 }

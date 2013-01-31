@@ -8,10 +8,10 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class LerSala extends FenixService {
 
-    @Service
-    public static Object run(RoomKey keySala) {
-	final AllocatableSpace sala = AllocatableSpace.findAllocatableSpaceForEducationByName(keySala.getNomeSala());
-	return sala == null ? null : InfoRoom.newInfoFromDomain(sala);
-    }
+	@Service
+	public static Object run(RoomKey keySala) {
+		final AllocatableSpace sala = AllocatableSpace.findAllocatableSpaceForEducationByName(keySala.getNomeSala());
+		return sala == null ? null : InfoRoom.newInfoFromDomain(sala);
+	}
 
 }

@@ -46,498 +46,499 @@ import pt.ist.fenixWebFramework.security.accessControl.Checked;
 
 public class GratuityEventWithPaymentPlan extends GratuityEventWithPaymentPlan_Base {
 
-    protected GratuityEventWithPaymentPlan() {
-	super();
-    }
-
-    public GratuityEventWithPaymentPlan(AdministrativeOffice administrativeOffice, Person person,
-	    StudentCurricularPlan studentCurricularPlan, ExecutionYear executionYear) {
-	this();
-	init(administrativeOffice, person, studentCurricularPlan, executionYear);
-
-    }
-
-    @Override
-    protected void init(AdministrativeOffice administrativeOffice, Person person, StudentCurricularPlan studentCurricularPlan,
-	    ExecutionYear executionYear) {
-	super.init(administrativeOffice, person, studentCurricularPlan, executionYear);
-
-	configuratePaymentPlan();
-    }
-
-    @Override
-    public void setGratuityPaymentPlan(final PaymentPlan gratuityPaymentPlan) {
-	throw new DomainException("error.GratuityEventWithPaymentPlan.do.not.use.this.method");
-    }
-
-    @Checked("RolePredicates.MANAGER_PREDICATE")
-    public void changeGratuityPaymentPlan(final PaymentPlan paymentPlan) {
-	if (paymentPlan instanceof GratuityPaymentPlan) {
-	    setGratuityPaymentPlan((GratuityPaymentPlan) paymentPlan);
-	} else if (paymentPlan instanceof CustomGratuityPaymentPlan) {
-	    setGratuityPaymentPlan((CustomGratuityPaymentPlan) paymentPlan);
-	} else {
-	    throw new DomainException("error.GratuityEventWithPaymentPlan.unexpected.payment.plan.type");
+	protected GratuityEventWithPaymentPlan() {
+		super();
 	}
-    }
 
-    @Checked("RolePredicates.MANAGER_PREDICATE")
-    public void setGratuityPaymentPlan(final GratuityPaymentPlan paymentPlan) {
-	if (paymentPlan != null) {
-	    ensureServiceAgreement();
-	    super.setGratuityPaymentPlan(paymentPlan);
+	public GratuityEventWithPaymentPlan(AdministrativeOffice administrativeOffice, Person person,
+			StudentCurricularPlan studentCurricularPlan, ExecutionYear executionYear) {
+		this();
+		init(administrativeOffice, person, studentCurricularPlan, executionYear);
+
 	}
-    }
 
-    @Checked("RolePredicates.MANAGER_PREDICATE")
-    public void setGratuityPaymentPlan(final CustomGratuityPaymentPlan paymentPlan) {
-	if (paymentPlan != null) {
-	    ensureServiceAgreement();
-	    super.setGratuityPaymentPlan(paymentPlan);
+	@Override
+	protected void init(AdministrativeOffice administrativeOffice, Person person, StudentCurricularPlan studentCurricularPlan,
+			ExecutionYear executionYear) {
+		super.init(administrativeOffice, person, studentCurricularPlan, executionYear);
+
+		configuratePaymentPlan();
 	}
-    }
 
-    public void configuratePaymentPlan() {
-	ensureServiceAgreement();
-
-	if (!hasGratuityPaymentPlan()) {
-	    super.setGratuityPaymentPlan(getDegreeCurricularPlanServiceAgreement().getGratuityPaymentPlanFor(
-		    getStudentCurricularPlan(), getExecutionYear()));
+	@Override
+	public void setGratuityPaymentPlan(final PaymentPlan gratuityPaymentPlan) {
+		throw new DomainException("error.GratuityEventWithPaymentPlan.do.not.use.this.method");
 	}
-    }
 
-    private void ensureServiceAgreement() {
-	if (getDegreeCurricularPlanServiceAgreement() == null) {
-	    new DegreeCurricularPlanServiceAgreement(getPerson(),
-		    DegreeCurricularPlanServiceAgreementTemplate.readByDegreeCurricularPlan(getStudentCurricularPlan()
-			    .getDegreeCurricularPlan()));
-	}
-    }
-
-    public void configurateCustomPaymentPlan() {
-	if (!hasCustomGratuityPaymentPlan()) {
-	    ensureServiceAgreement();
-	    super.setGratuityPaymentPlan(new CustomGratuityPaymentPlan(getExecutionYear(),
-		    getDegreeCurricularPlanServiceAgreement()));
-	}
-    }
-
-    public void configurateDefaultPaymentPlan() {
-	if (!hasDefaultGratuityPaymentPlan()) {
-	    ensureServiceAgreement();
-	    final GratuityPaymentPlan paymentPlan = getDegreeCurricularPlanServiceAgreement().getDefaultGratuityPaymentPlan(
-		    getExecutionYear());
-	    if (paymentPlan == null) {
-		throw new DomainException("error.GratuityEventWithPaymentPlan.cannot.set.null.payment.plan");
-	    }
-	    super.setGratuityPaymentPlan(paymentPlan);
-	}
-    }
-
-    @Override
-    protected List<AccountingEventPaymentCode> createPaymentCodes() {
-	return createMissingPaymentCodes();
-    }
-
-    private List<AccountingEventPaymentCode> createMissingPaymentCodes() {
-	final List<AccountingEventPaymentCode> result = new ArrayList<AccountingEventPaymentCode>();
-	for (final EntryDTO entryDTO : calculateEntries()) {
-
-	    if (!hasAnyNonProcessedPaymentCodeFor(entryDTO)) {
-		if (entryDTO instanceof EntryWithInstallmentDTO) {
-		    result.add(createInstallmentPaymentCode((EntryWithInstallmentDTO) entryDTO, getPerson().getStudent()));
+	@Checked("RolePredicates.MANAGER_PREDICATE")
+	public void changeGratuityPaymentPlan(final PaymentPlan paymentPlan) {
+		if (paymentPlan instanceof GratuityPaymentPlan) {
+			setGratuityPaymentPlan((GratuityPaymentPlan) paymentPlan);
+		} else if (paymentPlan instanceof CustomGratuityPaymentPlan) {
+			setGratuityPaymentPlan((CustomGratuityPaymentPlan) paymentPlan);
 		} else {
-		    result.add(createAccountingEventPaymentCode(entryDTO, getPerson().getStudent()));
+			throw new DomainException("error.GratuityEventWithPaymentPlan.unexpected.payment.plan.type");
 		}
-	    }
-
 	}
-	return result;
-    }
 
-    private boolean hasAnyNonProcessedPaymentCodeFor(final EntryDTO entryDTO) {
-	for (final AccountingEventPaymentCode paymentCode : getNonProcessedPaymentCodes()) {
-	    if (paymentCode instanceof InstallmentPaymentCode) {
-		if (entryDTO instanceof EntryWithInstallmentDTO) {
-		    final InstallmentPaymentCode installmentPaymentCode = (InstallmentPaymentCode) paymentCode;
-
-		    if (installmentPaymentCode.getInstallment() == ((EntryWithInstallmentDTO) entryDTO).getInstallment()) {
-			return true;
-		    }
+	@Checked("RolePredicates.MANAGER_PREDICATE")
+	public void setGratuityPaymentPlan(final GratuityPaymentPlan paymentPlan) {
+		if (paymentPlan != null) {
+			ensureServiceAgreement();
+			super.setGratuityPaymentPlan(paymentPlan);
 		}
-	    } else {
-		if (!(entryDTO instanceof EntryWithInstallmentDTO)) {
-		    return true;
+	}
+
+	@Checked("RolePredicates.MANAGER_PREDICATE")
+	public void setGratuityPaymentPlan(final CustomGratuityPaymentPlan paymentPlan) {
+		if (paymentPlan != null) {
+			ensureServiceAgreement();
+			super.setGratuityPaymentPlan(paymentPlan);
 		}
-	    }
 	}
 
-	return false;
-    }
+	public void configuratePaymentPlan() {
+		ensureServiceAgreement();
 
-    @Override
-    protected List<AccountingEventPaymentCode> updatePaymentCodes() {
-	createMissingPaymentCodes();
-
-	final List<EntryDTO> entryDTOs = calculateEntries();
-	final List<AccountingEventPaymentCode> result = new ArrayList<AccountingEventPaymentCode>();
-
-	for (final AccountingEventPaymentCode paymentCode : getNonProcessedPaymentCodes()) {
-	    final EntryDTO entryDTO = findEntryDTOForPaymentCode(entryDTOs, paymentCode);
-	    if (entryDTO == null) {
-		paymentCode.cancel();
-		continue;
-	    }
-
-	    if (paymentCode instanceof InstallmentPaymentCode) {
-		final InstallmentPaymentCode installmentPaymentCode = (InstallmentPaymentCode) paymentCode;
-		paymentCode.update(new YearMonthDay(),
-			calculateInstallmentPaymentCodeEndDate(installmentPaymentCode.getInstallment()),
-			entryDTO.getAmountToPay(), entryDTO.getAmountToPay());
-		result.add(paymentCode);
-	    } else {
-		paymentCode.update(new YearMonthDay(), calculateFullPaymentCodeEndDate(), entryDTO.getAmountToPay(),
-			entryDTO.getAmountToPay());
-
-		result.add(paymentCode);
-	    }
-
-	}
-
-	return result;
-    }
-
-    private YearMonthDay calculateInstallmentPaymentCodeEndDate(final Installment installment) {
-	final YearMonthDay today = new YearMonthDay();
-	final YearMonthDay installmentEndDate = new YearMonthDay(installment.getEndDate(this));
-	return today.isBefore(installmentEndDate) ? installmentEndDate : calculateNextEndDate(today);
-    }
-
-    private YearMonthDay calculateFullPaymentCodeEndDate() {
-	final YearMonthDay today = new YearMonthDay();
-	final LocalDate endDate = getFirstInstallment().getEndDate(this);
-	final YearMonthDay totalEndDate = new YearMonthDay(getFirstInstallment().getEndDate(this).getYear(),
-		getFirstInstallment().getEndDate(this).getMonthOfYear(), getFirstInstallment().getEndDate(this).getDayOfMonth());
-	return today.isBefore(totalEndDate) ? totalEndDate : calculateNextEndDate(today);
-    }
-
-    private EntryDTO findEntryDTOForPaymentCode(List<EntryDTO> entryDTOs, AccountingEventPaymentCode paymentCode) {
-
-	if (paymentCode instanceof InstallmentPaymentCode) {
-	    for (final EntryDTO entryDTO : entryDTOs) {
-		if (entryDTO instanceof EntryWithInstallmentDTO) {
-		    if (((InstallmentPaymentCode) paymentCode).getInstallment() == ((EntryWithInstallmentDTO) entryDTO)
-			    .getInstallment()) {
-			return entryDTO;
-		    }
+		if (!hasGratuityPaymentPlan()) {
+			super.setGratuityPaymentPlan(getDegreeCurricularPlanServiceAgreement().getGratuityPaymentPlanFor(
+					getStudentCurricularPlan(), getExecutionYear()));
 		}
-	    }
+	}
 
-	} else {
-	    for (final EntryDTO entryDTO : entryDTOs) {
-		if (!(entryDTO instanceof EntryWithInstallmentDTO)) {
-		    return entryDTO;
+	private void ensureServiceAgreement() {
+		if (getDegreeCurricularPlanServiceAgreement() == null) {
+			new DegreeCurricularPlanServiceAgreement(getPerson(),
+					DegreeCurricularPlanServiceAgreementTemplate.readByDegreeCurricularPlan(getStudentCurricularPlan()
+							.getDegreeCurricularPlan()));
 		}
-	    }
 	}
 
-	return null;
-
-	// throw new DomainException(
-	// "error.accounting.events.gratuity.GratuityEventWithPaymentPlan.paymentCode.does.not.have.corresponding.entryDTO.because.data.is.corrupted"
-	// );
-
-    }
-
-    public void changeGratuityTotalPaymentCodeState(final PaymentCodeState paymentCodeState) {
-	for (final AccountingEventPaymentCode accountingEventPaymentCode : getNonProcessedPaymentCodes()) {
-	    if (!(accountingEventPaymentCode instanceof InstallmentPaymentCode)) {
-		accountingEventPaymentCode.setState(paymentCodeState);
-	    }
-	}
-    }
-
-    public void changeInstallmentPaymentCodeState(final Installment installment, final PaymentCodeState paymentCodeState) {
-	for (final AccountingEventPaymentCode paymentCode : getNonProcessedPaymentCodes()) {
-	    if (paymentCode instanceof InstallmentPaymentCode
-		    && ((InstallmentPaymentCode) paymentCode).getInstallment() == installment) {
-		paymentCode.setState(paymentCodeState);
-	    }
+	public void configurateCustomPaymentPlan() {
+		if (!hasCustomGratuityPaymentPlan()) {
+			ensureServiceAgreement();
+			super.setGratuityPaymentPlan(new CustomGratuityPaymentPlan(getExecutionYear(),
+					getDegreeCurricularPlanServiceAgreement()));
+		}
 	}
 
-	// If at least one installment is payed, we assume that the payment
-	// will be based on installments
-	changeGratuityTotalPaymentCodeState(PaymentCodeState.CANCELLED);
-    }
-
-    private AccountingEventPaymentCode createAccountingEventPaymentCode(final EntryDTO entryDTO, final Student student) {
-	AccountingEventPaymentCode accountingEventPaymentCode = findEquivalentPaymentCodeInStudentCandidacy(entryDTO,
-		AccountingEventPaymentCode.class, student);
-
-	if (accountingEventPaymentCode != null) {
-	    accountingEventPaymentCode.setAccountingEvent(this);
-	    return accountingEventPaymentCode;
+	public void configurateDefaultPaymentPlan() {
+		if (!hasDefaultGratuityPaymentPlan()) {
+			ensureServiceAgreement();
+			final GratuityPaymentPlan paymentPlan =
+					getDegreeCurricularPlanServiceAgreement().getDefaultGratuityPaymentPlan(getExecutionYear());
+			if (paymentPlan == null) {
+				throw new DomainException("error.GratuityEventWithPaymentPlan.cannot.set.null.payment.plan");
+			}
+			super.setGratuityPaymentPlan(paymentPlan);
+		}
 	}
 
-	return AccountingEventPaymentCode.create(PaymentCodeType.GRATUITY_FIRST_INSTALLMENT, new YearMonthDay(),
-		calculateFullPaymentCodeEndDate(), this, entryDTO.getAmountToPay(), entryDTO.getAmountToPay(),
-		student.getPerson());
-    }
-
-    private InstallmentPaymentCode createInstallmentPaymentCode(final EntryWithInstallmentDTO entry, final Student student) {
-	AccountingEventPaymentCode accountingEventPaymentCode = findEquivalentPaymentCodeInStudentCandidacy(entry,
-		InstallmentPaymentCode.class, student);
-
-	if (accountingEventPaymentCode != null) {
-	    accountingEventPaymentCode.setAccountingEvent(this);
-	    return (InstallmentPaymentCode) accountingEventPaymentCode;
+	@Override
+	protected List<AccountingEventPaymentCode> createPaymentCodes() {
+		return createMissingPaymentCodes();
 	}
 
-	return InstallmentPaymentCode.create(PaymentCodeType.GRATUITY_FIRST_INSTALLMENT, new YearMonthDay(),
-		calculateInstallmentPaymentCodeEndDate(entry.getInstallment()), this, entry.getInstallment(),
-		entry.getAmountToPay(), entry.getAmountToPay(), student);
-    }
+	private List<AccountingEventPaymentCode> createMissingPaymentCodes() {
+		final List<AccountingEventPaymentCode> result = new ArrayList<AccountingEventPaymentCode>();
+		for (final EntryDTO entryDTO : calculateEntries()) {
 
-    private AccountingEventPaymentCode findEquivalentPaymentCodeInStudentCandidacy(final EntryDTO entry,
-	    final Class<? extends AccountingEventPaymentCode> whatForClazz, final Student student) {
-	DegreeCurricularPlan degreeCurricularPlan = this.getStudentCurricularPlan().getDegreeCurricularPlan();
-	ExecutionDegree executionDegree = degreeCurricularPlan.getExecutionDegreeByAcademicInterval(getExecutionYear()
-		.getAcademicInterval());
-	StudentCandidacy studentCandidacy = student.getPerson().getStudentCandidacyForExecutionDegree(executionDegree);
+			if (!hasAnyNonProcessedPaymentCodeFor(entryDTO)) {
+				if (entryDTO instanceof EntryWithInstallmentDTO) {
+					result.add(createInstallmentPaymentCode((EntryWithInstallmentDTO) entryDTO, getPerson().getStudent()));
+				} else {
+					result.add(createAccountingEventPaymentCode(entryDTO, getPerson().getStudent()));
+				}
+			}
 
-	if (studentCandidacy == null) {
-	    return null;
+		}
+		return result;
 	}
 
-	for (PaymentCode paymentCode : studentCandidacy.getAvailablePaymentCodes()) {
-	    if (!paymentCode.isNew()) {
-		continue;
-	    }
+	private boolean hasAnyNonProcessedPaymentCodeFor(final EntryDTO entryDTO) {
+		for (final AccountingEventPaymentCode paymentCode : getNonProcessedPaymentCodes()) {
+			if (paymentCode instanceof InstallmentPaymentCode) {
+				if (entryDTO instanceof EntryWithInstallmentDTO) {
+					final InstallmentPaymentCode installmentPaymentCode = (InstallmentPaymentCode) paymentCode;
 
-	    if (!PaymentCodeType.GRATUITY_FIRST_INSTALLMENT.equals(paymentCode.getType())) {
-		continue;
-	    }
+					if (installmentPaymentCode.getInstallment() == ((EntryWithInstallmentDTO) entryDTO).getInstallment()) {
+						return true;
+					}
+				}
+			} else {
+				if (!(entryDTO instanceof EntryWithInstallmentDTO)) {
+					return true;
+				}
+			}
+		}
 
-	    if (!whatForClazz.equals(paymentCode.getClass())) {
-		continue;
-	    }
+		return false;
+	}
 
-	    AccountingEventPaymentCode accountingEventPaymentCode = (AccountingEventPaymentCode) paymentCode;
-	    if (accountingEventPaymentCode.hasAccountingEvent()) {
-		continue;
-	    }
+	@Override
+	protected List<AccountingEventPaymentCode> updatePaymentCodes() {
+		createMissingPaymentCodes();
 
-	    if (!(accountingEventPaymentCode instanceof InstallmentPaymentCode)) {
-		return accountingEventPaymentCode;
-	    }
+		final List<EntryDTO> entryDTOs = calculateEntries();
+		final List<AccountingEventPaymentCode> result = new ArrayList<AccountingEventPaymentCode>();
 
-	    InstallmentPaymentCode installmentPaymentCode = (InstallmentPaymentCode) accountingEventPaymentCode;
-	    EntryWithInstallmentDTO installmentEntryDTO = (EntryWithInstallmentDTO) entry;
+		for (final AccountingEventPaymentCode paymentCode : getNonProcessedPaymentCodes()) {
+			final EntryDTO entryDTO = findEntryDTOForPaymentCode(entryDTOs, paymentCode);
+			if (entryDTO == null) {
+				paymentCode.cancel();
+				continue;
+			}
 
-	    if (installmentPaymentCode.getInstallment() == installmentEntryDTO.getInstallment()) {
-		return installmentPaymentCode;
-	    }
+			if (paymentCode instanceof InstallmentPaymentCode) {
+				final InstallmentPaymentCode installmentPaymentCode = (InstallmentPaymentCode) paymentCode;
+				paymentCode.update(new YearMonthDay(),
+						calculateInstallmentPaymentCodeEndDate(installmentPaymentCode.getInstallment()),
+						entryDTO.getAmountToPay(), entryDTO.getAmountToPay());
+				result.add(paymentCode);
+			} else {
+				paymentCode.update(new YearMonthDay(), calculateFullPaymentCodeEndDate(), entryDTO.getAmountToPay(),
+						entryDTO.getAmountToPay());
+
+				result.add(paymentCode);
+			}
+
+		}
+
+		return result;
+	}
+
+	private YearMonthDay calculateInstallmentPaymentCodeEndDate(final Installment installment) {
+		final YearMonthDay today = new YearMonthDay();
+		final YearMonthDay installmentEndDate = new YearMonthDay(installment.getEndDate(this));
+		return today.isBefore(installmentEndDate) ? installmentEndDate : calculateNextEndDate(today);
+	}
+
+	private YearMonthDay calculateFullPaymentCodeEndDate() {
+		final YearMonthDay today = new YearMonthDay();
+		final LocalDate endDate = getFirstInstallment().getEndDate(this);
+		final YearMonthDay totalEndDate =
+				new YearMonthDay(getFirstInstallment().getEndDate(this).getYear(), getFirstInstallment().getEndDate(this)
+						.getMonthOfYear(), getFirstInstallment().getEndDate(this).getDayOfMonth());
+		return today.isBefore(totalEndDate) ? totalEndDate : calculateNextEndDate(today);
+	}
+
+	private EntryDTO findEntryDTOForPaymentCode(List<EntryDTO> entryDTOs, AccountingEventPaymentCode paymentCode) {
+
+		if (paymentCode instanceof InstallmentPaymentCode) {
+			for (final EntryDTO entryDTO : entryDTOs) {
+				if (entryDTO instanceof EntryWithInstallmentDTO) {
+					if (((InstallmentPaymentCode) paymentCode).getInstallment() == ((EntryWithInstallmentDTO) entryDTO)
+							.getInstallment()) {
+						return entryDTO;
+					}
+				}
+			}
+
+		} else {
+			for (final EntryDTO entryDTO : entryDTOs) {
+				if (!(entryDTO instanceof EntryWithInstallmentDTO)) {
+					return entryDTO;
+				}
+			}
+		}
+
+		return null;
+
+		// throw new DomainException(
+		// "error.accounting.events.gratuity.GratuityEventWithPaymentPlan.paymentCode.does.not.have.corresponding.entryDTO.because.data.is.corrupted"
+		// );
 
 	}
 
-	return null;
-    }
-
-    private Installment getFirstInstallment() {
-	return getGratuityPaymentPlan().getFirstInstallment();
-    }
-
-    private Installment getLastInstallment() {
-	return getGratuityPaymentPlan().getLastInstallment();
-    }
-
-    public DegreeCurricularPlanServiceAgreement getDegreeCurricularPlanServiceAgreement() {
-	return (DegreeCurricularPlanServiceAgreement) getPerson().getServiceAgreementFor(getServiceAgreementTemplate());
-
-    }
-
-    @Override
-    public boolean hasInstallments() {
-	return true;
-    }
-
-    public InstallmentPaymentCode getInstallmentPaymentCodeFor(final Installment installment) {
-	for (final AccountingEventPaymentCode paymentCode : calculatePaymentCodes()) {
-	    if (paymentCode instanceof InstallmentPaymentCode
-		    && ((InstallmentPaymentCode) paymentCode).getInstallment() == installment) {
-		return (InstallmentPaymentCode) paymentCode;
-	    }
+	public void changeGratuityTotalPaymentCodeState(final PaymentCodeState paymentCodeState) {
+		for (final AccountingEventPaymentCode accountingEventPaymentCode : getNonProcessedPaymentCodes()) {
+			if (!(accountingEventPaymentCode instanceof InstallmentPaymentCode)) {
+				accountingEventPaymentCode.setState(paymentCodeState);
+			}
+		}
 	}
 
-	return null;
-    }
+	public void changeInstallmentPaymentCodeState(final Installment installment, final PaymentCodeState paymentCodeState) {
+		for (final AccountingEventPaymentCode paymentCode : getNonProcessedPaymentCodes()) {
+			if (paymentCode instanceof InstallmentPaymentCode
+					&& ((InstallmentPaymentCode) paymentCode).getInstallment() == installment) {
+				paymentCode.setState(paymentCodeState);
+			}
+		}
 
-    public AccountingEventPaymentCode getTotalPaymentCode() {
-	for (final AccountingEventPaymentCode paymentCode : calculatePaymentCodes()) {
-	    if (!(paymentCode instanceof InstallmentPaymentCode)) {
-		return paymentCode;
-	    }
+		// If at least one installment is payed, we assume that the payment
+		// will be based on installments
+		changeGratuityTotalPaymentCodeState(PaymentCodeState.CANCELLED);
 	}
 
-	return null;
-    }
+	private AccountingEventPaymentCode createAccountingEventPaymentCode(final EntryDTO entryDTO, final Student student) {
+		AccountingEventPaymentCode accountingEventPaymentCode =
+				findEquivalentPaymentCodeInStudentCandidacy(entryDTO, AccountingEventPaymentCode.class, student);
 
-    @Override
-    protected Set<Entry> internalProcess(User responsibleUser, AccountingEventPaymentCode paymentCode, Money amountToPay,
-	    SibsTransactionDetailDTO transactionDetail) {
-	return internalProcess(responsibleUser, Collections.singletonList(buildEntryDTOFrom(paymentCode, amountToPay)),
-		transactionDetail);
-    }
+		if (accountingEventPaymentCode != null) {
+			accountingEventPaymentCode.setAccountingEvent(this);
+			return accountingEventPaymentCode;
+		}
 
-    private EntryDTO buildEntryDTOFrom(final AccountingEventPaymentCode paymentCode, final Money amountToPay) {
-	if (paymentCode instanceof InstallmentPaymentCode) {
-	    return new EntryWithInstallmentDTO(EntryType.GRATUITY_FEE, this, amountToPay,
-		    ((InstallmentPaymentCode) paymentCode).getInstallment());
-	} else {
-	    return new EntryDTO(EntryType.GRATUITY_FEE, this, amountToPay);
+		return AccountingEventPaymentCode.create(PaymentCodeType.GRATUITY_FIRST_INSTALLMENT, new YearMonthDay(),
+				calculateFullPaymentCodeEndDate(), this, entryDTO.getAmountToPay(), entryDTO.getAmountToPay(),
+				student.getPerson());
 	}
-    }
 
-    private boolean installmentIsInDebtToday(Installment installment) {
-	return installmentIsInDebt(installment) && new YearMonthDay().isAfter(installment.getEndDate());
-    }
+	private InstallmentPaymentCode createInstallmentPaymentCode(final EntryWithInstallmentDTO entry, final Student student) {
+		AccountingEventPaymentCode accountingEventPaymentCode =
+				findEquivalentPaymentCodeInStudentCandidacy(entry, InstallmentPaymentCode.class, student);
 
-    private boolean installmentIsInDebt(Installment installment) {
-	return getGratuityPaymentPlan().isInstallmentInDebt(installment, this, new DateTime(),
-		calculateDiscountPercentage(getGratuityPaymentPlan().calculateOriginalTotalAmount()));
-    }
+		if (accountingEventPaymentCode != null) {
+			accountingEventPaymentCode.setAccountingEvent(this);
+			return (InstallmentPaymentCode) accountingEventPaymentCode;
+		}
 
-    private boolean hasAnyInstallmentInDebtToday() {
-	for (final Installment installment : getInstallments()) {
-	    if (installmentIsInDebtToday(installment)) {
+		return InstallmentPaymentCode.create(PaymentCodeType.GRATUITY_FIRST_INSTALLMENT, new YearMonthDay(),
+				calculateInstallmentPaymentCodeEndDate(entry.getInstallment()), this, entry.getInstallment(),
+				entry.getAmountToPay(), entry.getAmountToPay(), student);
+	}
+
+	private AccountingEventPaymentCode findEquivalentPaymentCodeInStudentCandidacy(final EntryDTO entry,
+			final Class<? extends AccountingEventPaymentCode> whatForClazz, final Student student) {
+		DegreeCurricularPlan degreeCurricularPlan = this.getStudentCurricularPlan().getDegreeCurricularPlan();
+		ExecutionDegree executionDegree =
+				degreeCurricularPlan.getExecutionDegreeByAcademicInterval(getExecutionYear().getAcademicInterval());
+		StudentCandidacy studentCandidacy = student.getPerson().getStudentCandidacyForExecutionDegree(executionDegree);
+
+		if (studentCandidacy == null) {
+			return null;
+		}
+
+		for (PaymentCode paymentCode : studentCandidacy.getAvailablePaymentCodes()) {
+			if (!paymentCode.isNew()) {
+				continue;
+			}
+
+			if (!PaymentCodeType.GRATUITY_FIRST_INSTALLMENT.equals(paymentCode.getType())) {
+				continue;
+			}
+
+			if (!whatForClazz.equals(paymentCode.getClass())) {
+				continue;
+			}
+
+			AccountingEventPaymentCode accountingEventPaymentCode = (AccountingEventPaymentCode) paymentCode;
+			if (accountingEventPaymentCode.hasAccountingEvent()) {
+				continue;
+			}
+
+			if (!(accountingEventPaymentCode instanceof InstallmentPaymentCode)) {
+				return accountingEventPaymentCode;
+			}
+
+			InstallmentPaymentCode installmentPaymentCode = (InstallmentPaymentCode) accountingEventPaymentCode;
+			EntryWithInstallmentDTO installmentEntryDTO = (EntryWithInstallmentDTO) entry;
+
+			if (installmentPaymentCode.getInstallment() == installmentEntryDTO.getInstallment()) {
+				return installmentPaymentCode;
+			}
+
+		}
+
+		return null;
+	}
+
+	private Installment getFirstInstallment() {
+		return getGratuityPaymentPlan().getFirstInstallment();
+	}
+
+	private Installment getLastInstallment() {
+		return getGratuityPaymentPlan().getLastInstallment();
+	}
+
+	public DegreeCurricularPlanServiceAgreement getDegreeCurricularPlanServiceAgreement() {
+		return (DegreeCurricularPlanServiceAgreement) getPerson().getServiceAgreementFor(getServiceAgreementTemplate());
+
+	}
+
+	@Override
+	public boolean hasInstallments() {
 		return true;
-	    }
-	}
-	return false;
-    }
-
-    @Override
-    public boolean isInDebt() {
-	return isOpen() && hasAnyInstallmentInDebtToday();
-    }
-
-    public InstallmentPenaltyExemption getInstallmentPenaltyExemptionFor(final Installment installment) {
-	for (final Exemption exemption : getExemptionsSet()) {
-	    if (exemption instanceof InstallmentPenaltyExemption) {
-		final InstallmentPenaltyExemption installmentPenaltyExemption = (InstallmentPenaltyExemption) exemption;
-		if (installmentPenaltyExemption.getInstallment() == installment) {
-		    return installmentPenaltyExemption;
-		}
-	    }
 	}
 
-	return null;
-    }
-
-    public boolean hasPenaltyExemptionFor(final Installment installment) {
-	for (final Exemption exemption : getExemptionsSet()) {
-	    if (exemption instanceof InstallmentPenaltyExemption) {
-		if (((InstallmentPenaltyExemption) exemption).getInstallment() == installment) {
-		    return true;
+	public InstallmentPaymentCode getInstallmentPaymentCodeFor(final Installment installment) {
+		for (final AccountingEventPaymentCode paymentCode : calculatePaymentCodes()) {
+			if (paymentCode instanceof InstallmentPaymentCode
+					&& ((InstallmentPaymentCode) paymentCode).getInstallment() == installment) {
+				return (InstallmentPaymentCode) paymentCode;
+			}
 		}
 
-	    }
+		return null;
 	}
 
-	return false;
-    }
+	public AccountingEventPaymentCode getTotalPaymentCode() {
+		for (final AccountingEventPaymentCode paymentCode : calculatePaymentCodes()) {
+			if (!(paymentCode instanceof InstallmentPaymentCode)) {
+				return paymentCode;
+			}
+		}
 
-    public List<Installment> getInstallments() {
-	return getGratuityPaymentPlan().getInstallmentsSortedByEndDate();
-    }
-
-    @Override
-    public boolean isExemptionAppliable() {
-	return true;
-    }
-
-    public List<InstallmentPenaltyExemption> getInstallmentPenaltyExemptions() {
-	final List<InstallmentPenaltyExemption> result = new ArrayList<InstallmentPenaltyExemption>();
-	for (final Exemption exemption : getExemptionsSet()) {
-	    if (exemption instanceof InstallmentPenaltyExemption) {
-		result.add((InstallmentPenaltyExemption) exemption);
-	    }
+		return null;
 	}
 
-	return result;
-    }
-
-    @Override
-    public boolean isOtherPartiesPaymentsSupported() {
-	return true;
-    }
-
-    @Override
-    @Checked("RolePredicates.MANAGER_PREDICATE")
-    protected void disconnect() {
-	if (hasCustomGratuityPaymentPlan()) {
-	    ((CustomGratuityPaymentPlan) super.getGratuityPaymentPlan()).delete();
-	}
-	super.setGratuityPaymentPlan(null);
-	super.disconnect();
-    }
-
-    @Override
-    public boolean isGratuityEventWithPaymentPlan() {
-	return true;
-    }
-
-    public boolean hasCustomGratuityPaymentPlan() {
-	return hasGratuityPaymentPlan() && getGratuityPaymentPlan().isCustomGratuityPaymentPlan();
-    }
-
-    public boolean hasDefaultGratuityPaymentPlan() {
-	return hasGratuityPaymentPlan() && getGratuityPaymentPlan().isDefault();
-    }
-
-    public Money getPayedAmountLessPenalty() {
-	if (isCancelled()) {
-	    throw new DomainException("error.accounting.Event.cannot.calculatePayedAmount.on.invalid.events");
+	@Override
+	protected Set<Entry> internalProcess(User responsibleUser, AccountingEventPaymentCode paymentCode, Money amountToPay,
+			SibsTransactionDetailDTO transactionDetail) {
+		return internalProcess(responsibleUser, Collections.singletonList(buildEntryDTOFrom(paymentCode, amountToPay)),
+				transactionDetail);
 	}
 
-	final DateTime now = new DateTime();
-	Money result = Money.ZERO;
-
-	for (final Installment installment : getGratuityPaymentPlan().getInstallments()) {
-	    if (!getGratuityPaymentPlan().isInstallmentInDebt(installment, this, now, BigDecimal.ZERO)) {
-		result = result.add(installment.getAmount());
-	    }
+	private EntryDTO buildEntryDTOFrom(final AccountingEventPaymentCode paymentCode, final Money amountToPay) {
+		if (paymentCode instanceof InstallmentPaymentCode) {
+			return new EntryWithInstallmentDTO(EntryType.GRATUITY_FEE, this, amountToPay,
+					((InstallmentPaymentCode) paymentCode).getInstallment());
+		} else {
+			return new EntryDTO(EntryType.GRATUITY_FEE, this, amountToPay);
+		}
 	}
 
-	if (result.isPositive()) {
-	    result = result.subtract(getTotalDiscount());
+	private boolean installmentIsInDebtToday(Installment installment) {
+		return installmentIsInDebt(installment) && new YearMonthDay().isAfter(installment.getEndDate());
 	}
 
-	return result.isPositive() ? result.add(getPayedAmountLessInstallments()) : getPayedAmountLessInstallments();
-    }
-
-    private Money getPayedAmountLessInstallments() {
-	Money payedAmount = Money.ZERO;
-	for (final AccountingTransaction transaction : getNonAdjustingTransactions()) {
-	    if (!transaction.isInstallment()) {
-		payedAmount = payedAmount.add(transaction.getToAccountEntry().getAmountWithAdjustment());
-	    }
+	private boolean installmentIsInDebt(Installment installment) {
+		return getGratuityPaymentPlan().isInstallmentInDebt(installment, this, new DateTime(),
+				calculateDiscountPercentage(getGratuityPaymentPlan().calculateOriginalTotalAmount()));
 	}
-	return payedAmount;
-    }
 
-    @Override
-    public GratuityWithPaymentPlanPR getPostingRule() {
-	return (GratuityWithPaymentPlanPR) super.getPostingRule();
-    }
+	private boolean hasAnyInstallmentInDebtToday() {
+		for (final Installment installment : getInstallments()) {
+			if (installmentIsInDebtToday(installment)) {
+				return true;
+			}
+		}
+		return false;
+	}
 
-    @Override
-    public Set<EntryType> getPossibleEntryTypesForDeposit() {
-	return Collections.singleton(EntryType.GRATUITY_FEE);
-    }
+	@Override
+	public boolean isInDebt() {
+		return isOpen() && hasAnyInstallmentInDebtToday();
+	}
 
-    @Override
-    public boolean isPaymentPlanChangeAllowed() {
-	return true;
-    }
+	public InstallmentPenaltyExemption getInstallmentPenaltyExemptionFor(final Installment installment) {
+		for (final Exemption exemption : getExemptionsSet()) {
+			if (exemption instanceof InstallmentPenaltyExemption) {
+				final InstallmentPenaltyExemption installmentPenaltyExemption = (InstallmentPenaltyExemption) exemption;
+				if (installmentPenaltyExemption.getInstallment() == installment) {
+					return installmentPenaltyExemption;
+				}
+			}
+		}
+
+		return null;
+	}
+
+	public boolean hasPenaltyExemptionFor(final Installment installment) {
+		for (final Exemption exemption : getExemptionsSet()) {
+			if (exemption instanceof InstallmentPenaltyExemption) {
+				if (((InstallmentPenaltyExemption) exemption).getInstallment() == installment) {
+					return true;
+				}
+
+			}
+		}
+
+		return false;
+	}
+
+	public List<Installment> getInstallments() {
+		return getGratuityPaymentPlan().getInstallmentsSortedByEndDate();
+	}
+
+	@Override
+	public boolean isExemptionAppliable() {
+		return true;
+	}
+
+	public List<InstallmentPenaltyExemption> getInstallmentPenaltyExemptions() {
+		final List<InstallmentPenaltyExemption> result = new ArrayList<InstallmentPenaltyExemption>();
+		for (final Exemption exemption : getExemptionsSet()) {
+			if (exemption instanceof InstallmentPenaltyExemption) {
+				result.add((InstallmentPenaltyExemption) exemption);
+			}
+		}
+
+		return result;
+	}
+
+	@Override
+	public boolean isOtherPartiesPaymentsSupported() {
+		return true;
+	}
+
+	@Override
+	@Checked("RolePredicates.MANAGER_PREDICATE")
+	protected void disconnect() {
+		if (hasCustomGratuityPaymentPlan()) {
+			((CustomGratuityPaymentPlan) super.getGratuityPaymentPlan()).delete();
+		}
+		super.setGratuityPaymentPlan(null);
+		super.disconnect();
+	}
+
+	@Override
+	public boolean isGratuityEventWithPaymentPlan() {
+		return true;
+	}
+
+	public boolean hasCustomGratuityPaymentPlan() {
+		return hasGratuityPaymentPlan() && getGratuityPaymentPlan().isCustomGratuityPaymentPlan();
+	}
+
+	public boolean hasDefaultGratuityPaymentPlan() {
+		return hasGratuityPaymentPlan() && getGratuityPaymentPlan().isDefault();
+	}
+
+	public Money getPayedAmountLessPenalty() {
+		if (isCancelled()) {
+			throw new DomainException("error.accounting.Event.cannot.calculatePayedAmount.on.invalid.events");
+		}
+
+		final DateTime now = new DateTime();
+		Money result = Money.ZERO;
+
+		for (final Installment installment : getGratuityPaymentPlan().getInstallments()) {
+			if (!getGratuityPaymentPlan().isInstallmentInDebt(installment, this, now, BigDecimal.ZERO)) {
+				result = result.add(installment.getAmount());
+			}
+		}
+
+		if (result.isPositive()) {
+			result = result.subtract(getTotalDiscount());
+		}
+
+		return result.isPositive() ? result.add(getPayedAmountLessInstallments()) : getPayedAmountLessInstallments();
+	}
+
+	private Money getPayedAmountLessInstallments() {
+		Money payedAmount = Money.ZERO;
+		for (final AccountingTransaction transaction : getNonAdjustingTransactions()) {
+			if (!transaction.isInstallment()) {
+				payedAmount = payedAmount.add(transaction.getToAccountEntry().getAmountWithAdjustment());
+			}
+		}
+		return payedAmount;
+	}
+
+	@Override
+	public GratuityWithPaymentPlanPR getPostingRule() {
+		return (GratuityWithPaymentPlanPR) super.getPostingRule();
+	}
+
+	@Override
+	public Set<EntryType> getPossibleEntryTypesForDeposit() {
+		return Collections.singleton(EntryType.GRATUITY_FEE);
+	}
+
+	@Override
+	public boolean isPaymentPlanChangeAllowed() {
+		return true;
+	}
 }

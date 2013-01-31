@@ -13,80 +13,80 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 /**
  * @author pcma
  * 
- * This bean is responsabile to hold information about a ready to create scorm
- * package. Field values along enums created here are based on the following
- * paper:
+ *         This bean is responsabile to hold information about a ready to create scorm
+ *         package. Field values along enums created here are based on the following
+ *         paper:
  * 
- * "Manual de Apoio para a utilização de Meta-dados na catalogação de conteúdos
- * com próposito educativo"
+ *         "Manual de Apoio para a utilização de Meta-dados na catalogação de conteúdos
+ *         com próposito educativo"
  */
 public class ScormCreationBean extends FileContentCreationBean {
 
 	private static final String metaMetadataSchema = "ADL SCORM";
-	private String generalTitle="";
-	private String generalDescription="";
+	private String generalTitle = "";
+	private String generalDescription = "";
 	private CatalogType generalCatalog;
-	private String generalEntry="";
+	private String generalEntry = "";
 	private Language generalLanguage;
-	private String generalAggregationLevel="1";
+	private String generalAggregationLevel = "1";
 	private String personName;
-	  
+
 	private ScormContributionRecommendedRoles contributeRole;
 	private YearMonthDay contributeDate;
-	
+
 	private EducationalInteractivityType educationalInteractivityType;
-    
-    
-    private Language educationalLanguage;
-    
-    private Boolean rightsCost=null;
-    private Boolean rightsCopyRightOtherRestrictions=null;
-    private String rightsDescription="";
-    
-    transient private InputStream vCardFile;
-    private String vCardFilename;
-    private long vCardSize;
-    private String vcardContent="";
-    
-    private String keywords="";
-    
-    private String technicalLocation="";
-    
+
+	private Language educationalLanguage;
+
+	private Boolean rightsCost = null;
+	private Boolean rightsCopyRightOtherRestrictions = null;
+	private String rightsDescription = "";
+
+	transient private InputStream vCardFile;
+	private String vCardFilename;
+	private long vCardSize;
+	private String vcardContent = "";
+
+	private String keywords = "";
+
+	private String technicalLocation = "";
+
 	public ScormCreationBean(Container container, Site site) {
-		super(container,site);
+		super(container, site);
 	}
 
-    public ScormMetaDataHash getMetaInformation() {
-    	ScormMetaDataHash scormMetaHasher = new ScormMetaDataHash();
+	public ScormMetaDataHash getMetaInformation() {
+		ScormMetaDataHash scormMetaHasher = new ScormMetaDataHash();
 
 		scormMetaHasher.put("title", null, getGeneralLanguageAsString(), getGeneralTitle());
 		scormMetaHasher.put("description", null, getGeneralLanguageAsString(), getGeneralDescription());
 		scormMetaHasher.put("identifier", getCatalogTypeAsString(), getGeneralLanguageAsString(), getGeneralEntry());
-		
+
 		scormMetaHasher.put("date", "created", null, getCurrentDateAsString());
 		scormMetaHasher.put("contributor", "author", null, getAuthorName());
-		
+
 		scormMetaHasher.put("version", null, null, "v1.0");
 		scormMetaHasher.put("metadatascheme", null, null, metaMetadataSchema);
 		scormMetaHasher.put("location", "uri", null, getTechnicalLocation());
 		scormMetaHasher.put("rights", "cost", null, getBooleanValue(getRightsCost()));
 		scormMetaHasher.put("rights", "copyright", null, getBooleanValue(getRightsCost()));
 		scormMetaHasher.put("subject", null, getGeneralLanguageAsString(), getKeywordsArray());
-		scormMetaHasher.put("description", null, getGeneralLanguageAsString(),getGeneralDescription());
-        scormMetaHasher.put("type",null,getGeneralLanguageAsString(),getLearningResourceAsString());
-		return scormMetaHasher;		
-    }
-    
-    private String[] getKeywordsArray() {
-    	String[] keys = getKeywords().split(",");
-    	for(int i=0;i<keys.length;i++) {
-    		keys[i].trim();
-    	}
-    	return keys;
-    }
-    private String getCurrentDateAsString() {
-    	YearMonthDay current = new YearMonthDay();
-    	return YearMonthDayAsString(current);
+		scormMetaHasher.put("description", null, getGeneralLanguageAsString(), getGeneralDescription());
+		scormMetaHasher.put("type", null, getGeneralLanguageAsString(), getLearningResourceAsString());
+		return scormMetaHasher;
+	}
+
+	private String[] getKeywordsArray() {
+		String[] keys = getKeywords().split(",");
+		for (String key : keys) {
+			key.trim();
+		}
+		return keys;
+	}
+
+	private String getCurrentDateAsString() {
+		YearMonthDay current = new YearMonthDay();
+		return YearMonthDayAsString(current);
 	}
 
 	private String YearMonthDayAsString(YearMonthDay current) {
@@ -95,58 +95,55 @@ public class ScormCreationBean extends FileContentCreationBean {
 	}
 
 	public boolean isValid() {
-    	return getDisplayName()!=null && getFile()!=null &&  getPermittedGroup()!=null && getGeneralTitle()!=null && 
-    	getRightsCost()!=null &&  getRightsCopyRightOtherRestrictions()!=null && getGeneralCatalog()!=null && 
-    	getGeneralEntry()!=null && getKeywords()!=null;
-    }
+		return getDisplayName() != null && getFile() != null && getPermittedGroup() != null && getGeneralTitle() != null
+				&& getRightsCost() != null && getRightsCopyRightOtherRestrictions() != null && getGeneralCatalog() != null
+				&& getGeneralEntry() != null && getKeywords() != null;
+	}
 
 	private String getEducationalLanguageAsString() {
-		Language language= getEducationalLanguage();
-		return (language==null) ? "" : language.toString();
+		Language language = getEducationalLanguage();
+		return (language == null) ? "" : language.toString();
 	}
 
 	private String getLearningResourceAsString() {
-		EducationalResourceType type = getEducationalLearningResourceType(); 
-		return (type==null) ? "" : type.getType();
+		EducationalResourceType type = getEducationalLearningResourceType();
+		return (type == null) ? "" : type.getType();
 	}
 
 	private String getEducationalInteractivityTypeAsString() {
-		EducationalInteractivityType type = getEducationalInteractivityType(); 
-		return (type==null) ? "" : type.getType();
+		EducationalInteractivityType type = getEducationalInteractivityType();
+		return (type == null) ? "" : type.getType();
 	}
-    
-    private String getCatalogTypeAsString() {
-    	CatalogType type = getGeneralCatalog();
-    	return (type==null) ? "" : type.getType();
-    }
-    
-    private String getGeneralLanguageAsString() {
-    	Language language =getGeneralLanguage(); 
-    	return (language==null) ? "x-none" : language.toString();
-    }
-    
-    private String getContributeRoleAsString() {
-    	ScormContributionRecommendedRoles role = getContributeRole();
-    	return (role==null) ? "" : role.getType();
-    }
-    
-    private String getDateAsString() {
-    	YearMonthDay date = getContributeDate();
-    	return (date==null) ? "" : YearMonthDayAsString(date);
-    }
-    
 
-    private String getAuthorName() {
-        return this.getSite().getAuthorName();
-    }
-    
-    public enum ScormContributionRecommendedRoles {
-    	ROLE_AUTHOR ("author"),
-    	ROLE_PUBLISHER ("publisher"),
-    	ROLE_UNKNOWN ("unknown"),
+	private String getCatalogTypeAsString() {
+		CatalogType type = getGeneralCatalog();
+		return (type == null) ? "" : type.getType();
+	}
+
+	private String getGeneralLanguageAsString() {
+		Language language = getGeneralLanguage();
+		return (language == null) ? "x-none" : language.toString();
+	}
+
+	private String getContributeRoleAsString() {
+		ScormContributionRecommendedRoles role = getContributeRole();
+		return (role == null) ? "" : role.getType();
+	}
+
+	private String getDateAsString() {
+		YearMonthDay date = getContributeDate();
+		return (date == null) ? "" : YearMonthDayAsString(date);
+	}
+
+	private String getAuthorName() {
+		return this.getSite().getAuthorName();
+	}
+
+	public enum ScormContributionRecommendedRoles {
+		ROLE_AUTHOR("author"), ROLE_PUBLISHER("publisher"), ROLE_UNKNOWN("unknown"),
 // ROLE_INITIATOR ("initiator"),
 // ROLE_TERMINATOR ("terminator"),
-    	ROLE_VALIDATOR ("validator");
+		ROLE_VALIDATOR("validator");
 // ROLE_EDITOR ("editor"),
 // ROLE_GRAPHICAL_DESIGNER ("graphical designer"),
 // ROLE_TECHNICAL_IMPLEMENTER ("technical implementer"),
@@ -155,55 +152,47 @@ public class ScormCreationBean extends FileContentCreationBean {
 // ROLE_EDUCATIONAL_VALIDATOR ("educational validator"),
 // ROLE_SCRIPT_WRITER ("script writter"),
 // ROLE_INSTRUCTIONAL_DESIGNER ("instructional designer");
-    	
-    	private String type;
-    	
-    	private ScormContributionRecommendedRoles(String type) {
-    		this.type = type;
-    	}
-    	
-    	public String getType() {
-    		return type;
-    	}
-    }
-    
-    public enum EducationalInteractivityType {
-    	ACTIVE ("active"),
-    	EXPOSITIVE("expositive"),
-    	MIXER("mixed"),
-    	UNDEFINED("undefined");
-    	
-    	private String type;
-    	
-    	private EducationalInteractivityType(String type) {
-    		this.type = type;
-    	}
-    	
-    	public String getType() {
-    		return type;
-    	}
-    }
-    
-    public enum CatalogType {
-    	ISBN ("isbn"),
-    	ISSN("issn"),
-    	SICI("sici"),
-    	ISMN("ismn"),
-    	URI("uri"),
-    	OTHER("other");
-    	;
-    	
-    	private String type;
-    	
-    	private CatalogType(String type) {
-    		this.type = type;
-    	}
-    	
-    	public String getType() {
-    		return type;
-    	}
-    }
-    
+
+		private String type;
+
+		private ScormContributionRecommendedRoles(String type) {
+			this.type = type;
+		}
+
+		public String getType() {
+			return type;
+		}
+	}
+
+	public enum EducationalInteractivityType {
+		ACTIVE("active"), EXPOSITIVE("expositive"), MIXER("mixed"), UNDEFINED("undefined");
+
+		private String type;
+
+		private EducationalInteractivityType(String type) {
+			this.type = type;
+		}
+
+		public String getType() {
+			return type;
+		}
+	}
+
+	public enum CatalogType {
+		ISBN("isbn"), ISSN("issn"), SICI("sici"), ISMN("ismn"), URI("uri"), OTHER("other");
+		;
+
+		private String type;
+
+		private CatalogType(String type) {
+			this.type = type;
+		}
+
+		public String getType() {
+			return type;
+		}
+	}
+
 	public String getKeywords() {
 		return keywords;
 	}
@@ -227,6 +216,7 @@ public class ScormCreationBean extends FileContentCreationBean {
 	public void setVirtualCardFile(InputStream cardFile) {
 		vCardFile = cardFile;
 	}
+
 	public YearMonthDay getContributeDate() {
 		return contributeDate;
 	}
@@ -308,7 +298,7 @@ public class ScormCreationBean extends FileContentCreationBean {
 	}
 
 	private String getBooleanValue(Boolean bool) {
-		return (bool) ? "yes" : "no"; 
+		return (bool) ? "yes" : "no";
 	}
 
 	public String getVirtualCardFilename() {
@@ -326,7 +316,7 @@ public class ScormCreationBean extends FileContentCreationBean {
 	public void setVirtualCardSize(long cardSize) {
 		vCardSize = cardSize;
 	}
-	
+
 	public String getTechnicalLocation() {
 		return technicalLocation;
 	}
@@ -351,13 +341,13 @@ public class ScormCreationBean extends FileContentCreationBean {
 		this.generalLanguage = generalLanguage;
 	}
 
-	  public EducationalInteractivityType getEducationalInteractivityType() {
-			return educationalInteractivityType;
-		}
+	public EducationalInteractivityType getEducationalInteractivityType() {
+		return educationalInteractivityType;
+	}
 
-		public void setEducationalInteractivityType(EducationalInteractivityType educationalInteractivityType) {
-			this.educationalInteractivityType = educationalInteractivityType;
-		}
+	public void setEducationalInteractivityType(EducationalInteractivityType educationalInteractivityType) {
+		this.educationalInteractivityType = educationalInteractivityType;
+	}
 
 	public void copyValuesFrom(ScormCreationBean possibleBean) {
 		this.setContributeDate(possibleBean.getContributeDate());

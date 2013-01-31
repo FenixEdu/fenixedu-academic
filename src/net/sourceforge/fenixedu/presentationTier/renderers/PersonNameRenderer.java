@@ -13,89 +13,89 @@ import pt.ist.fenixWebFramework.renderers.components.HtmlComponent;
  */
 public class PersonNameRenderer extends StringRenderer {
 
-    private boolean firstLastOnly;
-    private boolean middleNamesInicials;
-    private String normalizedName;
+	private boolean firstLastOnly;
+	private boolean middleNamesInicials;
+	private String normalizedName;
 
-    public boolean isFirstLastOnly() {
-	return this.firstLastOnly;
-    }
-
-    public void setFirstLastOnly(boolean firstLastOnly) {
-	this.firstLastOnly = firstLastOnly;
-    }
-
-    public boolean isMiddleNamesInicials() {
-	return this.middleNamesInicials;
-    }
-
-    public void setMiddleNamesInicials(boolean middleNamesInicials) {
-	this.middleNamesInicials = middleNamesInicials;
-    }
-
-    @Override
-    public HtmlComponent render(Object object, Class type) {
-	if (object != null) {
-	    String name = parseName((String) object);
-	    HtmlComponent component = super.render(name, type);
-
-	    if (isFirstLastOnly() || isMiddleNamesInicials()) {
-		component.setTitle(this.normalizedName);
-	    }
-
-	    return component;
-	} else {
-	    return super.render(object, type);
-	}
-    }
-
-    private String parseName(String name) {
-	String finalName;
-	this.normalizedName = capitalize(name.toLowerCase());
-
-	String[] allNames = this.normalizedName.split("\\p{Space}+");
-	if (allNames.length == 0) {
-	    return "";
+	public boolean isFirstLastOnly() {
+		return this.firstLastOnly;
 	}
 
-	if (allNames.length == 1) {
-	    return allNames[0];
+	public void setFirstLastOnly(boolean firstLastOnly) {
+		this.firstLastOnly = firstLastOnly;
 	}
 
-	finalName = allNames[0];
+	public boolean isMiddleNamesInicials() {
+		return this.middleNamesInicials;
+	}
 
-	if (!isFirstLastOnly()) {
-	    for (int i = 1; i < allNames.length - 1; i++) {
-		if (isMiddleNamesInicials()) {
-		    if (Character.isUpperCase(allNames[i].charAt(0))) {
-			finalName += " " + allNames[i].substring(0, 1) + ".";
-		    }
+	public void setMiddleNamesInicials(boolean middleNamesInicials) {
+		this.middleNamesInicials = middleNamesInicials;
+	}
+
+	@Override
+	public HtmlComponent render(Object object, Class type) {
+		if (object != null) {
+			String name = parseName((String) object);
+			HtmlComponent component = super.render(name, type);
+
+			if (isFirstLastOnly() || isMiddleNamesInicials()) {
+				component.setTitle(this.normalizedName);
+			}
+
+			return component;
 		} else {
-		    finalName += " " + allNames[i];
+			return super.render(object, type);
 		}
-	    }
 	}
 
-	finalName += " " + allNames[allNames.length - 1];
+	private String parseName(String name) {
+		String finalName;
+		this.normalizedName = capitalize(name.toLowerCase());
 
-	return finalName;
-    }
+		String[] allNames = this.normalizedName.split("\\p{Space}+");
+		if (allNames.length == 0) {
+			return "";
+		}
 
-    private String capitalize(String text) {
-	StringBuilder buffer = new StringBuilder();
-	for (String part : text.split("\\p{Space}+")) {
-	    if (part.length() == 0) {
-		continue;
-	    }
+		if (allNames.length == 1) {
+			return allNames[0];
+		}
 
-	    if (buffer.length() > 0) {
-		buffer.append(" ");
-	    }
+		finalName = allNames[0];
 
-	    buffer.append(StringFormatter.capitalizeWord(part, false));
+		if (!isFirstLastOnly()) {
+			for (int i = 1; i < allNames.length - 1; i++) {
+				if (isMiddleNamesInicials()) {
+					if (Character.isUpperCase(allNames[i].charAt(0))) {
+						finalName += " " + allNames[i].substring(0, 1) + ".";
+					}
+				} else {
+					finalName += " " + allNames[i];
+				}
+			}
+		}
+
+		finalName += " " + allNames[allNames.length - 1];
+
+		return finalName;
 	}
 
-	return buffer.toString();
-    }
+	private String capitalize(String text) {
+		StringBuilder buffer = new StringBuilder();
+		for (String part : text.split("\\p{Space}+")) {
+			if (part.length() == 0) {
+				continue;
+			}
+
+			if (buffer.length() > 0) {
+				buffer.append(" ");
+			}
+
+			buffer.append(StringFormatter.capitalizeWord(part, false));
+		}
+
+		return buffer.toString();
+	}
 
 }

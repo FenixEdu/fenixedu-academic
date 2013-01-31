@@ -7,7 +7,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
@@ -21,23 +20,22 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class LerAlunosDeTurno extends FenixService {
 
-    @Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
-    @Service
-    public static List<InfoStudent> run(ShiftKey keyTurno) {
+	@Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
+	@Service
+	public static List<InfoStudent> run(ShiftKey keyTurno) {
 
-	final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(keyTurno.getInfoExecutionCourse()
-		.getIdInternal());
-	final Shift shift = executionCourse.findShiftByName(keyTurno.getShiftName());
+		final ExecutionCourse executionCourse =
+				rootDomainObject.readExecutionCourseByOID(keyTurno.getInfoExecutionCourse().getIdInternal());
+		final Shift shift = executionCourse.findShiftByName(keyTurno.getShiftName());
 
-	List<Registration> alunos = shift.getStudents();
+		List<Registration> alunos = shift.getStudents();
 
-	List<InfoStudent> infoAlunos = new ArrayList<InfoStudent>(alunos.size());
-	for (final Iterator<Registration> iterator = alunos.iterator(); iterator.hasNext();) {
-	    Registration elem = iterator.next();
-	    infoAlunos.add(new InfoStudent(elem));
+		List<InfoStudent> infoAlunos = new ArrayList<InfoStudent>(alunos.size());
+		for (Registration elem : alunos) {
+			infoAlunos.add(new InfoStudent(elem));
+		}
+
+		return infoAlunos;
 	}
-
-	return infoAlunos;
-    }
 
 }

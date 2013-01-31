@@ -24,25 +24,25 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
  */
 @Mapping(module = "teacher", path = "/executionCourseForumManagement", scope = "request", parameter = "method")
 @Forwards(value = { @Forward(name = "viewForum", path = "view-forum"), @Forward(name = "viewThread", path = "view-thread"),
-	@Forward(name = "createThreadAndMessage", path = "create-thread-and-message"),
-	@Forward(name = "viewForuns", path = "view-foruns") })
+		@Forward(name = "createThreadAndMessage", path = "create-thread-and-message"),
+		@Forward(name = "viewForuns", path = "view-foruns") })
 public class ExecutionCourseForumManagementDispatchAction extends ForunsManagement {
 
-    @Override
-    public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-	ManageExecutionCourseDA.propageContextIds(request);
-	return super.execute(mapping, actionForm, request, response);
-    }
+	@Override
+	public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		ManageExecutionCourseDA.propageContextIds(request);
+		return super.execute(mapping, actionForm, request, response);
+	}
 
-    public ActionForward viewForuns(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixActionException, FenixFilterException, FenixServiceException {
+	public ActionForward viewForuns(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws FenixActionException, FenixFilterException, FenixServiceException {
 
-	ExecutionCourse executionCourse = (ExecutionCourse) request.getAttribute("executionCourse");
+		ExecutionCourse executionCourse = (ExecutionCourse) request.getAttribute("executionCourse");
 
-	request.setAttribute("foruns", executionCourse.getForuns());
+		request.setAttribute("foruns", executionCourse.getForuns());
 
-	return mapping.findForward("viewForuns");
-    }
+		return mapping.findForward("viewForuns");
+	}
 
 }

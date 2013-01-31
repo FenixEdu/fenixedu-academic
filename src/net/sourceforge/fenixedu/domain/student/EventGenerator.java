@@ -9,30 +9,30 @@ import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice
 
 public class EventGenerator {
 
-    public static void generateNecessaryEvents(StudentCurricularPlan studentCurricularPlan, Person person,
-	    ExecutionYear executionYear) {
+	public static void generateNecessaryEvents(StudentCurricularPlan studentCurricularPlan, Person person,
+			ExecutionYear executionYear) {
 
-	final AdministrativeOffice administrativeOffice = studentCurricularPlan.getDegree().getAdministrativeOffice();
+		final AdministrativeOffice administrativeOffice = studentCurricularPlan.getDegree().getAdministrativeOffice();
 
-	switch (studentCurricularPlan.getDegree().getDegreeType()) {
+		switch (studentCurricularPlan.getDegree().getDegreeType()) {
 
-	case BOLONHA_ADVANCED_FORMATION_DIPLOMA:
+		case BOLONHA_ADVANCED_FORMATION_DIPLOMA:
 
-	    final AccountingEventsManager accountingEventsManager = new AccountingEventsManager();
-	    final ExecutionYear executionYearToCreateEvents = executionYear != null ? executionYear : ExecutionYear
-		    .readCurrentExecutionYear();
+			final AccountingEventsManager accountingEventsManager = new AccountingEventsManager();
+			final ExecutionYear executionYearToCreateEvents =
+					executionYear != null ? executionYear : ExecutionYear.readCurrentExecutionYear();
 
-	    accountingEventsManager.createGratuityEvent(studentCurricularPlan, executionYearToCreateEvents, false);
+			accountingEventsManager.createGratuityEvent(studentCurricularPlan, executionYearToCreateEvents, false);
 
-	    new DfaRegistrationEvent(administrativeOffice, person, studentCurricularPlan.getRegistration());
+			new DfaRegistrationEvent(administrativeOffice, person, studentCurricularPlan.getRegistration());
 
-	    accountingEventsManager.createInsuranceEvent(studentCurricularPlan, executionYearToCreateEvents, false);
+			accountingEventsManager.createInsuranceEvent(studentCurricularPlan, executionYearToCreateEvents, false);
 
-	    break;
-	default:
-	    break;
+			break;
+		default:
+			break;
+
+		}
 
 	}
-
-    }
 }

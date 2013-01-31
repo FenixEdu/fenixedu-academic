@@ -10,13 +10,13 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadAllExecutionPeriods extends FenixService {
 
-    @Service
-    public static List run() {
-	final List<InfoExecutionPeriod> infoExecutionPeriods = new ArrayList<InfoExecutionPeriod>();
-	for (final ExecutionSemester executionSemester : rootDomainObject.getExecutionPeriods()) {
-	    infoExecutionPeriods.add(InfoExecutionPeriod.newInfoFromDomain(executionSemester));
+	@Service
+	public static List run() {
+		final List<InfoExecutionPeriod> infoExecutionPeriods = new ArrayList<InfoExecutionPeriod>();
+		for (final ExecutionSemester executionSemester : rootDomainObject.getExecutionPeriods()) {
+			infoExecutionPeriods.add(InfoExecutionPeriod.newInfoFromDomain(executionSemester));
+		}
+		return infoExecutionPeriods;
 	}
-	return infoExecutionPeriods;
-    }
 
 }

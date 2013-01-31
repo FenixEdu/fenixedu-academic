@@ -9,24 +9,24 @@ import net.sourceforge.fenixedu.util.EvaluationType;
  */
 public class InfoFinalEvaluation extends InfoEvaluation implements ISiteComponent {
 
-    public void copyFromDomain(FinalEvaluation finalEvaluation) {
-	super.copyFromDomain(finalEvaluation);
-	if (finalEvaluation != null) {
-	    setEvaluationType(EvaluationType.FINAL_TYPE);
+	public void copyFromDomain(FinalEvaluation finalEvaluation) {
+		super.copyFromDomain(finalEvaluation);
+		if (finalEvaluation != null) {
+			setEvaluationType(EvaluationType.FINAL_TYPE);
+		}
 	}
-    }
 
-    /**
-     * @param finalEvaluation
-     * @return
-     */
-    public static InfoFinalEvaluation newInfoFromDomain(FinalEvaluation finalEvaluation) {
-	InfoFinalEvaluation infoFinalEvaluation = null;
-	if (finalEvaluation != null) {
-	    infoFinalEvaluation = new InfoFinalEvaluation();
-	    infoFinalEvaluation.copyFromDomain(finalEvaluation);
+	/**
+	 * @param finalEvaluation
+	 * @return
+	 */
+	public static InfoFinalEvaluation newInfoFromDomain(FinalEvaluation finalEvaluation) {
+		InfoFinalEvaluation infoFinalEvaluation = null;
+		if (finalEvaluation != null) {
+			infoFinalEvaluation = new InfoFinalEvaluation();
+			infoFinalEvaluation.copyFromDomain(finalEvaluation);
+		}
+		return infoFinalEvaluation;
 	}
-	return infoFinalEvaluation;
-    }
 
 }

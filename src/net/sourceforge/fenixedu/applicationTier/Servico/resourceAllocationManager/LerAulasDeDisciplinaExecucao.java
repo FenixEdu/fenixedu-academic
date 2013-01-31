@@ -22,25 +22,25 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class LerAulasDeDisciplinaExecucao extends FenixService {
 
-    @Service
-    public static Object run(final InfoExecutionCourse infoExecutionCourse) {
+	@Service
+	public static Object run(final InfoExecutionCourse infoExecutionCourse) {
 
-	final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(infoExecutionCourse.getIdInternal());
-	final Set<Shift> shifts = executionCourse.getAssociatedShifts();
+		final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(infoExecutionCourse.getIdInternal());
+		final Set<Shift> shifts = executionCourse.getAssociatedShifts();
 
-	// An estimated upper bound for the number of elements is three lessons
-	// per shift.
-	final int estimatedNumberOfLessons = shifts.size() * 3;
+		// An estimated upper bound for the number of elements is three lessons
+		// per shift.
+		final int estimatedNumberOfLessons = shifts.size() * 3;
 
-	final List<InfoLesson> infoLessons = new ArrayList<InfoLesson>(estimatedNumberOfLessons);
+		final List<InfoLesson> infoLessons = new ArrayList<InfoLesson>(estimatedNumberOfLessons);
 
-	for (final Shift shift : shifts) {
-	    for (final Lesson lesson : shift.getAssociatedLessons()) {
-		infoLessons.add(InfoLesson.newInfoFromDomain(lesson));
-	    }
+		for (final Shift shift : shifts) {
+			for (final Lesson lesson : shift.getAssociatedLessons()) {
+				infoLessons.add(InfoLesson.newInfoFromDomain(lesson));
+			}
+		}
+
+		return infoLessons;
 	}
-
-	return infoLessons;
-    }
 
 }

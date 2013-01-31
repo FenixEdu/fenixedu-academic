@@ -21,33 +21,33 @@ import net.sourceforge.fenixedu.domain.StudentGroup;
 
 public class EnrollStudentGroupShift extends FenixService {
 
-    public Boolean run(Integer executionCourseCode, Integer studentGroupCode, Integer groupPropertiesCode, Integer newShiftCode)
-	    throws FenixServiceException {
+	public Boolean run(Integer executionCourseCode, Integer studentGroupCode, Integer groupPropertiesCode, Integer newShiftCode)
+			throws FenixServiceException {
 
-	Grouping grouping = rootDomainObject.readGroupingByOID(groupPropertiesCode);
+		Grouping grouping = rootDomainObject.readGroupingByOID(groupPropertiesCode);
 
-	if (grouping == null) {
-	    throw new ExistingServiceException();
+		if (grouping == null) {
+			throw new ExistingServiceException();
+		}
+
+		Shift shift = rootDomainObject.readShiftByOID(newShiftCode);
+
+		if (shift == null) {
+			throw new InvalidSituationServiceException();
+		}
+
+		StudentGroup studentGroup = rootDomainObject.readStudentGroupByOID(studentGroupCode);
+
+		if (studentGroup == null) {
+			throw new InvalidArgumentsServiceException();
+		}
+
+		if (grouping.getShiftType() == null || studentGroup.getShift() != null || !shift.containsType(grouping.getShiftType())) {
+			throw new InvalidChangeServiceException();
+		}
+
+		studentGroup.setShift(shift);
+
+		return new Boolean(true);
 	}
-
-	Shift shift = rootDomainObject.readShiftByOID(newShiftCode);
-
-	if (shift == null) {
-	    throw new InvalidSituationServiceException();
-	}
-
-	StudentGroup studentGroup = rootDomainObject.readStudentGroupByOID(studentGroupCode);
-
-	if (studentGroup == null) {
-	    throw new InvalidArgumentsServiceException();
-	}
-
-	if (grouping.getShiftType() == null || studentGroup.getShift() != null || !shift.containsType(grouping.getShiftType())) {
-	    throw new InvalidChangeServiceException();
-	}
-
-	studentGroup.setShift(shift);
-
-	return new Boolean(true);
-    }
 }

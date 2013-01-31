@@ -14,40 +14,40 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
 
 public class AllFirstCycleStudentsGroup extends Group {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    public AllFirstCycleStudentsGroup() {
-    }
-
-    @Override
-    public Set<Person> getElements() {
-	Set<Person> elements = new HashSet<Person>();
-
-	for (final Degree degree : RootDomainObject.getInstance().getDegreesSet()) {
-	    if (degree.isBolonhaDegree() && degree.getDegreeType().hasCycleTypes(CycleType.FIRST_CYCLE)) {
-		for (final DegreeCurricularPlan degreeCurricularPlan : degree.getDegreeCurricularPlansSet()) {
-		    if (degreeCurricularPlan.isActive()) {
-			for (final StudentCurricularPlan studentCurricularPlan : degreeCurricularPlan
-				.getStudentCurricularPlansSet()) {
-			    if (studentCurricularPlan.isActive()) {
-				final CycleCurriculumGroup cycleCurriculumGroup = studentCurricularPlan
-					.getCycle(CycleType.FIRST_CYCLE);
-				if (cycleCurriculumGroup != null && !cycleCurriculumGroup.isConcluded()) {
-				    elements.add(studentCurricularPlan.getPerson());
-				}
-			    }
-			}
-		    }
-		}
-	    }
+	public AllFirstCycleStudentsGroup() {
 	}
 
-	return elements;
-    }
+	@Override
+	public Set<Person> getElements() {
+		Set<Person> elements = new HashSet<Person>();
 
-    @Override
-    protected Argument[] getExpressionArguments() {
-	return null;
-    }
+		for (final Degree degree : RootDomainObject.getInstance().getDegreesSet()) {
+			if (degree.isBolonhaDegree() && degree.getDegreeType().hasCycleTypes(CycleType.FIRST_CYCLE)) {
+				for (final DegreeCurricularPlan degreeCurricularPlan : degree.getDegreeCurricularPlansSet()) {
+					if (degreeCurricularPlan.isActive()) {
+						for (final StudentCurricularPlan studentCurricularPlan : degreeCurricularPlan
+								.getStudentCurricularPlansSet()) {
+							if (studentCurricularPlan.isActive()) {
+								final CycleCurriculumGroup cycleCurriculumGroup =
+										studentCurricularPlan.getCycle(CycleType.FIRST_CYCLE);
+								if (cycleCurriculumGroup != null && !cycleCurriculumGroup.isConcluded()) {
+									elements.add(studentCurricularPlan.getPerson());
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+
+		return elements;
+	}
+
+	@Override
+	protected Argument[] getExpressionArguments() {
+		return null;
+	}
 
 }

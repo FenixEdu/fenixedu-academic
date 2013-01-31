@@ -13,155 +13,155 @@ import net.sourceforge.fenixedu.domain.contacts.PhysicalAddress;
 
 public class AlumniPublicAccessBean implements Serializable {
 
-    private Alumni alumni;
+	private Alumni alumni;
 
-    private String phone;
-    private Phone currentPhone;
+	private String phone;
+	private Phone currentPhone;
 
-    private String email;
-    private EmailAddress currentEmail;
+	private String email;
+	private EmailAddress currentEmail;
 
-    private AlumniAddressBean addressBean;
-    private PhysicalAddress currentAddress;
+	private AlumniAddressBean addressBean;
+	private PhysicalAddress currentAddress;
 
-    private AlumniJobBean jobBean;
-    private Job currentJob;
+	private AlumniJobBean jobBean;
+	private Job currentJob;
 
-    // private String password;
-    // private String passwordConfirmation;
+	// private String password;
+	// private String passwordConfirmation;
 
-    public AlumniPublicAccessBean(Alumni alumni) {
-	setAlumni(alumni);
-	initEmail(alumni);
-	initPhone(alumni);
-	initAddress(alumni);
-	initJob(alumni);
-	// setPassword("");
-	// setPasswordConfirmation("");
-    }
-
-    private void initPhone(Alumni alumni) {
-	PartyContact phone = alumni.getUpdatablePartyContact(Phone.class);
-	if (phone != null) {
-	    setCurrentPhone((Phone) phone);
-	    setPhone(((Phone) phone).getNumber());
+	public AlumniPublicAccessBean(Alumni alumni) {
+		setAlumni(alumni);
+		initEmail(alumni);
+		initPhone(alumni);
+		initAddress(alumni);
+		initJob(alumni);
+		// setPassword("");
+		// setPasswordConfirmation("");
 	}
-    }
 
-    private void initEmail(Alumni alumni) {
-	PartyContact email = alumni.getUpdatablePartyContact(EmailAddress.class);
-	if (email != null) {
-	    setCurrentEmail((EmailAddress) email);
-	    setEmail(((EmailAddress) email).getValue());
+	private void initPhone(Alumni alumni) {
+		PartyContact phone = alumni.getUpdatablePartyContact(Phone.class);
+		if (phone != null) {
+			setCurrentPhone((Phone) phone);
+			setPhone(((Phone) phone).getNumber());
+		}
 	}
-    }
 
-    private void initAddress(Alumni alumni) {
-	PartyContact address = alumni.getUpdatablePartyContact(PhysicalAddress.class);
-	if (address != null) {
-	    setCurrentPhysicalAddress((PhysicalAddress) address);
-	    setAddressBean(new AlumniAddressBean(alumni, (PhysicalAddress) address));
-	} else {
-	    setAddressBean(new AlumniAddressBean(alumni));
+	private void initEmail(Alumni alumni) {
+		PartyContact email = alumni.getUpdatablePartyContact(EmailAddress.class);
+		if (email != null) {
+			setCurrentEmail((EmailAddress) email);
+			setEmail(((EmailAddress) email).getValue());
+		}
 	}
-    }
 
-    private void initJob(Alumni alumni) {
-	if (alumni.hasAnyJobs()) {
-	    Job job = alumni.getLastJob();
-	    setCurrentJob(job);
-	    setJobBean(new AlumniJobBean(alumni, job));
-	} else {
-	    setJobBean(new AlumniJobBean(alumni));
+	private void initAddress(Alumni alumni) {
+		PartyContact address = alumni.getUpdatablePartyContact(PhysicalAddress.class);
+		if (address != null) {
+			setCurrentPhysicalAddress((PhysicalAddress) address);
+			setAddressBean(new AlumniAddressBean(alumni, (PhysicalAddress) address));
+		} else {
+			setAddressBean(new AlumniAddressBean(alumni));
+		}
 	}
-    }
 
-    public Alumni getAlumni() {
-	return this.alumni;
-    }
+	private void initJob(Alumni alumni) {
+		if (alumni.hasAnyJobs()) {
+			Job job = alumni.getLastJob();
+			setCurrentJob(job);
+			setJobBean(new AlumniJobBean(alumni, job));
+		} else {
+			setJobBean(new AlumniJobBean(alumni));
+		}
+	}
 
-    public void setAlumni(Alumni alumni) {
-	this.alumni = alumni;
-    }
+	public Alumni getAlumni() {
+		return this.alumni;
+	}
 
-    public String getPhone() {
-	return phone;
-    }
+	public void setAlumni(Alumni alumni) {
+		this.alumni = alumni;
+	}
 
-    public void setPhone(String phone) {
-	this.phone = phone;
-    }
+	public String getPhone() {
+		return phone;
+	}
 
-    public String getEmail() {
-	return email;
-    }
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
 
-    public void setEmail(String email) {
-	this.email = email;
-    }
+	public String getEmail() {
+		return email;
+	}
 
-    public AlumniAddressBean getAddressBean() {
-	return this.addressBean;
-    }
+	public void setEmail(String email) {
+		this.email = email;
+	}
 
-    public void setAddressBean(AlumniAddressBean alumniAddressBean) {
-	this.addressBean = alumniAddressBean;
-    }
+	public AlumniAddressBean getAddressBean() {
+		return this.addressBean;
+	}
 
-    public AlumniJobBean getJobBean() {
-	return this.jobBean;
-    }
+	public void setAddressBean(AlumniAddressBean alumniAddressBean) {
+		this.addressBean = alumniAddressBean;
+	}
 
-    public void setJobBean(AlumniJobBean alumniJobBean) {
-	this.jobBean = alumniJobBean;
-    }
+	public AlumniJobBean getJobBean() {
+		return this.jobBean;
+	}
 
-    // public String getPassword() {
-    // return password;
-    // }
-    //
-    // public void setPassword(String password) {
-    // this.password = password;
-    // }
-    //
-    // public String getPasswordConfirmation() {
-    // return passwordConfirmation;
-    // }
-    //
-    // public void setPasswordConfirmation(String passwordConfirmation) {
-    // this.passwordConfirmation = passwordConfirmation;
-    // }
+	public void setJobBean(AlumniJobBean alumniJobBean) {
+		this.jobBean = alumniJobBean;
+	}
 
-    public Phone getCurrentPhone() {
-	return this.currentPhone;
-    }
+	// public String getPassword() {
+	// return password;
+	// }
+	//
+	// public void setPassword(String password) {
+	// this.password = password;
+	// }
+	//
+	// public String getPasswordConfirmation() {
+	// return passwordConfirmation;
+	// }
+	//
+	// public void setPasswordConfirmation(String passwordConfirmation) {
+	// this.passwordConfirmation = passwordConfirmation;
+	// }
 
-    private void setCurrentPhone(Phone phone) {
-	this.currentPhone = phone;
-    }
+	public Phone getCurrentPhone() {
+		return this.currentPhone;
+	}
 
-    public EmailAddress getCurrentEmail() {
-	return this.currentEmail;
-    }
+	private void setCurrentPhone(Phone phone) {
+		this.currentPhone = phone;
+	}
 
-    private void setCurrentEmail(EmailAddress email) {
-	this.currentEmail = email;
-    }
+	public EmailAddress getCurrentEmail() {
+		return this.currentEmail;
+	}
 
-    public PhysicalAddress getCurrentPhysicalAddress() {
-	return this.currentAddress;
-    }
+	private void setCurrentEmail(EmailAddress email) {
+		this.currentEmail = email;
+	}
 
-    private void setCurrentPhysicalAddress(PhysicalAddress address) {
-	this.currentAddress = address;
-    }
+	public PhysicalAddress getCurrentPhysicalAddress() {
+		return this.currentAddress;
+	}
 
-    public Job getCurrentJob() {
-	return this.currentJob;
-    }
+	private void setCurrentPhysicalAddress(PhysicalAddress address) {
+		this.currentAddress = address;
+	}
 
-    private void setCurrentJob(Job job) {
-	this.currentJob = job;
-    }
+	public Job getCurrentJob() {
+		return this.currentJob;
+	}
+
+	private void setCurrentJob(Job job) {
+		this.currentJob = job;
+	}
 
 }

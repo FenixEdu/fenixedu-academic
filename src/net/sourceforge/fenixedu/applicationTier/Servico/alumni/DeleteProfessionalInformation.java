@@ -6,9 +6,9 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class DeleteProfessionalInformation extends FenixService {
 
-    @Service
-    public static void run(Job job) {
-	job.delete();
-    }
+	@Service
+	public static void run(Job job) {
+		job.delete();
+	}
 
 }

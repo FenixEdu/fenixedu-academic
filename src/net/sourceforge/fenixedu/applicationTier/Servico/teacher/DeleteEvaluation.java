@@ -10,17 +10,17 @@ import net.sourceforge.fenixedu.domain.Evaluation;
 
 public class DeleteEvaluation extends FenixService {
 
-    /**
-     * @param Integer
-     *            executionCourseID used in filtering
-     *            (ExecutionCourseLecturingTeacherAuthorizationFilter)
-     */
-    public void run(Integer executionCourseID, Integer evaluationID) throws FenixServiceException {
-	final Evaluation evaluation = (Evaluation) rootDomainObject.readEvaluationByOID(evaluationID);
-	if (evaluation == null) {
-	    throw new FenixServiceException("error.noEvaluation");
+	/**
+	 * @param Integer
+	 *            executionCourseID used in filtering
+	 *            (ExecutionCourseLecturingTeacherAuthorizationFilter)
+	 */
+	public void run(Integer executionCourseID, Integer evaluationID) throws FenixServiceException {
+		final Evaluation evaluation = rootDomainObject.readEvaluationByOID(evaluationID);
+		if (evaluation == null) {
+			throw new FenixServiceException("error.noEvaluation");
+		}
+		evaluation.delete();
 	}
-	evaluation.delete();
-    }
 
 }

@@ -22,31 +22,31 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class DomainObjectStringPropertyFormatter extends FenixService {
 
-    @Checked("RolePredicates.MANAGER_PREDICATE")
-    @Service
-    public static void run(Class clazz, String slotName) throws FenixServiceException {
+	@Checked("RolePredicates.MANAGER_PREDICATE")
+	@Service
+	public static void run(Class clazz, String slotName) throws FenixServiceException {
 
-	try {
-	    Collection<DomainObject> domainObjects = rootDomainObject.readAllDomainObjects(clazz);
-	    for (DomainObject domainObject : domainObjects) {
+		try {
+			Collection<DomainObject> domainObjects = rootDomainObject.readAllDomainObjects(clazz);
+			for (DomainObject domainObject : domainObjects) {
 
-		Object propertyToFormat = PropertyUtils.getSimpleProperty(domainObject, slotName);
+				Object propertyToFormat = PropertyUtils.getSimpleProperty(domainObject, slotName);
 
-		if (propertyToFormat != null && propertyToFormat instanceof String) {
-		    String strPropertyToFormat = (String) propertyToFormat;
-		    strPropertyToFormat = strPropertyToFormat.trim();
-		    String propertyFormatted = StringFormatter.prettyPrint(strPropertyToFormat);
-		    PropertyUtils.setSimpleProperty(domainObject, slotName, propertyFormatted);
+				if (propertyToFormat != null && propertyToFormat instanceof String) {
+					String strPropertyToFormat = (String) propertyToFormat;
+					strPropertyToFormat = strPropertyToFormat.trim();
+					String propertyFormatted = StringFormatter.prettyPrint(strPropertyToFormat);
+					PropertyUtils.setSimpleProperty(domainObject, slotName, propertyFormatted);
+				}
+
+			}
+		} catch (IllegalAccessException e) {
+			throw new FenixServiceException(e);
+		} catch (InvocationTargetException e) {
+			throw new FenixServiceException(e);
+		} catch (NoSuchMethodException e) {
+			throw new FenixServiceException(e);
 		}
-
-	    }
-	} catch (IllegalAccessException e) {
-	    throw new FenixServiceException(e);
-	} catch (InvocationTargetException e) {
-	    throw new FenixServiceException(e);
-	} catch (NoSuchMethodException e) {
-	    throw new FenixServiceException(e);
 	}
-    }
 
 }

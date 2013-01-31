@@ -12,51 +12,54 @@ import org.joda.time.LocalDate;
 
 public class RoomOccupationWeekBean implements Serializable {
 
-    private AcademicInterval academicInterval;
+	private AcademicInterval academicInterval;
 
-    private WeekBean weekBean;
+	private WeekBean weekBean;
 
-    private InfoRoom room;
+	private InfoRoom room;
 
-    public RoomOccupationWeekBean() {
-	this.academicInterval = AcademicInterval.readDefaultAcademicInterval(AcademicPeriod.SEMESTER);
-	LocalDate monday;
-	for (monday = new LocalDate(); monday.getDayOfWeek() != DateTimeConstants.MONDAY; monday = monday.minusDays(1))
-	    ;
-	this.weekBean = new WeekBean(monday);
-    }
+	public RoomOccupationWeekBean() {
+		this.academicInterval = AcademicInterval.readDefaultAcademicInterval(AcademicPeriod.SEMESTER);
+		LocalDate monday;
+		for (monday = new LocalDate(); monday.getDayOfWeek() != DateTimeConstants.MONDAY; monday = monday.minusDays(1)) {
+			;
+		}
+		this.weekBean = new WeekBean(monday);
+	}
 
-    public AcademicInterval getAcademicInterval() {
-	return academicInterval;
-    }
+	public AcademicInterval getAcademicInterval() {
+		return academicInterval;
+	}
 
-    public void setAcademicInterval(AcademicInterval academicInterval) {
-	this.academicInterval = academicInterval;
-    }
+	public void setAcademicInterval(AcademicInterval academicInterval) {
+		this.academicInterval = academicInterval;
+	}
 
-    public WeekBean getWeekBean() {
-	return weekBean;
-    }
+	public WeekBean getWeekBean() {
+		return weekBean;
+	}
 
-    public void setWeekBean(WeekBean weekBean) {
-	this.weekBean = weekBean;
-    }
+	public void setWeekBean(WeekBean weekBean) {
+		this.weekBean = weekBean;
+	}
 
-    public InfoRoom getRoom() {
-	return room;
-    }
+	public InfoRoom getRoom() {
+		return room;
+	}
 
-    public void setRoom(InfoRoom room) {
-	this.room = room;
-    }
+	public void setRoom(InfoRoom room) {
+		this.room = room;
+	}
 
-    @Deprecated
-    public ExecutionSemester getExecutionSemester() {
-	for (ExecutionSemester executionSemester : ExecutionSemester.readNotClosedExecutionPeriods())
-	    if (executionSemester.getAcademicInterval().equals(this.academicInterval))
-		return executionSemester;
+	@Deprecated
+	public ExecutionSemester getExecutionSemester() {
+		for (ExecutionSemester executionSemester : ExecutionSemester.readNotClosedExecutionPeriods()) {
+			if (executionSemester.getAcademicInterval().equals(this.academicInterval)) {
+				return executionSemester;
+			}
+		}
 
-	return null;
-    }
+		return null;
+	}
 
 }

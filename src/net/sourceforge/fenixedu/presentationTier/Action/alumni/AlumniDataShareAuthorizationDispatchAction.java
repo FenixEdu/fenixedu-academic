@@ -8,7 +8,11 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(path = "/studentDataShareAuthorization", module = "alumni")
 @Forwards({
-	@Forward(name = "authorizations", path = "/student/dataShareAuthorization/manageAuthorizations.jsp", tileProperties = @Tile(title = "private.alumni.academicpath.dataauthorization")),
-	@Forward(name = "historic", path = "/student/dataShareAuthorization/authorizationHistory.jsp", tileProperties = @Tile(title = "private.alumni.academicpath.dataauthorization")) })
+		@Forward(
+				name = "authorizations",
+				path = "/student/dataShareAuthorization/manageAuthorizations.jsp",
+				tileProperties = @Tile(title = "private.alumni.academicpath.dataauthorization")),
+		@Forward(name = "historic", path = "/student/dataShareAuthorization/authorizationHistory.jsp", tileProperties = @Tile(
+				title = "private.alumni.academicpath.dataauthorization")) })
 public class AlumniDataShareAuthorizationDispatchAction extends StudentDataShareAuthorizationDispatchAction {
 }

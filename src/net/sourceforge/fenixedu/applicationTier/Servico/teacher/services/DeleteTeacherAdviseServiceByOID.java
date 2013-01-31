@@ -14,10 +14,10 @@ import net.sourceforge.fenixedu.domain.teacher.TeacherAdviseService;
 
 public class DeleteTeacherAdviseServiceByOID extends FenixService {
 
-    public void run(Integer teacherAdviseServiceID, RoleType roleType) {
-	TeacherAdviseService teacherAdviseService = (TeacherAdviseService) rootDomainObject
-		.readTeacherServiceItemByOID(teacherAdviseServiceID);
-	teacherAdviseService.delete(roleType);
-    }
+	public void run(Integer teacherAdviseServiceID, RoleType roleType) {
+		TeacherAdviseService teacherAdviseService =
+				(TeacherAdviseService) rootDomainObject.readTeacherServiceItemByOID(teacherAdviseServiceID);
+		teacherAdviseService.delete(roleType);
+	}
 
 }

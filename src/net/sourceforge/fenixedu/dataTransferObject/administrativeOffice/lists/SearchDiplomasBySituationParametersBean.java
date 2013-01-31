@@ -13,35 +13,35 @@ import org.joda.time.LocalDate;
 
 public class SearchDiplomasBySituationParametersBean extends AcademicServiceRequestBean {
 
-    LocalDate searchBegin;
+	LocalDate searchBegin;
 
-    LocalDate searchEnd;
+	LocalDate searchEnd;
 
-    public SearchDiplomasBySituationParametersBean(final Person responsible) {
-	super(responsible, (String) null);
-    }
+	public SearchDiplomasBySituationParametersBean(final Person responsible) {
+		super(responsible, (String) null);
+	}
 
-    public LocalDate getSearchBegin() {
-	return searchBegin;
-    }
+	public LocalDate getSearchBegin() {
+		return searchBegin;
+	}
 
-    public void setSearchBegin(LocalDate searchBegin) {
-	this.searchBegin = searchBegin;
-    }
+	public void setSearchBegin(LocalDate searchBegin) {
+		this.searchBegin = searchBegin;
+	}
 
-    public LocalDate getSearchEnd() {
-	return searchEnd;
-    }
+	public LocalDate getSearchEnd() {
+		return searchEnd;
+	}
 
-    public void setSearchEnd(LocalDate searchEnd) {
-	this.searchEnd = searchEnd;
-    }
+	public void setSearchEnd(LocalDate searchEnd) {
+		this.searchEnd = searchEnd;
+	}
 
-    @Override
-    public Collection<AcademicServiceRequest> searchAcademicServiceRequests() {
-	return AcademicAuthorizationGroup.getAcademicServiceRequests(AccessControl.getPerson(), serviceRequestYear,
-		academicServiceRequestSituationType,
-		new Interval(searchBegin.toDateTimeAtStartOfDay(), searchEnd.toDateTimeAtStartOfDay()));
-    }
+	@Override
+	public Collection<AcademicServiceRequest> searchAcademicServiceRequests() {
+		return AcademicAuthorizationGroup.getAcademicServiceRequests(AccessControl.getPerson(), serviceRequestYear,
+				academicServiceRequestSituationType,
+				new Interval(searchBegin.toDateTimeAtStartOfDay(), searchEnd.toDateTimeAtStartOfDay()));
+	}
 
 }

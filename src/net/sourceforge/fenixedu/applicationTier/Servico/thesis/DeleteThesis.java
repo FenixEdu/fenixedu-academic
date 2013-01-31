@@ -7,9 +7,9 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class DeleteThesis extends FenixService {
 
-    @Service
-    public static void run(DegreeCurricularPlan degreeCurricularPlan, Thesis thesis) {
-	thesis.delete();
-    }
+	@Service
+	public static void run(DegreeCurricularPlan degreeCurricularPlan, Thesis thesis) {
+		thesis.delete();
+	}
 
 }

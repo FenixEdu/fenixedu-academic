@@ -11,22 +11,22 @@ import net.sourceforge.fenixedu.domain.phd.candidacy.PhdGuiderAcceptanceLetter;
 
 public class AddGuidingsInformation extends PhdIndividualProgramProcessActivity {
 
-    @Override
-    protected void activityPreConditions(PhdIndividualProgramProcess arg0, IUserView arg1) {
-	// no precondition to check
-    }
-
-    @SuppressWarnings("unchecked")
-    @Override
-    protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView, Object object) {
-	for (final PhdParticipantBean bean : (List<PhdParticipantBean>) object) {
-	    PhdParticipant guiding = process.addGuiding(bean);
-	    if (bean.getGuidingAcceptanceLetter() != null && bean.getGuidingAcceptanceLetter().getFileContent() != null) {
-		PhdProgramDocumentUploadBean acceptanceLetter = bean.getGuidingAcceptanceLetter();
-		new PhdGuiderAcceptanceLetter(guiding, acceptanceLetter.getType(), "", bean.getGuidingAcceptanceLetter()
-			.getFileContent(), bean.getGuidingAcceptanceLetter().getFilename(), userView.getPerson());
-	    }
+	@Override
+	protected void activityPreConditions(PhdIndividualProgramProcess arg0, IUserView arg1) {
+		// no precondition to check
 	}
-	return process;
-    }
+
+	@SuppressWarnings("unchecked")
+	@Override
+	protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView, Object object) {
+		for (final PhdParticipantBean bean : (List<PhdParticipantBean>) object) {
+			PhdParticipant guiding = process.addGuiding(bean);
+			if (bean.getGuidingAcceptanceLetter() != null && bean.getGuidingAcceptanceLetter().getFileContent() != null) {
+				PhdProgramDocumentUploadBean acceptanceLetter = bean.getGuidingAcceptanceLetter();
+				new PhdGuiderAcceptanceLetter(guiding, acceptanceLetter.getType(), "", bean.getGuidingAcceptanceLetter()
+						.getFileContent(), bean.getGuidingAcceptanceLetter().getFilename(), userView.getPerson());
+			}
+		}
+		return process;
+	}
 }

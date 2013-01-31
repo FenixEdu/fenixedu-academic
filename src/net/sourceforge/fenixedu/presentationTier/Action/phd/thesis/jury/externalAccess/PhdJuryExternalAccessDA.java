@@ -14,12 +14,6 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(path = "/phdJuryExternalAccess", module = "publico")
 @Forwards(tileProperties = @Tile(extend = "definition.phd.jury.external.access"), value = {
@@ -31,48 +25,48 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
 })
 public class PhdJuryExternalAccessDA extends PhdProcessDA {
 
-    @Override
-    public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
+	@Override
+	public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
 
-	request.setAttribute("dont-cache-pages-in-search-engines", Boolean.TRUE);
+		request.setAttribute("dont-cache-pages-in-search-engines", Boolean.TRUE);
 
-	return super.execute(mapping, actionForm, request, response);
-    }
-
-    public ActionForward prepareDownloadDocuments(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
-
-	final PhdParticipant participant = getPhdParticipant(request);
-
-	if (participant == null) {
-	    return null;
+		return super.execute(mapping, actionForm, request, response);
 	}
 
-	request.setAttribute("process", participant.getIndividualProcess());
+	public ActionForward prepareDownloadDocuments(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) {
 
-	return mapping.findForward("downloadDocuments");
-    }
+		final PhdParticipant participant = getPhdParticipant(request);
 
-    public ActionForward downloadDocuments(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
+		if (participant == null) {
+			return null;
+		}
 
-	return mapping.findForward("downloadDocuments");
-    }
+		request.setAttribute("process", participant.getIndividualProcess());
 
-    public ActionForward prepareUploadReview(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
+		return mapping.findForward("downloadDocuments");
+	}
 
-	return mapping.findForward("uploadReview");
-    }
+	public ActionForward downloadDocuments(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) {
 
-    public ActionForward uploadReview(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
+		return mapping.findForward("downloadDocuments");
+	}
 
-	return mapping.findForward("uploadReview");
-    }
+	public ActionForward prepareUploadReview(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) {
 
-    private PhdParticipant getPhdParticipant(HttpServletRequest request) {
-	return getDomainObject(request, "hash");
-    }
+		return mapping.findForward("uploadReview");
+	}
+
+	public ActionForward uploadReview(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) {
+
+		return mapping.findForward("uploadReview");
+	}
+
+	private PhdParticipant getPhdParticipant(HttpServletRequest request) {
+		return getDomainObject(request, "hash");
+	}
 }

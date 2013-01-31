@@ -23,164 +23,165 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class StudentFirstTimeCycleInquiryBean implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    private Set<InquiryBlockDTO> studentInquiryBlocks;
-    private Registration registration;
-    private PhdIndividualProgramProcess phdProcess;
-    private StudentCandidacy candidacy;
-    private StudentCycleInquiryTemplate studentInquiryTemplate;
+	private Set<InquiryBlockDTO> studentInquiryBlocks;
+	private Registration registration;
+	private PhdIndividualProgramProcess phdProcess;
+	private StudentCandidacy candidacy;
+	private StudentCycleInquiryTemplate studentInquiryTemplate;
 
-    public StudentFirstTimeCycleInquiryBean(StudentCycleInquiryTemplate studentInquiryTemplate, Registration registration) {
-	initStudentInquiry(studentInquiryTemplate, registration, null);
-	setGroupsVisibility();
-    }
-
-    public StudentFirstTimeCycleInquiryBean(StudentCycleInquiryTemplate studentInquiryTemplate,
-	    PhdIndividualProgramProcess phdProcess) {
-	initStudentInquiry(studentInquiryTemplate, null, phdProcess);
-	setGroupsVisibility();
-    }
-
-    private void initStudentInquiry(StudentCycleInquiryTemplate studentInquiryTemplate, Registration registration,
-	    PhdIndividualProgramProcess phdProcess) {
-	setRegistration(registration);
-	setPhdProcess(phdProcess);
-	setStudentInquiryTemplate(studentInquiryTemplate);
-	setStudentInquiryBlocks(new TreeSet<InquiryBlockDTO>(new BeanComparator("inquiryBlock.blockOrder")));
-	for (InquiryBlock inquiryBlock : studentInquiryTemplate.getInquiryBlocks()) {
-	    getStudentInquiryBlocks().add(new InquiryBlockDTO(inquiryBlock));
+	public StudentFirstTimeCycleInquiryBean(StudentCycleInquiryTemplate studentInquiryTemplate, Registration registration) {
+		initStudentInquiry(studentInquiryTemplate, registration, null);
+		setGroupsVisibility();
 	}
 
-    }
-
-    public void setGroupsVisibility() {
-	for (InquiryBlockDTO inquiryBlockDTO : getStudentInquiryBlocks()) {
-	    Set<InquiryGroupQuestionBean> groups = inquiryBlockDTO.getInquiryGroups();
-	    for (InquiryGroupQuestionBean group : groups) {
-		setGroupVisibility(getStudentInquiryBlocks(), group);
-	    }
+	public StudentFirstTimeCycleInquiryBean(StudentCycleInquiryTemplate studentInquiryTemplate,
+			PhdIndividualProgramProcess phdProcess) {
+		initStudentInquiry(studentInquiryTemplate, null, phdProcess);
+		setGroupsVisibility();
 	}
-    }
 
-    private void setGroupVisibility(Set<InquiryBlockDTO> inquiryBlocks, InquiryGroupQuestionBean groupQuestionBean) {
-	for (QuestionCondition questionCondition : groupQuestionBean.getInquiryGroupQuestion().getQuestionConditions()) {
-	    if (questionCondition instanceof MandatoryCondition) {
-		MandatoryCondition condition = (MandatoryCondition) questionCondition;
-		InquiryQuestionDTO inquiryDependentQuestionBean = getInquiryQuestionBean(condition.getInquiryDependentQuestion(),
-			inquiryBlocks);
-		boolean isMandatory = inquiryDependentQuestionBean.getFinalValue() == null ? false : condition
-			.getConditionValuesAsList().contains(inquiryDependentQuestionBean.getFinalValue());
-		if (isMandatory) {
-		    groupQuestionBean.setVisible(true);
-		} else {
-		    groupQuestionBean.setVisible(false);
-		    for (InquiryQuestionDTO questionDTO : groupQuestionBean.getInquiryQuestions()) {
-			questionDTO.setResponseValue(null);
-		    }
+	private void initStudentInquiry(StudentCycleInquiryTemplate studentInquiryTemplate, Registration registration,
+			PhdIndividualProgramProcess phdProcess) {
+		setRegistration(registration);
+		setPhdProcess(phdProcess);
+		setStudentInquiryTemplate(studentInquiryTemplate);
+		setStudentInquiryBlocks(new TreeSet<InquiryBlockDTO>(new BeanComparator("inquiryBlock.blockOrder")));
+		for (InquiryBlock inquiryBlock : studentInquiryTemplate.getInquiryBlocks()) {
+			getStudentInquiryBlocks().add(new InquiryBlockDTO(inquiryBlock));
 		}
-	    }
-	}
-    }
 
-    private InquiryQuestionDTO getInquiryQuestionBean(InquiryQuestion inquiryQuestion, Set<InquiryBlockDTO> inquiryBlocks) {
-	for (InquiryBlockDTO blockDTO : inquiryBlocks) {
-	    for (InquiryGroupQuestionBean groupQuestionBean : blockDTO.getInquiryGroups()) {
-		for (InquiryQuestionDTO inquiryQuestionDTO : groupQuestionBean.getInquiryQuestions()) {
-		    if (inquiryQuestionDTO.getInquiryQuestion() == inquiryQuestion) {
-			return inquiryQuestionDTO;
-		    }
-		}
-	    }
 	}
-	return null;
-    }
 
-    public String validateInquiry() {
-	String validationResult = null;
-	for (InquiryBlockDTO inquiryBlockDTO : getStudentInquiryBlocks()) {
-	    validationResult = inquiryBlockDTO.validate(getStudentInquiryBlocks());
-	    if (!Boolean.valueOf(validationResult)) {
-		return validationResult;
-	    }
-	}
-	return Boolean.toString(true);
-    }
-
-    @Service
-    public void saveAnswers() {
-	InquiryStudentCycleAnswer inquiryStudentCycleAnswer = null;
-	for (InquiryBlockDTO blockDTO : getStudentInquiryBlocks()) {
-	    for (InquiryGroupQuestionBean groupQuestionBean : blockDTO.getInquiryGroups()) {
-		for (InquiryQuestionDTO questionDTO : groupQuestionBean.getInquiryQuestions()) {
-		    if (!StringUtils.isEmpty(questionDTO.getResponseValue()) || questionDTO.getQuestionAnswer() != null) {
-			if (inquiryStudentCycleAnswer == null) {
-			    inquiryStudentCycleAnswer = createInquiryStudentCycleAnswer();
-			    inquiryStudentCycleAnswer.setResponseDateTime(new DateTime());
+	public void setGroupsVisibility() {
+		for (InquiryBlockDTO inquiryBlockDTO : getStudentInquiryBlocks()) {
+			Set<InquiryGroupQuestionBean> groups = inquiryBlockDTO.getInquiryGroups();
+			for (InquiryGroupQuestionBean group : groups) {
+				setGroupVisibility(getStudentInquiryBlocks(), group);
 			}
-			new QuestionAnswer(inquiryStudentCycleAnswer, questionDTO.getInquiryQuestion(),
-				questionDTO.getFinalValue());
-		    }
 		}
-	    }
 	}
-    }
 
-    private InquiryStudentCycleAnswer createInquiryStudentCycleAnswer() {
-	if (getRegistration() != null) {
-	    return new InquiryStudentCycleAnswer(getRegistration());
-	} else {
-	    return new InquiryStudentCycleAnswer(getPhdProcess());
+	private void setGroupVisibility(Set<InquiryBlockDTO> inquiryBlocks, InquiryGroupQuestionBean groupQuestionBean) {
+		for (QuestionCondition questionCondition : groupQuestionBean.getInquiryGroupQuestion().getQuestionConditions()) {
+			if (questionCondition instanceof MandatoryCondition) {
+				MandatoryCondition condition = (MandatoryCondition) questionCondition;
+				InquiryQuestionDTO inquiryDependentQuestionBean =
+						getInquiryQuestionBean(condition.getInquiryDependentQuestion(), inquiryBlocks);
+				boolean isMandatory =
+						inquiryDependentQuestionBean.getFinalValue() == null ? false : condition.getConditionValuesAsList()
+								.contains(inquiryDependentQuestionBean.getFinalValue());
+				if (isMandatory) {
+					groupQuestionBean.setVisible(true);
+				} else {
+					groupQuestionBean.setVisible(false);
+					for (InquiryQuestionDTO questionDTO : groupQuestionBean.getInquiryQuestions()) {
+						questionDTO.setResponseValue(null);
+					}
+				}
+			}
+		}
 	}
-    }
 
-    public Registration getRegistration() {
-	return registration;
-    }
-
-    public void setRegistration(Registration registration) {
-	this.registration = registration;
-    }
-
-    public void setStudentInquiryBlocks(Set<InquiryBlockDTO> studentInquiryBlocks) {
-	this.studentInquiryBlocks = studentInquiryBlocks;
-    }
-
-    public Set<InquiryBlockDTO> getStudentInquiryBlocks() {
-	return studentInquiryBlocks;
-    }
-
-    public void setCandidacy(StudentCandidacy candidacy) {
-	this.candidacy = candidacy;
-    }
-
-    public StudentCandidacy getCandidacy() {
-	return candidacy;
-    }
-
-    public PhdIndividualProgramProcess getPhdProcess() {
-	return phdProcess;
-    }
-
-    public void setPhdProcess(PhdIndividualProgramProcess phdProcess) {
-	this.phdProcess = phdProcess;
-    }
-
-    public void setStudentInquiryTemplate(StudentCycleInquiryTemplate studentInquiryTemplate) {
-	this.studentInquiryTemplate = studentInquiryTemplate;
-    }
-
-    public StudentCycleInquiryTemplate getStudentInquiryTemplate() {
-	return studentInquiryTemplate;
-    }
-
-    public boolean hasInquiryStudentCycleAnswer() {
-	if (getRegistration() != null && getRegistration().hasInquiryStudentCycleAnswer()) {
-	    return true;
+	private InquiryQuestionDTO getInquiryQuestionBean(InquiryQuestion inquiryQuestion, Set<InquiryBlockDTO> inquiryBlocks) {
+		for (InquiryBlockDTO blockDTO : inquiryBlocks) {
+			for (InquiryGroupQuestionBean groupQuestionBean : blockDTO.getInquiryGroups()) {
+				for (InquiryQuestionDTO inquiryQuestionDTO : groupQuestionBean.getInquiryQuestions()) {
+					if (inquiryQuestionDTO.getInquiryQuestion() == inquiryQuestion) {
+						return inquiryQuestionDTO;
+					}
+				}
+			}
+		}
+		return null;
 	}
-	if (getPhdProcess() != null && getPhdProcess().hasInquiryStudentCycleAnswer()) {
-	    return true;
+
+	public String validateInquiry() {
+		String validationResult = null;
+		for (InquiryBlockDTO inquiryBlockDTO : getStudentInquiryBlocks()) {
+			validationResult = inquiryBlockDTO.validate(getStudentInquiryBlocks());
+			if (!Boolean.valueOf(validationResult)) {
+				return validationResult;
+			}
+		}
+		return Boolean.toString(true);
 	}
-	return false;
-    }
+
+	@Service
+	public void saveAnswers() {
+		InquiryStudentCycleAnswer inquiryStudentCycleAnswer = null;
+		for (InquiryBlockDTO blockDTO : getStudentInquiryBlocks()) {
+			for (InquiryGroupQuestionBean groupQuestionBean : blockDTO.getInquiryGroups()) {
+				for (InquiryQuestionDTO questionDTO : groupQuestionBean.getInquiryQuestions()) {
+					if (!StringUtils.isEmpty(questionDTO.getResponseValue()) || questionDTO.getQuestionAnswer() != null) {
+						if (inquiryStudentCycleAnswer == null) {
+							inquiryStudentCycleAnswer = createInquiryStudentCycleAnswer();
+							inquiryStudentCycleAnswer.setResponseDateTime(new DateTime());
+						}
+						new QuestionAnswer(inquiryStudentCycleAnswer, questionDTO.getInquiryQuestion(),
+								questionDTO.getFinalValue());
+					}
+				}
+			}
+		}
+	}
+
+	private InquiryStudentCycleAnswer createInquiryStudentCycleAnswer() {
+		if (getRegistration() != null) {
+			return new InquiryStudentCycleAnswer(getRegistration());
+		} else {
+			return new InquiryStudentCycleAnswer(getPhdProcess());
+		}
+	}
+
+	public Registration getRegistration() {
+		return registration;
+	}
+
+	public void setRegistration(Registration registration) {
+		this.registration = registration;
+	}
+
+	public void setStudentInquiryBlocks(Set<InquiryBlockDTO> studentInquiryBlocks) {
+		this.studentInquiryBlocks = studentInquiryBlocks;
+	}
+
+	public Set<InquiryBlockDTO> getStudentInquiryBlocks() {
+		return studentInquiryBlocks;
+	}
+
+	public void setCandidacy(StudentCandidacy candidacy) {
+		this.candidacy = candidacy;
+	}
+
+	public StudentCandidacy getCandidacy() {
+		return candidacy;
+	}
+
+	public PhdIndividualProgramProcess getPhdProcess() {
+		return phdProcess;
+	}
+
+	public void setPhdProcess(PhdIndividualProgramProcess phdProcess) {
+		this.phdProcess = phdProcess;
+	}
+
+	public void setStudentInquiryTemplate(StudentCycleInquiryTemplate studentInquiryTemplate) {
+		this.studentInquiryTemplate = studentInquiryTemplate;
+	}
+
+	public StudentCycleInquiryTemplate getStudentInquiryTemplate() {
+		return studentInquiryTemplate;
+	}
+
+	public boolean hasInquiryStudentCycleAnswer() {
+		if (getRegistration() != null && getRegistration().hasInquiryStudentCycleAnswer()) {
+			return true;
+		}
+		if (getPhdProcess() != null && getPhdProcess().hasInquiryStudentCycleAnswer()) {
+			return true;
+		}
+		return false;
+	}
 }

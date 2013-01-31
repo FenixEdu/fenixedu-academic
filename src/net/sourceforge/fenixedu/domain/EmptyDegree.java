@@ -16,413 +16,412 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.util.MarkType;
 import net.sourceforge.fenixedu.util.StringUtils;
-import pt.ist.fenixWebFramework.services.Service;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class EmptyDegree extends EmptyDegree_Base {
 
-    private static EmptyDegree instance = null;
+	private static EmptyDegree instance = null;
 
-    private EmptyDegree() {
-	super();
-	setRootDomainObject(RootDomainObject.getInstance());
-	super.setDegreeType(DegreeType.EMPTY);
-    }
+	private EmptyDegree() {
+		super();
+		setRootDomainObject(RootDomainObject.getInstance());
+		super.setDegreeType(DegreeType.EMPTY);
+	}
 
-    @Override
-    public boolean isEmpty() {
-	return true;
-    }
+	@Override
+	public boolean isEmpty() {
+		return true;
+	}
 
-    public static EmptyDegree getInstance() {
-	if (instance == null) {
-	    synchronized (EmptyDegree.class) {
+	public static EmptyDegree getInstance() {
 		if (instance == null) {
-		    for (final Degree degree : RootDomainObject.getInstance().getDegreesSet()) {
-			if (degree.isEmpty()) {
-			    instance = (EmptyDegree) degree;
+			synchronized (EmptyDegree.class) {
+				if (instance == null) {
+					for (final Degree degree : RootDomainObject.getInstance().getDegreesSet()) {
+						if (degree.isEmpty()) {
+							instance = (EmptyDegree) degree;
+						}
+					}
+				}
 			}
-		    }
 		}
-	    }
-	}
-	
-	return instance;
-    }
 
-    public static void init() {
-	synchronized (EmptyDegree.class) {
-	    final EmptyDegree existing = getInstance();
-	    if (existing == null) {
-		final EmptyDegree newinstance = new EmptyDegree();
-		newinstance.setNomeOnSuper("Curso de Unidades Isoladas");
-		instance = newinstance;
-	    }
-	}
-    }
-
-    private void setNomeOnSuper(final String nome) {
-	super.setNome(nome);
-    }
-
-    @Override
-    public void edit(String name, String nameEn, String code, DegreeType degreeType, GradeScale gradeScale,
-	    ExecutionYear executionYear) {
-	throw new DomainException("EmptyDegree.not.available");
-    }
-
-    @Override
-    public void edit(String name, String nameEn, String acronym, DegreeType degreeType, Double ectsCredits,
-	    GradeScale gradeScale, String prevailingScientificArea, ExecutionYear executionYear) {
-	throw new DomainException("EmptyDegree.not.available");
-    }
-
-    @Override
-    public Boolean getCanBeDeleted() {
-	return false;
-    }
-
-    @Override
-    public void delete() {
-	throw new DomainException("EmptyDegree.not.available");
-    }
-
-    @Override
-    public DegreeCurricularPlan createPreBolonhaDegreeCurricularPlan(String name, DegreeCurricularPlanState state,
-	    Date initialDate, Date endDate, Integer degreeDuration, Integer minimalYearForOptionalCourses, Double neededCredits,
-	    MarkType markType, Integer numerusClausus, String anotation, GradeScale gradeScale) {
-	throw new DomainException("EmptyDegree.not.available");
-    }
-
-    @Override
-    public DegreeCurricularPlan createBolonhaDegreeCurricularPlan(String name, GradeScale gradeScale, Person creator) {
-	throw new DomainException("EmptyDegree.not.available");
-    }
-
-    @Override
-    public void setNome(final String nome) {
-	throw new DomainException("EmptyDegree.not.available");
-    }
-
-    @Override
-    public void setNameEn(String nameEn) {
-	throw new DomainException("EmptyDegree.not.available");
-    }
-
-    @Override
-    public void setSigla(final String sigla) {
-	throw new DomainException("EmptyDegree.not.available");
-    }
-
-    @Override
-    public String getSigla() {
-	return StringUtils.EMPTY;
-    }
-
-    @Override
-    public Double getEctsCredits() {
-	return null;
-    }
-
-    @Override
-    public void setEctsCredits(Double ectsCredits) {
-	throw new DomainException("EmptyDegree.not.available");
-    }
-
-    @Override
-    public boolean hasEctsCredits() {
-	return false;
-    }
-
-    @Override
-    public void setGradeScale(GradeScale gradeScale) {
-	throw new DomainException("EmptyDegree.not.available");
-    }
-
-    @Override
-    public GradeScale getGradeScale() {
-	return null;
-    }
-
-    @Override
-    public GradeScale getGradeScaleChain() {
-	return null;
-    }
-
-    @Override
-    public void setPrevailingScientificArea(String prevailingScientificArea) {
-	throw new DomainException("EmptyDegree.not.available");
-    }
-
-    @Override
-    public void setDegreeType(final DegreeType degreeType) {
-	throw new DomainException("EmptyDegree.not.available");
-    }
-
-    @Override
-    public boolean isBolonhaDegree() {
-	return true;
-    }
-
-    @Override
-    public boolean isDegreeOrBolonhaDegreeOrBolonhaIntegratedMasterDegree() {
-	return false;
-    }
-
-    @Override
-    public List<DegreeCurricularPlan> findDegreeCurricularPlansByState(DegreeCurricularPlanState state) {
-	if (state == DegreeCurricularPlanState.ACTIVE) {
-	    return getActiveDegreeCurricularPlans();
+		return instance;
 	}
 
-	return Collections.emptyList();
-    }
+	public static void init() {
+		synchronized (EmptyDegree.class) {
+			final EmptyDegree existing = getInstance();
+			if (existing == null) {
+				final EmptyDegree newinstance = new EmptyDegree();
+				newinstance.setNomeOnSuper("Curso de Unidades Isoladas");
+				instance = newinstance;
+			}
+		}
+	}
 
-    @Override
-    public List<DegreeCurricularPlan> getActiveDegreeCurricularPlans() {
-	return Collections.singletonList(getMostRecentDegreeCurricularPlan());
-    }
+	private void setNomeOnSuper(final String nome) {
+		super.setNome(nome);
+	}
 
-    @Override
-    public List<DegreeCurricularPlan> getPastDegreeCurricularPlans() {
-	return Collections.emptyList();
-    }
+	@Override
+	public void edit(String name, String nameEn, String code, DegreeType degreeType, GradeScale gradeScale,
+			ExecutionYear executionYear) {
+		throw new DomainException("EmptyDegree.not.available");
+	}
 
-    @Override
-    public List<CurricularCourse> getExecutedCurricularCoursesByExecutionYear(final ExecutionYear executionYear) {
-	return Collections.emptyList();
-    }
+	@Override
+	public void edit(String name, String nameEn, String acronym, DegreeType degreeType, Double ectsCredits,
+			GradeScale gradeScale, String prevailingScientificArea, ExecutionYear executionYear) {
+		throw new DomainException("EmptyDegree.not.available");
+	}
 
-    @Override
-    public List<CurricularCourse> getExecutedCurricularCoursesByExecutionYearAndYear(final ExecutionYear ey, final Integer cy) {
-	return Collections.emptyList();
-    }
+	@Override
+	public Boolean getCanBeDeleted() {
+		return false;
+	}
 
-    @Override
-    public List<ExecutionCourse> getExecutionCourses(String curricularCourseAcronym, ExecutionSemester executionSemester) {
-	return Collections.emptyList();
-    }
+	@Override
+	public void delete() {
+		throw new DomainException("EmptyDegree.not.available");
+	}
 
-    @Override
-    @Deprecated
-    final public String getName() {
-	return getPresentationName();
-    }
+	@Override
+	public DegreeCurricularPlan createPreBolonhaDegreeCurricularPlan(String name, DegreeCurricularPlanState state,
+			Date initialDate, Date endDate, Integer degreeDuration, Integer minimalYearForOptionalCourses, Double neededCredits,
+			MarkType markType, Integer numerusClausus, String anotation, GradeScale gradeScale) {
+		throw new DomainException("EmptyDegree.not.available");
+	}
 
-    @Override
-    final public String getPresentationName(ExecutionYear executionYear) {
-	return getNameFor((ExecutionYear) null).getContent(Language.pt);
-    }
+	@Override
+	public DegreeCurricularPlan createBolonhaDegreeCurricularPlan(String name, GradeScale gradeScale, Person creator) {
+		throw new DomainException("EmptyDegree.not.available");
+	}
 
-    @Override
-    final public String getFilteredName(final ExecutionYear executionYear, final Locale locale) {
-	return getNameFor(executionYear).getContent(Language.valueOf(locale.getLanguage()));
-    }
+	@Override
+	public void setNome(final String nome) {
+		throw new DomainException("EmptyDegree.not.available");
+	}
 
-    @Override
-    public DegreeCurricularPlan getMostRecentDegreeCurricularPlan() {
-	return getDegreeCurricularPlans().get(0);
-    }
+	@Override
+	public void setNameEn(String nameEn) {
+		throw new DomainException("EmptyDegree.not.available");
+	}
 
-    @Override
-    public DegreeCurricularPlan getLastActiveDegreeCurricularPlan() {
-	return getMostRecentDegreeCurricularPlan();
-    }
+	@Override
+	public void setSigla(final String sigla) {
+		throw new DomainException("EmptyDegree.not.available");
+	}
 
-    @Override
-    public MultiLanguageString getQualificationLevel(final ExecutionYear executionYear) {
-	return new MultiLanguageString();
-    }
+	@Override
+	public String getSigla() {
+		return StringUtils.EMPTY;
+	}
 
-    @Override
-    public MultiLanguageString getProfessionalExits(final ExecutionYear executionYear) {
-	return new MultiLanguageString();
-    }
+	@Override
+	public Double getEctsCredits() {
+		return null;
+	}
 
-    @Override
-    public DegreeInfo getMostRecentDegreeInfo() {
-	return null;
-    }
+	@Override
+	public void setEctsCredits(Double ectsCredits) {
+		throw new DomainException("EmptyDegree.not.available");
+	}
 
-    @Override
-    public DegreeInfo getDegreeInfoFor(ExecutionYear executionYear) {
-	return getMostRecentDegreeInfo();
-    }
+	@Override
+	public boolean hasEctsCredits() {
+		return false;
+	}
 
-    @Override
-    public DegreeInfo getMostRecentDegreeInfo(ExecutionYear executionYear) {
-	return getMostRecentDegreeInfo();
-    }
+	@Override
+	public void setGradeScale(GradeScale gradeScale) {
+		throw new DomainException("EmptyDegree.not.available");
+	}
 
-    @Override
-    public DegreeInfo createCurrentDegreeInfo() {
-	throw new DomainException("EmptyDegree.not.available");
-    }
+	@Override
+	public GradeScale getGradeScale() {
+		return null;
+	}
 
-    @Override
-    public List<Integer> buildFullCurricularYearList() {
-	return Collections.emptyList();
-    }
+	@Override
+	public GradeScale getGradeScaleChain() {
+		return null;
+	}
 
-    @Override
-    final public boolean isCoordinator(final Person person, final ExecutionYear executionYear) {
-	return false;
-    }
+	@Override
+	public void setPrevailingScientificArea(String prevailingScientificArea) {
+		throw new DomainException("EmptyDegree.not.available");
+	}
 
-    @Override
-    final public Collection<Coordinator> getResponsibleCoordinators(final ExecutionYear executionYear) {
-	return Collections.emptySet();
-    }
+	@Override
+	public void setDegreeType(final DegreeType degreeType) {
+		throw new DomainException("EmptyDegree.not.available");
+	}
 
-    @Override
-    final public Collection<Coordinator> getCurrentCoordinators() {
-	return Collections.emptySet();
-    }
+	@Override
+	public boolean isBolonhaDegree() {
+		return true;
+	}
 
-    @Override
-    final public Collection<Coordinator> getCurrentResponsibleCoordinators() {
-	return Collections.emptySet();
-    }
+	@Override
+	public boolean isDegreeOrBolonhaDegreeOrBolonhaIntegratedMasterDegree() {
+		return false;
+	}
 
-    @Override
-    final public Collection<Teacher> getResponsibleCoordinatorsTeachers(final ExecutionYear executionYear) {
-	return Collections.emptySet();
-    }
+	@Override
+	public List<DegreeCurricularPlan> findDegreeCurricularPlansByState(DegreeCurricularPlanState state) {
+		if (state == DegreeCurricularPlanState.ACTIVE) {
+			return getActiveDegreeCurricularPlans();
+		}
 
-    @Override
-    final public Collection<Teacher> getCurrentResponsibleCoordinatorsTeachers() {
-	return Collections.emptySet();
-    }
+		return Collections.emptyList();
+	}
 
-    @Override
-    public String constructSchoolClassPrefix(final Integer curricularYear) {
-	return StringUtils.EMPTY;
-    }
+	@Override
+	public List<DegreeCurricularPlan> getActiveDegreeCurricularPlans() {
+		return Collections.singletonList(getMostRecentDegreeCurricularPlan());
+	}
 
-    @Override
-    public boolean isFirstCycle() {
-	return false;
-    }
+	@Override
+	public List<DegreeCurricularPlan> getPastDegreeCurricularPlans() {
+		return Collections.emptyList();
+	}
 
-    @Override
-    public boolean isSecondCycle() {
-	return false;
-    }
+	@Override
+	public List<CurricularCourse> getExecutedCurricularCoursesByExecutionYear(final ExecutionYear executionYear) {
+		return Collections.emptyList();
+	}
 
-    @Override
-    public boolean isAnyPublishedThesisAvailable() {
-	return false;
-    }
+	@Override
+	public List<CurricularCourse> getExecutedCurricularCoursesByExecutionYearAndYear(final ExecutionYear ey, final Integer cy) {
+		return Collections.emptyList();
+	}
 
-    @Override
-    public boolean isAnyThesisAvailable() {
-	return false;
-    }
+	@Override
+	public List<ExecutionCourse> getExecutionCourses(String curricularCourseAcronym, ExecutionSemester executionSemester) {
+		return Collections.emptyList();
+	}
 
-    @Override
-    public List<YearDelegateElection> getYearDelegateElectionsGivenExecutionYear(ExecutionYear executionYear) {
-	return Collections.emptyList();
-    }
+	@Override
+	@Deprecated
+	final public String getName() {
+		return getPresentationName();
+	}
 
-    @Override
-    public List<YearDelegateElection> getYearDelegateElectionsGivenExecutionYearAndCurricularYear(ExecutionYear executionYear,
-	    CurricularYear curricularYear) {
-	return Collections.emptyList();
-    }
+	@Override
+	final public String getPresentationName(ExecutionYear executionYear) {
+		return getNameFor((ExecutionYear) null).getContent(Language.pt);
+	}
 
-    @Override
-    public YearDelegateElection getYearDelegateElectionWithLastCandidacyPeriod(ExecutionYear executionYear,
-	    CurricularYear curricularYear) {
-	return null;
-    }
+	@Override
+	final public String getFilteredName(final ExecutionYear executionYear, final Locale locale) {
+		return getNameFor(executionYear).getContent(Language.valueOf(locale.getLanguage()));
+	}
 
-    @Override
-    public YearDelegateElection getYearDelegateElectionWithLastVotingPeriod(ExecutionYear executionYear,
-	    CurricularYear curricularYear) {
-	return null;
-    }
+	@Override
+	public DegreeCurricularPlan getMostRecentDegreeCurricularPlan() {
+		return getDegreeCurricularPlans().get(0);
+	}
 
-    @Override
-    public List<Student> getAllActiveDelegates() {
-	return Collections.emptyList();
-    }
+	@Override
+	public DegreeCurricularPlan getLastActiveDegreeCurricularPlan() {
+		return getMostRecentDegreeCurricularPlan();
+	}
 
-    @Override
-    public List<Student> getAllActiveYearDelegates() {
-	return Collections.emptyList();
-    }
+	@Override
+	public MultiLanguageString getQualificationLevel(final ExecutionYear executionYear) {
+		return new MultiLanguageString();
+	}
 
-    @Override
-    public Student getActiveYearDelegateByCurricularYear(CurricularYear curricularYear) {
-	return null;
-    }
+	@Override
+	public MultiLanguageString getProfessionalExits(final ExecutionYear executionYear) {
+		return new MultiLanguageString();
+	}
 
-    @Override
-    public List<Student> getAllActiveDelegatesByFunctionType(FunctionType functionType, ExecutionYear executionYear) {
-	return Collections.emptyList();
-    }
+	@Override
+	public DegreeInfo getMostRecentDegreeInfo() {
+		return null;
+	}
 
-    @Override
-    public boolean hasActiveDelegateFunctionForStudent(Student student, ExecutionYear executionYear,
-	    FunctionType delegateFunctionType) {
-	return false;
-    }
+	@Override
+	public DegreeInfo getDegreeInfoFor(ExecutionYear executionYear) {
+		return getMostRecentDegreeInfo();
+	}
 
-    @Override
-    public boolean hasAnyActiveDelegateFunctionForStudent(Student student) {
-	return false;
-    }
+	@Override
+	public DegreeInfo getMostRecentDegreeInfo(ExecutionYear executionYear) {
+		return getMostRecentDegreeInfo();
+	}
 
-    @Override
-    public PersonFunction getActiveDelegatePersonFunctionByStudentAndFunctionType(Student student, ExecutionYear executionYear,
-	    FunctionType functionType) {
-	return null;
-    }
+	@Override
+	public DegreeInfo createCurrentDegreeInfo() {
+		throw new DomainException("EmptyDegree.not.available");
+	}
 
-    @Override
-    public Student getYearDelegateByExecutionYearAndCurricularYear(ExecutionYear executionYear, CurricularYear curricularYear) {
-	return null;
-    }
+	@Override
+	public List<Integer> buildFullCurricularYearList() {
+		return Collections.emptyList();
+	}
 
-    @Override
-    public List<Student> getAllDelegatesByExecutionYearAndFunctionType(ExecutionYear executionYear, FunctionType functionType) {
-	return Collections.emptyList();
-    }
+	@Override
+	final public boolean isCoordinator(final Person person, final ExecutionYear executionYear) {
+		return false;
+	}
 
-    @Override
-    public List<Student> getSecondCycleStudents(ExecutionYear executionYear) {
-	return Collections.emptyList();
-    }
+	@Override
+	final public Collection<Coordinator> getResponsibleCoordinators(final ExecutionYear executionYear) {
+		return Collections.emptySet();
+	}
 
-    @Override
-    public List<Student> getFirstCycleStudents(ExecutionYear executionYear) {
-	return Collections.emptyList();
-    }
+	@Override
+	final public Collection<Coordinator> getCurrentCoordinators() {
+		return Collections.emptySet();
+	}
 
-    @Override
-    public Set<CurricularCourse> getAllCurricularCourses(ExecutionYear executionYear) {
-	return Collections.emptySet();
-    }
+	@Override
+	final public Collection<Coordinator> getCurrentResponsibleCoordinators() {
+		return Collections.emptySet();
+	}
 
-    @Override
-    public Set<CurricularCourse> getCurricularCoursesFromGivenCurricularYear(int curricularYear, ExecutionYear executionYear) {
-	return Collections.emptySet();
-    }
+	@Override
+	final public Collection<Teacher> getResponsibleCoordinatorsTeachers(final ExecutionYear executionYear) {
+		return Collections.emptySet();
+	}
 
-    @Override
-    public Set<CurricularCourse> getFirstCycleCurricularCourses(ExecutionYear executionYear) {
-	return Collections.emptySet();
-    }
+	@Override
+	final public Collection<Teacher> getCurrentResponsibleCoordinatorsTeachers() {
+		return Collections.emptySet();
+	}
 
-    @Override
-    public Set<CurricularCourse> getSecondCycleCurricularCourses(ExecutionYear executionYear) {
-	return Collections.emptySet();
-    }
+	@Override
+	public String constructSchoolClassPrefix(final Integer curricularYear) {
+		return StringUtils.EMPTY;
+	}
 
-    @Override
-    public boolean canCreateGratuityEvent() {
-	return false;
-    }
+	@Override
+	public boolean isFirstCycle() {
+		return false;
+	}
+
+	@Override
+	public boolean isSecondCycle() {
+		return false;
+	}
+
+	@Override
+	public boolean isAnyPublishedThesisAvailable() {
+		return false;
+	}
+
+	@Override
+	public boolean isAnyThesisAvailable() {
+		return false;
+	}
+
+	@Override
+	public List<YearDelegateElection> getYearDelegateElectionsGivenExecutionYear(ExecutionYear executionYear) {
+		return Collections.emptyList();
+	}
+
+	@Override
+	public List<YearDelegateElection> getYearDelegateElectionsGivenExecutionYearAndCurricularYear(ExecutionYear executionYear,
+			CurricularYear curricularYear) {
+		return Collections.emptyList();
+	}
+
+	@Override
+	public YearDelegateElection getYearDelegateElectionWithLastCandidacyPeriod(ExecutionYear executionYear,
+			CurricularYear curricularYear) {
+		return null;
+	}
+
+	@Override
+	public YearDelegateElection getYearDelegateElectionWithLastVotingPeriod(ExecutionYear executionYear,
+			CurricularYear curricularYear) {
+		return null;
+	}
+
+	@Override
+	public List<Student> getAllActiveDelegates() {
+		return Collections.emptyList();
+	}
+
+	@Override
+	public List<Student> getAllActiveYearDelegates() {
+		return Collections.emptyList();
+	}
+
+	@Override
+	public Student getActiveYearDelegateByCurricularYear(CurricularYear curricularYear) {
+		return null;
+	}
+
+	@Override
+	public List<Student> getAllActiveDelegatesByFunctionType(FunctionType functionType, ExecutionYear executionYear) {
+		return Collections.emptyList();
+	}
+
+	@Override
+	public boolean hasActiveDelegateFunctionForStudent(Student student, ExecutionYear executionYear,
+			FunctionType delegateFunctionType) {
+		return false;
+	}
+
+	@Override
+	public boolean hasAnyActiveDelegateFunctionForStudent(Student student) {
+		return false;
+	}
+
+	@Override
+	public PersonFunction getActiveDelegatePersonFunctionByStudentAndFunctionType(Student student, ExecutionYear executionYear,
+			FunctionType functionType) {
+		return null;
+	}
+
+	@Override
+	public Student getYearDelegateByExecutionYearAndCurricularYear(ExecutionYear executionYear, CurricularYear curricularYear) {
+		return null;
+	}
+
+	@Override
+	public List<Student> getAllDelegatesByExecutionYearAndFunctionType(ExecutionYear executionYear, FunctionType functionType) {
+		return Collections.emptyList();
+	}
+
+	@Override
+	public List<Student> getSecondCycleStudents(ExecutionYear executionYear) {
+		return Collections.emptyList();
+	}
+
+	@Override
+	public List<Student> getFirstCycleStudents(ExecutionYear executionYear) {
+		return Collections.emptyList();
+	}
+
+	@Override
+	public Set<CurricularCourse> getAllCurricularCourses(ExecutionYear executionYear) {
+		return Collections.emptySet();
+	}
+
+	@Override
+	public Set<CurricularCourse> getCurricularCoursesFromGivenCurricularYear(int curricularYear, ExecutionYear executionYear) {
+		return Collections.emptySet();
+	}
+
+	@Override
+	public Set<CurricularCourse> getFirstCycleCurricularCourses(ExecutionYear executionYear) {
+		return Collections.emptySet();
+	}
+
+	@Override
+	public Set<CurricularCourse> getSecondCycleCurricularCourses(ExecutionYear executionYear) {
+		return Collections.emptySet();
+	}
+
+	@Override
+	public boolean canCreateGratuityEvent() {
+		return false;
+	}
 
 }

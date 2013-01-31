@@ -7,13 +7,15 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class ManageThesisContextProvider implements DataProvider {
 
-    public Object provide(Object source, Object currentValue) {
-	final ManageThesisContext manageThesisContext = (ManageThesisContext) source;
-	return manageThesisContext.getAvailableExecutionDegrees();
-    }
+	@Override
+	public Object provide(Object source, Object currentValue) {
+		final ManageThesisContext manageThesisContext = (ManageThesisContext) source;
+		return manageThesisContext.getAvailableExecutionDegrees();
+	}
 
-    public Converter getConverter() {
-	return new DomainObjectKeyConverter();
-    }
+	@Override
+	public Converter getConverter() {
+		return new DomainObjectKeyConverter();
+	}
 
 }

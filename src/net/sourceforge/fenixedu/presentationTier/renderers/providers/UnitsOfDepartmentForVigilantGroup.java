@@ -16,25 +16,27 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class UnitsOfDepartmentForVigilantGroup implements DataProvider {
 
-    public Object provide(Object source, Object currentValue) {
-	VigilantGroupBean bean = (VigilantGroupBean) source;
-	Department department = bean.getSelectedDepartment();
+	@Override
+	public Object provide(Object source, Object currentValue) {
+		VigilantGroupBean bean = (VigilantGroupBean) source;
+		Department department = bean.getSelectedDepartment();
 
-	List<Unit> unitsOfDepartment = new ArrayList<Unit>();
+		List<Unit> unitsOfDepartment = new ArrayList<Unit>();
 
-	if (department != null) {
-	    for (Unit unit : department.getDepartmentUnit().getScientificAreaUnits()) {
-		unitsOfDepartment.add(unit);
-	    }
-	    unitsOfDepartment.add(department.getDepartmentUnit());
+		if (department != null) {
+			for (Unit unit : department.getDepartmentUnit().getScientificAreaUnits()) {
+				unitsOfDepartment.add(unit);
+			}
+			unitsOfDepartment.add(department.getDepartmentUnit());
+		}
+
+		Collections.sort(unitsOfDepartment, new BeanComparator("name"));
+		return unitsOfDepartment;
 	}
 
-	Collections.sort(unitsOfDepartment, new BeanComparator("name"));
-	return unitsOfDepartment;
-    }
-
-    public Converter getConverter() {
-	return new DomainObjectKeyConverter();
-    }
+	@Override
+	public Converter getConverter() {
+		return new DomainObjectKeyConverter();
+	}
 
 }

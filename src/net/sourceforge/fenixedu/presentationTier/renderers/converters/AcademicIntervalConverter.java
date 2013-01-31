@@ -5,14 +5,14 @@ import pt.ist.fenixWebFramework.renderers.components.converters.BiDirectionalCon
 
 public class AcademicIntervalConverter extends BiDirectionalConverter {
 
-    @Override
-    public Object convert(Class type, Object value) {
-	return AcademicInterval.getAcademicIntervalFromResumedString((String) value);
-    }
+	@Override
+	public Object convert(Class type, Object value) {
+		return AcademicInterval.getAcademicIntervalFromResumedString((String) value);
+	}
 
-    @Override
-    public String deserialize(Object object) {
-	AcademicInterval academicInterval = (AcademicInterval) object;
-	return academicInterval.getResumedRepresentationInStringFormat();
-    }
+	@Override
+	public String deserialize(Object object) {
+		AcademicInterval academicInterval = (AcademicInterval) object;
+		return academicInterval.getResumedRepresentationInStringFormat();
+	}
 }

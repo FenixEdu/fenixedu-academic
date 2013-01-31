@@ -13,42 +13,42 @@ import net.sourceforge.fenixedu.domain.accounting.serviceAgreementTemplates.Degr
 
 public class GratuityPaymentPlan extends GratuityPaymentPlan_Base {
 
-    protected GratuityPaymentPlan() {
-	super();
-    }
+	protected GratuityPaymentPlan() {
+		super();
+	}
 
-    public GratuityPaymentPlan(final ExecutionYear executionYear,
-	    final DegreeCurricularPlanServiceAgreementTemplate serviceAgreementTemplate) {
-	this(executionYear, serviceAgreementTemplate, false);
-    }
+	public GratuityPaymentPlan(final ExecutionYear executionYear,
+			final DegreeCurricularPlanServiceAgreementTemplate serviceAgreementTemplate) {
+		this(executionYear, serviceAgreementTemplate, false);
+	}
 
-    public GratuityPaymentPlan(final ExecutionYear executionYear,
-	    final DegreeCurricularPlanServiceAgreementTemplate serviceAgreementTemplate, final Boolean defaultPlan) {
-	this();
-	super.init(executionYear, serviceAgreementTemplate, defaultPlan);
-    }
+	public GratuityPaymentPlan(final ExecutionYear executionYear,
+			final DegreeCurricularPlanServiceAgreementTemplate serviceAgreementTemplate, final Boolean defaultPlan) {
+		this();
+		super.init(executionYear, serviceAgreementTemplate, defaultPlan);
+	}
 
-    @Override
-    public boolean isToApplyPenalty(Event event, Installment installment) {
-	return !((GratuityEventWithPaymentPlan) event).hasPenaltyExemptionFor(installment);
-    }
+	@Override
+	public boolean isToApplyPenalty(Event event, Installment installment) {
+		return !((GratuityEventWithPaymentPlan) event).hasPenaltyExemptionFor(installment);
+	}
 
-    @Override
-    public boolean isGratuityPaymentPlan() {
-	return true;
-    }
+	@Override
+	public boolean isGratuityPaymentPlan() {
+		return true;
+	}
 
-    @Override
-    protected Collection<PaymentPlanRule> getSpecificPaymentPlanRules() {
-	return Collections.emptyList();
-    }
-    
-    protected Set<Class<? extends GratuityPaymentPlan>> getPaymentPlansWhichHasPrecedence() {
-	return Collections.EMPTY_SET;
-    }
+	@Override
+	protected Collection<PaymentPlanRule> getSpecificPaymentPlanRules() {
+		return Collections.emptyList();
+	}
 
-    public boolean hasPrecedenceOver(Class<? extends GratuityPaymentPlan> plan) {
-	return getPaymentPlansWhichHasPrecedence().contains(plan);
-    }
+	protected Set<Class<? extends GratuityPaymentPlan>> getPaymentPlansWhichHasPrecedence() {
+		return Collections.EMPTY_SET;
+	}
+
+	public boolean hasPrecedenceOver(Class<? extends GratuityPaymentPlan> plan) {
+		return getPaymentPlansWhichHasPrecedence().contains(plan);
+	}
 
 }

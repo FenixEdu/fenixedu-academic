@@ -11,22 +11,23 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class SpecialSeasonBolonhaStudentEnrolmentBean extends BolonhaStudentEnrollmentBean {
 
-    private static final long serialVersionUID = -7472651937511355140L;
+	private static final long serialVersionUID = -7472651937511355140L;
 
-    public SpecialSeasonBolonhaStudentEnrolmentBean(final StudentCurricularPlan studentCurricularPlan,
-	    final ExecutionSemester executionSemester) {
-	super(studentCurricularPlan, executionSemester, new SpecialSeasonStudentCurriculumGroupBean(studentCurricularPlan
-		.getRoot(), executionSemester), CurricularRuleLevel.SPECIAL_SEASON_ENROLMENT);
-    }
+	public SpecialSeasonBolonhaStudentEnrolmentBean(final StudentCurricularPlan studentCurricularPlan,
+			final ExecutionSemester executionSemester) {
+		super(studentCurricularPlan, executionSemester, new SpecialSeasonStudentCurriculumGroupBean(
+				studentCurricularPlan.getRoot(), executionSemester), CurricularRuleLevel.SPECIAL_SEASON_ENROLMENT);
+	}
 
-    @Override
-    public Converter getDegreeModulesToEvaluateConverter() {
-	return new CurriculumModuleEnroledWrapperConverter();
-    }
+	@Override
+	public Converter getDegreeModulesToEvaluateConverter() {
+		return new CurriculumModuleEnroledWrapperConverter();
+	}
 
-    public String getFuncionalityTitle() {
-	final ResourceBundle resourceBundle = ResourceBundle.getBundle("resources.AcademicAdminOffice", Language.getLocale());
-	return resourceBundle.getString("label.special.season.enrolment");
-    }
+	@Override
+	public String getFuncionalityTitle() {
+		final ResourceBundle resourceBundle = ResourceBundle.getBundle("resources.AcademicAdminOffice", Language.getLocale());
+		return resourceBundle.getString("label.special.season.enrolment");
+	}
 
 }

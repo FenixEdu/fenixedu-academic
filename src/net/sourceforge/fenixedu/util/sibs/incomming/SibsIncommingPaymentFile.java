@@ -17,129 +17,129 @@ import org.joda.time.YearMonthDay;
 
 public class SibsIncommingPaymentFile {
 
-    private static final String HEADER_REGISTER_TYPE = "0";
+	private static final String HEADER_REGISTER_TYPE = "0";
 
-    private static final String DETAIL_REGISTER_TYPE = "2";
+	private static final String DETAIL_REGISTER_TYPE = "2";
 
-    private static final String FOOTER_REGISTER_TYPE = "9";
+	private static final String FOOTER_REGISTER_TYPE = "9";
 
-    private SibsIncommingPaymentFileHeader header;
+	private SibsIncommingPaymentFileHeader header;
 
-    private List<SibsIncommingPaymentFileDetailLine> detailLines;
+	private List<SibsIncommingPaymentFileDetailLine> detailLines;
 
-    private SibsIncommingPaymentFileFooter footer;
+	private SibsIncommingPaymentFileFooter footer;
 
-    private String filename;
+	private String filename;
 
-    private SibsIncommingPaymentFile(String filename, SibsIncommingPaymentFileHeader header,
-	    SibsIncommingPaymentFileFooter footer, List<SibsIncommingPaymentFileDetailLine> detailLines) {
-	this.filename = filename;
-	this.header = header;
-	this.footer = footer;
-	this.detailLines = detailLines;
+	private SibsIncommingPaymentFile(String filename, SibsIncommingPaymentFileHeader header,
+			SibsIncommingPaymentFileFooter footer, List<SibsIncommingPaymentFileDetailLine> detailLines) {
+		this.filename = filename;
+		this.header = header;
+		this.footer = footer;
+		this.detailLines = detailLines;
 
-	checkIfDetailLinesTotalAmountMatchesFooterTotalAmount();
-    }
-
-    private void checkIfDetailLinesTotalAmountMatchesFooterTotalAmount() {
-	Money totalEntriesAmount = Money.ZERO;
-	for (final SibsIncommingPaymentFileDetailLine detailLine : getDetailLines()) {
-	    totalEntriesAmount = totalEntriesAmount.add(detailLine.getAmount());
+		checkIfDetailLinesTotalAmountMatchesFooterTotalAmount();
 	}
 
-	if (!totalEntriesAmount.equals(footer.getTransactionsTotalAmount())) {
-	    throw new RuntimeException("Footer total amount does not match detail lines total amount");
+	private void checkIfDetailLinesTotalAmountMatchesFooterTotalAmount() {
+		Money totalEntriesAmount = Money.ZERO;
+		for (final SibsIncommingPaymentFileDetailLine detailLine : getDetailLines()) {
+			totalEntriesAmount = totalEntriesAmount.add(detailLine.getAmount());
+		}
+
+		if (!totalEntriesAmount.equals(footer.getTransactionsTotalAmount())) {
+			throw new RuntimeException("Footer total amount does not match detail lines total amount");
+		}
+
 	}
 
-    }
+	public static SibsIncommingPaymentFile parse(final File file) {
+		FileInputStream inputStream = null;
 
-    public static SibsIncommingPaymentFile parse(final File file) {
-	FileInputStream inputStream = null;
-
-	try {
-	    inputStream = new FileInputStream(file);
-
-	    return parse(pt.utl.ist.fenix.tools.util.FileUtils.getFilenameOnly(file.getName()), inputStream);
-
-	} catch (FileNotFoundException e) {
-	    throw new RuntimeException(e);
-	} finally {
-	    if (inputStream != null) {
 		try {
-		    inputStream.close();
+			inputStream = new FileInputStream(file);
+
+			return parse(pt.utl.ist.fenix.tools.util.FileUtils.getFilenameOnly(file.getName()), inputStream);
+
+		} catch (FileNotFoundException e) {
+			throw new RuntimeException(e);
+		} finally {
+			if (inputStream != null) {
+				try {
+					inputStream.close();
+				} catch (IOException e) {
+					throw new RuntimeException(e);
+				}
+			}
+		}
+
+	}
+
+	public static SibsIncommingPaymentFile parse(String filename, InputStream stream) {
+
+		SibsIncommingPaymentFileHeader header = null;
+		SibsIncommingPaymentFileFooter footer = null;
+		final List<SibsIncommingPaymentFileDetailLine> detailLines = new ArrayList<SibsIncommingPaymentFileDetailLine>();
+		final BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
+
+		try {
+			String line = reader.readLine();
+			while (line != null) {
+
+				if (isHeader(line)) {
+					header = SibsIncommingPaymentFileHeader.buildFrom(line);
+				} else if (isDetail(line)) {
+					detailLines.add(SibsIncommingPaymentFileDetailLine.buildFrom(line));
+				} else if (isFooter(line)) {
+					footer = SibsIncommingPaymentFileFooter.buildFrom(line);
+				} else {
+					throw new RuntimeException("Unknown sibs incomming payment file line type");
+				}
+
+				line = reader.readLine();
+			}
 		} catch (IOException e) {
-		    throw new RuntimeException(e);
-		}
-	    }
-	}
-
-    }
-
-    public static SibsIncommingPaymentFile parse(String filename, InputStream stream) {
-
-	SibsIncommingPaymentFileHeader header = null;
-	SibsIncommingPaymentFileFooter footer = null;
-	final List<SibsIncommingPaymentFileDetailLine> detailLines = new ArrayList<SibsIncommingPaymentFileDetailLine>();
-	final BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
-
-	try {
-	    String line = reader.readLine();
-	    while (line != null) {
-
-		if (isHeader(line)) {
-		    header = SibsIncommingPaymentFileHeader.buildFrom(line);
-		} else if (isDetail(line)) {
-		    detailLines.add(SibsIncommingPaymentFileDetailLine.buildFrom(line));
-		} else if (isFooter(line)) {
-		    footer = SibsIncommingPaymentFileFooter.buildFrom(line);
-		} else {
-		    throw new RuntimeException("Unknown sibs incomming payment file line type");
+			throw new RuntimeException(e);
 		}
 
-		line = reader.readLine();
-	    }
-	} catch (IOException e) {
-	    throw new RuntimeException(e);
+		return new SibsIncommingPaymentFile(filename, header, footer, detailLines);
+
 	}
 
-	return new SibsIncommingPaymentFile(filename, header, footer, detailLines);
+	private static boolean isFooter(String line) {
+		return line.startsWith(FOOTER_REGISTER_TYPE);
+	}
 
-    }
+	private static boolean isHeader(String line) {
+		return line.startsWith(HEADER_REGISTER_TYPE);
+	}
 
-    private static boolean isFooter(String line) {
-	return line.startsWith(FOOTER_REGISTER_TYPE);
-    }
+	private static boolean isDetail(String line) {
+		return line.startsWith(DETAIL_REGISTER_TYPE);
+	}
 
-    private static boolean isHeader(String line) {
-	return line.startsWith(HEADER_REGISTER_TYPE);
-    }
+	public List<SibsIncommingPaymentFileDetailLine> getDetailLines() {
+		return Collections.unmodifiableList(detailLines);
+	}
 
-    private static boolean isDetail(String line) {
-	return line.startsWith(DETAIL_REGISTER_TYPE);
-    }
+	public SibsIncommingPaymentFileFooter getFooter() {
+		return footer;
+	}
 
-    public List<SibsIncommingPaymentFileDetailLine> getDetailLines() {
-	return Collections.unmodifiableList(detailLines);
-    }
+	public SibsIncommingPaymentFileHeader getHeader() {
+		return header;
+	}
 
-    public SibsIncommingPaymentFileFooter getFooter() {
-	return footer;
-    }
+	public String getFilename() {
+		return filename;
+	}
 
-    public SibsIncommingPaymentFileHeader getHeader() {
-	return header;
-    }
+	public YearMonthDay getWhenProcessedBySibs() {
+		return getHeader().getWhenProcessedBySibs();
+	}
 
-    public String getFilename() {
-	return filename;
-    }
-
-    public YearMonthDay getWhenProcessedBySibs() {
-	return getHeader().getWhenProcessedBySibs();
-    }
-
-    public Integer getVersion() {
-	return getHeader().getVersion();
-    }
+	public Integer getVersion() {
+		return getHeader().getVersion();
+	}
 
 }

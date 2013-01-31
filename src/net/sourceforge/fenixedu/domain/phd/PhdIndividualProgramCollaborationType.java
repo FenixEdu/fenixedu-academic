@@ -7,56 +7,56 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public enum PhdIndividualProgramCollaborationType {
 
-    CMU,
+	CMU,
 
-    UT_AUSTIN,
+	UT_AUSTIN,
 
-    MIT,
+	MIT,
 
-    EPFL(false, false),
+	EPFL(false, false),
 
-    NONE,
+	NONE,
 
-    WITH_SUPERVISION(true),
+	WITH_SUPERVISION(true),
 
-    ERASMUS_MUNDUS(false),
+	ERASMUS_MUNDUS(false),
 
-    OTHER(true);
+	OTHER(true);
 
-    private boolean needExtraInformation;
-    private boolean generateCandidacyDebt;
+	private boolean needExtraInformation;
+	private boolean generateCandidacyDebt;
 
-    private PhdIndividualProgramCollaborationType(final boolean needExtraInformation, final boolean generateCandidacyDebt) {
-	this.needExtraInformation = needExtraInformation;
-	this.generateCandidacyDebt = generateCandidacyDebt;
-    }
+	private PhdIndividualProgramCollaborationType(final boolean needExtraInformation, final boolean generateCandidacyDebt) {
+		this.needExtraInformation = needExtraInformation;
+		this.generateCandidacyDebt = generateCandidacyDebt;
+	}
 
-    private PhdIndividualProgramCollaborationType() {
-	this(false, true);
-    }
+	private PhdIndividualProgramCollaborationType() {
+		this(false, true);
+	}
 
-    private PhdIndividualProgramCollaborationType(final boolean needExtraInformation) {
-	this(needExtraInformation, true);
-    }
+	private PhdIndividualProgramCollaborationType(final boolean needExtraInformation) {
+		this(needExtraInformation, true);
+	}
 
-    public String getLocalizedName() {
-	return getLocalizedName(Language.getLocale());
-    }
+	public String getLocalizedName() {
+		return getLocalizedName(Language.getLocale());
+	}
 
-    public String getLocalizedName(final Locale locale) {
-	return ResourceBundle.getBundle("resources.EnumerationResources", locale).getString(getQualifiedName());
-    }
+	public String getLocalizedName(final Locale locale) {
+		return ResourceBundle.getBundle("resources.EnumerationResources", locale).getString(getQualifiedName());
+	}
 
-    private String getQualifiedName() {
-	return PhdIndividualProgramCollaborationType.class.getSimpleName() + "." + name();
-    }
+	private String getQualifiedName() {
+		return PhdIndividualProgramCollaborationType.class.getSimpleName() + "." + name();
+	}
 
-    public boolean needExtraInformation() {
-	return needExtraInformation;
-    }
+	public boolean needExtraInformation() {
+		return needExtraInformation;
+	}
 
-    public boolean generateCandidacyDebt() {
-	return generateCandidacyDebt;
-    }
+	public boolean generateCandidacyDebt() {
+		return generateCandidacyDebt;
+	}
 
 }

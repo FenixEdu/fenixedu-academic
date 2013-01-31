@@ -4,35 +4,35 @@ import org.joda.time.YearMonthDay;
 
 public class DelegateElectionCandidacyPeriod extends DelegateElectionCandidacyPeriod_Base {
 
-    private DelegateElectionCandidacyPeriod() {
-	super();
-    }
+	private DelegateElectionCandidacyPeriod() {
+		super();
+	}
 
-    public DelegateElectionCandidacyPeriod(YearMonthDay startDate, YearMonthDay endDate) {
-	this();
-	setStartDate(startDate);
-	setEndDate(endDate);
-    }
+	public DelegateElectionCandidacyPeriod(YearMonthDay startDate, YearMonthDay endDate) {
+		this();
+		setStartDate(startDate);
+		setEndDate(endDate);
+	}
 
-    @Override
-    public void delete() {
-	removeDelegateElection();
-	super.delete();
-    }
+	@Override
+	public void delete() {
+		removeDelegateElection();
+		super.delete();
+	}
 
-    @Override
-    public boolean isSecondRoundElections() {
-	return false;
-    }
+	@Override
+	public boolean isSecondRoundElections() {
+		return false;
+	}
 
-    @Override
-    public boolean isFirstRoundElections() {
-	return false;
-    }
+	@Override
+	public boolean isFirstRoundElections() {
+		return false;
+	}
 
-    @Override
-    public boolean isOpenRoundElections() {
-	return false;
-    }
+	@Override
+	public boolean isOpenRoundElections() {
+		return false;
+	}
 
 }

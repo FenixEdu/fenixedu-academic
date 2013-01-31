@@ -10,12 +10,12 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadNotClosedExecutionYears extends FenixService {
 
-    @Service
-    public static List<InfoExecutionYear> run() {
-	final List<InfoExecutionYear> result = new ArrayList<InfoExecutionYear>();
-	for (final ExecutionYear executionYear : ExecutionYear.readNotClosedExecutionYears()) {
-	    result.add(InfoExecutionYear.newInfoFromDomain(executionYear));
+	@Service
+	public static List<InfoExecutionYear> run() {
+		final List<InfoExecutionYear> result = new ArrayList<InfoExecutionYear>();
+		for (final ExecutionYear executionYear : ExecutionYear.readNotClosedExecutionYears()) {
+			result.add(InfoExecutionYear.newInfoFromDomain(executionYear));
+		}
+		return result;
 	}
-	return result;
-    }
 }

@@ -13,54 +13,55 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
  */
 public class ExecutionCourseSiteView extends SiteView {
 
-    private ExecutionCourse executionCourse;
+	private ExecutionCourse executionCourse;
 
-    /**
-     * @param commonComponent
-     * @param bodyComponent
-     */
-    public ExecutionCourseSiteView(ISiteComponent commonComponent, ISiteComponent bodyComponent) {
-	setCommonComponent(commonComponent);
-	setComponent(bodyComponent);
-    }
-
-    private ISiteComponent commonComponent;
-
-    /**
-     * @return
-     */
-    public ISiteComponent getCommonComponent() {
-
-	return commonComponent;
-    }
-
-    /**
-     * @param component
-     */
-    public void setCommonComponent(ISiteComponent component) {
-	commonComponent = component;
-    }
-
-    public boolean equals(Object obj) {
-
-	boolean resultado = false;
-
-	if (obj instanceof ExecutionCourseSiteView) {
-	    ExecutionCourseSiteView siteView = (ExecutionCourseSiteView) obj;
-
-	    resultado = getCommonComponent().equals(siteView.getCommonComponent())
-		    && getComponent().equals(siteView.getComponent());
+	/**
+	 * @param commonComponent
+	 * @param bodyComponent
+	 */
+	public ExecutionCourseSiteView(ISiteComponent commonComponent, ISiteComponent bodyComponent) {
+		setCommonComponent(commonComponent);
+		setComponent(bodyComponent);
 	}
 
-	return resultado;
-    }
+	private ISiteComponent commonComponent;
 
-    public ExecutionCourse getExecutionCourse() {
-	return executionCourse;
-    }
+	/**
+	 * @return
+	 */
+	public ISiteComponent getCommonComponent() {
 
-    public void setExecutionCourse(ExecutionCourse executionCourse) {
-	this.executionCourse = executionCourse;
-    }
+		return commonComponent;
+	}
+
+	/**
+	 * @param component
+	 */
+	public void setCommonComponent(ISiteComponent component) {
+		commonComponent = component;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+
+		boolean resultado = false;
+
+		if (obj instanceof ExecutionCourseSiteView) {
+			ExecutionCourseSiteView siteView = (ExecutionCourseSiteView) obj;
+
+			resultado =
+					getCommonComponent().equals(siteView.getCommonComponent()) && getComponent().equals(siteView.getComponent());
+		}
+
+		return resultado;
+	}
+
+	public ExecutionCourse getExecutionCourse() {
+		return executionCourse;
+	}
+
+	public void setExecutionCourse(ExecutionCourse executionCourse) {
+		this.executionCourse = executionCourse;
+	}
 
 }

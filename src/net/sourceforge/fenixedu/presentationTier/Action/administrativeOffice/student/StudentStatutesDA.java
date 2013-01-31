@@ -21,7 +21,6 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
@@ -32,88 +31,89 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 @Forwards({ @Forward(name = "manageStatutes", path = "/academicAdminOffice/manageStatutes.jsp") })
 public class StudentStatutesDA extends FenixDispatchAction {
 
-    public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) {
+	public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) {
 
-	final Student student = rootDomainObject.readStudentByOID(getIntegerFromRequest(request, "studentId"));
-	request.setAttribute("student", student);
-	request.setAttribute("manageStatuteBean", new CreateStudentStatuteFactory(student));
-	request.setAttribute("schemaName", "student.createStatutes");
+		final Student student = rootDomainObject.readStudentByOID(getIntegerFromRequest(request, "studentId"));
+		request.setAttribute("student", student);
+		request.setAttribute("manageStatuteBean", new CreateStudentStatuteFactory(student));
+		request.setAttribute("schemaName", "student.createStatutes");
 
-	return mapping.findForward("manageStatutes");
-    }
-
-    public ActionForward invalid(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) {
-	final Student student = AbstractDomainObject.fromExternalId(request.getParameter("studentOID"));
-	request.setAttribute("student", student);
-	request.setAttribute("schemaName", request.getParameter("schemaName"));
-	request.setAttribute("manageStatuteBean", getRenderedObject());
-
-	return mapping.findForward("manageStatutes");
-    }
-
-    public ActionForward seniorStatutePostBack(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) {
-
-	final CreateStudentStatuteFactory oldManageStatuteBean = getRenderedObject();
-	final Student student = oldManageStatuteBean.getStudent();
-	final StudentStatuteType statuteType = oldManageStatuteBean.getStatuteType();
-	final CreateStudentStatuteFactory manageStatuteBean = new CreateStudentStatuteFactory(student);
-	manageStatuteBean.setStatuteType(statuteType);
-
-	RenderUtils.invalidateViewState();
-
-	request.setAttribute("student", student);
-	request.setAttribute("manageStatuteBean", manageStatuteBean);
-
-	if (manageStatuteBean.getStatuteType() == StudentStatuteType.SENIOR)
-	    request.setAttribute("schemaName", "student.createSeniorStatute");
-	else
-	    request.setAttribute("schemaName", "student.createStatutes");
-
-	return mapping.findForward("manageStatutes");
-    }
-
-    public ActionForward addNewStatute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-
-	try {
-	    // add new statute
-	    executeFactoryMethod();
-	} catch (DomainException e) {
-	    addActionMessage(request, e.getMessage());
+		return mapping.findForward("manageStatutes");
 	}
 
-	final Student student = ((CreateStudentStatuteFactory) getRenderedObject()).getStudent();
-	request.setAttribute("student", student);
-	request.setAttribute("manageStatuteBean", new CreateStudentStatuteFactory(student));
-	request.setAttribute("schemaName", "student.createStatutes");
+	public ActionForward invalid(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) {
+		final Student student = AbstractDomainObject.fromExternalId(request.getParameter("studentOID"));
+		request.setAttribute("student", student);
+		request.setAttribute("schemaName", request.getParameter("schemaName"));
+		request.setAttribute("manageStatuteBean", getRenderedObject());
 
-	return mapping.findForward("manageStatutes");
-
-    }
-
-    public ActionForward deleteStatute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-
-	final StudentStatute studentStatute = rootDomainObject
-		.readStudentStatuteByOID(getIntegerFromRequest(request, "statuteId"));
-	final Student student = studentStatute.getStudent();
-
-	try {
-	    // delete statute
-	    executeFactoryMethod(new DeleteStudentStatuteFactory(studentStatute));
-	} catch (DomainException de) {
-	    addActionMessage(request, de.getMessage());
+		return mapping.findForward("manageStatutes");
 	}
 
-	request.setAttribute("student", student);
-	request.setAttribute("manageStatuteBean", new CreateStudentStatuteFactory(student));
-	request.setAttribute("schemaName", "student.createStatutes");
+	public ActionForward seniorStatutePostBack(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) {
 
-	return mapping.findForward("manageStatutes");
+		final CreateStudentStatuteFactory oldManageStatuteBean = getRenderedObject();
+		final Student student = oldManageStatuteBean.getStudent();
+		final StudentStatuteType statuteType = oldManageStatuteBean.getStatuteType();
+		final CreateStudentStatuteFactory manageStatuteBean = new CreateStudentStatuteFactory(student);
+		manageStatuteBean.setStatuteType(statuteType);
 
-    }
+		RenderUtils.invalidateViewState();
+
+		request.setAttribute("student", student);
+		request.setAttribute("manageStatuteBean", manageStatuteBean);
+
+		if (manageStatuteBean.getStatuteType() == StudentStatuteType.SENIOR) {
+			request.setAttribute("schemaName", "student.createSeniorStatute");
+		} else {
+			request.setAttribute("schemaName", "student.createStatutes");
+		}
+
+		return mapping.findForward("manageStatutes");
+	}
+
+	public ActionForward addNewStatute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+
+		try {
+			// add new statute
+			executeFactoryMethod();
+		} catch (DomainException e) {
+			addActionMessage(request, e.getMessage());
+		}
+
+		final Student student = ((CreateStudentStatuteFactory) getRenderedObject()).getStudent();
+		request.setAttribute("student", student);
+		request.setAttribute("manageStatuteBean", new CreateStudentStatuteFactory(student));
+		request.setAttribute("schemaName", "student.createStatutes");
+
+		return mapping.findForward("manageStatutes");
+
+	}
+
+	public ActionForward deleteStatute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+
+		final StudentStatute studentStatute =
+				rootDomainObject.readStudentStatuteByOID(getIntegerFromRequest(request, "statuteId"));
+		final Student student = studentStatute.getStudent();
+
+		try {
+			// delete statute
+			executeFactoryMethod(new DeleteStudentStatuteFactory(studentStatute));
+		} catch (DomainException de) {
+			addActionMessage(request, de.getMessage());
+		}
+
+		request.setAttribute("student", student);
+		request.setAttribute("manageStatuteBean", new CreateStudentStatuteFactory(student));
+		request.setAttribute("schemaName", "student.createStatutes");
+
+		return mapping.findForward("manageStatutes");
+
+	}
 
 }

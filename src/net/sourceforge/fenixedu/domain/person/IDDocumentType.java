@@ -11,38 +11,38 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public enum IDDocumentType implements IPresentableEnum {
 
-    IDENTITY_CARD,
+	IDENTITY_CARD,
 
-    PASSPORT,
+	PASSPORT,
 
-    FOREIGNER_IDENTITY_CARD,
+	FOREIGNER_IDENTITY_CARD,
 
-    NATIVE_COUNTRY_IDENTITY_CARD,
+	NATIVE_COUNTRY_IDENTITY_CARD,
 
-    NAVY_IDENTITY_CARD,
+	NAVY_IDENTITY_CARD,
 
-    AIR_FORCE_IDENTITY_CARD,
+	AIR_FORCE_IDENTITY_CARD,
 
-    OTHER,
+	OTHER,
 
-    MILITARY_IDENTITY_CARD,
+	MILITARY_IDENTITY_CARD,
 
-    EXTERNAL,
+	EXTERNAL,
 
-    CITIZEN_CARD,
+	CITIZEN_CARD,
 
-    RESIDENCE_AUTHORIZATION;
+	RESIDENCE_AUTHORIZATION;
 
-    public String getName() {
-	return name();
-    }
+	public String getName() {
+		return name();
+	}
 
-    @Override
-    public String getLocalizedName() {
-	return getLocalizedName(Language.getLocale());
-    }
+	@Override
+	public String getLocalizedName() {
+		return getLocalizedName(Language.getLocale());
+	}
 
-    public String getLocalizedName(final Locale locale) {
-	return ResourceBundle.getBundle("resources.EnumerationResources", locale).getString(name());
-    }
+	public String getLocalizedName(final Locale locale) {
+		return ResourceBundle.getBundle("resources.EnumerationResources", locale).getString(name());
+	}
 }

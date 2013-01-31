@@ -4,55 +4,55 @@ import net.sourceforge.fenixedu.domain.CurricularCourseEquivalence;
 
 public class InfoCurricularCourseEquivalence extends InfoObject {
 
-    private InfoCurricularCourse infoOldCurricularCourse;
-    private InfoCurricularCourse infoEquivalentCurricularCourse;
-    private InfoDegreeCurricularPlan infoDegreeCurricularPlan;
+	private InfoCurricularCourse infoOldCurricularCourse;
+	private InfoCurricularCourse infoEquivalentCurricularCourse;
+	private InfoDegreeCurricularPlan infoDegreeCurricularPlan;
 
-    public void copyFromDomain(final CurricularCourseEquivalence curricularCourseEquivalence) {
-	super.copyFromDomain(curricularCourseEquivalence);
-	if (curricularCourseEquivalence != null) {
-	    setInfoOldCurricularCourse(InfoCurricularCourse.newInfoFromDomain(curricularCourseEquivalence
-		    .getOldCurricularCourses().get(0)));
-	    setInfoEquivalentCurricularCourse(InfoCurricularCourse.newInfoFromDomain(curricularCourseEquivalence
-		    .getEquivalentCurricularCourse()));
-	}
-    }
-
-    public static InfoCurricularCourseEquivalence newInfoFromDomain(final CurricularCourseEquivalence curricularCourseEquivalence) {
-	final InfoCurricularCourseEquivalence infoCurricularCourseEquivalence;
-
-	if (curricularCourseEquivalence != null) {
-	    infoCurricularCourseEquivalence = new InfoCurricularCourseEquivalence();
-	    infoCurricularCourseEquivalence.copyFromDomain(curricularCourseEquivalence);
-	} else {
-	    infoCurricularCourseEquivalence = null;
+	public void copyFromDomain(final CurricularCourseEquivalence curricularCourseEquivalence) {
+		super.copyFromDomain(curricularCourseEquivalence);
+		if (curricularCourseEquivalence != null) {
+			setInfoOldCurricularCourse(InfoCurricularCourse.newInfoFromDomain(curricularCourseEquivalence
+					.getOldCurricularCourses().get(0)));
+			setInfoEquivalentCurricularCourse(InfoCurricularCourse.newInfoFromDomain(curricularCourseEquivalence
+					.getEquivalentCurricularCourse()));
+		}
 	}
 
-	return infoCurricularCourseEquivalence;
-    }
+	public static InfoCurricularCourseEquivalence newInfoFromDomain(final CurricularCourseEquivalence curricularCourseEquivalence) {
+		final InfoCurricularCourseEquivalence infoCurricularCourseEquivalence;
 
-    public InfoDegreeCurricularPlan getInfoDegreeCurricularPlan() {
-	return infoDegreeCurricularPlan;
-    }
+		if (curricularCourseEquivalence != null) {
+			infoCurricularCourseEquivalence = new InfoCurricularCourseEquivalence();
+			infoCurricularCourseEquivalence.copyFromDomain(curricularCourseEquivalence);
+		} else {
+			infoCurricularCourseEquivalence = null;
+		}
 
-    public void setInfoDegreeCurricularPlan(InfoDegreeCurricularPlan infoDegreeCurricularPlan) {
-	this.infoDegreeCurricularPlan = infoDegreeCurricularPlan;
-    }
+		return infoCurricularCourseEquivalence;
+	}
 
-    public InfoCurricularCourse getInfoEquivalentCurricularCourse() {
-	return infoEquivalentCurricularCourse;
-    }
+	public InfoDegreeCurricularPlan getInfoDegreeCurricularPlan() {
+		return infoDegreeCurricularPlan;
+	}
 
-    public void setInfoEquivalentCurricularCourse(InfoCurricularCourse infoEquivalentCurricularCourse) {
-	this.infoEquivalentCurricularCourse = infoEquivalentCurricularCourse;
-    }
+	public void setInfoDegreeCurricularPlan(InfoDegreeCurricularPlan infoDegreeCurricularPlan) {
+		this.infoDegreeCurricularPlan = infoDegreeCurricularPlan;
+	}
 
-    public InfoCurricularCourse getInfoOldCurricularCourse() {
-	return infoOldCurricularCourse;
-    }
+	public InfoCurricularCourse getInfoEquivalentCurricularCourse() {
+		return infoEquivalentCurricularCourse;
+	}
 
-    public void setInfoOldCurricularCourse(InfoCurricularCourse infoOldCurricularCourse) {
-	this.infoOldCurricularCourse = infoOldCurricularCourse;
-    }
+	public void setInfoEquivalentCurricularCourse(InfoCurricularCourse infoEquivalentCurricularCourse) {
+		this.infoEquivalentCurricularCourse = infoEquivalentCurricularCourse;
+	}
+
+	public InfoCurricularCourse getInfoOldCurricularCourse() {
+		return infoOldCurricularCourse;
+	}
+
+	public void setInfoOldCurricularCourse(InfoCurricularCourse infoOldCurricularCourse) {
+		this.infoOldCurricularCourse = infoOldCurricularCourse;
+	}
 
 }

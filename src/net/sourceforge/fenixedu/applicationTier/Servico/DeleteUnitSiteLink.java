@@ -6,8 +6,8 @@ import net.sourceforge.fenixedu.domain.UnitSiteLink;
 
 public class DeleteUnitSiteLink extends FenixService {
 
-    public void run(UnitSite site, UnitSiteLink link) {
-	link.delete();
-    }
+	public void run(UnitSite site, UnitSiteLink link) {
+		link.delete();
+	}
 
 }

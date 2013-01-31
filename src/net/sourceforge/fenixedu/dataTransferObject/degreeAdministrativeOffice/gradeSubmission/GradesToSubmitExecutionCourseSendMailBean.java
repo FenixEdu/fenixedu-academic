@@ -16,105 +16,105 @@ import net.sourceforge.fenixedu.util.StringUtils;
 
 public class GradesToSubmitExecutionCourseSendMailBean implements Serializable {
 
-    static private final long serialVersionUID = 1L;
+	static private final long serialVersionUID = 1L;
 
-    private DegreeCurricularPlan degreeCurricularPlan;
-    private ExecutionCourse executionCourse;
-    private boolean toSubmit;
+	private DegreeCurricularPlan degreeCurricularPlan;
+	private ExecutionCourse executionCourse;
+	private boolean toSubmit;
 
-    public GradesToSubmitExecutionCourseSendMailBean(final DegreeCurricularPlan degreeCurricularPlan,
-	    final ExecutionCourse executionCourse, final boolean toSubmit) {
-	setDegreeCurricularPlan(degreeCurricularPlan);
-	setExecutionCourse(executionCourse);
-	setToSubmit(toSubmit);
-    }
-
-    public DegreeCurricularPlan getDegreeCurricularPlan() {
-	return degreeCurricularPlan;
-    }
-
-    public void setDegreeCurricularPlan(DegreeCurricularPlan degreeCurricularPlan) {
-	this.degreeCurricularPlan = degreeCurricularPlan;
-    }
-
-    public ExecutionCourse getExecutionCourse() {
-	return this.executionCourse;
-    }
-
-    public void setExecutionCourse(ExecutionCourse executionCourse) {
-	this.executionCourse = executionCourse;
-    }
-
-    public boolean isToSubmit() {
-	return toSubmit;
-    }
-
-    public void setToSubmit(boolean toSubmit) {
-	this.toSubmit = toSubmit;
-    }
-
-    public ExecutionSemester getExecutionSemester() {
-	return executionCourse.getExecutionPeriod();
-    }
-
-    public int getNumberOfEnroledStudents() {
-	return executionCourse.getAttendsCount();
-    }
-
-    public int getNumberOfStudentsWithoutGrade() {
-	int count = 0;
-
-	for (final CurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCourses()) {
-	    if (degreeCurricularPlan != null && degreeCurricularPlan.equals(curricularCourse.getDegreeCurricularPlan())) {
-		count += getNumberOfStudentsWithoutGrade(curricularCourse);
-	    }
+	public GradesToSubmitExecutionCourseSendMailBean(final DegreeCurricularPlan degreeCurricularPlan,
+			final ExecutionCourse executionCourse, final boolean toSubmit) {
+		setDegreeCurricularPlan(degreeCurricularPlan);
+		setExecutionCourse(executionCourse);
+		setToSubmit(toSubmit);
 	}
-	return count;
-    }
 
-    private int getNumberOfStudentsWithoutGrade(CurricularCourse curricularCourse) {
-	int total = 0;
-	for (final CurriculumModule curriculumModule : curricularCourse.getCurriculumModulesSet()) {
+	public DegreeCurricularPlan getDegreeCurricularPlan() {
+		return degreeCurricularPlan;
+	}
 
-	    if (curriculumModule.isEnrolment()) {
-		final Enrolment enrolment = (Enrolment) curriculumModule;
+	public void setDegreeCurricularPlan(DegreeCurricularPlan degreeCurricularPlan) {
+		this.degreeCurricularPlan = degreeCurricularPlan;
+	}
 
-		if (enrolment.isValid(getExecutionSemester())
-			&& enrolment.getEnrolmentEvaluationType() == EnrolmentEvaluationType.NORMAL) {
+	public ExecutionCourse getExecutionCourse() {
+		return this.executionCourse;
+	}
 
-		    if (!enrolment.hasAssociatedMarkSheetOrFinalGrade(MarkSheetType.NORMAL)) {
-			total++;
-		    }
+	public void setExecutionCourse(ExecutionCourse executionCourse) {
+		this.executionCourse = executionCourse;
+	}
 
-		} else if (enrolment.hasImprovement() && !enrolment.hasAssociatedMarkSheet(MarkSheetType.IMPROVEMENT)
-			&& enrolment.hasImprovementFor(getExecutionSemester())) {
+	public boolean isToSubmit() {
+		return toSubmit;
+	}
 
-		    total++;
+	public void setToSubmit(boolean toSubmit) {
+		this.toSubmit = toSubmit;
+	}
+
+	public ExecutionSemester getExecutionSemester() {
+		return executionCourse.getExecutionPeriod();
+	}
+
+	public int getNumberOfEnroledStudents() {
+		return executionCourse.getAttendsCount();
+	}
+
+	public int getNumberOfStudentsWithoutGrade() {
+		int count = 0;
+
+		for (final CurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCourses()) {
+			if (degreeCurricularPlan != null && degreeCurricularPlan.equals(curricularCourse.getDegreeCurricularPlan())) {
+				count += getNumberOfStudentsWithoutGrade(curricularCourse);
+			}
 		}
-	    }
-	}
-	return total;
-    }
-
-    public String getResponsibleTeacherNames() {
-	final StringBuilder builder = new StringBuilder();
-	for (final Professorship professorship : executionCourse.responsibleFors()) {
-
-	    final Person person = professorship.getPerson();
-	    builder.append(person.getName());
-
-	    final String email = person.getInstitutionalOrDefaultEmailAddressValue();
-	    if (!StringUtils.isEmpty(email)) {
-		builder.append(" (").append(email).append(")");
-	    }
-
-	    builder.append(",");
+		return count;
 	}
 
-	if (builder.length() > 0) {
-	    builder.deleteCharAt(builder.length() - 1);
+	private int getNumberOfStudentsWithoutGrade(CurricularCourse curricularCourse) {
+		int total = 0;
+		for (final CurriculumModule curriculumModule : curricularCourse.getCurriculumModulesSet()) {
+
+			if (curriculumModule.isEnrolment()) {
+				final Enrolment enrolment = (Enrolment) curriculumModule;
+
+				if (enrolment.isValid(getExecutionSemester())
+						&& enrolment.getEnrolmentEvaluationType() == EnrolmentEvaluationType.NORMAL) {
+
+					if (!enrolment.hasAssociatedMarkSheetOrFinalGrade(MarkSheetType.NORMAL)) {
+						total++;
+					}
+
+				} else if (enrolment.hasImprovement() && !enrolment.hasAssociatedMarkSheet(MarkSheetType.IMPROVEMENT)
+						&& enrolment.hasImprovementFor(getExecutionSemester())) {
+
+					total++;
+				}
+			}
+		}
+		return total;
 	}
 
-	return builder.toString();
-    }
+	public String getResponsibleTeacherNames() {
+		final StringBuilder builder = new StringBuilder();
+		for (final Professorship professorship : executionCourse.responsibleFors()) {
+
+			final Person person = professorship.getPerson();
+			builder.append(person.getName());
+
+			final String email = person.getInstitutionalOrDefaultEmailAddressValue();
+			if (!StringUtils.isEmpty(email)) {
+				builder.append(" (").append(email).append(")");
+			}
+
+			builder.append(",");
+		}
+
+		if (builder.length() > 0) {
+			builder.deleteCharAt(builder.length() - 1);
+		}
+
+		return builder.toString();
+	}
 }

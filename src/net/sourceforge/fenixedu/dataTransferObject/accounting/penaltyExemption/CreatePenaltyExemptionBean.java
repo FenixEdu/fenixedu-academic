@@ -9,49 +9,49 @@ import org.joda.time.YearMonthDay;
 
 public abstract class CreatePenaltyExemptionBean implements Serializable {
 
-    private Event event;
+	private Event event;
 
-    private String reason;
+	private String reason;
 
-    private PenaltyExemptionJustificationType justificationType;
+	private PenaltyExemptionJustificationType justificationType;
 
-    private YearMonthDay dispatchDate;
+	private YearMonthDay dispatchDate;
 
-    protected CreatePenaltyExemptionBean(final Event event) {
-	setEvent(event);
-    }
+	protected CreatePenaltyExemptionBean(final Event event) {
+		setEvent(event);
+	}
 
-    public String getReason() {
-	return reason;
-    }
+	public String getReason() {
+		return reason;
+	}
 
-    public void setReason(String reason) {
-	this.reason = reason;
+	public void setReason(String reason) {
+		this.reason = reason;
 
-    }
+	}
 
-    public Event getEvent() {
-	return this.event;
-    }
+	public Event getEvent() {
+		return this.event;
+	}
 
-    public void setEvent(Event event) {
-	this.event = event;
-    }
+	public void setEvent(Event event) {
+		this.event = event;
+	}
 
-    public PenaltyExemptionJustificationType getJustificationType() {
-	return justificationType;
-    }
+	public PenaltyExemptionJustificationType getJustificationType() {
+		return justificationType;
+	}
 
-    public void setJustificationType(PenaltyExemptionJustificationType exemptionType) {
-	this.justificationType = exemptionType;
-    }
+	public void setJustificationType(PenaltyExemptionJustificationType exemptionType) {
+		this.justificationType = exemptionType;
+	}
 
-    public YearMonthDay getDispatchDate() {
-	return dispatchDate;
-    }
+	public YearMonthDay getDispatchDate() {
+		return dispatchDate;
+	}
 
-    public void setDispatchDate(YearMonthDay dispatchDate) {
-	this.dispatchDate = dispatchDate;
-    }
+	public void setDispatchDate(YearMonthDay dispatchDate) {
+		this.dispatchDate = dispatchDate;
+	}
 
 }

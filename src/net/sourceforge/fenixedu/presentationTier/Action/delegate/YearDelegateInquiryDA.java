@@ -46,121 +46,128 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
  */
 @Mapping(path = "/delegateInquiry", module = "delegate")
 @Forwards({
-	@Forward(name = "chooseCoursesToAnswer", path = "/delegate/inquiries/chooseCoursesToAnswer.jsp", tileProperties = @Tile(title = "private.delegate.participate.qucdelegateinquiries")),
-	@Forward(name = "inquiry1stPage", path = "/delegate/inquiries/inquiry1stPage.jsp", tileProperties = @Tile(title = "private.delegate.participate.qucdelegateinquiries")),
-	@Forward(name = "delegateInquiry", path = "/delegate/inquiries/delegateInquiry.jsp", tileProperties = @Tile(title = "private.delegate.participate.qucdelegateinquiries")),
-	@Forward(name = "inquiriesClosed", path = "/delegate/inquiries/inquiriesClosed.jsp", tileProperties = @Tile(title = "private.delegate.participate.qucdelegateinquiries")) })
+		@Forward(name = "chooseCoursesToAnswer", path = "/delegate/inquiries/chooseCoursesToAnswer.jsp", tileProperties = @Tile(
+				title = "private.delegate.participate.qucdelegateinquiries")),
+		@Forward(name = "inquiry1stPage", path = "/delegate/inquiries/inquiry1stPage.jsp", tileProperties = @Tile(
+				title = "private.delegate.participate.qucdelegateinquiries")),
+		@Forward(name = "delegateInquiry", path = "/delegate/inquiries/delegateInquiry.jsp", tileProperties = @Tile(
+				title = "private.delegate.participate.qucdelegateinquiries")),
+		@Forward(name = "inquiriesClosed", path = "/delegate/inquiries/inquiriesClosed.jsp", tileProperties = @Tile(
+				title = "private.delegate.participate.qucdelegateinquiries")) })
 public class YearDelegateInquiryDA extends FenixDispatchAction {
 
-    public ActionForward showCoursesToAnswerPage(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) {
+	public ActionForward showCoursesToAnswerPage(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) {
 
-	final DelegateInquiryTemplate delegateInquiryTemplate = DelegateInquiryTemplate.getCurrentTemplate();
-	if (delegateInquiryTemplate == null) {
-	    return actionMapping.findForward("inquiriesClosed");
-	}
-	YearDelegate yearDelegate = null;
-	ExecutionSemester executionPeriod = delegateInquiryTemplate.getExecutionPeriod();
-	for (Delegate delegate : AccessControl.getPerson().getStudent().getDelegates()) {
-	    if (delegate instanceof YearDelegate) {
-		if (delegate.isActiveForFirstExecutionYear(executionPeriod.getExecutionYear())) {
-		    if (yearDelegate == null || ((YearDelegate) delegate).isAfter(yearDelegate)) {
-			yearDelegate = (YearDelegate) delegate;
-		    }
+		final DelegateInquiryTemplate delegateInquiryTemplate = DelegateInquiryTemplate.getCurrentTemplate();
+		if (delegateInquiryTemplate == null) {
+			return actionMapping.findForward("inquiriesClosed");
 		}
-	    }
-	}
+		YearDelegate yearDelegate = null;
+		ExecutionSemester executionPeriod = delegateInquiryTemplate.getExecutionPeriod();
+		for (Delegate delegate : AccessControl.getPerson().getStudent().getDelegates()) {
+			if (delegate instanceof YearDelegate) {
+				if (delegate.isActiveForFirstExecutionYear(executionPeriod.getExecutionYear())) {
+					if (yearDelegate == null || ((YearDelegate) delegate).isAfter(yearDelegate)) {
+						yearDelegate = (YearDelegate) delegate;
+					}
+				}
+			}
+		}
 
-	if (yearDelegate != null) {
-	    PersonFunction lastYearDelegatePersonFunction = yearDelegate
-		    .getDegree()
-		    .getUnit()
-		    .getLastYearDelegatePersonFunctionByExecutionYearAndCurricularYear(executionPeriod.getExecutionYear(),
-			    yearDelegate.getCurricularYear());
-	    if (lastYearDelegatePersonFunction.getDelegate() != yearDelegate) {
+		if (yearDelegate != null) {
+			PersonFunction lastYearDelegatePersonFunction =
+					yearDelegate
+							.getDegree()
+							.getUnit()
+							.getLastYearDelegatePersonFunctionByExecutionYearAndCurricularYear(
+									executionPeriod.getExecutionYear(), yearDelegate.getCurricularYear());
+			if (lastYearDelegatePersonFunction.getDelegate() != yearDelegate) {
+				return actionMapping.findForward("inquiriesClosed");
+			}
+
+			final ExecutionDegree executionDegree =
+					ExecutionDegree.getByDegreeCurricularPlanAndExecutionYear(yearDelegate.getRegistration()
+							.getStudentCurricularPlan(executionPeriod).getDegreeCurricularPlan(),
+							executionPeriod.getExecutionYear());
+			Set<ExecutionCourse> executionCoursesToInquiries =
+					yearDelegate.getExecutionCoursesToInquiries(executionPeriod, executionDegree);
+
+			List<CurricularCourseResumeResult> coursesResultResume = new ArrayList<CurricularCourseResumeResult>();
+			for (ExecutionCourse executionCourse : executionCoursesToInquiries) {
+				coursesResultResume.add(new CurricularCourseResumeResult(executionCourse, executionDegree, yearDelegate));
+			}
+			Collections.sort(coursesResultResume, new BeanComparator("executionCourse.name"));
+			request.setAttribute("executionDegree", executionDegree);
+			request.setAttribute("executionPeriod", executionPeriod);
+			request.setAttribute("coursesResultResume", coursesResultResume);
+			return actionMapping.findForward("chooseCoursesToAnswer");
+		}
+
 		return actionMapping.findForward("inquiriesClosed");
-	    }
-
-	    final ExecutionDegree executionDegree = ExecutionDegree.getByDegreeCurricularPlanAndExecutionYear(yearDelegate
-		    .getRegistration().getStudentCurricularPlan(executionPeriod).getDegreeCurricularPlan(),
-		    executionPeriod.getExecutionYear());
-	    Set<ExecutionCourse> executionCoursesToInquiries = yearDelegate.getExecutionCoursesToInquiries(executionPeriod,
-		    executionDegree);
-
-	    List<CurricularCourseResumeResult> coursesResultResume = new ArrayList<CurricularCourseResumeResult>();
-	    for (ExecutionCourse executionCourse : executionCoursesToInquiries) {
-		coursesResultResume.add(new CurricularCourseResumeResult(executionCourse, executionDegree, yearDelegate));
-	    }
-	    Collections.sort(coursesResultResume, new BeanComparator("executionCourse.name"));
-	    request.setAttribute("executionDegree", executionDegree);
-	    request.setAttribute("executionPeriod", executionPeriod);
-	    request.setAttribute("coursesResultResume", coursesResultResume);
-	    return actionMapping.findForward("chooseCoursesToAnswer");
 	}
 
-	return actionMapping.findForward("inquiriesClosed");
-    }
+	public ActionForward showFillInquiryPage(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) {
 
-    public ActionForward showFillInquiryPage(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) {
+		YearDelegate yearDelegate = AbstractDomainObject.fromExternalId(getFromRequest(request, "yearDelegateOID").toString());
+		ExecutionCourse executionCourse =
+				AbstractDomainObject.fromExternalId(getFromRequest(request, "executionCourseOID").toString());
+		ExecutionDegree executionDegree =
+				AbstractDomainObject.fromExternalId(getFromRequest(request, "executionDegreeOID").toString());
 
-	YearDelegate yearDelegate = AbstractDomainObject.fromExternalId(getFromRequest(request, "yearDelegateOID").toString());
-	ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(getFromRequest(request, "executionCourseOID")
-		.toString());
-	ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(getFromRequest(request, "executionDegreeOID")
-		.toString());
-
-	List<InquiryResult> results = executionCourse.getInquiryResultsByExecutionDegreeAndForTeachers(executionDegree);
-	DelegateInquiryTemplate delegateInquiryTemplate = DelegateInquiryTemplate.getCurrentTemplate();
-	InquiryDelegateAnswer inquiryDelegateAnswer = null;
-	for (InquiryDelegateAnswer delegateAnswer : yearDelegate.getInquiryDelegateAnswers()) {
-	    if (delegateAnswer.getExecutionCourse() == executionCourse) {
-		inquiryDelegateAnswer = delegateAnswer;
-	    }
-	}
-
-	DelegateInquiryBean delegateInquiryBean = new DelegateInquiryBean(executionCourse, executionDegree,
-		delegateInquiryTemplate, results, yearDelegate, inquiryDelegateAnswer);
-
-	request.setAttribute("hasNotRelevantData", executionCourse.hasNotRelevantDataFor(executionDegree));
-	request.setAttribute("executionPeriod", executionCourse.getExecutionPeriod());
-	request.setAttribute("delegateInquiryBean", delegateInquiryBean);
-
-	ViewTeacherInquiryPublicResults.setTeacherScaleColorException(executionCourse.getExecutionPeriod(), request);
-	return actionMapping.findForward("delegateInquiry");
-    }
-
-    public ActionForward saveChanges(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-	final DelegateInquiryBean delegateInquiryBean = getRenderedObject("delegateInquiryBean");
-	if (delegateInquiryBean.getInquiryDelegateAnswer() == null) {
-	    InquiryDelegateAnswer inquiryDelegateAnswer = null;
-	    for (InquiryDelegateAnswer delegateAnswer : delegateInquiryBean.getYearDelegate().getInquiryDelegateAnswers()) {
-		if (delegateAnswer.getExecutionCourse() == delegateInquiryBean.getExecutionCourse()) {
-		    inquiryDelegateAnswer = delegateAnswer;
+		List<InquiryResult> results = executionCourse.getInquiryResultsByExecutionDegreeAndForTeachers(executionDegree);
+		DelegateInquiryTemplate delegateInquiryTemplate = DelegateInquiryTemplate.getCurrentTemplate();
+		InquiryDelegateAnswer inquiryDelegateAnswer = null;
+		for (InquiryDelegateAnswer delegateAnswer : yearDelegate.getInquiryDelegateAnswers()) {
+			if (delegateAnswer.getExecutionCourse() == executionCourse) {
+				inquiryDelegateAnswer = delegateAnswer;
+			}
 		}
-	    }
-	    delegateInquiryBean.setInquiryDelegateAnswer(inquiryDelegateAnswer);
+
+		DelegateInquiryBean delegateInquiryBean =
+				new DelegateInquiryBean(executionCourse, executionDegree, delegateInquiryTemplate, results, yearDelegate,
+						inquiryDelegateAnswer);
+
+		request.setAttribute("hasNotRelevantData", executionCourse.hasNotRelevantDataFor(executionDegree));
+		request.setAttribute("executionPeriod", executionCourse.getExecutionPeriod());
+		request.setAttribute("delegateInquiryBean", delegateInquiryBean);
+
+		ViewTeacherInquiryPublicResults.setTeacherScaleColorException(executionCourse.getExecutionPeriod(), request);
+		return actionMapping.findForward("delegateInquiry");
 	}
-	if (!delegateInquiryBean.isValid()) {
-	    request.setAttribute("delegateInquiryBean", delegateInquiryBean);
-	    RenderUtils.invalidateViewState();
-	    addActionMessage(request, "error.inquiries.fillAllRequiredFields");
-	    return actionMapping.findForward("delegateInquiry");
+
+	public ActionForward saveChanges(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		final DelegateInquiryBean delegateInquiryBean = getRenderedObject("delegateInquiryBean");
+		if (delegateInquiryBean.getInquiryDelegateAnswer() == null) {
+			InquiryDelegateAnswer inquiryDelegateAnswer = null;
+			for (InquiryDelegateAnswer delegateAnswer : delegateInquiryBean.getYearDelegate().getInquiryDelegateAnswers()) {
+				if (delegateAnswer.getExecutionCourse() == delegateInquiryBean.getExecutionCourse()) {
+					inquiryDelegateAnswer = delegateAnswer;
+				}
+			}
+			delegateInquiryBean.setInquiryDelegateAnswer(inquiryDelegateAnswer);
+		}
+		if (!delegateInquiryBean.isValid()) {
+			request.setAttribute("delegateInquiryBean", delegateInquiryBean);
+			RenderUtils.invalidateViewState();
+			addActionMessage(request, "error.inquiries.fillAllRequiredFields");
+			return actionMapping.findForward("delegateInquiry");
+		}
+		RenderUtils.invalidateViewState("delegateInquiryBean");
+		delegateInquiryBean.saveChanges(getUserView(request).getPerson(), ResultPersonCategory.DELEGATE);
+
+		return showCoursesToAnswerPage(actionMapping, actionForm, request, response);
 	}
-	RenderUtils.invalidateViewState("delegateInquiryBean");
-	delegateInquiryBean.saveChanges(getUserView(request).getPerson(), ResultPersonCategory.DELEGATE);
 
-	return showCoursesToAnswerPage(actionMapping, actionForm, request, response);
-    }
+	public ActionForward viewCourseInquiryResults(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		return ViewCourseInquiryPublicResults.getCourseResultsActionForward(mapping, form, request, response);
+	}
 
-    public ActionForward viewCourseInquiryResults(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-	return ViewCourseInquiryPublicResults.getCourseResultsActionForward(mapping, form, request, response);
-    }
-
-    public ActionForward viewTeacherShiftTypeInquiryResults(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-	return ViewTeacherInquiryPublicResults.getTeacherResultsActionForward(mapping, form, request, response);
-    }
+	public ActionForward viewTeacherShiftTypeInquiryResults(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		return ViewTeacherInquiryPublicResults.getTeacherResultsActionForward(mapping, form, request, response);
+	}
 }

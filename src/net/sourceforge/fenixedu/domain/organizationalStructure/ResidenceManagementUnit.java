@@ -6,28 +6,28 @@ import net.sourceforge.fenixedu.util.Money;
 
 public class ResidenceManagementUnit extends ResidenceManagementUnit_Base {
 
-    public ResidenceManagementUnit() {
-	super();
-    }
+	public ResidenceManagementUnit() {
+		super();
+	}
 
-    public boolean isPaymentEventAvailable(Person person, ResidenceMonth month) {
-	return month.isEventPresent(person);
-    }
+	public boolean isPaymentEventAvailable(Person person, ResidenceMonth month) {
+		return month.isEventPresent(person);
+	}
 
-    public Integer getCurrentPaymentLimitDay() {
-	return getResidencePriceTable().getPaymentLimitDay();
-    }
+	public Integer getCurrentPaymentLimitDay() {
+		return getResidencePriceTable().getPaymentLimitDay();
+	}
 
-    public Money getCurrentSingleRoomValue() {
-	return getResidencePriceTable().getSingleRoomValue();
-    }
+	public Money getCurrentSingleRoomValue() {
+		return getResidencePriceTable().getSingleRoomValue();
+	}
 
-    public Money getCurrentDoubleRoomValue() {
-	return getResidencePriceTable().getDoubleRoomValue();
-    }
+	public Money getCurrentDoubleRoomValue() {
+		return getResidencePriceTable().getDoubleRoomValue();
+	}
 
-    public boolean isResidencePriceTableConfigured() {
-	return getResidencePriceTable().isConfigured();
-    }
+	public boolean isResidencePriceTableConfigured() {
+		return getResidencePriceTable().isConfigured();
+	}
 
 }

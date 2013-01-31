@@ -15,23 +15,23 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class ExecutionPeriodsForOldMarkSheets implements DataProvider {
 
-    @Override
-    public Converter getConverter() {
-	return new DomainObjectKeyConverter();
-    }
-
-    @Override
-    public Object provide(Object source, Object currentValue) {
-	final List<ExecutionSemester> result = new ArrayList<ExecutionSemester>();
-
-	for (final ExecutionSemester executionSemester : RootDomainObject.getInstance().getExecutionPeriodsSet()) {
-	    if (executionSemester.isBefore(ExecutionSemester.readMarkSheetManagmentExecutionPeriod())) {
-		result.add(executionSemester);
-	    }
+	@Override
+	public Converter getConverter() {
+		return new DomainObjectKeyConverter();
 	}
 
-	Collections.sort(result, new ReverseComparator());
-	return result;
-    }
+	@Override
+	public Object provide(Object source, Object currentValue) {
+		final List<ExecutionSemester> result = new ArrayList<ExecutionSemester>();
+
+		for (final ExecutionSemester executionSemester : RootDomainObject.getInstance().getExecutionPeriodsSet()) {
+			if (executionSemester.isBefore(ExecutionSemester.readMarkSheetManagmentExecutionPeriod())) {
+				result.add(executionSemester);
+			}
+		}
+
+		Collections.sort(result, new ReverseComparator());
+		return result;
+	}
 
 }

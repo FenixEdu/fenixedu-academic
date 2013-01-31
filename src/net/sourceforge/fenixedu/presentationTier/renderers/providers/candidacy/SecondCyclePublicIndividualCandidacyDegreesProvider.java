@@ -8,22 +8,24 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class SecondCyclePublicIndividualCandidacyDegreesProvider implements DataProvider {
 
-    public Object provide(Object source, Object currentValue) {
-	final SecondCycleIndividualCandidacyProcessBean bean = (SecondCycleIndividualCandidacyProcessBean) source;
+	@Override
+	public Object provide(Object source, Object currentValue) {
+		final SecondCycleIndividualCandidacyProcessBean bean = (SecondCycleIndividualCandidacyProcessBean) source;
 
-	if (bean.getCandidacyProcess() != null) {
-	    final SecondCycleCandidacyProcess candidacyProcess = (SecondCycleCandidacyProcess) bean.getCandidacyProcess();
-	    return candidacyProcess.getAvailableDegrees();
+		if (bean.getCandidacyProcess() != null) {
+			final SecondCycleCandidacyProcess candidacyProcess = bean.getCandidacyProcess();
+			return candidacyProcess.getAvailableDegrees();
+		}
+
+		final SecondCycleCandidacyProcess candidacyProcess =
+				(SecondCycleCandidacyProcess) bean.getIndividualCandidacyProcess().getCandidacyProcess();
+
+		return candidacyProcess.getAvailableDegrees();
 	}
 
-	final SecondCycleCandidacyProcess candidacyProcess = (SecondCycleCandidacyProcess) bean.getIndividualCandidacyProcess()
-		.getCandidacyProcess();
-
-	return candidacyProcess.getAvailableDegrees();
-    }
-
-    public Converter getConverter() {
-	return new DomainObjectKeyConverter();
-    }
+	@Override
+	public Converter getConverter() {
+		return new DomainObjectKeyConverter();
+	}
 
 }

@@ -9,40 +9,43 @@ import net.sourceforge.fenixedu.domain.tests.NewQuestion;
 import net.sourceforge.fenixedu.presentationTier.Action.teacher.tests.PredicateBean;
 
 public class MultipleChoiceAnswerPredicate extends AtomicPredicate implements Predicate {
-    private final NewChoice choice;
+	private final NewChoice choice;
 
-    public MultipleChoiceAnswerPredicate(NewChoice choice) {
-	super();
-	this.choice = choice;
-    }
-
-    public MultipleChoiceAnswerPredicate(PredicateBean predicateBean) {
-	this(predicateBean.getChoice());
-    }
-
-    public boolean evaluate(NewQuestion question, Person person) {
-	NewMultipleChoiceQuestion multipleChoiceQuestion = (NewMultipleChoiceQuestion) question;
-
-	if (!multipleChoiceQuestion.isAnswered(person)) {
-	    return false;
+	public MultipleChoiceAnswerPredicate(NewChoice choice) {
+		super();
+		this.choice = choice;
 	}
 
-	return multipleChoiceQuestion.getMultipleChoiceAnswer(person).contains(this.getChoice());
-    }
+	public MultipleChoiceAnswerPredicate(PredicateBean predicateBean) {
+		this(predicateBean.getChoice());
+	}
 
-    public NewChoice getChoice() {
-	return choice;
-    }
+	@Override
+	public boolean evaluate(NewQuestion question, Person person) {
+		NewMultipleChoiceQuestion multipleChoiceQuestion = (NewMultipleChoiceQuestion) question;
 
-    public boolean uses(Object object) {
-	NewChoice choice = (NewChoice) object;
+		if (!multipleChoiceQuestion.isAnswered(person)) {
+			return false;
+		}
 
-	return choice.equals(this.getChoice());
-    }
+		return multipleChoiceQuestion.getMultipleChoiceAnswer(person).contains(this.getChoice());
+	}
 
-    public Predicate transform(HashMap<Object, Object> transformMap) {
-	NewChoice transformation = (NewChoice) transformMap.get(getChoice());
-	return new MultipleChoiceAnswerPredicate(transformation != null ? transformation : getChoice());
-    }
+	public NewChoice getChoice() {
+		return choice;
+	}
+
+	@Override
+	public boolean uses(Object object) {
+		NewChoice choice = (NewChoice) object;
+
+		return choice.equals(this.getChoice());
+	}
+
+	@Override
+	public Predicate transform(HashMap<Object, Object> transformMap) {
+		NewChoice transformation = (NewChoice) transformMap.get(getChoice());
+		return new MultipleChoiceAnswerPredicate(transformation != null ? transformation : getChoice());
+	}
 
 }

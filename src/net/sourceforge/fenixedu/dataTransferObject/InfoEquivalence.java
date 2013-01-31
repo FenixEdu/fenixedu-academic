@@ -9,93 +9,96 @@ import net.sourceforge.fenixedu.util.EnrolmentEquivalenceType;
  */
 public class InfoEquivalence extends InfoObject {
 
-    private InfoEnrolment infoEnrolment;
+	private InfoEnrolment infoEnrolment;
 
-    private InfoEnrolment infoEquivalentEnrolment;
+	private InfoEnrolment infoEquivalentEnrolment;
 
-    private EnrolmentEquivalenceType equivalenceType;
+	private EnrolmentEquivalenceType equivalenceType;
 
-    public InfoEquivalence() {
-	setInfoEnrolment(null);
-	setInfoEquivalentEnrolment(null);
-	setEquivalenceType(null);
-    }
-
-    public InfoEquivalence(InfoEnrolment enrolment, InfoEnrolment equivalentEnrolment, EnrolmentEquivalenceType equivalenceType) {
-	setInfoEnrolment(enrolment);
-	setInfoEquivalentEnrolment(equivalentEnrolment);
-	setEquivalenceType(equivalenceType);
-    }
-
-    public boolean equals(Object obj) {
-	boolean resultado = false;
-
-	if (obj instanceof InfoEquivalence) {
-	    InfoEquivalence equivalence = (InfoEquivalence) obj;
-
-	    resultado = (this.getInfoEnrolment().equals(equivalence.getInfoEnrolment()))
-		    && (this.getInfoEquivalentEnrolment().equals(equivalence.getInfoEquivalentEnrolment()));
+	public InfoEquivalence() {
+		setInfoEnrolment(null);
+		setInfoEquivalentEnrolment(null);
+		setEquivalenceType(null);
 	}
-	return resultado;
-    }
 
-    public String toString() {
-	String result = "[" + this.getClass().getName() + "; ";
-	result += "enrolment = " + this.infoEnrolment + "; ";
-	result += "equivalentEnrolment = " + this.infoEquivalentEnrolment + "; ";
-	result += "equivalenceType" + this.equivalenceType + "]\n";
-	return result;
-    }
+	public InfoEquivalence(InfoEnrolment enrolment, InfoEnrolment equivalentEnrolment, EnrolmentEquivalenceType equivalenceType) {
+		setInfoEnrolment(enrolment);
+		setInfoEquivalentEnrolment(equivalentEnrolment);
+		setEquivalenceType(equivalenceType);
+	}
 
-    /**
-     * @return EnrolmentEquivalenceType
-     */
-    public EnrolmentEquivalenceType getEquivalenceType() {
-	return equivalenceType;
-    }
+	@Override
+	public boolean equals(Object obj) {
+		boolean resultado = false;
 
-    /**
-     * @return InfoEnrolment
-     */
-    public InfoEnrolment getInfoEnrolment() {
-	return infoEnrolment;
-    }
+		if (obj instanceof InfoEquivalence) {
+			InfoEquivalence equivalence = (InfoEquivalence) obj;
 
-    /**
-     * @return InfoEnrolment
-     */
-    public InfoEnrolment getInfoEquivalentEnrolment() {
-	return infoEquivalentEnrolment;
-    }
+			resultado =
+					(this.getInfoEnrolment().equals(equivalence.getInfoEnrolment()))
+							&& (this.getInfoEquivalentEnrolment().equals(equivalence.getInfoEquivalentEnrolment()));
+		}
+		return resultado;
+	}
 
-    /**
-     * Sets the equivalenceType.
-     * 
-     * @param equivalenceType
-     *            The equivalenceType to set
-     */
-    public void setEquivalenceType(EnrolmentEquivalenceType equivalenceType) {
-	this.equivalenceType = equivalenceType;
-    }
+	@Override
+	public String toString() {
+		String result = "[" + this.getClass().getName() + "; ";
+		result += "enrolment = " + this.infoEnrolment + "; ";
+		result += "equivalentEnrolment = " + this.infoEquivalentEnrolment + "; ";
+		result += "equivalenceType" + this.equivalenceType + "]\n";
+		return result;
+	}
 
-    /**
-     * Sets the infoEnrolment.
-     * 
-     * @param infoEnrolment
-     *            The infoEnrolment to set
-     */
-    public void setInfoEnrolment(InfoEnrolment infoEnrolment) {
-	this.infoEnrolment = infoEnrolment;
-    }
+	/**
+	 * @return EnrolmentEquivalenceType
+	 */
+	public EnrolmentEquivalenceType getEquivalenceType() {
+		return equivalenceType;
+	}
 
-    /**
-     * Sets the infoEquivalentEnrolment.
-     * 
-     * @param infoEquivalentEnrolment
-     *            The infoEquivalentEnrolment to set
-     */
-    public void setInfoEquivalentEnrolment(InfoEnrolment infoEquivalentEnrolment) {
-	this.infoEquivalentEnrolment = infoEquivalentEnrolment;
-    }
+	/**
+	 * @return InfoEnrolment
+	 */
+	public InfoEnrolment getInfoEnrolment() {
+		return infoEnrolment;
+	}
+
+	/**
+	 * @return InfoEnrolment
+	 */
+	public InfoEnrolment getInfoEquivalentEnrolment() {
+		return infoEquivalentEnrolment;
+	}
+
+	/**
+	 * Sets the equivalenceType.
+	 * 
+	 * @param equivalenceType
+	 *            The equivalenceType to set
+	 */
+	public void setEquivalenceType(EnrolmentEquivalenceType equivalenceType) {
+		this.equivalenceType = equivalenceType;
+	}
+
+	/**
+	 * Sets the infoEnrolment.
+	 * 
+	 * @param infoEnrolment
+	 *            The infoEnrolment to set
+	 */
+	public void setInfoEnrolment(InfoEnrolment infoEnrolment) {
+		this.infoEnrolment = infoEnrolment;
+	}
+
+	/**
+	 * Sets the infoEquivalentEnrolment.
+	 * 
+	 * @param infoEquivalentEnrolment
+	 *            The infoEquivalentEnrolment to set
+	 */
+	public void setInfoEquivalentEnrolment(InfoEnrolment infoEquivalentEnrolment) {
+		this.infoEquivalentEnrolment = infoEquivalentEnrolment;
+	}
 
 }

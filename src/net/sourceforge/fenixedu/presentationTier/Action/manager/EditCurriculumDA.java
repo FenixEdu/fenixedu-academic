@@ -34,119 +34,128 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
  * @author lmac1
  */
 
-@Mapping(module = "manager", path = "/editCurriculum", input = "/editCurriculum.do?method=prepareEdit&page=0", attribute = "curriculumForm", formBean = "curriculumForm", scope = "request", parameter = "method")
+@Mapping(
+		module = "manager",
+		path = "/editCurriculum",
+		input = "/editCurriculum.do?method=prepareEdit&page=0",
+		attribute = "curriculumForm",
+		formBean = "curriculumForm",
+		scope = "request",
+		parameter = "method")
 @Forwards(value = {
 		@Forward(name = "readDegreeCurricularPlan", path = "/readDegreeCurricularPlan.do"),
 		@Forward(name = "readCurricularCourse", path = "/readCurricularCourse.do"),
-		@Forward(name = "editCurriculum", path = "/manager/editCurriculum_bd.jsp", tileProperties = @Tile(navLocal = "/manager/curricularCourseNavLocalManager.jsp")),
-		@Forward(name = "editCurriculumEnglish", path = "/manager/editCurriculumEnglish_bd.jsp", tileProperties = @Tile(navLocal = "/manager/curricularCourseNavLocalManager.jsp")) })
-@Exceptions(value = { @ExceptionHandling(type = net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException.class, key = "resources.Action.exceptions.NonExistingActionException", handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class, scope = "request") })
+		@Forward(name = "editCurriculum", path = "/manager/editCurriculum_bd.jsp", tileProperties = @Tile(
+				navLocal = "/manager/curricularCourseNavLocalManager.jsp")),
+		@Forward(name = "editCurriculumEnglish", path = "/manager/editCurriculumEnglish_bd.jsp", tileProperties = @Tile(
+				navLocal = "/manager/curricularCourseNavLocalManager.jsp")) })
+@Exceptions(value = { @ExceptionHandling(
+		type = net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException.class,
+		key = "resources.Action.exceptions.NonExistingActionException",
+		handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class,
+		scope = "request") })
 public class EditCurriculumDA extends FenixDispatchAction {
 
-    public ActionForward prepareEdit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixActionException, FenixFilterException {
+	public ActionForward prepareEdit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
-	IUserView userView = UserView.getUser();
+		IUserView userView = UserView.getUser();
 
-	DynaActionForm curriculumForm = (DynaActionForm) form;
+		DynaActionForm curriculumForm = (DynaActionForm) form;
 
-	Integer curricularCourseId = new Integer(request.getParameter("curricularCourseId"));
-	String language = request.getParameter("language");
+		Integer curricularCourseId = new Integer(request.getParameter("curricularCourseId"));
+		String language = request.getParameter("language");
 
-	InfoCurriculum infoCurriculum = null;
+		InfoCurriculum infoCurriculum = null;
 
-	try {
-	    infoCurriculum = (InfoCurriculum) ReadCurriculum.run(curricularCourseId);
+		try {
+			infoCurriculum = ReadCurriculum.run(curricularCourseId);
 
-	} catch (NonExistingServiceException e) {
-	    throw new NonExistingActionException("message.nonExistingCurricularCourse", mapping
-		    .findForward("readDegreeCurricularPlan"));
-	} catch (FenixServiceException fenixServiceException) {
-	    throw new FenixActionException(fenixServiceException.getMessage());
+		} catch (NonExistingServiceException e) {
+			throw new NonExistingActionException("message.nonExistingCurricularCourse",
+					mapping.findForward("readDegreeCurricularPlan"));
+		} catch (FenixServiceException fenixServiceException) {
+			throw new FenixActionException(fenixServiceException.getMessage());
+		}
+
+		if (infoCurriculum != null) {
+			if (language == null) {
+				curriculumForm.set("generalObjectives", infoCurriculum.getGeneralObjectives());
+				curriculumForm.set("operacionalObjectives", infoCurriculum.getOperacionalObjectives());
+				curriculumForm.set("program", infoCurriculum.getProgram());
+			} else {
+				curriculumForm.set("generalObjectivesEn", infoCurriculum.getGeneralObjectivesEn());
+				curriculumForm.set("operacionalObjectivesEn", infoCurriculum.getOperacionalObjectivesEn());
+				curriculumForm.set("programEn", infoCurriculum.getProgramEn());
+			}
+		}
+
+		request.setAttribute("executionYears", ExecutionYear.readNotClosedExecutionYears());
+
+		if (language == null) {
+			return mapping.findForward("editCurriculum");
+		}
+
+		return mapping.findForward("editCurriculumEnglish");
 	}
 
-	if (infoCurriculum != null) {
-	    if (language == null) {
-		curriculumForm.set("generalObjectives", infoCurriculum.getGeneralObjectives());
-		curriculumForm.set("operacionalObjectives", infoCurriculum.getOperacionalObjectives());
-		curriculumForm.set("program", infoCurriculum.getProgram());
-	    } else {
-		curriculumForm.set("generalObjectivesEn", infoCurriculum.getGeneralObjectivesEn());
-		curriculumForm.set("operacionalObjectivesEn", infoCurriculum.getOperacionalObjectivesEn());
-		curriculumForm.set("programEn", infoCurriculum.getProgramEn());
-	    }
+	public ActionForward edit(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+			throws FenixActionException, FenixFilterException {
+
+		IUserView userView = UserView.getUser();
+
+		DynaActionForm editForm = (DynaActionForm) form;
+
+		InfoCurriculum infoCurriculum = new InfoCurriculum();
+		final CurricularCourse curricularCourse =
+				(CurricularCourse) rootDomainObject.readDegreeModuleByOID(Integer.valueOf(request
+						.getParameter("curricularCourseId")));
+		InfoCurricularCourse infoCurricularCourse = new InfoCurricularCourse(curricularCourse);
+		Curriculum curriculum = curricularCourse.findLatestCurriculum();
+
+		infoCurriculum.setInfoCurricularCourse(infoCurricularCourse);
+
+		String objectives = (String) editForm.get("generalObjectives");
+		infoCurriculum.setGeneralObjectives((StringUtils.isEmpty(objectives) && curriculum != null) ? curriculum
+				.getGeneralObjectives() : objectives);
+
+		String operationalObjectives = (String) editForm.get("operacionalObjectives");
+		infoCurriculum.setOperacionalObjectives(StringUtils.isEmpty(operationalObjectives) && curriculum != null ? curriculum
+				.getOperacionalObjectives() : operationalObjectives);
+
+		String program = (String) editForm.get("program");
+		infoCurriculum.setProgram(StringUtils.isEmpty(program) && curriculum != null ? curriculum.getProgram() : program);
+
+		String objectivesEn = (String) editForm.get("generalObjectivesEn");
+		infoCurriculum.setGeneralObjectivesEn(StringUtils.isEmpty(objectivesEn) && curriculum != null ? curriculum
+				.getGeneralObjectivesEn() : objectivesEn);
+
+		String operationalObjectivesEn = (String) editForm.get("operacionalObjectivesEn");
+		infoCurriculum.setOperacionalObjectivesEn(StringUtils.isEmpty(operationalObjectivesEn) && curriculum != null ? curriculum
+				.getOperacionalObjectivesEn() : operationalObjectivesEn);
+
+		String programEn = (String) editForm.get("programEn");
+		infoCurriculum.setProgramEn(StringUtils.isEmpty(programEn) && curriculum != null ? curriculum.getProgramEn() : programEn);
+
+		Integer executionYearId = (Integer) editForm.get("executionYearId");
+		infoCurriculum.setExecutionYearId(executionYearId);
+
+		try {
+			EditCurriculum.run(infoCurriculum, request.getParameter("language"), userView.getUtilizador());
+
+		} catch (NonExistingServiceException nonExistingServiceException) {
+			nonExistingServiceException.printStackTrace();
+			throw new NonExistingActionException("message.nonExistingCurricularCourse",
+					mapping.findForward("readDegreeCurricularPlan"));
+		} catch (FenixServiceException fenixServiceException) {
+			fenixServiceException.printStackTrace();
+			throw new FenixActionException(fenixServiceException.getMessage());
+		}
+		return mapping.findForward("readCurricularCourse");
 	}
-
-	request.setAttribute("executionYears", ExecutionYear.readNotClosedExecutionYears());
-
-	if (language == null)
-	    return mapping.findForward("editCurriculum");
-
-	return mapping.findForward("editCurriculumEnglish");
-    }
-
-    public ActionForward edit(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-	    throws FenixActionException, FenixFilterException {
-
-	IUserView userView = UserView.getUser();
-
-	DynaActionForm editForm = (DynaActionForm) form;
-
-	InfoCurriculum infoCurriculum = new InfoCurriculum();
-	final CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(Integer
-		.valueOf(request.getParameter("curricularCourseId")));
-	InfoCurricularCourse infoCurricularCourse = new InfoCurricularCourse(curricularCourse);
-	Curriculum curriculum = curricularCourse.findLatestCurriculum();
-
-	infoCurriculum.setInfoCurricularCourse(infoCurricularCourse);
-
-	String objectives = (String) editForm.get("generalObjectives");
-	infoCurriculum.setGeneralObjectives((StringUtils.isEmpty(objectives) && curriculum != null) ? curriculum
-		.getGeneralObjectives() : objectives);
-
-	String operationalObjectives = (String) editForm.get("operacionalObjectives");
-	infoCurriculum.setOperacionalObjectives(StringUtils.isEmpty(operationalObjectives) && curriculum != null ? curriculum
-		.getOperacionalObjectives() : operationalObjectives);
-
-	String program = (String) editForm.get("program");
-	infoCurriculum.setProgram(StringUtils.isEmpty(program) && curriculum != null ? curriculum.getProgram() : program);
-
-	String objectivesEn = (String) editForm.get("generalObjectivesEn");
-	infoCurriculum.setGeneralObjectivesEn(StringUtils.isEmpty(objectivesEn) && curriculum != null ? curriculum
-		.getGeneralObjectivesEn() : objectivesEn);
-
-	String operationalObjectivesEn = (String) editForm.get("operacionalObjectivesEn");
-	infoCurriculum.setOperacionalObjectivesEn(StringUtils.isEmpty(operationalObjectivesEn) && curriculum != null ? curriculum
-		.getOperacionalObjectivesEn() : operationalObjectivesEn);
-
-	String programEn = (String) editForm.get("programEn");
-	infoCurriculum.setProgramEn(StringUtils.isEmpty(programEn) && curriculum != null ? curriculum.getProgramEn() : programEn);
-
-	Integer executionYearId = (Integer) editForm.get("executionYearId");
-	infoCurriculum.setExecutionYearId(executionYearId);
-
-	try {
-	    EditCurriculum.run(infoCurriculum, request.getParameter("language"), userView.getUtilizador());
-
-	} catch (NonExistingServiceException nonExistingServiceException) {
-	    nonExistingServiceException.printStackTrace();
-	    throw new NonExistingActionException("message.nonExistingCurricularCourse", mapping
-		    .findForward("readDegreeCurricularPlan"));
-	} catch (FenixServiceException fenixServiceException) {
-	    fenixServiceException.printStackTrace();
-	    throw new FenixActionException(fenixServiceException.getMessage());
-	}
-	return mapping.findForward("readCurricularCourse");
-    }
 }

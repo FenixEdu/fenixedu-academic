@@ -14,72 +14,72 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class ErasmusVacancy extends ErasmusVacancy_Base {
 
-    private ErasmusVacancy() {
-	super();
-	setRootDomainObject(RootDomainObject.getInstance());
-    }
-
-    public ErasmusVacancy(final MobilityApplicationPeriod period, Degree degree, UniversityUnit unit, Integer numberOfVacancies) {
-	this();
-
-	setCandidacyPeriod(period);
-	setDegree(degree);
-	setUniversityUnit(unit);
-
-	setNumberOfVacancies(numberOfVacancies);
-
-	check();
-    }
-
-    private void check() {
-	if (getCandidacyPeriod() == null) {
-	    throw new DomainException("error.erasmus.vacancy.candidacy.period.must.not.be.null");
+	private ErasmusVacancy() {
+		super();
+		setRootDomainObject(RootDomainObject.getInstance());
 	}
 
-	if (getDegree() == null) {
-	    throw new DomainException("error.erasmus.vacancy.degree.must.not.be.null");
+	public ErasmusVacancy(final MobilityApplicationPeriod period, Degree degree, UniversityUnit unit, Integer numberOfVacancies) {
+		this();
+
+		setCandidacyPeriod(period);
+		setDegree(degree);
+		setUniversityUnit(unit);
+
+		setNumberOfVacancies(numberOfVacancies);
+
+		check();
 	}
 
-	if (getUniversityUnit() == null) {
-	    throw new DomainException("error.erasmus.vacancy.university.unit.must.not.be.null");
+	private void check() {
+		if (getCandidacyPeriod() == null) {
+			throw new DomainException("error.erasmus.vacancy.candidacy.period.must.not.be.null");
+		}
+
+		if (getDegree() == null) {
+			throw new DomainException("error.erasmus.vacancy.degree.must.not.be.null");
+		}
+
+		if (getUniversityUnit() == null) {
+			throw new DomainException("error.erasmus.vacancy.university.unit.must.not.be.null");
+		}
+
+		if (getNumberOfVacancies() == null) {
+			throw new DomainException("error.erasmus.vacancy.number.of.vacancies.must.not.be.null");
+		}
 	}
 
-	if (getNumberOfVacancies() == null) {
-	    throw new DomainException("error.erasmus.vacancy.number.of.vacancies.must.not.be.null");
-	}
-    }
-
-    @Service
-    public static ErasmusVacancy createVacancy(final MobilityApplicationPeriod period, Degree degree, UniversityUnit unit,
-	    Integer numberOfVacancies) {
-	return new ErasmusVacancy(period, degree, unit, numberOfVacancies);
-    }
-
-    public List<MobilityIndividualApplicationProcess> getStudentApplicationProcesses() {
-	List<MobilityIndividualApplicationProcess> processList = new ArrayList<MobilityIndividualApplicationProcess>();
-
-	for (MobilityStudentData data : getCandidacies()) {
-	    processList.add(data.getMobilityIndividualApplication().getCandidacyProcess());
+	@Service
+	public static ErasmusVacancy createVacancy(final MobilityApplicationPeriod period, Degree degree, UniversityUnit unit,
+			Integer numberOfVacancies) {
+		return new ErasmusVacancy(period, degree, unit, numberOfVacancies);
 	}
 
-	return processList;
-    }
+	public List<MobilityIndividualApplicationProcess> getStudentApplicationProcesses() {
+		List<MobilityIndividualApplicationProcess> processList = new ArrayList<MobilityIndividualApplicationProcess>();
 
-    public boolean isVacancyAssociatedToAnyCandidacy() {
-	return hasAnyCandidacies();
-    }
+		for (MobilityStudentData data : getCandidacies()) {
+			processList.add(data.getMobilityIndividualApplication().getCandidacyProcess());
+		}
 
-    public void delete() {
-	if (isVacancyAssociatedToAnyCandidacy()) {
-	    throw new DomainException("error.erasmus.vacancy.is.associated.to.candidacies");
+		return processList;
 	}
 
-	removeUniversityUnit();
-	removeDegree();
-	removeCandidacyPeriod();
-	removeRootDomainObject();
+	public boolean isVacancyAssociatedToAnyCandidacy() {
+		return hasAnyCandidacies();
+	}
 
-	deleteDomainObject();
-    }
+	public void delete() {
+		if (isVacancyAssociatedToAnyCandidacy()) {
+			throw new DomainException("error.erasmus.vacancy.is.associated.to.candidacies");
+		}
+
+		removeUniversityUnit();
+		removeDegree();
+		removeCandidacyPeriod();
+		removeRootDomainObject();
+
+		deleteDomainObject();
+	}
 
 }

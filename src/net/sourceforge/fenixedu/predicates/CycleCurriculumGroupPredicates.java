@@ -10,19 +10,20 @@ import net.sourceforge.fenixedu.injectionCode.AccessControlPredicate;
 
 public class CycleCurriculumGroupPredicates {
 
-    public static final AccessControlPredicate<CycleCurriculumGroup> MANAGE_CONCLUSION_PROCESS = new AccessControlPredicate<CycleCurriculumGroup>() {
+	public static final AccessControlPredicate<CycleCurriculumGroup> MANAGE_CONCLUSION_PROCESS =
+			new AccessControlPredicate<CycleCurriculumGroup>() {
 
-	@Override
-	public boolean evaluate(final CycleCurriculumGroup cycleCurriculumGroup) {
-	    final Person person = AccessControl.getPerson();
+				@Override
+				public boolean evaluate(final CycleCurriculumGroup cycleCurriculumGroup) {
+					final Person person = AccessControl.getPerson();
 
-	    if (person.hasRole(RoleType.MANAGER)) {
-		return true;
-	    }
+					if (person.hasRole(RoleType.MANAGER)) {
+						return true;
+					}
 
-	    return AcademicAuthorizationGroup.getProgramsForOperation(person, AcademicOperationType.MANAGE_CONCLUSION).contains(
-		    cycleCurriculumGroup.getRegistration().getDegree());
-	}
-    };
+					return AcademicAuthorizationGroup.getProgramsForOperation(person, AcademicOperationType.MANAGE_CONCLUSION)
+							.contains(cycleCurriculumGroup.getRegistration().getDegree());
+				}
+			};
 
 }

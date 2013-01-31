@@ -15,19 +15,19 @@ import org.joda.time.DateTime;
  */
 public class ExternalAbandonState extends ExternalAbandonState_Base {
 
-    protected ExternalAbandonState(Registration registration, Person person, DateTime dateTime) {
-	super();
-	init(registration, person, dateTime);
-    }
+	protected ExternalAbandonState(Registration registration, Person person, DateTime dateTime) {
+		super();
+		init(registration, person, dateTime);
+	}
 
-    @Override
-    public Set<String> getValidNextStates() {
-	return Collections.singleton(RegistrationStateType.REGISTERED.name());
-    }
+	@Override
+	public Set<String> getValidNextStates() {
+		return Collections.singleton(RegistrationStateType.REGISTERED.name());
+	}
 
-    @Override
-    public RegistrationStateType getStateType() {
-	return RegistrationStateType.EXTERNAL_ABANDON;
-    }
+	@Override
+	public RegistrationStateType getStateType() {
+		return RegistrationStateType.EXTERNAL_ABANDON;
+	}
 
 }

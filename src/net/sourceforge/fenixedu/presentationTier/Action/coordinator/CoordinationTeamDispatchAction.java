@@ -35,156 +35,156 @@ import pt.ist.fenixWebFramework.security.UserView;
  */
 public class CoordinationTeamDispatchAction extends FenixDispatchAction {
 
-    @Override
-    public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-	CoordinatedDegreeInfo.setCoordinatorContext(request);
-	return super.execute(mapping, actionForm, request, response);
-    }
-
-    public ActionForward chooseExecutionYear(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixActionException, FenixServiceException, FenixFilterException {
-
-	IUserView userView = UserView.getUser();
-
-	Integer degreeCurricularPlanID = null;
-	if (request.getParameter("degreeCurricularPlanID") != null) {
-	    degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanID"));
-	    request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
+	@Override
+	public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		CoordinatedDegreeInfo.setCoordinatorContext(request);
+		return super.execute(mapping, actionForm, request, response);
 	}
 
-	Object[] args = { degreeCurricularPlanID };
-	List executionDegrees = (List) ServiceUtils.executeService("ReadExecutionDegreesByDegreeCurricularPlanID", args);
+	public ActionForward chooseExecutionYear(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws FenixActionException, FenixServiceException, FenixFilterException {
 
-	request.setAttribute("executionDegrees", executionDegrees);
+		IUserView userView = UserView.getUser();
 
-	return mapping.findForward("chooseExecutionYear");
-    }
+		Integer degreeCurricularPlanID = null;
+		if (request.getParameter("degreeCurricularPlanID") != null) {
+			degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanID"));
+			request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
+		}
 
-    public ActionForward viewTeam(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-	    throws FenixActionException, FenixServiceException, FenixFilterException {
+		Object[] args = { degreeCurricularPlanID };
+		List executionDegrees = (List) ServiceUtils.executeService("ReadExecutionDegreesByDegreeCurricularPlanID", args);
 
-	IUserView userView = getUserView(request);
+		request.setAttribute("executionDegrees", executionDegrees);
 
-	Integer degreeCurricularPlanID = null;
-	if (request.getParameter("degreeCurricularPlanID") != null) {
-	    degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanID"));
-	    request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
+		return mapping.findForward("chooseExecutionYear");
 	}
 
-	Integer executionDegreeID = new Integer(request.getParameter("infoExecutionDegreeId"));
-	request.setAttribute("infoExecutionDegreeId", executionDegreeID);
+	public ActionForward viewTeam(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+			throws FenixActionException, FenixServiceException, FenixFilterException {
 
-	ActionErrors actionErrors = new ActionErrors();
-	Object[] args = { executionDegreeID };
-	List coordinators = new ArrayList();
-	try {
-	    coordinators = (List) ServiceUtils.executeService("ReadCoordinationTeam", args);
-	} catch (NotAuthorizedFilterException e) {
-	    actionErrors.add("error", new ActionError("noAuthorization"));
-	    saveErrors(request, actionErrors);
-	    return mapping.findForward("noAuthorization");
-	} catch (FenixServiceException e) {
-	    actionErrors.add("error", new ActionError(e.getMessage()));
-	    saveErrors(request, actionErrors);
-	    return mapping.findForward("noAuthorization");
-	}
-	Boolean result = Boolean.FALSE;
-	Object[] args1 = { executionDegreeID, userView };
-	try {
-	    result = (Boolean) ServiceUtils.executeService("ReadCoordinationResponsibility", args1);
-	} catch (FenixServiceException e) {
-	    actionErrors.add("error", new ActionError(e.getMessage()));
-	    saveErrors(request, actionErrors);
-	    return mapping.findForward("noAuthorization");
-	}
+		IUserView userView = getUserView(request);
 
-	request.setAttribute("isResponsible", result);
-	request.setAttribute("coordinators", coordinators);
-	return mapping.findForward("coordinationTeam");
-    }
+		Integer degreeCurricularPlanID = null;
+		if (request.getParameter("degreeCurricularPlanID") != null) {
+			degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanID"));
+			request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
+		}
 
-    public ActionForward prepareAddCoordinator(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixActionException, FenixFilterException {
-	IUserView userView = getUserView(request);
+		Integer executionDegreeID = new Integer(request.getParameter("infoExecutionDegreeId"));
+		request.setAttribute("infoExecutionDegreeId", executionDegreeID);
 
-	Integer degreeCurricularPlanID = new Integer(Integer.parseInt(request.getParameter("degreeCurricularPlanID")));
-	request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
+		ActionErrors actionErrors = new ActionErrors();
+		Object[] args = { executionDegreeID };
+		List coordinators = new ArrayList();
+		try {
+			coordinators = (List) ServiceUtils.executeService("ReadCoordinationTeam", args);
+		} catch (NotAuthorizedFilterException e) {
+			actionErrors.add("error", new ActionError("noAuthorization"));
+			saveErrors(request, actionErrors);
+			return mapping.findForward("noAuthorization");
+		} catch (FenixServiceException e) {
+			actionErrors.add("error", new ActionError(e.getMessage()));
+			saveErrors(request, actionErrors);
+			return mapping.findForward("noAuthorization");
+		}
+		Boolean result = Boolean.FALSE;
+		Object[] args1 = { executionDegreeID, userView };
+		try {
+			result = (Boolean) ServiceUtils.executeService("ReadCoordinationResponsibility", args1);
+		} catch (FenixServiceException e) {
+			actionErrors.add("error", new ActionError(e.getMessage()));
+			saveErrors(request, actionErrors);
+			return mapping.findForward("noAuthorization");
+		}
 
-	String infoExecutionDegreeIdString = request.getParameter("infoExecutionDegreeId");
-	Integer infoExecutionDegreeId = new Integer(infoExecutionDegreeIdString);
-	request.setAttribute("infoExecutionDegreeId", infoExecutionDegreeId);
-	Boolean result = new Boolean(false);
-	Object[] args1 = { infoExecutionDegreeId, userView };
-	try {
-	    result = (Boolean) ServiceUtils.executeService("ReadCoordinationResponsibility", args1);
-
-	} catch (FenixServiceException e) {
-	    throw new FenixActionException(e);
+		request.setAttribute("isResponsible", result);
+		request.setAttribute("coordinators", coordinators);
+		return mapping.findForward("coordinationTeam");
 	}
 
-	request.setAttribute("isResponsible", result);
+	public ActionForward prepareAddCoordinator(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws FenixActionException, FenixFilterException {
+		IUserView userView = getUserView(request);
 
-	return mapping.findForward("addCoordinator");
+		Integer degreeCurricularPlanID = new Integer(Integer.parseInt(request.getParameter("degreeCurricularPlanID")));
+		request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
 
-    }
+		String infoExecutionDegreeIdString = request.getParameter("infoExecutionDegreeId");
+		Integer infoExecutionDegreeId = new Integer(infoExecutionDegreeIdString);
+		request.setAttribute("infoExecutionDegreeId", infoExecutionDegreeId);
+		Boolean result = new Boolean(false);
+		Object[] args1 = { infoExecutionDegreeId, userView };
+		try {
+			result = (Boolean) ServiceUtils.executeService("ReadCoordinationResponsibility", args1);
 
-    public ActionForward AddCoordinator(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixActionException, FenixFilterException {
-	IUserView userView = getUserView(request);
-	DynaActionForm teacherForm = (DynaActionForm) form;
-	String istUsername = new String((String) teacherForm.get("newCoordinatorIstUsername"));
-	String infoExecutionDegreeIdString = request.getParameter("infoExecutionDegreeId");
-	Integer infoExecutionDegreeId = new Integer(infoExecutionDegreeIdString);
-	request.setAttribute("infoExecutionDegreeId", infoExecutionDegreeId);
-	Object[] args = { infoExecutionDegreeId, istUsername };
-	try {
-	    ServiceUtils.executeService("AddCoordinator", args);
-	} catch (NonExistingServiceException e) {
-	    ActionErrors actionErrors = new ActionErrors();
-	    actionErrors.add("unknownTeacher", new ActionError("error.nonExistingTeacher"));
-	    saveErrors(request, actionErrors);
-	    return prepareAddCoordinator(mapping, form, request, response);
-	} catch (InvalidArgumentsServiceException e) {
-	    throw new FenixActionException(e);
-	} catch (ExistingServiceException e) {
-	    ActionErrors actionErrors = new ActionErrors();
-	    actionErrors.add("existingCoordinator", new ActionError("error.existingTeacher"));
-	    saveErrors(request, actionErrors);
-	    return prepareAddCoordinator(mapping, form, request, response);
-	} catch (FenixServiceException e) {
-	    ActionErrors actionErrors = new ActionErrors();
-	    if (e.getMessage().equals("error.noEmployeeForIstUsername")) {
-		actionErrors.add("unknownTeacher", new ActionError(e.getMessage(), istUsername));
-	    } else {
-		actionErrors.add("unknownTeacher", new ActionError(e.getMessage()));
-	    }
-	    saveErrors(request, actionErrors);
-	    return prepareAddCoordinator(mapping, form, request, response);
-	    // throw new FenixActionException(e);
-	}
-	return mapping.findForward("sucess");
-    }
+		} catch (FenixServiceException e) {
+			throw new FenixActionException(e);
+		}
 
-    public ActionForward removeCoordinators(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixActionException, FenixServiceException, FenixFilterException {
-	IUserView userView = getUserView(request);
-	DynaActionForm removeCoordinatorsForm = (DynaActionForm) form;
-	Integer[] coordinatorsIds = (Integer[]) removeCoordinatorsForm.get("coordinatorsIds");
-	List coordinators = Arrays.asList(coordinatorsIds);
+		request.setAttribute("isResponsible", result);
 
-	String infoExecutionDegreeIdString = request.getParameter("infoExecutionDegreeId");
-	Integer infoExecutionDegreeId = new Integer(infoExecutionDegreeIdString);
-	request.setAttribute("infoExecutionDegreeId", infoExecutionDegreeId);
-	Object[] args = { infoExecutionDegreeId, coordinators };
-	try {
-	    ServiceUtils.executeService("RemoveCoordinators", args);
+		return mapping.findForward("addCoordinator");
 
-	} catch (FenixServiceException e) {
-	    throw new FenixActionException(e);
 	}
 
-	return viewTeam(mapping, form, request, response);
-    }
+	public ActionForward AddCoordinator(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws FenixActionException, FenixFilterException {
+		IUserView userView = getUserView(request);
+		DynaActionForm teacherForm = (DynaActionForm) form;
+		String istUsername = new String((String) teacherForm.get("newCoordinatorIstUsername"));
+		String infoExecutionDegreeIdString = request.getParameter("infoExecutionDegreeId");
+		Integer infoExecutionDegreeId = new Integer(infoExecutionDegreeIdString);
+		request.setAttribute("infoExecutionDegreeId", infoExecutionDegreeId);
+		Object[] args = { infoExecutionDegreeId, istUsername };
+		try {
+			ServiceUtils.executeService("AddCoordinator", args);
+		} catch (NonExistingServiceException e) {
+			ActionErrors actionErrors = new ActionErrors();
+			actionErrors.add("unknownTeacher", new ActionError("error.nonExistingTeacher"));
+			saveErrors(request, actionErrors);
+			return prepareAddCoordinator(mapping, form, request, response);
+		} catch (InvalidArgumentsServiceException e) {
+			throw new FenixActionException(e);
+		} catch (ExistingServiceException e) {
+			ActionErrors actionErrors = new ActionErrors();
+			actionErrors.add("existingCoordinator", new ActionError("error.existingTeacher"));
+			saveErrors(request, actionErrors);
+			return prepareAddCoordinator(mapping, form, request, response);
+		} catch (FenixServiceException e) {
+			ActionErrors actionErrors = new ActionErrors();
+			if (e.getMessage().equals("error.noEmployeeForIstUsername")) {
+				actionErrors.add("unknownTeacher", new ActionError(e.getMessage(), istUsername));
+			} else {
+				actionErrors.add("unknownTeacher", new ActionError(e.getMessage()));
+			}
+			saveErrors(request, actionErrors);
+			return prepareAddCoordinator(mapping, form, request, response);
+			// throw new FenixActionException(e);
+		}
+		return mapping.findForward("sucess");
+	}
+
+	public ActionForward removeCoordinators(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws FenixActionException, FenixServiceException, FenixFilterException {
+		IUserView userView = getUserView(request);
+		DynaActionForm removeCoordinatorsForm = (DynaActionForm) form;
+		Integer[] coordinatorsIds = (Integer[]) removeCoordinatorsForm.get("coordinatorsIds");
+		List coordinators = Arrays.asList(coordinatorsIds);
+
+		String infoExecutionDegreeIdString = request.getParameter("infoExecutionDegreeId");
+		Integer infoExecutionDegreeId = new Integer(infoExecutionDegreeIdString);
+		request.setAttribute("infoExecutionDegreeId", infoExecutionDegreeId);
+		Object[] args = { infoExecutionDegreeId, coordinators };
+		try {
+			ServiceUtils.executeService("RemoveCoordinators", args);
+
+		} catch (FenixServiceException e) {
+			throw new FenixActionException(e);
+		}
+
+		return viewTeam(mapping, form, request, response);
+	}
 
 }

@@ -17,40 +17,42 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class ExecutionCourseForExecutionDegreeAndExecutionPeriodProvider implements DataProvider {
 
-    public Object provide(Object source, Object currentValue) {
-	final List<ExecutionCourse> executionCourses = new ArrayList<ExecutionCourse>();
+	@Override
+	public Object provide(Object source, Object currentValue) {
+		final List<ExecutionCourse> executionCourses = new ArrayList<ExecutionCourse>();
 
-	final HasExecutionSemester hasExecutionSemester = (HasExecutionSemester) source;
-	final ExecutionSemester executionPeriod = hasExecutionSemester.getExecutionPeriod();
+		final HasExecutionSemester hasExecutionSemester = (HasExecutionSemester) source;
+		final ExecutionSemester executionPeriod = hasExecutionSemester.getExecutionPeriod();
 
-	final HasExecutionDegree hasExecutionDegree = (HasExecutionDegree) source;
-	final ExecutionDegree executionDegree = hasExecutionDegree.getExecutionDegree();
-	final DegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
+		final HasExecutionDegree hasExecutionDegree = (HasExecutionDegree) source;
+		final ExecutionDegree executionDegree = hasExecutionDegree.getExecutionDegree();
+		final DegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
 
-	if (executionPeriod != null && executionDegree != null) {
-	    for (final ExecutionCourse executionCourse : executionPeriod.getAssociatedExecutionCoursesSet()) {
-		if (matches(executionCourse, degreeCurricularPlan)) {
-		    executionCourses.add(executionCourse);
+		if (executionPeriod != null && executionDegree != null) {
+			for (final ExecutionCourse executionCourse : executionPeriod.getAssociatedExecutionCoursesSet()) {
+				if (matches(executionCourse, degreeCurricularPlan)) {
+					executionCourses.add(executionCourse);
+				}
+			}
 		}
-	    }
+
+		Collections.sort(executionCourses, ExecutionCourse.EXECUTION_COURSE_NAME_COMPARATOR);
+
+		return executionCourses;
 	}
 
-	Collections.sort(executionCourses, ExecutionCourse.EXECUTION_COURSE_NAME_COMPARATOR);
-
-	return executionCourses;
-    }
-
-    private boolean matches(final ExecutionCourse executionCourse, final DegreeCurricularPlan degreeCurricularPlan) {
-	for (final CurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCoursesSet()) {
-	    if (curricularCourse.getDegreeCurricularPlan() == degreeCurricularPlan) {
-		return true;
-	    }
+	private boolean matches(final ExecutionCourse executionCourse, final DegreeCurricularPlan degreeCurricularPlan) {
+		for (final CurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCoursesSet()) {
+			if (curricularCourse.getDegreeCurricularPlan() == degreeCurricularPlan) {
+				return true;
+			}
+		}
+		return false;
 	}
-	return false;
-    }
 
-    public Converter getConverter() {
-	return new DomainObjectKeyConverter();
-    }
+	@Override
+	public Converter getConverter() {
+		return new DomainObjectKeyConverter();
+	}
 
 }

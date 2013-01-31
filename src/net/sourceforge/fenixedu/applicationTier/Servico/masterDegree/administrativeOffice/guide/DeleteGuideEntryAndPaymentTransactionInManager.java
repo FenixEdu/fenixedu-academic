@@ -8,16 +8,16 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class DeleteGuideEntryAndPaymentTransactionInManager extends FenixService {
 
-    @Checked("RolePredicates.MANAGER_PREDICATE")
-    @Service
-    public static void run(Integer guideEntryID) throws InvalidChangeServiceException {
-	GuideEntry guideEntry = rootDomainObject.readGuideEntryByOID(guideEntryID);
+	@Checked("RolePredicates.MANAGER_PREDICATE")
+	@Service
+	public static void run(Integer guideEntryID) throws InvalidChangeServiceException {
+		GuideEntry guideEntry = rootDomainObject.readGuideEntryByOID(guideEntryID);
 
-	if (!guideEntry.canBeDeleted()) {
-	    throw new InvalidChangeServiceException();
+		if (!guideEntry.canBeDeleted()) {
+			throw new InvalidChangeServiceException();
+		}
+
+		guideEntry.delete();
 	}
-
-	guideEntry.delete();
-    }
 
 }

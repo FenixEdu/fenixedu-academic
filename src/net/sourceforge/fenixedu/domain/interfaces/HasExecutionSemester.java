@@ -4,6 +4,6 @@ import net.sourceforge.fenixedu.domain.ExecutionSemester;
 
 public interface HasExecutionSemester {
 
-    public ExecutionSemester getExecutionPeriod();
+	public ExecutionSemester getExecutionPeriod();
 
 }

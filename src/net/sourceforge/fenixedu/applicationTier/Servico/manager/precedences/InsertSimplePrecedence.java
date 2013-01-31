@@ -17,25 +17,25 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class InsertSimplePrecedence extends FenixService {
 
-    @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
-    @Service
-    public static void run(String className, Integer curricularCourseToAddPrecedenceID, Integer precedentCurricularCourseID,
-	    Integer number) throws FenixServiceException {
-	CurricularCourse curricularCourseToAddPrecedence = (CurricularCourse) rootDomainObject
-		.readDegreeModuleByOID(curricularCourseToAddPrecedenceID);
-	if (curricularCourseToAddPrecedence == null) {
-	    throw new FenixServiceException("curricularCourseToAddPrecedence.NULL");
-	}
+	@Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
+	@Service
+	public static void run(String className, Integer curricularCourseToAddPrecedenceID, Integer precedentCurricularCourseID,
+			Integer number) throws FenixServiceException {
+		CurricularCourse curricularCourseToAddPrecedence =
+				(CurricularCourse) rootDomainObject.readDegreeModuleByOID(curricularCourseToAddPrecedenceID);
+		if (curricularCourseToAddPrecedence == null) {
+			throw new FenixServiceException("curricularCourseToAddPrecedence.NULL");
+		}
 
-	CurricularCourse precedentCurricularCourse = null;
-	if (precedentCurricularCourseID != null) {
-	    precedentCurricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(precedentCurricularCourseID);
-	    if (precedentCurricularCourse == null) {
-		throw new FenixServiceException("precedentCurricularCourse.NULL");
-	    }
-	}
+		CurricularCourse precedentCurricularCourse = null;
+		if (precedentCurricularCourseID != null) {
+			precedentCurricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(precedentCurricularCourseID);
+			if (precedentCurricularCourse == null) {
+				throw new FenixServiceException("precedentCurricularCourse.NULL");
+			}
+		}
 
-	new Precedence(curricularCourseToAddPrecedence, className, precedentCurricularCourse, number);
-    }
+		new Precedence(curricularCourseToAddPrecedence, className, precedentCurricularCourse, number);
+	}
 
 }

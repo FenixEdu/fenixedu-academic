@@ -26,20 +26,20 @@ import net.sourceforge.fenixedu.presentationTier.Action.Seminaries.Exceptions.BD
  */
 public class GetCandidaciesByStudentID extends FenixService {
 
-    public List run(final Person person) throws BDException {
-	final List candidaciesInfo = new LinkedList();
+	public List run(final Person person) throws BDException {
+		final List candidaciesInfo = new LinkedList();
 
-	final Student student = person.getStudent();
-	for (final Registration registration : student.getRegistrationsSet()) {
-	    for (final SeminaryCandidacy seminaryCandidacy : registration.getAssociatedCandidanciesSet()) {
-		final InfoCandidacy infoCandidacy = InfoCandidacy.newInfoFromDomain(seminaryCandidacy);
-		final Seminary seminary = seminaryCandidacy.getSeminary();
-		infoCandidacy.setSeminaryName(seminary.getName());
-		candidaciesInfo.add(infoCandidacy);
-	    }
+		final Student student = person.getStudent();
+		for (final Registration registration : student.getRegistrationsSet()) {
+			for (final SeminaryCandidacy seminaryCandidacy : registration.getAssociatedCandidanciesSet()) {
+				final InfoCandidacy infoCandidacy = InfoCandidacy.newInfoFromDomain(seminaryCandidacy);
+				final Seminary seminary = seminaryCandidacy.getSeminary();
+				infoCandidacy.setSeminaryName(seminary.getName());
+				candidaciesInfo.add(infoCandidacy);
+			}
+		}
+
+		return candidaciesInfo;
 	}
-
-	return candidaciesInfo;
-    }
 
 }

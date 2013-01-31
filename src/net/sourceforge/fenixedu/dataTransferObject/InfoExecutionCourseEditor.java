@@ -6,193 +6,196 @@ import net.sourceforge.fenixedu.domain.EntryPhase;
 
 public class InfoExecutionCourseEditor extends InfoObject {
 
-    protected String _nome;
+	protected String _nome;
 
-    protected String _sigla;
+	protected String _sigla;
 
-    protected String _programa;
+	protected String _programa;
 
-    private Double _theoreticalHours;
+	private Double _theoreticalHours;
 
-    private Double _praticalHours;
+	private Double _praticalHours;
 
-    private Double _theoPratHours;
+	private Double _theoPratHours;
 
-    private Double _labHours;
+	private Double _labHours;
 
-    private Double _seminaryHours;
+	private Double _seminaryHours;
 
-    private Double _problemsHours;
+	private Double _problemsHours;
 
-    private Double _fieldWorkHours;
+	private Double _fieldWorkHours;
 
-    private Double _trainingPeriodHours;
+	private Double _trainingPeriodHours;
 
-    private Double _tutorialOrientationHours;
+	private Double _tutorialOrientationHours;
 
-    private Boolean availableGradeSubmission;
+	private Boolean availableGradeSubmission;
 
-    protected String comment;
+	protected String comment;
 
-    protected InfoExecutionPeriod infoExecutionPeriod;
+	protected InfoExecutionPeriod infoExecutionPeriod;
 
-    protected List associatedInfoCurricularCourses;
+	protected List associatedInfoCurricularCourses;
 
-    private EntryPhase entryPhase;
+	private EntryPhase entryPhase;
 
-    public InfoExecutionCourseEditor() {
-    }
-
-    public boolean equals(Object obj) {
-	boolean resultado = false;
-	if (obj instanceof InfoExecutionCourseEditor) {
-	    InfoExecutionCourseEditor infoExecutionCourse = (InfoExecutionCourseEditor) obj;
-	    resultado = (getIdInternal() != null && infoExecutionCourse.getIdInternal() != null && getIdInternal().equals(
-		    infoExecutionCourse.getIdInternal()))
-		    || (getSigla().equals(infoExecutionCourse.getSigla()) && getInfoExecutionPeriod().equals(
-			    infoExecutionCourse.getInfoExecutionPeriod()));
+	public InfoExecutionCourseEditor() {
 	}
-	return resultado;
-    }
 
-    public int hashCode() {
-	return 0;
-    }
+	@Override
+	public boolean equals(Object obj) {
+		boolean resultado = false;
+		if (obj instanceof InfoExecutionCourseEditor) {
+			InfoExecutionCourseEditor infoExecutionCourse = (InfoExecutionCourseEditor) obj;
+			resultado =
+					(getIdInternal() != null && infoExecutionCourse.getIdInternal() != null && getIdInternal().equals(
+							infoExecutionCourse.getIdInternal()))
+							|| (getSigla().equals(infoExecutionCourse.getSigla()) && getInfoExecutionPeriod().equals(
+									infoExecutionCourse.getInfoExecutionPeriod()));
+		}
+		return resultado;
+	}
 
-    public String getNome() {
-	return _nome;
-    }
+	@Override
+	public int hashCode() {
+		return 0;
+	}
 
-    public void setNome(String nome) {
-	_nome = nome;
-    }
+	public String getNome() {
+		return _nome;
+	}
 
-    public String getSigla() {
-	return _sigla;
-    }
+	public void setNome(String nome) {
+		_nome = nome;
+	}
 
-    public void setSigla(String sigla) {
-	_sigla = sigla;
-    }
+	public String getSigla() {
+		return _sigla;
+	}
 
-    public String getPrograma() {
-	return _programa;
-    }
+	public void setSigla(String sigla) {
+		_sigla = sigla;
+	}
 
-    public void setPrograma(String programa) {
-	_programa = programa;
-    }
+	public String getPrograma() {
+		return _programa;
+	}
 
-    public Double getTheoreticalHours() {
-	return _theoreticalHours;
-    }
+	public void setPrograma(String programa) {
+		_programa = programa;
+	}
 
-    public void setTheoreticalHours(Double theoreticalHours) {
-	_theoreticalHours = theoreticalHours;
-    }
+	public Double getTheoreticalHours() {
+		return _theoreticalHours;
+	}
 
-    public Double getPraticalHours() {
-	return _praticalHours;
-    }
+	public void setTheoreticalHours(Double theoreticalHours) {
+		_theoreticalHours = theoreticalHours;
+	}
 
-    public void setPraticalHours(Double praticalHours) {
-	_praticalHours = praticalHours;
-    }
+	public Double getPraticalHours() {
+		return _praticalHours;
+	}
 
-    public Double getTheoPratHours() {
-	return _theoPratHours;
-    }
+	public void setPraticalHours(Double praticalHours) {
+		_praticalHours = praticalHours;
+	}
 
-    public void setTheoPratHours(Double theoPratHours) {
-	_theoPratHours = theoPratHours;
-    }
+	public Double getTheoPratHours() {
+		return _theoPratHours;
+	}
 
-    public Double getLabHours() {
-	return _labHours;
-    }
+	public void setTheoPratHours(Double theoPratHours) {
+		_theoPratHours = theoPratHours;
+	}
 
-    public void setLabHours(Double labHours) {
-	_labHours = labHours;
-    }
+	public Double getLabHours() {
+		return _labHours;
+	}
 
-    public String getComment() {
-	return comment;
-    }
+	public void setLabHours(Double labHours) {
+		_labHours = labHours;
+	}
 
-    public void setComment(String string) {
-	comment = string;
-    }
+	public String getComment() {
+		return comment;
+	}
 
-    public Double getFieldWorkHours() {
-	return _fieldWorkHours;
-    }
+	public void setComment(String string) {
+		comment = string;
+	}
 
-    public void setFieldWorkHours(Double workHours) {
-	_fieldWorkHours = workHours;
-    }
+	public Double getFieldWorkHours() {
+		return _fieldWorkHours;
+	}
 
-    public Double getProblemsHours() {
-	return _problemsHours;
-    }
+	public void setFieldWorkHours(Double workHours) {
+		_fieldWorkHours = workHours;
+	}
 
-    public void setProblemsHours(Double hours) {
-	_problemsHours = hours;
-    }
+	public Double getProblemsHours() {
+		return _problemsHours;
+	}
 
-    public Double getSeminaryHours() {
-	return _seminaryHours;
-    }
+	public void setProblemsHours(Double hours) {
+		_problemsHours = hours;
+	}
 
-    public void setSeminaryHours(Double hours) {
-	_seminaryHours = hours;
-    }
+	public Double getSeminaryHours() {
+		return _seminaryHours;
+	}
 
-    public Double getTrainingPeriodHours() {
-	return _trainingPeriodHours;
-    }
+	public void setSeminaryHours(Double hours) {
+		_seminaryHours = hours;
+	}
 
-    public void setTrainingPeriodHours(Double periodHours) {
-	_trainingPeriodHours = periodHours;
-    }
+	public Double getTrainingPeriodHours() {
+		return _trainingPeriodHours;
+	}
 
-    public Double getTutorialOrientationHours() {
-	return _tutorialOrientationHours;
-    }
+	public void setTrainingPeriodHours(Double periodHours) {
+		_trainingPeriodHours = periodHours;
+	}
 
-    public void setTutorialOrientationHours(Double orientationHours) {
-	_tutorialOrientationHours = orientationHours;
-    }
+	public Double getTutorialOrientationHours() {
+		return _tutorialOrientationHours;
+	}
 
-    public InfoExecutionPeriod getInfoExecutionPeriod() {
-	return infoExecutionPeriod;
-    }
+	public void setTutorialOrientationHours(Double orientationHours) {
+		_tutorialOrientationHours = orientationHours;
+	}
 
-    public void setInfoExecutionPeriod(InfoExecutionPeriod infoExecutionPeriod) {
-	this.infoExecutionPeriod = infoExecutionPeriod;
-    }
+	public InfoExecutionPeriod getInfoExecutionPeriod() {
+		return infoExecutionPeriod;
+	}
 
-    public List getAssociatedInfoCurricularCourses() {
-	return associatedInfoCurricularCourses;
-    }
+	public void setInfoExecutionPeriod(InfoExecutionPeriod infoExecutionPeriod) {
+		this.infoExecutionPeriod = infoExecutionPeriod;
+	}
 
-    public void setAssociatedInfoCurricularCourses(List list) {
-	associatedInfoCurricularCourses = list;
-    }
+	public List getAssociatedInfoCurricularCourses() {
+		return associatedInfoCurricularCourses;
+	}
 
-    public Boolean getAvailableGradeSubmission() {
-	return availableGradeSubmission;
-    }
+	public void setAssociatedInfoCurricularCourses(List list) {
+		associatedInfoCurricularCourses = list;
+	}
 
-    public void setAvailableGradeSubmission(Boolean availableGradeSubmission) {
-	this.availableGradeSubmission = availableGradeSubmission;
-    }
+	public Boolean getAvailableGradeSubmission() {
+		return availableGradeSubmission;
+	}
 
-    public EntryPhase getEntryPhase() {
-	return entryPhase;
-    }
+	public void setAvailableGradeSubmission(Boolean availableGradeSubmission) {
+		this.availableGradeSubmission = availableGradeSubmission;
+	}
 
-    public void setEntryPhase(EntryPhase entryPhase) {
-	this.entryPhase = entryPhase;
-    }
+	public EntryPhase getEntryPhase() {
+		return entryPhase;
+	}
+
+	public void setEntryPhase(EntryPhase entryPhase) {
+		this.entryPhase = entryPhase;
+	}
 
 }

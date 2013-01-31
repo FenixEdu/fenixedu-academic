@@ -18,58 +18,58 @@ import net.sourceforge.fenixedu.domain.CareerType;
  */
 public class InfoSiteCareers extends DataTranferObject implements ISiteComponent {
 
-    private List infoCareers;
+	private List infoCareers;
 
-    private CareerType careerType;
+	private CareerType careerType;
 
-    private InfoTeacher infoTeacher;
+	private InfoTeacher infoTeacher;
 
-    public InfoSiteCareers() {
-    }
+	public InfoSiteCareers() {
+	}
 
-    /**
-     * @return Returns the careerType.
-     */
-    public CareerType getCareerType() {
-	return careerType;
-    }
+	/**
+	 * @return Returns the careerType.
+	 */
+	public CareerType getCareerType() {
+		return careerType;
+	}
 
-    /**
-     * @param careerType
-     *            The careerType to set.
-     */
-    public void setCareerType(CareerType careerType) {
-	this.careerType = careerType;
-    }
+	/**
+	 * @param careerType
+	 *            The careerType to set.
+	 */
+	public void setCareerType(CareerType careerType) {
+		this.careerType = careerType;
+	}
 
-    /**
-     * @return Returns the infoCareers.
-     */
-    public List getInfoCareers() {
-	return infoCareers;
-    }
+	/**
+	 * @return Returns the infoCareers.
+	 */
+	public List getInfoCareers() {
+		return infoCareers;
+	}
 
-    /**
-     * @param infoCareers
-     *            The infoCareers to set.
-     */
-    public void setInfoCareers(List infoCareers) {
-	this.infoCareers = infoCareers;
-    }
+	/**
+	 * @param infoCareers
+	 *            The infoCareers to set.
+	 */
+	public void setInfoCareers(List infoCareers) {
+		this.infoCareers = infoCareers;
+	}
 
-    /**
-     * @return Returns the infoTeacher.
-     */
-    public InfoTeacher getInfoTeacher() {
-	return infoTeacher;
-    }
+	/**
+	 * @return Returns the infoTeacher.
+	 */
+	public InfoTeacher getInfoTeacher() {
+		return infoTeacher;
+	}
 
-    /**
-     * @param infoTeacher
-     *            The infoTeacher to set.
-     */
-    public void setInfoTeacher(InfoTeacher infoTeacher) {
-	this.infoTeacher = infoTeacher;
-    }
+	/**
+	 * @param infoTeacher
+	 *            The infoTeacher to set.
+	 */
+	public void setInfoTeacher(InfoTeacher infoTeacher) {
+		this.infoTeacher = infoTeacher;
+	}
 
 }

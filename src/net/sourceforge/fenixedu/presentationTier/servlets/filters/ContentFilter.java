@@ -24,89 +24,93 @@ import net.sourceforge.fenixedu.presentationTier.servlets.filters.functionalitie
 
 public class ContentFilter implements Filter {
 
-    private static final String SECTION_PATH = "/publico/viewGenericContent.do?method=viewSection";
+	private static final String SECTION_PATH = "/publico/viewGenericContent.do?method=viewSection";
 
-    private static final String ITEM_PATH = "/publico/viewGenericContent.do?method=viewItem";
+	private static final String ITEM_PATH = "/publico/viewGenericContent.do?method=viewItem";
 
-    public static String FUNCTIONALITY_PARAMETER = "_f";
+	public static String FUNCTIONALITY_PARAMETER = "_f";
 
-    public void init(FilterConfig config) throws ServletException {
-    }
-
-    public void destroy() {
-	// nothing
-    }
-
-    public void doFilter(ServletRequest initialRequest, ServletResponse initialResponse, FilterChain chain) throws IOException,
-	    ServletException {
-	HttpServletRequest request = (HttpServletRequest) initialRequest;
-	HttpServletResponse response = (HttpServletResponse) initialResponse;
-
-	final FilterFunctionalityContext functionalityContext = (FilterFunctionalityContext) getContextAttibute((HttpServletRequest) initialRequest);
-
-	if (functionalityContext == null || functionalityContext.getSelectedContents().isEmpty()
-		|| functionalityContext.hasBeenForwarded()) {
-	    chain.doFilter(request, response);
-	} else {
-	    contentsForward((HttpServletRequest) initialRequest, (HttpServletResponse) initialResponse, functionalityContext);
+	@Override
+	public void init(FilterConfig config) throws ServletException {
 	}
 
-    }
-
-    private void dispatchTo(final HttpServletRequest httpServletRequest, final HttpServletResponse httpServletResponse,
-	    final FilterFunctionalityContext functionalityContext, String path) throws ServletException, IOException {
-	httpServletRequest.setAttribute(ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME, functionalityContext
-		.getCurrentContextPath());
-	final RequestDispatcher requestDispatcher = httpServletRequest.getRequestDispatcher(path);
-	functionalityContext.setHasBeenForwarded();
-	requestDispatcher.forward(httpServletRequest, httpServletResponse);
-    }
-
-    private void contentsForward(final HttpServletRequest httpServletRequest, final HttpServletResponse httpServletResponse,
-	    final FilterFunctionalityContext functionalityContext) throws ServletException, IOException {
-
-	Content content = functionalityContext.getSelectedContent();
-
-	if (LogLevel.INFO) {
-	    if (content == null) {
-		System.out.println(httpServletRequest.getRequestURI() + " ---> null");
-	    } else {
-		System.out.println(httpServletRequest.getRequestURI() + " ---> " + content.getClass().getName());
-	    }
+	@Override
+	public void destroy() {
+		// nothing
 	}
 
-	if (content instanceof Section) {
-	    dispatchTo(httpServletRequest, httpServletResponse, functionalityContext, SECTION_PATH);
+	@Override
+	public void doFilter(ServletRequest initialRequest, ServletResponse initialResponse, FilterChain chain) throws IOException,
+			ServletException {
+		HttpServletRequest request = (HttpServletRequest) initialRequest;
+		HttpServletResponse response = (HttpServletResponse) initialResponse;
 
-	} else if (content instanceof Item) {
-	    dispatchTo(httpServletRequest, httpServletResponse, functionalityContext, ITEM_PATH);
+		final FilterFunctionalityContext functionalityContext =
+				(FilterFunctionalityContext) getContextAttibute((HttpServletRequest) initialRequest);
 
-	} else if (content instanceof Attachment) {
-	    Attachment attachment = (Attachment) content;
-	    httpServletResponse.sendRedirect(attachment.getFile().getDownloadUrl());
-	} else if (content instanceof FunctionalityCall) {
-	    Functionality functionality = ((FunctionalityCall) content).getFunctionality();
-	    dispatchTo(httpServletRequest, httpServletResponse, functionalityContext, functionality.getPath());
+		if (functionalityContext == null || functionalityContext.getSelectedContents().isEmpty()
+				|| functionalityContext.hasBeenForwarded()) {
+			chain.doFilter(request, response);
+		} else {
+			contentsForward((HttpServletRequest) initialRequest, (HttpServletResponse) initialResponse, functionalityContext);
+		}
 
-	} else if (content instanceof Functionality) {
-	    Functionality functionality = ((Functionality) content);
-	    dispatchTo(httpServletRequest, httpServletResponse, functionalityContext, functionality.getPath());
 	}
-    }
 
-    protected void dispatch(final HttpServletRequest request, final HttpServletResponse response, final String path)
-	    throws IOException, ServletException {
-	final RequestDispatcher dispatcher = request.getRequestDispatcher(path);
-
-	if (dispatcher == null) {
-	    response.sendRedirect(request.getContextPath() + path);
-	} else {
-	    dispatcher.forward(request, response);
+	private void dispatchTo(final HttpServletRequest httpServletRequest, final HttpServletResponse httpServletResponse,
+			final FilterFunctionalityContext functionalityContext, String path) throws ServletException, IOException {
+		httpServletRequest.setAttribute(ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME,
+				functionalityContext.getCurrentContextPath());
+		final RequestDispatcher requestDispatcher = httpServletRequest.getRequestDispatcher(path);
+		functionalityContext.setHasBeenForwarded();
+		requestDispatcher.forward(httpServletRequest, httpServletResponse);
 	}
-    }
 
-    private FunctionalityContext getContextAttibute(final HttpServletRequest httpServletRequest) {
-	return (FunctionalityContext) httpServletRequest.getAttribute(FunctionalityContext.CONTEXT_KEY);
-    }
+	private void contentsForward(final HttpServletRequest httpServletRequest, final HttpServletResponse httpServletResponse,
+			final FilterFunctionalityContext functionalityContext) throws ServletException, IOException {
+
+		Content content = functionalityContext.getSelectedContent();
+
+		if (LogLevel.INFO) {
+			if (content == null) {
+				System.out.println(httpServletRequest.getRequestURI() + " ---> null");
+			} else {
+				System.out.println(httpServletRequest.getRequestURI() + " ---> " + content.getClass().getName());
+			}
+		}
+
+		if (content instanceof Section) {
+			dispatchTo(httpServletRequest, httpServletResponse, functionalityContext, SECTION_PATH);
+
+		} else if (content instanceof Item) {
+			dispatchTo(httpServletRequest, httpServletResponse, functionalityContext, ITEM_PATH);
+
+		} else if (content instanceof Attachment) {
+			Attachment attachment = (Attachment) content;
+			httpServletResponse.sendRedirect(attachment.getFile().getDownloadUrl());
+		} else if (content instanceof FunctionalityCall) {
+			Functionality functionality = ((FunctionalityCall) content).getFunctionality();
+			dispatchTo(httpServletRequest, httpServletResponse, functionalityContext, functionality.getPath());
+
+		} else if (content instanceof Functionality) {
+			Functionality functionality = ((Functionality) content);
+			dispatchTo(httpServletRequest, httpServletResponse, functionalityContext, functionality.getPath());
+		}
+	}
+
+	protected void dispatch(final HttpServletRequest request, final HttpServletResponse response, final String path)
+			throws IOException, ServletException {
+		final RequestDispatcher dispatcher = request.getRequestDispatcher(path);
+
+		if (dispatcher == null) {
+			response.sendRedirect(request.getContextPath() + path);
+		} else {
+			dispatcher.forward(request, response);
+		}
+	}
+
+	private FunctionalityContext getContextAttibute(final HttpServletRequest httpServletRequest) {
+		return (FunctionalityContext) httpServletRequest.getAttribute(FunctionalityContext.CONTEXT_KEY);
+	}
 
 }

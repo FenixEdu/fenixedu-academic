@@ -6,12 +6,12 @@ package net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions
  */
 public class WrongTypeOfArgumentException extends GroupDynamicExpressionException {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    private static final String MESSAGE = "accessControl.group.expression.wrong.argumentType";
+	private static final String MESSAGE = "accessControl.group.expression.wrong.argumentType";
 
-    public WrongTypeOfArgumentException(int position, Class expected, Class given) {
-	super(MESSAGE, String.valueOf(position), expected.getName(), given.getName());
-    }
+	public WrongTypeOfArgumentException(int position, Class expected, Class given) {
+		super(MESSAGE, String.valueOf(position), expected.getName(), given.getName());
+	}
 
 }

@@ -13,18 +13,18 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class SearchRooms extends FenixService {
 
-    @Service
-    public static List run(String name, String building, Integer floor, RoomClassification type, Integer normal, Integer exam)
-	    throws FenixServiceException {
+	@Service
+	public static List run(String name, String building, Integer floor, RoomClassification type, Integer normal, Integer exam)
+			throws FenixServiceException {
 
-	final List<AllocatableSpace> rooms = AllocatableSpace.findActiveAllocatableSpacesBySpecifiedArguments(name, building,
-		floor, type, normal, exam);
-	final List<InfoRoom> infoRooms = new ArrayList();
-	for (final AllocatableSpace room : rooms) {
-	    if (room.containsIdentification()) {
-		infoRooms.add(InfoRoomWithInfoInquiriesRoom.newInfoFromDomain(room));
-	    }
+		final List<AllocatableSpace> rooms =
+				AllocatableSpace.findActiveAllocatableSpacesBySpecifiedArguments(name, building, floor, type, normal, exam);
+		final List<InfoRoom> infoRooms = new ArrayList();
+		for (final AllocatableSpace room : rooms) {
+			if (room.containsIdentification()) {
+				infoRooms.add(InfoRoomWithInfoInquiriesRoom.newInfoFromDomain(room));
+			}
+		}
+		return infoRooms;
 	}
-	return infoRooms;
-    }
 }

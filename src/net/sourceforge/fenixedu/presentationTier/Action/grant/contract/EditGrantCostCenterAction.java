@@ -24,19 +24,29 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
  * @author Barbosa
  * @author Pica
  */
-@Mapping(module = "facultyAdmOffice", path = "/editGrantCostCenter", input = "/editGrantCostCenter.do?page=0&method=prepareEditGrantCostCenterForm", attribute = "editGrantCostCenterForm", formBean = "editGrantCostCenterForm", scope = "request", parameter = "method")
+@Mapping(
+		module = "facultyAdmOffice",
+		path = "/editGrantCostCenter",
+		input = "/editGrantCostCenter.do?page=0&method=prepareEditGrantCostCenterForm",
+		attribute = "editGrantCostCenterForm",
+		formBean = "editGrantCostCenterForm",
+		scope = "request",
+		parameter = "method")
 @Forwards(value = {
-	@Forward(name = "edit-grant-costcenter", path = "/facultyAdmOffice/grant/contract/editGrantCostCenter.jsp", tileProperties = @Tile(title = "private.teachingstaffandresearcher.miscellaneousmanagement.costcenter")),
-	@Forward(name = "manage-grant-costcenter", path = "/manageGrantCostCenter.do?method=prepareManageGrantCostCenter") })
+		@Forward(
+				name = "edit-grant-costcenter",
+				path = "/facultyAdmOffice/grant/contract/editGrantCostCenter.jsp",
+				tileProperties = @Tile(title = "private.teachingstaffandresearcher.miscellaneousmanagement.costcenter")),
+		@Forward(name = "manage-grant-costcenter", path = "/manageGrantCostCenter.do?method=prepareManageGrantCostCenter") })
 public class EditGrantCostCenterAction extends FenixDispatchAction {
 
-    public ActionForward prepareEditGrantCostCenterForm(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-	Integer idGrantCostCenter = getIntegerFromRequest(request, "idGrantCostCenter");
-	if (idGrantCostCenter != null) {
-	    GrantCostCenter grantCostCenter = (GrantCostCenter) rootDomainObject.readGrantPaymentEntityByOID(idGrantCostCenter);
-	    request.setAttribute("grantCostCenter", grantCostCenter);
+	public ActionForward prepareEditGrantCostCenterForm(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		Integer idGrantCostCenter = getIntegerFromRequest(request, "idGrantCostCenter");
+		if (idGrantCostCenter != null) {
+			GrantCostCenter grantCostCenter = (GrantCostCenter) rootDomainObject.readGrantPaymentEntityByOID(idGrantCostCenter);
+			request.setAttribute("grantCostCenter", grantCostCenter);
+		}
+		return mapping.findForward("edit-grant-costcenter");
 	}
-	return mapping.findForward("edit-grant-costcenter");
-    }
 }

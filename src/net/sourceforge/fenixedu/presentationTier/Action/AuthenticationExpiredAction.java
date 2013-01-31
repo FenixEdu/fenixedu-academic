@@ -32,142 +32,144 @@ import pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter;
 
 public class AuthenticationExpiredAction extends FenixDispatchAction {
 
-    protected static final boolean useCASAuthentication = PropertiesManager.getBooleanProperty("cas.enabled");
+	protected static final boolean useCASAuthentication = PropertiesManager.getBooleanProperty("cas.enabled");
 
-    public ActionForward start(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-	    throws Exception {
-	DynaActionForm actionForm = (DynaActionForm) form;
-	actionForm.set("username", request.getParameter("username"));
-	actionForm.set("page", 0);
-	actionForm.set("fromCAS", request.getParameter("fromCAS"));
-	saveErrors(request, null);
-	return mapping.findForward("changePass");
-    }
+	public ActionForward start(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+		DynaActionForm actionForm = (DynaActionForm) form;
+		actionForm.set("username", request.getParameter("username"));
+		actionForm.set("page", 0);
+		actionForm.set("fromCAS", request.getParameter("fromCAS"));
+		saveErrors(request, null);
+		return mapping.findForward("changePass");
+	}
 
-    public ActionForward changePass(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-	try {
+	public ActionForward changePass(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		try {
 
-	    final IUserView userView = changePasswordAndAuthenticateUser(form, request);
+			final IUserView userView = changePasswordAndAuthenticateUser(form, request);
 
-	    if (userView == null || userView.getRoleTypes().isEmpty()) {
-		return authenticationFailedForward(mapping, request, "errors.noAuthorization");
-	    }
+			if (userView == null || userView.getRoleTypes().isEmpty()) {
+				return authenticationFailedForward(mapping, request, "errors.noAuthorization");
+			}
 
-	    // TODO: remove when fenix CAS support is activated
-	    // This is here until we move authentication expiration page to
-	    // CAS
-	    String fromCAS = ((DynaActionForm) form).getString("fromCAS");
+			// TODO: remove when fenix CAS support is activated
+			// This is here until we move authentication expiration page to
+			// CAS
+			String fromCAS = ((DynaActionForm) form).getString("fromCAS");
 
-	    if (useCASAuthentication || (fromCAS != null && fromCAS.equalsIgnoreCase("true"))) {
-		String casLoginUrl = PropertiesManager.getProperty("cas.loginUrl");
-		ActionForward actionForward = new ActionForward();
+			if (useCASAuthentication || (fromCAS != null && fromCAS.equalsIgnoreCase("true"))) {
+				String casLoginUrl = PropertiesManager.getProperty("cas.loginUrl");
+				ActionForward actionForward = new ActionForward();
 
-		actionForward.setRedirect(true);
-		actionForward.setPath(casLoginUrl);
+				actionForward.setRedirect(true);
+				actionForward.setPath(casLoginUrl);
 
-		return actionForward;
+				return actionForward;
 
-	    } else {
+			} else {
 
-		final HttpSession session = request.getSession(true);
+				final HttpSession session = request.getSession(true);
 
-		// Store the UserView into the session and return
-		UserView.setUser(userView);
-		session.setAttribute(SetUserViewFilter.USER_SESSION_ATTRIBUTE, userView);
+				// Store the UserView into the session and return
+				UserView.setUser(userView);
+				session.setAttribute(SetUserViewFilter.USER_SESSION_ATTRIBUTE, userView);
 
-		int numberOfSubApplications = getNumberOfSubApplications(userView.getRoleTypes());
-		if (numberOfSubApplications == 1 || !userView.hasRoleType(RoleType.PERSON)) {
-		    final Role firstInfoRole = ((userView.getRoleTypes().isEmpty()) ? null : Role.getRoleByRoleType(userView
-			    .getRoleTypes().iterator().next()));
-		    return buildRoleForward(firstInfoRole);
-		} else {
-		    return mapping.findForward("sucess");
+				int numberOfSubApplications = getNumberOfSubApplications(userView.getRoleTypes());
+				if (numberOfSubApplications == 1 || !userView.hasRoleType(RoleType.PERSON)) {
+					final Role firstInfoRole =
+							((userView.getRoleTypes().isEmpty()) ? null : Role.getRoleByRoleType(userView.getRoleTypes()
+									.iterator().next()));
+					return buildRoleForward(firstInfoRole);
+				} else {
+					return mapping.findForward("sucess");
+				}
+
+			}
+
+		} catch (ExcepcaoAutenticacao e) {
+			ActionErrors actionErrors = new ActionErrors();
+			actionErrors.add("invalidAuthentication", new ActionError("errors.invalidAuthentication"));
+			saveErrors(request, actionErrors);
+			return mapping.getInputForward();
+		} catch (InvalidPasswordServiceException e) {
+			ActionErrors actionErrors = new ActionErrors();
+			actionErrors.add(e.getMessage(), new ActionError(e.getMessage()));
+			saveErrors(request, actionErrors);
+			return mapping.getInputForward();
+		} catch (FenixServiceException e) {
+			ActionErrors actionErrors = new ActionErrors();
+			actionErrors.add("error.person.impossible.change", new ActionError("error.person.impossible.change"));
+			saveErrors(request, actionErrors);
+			return mapping.getInputForward();
 		}
 
-	    }
-
-	} catch (ExcepcaoAutenticacao e) {
-	    ActionErrors actionErrors = new ActionErrors();
-	    actionErrors.add("invalidAuthentication", new ActionError("errors.invalidAuthentication"));
-	    saveErrors(request, actionErrors);
-	    return mapping.getInputForward();
-	} catch (InvalidPasswordServiceException e) {
-	    ActionErrors actionErrors = new ActionErrors();
-	    actionErrors.add(e.getMessage(), new ActionError(e.getMessage()));
-	    saveErrors(request, actionErrors);
-	    return mapping.getInputForward();
-	} catch (FenixServiceException e) {
-	    ActionErrors actionErrors = new ActionErrors();
-	    actionErrors.add("error.person.impossible.change", new ActionError("error.person.impossible.change"));
-	    saveErrors(request, actionErrors);
-	    return mapping.getInputForward();
 	}
 
-    }
-
-    /**
-     * @param userRoles
-     * @return
-     */
-    private int getNumberOfSubApplications(Collection<RoleType> roleTypes) {
-	final Set<String> subApplications = new HashSet<String>();
-	for (final RoleType roleType : roleTypes) {
-	    final Role role = Role.getRoleByRoleType(roleType);
-	    final String subApplication = role.getPortalSubApplication();
-	    if (!subApplications.contains(subApplication) && !subApplication.equals("/teacher")) {
-		subApplications.add(subApplication);
-	    }
+	/**
+	 * @param userRoles
+	 * @return
+	 */
+	private int getNumberOfSubApplications(Collection<RoleType> roleTypes) {
+		final Set<String> subApplications = new HashSet<String>();
+		for (final RoleType roleType : roleTypes) {
+			final Role role = Role.getRoleByRoleType(roleType);
+			final String subApplication = role.getPortalSubApplication();
+			if (!subApplications.contains(subApplication) && !subApplication.equals("/teacher")) {
+				subApplications.add(subApplication);
+			}
+		}
+		return subApplications.size();
 	}
-	return subApplications.size();
-    }
 
-    /**
-     * @param infoRole
-     * @return
-     */
-    private ActionForward buildRoleForward(Role infoRole) {
-	ActionForward actionForward = new ActionForward();
-	actionForward.setContextRelative(false);
-	actionForward.setRedirect(false);
-	actionForward.setPath("/dotIstPortal.do?prefix=" + infoRole.getPortalSubApplication() + "&page=" + infoRole.getPage());
-	return actionForward;
-    }
-
-    private Role getRole(RoleType roleType, Collection rolesList) {
-
-	Role infoRole = Role.getRoleByRoleType(roleType);
-
-	Iterator iterator = rolesList.iterator();
-	while (iterator.hasNext()) {
-
-	    Role role = (Role) iterator.next();
-	    if (role.equals(infoRole))
-		return role;
-
+	/**
+	 * @param infoRole
+	 * @return
+	 */
+	private ActionForward buildRoleForward(Role infoRole) {
+		ActionForward actionForward = new ActionForward();
+		actionForward.setContextRelative(false);
+		actionForward.setRedirect(false);
+		actionForward.setPath("/dotIstPortal.do?prefix=" + infoRole.getPortalSubApplication() + "&page=" + infoRole.getPage());
+		return actionForward;
 	}
-	return null;
-    }
 
-    private IUserView changePasswordAndAuthenticateUser(final ActionForm form, final HttpServletRequest request)
-	    throws FenixServiceException, FenixFilterException {
-	DynaActionForm authenticationForm = (DynaActionForm) form;
-	final String username = (String) authenticationForm.get("username");
-	final String password = (String) authenticationForm.get("password");
-	final String newPassword = (String) authenticationForm.get("newPassword");
-	final String requestURL = request.getRequestURL().toString();
+	private Role getRole(RoleType roleType, Collection rolesList) {
 
-	String remoteHostName = BaseAuthenticationAction.getRemoteHostName(request);
-	Object argsAutenticacao[] = { username, password, newPassword, requestURL, remoteHostName };
+		Role infoRole = Role.getRoleByRoleType(roleType);
 
-	return (IUserView) ServiceManagerServiceFactory.executeService("AuthenticationExpired", argsAutenticacao);
-    }
+		Iterator iterator = rolesList.iterator();
+		while (iterator.hasNext()) {
 
-    protected ActionForward authenticationFailedForward(final ActionMapping mapping, final HttpServletRequest request,
-	    final String messageKey) {
-	final ActionErrors actionErrors = new ActionErrors();
-	actionErrors.add(messageKey, new ActionError(messageKey));
-	saveErrors(request, actionErrors);
-	return mapping.getInputForward();
-    }
+			Role role = (Role) iterator.next();
+			if (role.equals(infoRole)) {
+				return role;
+			}
+
+		}
+		return null;
+	}
+
+	private IUserView changePasswordAndAuthenticateUser(final ActionForm form, final HttpServletRequest request)
+			throws FenixServiceException, FenixFilterException {
+		DynaActionForm authenticationForm = (DynaActionForm) form;
+		final String username = (String) authenticationForm.get("username");
+		final String password = (String) authenticationForm.get("password");
+		final String newPassword = (String) authenticationForm.get("newPassword");
+		final String requestURL = request.getRequestURL().toString();
+
+		String remoteHostName = BaseAuthenticationAction.getRemoteHostName(request);
+		Object argsAutenticacao[] = { username, password, newPassword, requestURL, remoteHostName };
+
+		return (IUserView) ServiceManagerServiceFactory.executeService("AuthenticationExpired", argsAutenticacao);
+	}
+
+	protected ActionForward authenticationFailedForward(final ActionMapping mapping, final HttpServletRequest request,
+			final String messageKey) {
+		final ActionErrors actionErrors = new ActionErrors();
+		actionErrors.add(messageKey, new ActionError(messageKey));
+		saveErrors(request, actionErrors);
+		return mapping.getInputForward();
+	}
 }

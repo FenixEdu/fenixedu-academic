@@ -10,34 +10,34 @@ import net.sourceforge.fenixedu.domain.candidacyProcess.graduatedPerson.DegreeCa
 
 public class DegreeCandidacyForGraduatedPersonEvent extends DegreeCandidacyForGraduatedPersonEvent_Base {
 
-    private DegreeCandidacyForGraduatedPersonEvent() {
-	super();
-    }
+	private DegreeCandidacyForGraduatedPersonEvent() {
+		super();
+	}
 
-    public DegreeCandidacyForGraduatedPersonEvent(final DegreeCandidacyForGraduatedPerson candidacy, final Person person) {
-	this();
-	super.init(candidacy, EventType.DEGREE_CANDIDACY_FOR_GRADUATED_PERSON, person);
+	public DegreeCandidacyForGraduatedPersonEvent(final DegreeCandidacyForGraduatedPerson candidacy, final Person person) {
+		this();
+		super.init(candidacy, EventType.DEGREE_CANDIDACY_FOR_GRADUATED_PERSON, person);
 
-	attachAvailablePaymentCode(person);
-    }
+		attachAvailablePaymentCode(person);
+	}
 
-    @Override
-    protected AdministrativeOffice readAdministrativeOffice() {
-	return AdministrativeOffice.readByAdministrativeOfficeType(AdministrativeOfficeType.DEGREE);
-    }
+	@Override
+	protected AdministrativeOffice readAdministrativeOffice() {
+		return AdministrativeOffice.readByAdministrativeOfficeType(AdministrativeOfficeType.DEGREE);
+	}
 
-    @Override
-    public DegreeCandidacyForGraduatedPerson getIndividualCandidacy() {
-	return (DegreeCandidacyForGraduatedPerson) super.getIndividualCandidacy();
-    }
+	@Override
+	public DegreeCandidacyForGraduatedPerson getIndividualCandidacy() {
+		return (DegreeCandidacyForGraduatedPerson) super.getIndividualCandidacy();
+	}
 
-    public Degree getCandidacyDegree() {
-	return getIndividualCandidacy().getSelectedDegree();
-    }
+	public Degree getCandidacyDegree() {
+		return getIndividualCandidacy().getSelectedDegree();
+	}
 
-    @Override
-    protected EntryType getEntryType() {
-	return EntryType.DEGREE_CANDIDACY_FOR_GRADUATED_PERSON_FEE;
-    }
+	@Override
+	protected EntryType getEntryType() {
+		return EntryType.DEGREE_CANDIDACY_FOR_GRADUATED_PERSON_FEE;
+	}
 
 }

@@ -16,59 +16,59 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class TeacherAttributeFinalDegreeWork extends FenixService {
 
-    @Service
-    public static Boolean run(Integer selectedGroupProposalOID) throws FenixServiceException {
-	final GroupProposal groupProposal = rootDomainObject.readGroupProposalByOID(selectedGroupProposalOID);
+	@Service
+	public static Boolean run(Integer selectedGroupProposalOID) throws FenixServiceException {
+		final GroupProposal groupProposal = rootDomainObject.readGroupProposalByOID(selectedGroupProposalOID);
 
-	if (groupProposal != null) {
-	    final Proposal proposal = groupProposal.getFinalDegreeWorkProposal();
-	    final FinalDegreeWorkGroup group = groupProposal.getFinalDegreeDegreeWorkGroup();
+		if (groupProposal != null) {
+			final Proposal proposal = groupProposal.getFinalDegreeWorkProposal();
+			final FinalDegreeWorkGroup group = groupProposal.getFinalDegreeDegreeWorkGroup();
 
-	    if (proposal != null && group != null) {
-		final Proposal proposalAttributedToGroup = group.getProposalAttributedByTeacher();
-		if (proposalAttributedToGroup != null && proposalAttributedToGroup != proposal) {
-		    throw new GroupAlreadyAttributed(proposalAttributedToGroup.getProposalNumber().toString());
-		}
+			if (proposal != null && group != null) {
+				final Proposal proposalAttributedToGroup = group.getProposalAttributedByTeacher();
+				if (proposalAttributedToGroup != null && proposalAttributedToGroup != proposal) {
+					throw new GroupAlreadyAttributed(proposalAttributedToGroup.getProposalNumber().toString());
+				}
 
-		if (proposal.getGroupAttributedByTeacher() == null || proposal.getGroupAttributedByTeacher() != group) {
-		    proposal.setGroupAttributedByTeacher(group);
-		    for (int i = 0; i < group.getGroupProposals().size(); i++) {
-			GroupProposal otherGroupProposal = group.getGroupProposals().get(i);
-			Proposal otherProposal = otherGroupProposal.getFinalDegreeWorkProposal();
-			if (otherProposal != proposal && group == otherProposal.getGroupAttributedByTeacher()) {
-			    otherProposal.setGroupAttributedByTeacher(null);
+				if (proposal.getGroupAttributedByTeacher() == null || proposal.getGroupAttributedByTeacher() != group) {
+					proposal.setGroupAttributedByTeacher(group);
+					for (int i = 0; i < group.getGroupProposals().size(); i++) {
+						GroupProposal otherGroupProposal = group.getGroupProposals().get(i);
+						Proposal otherProposal = otherGroupProposal.getFinalDegreeWorkProposal();
+						if (otherProposal != proposal && group == otherProposal.getGroupAttributedByTeacher()) {
+							otherProposal.setGroupAttributedByTeacher(null);
+						}
+					}
+				} else {
+					proposal.setGroupAttributedByTeacher(null);
+				}
 			}
-		    }
-		} else {
-		    proposal.setGroupAttributedByTeacher(null);
 		}
-	    }
-	}
-	return Boolean.TRUE;
-    }
-
-    public static class GroupAlreadyAttributed extends FenixServiceException {
-
-	public GroupAlreadyAttributed() {
-	    super();
+		return Boolean.TRUE;
 	}
 
-	public GroupAlreadyAttributed(int errorType) {
-	    super(errorType);
-	}
+	public static class GroupAlreadyAttributed extends FenixServiceException {
 
-	public GroupAlreadyAttributed(String s) {
-	    super(s);
-	}
+		public GroupAlreadyAttributed() {
+			super();
+		}
 
-	public GroupAlreadyAttributed(Throwable cause) {
-	    super(cause);
-	}
+		public GroupAlreadyAttributed(int errorType) {
+			super(errorType);
+		}
 
-	public GroupAlreadyAttributed(String message, Throwable cause) {
-	    super(message, cause);
-	}
+		public GroupAlreadyAttributed(String s) {
+			super(s);
+		}
 
-    }
+		public GroupAlreadyAttributed(Throwable cause) {
+			super(cause);
+		}
+
+		public GroupAlreadyAttributed(String message, Throwable cause) {
+			super(message, cause);
+		}
+
+	}
 
 }

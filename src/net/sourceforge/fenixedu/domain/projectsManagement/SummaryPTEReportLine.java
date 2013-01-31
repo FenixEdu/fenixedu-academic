@@ -12,53 +12,63 @@ import java.io.Serializable;
  */
 public class SummaryPTEReportLine implements Serializable, ISummaryPTEReportLine {
 
-    private String projectCode;
+	private String projectCode;
 
-    private Double revenue;
+	private Double revenue;
 
-    private Double expense;
+	private Double expense;
 
-    private Double tax;
+	private Double tax;
 
-    private Double total;
+	private Double total;
 
-    public Double getExpense() {
-	return expense;
-    }
+	@Override
+	public Double getExpense() {
+		return expense;
+	}
 
-    public void setExpense(Double expense) {
-	this.expense = expense;
-    }
+	@Override
+	public void setExpense(Double expense) {
+		this.expense = expense;
+	}
 
-    public String getProjectCode() {
-	return projectCode;
-    }
+	@Override
+	public String getProjectCode() {
+		return projectCode;
+	}
 
-    public void setProjectCode(String projectCode) {
-	this.projectCode = projectCode;
-    }
+	@Override
+	public void setProjectCode(String projectCode) {
+		this.projectCode = projectCode;
+	}
 
-    public Double getRevenue() {
-	return revenue;
-    }
+	@Override
+	public Double getRevenue() {
+		return revenue;
+	}
 
-    public void setRevenue(Double revenue) {
-	this.revenue = revenue;
-    }
+	@Override
+	public void setRevenue(Double revenue) {
+		this.revenue = revenue;
+	}
 
-    public Double getTax() {
-	return tax;
-    }
+	@Override
+	public Double getTax() {
+		return tax;
+	}
 
-    public void setTax(Double tax) {
-	this.tax = tax;
-    }
+	@Override
+	public void setTax(Double tax) {
+		this.tax = tax;
+	}
 
-    public Double getTotal() {
-	return total;
-    }
+	@Override
+	public Double getTotal() {
+		return total;
+	}
 
-    public void setTotal(Double total) {
-	this.total = total;
-    }
+	@Override
+	public void setTotal(Double total) {
+		this.total = total;
+	}
 }

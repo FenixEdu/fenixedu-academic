@@ -22,115 +22,119 @@ import net.sourceforge.fenixedu.injectionCode.IGroup;
  */
 public class CompetenceCoursePredicates {
 
-    public static final AccessControlPredicate<CompetenceCourse> readPredicate = new AccessControlPredicate<CompetenceCourse>() {
+	public static final AccessControlPredicate<CompetenceCourse> readPredicate = new AccessControlPredicate<CompetenceCourse>() {
 
-	public boolean evaluate(CompetenceCourse competenceCourse) {
+		@Override
+		public boolean evaluate(CompetenceCourse competenceCourse) {
 
-	    if (!competenceCourse.isBolonha()) {
-		return true;
-	    }
+			if (!competenceCourse.isBolonha()) {
+				return true;
+			}
 
-	    Person person = AccessControl.getPerson();
-	    if (person.hasRole(RoleType.SCIENTIFIC_COUNCIL)) {
-		return true;
-	    }
+			Person person = AccessControl.getPerson();
+			if (person.hasRole(RoleType.SCIENTIFIC_COUNCIL)) {
+				return true;
+			}
 
-	    boolean isDegreeCurricularPlansMember = false;
-	    isDegreeCurricularPlansMember = isMemberOfDegreeCurricularPlansGroup(person);
+			boolean isDegreeCurricularPlansMember = false;
+			isDegreeCurricularPlansMember = isMemberOfDegreeCurricularPlansGroup(person);
 
-	    boolean isCompetenceGroupMember = isMemberOfCompetenceCourseGroup(competenceCourse, person);
+			boolean isCompetenceGroupMember = isMemberOfCompetenceCourseGroup(competenceCourse, person);
 
-	    switch (competenceCourse.getCurricularStage()) {
-	    case DRAFT:
-		return isCompetenceGroupMember;
-	    case PUBLISHED:
-		return isCompetenceGroupMember || isDegreeCurricularPlansMember;
-	    case APPROVED:
-		return true;
-	    default:
+			switch (competenceCourse.getCurricularStage()) {
+			case DRAFT:
+				return isCompetenceGroupMember;
+			case PUBLISHED:
+				return isCompetenceGroupMember || isDegreeCurricularPlansMember;
+			case APPROVED:
+				return true;
+			default:
+				return false;
+			}
+
+		}
+
+	};
+
+	public static final AccessControlPredicate<CompetenceCourse> writePredicate = new AccessControlPredicate<CompetenceCourse>() {
+
+		@Override
+		public boolean evaluate(CompetenceCourse competenceCourse) {
+
+			if (!competenceCourse.isBolonha()) {
+				return true;
+			}
+
+			Person person = AccessControl.getPerson();
+
+			if (person.hasRole(RoleType.MANAGER)) {
+				return true;
+			}
+
+			boolean isDegreeCurricularPlansMember = false;
+			isDegreeCurricularPlansMember = isMemberOfDegreeCurricularPlansGroup(person);
+
+			boolean isCompetenceGroupMember = isMemberOfCompetenceCourseGroup(competenceCourse, person);
+
+			switch (competenceCourse.getCurricularStage()) {
+			case DRAFT:
+				return isCompetenceGroupMember;
+			case PUBLISHED:
+				return isCompetenceGroupMember || isDegreeCurricularPlansMember;
+			case APPROVED:
+				return person.hasRole(RoleType.SCIENTIFIC_COUNCIL);
+			default:
+				return false;
+			}
+
+		}
+	};
+
+	public static final AccessControlPredicate<CompetenceCourse> editCurricularStagePredicate =
+			new AccessControlPredicate<CompetenceCourse>() {
+
+				@Override
+				public boolean evaluate(CompetenceCourse competenceCourse) {
+
+					Person person = AccessControl.getPerson();
+					boolean isCompetenceGroupMember = isMemberOfCompetenceCourseGroup(competenceCourse, person);
+
+					switch (competenceCourse.getCurricularStage()) {
+					case DRAFT:
+						return isCompetenceGroupMember;
+					case PUBLISHED:
+						return isCompetenceGroupMember || person.hasRole(RoleType.SCIENTIFIC_COUNCIL);
+					case APPROVED:
+						return person.hasRole(RoleType.SCIENTIFIC_COUNCIL);
+					default:
+						return false;
+					}
+
+				}
+
+			};
+
+	private static boolean isMemberOfDegreeCurricularPlansGroup(Person person) {
+		Collection<DegreeCurricularPlan> degreeCurricularPlans = DegreeCurricularPlan.readNotEmptyDegreeCurricularPlans();
+
+		Collection<IGroup> groups = new ArrayList<IGroup>();
+		for (DegreeCurricularPlan plan : degreeCurricularPlans) {
+			Group curricularPlanMembersGroup = plan.getCurricularPlanMembersGroup();
+			if (curricularPlanMembersGroup != null) {
+				groups.add(curricularPlanMembersGroup);
+			}
+		}
+
+		return new GroupUnion(groups).isMember(person);
+	}
+
+	private static boolean isMemberOfCompetenceCourseGroup(CompetenceCourse competenceCourse, Person person) {
+		Group competenceCourseMembersGroup =
+				competenceCourse.getDepartmentUnit().getDepartment().getCompetenceCourseMembersGroup();
+		if (competenceCourseMembersGroup != null) {
+			return competenceCourseMembersGroup.isMember(person);
+		}
 		return false;
-	    }
-
 	}
-
-    };
-
-    public static final AccessControlPredicate<CompetenceCourse> writePredicate = new AccessControlPredicate<CompetenceCourse>() {
-
-	public boolean evaluate(CompetenceCourse competenceCourse) {
-
-	    if (!competenceCourse.isBolonha()) {
-		return true;
-	    }
-
-	    Person person = AccessControl.getPerson();
-
-	    if (person.hasRole(RoleType.MANAGER)) {
-		return true;
-	    }
-
-	    boolean isDegreeCurricularPlansMember = false;
-	    isDegreeCurricularPlansMember = isMemberOfDegreeCurricularPlansGroup(person);
-
-	    boolean isCompetenceGroupMember = isMemberOfCompetenceCourseGroup(competenceCourse, person);
-
-	    switch (competenceCourse.getCurricularStage()) {
-	    case DRAFT:
-		return isCompetenceGroupMember;
-	    case PUBLISHED:
-		return isCompetenceGroupMember || isDegreeCurricularPlansMember;
-	    case APPROVED:
-		return person.hasRole(RoleType.SCIENTIFIC_COUNCIL);
-	    default:
-		return false;
-	    }
-
-	}
-    };
-
-    public static final AccessControlPredicate<CompetenceCourse> editCurricularStagePredicate = new AccessControlPredicate<CompetenceCourse>() {
-
-	public boolean evaluate(CompetenceCourse competenceCourse) {
-
-	    Person person = AccessControl.getPerson();
-	    boolean isCompetenceGroupMember = isMemberOfCompetenceCourseGroup(competenceCourse, person);
-
-	    switch (competenceCourse.getCurricularStage()) {
-	    case DRAFT:
-		return isCompetenceGroupMember;
-	    case PUBLISHED:
-		return isCompetenceGroupMember || person.hasRole(RoleType.SCIENTIFIC_COUNCIL);
-	    case APPROVED:
-		return person.hasRole(RoleType.SCIENTIFIC_COUNCIL);
-	    default:
-		return false;
-	    }
-
-	}
-
-    };
-
-    private static boolean isMemberOfDegreeCurricularPlansGroup(Person person) {
-	Collection<DegreeCurricularPlan> degreeCurricularPlans = DegreeCurricularPlan.readNotEmptyDegreeCurricularPlans();
-
-	Collection<IGroup> groups = new ArrayList<IGroup>();
-	for (DegreeCurricularPlan plan : degreeCurricularPlans) {
-	    Group curricularPlanMembersGroup = plan.getCurricularPlanMembersGroup();
-	    if (curricularPlanMembersGroup != null) {
-		groups.add(curricularPlanMembersGroup);
-	    }
-	}
-
-	return new GroupUnion(groups).isMember(person);
-    }
-
-    private static boolean isMemberOfCompetenceCourseGroup(CompetenceCourse competenceCourse, Person person) {
-	Group competenceCourseMembersGroup = competenceCourse.getDepartmentUnit().getDepartment()
-		.getCompetenceCourseMembersGroup();
-	if (competenceCourseMembersGroup != null) {
-	    return competenceCourseMembersGroup.isMember(person);
-	}
-	return false;
-    }
 
 }

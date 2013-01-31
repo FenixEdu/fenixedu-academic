@@ -12,32 +12,32 @@ import org.joda.time.YearMonthDay;
 
 public abstract class InstallmentWithPenalty extends InstallmentWithPenalty_Base {
 
-    protected InstallmentWithPenalty() {
-	super();
-    }
-
-    protected void init(final PaymentPlan paymentCondition, final Money amount, YearMonthDay startDate, YearMonthDay endDate,
-	    final BigDecimal penaltyPercentage) {
-
-	super.init(paymentCondition, amount, startDate, endDate);
-	checkParameters(penaltyPercentage);
-
-	super.setPenaltyPercentage(penaltyPercentage);
-
-    }
-
-    private void checkParameters(BigDecimal penaltyPercentage) {
-	if (penaltyPercentage == null) {
-	    throw new DomainException("error.accounting.installments.InstallmentWithPenalty.penaltyPercentage.cannot.be.null");
+	protected InstallmentWithPenalty() {
+		super();
 	}
-    }
 
-    @Override
-    public Money calculateAmount(Event event, DateTime when, BigDecimal discountPercentage, boolean applyPenalty) {
-	return super.calculateAmount(event, when, discountPercentage, applyPenalty).add(
-		(applyPenalty ? calculatePenaltyAmount(event, when, discountPercentage) : Money.ZERO));
-    }
+	protected void init(final PaymentPlan paymentCondition, final Money amount, YearMonthDay startDate, YearMonthDay endDate,
+			final BigDecimal penaltyPercentage) {
 
-    abstract protected Money calculatePenaltyAmount(Event event, DateTime when, BigDecimal discountPercentage);
+		super.init(paymentCondition, amount, startDate, endDate);
+		checkParameters(penaltyPercentage);
+
+		super.setPenaltyPercentage(penaltyPercentage);
+
+	}
+
+	private void checkParameters(BigDecimal penaltyPercentage) {
+		if (penaltyPercentage == null) {
+			throw new DomainException("error.accounting.installments.InstallmentWithPenalty.penaltyPercentage.cannot.be.null");
+		}
+	}
+
+	@Override
+	public Money calculateAmount(Event event, DateTime when, BigDecimal discountPercentage, boolean applyPenalty) {
+		return super.calculateAmount(event, when, discountPercentage, applyPenalty).add(
+				(applyPenalty ? calculatePenaltyAmount(event, when, discountPercentage) : Money.ZERO));
+	}
+
+	abstract protected Money calculatePenaltyAmount(Event event, DateTime when, BigDecimal discountPercentage);
 
 }

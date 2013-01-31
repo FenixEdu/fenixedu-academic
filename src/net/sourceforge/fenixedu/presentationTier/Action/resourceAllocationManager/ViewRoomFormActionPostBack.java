@@ -29,52 +29,52 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
  */
 public class ViewRoomFormActionPostBack extends FenixDispatchAction {
 
-    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-	    throws FenixServiceException, FenixFilterException {
-	RoomOccupationWeekBean roomOccupationWeekBean = new RoomOccupationWeekBean();
+	public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+			throws FenixServiceException, FenixFilterException {
+		RoomOccupationWeekBean roomOccupationWeekBean = new RoomOccupationWeekBean();
 
-	DynaActionForm indexForm = (DynaActionForm) form;
-	List<InfoRoom> infoRooms = (List<InfoRoom>) request.getAttribute(PresentationConstants.SELECTED_ROOMS);
-	InfoRoom infoRoom = infoRooms.get(((Integer) indexForm.get("index")).intValue());
-	roomOccupationWeekBean.setRoom(infoRoom);
-	fillRequestData(roomOccupationWeekBean, request);
-	return mapping.findForward("Sucess");
-    }
-
-    public ActionForward academicIntervalPostBack(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixServiceException {
-	RoomOccupationWeekBean roomOccupationWeekBean = getRenderedObject("roomOccupationWeekBean");
-	RenderUtils.invalidateViewState();
-	roomOccupationWeekBean.setWeekBean(null);
-	fillRequestData(roomOccupationWeekBean, request);
-	return mapping.findForward("Sucess");
-    }
-
-    public ActionForward weekPostBack(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixServiceException {
-	RoomOccupationWeekBean roomOccupationWeekBean = getRenderedObject("roomOccupationWeekBean");
-	RenderUtils.invalidateViewState();
-	fillRequestData(roomOccupationWeekBean, request);
-	return mapping.findForward("Sucess");
-    }
-
-    public void fillRequestData(RoomOccupationWeekBean roomOccupationWeekBean, HttpServletRequest request)
-	    throws FenixServiceException {
-	request.setAttribute(PresentationConstants.ROOM, roomOccupationWeekBean.getRoom());
-	request.setAttribute(PresentationConstants.ROOM_OID, roomOccupationWeekBean.getRoom().getIdInternal());
-	final AllocatableSpace room = (AllocatableSpace) rootDomainObject.readResourceByOID(roomOccupationWeekBean.getRoom()
-		.getIdInternal());
-	Calendar calendar = Calendar.getInstance();
-	if (roomOccupationWeekBean.getWeekBean() == null) {
-	    calendar.setTime(roomOccupationWeekBean.getAcademicInterval().getStart().toDate());
-	} else {
-	    calendar.setTime(roomOccupationWeekBean.getWeekBean().getWeek().toDateMidnight().toDate());
+		DynaActionForm indexForm = (DynaActionForm) form;
+		List<InfoRoom> infoRooms = (List<InfoRoom>) request.getAttribute(PresentationConstants.SELECTED_ROOMS);
+		InfoRoom infoRoom = infoRooms.get(((Integer) indexForm.get("index")).intValue());
+		roomOccupationWeekBean.setRoom(infoRoom);
+		fillRequestData(roomOccupationWeekBean, request);
+		return mapping.findForward("Sucess");
 	}
-	List<InfoObject> showOccupations = ReadLessonsExamsAndPunctualRoomsOccupationsInWeekAndRoom.run(room, YearMonthDay
-		.fromCalendarFields(calendar));
-	if (showOccupations != null) {
-	    request.setAttribute(PresentationConstants.LESSON_LIST_ATT, showOccupations);
+
+	public ActionForward academicIntervalPostBack(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws FenixServiceException {
+		RoomOccupationWeekBean roomOccupationWeekBean = getRenderedObject("roomOccupationWeekBean");
+		RenderUtils.invalidateViewState();
+		roomOccupationWeekBean.setWeekBean(null);
+		fillRequestData(roomOccupationWeekBean, request);
+		return mapping.findForward("Sucess");
 	}
-	request.setAttribute("roomOccupationWeekBean", roomOccupationWeekBean);
-    }
+
+	public ActionForward weekPostBack(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws FenixServiceException {
+		RoomOccupationWeekBean roomOccupationWeekBean = getRenderedObject("roomOccupationWeekBean");
+		RenderUtils.invalidateViewState();
+		fillRequestData(roomOccupationWeekBean, request);
+		return mapping.findForward("Sucess");
+	}
+
+	public void fillRequestData(RoomOccupationWeekBean roomOccupationWeekBean, HttpServletRequest request)
+			throws FenixServiceException {
+		request.setAttribute(PresentationConstants.ROOM, roomOccupationWeekBean.getRoom());
+		request.setAttribute(PresentationConstants.ROOM_OID, roomOccupationWeekBean.getRoom().getIdInternal());
+		final AllocatableSpace room =
+				(AllocatableSpace) rootDomainObject.readResourceByOID(roomOccupationWeekBean.getRoom().getIdInternal());
+		Calendar calendar = Calendar.getInstance();
+		if (roomOccupationWeekBean.getWeekBean() == null) {
+			calendar.setTime(roomOccupationWeekBean.getAcademicInterval().getStart().toDate());
+		} else {
+			calendar.setTime(roomOccupationWeekBean.getWeekBean().getWeek().toDateMidnight().toDate());
+		}
+		List<InfoObject> showOccupations =
+				ReadLessonsExamsAndPunctualRoomsOccupationsInWeekAndRoom.run(room, YearMonthDay.fromCalendarFields(calendar));
+		if (showOccupations != null) {
+			request.setAttribute(PresentationConstants.LESSON_LIST_ATT, showOccupations);
+		}
+		request.setAttribute("roomOccupationWeekBean", roomOccupationWeekBean);
+	}
 }

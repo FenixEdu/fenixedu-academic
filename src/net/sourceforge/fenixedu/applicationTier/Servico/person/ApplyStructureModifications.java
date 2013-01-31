@@ -12,40 +12,40 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class ApplyStructureModifications extends FenixService {
 
-    @Service
-    public static void run(List<ModifiedContentBean> modifications) {
-	for (ModifiedContentBean bean : modifications) {
-	    Container parentContainer = bean.getCurrentParent();
-	    Container newContainer = bean.getNewParent();
-	    Node node = bean.getContent().getParentNode(bean.getCurrentParent());
+	@Service
+	public static void run(List<ModifiedContentBean> modifications) {
+		for (ModifiedContentBean bean : modifications) {
+			Container parentContainer = bean.getCurrentParent();
+			Container newContainer = bean.getNewParent();
+			Node node = bean.getContent().getParentNode(bean.getCurrentParent());
 
-	    if (!parentContainer.equals(newContainer)) {
-		node = changeParent(node, newContainer);
-	    }
+			if (!parentContainer.equals(newContainer)) {
+				node = changeParent(node, newContainer);
+			}
 
-	    if (node instanceof ExplicitOrderNode) {
-		ExplicitOrderNode explicitOrderNode = (ExplicitOrderNode) node;
-		if (!explicitOrderNode.getNodeOrder().equals(bean.getOrder())) {
-		    explicitOrderNode.setNodeOrder(bean.getOrder());
+			if (node instanceof ExplicitOrderNode) {
+				ExplicitOrderNode explicitOrderNode = (ExplicitOrderNode) node;
+				if (!explicitOrderNode.getNodeOrder().equals(bean.getOrder())) {
+					explicitOrderNode.setNodeOrder(bean.getOrder());
+				}
+			}
 		}
-	    }
 	}
-    }
 
-    private static Node changeParent(Node node, Container parent) {
-	if (node instanceof ExplicitOrderNode) {
-	    ExplicitOrderNode oldNode = (ExplicitOrderNode) node;
-	    ExplicitOrderNode explicitOrderNode = new ExplicitOrderNode(parent, oldNode.getChild(), oldNode.isAscending(),
-		    oldNode.getNodeOrder());
-	    oldNode.deleteWithoutReOrdering();
-	    return explicitOrderNode;
-	} else if (node instanceof DateOrderedNode) {
-	    DateOrderedNode oldNode = (DateOrderedNode) node;
-	    DateOrderedNode dateOrderedNode = new DateOrderedNode(parent, oldNode.getChild(), oldNode.getAscending());
-	    oldNode.delete();
-	    return dateOrderedNode;
+	private static Node changeParent(Node node, Container parent) {
+		if (node instanceof ExplicitOrderNode) {
+			ExplicitOrderNode oldNode = (ExplicitOrderNode) node;
+			ExplicitOrderNode explicitOrderNode =
+					new ExplicitOrderNode(parent, oldNode.getChild(), oldNode.isAscending(), oldNode.getNodeOrder());
+			oldNode.deleteWithoutReOrdering();
+			return explicitOrderNode;
+		} else if (node instanceof DateOrderedNode) {
+			DateOrderedNode oldNode = (DateOrderedNode) node;
+			DateOrderedNode dateOrderedNode = new DateOrderedNode(parent, oldNode.getChild(), oldNode.getAscending());
+			oldNode.delete();
+			return dateOrderedNode;
+		}
+		return null;
 	}
-	return null;
-    }
 
 }

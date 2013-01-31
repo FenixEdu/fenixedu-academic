@@ -13,25 +13,27 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class YearsPartialProvider implements DataProvider {
 
-    public Object provide(Object source, Object currentValue) {
+	@Override
+	public Object provide(Object source, Object currentValue) {
 
-	List<Partial> result = new ArrayList<Partial>();
-	ExecutionYear firstExecutionYear = ExecutionYear.readFirstExecutionYear();
+		List<Partial> result = new ArrayList<Partial>();
+		ExecutionYear firstExecutionYear = ExecutionYear.readFirstExecutionYear();
 
-	if (firstExecutionYear != null) {
-	    ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
-	    int firstYear = firstExecutionYear.getBeginDateYearMonthDay().getYear();
-	    int lastYear = currentExecutionYear.getEndDateYearMonthDay().getYear();
-	    while (firstYear <= lastYear) {
-		result.add(new Partial(DateTimeFieldType.year(), firstYear));
-		firstYear++;
-	    }
+		if (firstExecutionYear != null) {
+			ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
+			int firstYear = firstExecutionYear.getBeginDateYearMonthDay().getYear();
+			int lastYear = currentExecutionYear.getEndDateYearMonthDay().getYear();
+			while (firstYear <= lastYear) {
+				result.add(new Partial(DateTimeFieldType.year(), firstYear));
+				firstYear++;
+			}
+		}
+
+		return result;
 	}
 
-	return result;
-    }
-
-    public Converter getConverter() {
-	return null;
-    }
+	@Override
+	public Converter getConverter() {
+		return null;
+	}
 }

@@ -2,9 +2,9 @@ package net.sourceforge.fenixedu.domain.space;
 
 public enum SpaceState {
 
-    ACTIVE, INACTIVE;
+	ACTIVE, INACTIVE;
 
-    public String getName() {
-	return name();
-    }
+	public String getName() {
+		return name();
+	}
 }

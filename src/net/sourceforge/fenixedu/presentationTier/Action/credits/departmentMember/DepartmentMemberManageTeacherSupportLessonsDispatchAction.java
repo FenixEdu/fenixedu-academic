@@ -26,68 +26,84 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
-@Mapping(module = "departmentMember", path = "/supportLessonsManagement", input = "/supportLessonsManagement.do?method=prepareEdit&page=0", attribute = "supportLessonForm", formBean = "supportLessonForm", scope = "request", parameter = "method")
+@Mapping(
+		module = "departmentMember",
+		path = "/supportLessonsManagement",
+		input = "/supportLessonsManagement.do?method=prepareEdit&page=0",
+		attribute = "supportLessonForm",
+		formBean = "supportLessonForm",
+		scope = "request",
+		parameter = "method")
 @Forwards(value = {
-	@Forward(name = "successfull-delete", path = "/degreeTeachingServiceManagement.do?method=showTeachingServiceDetails"),
-	@Forward(name = "successfull-edit", path = "/degreeTeachingServiceManagement.do?method=showTeachingServiceDetails"),
-	@Forward(name = "edit-support-lesson", path = "/credits/supportLessons/editSupportLesson.jsp"),
-	@Forward(name = "list-support-lessons", path = "/degreeTeachingServiceManagement.do?method=showTeachingServiceDetails"),
-	@Forward(name = "teacher-not-found", path = "/credits.do?method=viewAnnualTeachingCredits") })
-@Exceptions(value = {
-	@ExceptionHandling(type = net.sourceforge.fenixedu.presentationTier.Action.credits.ManageTeacherSupportLessonsDispatchAction.InvalidPeriodException.class, key = "message.invalidPeriod", handler = org.apache.struts.action.ExceptionHandler.class, path = "/supportLessonsManagement.do?method=prepareEdit&page=0", scope = "request"),
-	@ExceptionHandling(type = net.sourceforge.fenixedu.domain.exceptions.DomainException.class, handler = net.sourceforge.fenixedu.presentationTier.config.FenixDomainExceptionHandler.class, scope = "request") })
+		@Forward(name = "successfull-delete", path = "/degreeTeachingServiceManagement.do?method=showTeachingServiceDetails"),
+		@Forward(name = "successfull-edit", path = "/degreeTeachingServiceManagement.do?method=showTeachingServiceDetails"),
+		@Forward(name = "edit-support-lesson", path = "/credits/supportLessons/editSupportLesson.jsp"),
+		@Forward(name = "list-support-lessons", path = "/degreeTeachingServiceManagement.do?method=showTeachingServiceDetails"),
+		@Forward(name = "teacher-not-found", path = "/credits.do?method=viewAnnualTeachingCredits") })
+@Exceptions(
+		value = {
+				@ExceptionHandling(
+						type = net.sourceforge.fenixedu.presentationTier.Action.credits.ManageTeacherSupportLessonsDispatchAction.InvalidPeriodException.class,
+						key = "message.invalidPeriod",
+						handler = org.apache.struts.action.ExceptionHandler.class,
+						path = "/supportLessonsManagement.do?method=prepareEdit&page=0",
+						scope = "request"),
+				@ExceptionHandling(
+						type = net.sourceforge.fenixedu.domain.exceptions.DomainException.class,
+						handler = net.sourceforge.fenixedu.presentationTier.config.FenixDomainExceptionHandler.class,
+						scope = "request") })
 public class DepartmentMemberManageTeacherSupportLessonsDispatchAction extends ManageTeacherSupportLessonsDispatchAction {
 
-    public ActionForward prepareEdit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws NumberFormatException, FenixFilterException, FenixServiceException {
+	public ActionForward prepareEdit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws NumberFormatException, FenixFilterException, FenixServiceException {
 
-	DynaActionForm supportLessonForm = (DynaActionForm) form;
-	Integer supportLesssonID = (Integer) supportLessonForm.get("supportLessonID");
-	Integer professorshipID = (Integer) supportLessonForm.get("professorshipID");
+		DynaActionForm supportLessonForm = (DynaActionForm) form;
+		Integer supportLesssonID = (Integer) supportLessonForm.get("supportLessonID");
+		Integer professorshipID = (Integer) supportLessonForm.get("professorshipID");
 
-	Professorship professorship = rootDomainObject.readProfessorshipByOID(professorshipID);
+		Professorship professorship = rootDomainObject.readProfessorshipByOID(professorshipID);
 
-	if (professorship == null || professorship.getTeacher() != getLoggedTeacher(request)) {
-	    createNewActionMessage(request);
-	    return mapping.findForward("teacher-not-found");
+		if (professorship == null || professorship.getTeacher() != getLoggedTeacher(request)) {
+			createNewActionMessage(request);
+			return mapping.findForward("teacher-not-found");
+		}
+
+		SupportLesson supportLesson = null;
+		if (supportLesssonID != null && supportLesssonID != 0) {
+			supportLesson = rootDomainObject.readSupportLessonByOID(supportLesssonID);
+			if (!professorship.getSupportLessons().contains(supportLesson)) {
+				createNewActionMessage(request);
+				return mapping.findForward("teacher-not-found");
+			}
+		}
+
+		prepareToEdit(supportLesson, professorship, supportLessonForm, request);
+		return mapping.findForward("edit-support-lesson");
 	}
 
-	SupportLesson supportLesson = null;
-	if (supportLesssonID != null && supportLesssonID != 0) {
-	    supportLesson = rootDomainObject.readSupportLessonByOID(supportLesssonID);
-	    if (!professorship.getSupportLessons().contains(supportLesson)) {
-		createNewActionMessage(request);
-		return mapping.findForward("teacher-not-found");
-	    }
+	private void createNewActionMessage(HttpServletRequest request) {
+		ActionMessages actionMessages = new ActionMessages();
+		actionMessages.add("", new ActionMessage("message.invalid.teacher"));
+		saveMessages(request, actionMessages);
 	}
 
-	prepareToEdit(supportLesson, professorship, supportLessonForm, request);
-	return mapping.findForward("edit-support-lesson");
-    }
+	private Teacher getLoggedTeacher(HttpServletRequest request) {
+		IUserView userView = UserView.getUser();
+		return userView.getPerson().getTeacher();
+	}
 
-    private void createNewActionMessage(HttpServletRequest request) {
-	ActionMessages actionMessages = new ActionMessages();
-	actionMessages.add("", new ActionMessage("message.invalid.teacher"));
-	saveMessages(request, actionMessages);
-    }
+	public ActionForward editSupportLesson(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws NumberFormatException, FenixFilterException, FenixServiceException,
+			InvalidPeriodException {
 
-    private Teacher getLoggedTeacher(HttpServletRequest request) {
-	IUserView userView = UserView.getUser();
-	return userView.getPerson().getTeacher();
-    }
+		editSupportLesson(form, request, RoleType.DEPARTMENT_MEMBER);
+		return mapping.findForward("successfull-edit");
+	}
 
-    public ActionForward editSupportLesson(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws NumberFormatException, FenixFilterException, FenixServiceException,
-	    InvalidPeriodException {
+	public ActionForward deleteSupportLesson(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws NumberFormatException, FenixFilterException, FenixServiceException {
 
-	editSupportLesson(form, request, RoleType.DEPARTMENT_MEMBER);
-	return mapping.findForward("successfull-edit");
-    }
-
-    public ActionForward deleteSupportLesson(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws NumberFormatException, FenixFilterException, FenixServiceException {
-
-	deleteSupportLesson(request, form, RoleType.DEPARTMENT_MEMBER);
-	return mapping.findForward("successfull-delete");
-    }
+		deleteSupportLesson(request, form, RoleType.DEPARTMENT_MEMBER);
+		return mapping.findForward("successfull-delete");
+	}
 }

@@ -15,28 +15,28 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadStudentByNumberAndType extends FenixService {
 
-    // FIXME: We have to read the student by type also !!
+	// FIXME: We have to read the student by type also !!
 
-    @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
-    @Service
-    public static Object run(Integer number, DegreeType degreeType) {
+	@Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
+	@Service
+	public static Object run(Integer number, DegreeType degreeType) {
 
-	InfoStudent infoStudent = null;
+		InfoStudent infoStudent = null;
 
-	// //////////////////////////////////////////////////////////////////////
-	// //////////////////////////////////
-	// Isto não é para ficar assim. Está assim temporariamente até se
-	// saber como é feita de facto a distinção
-	// dos aluno, referente ao tipo, a partir da página de login.
-	// //////////////////////////////////////////////////////////////////////
-	// //////////////////////////////////
-	Registration registration = Registration.readStudentByNumberAndDegreeType(number, degreeType);
+		// //////////////////////////////////////////////////////////////////////
+		// //////////////////////////////////
+		// Isto não é para ficar assim. Está assim temporariamente até se
+		// saber como é feita de facto a distinção
+		// dos aluno, referente ao tipo, a partir da página de login.
+		// //////////////////////////////////////////////////////////////////////
+		// //////////////////////////////////
+		Registration registration = Registration.readStudentByNumberAndDegreeType(number, degreeType);
 
-	if (registration != null) {
-	    infoStudent = InfoStudent.newInfoFromDomain(registration);
+		if (registration != null) {
+			infoStudent = InfoStudent.newInfoFromDomain(registration);
+		}
+
+		return infoStudent;
 	}
-
-	return infoStudent;
-    }
 
 }

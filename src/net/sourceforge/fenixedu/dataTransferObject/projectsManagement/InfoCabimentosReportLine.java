@@ -19,103 +19,107 @@ import pt.utl.ist.fenix.tools.util.excel.ExcelStyle;
  */
 public class InfoCabimentosReportLine extends InfoReportLine {
 
-    private String projectCode;
+	private String projectCode;
 
-    private Double cabimentos;
+	private Double cabimentos;
 
-    private Double justifications;
+	private Double justifications;
 
-    private Double total;
+	private Double total;
 
-    public Double getCabimentos() {
-	return cabimentos;
-    }
-
-    public void setCabimentos(Double cabimentos) {
-	this.cabimentos = cabimentos;
-    }
-
-    public Double getJustifications() {
-	return justifications;
-    }
-
-    public void setJustifications(Double justifications) {
-	this.justifications = justifications;
-    }
-
-    public String getProjectCode() {
-	return projectCode;
-    }
-
-    public void setProjectCode(String projectCode) {
-	this.projectCode = projectCode;
-    }
-
-    public Double getTotal() {
-	return total;
-    }
-
-    public void setTotal(Double total) {
-	this.total = total;
-    }
-
-    public void copyFromDomain(ICabimentosReportLine cabimentosReportLine) {
-	if (cabimentosReportLine != null) {
-	    setProjectCode(cabimentosReportLine.getProjectCode());
-	    setCabimentos(cabimentosReportLine.getCabimentos());
-	    setJustifications(cabimentosReportLine.getJustifications());
-	    setTotal(cabimentosReportLine.getTotal());
+	public Double getCabimentos() {
+		return cabimentos;
 	}
-    }
 
-    public static InfoCabimentosReportLine newInfoFromDomain(ICabimentosReportLine cabimentosReportLine) {
-	InfoCabimentosReportLine infoCabimentosReportLine = null;
-	if (cabimentosReportLine != null) {
-	    infoCabimentosReportLine = new InfoCabimentosReportLine();
-	    infoCabimentosReportLine.copyFromDomain(cabimentosReportLine);
+	public void setCabimentos(Double cabimentos) {
+		this.cabimentos = cabimentos;
 	}
-	return infoCabimentosReportLine;
-    }
 
-    public void getLineToExcel(HSSFSheet sheet, ExcelStyle excelStyle, ReportType reportType) {
-	int nextRow = sheet.getLastRowNum() + 2;
-	HSSFRow row = sheet.createRow(nextRow);
-	HSSFCell cell = row.createCell((short) 0);
-	cell.setCellValue(getString("label.total.cabimentosReport"));
-	// sheet.addMergedRegion(new Region((short) row.getRowNum(), (short) 0,
-	// (short) row.getRowNum(), (short) 2));
-	cell.setCellStyle(excelStyle.getLabelStyle());
-	cell = row.createCell((short) 3);
-	cell.setCellValue(getCabimentos().doubleValue());
-	if (getCabimentos().doubleValue() < 0)
-	    cell.setCellStyle(excelStyle.getDoubleNegativeStyle());
-	else
-	    cell.setCellStyle(excelStyle.getDoubleStyle());
-	nextRow++;
-	row = sheet.createRow(nextRow);
-	cell = row.createCell((short) 0);
-	cell.setCellValue(getString("label.returnsExecuted.cabimentosReport"));
-	// sheet.addMergedRegion(new Region((short) row.getRowNum(), (short) 0,
-	// (short) row.getRowNum(), (short) 2));
-	cell.setCellStyle(excelStyle.getLabelStyle());
-	cell = row.createCell((short) 3);
-	cell.setCellValue(getJustifications().doubleValue());
-	if (getJustifications().doubleValue() < 0)
-	    cell.setCellStyle(excelStyle.getDoubleNegativeStyle());
-	else
-	    cell.setCellStyle(excelStyle.getDoubleStyle());
-	nextRow++;
-	row = sheet.createRow(nextRow);
-	cell = row.createCell((short) 0);
-	cell.setCellValue(getString("label.toExecute.cabimentosReport"));
-	// sheet.addMergedRegion(new Region((short) row.getRowNum(), (short) 0,
-	// (short) row.getRowNum(), (short) 2));
-	cell.setCellStyle(excelStyle.getLabelStyle());
-	cell = row.createCell((short) 3);
-	cell.setCellValue(getTotal().doubleValue());
-	if (getTotal().doubleValue() < 0)
-	    cell.setCellStyle(excelStyle.getDoubleNegativeStyle());
-	else
-	    cell.setCellStyle(excelStyle.getDoubleStyle());
-    }
+	public Double getJustifications() {
+		return justifications;
+	}
+
+	public void setJustifications(Double justifications) {
+		this.justifications = justifications;
+	}
+
+	public String getProjectCode() {
+		return projectCode;
+	}
+
+	public void setProjectCode(String projectCode) {
+		this.projectCode = projectCode;
+	}
+
+	public Double getTotal() {
+		return total;
+	}
+
+	public void setTotal(Double total) {
+		this.total = total;
+	}
+
+	public void copyFromDomain(ICabimentosReportLine cabimentosReportLine) {
+		if (cabimentosReportLine != null) {
+			setProjectCode(cabimentosReportLine.getProjectCode());
+			setCabimentos(cabimentosReportLine.getCabimentos());
+			setJustifications(cabimentosReportLine.getJustifications());
+			setTotal(cabimentosReportLine.getTotal());
+		}
+	}
+
+	public static InfoCabimentosReportLine newInfoFromDomain(ICabimentosReportLine cabimentosReportLine) {
+		InfoCabimentosReportLine infoCabimentosReportLine = null;
+		if (cabimentosReportLine != null) {
+			infoCabimentosReportLine = new InfoCabimentosReportLine();
+			infoCabimentosReportLine.copyFromDomain(cabimentosReportLine);
+		}
+		return infoCabimentosReportLine;
+	}
+
+	@Override
+	public void getLineToExcel(HSSFSheet sheet, ExcelStyle excelStyle, ReportType reportType) {
+		int nextRow = sheet.getLastRowNum() + 2;
+		HSSFRow row = sheet.createRow(nextRow);
+		HSSFCell cell = row.createCell((short) 0);
+		cell.setCellValue(getString("label.total.cabimentosReport"));
+		// sheet.addMergedRegion(new Region((short) row.getRowNum(), (short) 0,
+		// (short) row.getRowNum(), (short) 2));
+		cell.setCellStyle(excelStyle.getLabelStyle());
+		cell = row.createCell((short) 3);
+		cell.setCellValue(getCabimentos().doubleValue());
+		if (getCabimentos().doubleValue() < 0) {
+			cell.setCellStyle(excelStyle.getDoubleNegativeStyle());
+		} else {
+			cell.setCellStyle(excelStyle.getDoubleStyle());
+		}
+		nextRow++;
+		row = sheet.createRow(nextRow);
+		cell = row.createCell((short) 0);
+		cell.setCellValue(getString("label.returnsExecuted.cabimentosReport"));
+		// sheet.addMergedRegion(new Region((short) row.getRowNum(), (short) 0,
+		// (short) row.getRowNum(), (short) 2));
+		cell.setCellStyle(excelStyle.getLabelStyle());
+		cell = row.createCell((short) 3);
+		cell.setCellValue(getJustifications().doubleValue());
+		if (getJustifications().doubleValue() < 0) {
+			cell.setCellStyle(excelStyle.getDoubleNegativeStyle());
+		} else {
+			cell.setCellStyle(excelStyle.getDoubleStyle());
+		}
+		nextRow++;
+		row = sheet.createRow(nextRow);
+		cell = row.createCell((short) 0);
+		cell.setCellValue(getString("label.toExecute.cabimentosReport"));
+		// sheet.addMergedRegion(new Region((short) row.getRowNum(), (short) 0,
+		// (short) row.getRowNum(), (short) 2));
+		cell.setCellStyle(excelStyle.getLabelStyle());
+		cell = row.createCell((short) 3);
+		cell.setCellValue(getTotal().doubleValue());
+		if (getTotal().doubleValue() < 0) {
+			cell.setCellStyle(excelStyle.getDoubleNegativeStyle());
+		} else {
+			cell.setCellStyle(excelStyle.getDoubleStyle());
+		}
+	}
 }

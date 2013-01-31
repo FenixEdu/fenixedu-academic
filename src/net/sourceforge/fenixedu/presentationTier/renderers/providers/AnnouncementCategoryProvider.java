@@ -8,14 +8,14 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class AnnouncementCategoryProvider implements DataProvider {
 
-    @Override
-    public Converter getConverter() {
-	return new DomainObjectKeyArrayConverter();
-    }
+	@Override
+	public Converter getConverter() {
+		return new DomainObjectKeyArrayConverter();
+	}
 
-    @Override
-    public Object provide(Object source, Object currentValue) {
-	return RootDomainObject.getInstance().readAllDomainObjects(AnnouncementCategory.class);
-    }
+	@Override
+	public Object provide(Object source, Object currentValue) {
+		return RootDomainObject.getInstance().readAllDomainObjects(AnnouncementCategory.class);
+	}
 
 }

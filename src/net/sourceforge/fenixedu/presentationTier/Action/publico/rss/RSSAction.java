@@ -18,70 +18,70 @@ import de.nava.informa.impl.basic.Item;
 
 public abstract class RSSAction extends InformaRSSAction {
 
-    // private static Pattern sanitizeInputForXml = Pattern
-    // .compile("[^\\u0009\\u000A\\u000D\\u0020-\\uD7FF\\uE000-\\uFFFD\\x{10000}-\\x{10FFFF}]");
+	// private static Pattern sanitizeInputForXml = Pattern
+	// .compile("[^\\u0009\
 
-    private static Pattern sanitizeInputForXml = Pattern
-	    .compile("[^\\u0009\\u000A\\u000D\\u0020-\\uD7FF\\uE000-\\uFFFD\uD800\uDC00-\uDBFF\uDFFF]");
+	private static Pattern sanitizeInputForXml = Pattern
+			.compile("[^\\u0009\\u000A\\u000D\\u0020-\\uD7FF\\uE000-\\uFFFD\uD800\uDC00-\uDBFF\uDFFF]");
 
-    public static class SyndEntryFenixImpl extends SyndEntryImpl {
+	public static class SyndEntryFenixImpl extends SyndEntryImpl {
 
-	private final DomainObject domainObject;
+		private final DomainObject domainObject;
 
-	public SyndEntryFenixImpl(final DomainObject domainObject) {
-	    super();
-	    this.domainObject = domainObject;
+		public SyndEntryFenixImpl(final DomainObject domainObject) {
+			super();
+			this.domainObject = domainObject;
+		}
+
+		public ItemGuidIF getItemGuidIF(final ItemIF itemIF) {
+			return InformaRSSAction.getItemGuidIF(itemIF, domainObject);
+		}
+
 	}
 
-	public ItemGuidIF getItemGuidIF(final ItemIF itemIF) {
-	    return InformaRSSAction.getItemGuidIF(itemIF, domainObject);
+	private String sanitizeStringForXml(final String xml) {
+		return sanitizeInputForXml.matcher(xml).replaceAll("");
 	}
 
-    }
+	@Override
+	protected ChannelIF getRSSChannel(final HttpServletRequest request) throws Exception {
+		final ChannelBuilder builder = new ChannelBuilder();
 
-    private String sanitizeStringForXml(final String xml) {
-	return sanitizeInputForXml.matcher(xml).replaceAll("");
-    }
+		final ChannelIF channel = builder.createChannel(getFeedTitle(request));
+		channel.setDescription(getFeedDescription(request));
+		channel.setLocation(new URL(getFeedLink(request)));
+		String siteLocation = getSiteLocation(request);
+		if (siteLocation != null) {
+			channel.setSite(new URL(siteLocation));
+		}
 
-    @Override
-    protected ChannelIF getRSSChannel(final HttpServletRequest request) throws Exception {
-	final ChannelBuilder builder = new ChannelBuilder();
+		for (final SyndEntryFenixImpl syndEntry : getFeedEntries(request)) {
+			final ItemIF item = new Item();
+			item.setTitle(syndEntry.getTitle());
+			item.setDescription(sanitizeStringForXml(syndEntry.getDescription().getValue()));
+			item.setCreator(syndEntry.getAuthor());
+			item.setDate(syndEntry.getUpdatedDate());
+			item.setFound(syndEntry.getPublishedDate());
 
-	final ChannelIF channel = builder.createChannel(getFeedTitle(request));
-	channel.setDescription(getFeedDescription(request));
-	channel.setLocation(new URL(getFeedLink(request)));
-	String siteLocation = getSiteLocation(request);
-	if (siteLocation != null) {
-	    channel.setSite(new URL(siteLocation));
+			if (syndEntry.getLink() != null) {
+				item.setLink(new URL(syndEntry.getLink()));
+			}
+
+			item.setGuid(syndEntry.getItemGuidIF(item));
+			channel.addItem(item);
+		}
+
+		return channel;
 	}
 
-	for (final SyndEntryFenixImpl syndEntry : getFeedEntries(request)) {
-	    final ItemIF item = new Item();
-	    item.setTitle(syndEntry.getTitle());
-	    item.setDescription(sanitizeStringForXml(syndEntry.getDescription().getValue()));
-	    item.setCreator(syndEntry.getAuthor());
-	    item.setDate(syndEntry.getUpdatedDate());
-	    item.setFound(syndEntry.getPublishedDate());
+	protected abstract List<SyndEntryFenixImpl> getFeedEntries(HttpServletRequest request) throws Exception;
 
-	    if (syndEntry.getLink() != null) {
-		item.setLink(new URL(syndEntry.getLink()));
-	    }
+	protected abstract String getFeedTitle(HttpServletRequest request) throws Exception;
 
-	    item.setGuid(syndEntry.getItemGuidIF(item));
-	    channel.addItem(item);
-	}
+	protected abstract String getFeedDescription(HttpServletRequest request) throws Exception;
 
-	return channel;
-    }
+	protected abstract String getFeedLink(HttpServletRequest request) throws Exception;
 
-    protected abstract List<SyndEntryFenixImpl> getFeedEntries(HttpServletRequest request) throws Exception;
-
-    protected abstract String getFeedTitle(HttpServletRequest request) throws Exception;
-
-    protected abstract String getFeedDescription(HttpServletRequest request) throws Exception;
-
-    protected abstract String getFeedLink(HttpServletRequest request) throws Exception;
-
-    protected abstract String getSiteLocation(HttpServletRequest request) throws Exception;
+	protected abstract String getSiteLocation(HttpServletRequest request) throws Exception;
 
 }

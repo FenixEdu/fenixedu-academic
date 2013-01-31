@@ -8,11 +8,11 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class DeleteRestrictionFromDegreeCurricularPlan extends FenixService {
 
-    @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
-    @Service
-    public static void run(Integer restrictionID) throws FenixServiceException {
-	Restriction restriction = rootDomainObject.readRestrictionByOID(restrictionID);
+	@Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
+	@Service
+	public static void run(Integer restrictionID) throws FenixServiceException {
+		Restriction restriction = rootDomainObject.readRestrictionByOID(restrictionID);
 
-	restriction.delete();
-    }
+		restriction.delete();
+	}
 }

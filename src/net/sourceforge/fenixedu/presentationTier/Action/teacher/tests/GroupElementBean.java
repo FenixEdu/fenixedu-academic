@@ -7,31 +7,31 @@ import net.sourceforge.fenixedu.domain.tests.NewQuestionGroup;
 
 public class GroupElementBean implements Serializable {
 
-    NewQuestionGroup parent;
+	NewQuestionGroup parent;
 
-    NewQuestion child;
+	NewQuestion child;
 
-    public GroupElementBean(NewQuestion child) {
-	super();
+	public GroupElementBean(NewQuestion child) {
+		super();
 
-	this.setChild(child);
-	this.setParent(null);
-    }
+		this.setChild(child);
+		this.setParent(null);
+	}
 
-    public NewQuestion getChild() {
-	return child;
-    }
+	public NewQuestion getChild() {
+		return child;
+	}
 
-    public void setChild(NewQuestion child) {
-	this.child = child;
-    }
+	public void setChild(NewQuestion child) {
+		this.child = child;
+	}
 
-    public NewQuestionGroup getParent() {
-	return parent;
-    }
+	public NewQuestionGroup getParent() {
+		return parent;
+	}
 
-    public void setParent(NewQuestionGroup parent) {
-	this.parent = parent;
-    }
+	public void setParent(NewQuestionGroup parent) {
+		this.parent = parent;
+	}
 
 }

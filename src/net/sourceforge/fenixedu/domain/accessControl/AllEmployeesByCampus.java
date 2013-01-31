@@ -17,74 +17,77 @@ import net.sourceforge.fenixedu.domain.teacher.CategoryType;
 
 public class AllEmployeesByCampus extends Group {
 
-    private final Campus campus;
+	private final Campus campus;
 
-    public AllEmployeesByCampus(Campus campus) {
-	super();
-	this.campus = campus;
-    }
+	public AllEmployeesByCampus(Campus campus) {
+		super();
+		this.campus = campus;
+	}
 
-    public Campus getCampus() {
-	return campus;
-    }
+	public Campus getCampus() {
+		return campus;
+	}
 
-    @Override
-    public boolean isMember(final Person person) {
-	return isMember(person, getCampus());
-    }
+	@Override
+	public boolean isMember(final Person person) {
+		return isMember(person, getCampus());
+	}
 
-    public boolean isMember(final Person person, final Campus campus) {
-	if (person != null) {
-	    PersonProfessionalData personProfessionalData = person.getPersonProfessionalData();
-	    if (personProfessionalData != null) {
-		GiafProfessionalData giafProfessionalDataByCategoryType = personProfessionalData
-			.getGiafProfessionalDataByCategoryType(CategoryType.EMPLOYEE);
-		if (giafProfessionalDataByCategoryType != null && giafProfessionalDataByCategoryType.getCampus() != null
-			&& giafProfessionalDataByCategoryType.getCampus().equals(campus)
-			&& !giafProfessionalDataByCategoryType.getContractSituation().getEndSituation()) {
-		    return true;
+	public boolean isMember(final Person person, final Campus campus) {
+		if (person != null) {
+			PersonProfessionalData personProfessionalData = person.getPersonProfessionalData();
+			if (personProfessionalData != null) {
+				GiafProfessionalData giafProfessionalDataByCategoryType =
+						personProfessionalData.getGiafProfessionalDataByCategoryType(CategoryType.EMPLOYEE);
+				if (giafProfessionalDataByCategoryType != null && giafProfessionalDataByCategoryType.getCampus() != null
+						&& giafProfessionalDataByCategoryType.getCampus().equals(campus)
+						&& !giafProfessionalDataByCategoryType.getContractSituation().getEndSituation()) {
+					return true;
+				}
+			}
 		}
-	    }
-	}
-	return false;
-    }
-
-    @Override
-    public Set<Person> getElements() {
-	final Set<Person> people = new HashSet<Person>();
-	final Campus campus = getCampus();
-	for (final Person person : Role.getRoleByRoleType(RoleType.EMPLOYEE).getAssociatedPersons()) {
-	    if (isMember(person, campus)) {
-		people.add(person);
-	    }
-	}
-	return people;
-    }
-
-    @Override
-    protected Argument[] getExpressionArguments() {
-	return new Argument[] { new IdOperator(getCampus()) };
-    }
-
-    public static class Builder implements GroupBuilder {
-
-	public Group build(Object[] arguments) {
-	    final Campus campus = (Campus) arguments[0];
-	    if (campus == null) {
-		throw new VariableNotDefinedException("campus");
-	    }
-	    return new AllEmployeesByCampus(campus);
-
+		return false;
 	}
 
-	public int getMaxArguments() {
-	    return 1;
+	@Override
+	public Set<Person> getElements() {
+		final Set<Person> people = new HashSet<Person>();
+		final Campus campus = getCampus();
+		for (final Person person : Role.getRoleByRoleType(RoleType.EMPLOYEE).getAssociatedPersons()) {
+			if (isMember(person, campus)) {
+				people.add(person);
+			}
+		}
+		return people;
 	}
 
-	public int getMinArguments() {
-	    return 1;
+	@Override
+	protected Argument[] getExpressionArguments() {
+		return new Argument[] { new IdOperator(getCampus()) };
 	}
 
-    }
+	public static class Builder implements GroupBuilder {
+
+		@Override
+		public Group build(Object[] arguments) {
+			final Campus campus = (Campus) arguments[0];
+			if (campus == null) {
+				throw new VariableNotDefinedException("campus");
+			}
+			return new AllEmployeesByCampus(campus);
+
+		}
+
+		@Override
+		public int getMaxArguments() {
+			return 1;
+		}
+
+		@Override
+		public int getMinArguments() {
+			return 1;
+		}
+
+	}
 
 }

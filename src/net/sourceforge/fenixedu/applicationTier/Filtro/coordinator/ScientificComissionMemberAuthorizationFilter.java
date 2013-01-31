@@ -11,24 +11,24 @@ import pt.utl.ist.berserk.ServiceResponse;
 
 public class ScientificComissionMemberAuthorizationFilter extends AuthorizationByRoleFilter {
 
-    @Override
-    protected RoleType getRoleType() {
-	return RoleType.COORDINATOR;
-    }
-
-    @Override
-    public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
-	super.execute(request, response);
-
-	IUserView userView = getRemoteUser(request);
-	Person person = userView.getPerson();
-
-	// first argument must be a degree curricularPlan
-	DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) request.getServiceParameters().getParameter(0);
-
-	if (!degreeCurricularPlan.getDegree().isMemberOfCurrentScientificCommission(person)) {
-	    throw new NotAuthorizedFilterException("degree.scientificCommission.notMember");
+	@Override
+	protected RoleType getRoleType() {
+		return RoleType.COORDINATOR;
 	}
-    }
+
+	@Override
+	public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
+		super.execute(request, response);
+
+		IUserView userView = getRemoteUser(request);
+		Person person = userView.getPerson();
+
+		// first argument must be a degree curricularPlan
+		DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) request.getServiceParameters().getParameter(0);
+
+		if (!degreeCurricularPlan.getDegree().isMemberOfCurrentScientificCommission(person)) {
+			throw new NotAuthorizedFilterException("degree.scientificCommission.notMember");
+		}
+	}
 
 }

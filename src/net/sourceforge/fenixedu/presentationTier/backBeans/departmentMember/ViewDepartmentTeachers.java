@@ -42,304 +42,310 @@ import org.apache.commons.collections.comparators.ComparatorChain;
  */
 public class ViewDepartmentTeachers extends FenixBackingBean {
 
-    private Integer selectedExecutionYearID;
+	private Integer selectedExecutionYearID;
 
-    private InfoTeacher selectedTeacher;
+	private InfoTeacher selectedTeacher;
 
-    private List<ExecutionCourse> lecturedDegreeExecutionCourses;
+	private List<ExecutionCourse> lecturedDegreeExecutionCourses;
 
-    private Map<Integer, String> lecturedDegreeExecutionCourseDegreeNames;
+	private Map<Integer, String> lecturedDegreeExecutionCourseDegreeNames;
 
-    private List<ExecutionCourse> lecturedMasterDegreeExecutionCourses;
+	private List<ExecutionCourse> lecturedMasterDegreeExecutionCourses;
 
-    private Map<Integer, String> lecturedMasterDegreeExecutionCourseDegreeNames;
+	private Map<Integer, String> lecturedMasterDegreeExecutionCourseDegreeNames;
 
-    private List<MasterDegreeThesisDataVersion> guidedMasterDegreeThesisList;
+	private List<MasterDegreeThesisDataVersion> guidedMasterDegreeThesisList;
 
-    private List<SelectItem> executionYearItems;
+	private List<SelectItem> executionYearItems;
 
-    private List<Advise> finalDegreeWorkAdvises;
+	private List<Advise> finalDegreeWorkAdvises;
 
-    private List<PersonFunction> teacherFunctions;
+	private List<PersonFunction> teacherFunctions;
 
-    private ResourceBundle bundle;
+	private ResourceBundle bundle;
 
-    private static final String BUNDLE_NAME = "resources/DepartmentMemberResources";
+	private static final String BUNDLE_NAME = "resources/DepartmentMemberResources";
 
-    private static final String ALL_EXECUTION_YEARS_KEY = "label.common.allExecutionYears";
+	private static final String ALL_EXECUTION_YEARS_KEY = "label.common.allExecutionYears";
 
-    public ResourceBundle getBundle() {
+	public ResourceBundle getBundle() {
 
-	if (this.bundle == null) {
-	    this.bundle = getResourceBundle(BUNDLE_NAME);
+		if (this.bundle == null) {
+			this.bundle = getResourceBundle(BUNDLE_NAME);
+		}
+
+		return this.bundle;
 	}
 
-	return this.bundle;
-    }
+	public Integer getSelectedTeacherID() {
 
-    public Integer getSelectedTeacherID() {
-
-	return (Integer) this.getViewState().getAttribute("selectedTeacherID");
-
-    }
-
-    public void setSelectedTeacherID(String selectedTeacherId) {
-	this.getViewState().setAttribute("selectedTeacherId", selectedTeacherId);
-    }
-
-    public Integer getSelectedExecutionYearID() throws FenixFilterException, FenixServiceException {
-
-	if (this.selectedExecutionYearID == null) {
-
-	    InfoExecutionYear infoExecutionYear = (InfoExecutionYear) ReadCurrentExecutionYear.run();
-
-	    if (infoExecutionYear != null) {
-		this.selectedExecutionYearID = infoExecutionYear.getIdInternal();
-	    } else {
-		this.selectedExecutionYearID = 0;
-	    }
-	}
-
-	return this.selectedExecutionYearID;
-    }
-
-    public void setSelectedExecutionYearID(Integer selectedExecutionYearID) {
-	this.selectedExecutionYearID = selectedExecutionYearID;
-    }
-
-    public List<Teacher> getDepartmentTeachers() throws FenixFilterException, FenixServiceException {
-	Integer executionYearID = getSelectedExecutionYearID();
-
-	if (executionYearID == 0) {
-	    executionYearID = null;
-	}
-
-	List<Teacher> result = new ArrayList<Teacher>((List<Teacher>) ServiceUtils.executeService(
-		"ReadDepartmentTeachersByDepartmentIDAndExecutionYearID", new Object[] { getDepartment().getIdInternal(),
-			executionYearID }));
-
-	ComparatorChain comparatorChain = new ComparatorChain();
-	comparatorChain.addComparator(new BeanComparator("teacherId"));
-
-	Collections.sort(result, comparatorChain);
-
-	return result;
-    }
-
-    public Department getDepartment() {
-	return getUserView().getPerson().getTeacher().getLastWorkingDepartment();
-
-    }
-
-    public void selectTeacher(ActionEvent event) throws NumberFormatException, FenixFilterException, FenixServiceException {
-
-	String teacherId = getRequestParameter("teacherId");
-
-	setSelectedTeacherID(teacherId);
-    }
-
-    public InfoTeacher getSelectedTeacher() throws FenixFilterException, FenixServiceException {
-
-	if (this.selectedTeacher == null) {
-	    this.selectedTeacher = (InfoTeacher) ServiceUtils.executeService("ReadTeacherByOID",
-		    new Object[] { getSelectedTeacherID() });
-	}
-
-	return this.selectedTeacher;
-    }
-
-    public List<SelectItem> getExecutionYears() throws FenixFilterException, FenixServiceException {
-
-	if (this.executionYearItems == null) {
-
-	    List<InfoExecutionYear> executionYears = (List<InfoExecutionYear>) ReadNotClosedExecutionYears.run();
-
-	    List<SelectItem> result = new ArrayList<SelectItem>(executionYears.size());
-	    for (InfoExecutionYear executionYear : executionYears) {
-		result.add(new SelectItem(executionYear.getIdInternal(), executionYear.getYear()));
-	    }
-
-	    result.add(0, new SelectItem(0, getBundle().getString(ALL_EXECUTION_YEARS_KEY)));
-
-	    this.executionYearItems = result;
-	}
-
-	return this.executionYearItems;
-
-    }
-
-    public List<ExecutionCourse> getLecturedDegreeExecutionCourses() throws FenixFilterException, FenixServiceException {
-
-	if (this.lecturedDegreeExecutionCourses == null && this.getSelectedExecutionYearID() != null) {
-	    this.lecturedDegreeExecutionCourses = readLecturedExecutionCourses(DegreeType.DEGREE);
-	    this.lecturedDegreeExecutionCourseDegreeNames = computeExecutionCoursesDegreeAcronyms(this.lecturedDegreeExecutionCourses);
+		return (Integer) this.getViewState().getAttribute("selectedTeacherID");
 
 	}
 
-	return this.lecturedDegreeExecutionCourses;
-    }
+	public void setSelectedTeacherID(String selectedTeacherId) {
+		this.getViewState().setAttribute("selectedTeacherId", selectedTeacherId);
+	}
 
-    public List<ExecutionCourse> getLecturedMasterDegreeExecutionCourses() throws FenixFilterException, FenixServiceException {
+	public Integer getSelectedExecutionYearID() throws FenixFilterException, FenixServiceException {
 
-	if (this.lecturedMasterDegreeExecutionCourses == null && this.getSelectedExecutionYearID() != null) {
-	    this.lecturedMasterDegreeExecutionCourses = readLecturedExecutionCourses(DegreeType.MASTER_DEGREE);
-	    this.lecturedMasterDegreeExecutionCourseDegreeNames = computeExecutionCoursesDegreeAcronyms(this.lecturedMasterDegreeExecutionCourses);
+		if (this.selectedExecutionYearID == null) {
+
+			InfoExecutionYear infoExecutionYear = ReadCurrentExecutionYear.run();
+
+			if (infoExecutionYear != null) {
+				this.selectedExecutionYearID = infoExecutionYear.getIdInternal();
+			} else {
+				this.selectedExecutionYearID = 0;
+			}
+		}
+
+		return this.selectedExecutionYearID;
+	}
+
+	public void setSelectedExecutionYearID(Integer selectedExecutionYearID) {
+		this.selectedExecutionYearID = selectedExecutionYearID;
+	}
+
+	public List<Teacher> getDepartmentTeachers() throws FenixFilterException, FenixServiceException {
+		Integer executionYearID = getSelectedExecutionYearID();
+
+		if (executionYearID == 0) {
+			executionYearID = null;
+		}
+
+		List<Teacher> result =
+				new ArrayList<Teacher>((List<Teacher>) ServiceUtils.executeService(
+						"ReadDepartmentTeachersByDepartmentIDAndExecutionYearID", new Object[] { getDepartment().getIdInternal(),
+								executionYearID }));
+
+		ComparatorChain comparatorChain = new ComparatorChain();
+		comparatorChain.addComparator(new BeanComparator("teacherId"));
+
+		Collections.sort(result, comparatorChain);
+
+		return result;
+	}
+
+	public Department getDepartment() {
+		return getUserView().getPerson().getTeacher().getLastWorkingDepartment();
 
 	}
 
-	return this.lecturedMasterDegreeExecutionCourses;
-    }
+	public void selectTeacher(ActionEvent event) throws NumberFormatException, FenixFilterException, FenixServiceException {
 
-    public Map<Integer, String> getLecturedDegreeExecutionCourseDegreeNames() {
-	return lecturedDegreeExecutionCourseDegreeNames;
-    }
+		String teacherId = getRequestParameter("teacherId");
 
-    public Map<Integer, String> getLecturedMasterDegreeExecutionCourseDegreeNames() {
-	return lecturedMasterDegreeExecutionCourseDegreeNames;
-    }
-
-    private List<ExecutionCourse> readLecturedExecutionCourses(DegreeType degreeType) throws FenixFilterException,
-	    FenixServiceException {
-
-	Integer executionYearID = getSelectedExecutionYearID();
-
-	if (executionYearID == 0) {
-	    executionYearID = null;
+		setSelectedTeacherID(teacherId);
 	}
 
-	List<ExecutionCourse> lecturedExecutionCourses = (List<ExecutionCourse>) ServiceUtils.executeService(
-		"ReadLecturedExecutionCoursesByTeacherIDAndExecutionYearIDAndDegreeType", new Object[] { getSelectedTeacherID(),
-			executionYearID, degreeType });
+	public InfoTeacher getSelectedTeacher() throws FenixFilterException, FenixServiceException {
 
-	List<ExecutionCourse> result = new ArrayList<ExecutionCourse>();
+		if (this.selectedTeacher == null) {
+			this.selectedTeacher =
+					(InfoTeacher) ServiceUtils.executeService("ReadTeacherByOID", new Object[] { getSelectedTeacherID() });
+		}
 
-	result.addAll(lecturedExecutionCourses);
-
-	ComparatorChain comparatorChain = new ComparatorChain();
-	BeanComparator executionYearComparator = new BeanComparator("executionPeriod.executionYear.year");
-	BeanComparator semesterComparator = new BeanComparator("executionPeriod.semester");
-
-	comparatorChain.addComparator(executionYearComparator);
-	comparatorChain.addComparator(semesterComparator);
-
-	Collections.sort(result, comparatorChain);
-
-	return result;
-    }
-
-    private Map<Integer, String> computeExecutionCoursesDegreeAcronyms(List<ExecutionCourse> executionCourses) {
-	Map<Integer, String> result = new HashMap<Integer, String>();
-
-	for (ExecutionCourse executionCourse : executionCourses) {
-	    String degreeAcronyns = computeDegreeAcronyms(executionCourse);
-	    result.put(executionCourse.getIdInternal(), degreeAcronyns);
+		return this.selectedTeacher;
 	}
 
-	return result;
-    }
+	public List<SelectItem> getExecutionYears() throws FenixFilterException, FenixServiceException {
 
-    private String computeDegreeAcronyms(ExecutionCourse executionCourse) {
-	StringBuilder degreeAcronyms = new StringBuilder();
+		if (this.executionYearItems == null) {
 
-	List<CurricularCourse> curricularCourses = executionCourse.getAssociatedCurricularCourses();
-	Set<String> processedAcronyns = new HashSet<String>();
+			List<InfoExecutionYear> executionYears = ReadNotClosedExecutionYears.run();
 
-	for (CurricularCourse curricularCourse : curricularCourses) {
-	    String degreeAcronym = curricularCourse.getDegreeCurricularPlan().getDegree().getSigla();
+			List<SelectItem> result = new ArrayList<SelectItem>(executionYears.size());
+			for (InfoExecutionYear executionYear : executionYears) {
+				result.add(new SelectItem(executionYear.getIdInternal(), executionYear.getYear()));
+			}
 
-	    if (!processedAcronyns.contains(degreeAcronym)) {
-		degreeAcronyms.append(degreeAcronym).append(",");
-		processedAcronyns.add(degreeAcronym);
+			result.add(0, new SelectItem(0, getBundle().getString(ALL_EXECUTION_YEARS_KEY)));
 
-	    }
-	}
+			this.executionYearItems = result;
+		}
 
-	if (degreeAcronyms.toString().endsWith(",")) {
-	    degreeAcronyms.deleteCharAt(degreeAcronyms.length() - 1);
-	}
-
-	return degreeAcronyms.toString();
-
-    }
-
-    public List<Advise> getFinalDegreeWorkAdvises() throws FenixFilterException, FenixServiceException {
-
-	if (this.finalDegreeWorkAdvises == null && this.getSelectedExecutionYearID() != null) {
-	    Integer executionYearID = this.getSelectedExecutionYearID();
-
-	    if (executionYearID == 0) {
-		executionYearID = null;
-	    }
-
-	    List<Advise> result = new ArrayList<Advise>((List<Advise>) ServiceUtils.executeService(
-		    "ReadTeacherAdvisesByTeacherIDAndAdviseTypeAndExecutionYearID", new Object[] { AdviseType.FINAL_WORK_DEGREE,
-			    getSelectedTeacherID(), executionYearID }));
-
-	    ComparatorChain comparatorChain = new ComparatorChain();
-	    BeanComparator executionYearComparator = new BeanComparator("student.number");
-
-	    comparatorChain.addComparator(executionYearComparator);
-
-	    Collections.sort(result, comparatorChain);
-
-	    this.finalDegreeWorkAdvises = result;
+		return this.executionYearItems;
 
 	}
-	return this.finalDegreeWorkAdvises;
-    }
 
-    public List<MasterDegreeThesisDataVersion> getGuidedMasterDegreeThesisList() throws FenixFilterException,
-	    FenixServiceException {
-	if (this.guidedMasterDegreeThesisList == null && this.getSelectedExecutionYearID() != null) {
-	    Integer executionYearID = this.getSelectedExecutionYearID();
+	public List<ExecutionCourse> getLecturedDegreeExecutionCourses() throws FenixFilterException, FenixServiceException {
 
-	    if (executionYearID == 0) {
-		executionYearID = null;
-	    }
+		if (this.lecturedDegreeExecutionCourses == null && this.getSelectedExecutionYearID() != null) {
+			this.lecturedDegreeExecutionCourses = readLecturedExecutionCourses(DegreeType.DEGREE);
+			this.lecturedDegreeExecutionCourseDegreeNames =
+					computeExecutionCoursesDegreeAcronyms(this.lecturedDegreeExecutionCourses);
 
-	    this.guidedMasterDegreeThesisList = (List<MasterDegreeThesisDataVersion>) ServiceUtils.executeService(
-		    "ReadGuidedMasterDegreeThesisByTeacherIDAndExecutionYearID", new Object[] { getSelectedTeacherID(),
-			    executionYearID });
+		}
+
+		return this.lecturedDegreeExecutionCourses;
 	}
 
-	return this.guidedMasterDegreeThesisList;
-    }
+	public List<ExecutionCourse> getLecturedMasterDegreeExecutionCourses() throws FenixFilterException, FenixServiceException {
 
-    public List<PersonFunction> getTeacherFunctions() throws FenixFilterException, FenixServiceException {
-	if (this.teacherFunctions == null && this.getSelectedExecutionYearID() != null) {
-	    Integer executionYearID = this.getSelectedExecutionYearID();
+		if (this.lecturedMasterDegreeExecutionCourses == null && this.getSelectedExecutionYearID() != null) {
+			this.lecturedMasterDegreeExecutionCourses = readLecturedExecutionCourses(DegreeType.MASTER_DEGREE);
+			this.lecturedMasterDegreeExecutionCourseDegreeNames =
+					computeExecutionCoursesDegreeAcronyms(this.lecturedMasterDegreeExecutionCourses);
 
-	    if (executionYearID == 0) {
-		executionYearID = null;
-	    }
+		}
 
-	    Teacher teacher = rootDomainObject.readTeacherByOID(getSelectedTeacherID());
-
-	    List<PersonFunction> result = new ArrayList<PersonFunction>(
-		    (List<PersonFunction>) ReadPersonFunctionsByPersonIDAndExecutionYearID.run(teacher.getPerson()
-			    .getIdInternal(), executionYearID));
-
-	    ComparatorChain comparatorChain = new ComparatorChain();
-	    BeanComparator beginDateComparator = new BeanComparator("beginDate");
-
-	    comparatorChain.addComparator(beginDateComparator);
-
-	    Collections.sort(result, comparatorChain);
-
-	    this.teacherFunctions = result;
+		return this.lecturedMasterDegreeExecutionCourses;
 	}
 
-	return this.teacherFunctions;
+	public Map<Integer, String> getLecturedDegreeExecutionCourseDegreeNames() {
+		return lecturedDegreeExecutionCourseDegreeNames;
+	}
 
-    }
+	public Map<Integer, String> getLecturedMasterDegreeExecutionCourseDegreeNames() {
+		return lecturedMasterDegreeExecutionCourseDegreeNames;
+	}
 
-    public void onSelectedExecutionYearChanged(ValueChangeEvent valueChangeEvent) {
-	setSelectedExecutionYearID((Integer) valueChangeEvent.getNewValue());
-	this.lecturedDegreeExecutionCourses = null;
-	this.lecturedMasterDegreeExecutionCourses = null;
-	this.finalDegreeWorkAdvises = null;
-	this.guidedMasterDegreeThesisList = null;
-	this.teacherFunctions = null;
-    }
+	private List<ExecutionCourse> readLecturedExecutionCourses(DegreeType degreeType) throws FenixFilterException,
+			FenixServiceException {
+
+		Integer executionYearID = getSelectedExecutionYearID();
+
+		if (executionYearID == 0) {
+			executionYearID = null;
+		}
+
+		List<ExecutionCourse> lecturedExecutionCourses =
+				(List<ExecutionCourse>) ServiceUtils.executeService(
+						"ReadLecturedExecutionCoursesByTeacherIDAndExecutionYearIDAndDegreeType", new Object[] {
+								getSelectedTeacherID(), executionYearID, degreeType });
+
+		List<ExecutionCourse> result = new ArrayList<ExecutionCourse>();
+
+		result.addAll(lecturedExecutionCourses);
+
+		ComparatorChain comparatorChain = new ComparatorChain();
+		BeanComparator executionYearComparator = new BeanComparator("executionPeriod.executionYear.year");
+		BeanComparator semesterComparator = new BeanComparator("executionPeriod.semester");
+
+		comparatorChain.addComparator(executionYearComparator);
+		comparatorChain.addComparator(semesterComparator);
+
+		Collections.sort(result, comparatorChain);
+
+		return result;
+	}
+
+	private Map<Integer, String> computeExecutionCoursesDegreeAcronyms(List<ExecutionCourse> executionCourses) {
+		Map<Integer, String> result = new HashMap<Integer, String>();
+
+		for (ExecutionCourse executionCourse : executionCourses) {
+			String degreeAcronyns = computeDegreeAcronyms(executionCourse);
+			result.put(executionCourse.getIdInternal(), degreeAcronyns);
+		}
+
+		return result;
+	}
+
+	private String computeDegreeAcronyms(ExecutionCourse executionCourse) {
+		StringBuilder degreeAcronyms = new StringBuilder();
+
+		List<CurricularCourse> curricularCourses = executionCourse.getAssociatedCurricularCourses();
+		Set<String> processedAcronyns = new HashSet<String>();
+
+		for (CurricularCourse curricularCourse : curricularCourses) {
+			String degreeAcronym = curricularCourse.getDegreeCurricularPlan().getDegree().getSigla();
+
+			if (!processedAcronyns.contains(degreeAcronym)) {
+				degreeAcronyms.append(degreeAcronym).append(",");
+				processedAcronyns.add(degreeAcronym);
+
+			}
+		}
+
+		if (degreeAcronyms.toString().endsWith(",")) {
+			degreeAcronyms.deleteCharAt(degreeAcronyms.length() - 1);
+		}
+
+		return degreeAcronyms.toString();
+
+	}
+
+	public List<Advise> getFinalDegreeWorkAdvises() throws FenixFilterException, FenixServiceException {
+
+		if (this.finalDegreeWorkAdvises == null && this.getSelectedExecutionYearID() != null) {
+			Integer executionYearID = this.getSelectedExecutionYearID();
+
+			if (executionYearID == 0) {
+				executionYearID = null;
+			}
+
+			List<Advise> result =
+					new ArrayList<Advise>((List<Advise>) ServiceUtils.executeService(
+							"ReadTeacherAdvisesByTeacherIDAndAdviseTypeAndExecutionYearID", new Object[] {
+									AdviseType.FINAL_WORK_DEGREE, getSelectedTeacherID(), executionYearID }));
+
+			ComparatorChain comparatorChain = new ComparatorChain();
+			BeanComparator executionYearComparator = new BeanComparator("student.number");
+
+			comparatorChain.addComparator(executionYearComparator);
+
+			Collections.sort(result, comparatorChain);
+
+			this.finalDegreeWorkAdvises = result;
+
+		}
+		return this.finalDegreeWorkAdvises;
+	}
+
+	public List<MasterDegreeThesisDataVersion> getGuidedMasterDegreeThesisList() throws FenixFilterException,
+			FenixServiceException {
+		if (this.guidedMasterDegreeThesisList == null && this.getSelectedExecutionYearID() != null) {
+			Integer executionYearID = this.getSelectedExecutionYearID();
+
+			if (executionYearID == 0) {
+				executionYearID = null;
+			}
+
+			this.guidedMasterDegreeThesisList =
+					(List<MasterDegreeThesisDataVersion>) ServiceUtils.executeService(
+							"ReadGuidedMasterDegreeThesisByTeacherIDAndExecutionYearID", new Object[] { getSelectedTeacherID(),
+									executionYearID });
+		}
+
+		return this.guidedMasterDegreeThesisList;
+	}
+
+	public List<PersonFunction> getTeacherFunctions() throws FenixFilterException, FenixServiceException {
+		if (this.teacherFunctions == null && this.getSelectedExecutionYearID() != null) {
+			Integer executionYearID = this.getSelectedExecutionYearID();
+
+			if (executionYearID == 0) {
+				executionYearID = null;
+			}
+
+			Teacher teacher = rootDomainObject.readTeacherByOID(getSelectedTeacherID());
+
+			List<PersonFunction> result =
+					new ArrayList<PersonFunction>(ReadPersonFunctionsByPersonIDAndExecutionYearID.run(teacher.getPerson()
+							.getIdInternal(), executionYearID));
+
+			ComparatorChain comparatorChain = new ComparatorChain();
+			BeanComparator beginDateComparator = new BeanComparator("beginDate");
+
+			comparatorChain.addComparator(beginDateComparator);
+
+			Collections.sort(result, comparatorChain);
+
+			this.teacherFunctions = result;
+		}
+
+		return this.teacherFunctions;
+
+	}
+
+	public void onSelectedExecutionYearChanged(ValueChangeEvent valueChangeEvent) {
+		setSelectedExecutionYearID((Integer) valueChangeEvent.getNewValue());
+		this.lecturedDegreeExecutionCourses = null;
+		this.lecturedMasterDegreeExecutionCourses = null;
+		this.finalDegreeWorkAdvises = null;
+		this.guidedMasterDegreeThesisList = null;
+		this.teacherFunctions = null;
+	}
 
 }

@@ -15,11 +15,11 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class CheckIfUserCanAccessFile extends FenixService {
 
-    @Service
-    public static Boolean run(final String username, final String externalStorageIdentification) {
-	final Person person = Person.readPersonByUsername(username);
-	final File file = File.readByExternalStorageIdentification(externalStorageIdentification);
-	return person != null && file != null && file.isPersonAllowedToAccess(person);
-    }
+	@Service
+	public static Boolean run(final String username, final String externalStorageIdentification) {
+		final Person person = Person.readPersonByUsername(username);
+		final File file = File.readByExternalStorageIdentification(externalStorageIdentification);
+		return person != null && file != null && file.isPersonAllowedToAccess(person);
+	}
 
 }

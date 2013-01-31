@@ -12,26 +12,26 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public enum RegimeType {
 
-    INTEGRAL_TIME, PARTIAL_TIME, EXCLUSIVENESS;
+	INTEGRAL_TIME, PARTIAL_TIME, EXCLUSIVENESS;
 
-    public String getName() {
-	return name();
-    }
+	public String getName() {
+		return name();
+	}
 
-    public String localizedName(Locale locale) {
-	return ResourceBundle.getBundle("resources.EnumerationResources", locale).getString(qualifiedName());
-    }
+	public String localizedName(Locale locale) {
+		return ResourceBundle.getBundle("resources.EnumerationResources", locale).getString(qualifiedName());
+	}
 
-    protected String qualifiedName() {
-	return StringAppender.append(this.getClass().getSimpleName(), ".", name());
-    }
+	protected String qualifiedName() {
+		return StringAppender.append(this.getClass().getSimpleName(), ".", name());
+	}
 
-    protected String localizedName() {
-	return localizedName(Language.getLocale());
-    }
+	protected String localizedName() {
+		return localizedName(Language.getLocale());
+	}
 
-    public String getLocalizedName() {
-	return localizedName();
-    }
+	public String getLocalizedName() {
+		return localizedName();
+	}
 
 }

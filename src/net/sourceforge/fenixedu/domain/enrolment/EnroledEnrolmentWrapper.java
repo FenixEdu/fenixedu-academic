@@ -9,33 +9,33 @@ import net.sourceforge.fenixedu.domain.curricularRules.CurricularRule;
 
 public class EnroledEnrolmentWrapper extends EnroledCurriculumModuleWrapper {
 
-    private static final long serialVersionUID = 8766503234444669518L;
+	private static final long serialVersionUID = 8766503234444669518L;
 
-    public EnroledEnrolmentWrapper(final Enrolment enrolment, final ExecutionSemester executionSemester) {
-	super(enrolment, executionSemester);
-    }
+	public EnroledEnrolmentWrapper(final Enrolment enrolment, final ExecutionSemester executionSemester) {
+		super(enrolment, executionSemester);
+	}
 
-    @Override
-    public boolean canCollectRules() {
-	return getCurriculumModule().parentCurriculumGroupIsNoCourseGroupCurriculumGroup() ? false : super.canCollectRules();
-    }
+	@Override
+	public boolean canCollectRules() {
+		return getCurriculumModule().parentCurriculumGroupIsNoCourseGroupCurriculumGroup() ? false : super.canCollectRules();
+	}
 
-    @Override
-    public Enrolment getCurriculumModule() {
-	return (Enrolment) super.getCurriculumModule();
-    }
+	@Override
+	public Enrolment getCurriculumModule() {
+		return (Enrolment) super.getCurriculumModule();
+	}
 
-    private boolean isApproved() {
-	return getCurriculumModule().isApproved();
-    }
+	private boolean isApproved() {
+		return getCurriculumModule().isApproved();
+	}
 
-    @Override
-    public List<CurricularRule> getCurricularRulesFromDegreeModule(ExecutionSemester executionSemester) {
-	return isApproved() ? Collections.EMPTY_LIST : super.getCurricularRulesFromDegreeModule(executionSemester);
-    }
+	@Override
+	public List<CurricularRule> getCurricularRulesFromDegreeModule(ExecutionSemester executionSemester) {
+		return isApproved() ? Collections.EMPTY_LIST : super.getCurricularRulesFromDegreeModule(executionSemester);
+	}
 
-    @Override
-    public boolean isDissertation() {
-	return getCurriculumModule().getDegreeModule().isDissertation();
-    }
+	@Override
+	public boolean isDissertation() {
+		return getCurriculumModule().getDegreeModule().isDissertation();
+	}
 }

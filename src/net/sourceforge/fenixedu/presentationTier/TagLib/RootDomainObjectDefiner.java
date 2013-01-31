@@ -8,43 +8,45 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 
 public class RootDomainObjectDefiner extends BodyTagSupport {
 
-    private String scope;
-    private String id;
+	private String scope;
+	private String id;
 
-    public String getScope() {
-	return scope;
-    }
-
-    public void setScope(String scope) {
-	this.scope = scope;
-    }
-
-    public String getId() {
-	return id;
-    }
-
-    public void setId(String id) {
-	this.id = id;
-    }
-
-    public int getPageScope() {
-	if (scope == null) {
-	    return PageContext.PAGE_SCOPE;
-	} else if (scope.equalsIgnoreCase("page")) {
-	    return PageContext.PAGE_SCOPE;
-	} else if (scope.equalsIgnoreCase("request")) {
-	    return PageContext.REQUEST_SCOPE;
-	} else if (scope.equalsIgnoreCase("session")) {
-	    return PageContext.SESSION_SCOPE;
-	} else {
-	    return PageContext.PAGE_SCOPE;
+	public String getScope() {
+		return scope;
 	}
-    }
 
-    @Override
-    public int doEndTag() throws JspException {
-	pageContext.setAttribute(getId(), RootDomainObject.getInstance(), getPageScope());
-	return super.doEndTag();
-    }
+	public void setScope(String scope) {
+		this.scope = scope;
+	}
+
+	@Override
+	public String getId() {
+		return id;
+	}
+
+	@Override
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public int getPageScope() {
+		if (scope == null) {
+			return PageContext.PAGE_SCOPE;
+		} else if (scope.equalsIgnoreCase("page")) {
+			return PageContext.PAGE_SCOPE;
+		} else if (scope.equalsIgnoreCase("request")) {
+			return PageContext.REQUEST_SCOPE;
+		} else if (scope.equalsIgnoreCase("session")) {
+			return PageContext.SESSION_SCOPE;
+		} else {
+			return PageContext.PAGE_SCOPE;
+		}
+	}
+
+	@Override
+	public int doEndTag() throws JspException {
+		pageContext.setAttribute(getId(), RootDomainObject.getInstance(), getPageScope());
+		return super.doEndTag();
+	}
 
 }

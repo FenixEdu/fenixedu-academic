@@ -10,56 +10,56 @@ import pt.utl.ist.fenix.tools.util.PhoneUtil;
 
 public class PhoneBean extends PartyContactBean {
 
-    private static final String CONTACT_NAME = "Phone";
+	private static final String CONTACT_NAME = "Phone";
 
-    private static final long serialVersionUID = 7318803302492544891L;
+	private static final long serialVersionUID = 7318803302492544891L;
 
-    public PhoneBean(Party party) {
-	super(party);
-    }
-
-    public PhoneBean(Phone partyContact) {
-	super(partyContact);
-	setValue(partyContact.getNumber());
-    }
-
-    @Override
-    public String getContactName() {
-	return CONTACT_NAME;
-    }
-
-    @Override
-    @Service
-    public Boolean edit() {
-	boolean isValueChanged = super.edit();
-	if (isValueChanged) {
-	    if (!getType().equals(PartyContactType.INSTITUTIONAL)) {
-		((Phone) getContact()).edit(getValue());
-	    }
+	public PhoneBean(Party party) {
+		super(party);
 	}
-	return isValueChanged;
-    }
 
-    @Override
-    @Checked("RolePredicates.PARTY_CONTACT_BEAN_PREDICATE")
-    public PartyContact createNewContact() {
-	return Phone.createPhone(getParty(), getValue(), getType(), getDefaultContact(), getVisibleToPublic(),
-		getVisibleToStudents(), getVisibleToTeachers(), getVisibleToEmployees(), getVisibleToAlumni());
-    }
-
-    @Override
-    public String getValidationMessageKey() {
-	if (PhoneUtil.isMobileNumber(getValue())) {
-	    return "label.contact.validation.message.MobilePhone";
+	public PhoneBean(Phone partyContact) {
+		super(partyContact);
+		setValue(partyContact.getNumber());
 	}
-	if (PhoneUtil.isFixedNumber(getValue())) {
-	    return "label.contact.validation.message.Phone";
-	}
-	return super.getValidationMessageKey();
-    }
 
-    @Override
-    public boolean isValueChanged() {
-	return !getValue().equals(((Phone) getContact()).getNumber());
-    }
+	@Override
+	public String getContactName() {
+		return CONTACT_NAME;
+	}
+
+	@Override
+	@Service
+	public Boolean edit() {
+		boolean isValueChanged = super.edit();
+		if (isValueChanged) {
+			if (!getType().equals(PartyContactType.INSTITUTIONAL)) {
+				((Phone) getContact()).edit(getValue());
+			}
+		}
+		return isValueChanged;
+	}
+
+	@Override
+	@Checked("RolePredicates.PARTY_CONTACT_BEAN_PREDICATE")
+	public PartyContact createNewContact() {
+		return Phone.createPhone(getParty(), getValue(), getType(), getDefaultContact(), getVisibleToPublic(),
+				getVisibleToStudents(), getVisibleToTeachers(), getVisibleToEmployees(), getVisibleToAlumni());
+	}
+
+	@Override
+	public String getValidationMessageKey() {
+		if (PhoneUtil.isMobileNumber(getValue())) {
+			return "label.contact.validation.message.MobilePhone";
+		}
+		if (PhoneUtil.isFixedNumber(getValue())) {
+			return "label.contact.validation.message.Phone";
+		}
+		return super.getValidationMessageKey();
+	}
+
+	@Override
+	public boolean isValueChanged() {
+		return !getValue().equals(((Phone) getContact()).getNumber());
+	}
 }

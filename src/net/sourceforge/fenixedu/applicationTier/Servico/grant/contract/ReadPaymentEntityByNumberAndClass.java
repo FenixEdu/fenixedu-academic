@@ -16,12 +16,12 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class ReadPaymentEntityByNumberAndClass extends FenixService {
 
-    @Checked("RolePredicates.GRANT_OWNER_MANAGER_PREDICATE")
-    @Service
-    public static InfoGrantPaymentEntity run(String paymentEntityNumber, String className) throws FenixServiceException {
-	final GrantPaymentEntity grantPaymentEntity = GrantPaymentEntity.findGrantPaymentEntityByNumberAndConcreteClass(
-		paymentEntityNumber, className);
-	return InfoGrantPaymentEntity.newInfoFromDomain(grantPaymentEntity);
-    }
+	@Checked("RolePredicates.GRANT_OWNER_MANAGER_PREDICATE")
+	@Service
+	public static InfoGrantPaymentEntity run(String paymentEntityNumber, String className) throws FenixServiceException {
+		final GrantPaymentEntity grantPaymentEntity =
+				GrantPaymentEntity.findGrantPaymentEntityByNumberAndConcreteClass(paymentEntityNumber, className);
+		return InfoGrantPaymentEntity.newInfoFromDomain(grantPaymentEntity);
+	}
 
 }

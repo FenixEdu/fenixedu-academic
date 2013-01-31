@@ -19,146 +19,147 @@ import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class CycleCourseGroup extends CycleCourseGroup_Base {
 
-    protected CycleCourseGroup() {
-	super();
-    }
-    
-    public CycleCourseGroup(final RootCourseGroup parentCourseGroup, final String name, final String nameEn,
-	    final CycleType cycleType, final ExecutionSemester begin, final ExecutionSemester end) {
-	if (cycleType == null) {
-	    throw new DomainException("error.degreeStructure.CycleCourseGroup.cycle.type.cannot.be.null");
-	}
-	init(parentCourseGroup, name, nameEn, begin, end);
-	setCycleType(cycleType);
-    }
-
-    @Override
-    public void delete() {
-	getSourceAffinitiesSet().clear();
-	getDestinationAffinitiesSet().clear();
-	super.delete();
-    }
-
-    @Override
-    public boolean isCycleCourseGroup() {
-	return true;
-    }
-
-    final public String getGraduateTitle() {
-	return getGraduateTitle(ExecutionYear.readCurrentExecutionYear(), Language.getLocale());
-    }
-
-    final public String getGraduateTitle(final ExecutionYear executionYear, final Locale locale) {
-
-	if (getMostRecentCycleCourseGroupInformation(executionYear) != null) {
-	    return getMostRecentCycleCourseGroupInformation(executionYear).getGraduatedTitle().getContent(
-		    Language.valueOf(locale.getLanguage()));
-	} else {
-	    final StringBuilder result = new StringBuilder();
-
-	    result.append(getDegreeType().getGraduateTitle(getCycleType(), locale));
-
-	    final String degreeFilteredName = getDegree().getFilteredName(executionYear, locale);
-	    result.append(StringUtils.SINGLE_SPACE).append(
-		    ResourceBundle.getBundle("resources/ApplicationResources", locale).getString("label.in"));
-
-	    final MultiLanguageString mls = getGraduateTitleSuffix();
-	    final String suffix = mls == null ? null : mls.getContent(Language.valueOf(locale.getLanguage()));
-	    if (!StringUtils.isEmpty(suffix) && !degreeFilteredName.contains(suffix.trim())) {
-		result.append(StringUtils.SINGLE_SPACE).append(suffix);
-		result.append(StringUtils.SINGLE_SPACE).append("-");
-	    }
-
-	    result.append(StringUtils.SINGLE_SPACE).append(degreeFilteredName);
-
-	    return result.toString();
+	protected CycleCourseGroup() {
+		super();
 	}
 
-    }
-
-    public boolean isFirstCycle() {
-	return getCycleType() == CycleType.FIRST_CYCLE;
-    }
-
-    public boolean isSecondCycle() {
-	return getCycleType() == CycleType.SECOND_CYCLE;
-    }
-
-    public boolean isThirdCycle() {
-	return getCycleType() == CycleType.THIRD_CYCLE;
-    }
-
-    public boolean isSpecializationCycle() {
-	return getCycleType() == CycleType.SPECIALIZATION_CYCLE;
-    }
-
-    @Override
-    public Collection<CycleCourseGroup> getParentCycleCourseGroups() {
-	return Collections.singletonList(this);
-    }
-
-    public Double getCurrentDefaultEcts() {
-	return getDefaultEcts(ExecutionYear.readCurrentExecutionYear());
-    }
-
-    public Double getDefaultEcts(final ExecutionYear executionYear) {
-	final CreditsLimit creditsLimit = (CreditsLimit) getMostRecentActiveCurricularRule(CurricularRuleType.CREDITS_LIMIT,
-		null, executionYear);
-	if (creditsLimit != null) {
-	    return creditsLimit.getMinimumCredits();
+	public CycleCourseGroup(final RootCourseGroup parentCourseGroup, final String name, final String nameEn,
+			final CycleType cycleType, final ExecutionSemester begin, final ExecutionSemester end) {
+		if (cycleType == null) {
+			throw new DomainException("error.degreeStructure.CycleCourseGroup.cycle.type.cannot.be.null");
+		}
+		init(parentCourseGroup, name, nameEn, begin, end);
+		setCycleType(cycleType);
 	}
 
-	if (getDegreeType().hasExactlyOneCycleType()) {
-	    if (getDegree().hasEctsCredits()) {
-		return getDegree().getEctsCredits();
-	    }
-
-	    return getDegreeType().getDefaultEctsCredits();
+	@Override
+	public void delete() {
+		getSourceAffinitiesSet().clear();
+		getDestinationAffinitiesSet().clear();
+		super.delete();
 	}
 
-	throw new DomainException("error.CycleCourseGroup.cannot.calculate.default.ects.credits");
-    }
-
-    public List<CycleCourseGroupInformation> getCycleCourseGroupInformationOrderedByExecutionYear() {
-	List<CycleCourseGroupInformation> groupInformationList = new ArrayList<CycleCourseGroupInformation>(
-		getCycleCourseGroupInformation());
-	Collections.sort(groupInformationList, CycleCourseGroupInformation.COMPARATOR_BY_EXECUTION_YEAR);
-
-	return groupInformationList;
-    }
-
-    public CycleCourseGroupInformation getCycleCourseGroupInformationByExecutionYear(final ExecutionYear executionYear) {
-	for (CycleCourseGroupInformation cycleInformation : getCycleCourseGroupInformation()) {
-	    if (cycleInformation.getExecutionYear() == executionYear) {
-		return cycleInformation;
-	    }
+	@Override
+	public boolean isCycleCourseGroup() {
+		return true;
 	}
 
-	return null;
-    }
-
-    public CycleCourseGroupInformation getMostRecentCycleCourseGroupInformation(final ExecutionYear executionYear) {
-	CycleCourseGroupInformation mostRecent = null;
-
-	for (CycleCourseGroupInformation cycleInformation : getCycleCourseGroupInformation()) {
-	    if (cycleInformation.getExecutionYear().isAfter(executionYear)) {
-		continue;
-	    }
-
-	    if ((mostRecent == null) || cycleInformation.getExecutionYear().isAfter(mostRecent.getExecutionYear())) {
-		mostRecent = cycleInformation;
-	    }
+	final public String getGraduateTitle() {
+		return getGraduateTitle(ExecutionYear.readCurrentExecutionYear(), Language.getLocale());
 	}
 
-	return mostRecent;
-    }
+	final public String getGraduateTitle(final ExecutionYear executionYear, final Locale locale) {
 
-    @Service
-    public CycleCourseGroupInformation createCycleCourseGroupInformation(final ExecutionYear executionYear,
-	    String graduatedTitle, String graduatedTitleEn) {
-	if (getCycleCourseGroupInformationByExecutionYear(executionYear) != null)
-	    throw new DomainException("cycle.course.group.information.exists.in.execution.year");
+		if (getMostRecentCycleCourseGroupInformation(executionYear) != null) {
+			return getMostRecentCycleCourseGroupInformation(executionYear).getGraduatedTitle().getContent(
+					Language.valueOf(locale.getLanguage()));
+		} else {
+			final StringBuilder result = new StringBuilder();
 
-	return new CycleCourseGroupInformation(this, executionYear, graduatedTitle, graduatedTitleEn);
-    }
+			result.append(getDegreeType().getGraduateTitle(getCycleType(), locale));
+
+			final String degreeFilteredName = getDegree().getFilteredName(executionYear, locale);
+			result.append(StringUtils.SINGLE_SPACE).append(
+					ResourceBundle.getBundle("resources/ApplicationResources", locale).getString("label.in"));
+
+			final MultiLanguageString mls = getGraduateTitleSuffix();
+			final String suffix = mls == null ? null : mls.getContent(Language.valueOf(locale.getLanguage()));
+			if (!StringUtils.isEmpty(suffix) && !degreeFilteredName.contains(suffix.trim())) {
+				result.append(StringUtils.SINGLE_SPACE).append(suffix);
+				result.append(StringUtils.SINGLE_SPACE).append("-");
+			}
+
+			result.append(StringUtils.SINGLE_SPACE).append(degreeFilteredName);
+
+			return result.toString();
+		}
+
+	}
+
+	public boolean isFirstCycle() {
+		return getCycleType() == CycleType.FIRST_CYCLE;
+	}
+
+	public boolean isSecondCycle() {
+		return getCycleType() == CycleType.SECOND_CYCLE;
+	}
+
+	public boolean isThirdCycle() {
+		return getCycleType() == CycleType.THIRD_CYCLE;
+	}
+
+	public boolean isSpecializationCycle() {
+		return getCycleType() == CycleType.SPECIALIZATION_CYCLE;
+	}
+
+	@Override
+	public Collection<CycleCourseGroup> getParentCycleCourseGroups() {
+		return Collections.singletonList(this);
+	}
+
+	public Double getCurrentDefaultEcts() {
+		return getDefaultEcts(ExecutionYear.readCurrentExecutionYear());
+	}
+
+	public Double getDefaultEcts(final ExecutionYear executionYear) {
+		final CreditsLimit creditsLimit =
+				(CreditsLimit) getMostRecentActiveCurricularRule(CurricularRuleType.CREDITS_LIMIT, null, executionYear);
+		if (creditsLimit != null) {
+			return creditsLimit.getMinimumCredits();
+		}
+
+		if (getDegreeType().hasExactlyOneCycleType()) {
+			if (getDegree().hasEctsCredits()) {
+				return getDegree().getEctsCredits();
+			}
+
+			return getDegreeType().getDefaultEctsCredits();
+		}
+
+		throw new DomainException("error.CycleCourseGroup.cannot.calculate.default.ects.credits");
+	}
+
+	public List<CycleCourseGroupInformation> getCycleCourseGroupInformationOrderedByExecutionYear() {
+		List<CycleCourseGroupInformation> groupInformationList =
+				new ArrayList<CycleCourseGroupInformation>(getCycleCourseGroupInformation());
+		Collections.sort(groupInformationList, CycleCourseGroupInformation.COMPARATOR_BY_EXECUTION_YEAR);
+
+		return groupInformationList;
+	}
+
+	public CycleCourseGroupInformation getCycleCourseGroupInformationByExecutionYear(final ExecutionYear executionYear) {
+		for (CycleCourseGroupInformation cycleInformation : getCycleCourseGroupInformation()) {
+			if (cycleInformation.getExecutionYear() == executionYear) {
+				return cycleInformation;
+			}
+		}
+
+		return null;
+	}
+
+	public CycleCourseGroupInformation getMostRecentCycleCourseGroupInformation(final ExecutionYear executionYear) {
+		CycleCourseGroupInformation mostRecent = null;
+
+		for (CycleCourseGroupInformation cycleInformation : getCycleCourseGroupInformation()) {
+			if (cycleInformation.getExecutionYear().isAfter(executionYear)) {
+				continue;
+			}
+
+			if ((mostRecent == null) || cycleInformation.getExecutionYear().isAfter(mostRecent.getExecutionYear())) {
+				mostRecent = cycleInformation;
+			}
+		}
+
+		return mostRecent;
+	}
+
+	@Service
+	public CycleCourseGroupInformation createCycleCourseGroupInformation(final ExecutionYear executionYear,
+			String graduatedTitle, String graduatedTitleEn) {
+		if (getCycleCourseGroupInformationByExecutionYear(executionYear) != null) {
+			throw new DomainException("cycle.course.group.information.exists.in.execution.year");
+		}
+
+		return new CycleCourseGroupInformation(this, executionYear, graduatedTitle, graduatedTitleEn);
+	}
 }

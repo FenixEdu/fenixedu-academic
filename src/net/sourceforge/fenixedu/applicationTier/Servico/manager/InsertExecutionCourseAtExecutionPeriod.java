@@ -18,25 +18,26 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class InsertExecutionCourseAtExecutionPeriod extends FenixService {
 
-    @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
-    @Service
-    public static void run(InfoExecutionCourseEditor infoExecutionCourse) throws FenixServiceException {
+	@Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
+	@Service
+	public static void run(InfoExecutionCourseEditor infoExecutionCourse) throws FenixServiceException {
 
-	final ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(infoExecutionCourse
-		.getInfoExecutionPeriod().getIdInternal());
-	if (executionSemester == null) {
-	    throw new NonExistingServiceException("message.nonExistingExecutionPeriod", null);
+		final ExecutionSemester executionSemester =
+				rootDomainObject.readExecutionSemesterByOID(infoExecutionCourse.getInfoExecutionPeriod().getIdInternal());
+		if (executionSemester == null) {
+			throw new NonExistingServiceException("message.nonExistingExecutionPeriod", null);
+		}
+
+		final ExecutionCourse existentExecutionCourse =
+				executionSemester.getExecutionCourseByInitials(infoExecutionCourse.getSigla());
+		if (existentExecutionCourse != null) {
+			throw new ExistingServiceException("A disciplina execução com sigla " + existentExecutionCourse.getSigla()
+					+ " e período execução " + executionSemester.getName() + "-" + executionSemester.getExecutionYear().getYear());
+		}
+
+		final ExecutionCourse executionCourse =
+				new ExecutionCourse(infoExecutionCourse.getNome(), infoExecutionCourse.getSigla(), executionSemester,
+						infoExecutionCourse.getEntryPhase());
+		executionCourse.createSite();
 	}
-
-	final ExecutionCourse existentExecutionCourse = executionSemester.getExecutionCourseByInitials(infoExecutionCourse
-		.getSigla());
-	if (existentExecutionCourse != null) {
-	    throw new ExistingServiceException("A disciplina execução com sigla " + existentExecutionCourse.getSigla()
-		    + " e período execução " + executionSemester.getName() + "-" + executionSemester.getExecutionYear().getYear());
-	}
-
-	final ExecutionCourse executionCourse = new ExecutionCourse(infoExecutionCourse.getNome(),
-		infoExecutionCourse.getSigla(), executionSemester, infoExecutionCourse.getEntryPhase());
-	executionCourse.createSite();
-    }
 }

@@ -23,19 +23,29 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
  * @author Barbosa
  * @author Pica
  */
-@Mapping(module = "facultyAdmOffice", path = "/editGrantProject", input = "/editGrantProject.do?page=0&method=prepareEditGrantProjectForm", attribute = "editGrantProjectForm", formBean = "editGrantProjectForm", scope = "request", parameter = "method")
+@Mapping(
+		module = "facultyAdmOffice",
+		path = "/editGrantProject",
+		input = "/editGrantProject.do?page=0&method=prepareEditGrantProjectForm",
+		attribute = "editGrantProjectForm",
+		formBean = "editGrantProjectForm",
+		scope = "request",
+		parameter = "method")
 @Forwards(value = {
-	@Forward(name = "manage-grant-project", path = "/manageGrantProject.do?method=prepareManageGrantProject"),
-	@Forward(name = "edit-grant-project", path = "/facultyAdmOffice/grant/contract/editGrantProject.jsp", tileProperties = @Tile(title = "private.teachingstaffandresearcher.miscellaneousmanagement.projects")) })
+		@Forward(name = "manage-grant-project", path = "/manageGrantProject.do?method=prepareManageGrantProject"),
+		@Forward(
+				name = "edit-grant-project",
+				path = "/facultyAdmOffice/grant/contract/editGrantProject.jsp",
+				tileProperties = @Tile(title = "private.teachingstaffandresearcher.miscellaneousmanagement.projects")) })
 public class EditGrantProjectAction extends FenixDispatchAction {
 
-    public ActionForward prepareEditGrantProjectForm(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-	Integer idGrantProject = getIntegerFromRequest(request, "idGrantProject");
-	if (idGrantProject != null) {
-	    GrantProject grantProject = (GrantProject) rootDomainObject.readGrantPaymentEntityByOID(idGrantProject);
-	    request.setAttribute("grantProject", grantProject);
+	public ActionForward prepareEditGrantProjectForm(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		Integer idGrantProject = getIntegerFromRequest(request, "idGrantProject");
+		if (idGrantProject != null) {
+			GrantProject grantProject = (GrantProject) rootDomainObject.readGrantPaymentEntityByOID(idGrantProject);
+			request.setAttribute("grantProject", grantProject);
+		}
+		return mapping.findForward("edit-grant-project");
 	}
-	return mapping.findForward("edit-grant-project");
-    }
 }

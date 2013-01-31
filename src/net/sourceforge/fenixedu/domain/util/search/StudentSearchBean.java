@@ -8,47 +8,48 @@ import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 
 public class StudentSearchBean implements FactoryExecutor, Serializable {
 
-    /**
+	/**
      * 
      */
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    private Integer studentNumber;
+	private Integer studentNumber;
 
-    private DegreeCurricularPlan degreeCurricularPlan;
+	private DegreeCurricularPlan degreeCurricularPlan;
 
-    private DegreeCurricularPlan oldDegreeCurricularPlan;
+	private DegreeCurricularPlan oldDegreeCurricularPlan;
 
-    public Object execute() {
-	return search();
-    }
+	@Override
+	public Object execute() {
+		return search();
+	}
 
-    public Student search() {
-	return Student.readStudentByNumber(getStudentNumber());
-    }
+	public Student search() {
+		return Student.readStudentByNumber(getStudentNumber());
+	}
 
-    public Integer getStudentNumber() {
-	return studentNumber;
-    }
+	public Integer getStudentNumber() {
+		return studentNumber;
+	}
 
-    public void setStudentNumber(final Integer studentNumber) {
-	this.studentNumber = studentNumber;
-    }
+	public void setStudentNumber(final Integer studentNumber) {
+		this.studentNumber = studentNumber;
+	}
 
-    public DegreeCurricularPlan getDegreeCurricularPlan() {
-	return degreeCurricularPlan;
-    }
+	public DegreeCurricularPlan getDegreeCurricularPlan() {
+		return degreeCurricularPlan;
+	}
 
-    public void setDegreeCurricularPlan(DegreeCurricularPlan degreeCurricularPlan) {
-	this.degreeCurricularPlan = degreeCurricularPlan;
-    }
+	public void setDegreeCurricularPlan(DegreeCurricularPlan degreeCurricularPlan) {
+		this.degreeCurricularPlan = degreeCurricularPlan;
+	}
 
-    public DegreeCurricularPlan getOldDegreeCurricularPlan() {
-	return this.oldDegreeCurricularPlan;
-    }
+	public DegreeCurricularPlan getOldDegreeCurricularPlan() {
+		return this.oldDegreeCurricularPlan;
+	}
 
-    public void setOldDegreeCurricularPlan(DegreeCurricularPlan oldDegreeCurricularPlan) {
-	this.oldDegreeCurricularPlan = oldDegreeCurricularPlan;
-    }
+	public void setOldDegreeCurricularPlan(DegreeCurricularPlan oldDegreeCurricularPlan) {
+		this.oldDegreeCurricularPlan = oldDegreeCurricularPlan;
+	}
 
 }

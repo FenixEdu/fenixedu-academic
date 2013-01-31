@@ -9,37 +9,37 @@ import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 public class DeclarationRequestEvent extends DeclarationRequestEvent_Base {
 
-    protected DeclarationRequestEvent() {
-	super();
-    }
-
-    public DeclarationRequestEvent(final AdministrativeOffice administrativeOffice, final EventType eventType,
-	    final Person person, final DeclarationRequest declarationRequest) {
-	this();
-	super.init(administrativeOffice, eventType, person, declarationRequest);
-    }
-
-    @Override
-    final public LabelFormatter getDescriptionForEntryType(EntryType entryType) {
-	final LabelFormatter labelFormatter = new LabelFormatter();
-
-	labelFormatter.appendLabel(entryType.name(), LabelFormatter.ENUMERATION_RESOURCES);
-	labelFormatter.appendLabel(" (");
-	labelFormatter.appendLabel(getDegree().getDegreeType().name(), LabelFormatter.ENUMERATION_RESOURCES);
-	labelFormatter.appendLabel(" ");
-	labelFormatter.appendLabel("label.in", LabelFormatter.APPLICATION_RESOURCES);
-	labelFormatter.appendLabel(" ");
-	labelFormatter.appendLabel(getDegree().getNameFor(getExecutionYear()).getContent());
-	labelFormatter.appendLabel(")");
-	if (getAcademicServiceRequest().hasExecutionYear()) {
-	    labelFormatter.appendLabel(" - " + getExecutionYear().getYear());
+	protected DeclarationRequestEvent() {
+		super();
 	}
 
-	return labelFormatter;
-    }
+	public DeclarationRequestEvent(final AdministrativeOffice administrativeOffice, final EventType eventType,
+			final Person person, final DeclarationRequest declarationRequest) {
+		this();
+		super.init(administrativeOffice, eventType, person, declarationRequest);
+	}
 
-    final public Integer getNumberOfPages() {
-	return ((DeclarationRequest) getAcademicServiceRequest()).getNumberOfPages();
-    }
+	@Override
+	final public LabelFormatter getDescriptionForEntryType(EntryType entryType) {
+		final LabelFormatter labelFormatter = new LabelFormatter();
+
+		labelFormatter.appendLabel(entryType.name(), LabelFormatter.ENUMERATION_RESOURCES);
+		labelFormatter.appendLabel(" (");
+		labelFormatter.appendLabel(getDegree().getDegreeType().name(), LabelFormatter.ENUMERATION_RESOURCES);
+		labelFormatter.appendLabel(" ");
+		labelFormatter.appendLabel("label.in", LabelFormatter.APPLICATION_RESOURCES);
+		labelFormatter.appendLabel(" ");
+		labelFormatter.appendLabel(getDegree().getNameFor(getExecutionYear()).getContent());
+		labelFormatter.appendLabel(")");
+		if (getAcademicServiceRequest().hasExecutionYear()) {
+			labelFormatter.appendLabel(" - " + getExecutionYear().getYear());
+		}
+
+		return labelFormatter;
+	}
+
+	final public Integer getNumberOfPages() {
+		return ((DeclarationRequest) getAcademicServiceRequest()).getNumberOfPages();
+	}
 
 }

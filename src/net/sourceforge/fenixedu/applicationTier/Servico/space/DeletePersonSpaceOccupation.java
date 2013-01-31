@@ -7,12 +7,12 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class DeletePersonSpaceOccupation extends FenixService {
 
-    @Checked("RolePredicates.SPACE_MANAGER_PREDICATE")
-    @Service
-    public static Boolean run(PersonSpaceOccupation personSpaceOccupation) {
-	if (personSpaceOccupation != null) {
-	    personSpaceOccupation.delete();
+	@Checked("RolePredicates.SPACE_MANAGER_PREDICATE")
+	@Service
+	public static Boolean run(PersonSpaceOccupation personSpaceOccupation) {
+		if (personSpaceOccupation != null) {
+			personSpaceOccupation.delete();
+		}
+		return true;
 	}
-	return true;
-    }
 }

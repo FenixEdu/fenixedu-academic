@@ -13,34 +13,34 @@ import org.joda.time.LocalDate;
 
 public class SkipThesisJuryActivities extends PhdThesisActivity {
 
-    @Override
-    protected void activityPreConditions(PhdThesisProcess process, IUserView userView) {
-	if (process.getActiveState() != PhdThesisProcessStateType.NEW) {
-	    throw new PreConditionNotValidException();
+	@Override
+	protected void activityPreConditions(PhdThesisProcess process, IUserView userView) {
+		if (process.getActiveState() != PhdThesisProcessStateType.NEW) {
+			throw new PreConditionNotValidException();
+		}
+
+		if (!process.isAllowedToManageProcess(userView)) {
+			throw new PreConditionNotValidException();
+		}
 	}
 
-	if (!process.isAllowedToManageProcess(userView)) {
-	    throw new PreConditionNotValidException();
+	@Override
+	protected PhdThesisProcess executeActivity(PhdThesisProcess process, IUserView userView, Object object) {
+
+		final PhdThesisProcessBean thesisBean = (PhdThesisProcessBean) object;
+
+		process.setWhenJuryDesignated(process.getIndividualProgramProcess().getCandidacyDate());
+		LocalDate candidacyDate = process.getIndividualProgramProcess().getCandidacyDate();
+		process.setWhenJuryValidated(candidacyDate);
+
+		process.createState(PhdThesisProcessStateType.WAITING_FOR_JURY_REPORTER_FEEDBACK, userView.getPerson(),
+				thesisBean.getRemarks());
+
+		if (!process.hasMeetingProcess()) {
+			Process.createNewProcess(userView, PhdMeetingSchedulingProcess.class, thesisBean);
+		}
+
+		return process;
 	}
-    }
-
-    @Override
-    protected PhdThesisProcess executeActivity(PhdThesisProcess process, IUserView userView, Object object) {
-
-	final PhdThesisProcessBean thesisBean = (PhdThesisProcessBean) object;
-
-	process.setWhenJuryDesignated(process.getIndividualProgramProcess().getCandidacyDate());
-	LocalDate candidacyDate = process.getIndividualProgramProcess().getCandidacyDate();
-	process.setWhenJuryValidated(candidacyDate);
-
-	process.createState(PhdThesisProcessStateType.WAITING_FOR_JURY_REPORTER_FEEDBACK, userView.getPerson(),
-		thesisBean.getRemarks());
-
-	if (!process.hasMeetingProcess()) {
-	    Process.createNewProcess(userView, PhdMeetingSchedulingProcess.class, thesisBean);
-	}
-
-	return process;
-    }
 
 }

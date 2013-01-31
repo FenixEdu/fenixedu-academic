@@ -15,33 +15,33 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadStudentEnrolmentEvaluation extends FenixService {
 
-    @Service
-    public static InfoSiteEnrolmentEvaluation run(Integer studentEvaluationCode) {
+	@Service
+	public static InfoSiteEnrolmentEvaluation run(Integer studentEvaluationCode) {
 
-	final EnrolmentEvaluation enrolmentEvaluation = rootDomainObject.readEnrolmentEvaluationByOID(studentEvaluationCode);
-	final InfoTeacher infoTeacher = InfoTeacher.newInfoFromDomain(enrolmentEvaluation.getPersonResponsibleForGrade()
-		.getTeacher());
+		final EnrolmentEvaluation enrolmentEvaluation = rootDomainObject.readEnrolmentEvaluationByOID(studentEvaluationCode);
+		final InfoTeacher infoTeacher =
+				InfoTeacher.newInfoFromDomain(enrolmentEvaluation.getPersonResponsibleForGrade().getTeacher());
 
-	final List<InfoEnrolmentEvaluation> infoEnrolmentEvaluations = new ArrayList<InfoEnrolmentEvaluation>();
-	final InfoEnrolment infoEnrolment = InfoEnrolment.newInfoFromDomain(enrolmentEvaluation.getEnrolment());
+		final List<InfoEnrolmentEvaluation> infoEnrolmentEvaluations = new ArrayList<InfoEnrolmentEvaluation>();
+		final InfoEnrolment infoEnrolment = InfoEnrolment.newInfoFromDomain(enrolmentEvaluation.getEnrolment());
 
-	final InfoEnrolmentEvaluation infoEnrolmentEvaluation = InfoEnrolmentEvaluationWithResponsibleForGrade
-		.newInfoFromDomain(enrolmentEvaluation);
-	infoEnrolmentEvaluation.setInfoPersonResponsibleForGrade(infoTeacher.getInfoPerson());
-	if (enrolmentEvaluation.hasPerson()) {
-	    infoEnrolmentEvaluation.setInfoEmployee(InfoPerson.newInfoFromDomain(enrolmentEvaluation.getPerson()));
+		final InfoEnrolmentEvaluation infoEnrolmentEvaluation =
+				InfoEnrolmentEvaluationWithResponsibleForGrade.newInfoFromDomain(enrolmentEvaluation);
+		infoEnrolmentEvaluation.setInfoPersonResponsibleForGrade(infoTeacher.getInfoPerson());
+		if (enrolmentEvaluation.hasPerson()) {
+			infoEnrolmentEvaluation.setInfoEmployee(InfoPerson.newInfoFromDomain(enrolmentEvaluation.getPerson()));
+		}
+		infoEnrolmentEvaluation.setInfoEnrolment(infoEnrolment);
+		infoEnrolmentEvaluations.add(infoEnrolmentEvaluation);
+
+		// enrolmenEvaluation.setEnrolment
+
+		InfoSiteEnrolmentEvaluation infoSiteEnrolmentEvaluation = new InfoSiteEnrolmentEvaluation();
+		infoSiteEnrolmentEvaluation.setEnrolmentEvaluations(infoEnrolmentEvaluations);
+		infoSiteEnrolmentEvaluation.setInfoTeacher(infoTeacher);
+
+		return infoSiteEnrolmentEvaluation;
+
 	}
-	infoEnrolmentEvaluation.setInfoEnrolment(infoEnrolment);
-	infoEnrolmentEvaluations.add(infoEnrolmentEvaluation);
-
-	// enrolmenEvaluation.setEnrolment
-
-	InfoSiteEnrolmentEvaluation infoSiteEnrolmentEvaluation = new InfoSiteEnrolmentEvaluation();
-	infoSiteEnrolmentEvaluation.setEnrolmentEvaluations(infoEnrolmentEvaluations);
-	infoSiteEnrolmentEvaluation.setInfoTeacher(infoTeacher);
-
-	return infoSiteEnrolmentEvaluation;
-
-    }
 
 }

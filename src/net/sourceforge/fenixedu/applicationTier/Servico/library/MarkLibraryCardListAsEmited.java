@@ -12,11 +12,11 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class MarkLibraryCardListAsEmited extends FenixService {
 
-    @Checked("RolePredicates.LIBRARY_PREDICATE")
-    @Service
-    public static void run(List<LibraryCardDTO> libraryCardList) {
-	for (LibraryCardDTO libraryCardDTO : libraryCardList) {
-	    libraryCardDTO.getLibraryCard().setCardEmitionDate(new DateTime());
+	@Checked("RolePredicates.LIBRARY_PREDICATE")
+	@Service
+	public static void run(List<LibraryCardDTO> libraryCardList) {
+		for (LibraryCardDTO libraryCardDTO : libraryCardList) {
+			libraryCardDTO.getLibraryCard().setCardEmitionDate(new DateTime());
+		}
 	}
-    }
 }

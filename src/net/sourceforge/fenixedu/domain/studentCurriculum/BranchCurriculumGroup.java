@@ -12,81 +12,81 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 public class BranchCurriculumGroup extends BranchCurriculumGroup_Base {
 
-    protected BranchCurriculumGroup() {
-	super();
-    }
-
-    public BranchCurriculumGroup(CurriculumGroup parentNode, BranchCourseGroup branch) {
-	this();
-	init(parentNode, branch);
-    }
-
-    public BranchCurriculumGroup(CurriculumGroup parentNode, BranchCourseGroup branch, ExecutionSemester executionSemester) {
-	super();
-	init(parentNode, branch, executionSemester);
-    }
-
-    @Override
-    protected void checkInitConstraints(CurriculumGroup parent, CourseGroup courseGroup) {
-	super.checkInitConstraints(parent, courseGroup);
-
-	final BranchCourseGroup branchCourseGroup = (BranchCourseGroup) courseGroup;
-
-	final CycleCurriculumGroup cycle = parent.getParentCycleCurriculumGroup();
-	if (cycle != null && cycle.hasBranchCurriculumGroup(branchCourseGroup.getBranchType())) {
-	    throw new DomainException("error.BranchCurriculumGroup.parent.cycle.cannot.have.another.branch.with.same.type");
+	protected BranchCurriculumGroup() {
+		super();
 	}
-    }
 
-    @Override
-    public boolean isBranchCurriculumGroup() {
-	return true;
-    }
-
-    @Override
-    public void setDegreeModule(DegreeModule degreeModule) {
-	if (degreeModule != null && !(degreeModule instanceof BranchCourseGroup)) {
-	    throw new DomainException("error.curriculumGroup.BranchParentDegreeModuleCanOnlyBeBranchCourseGroup");
+	public BranchCurriculumGroup(CurriculumGroup parentNode, BranchCourseGroup branch) {
+		this();
+		init(parentNode, branch);
 	}
-	super.setDegreeModule(degreeModule);
-    }
 
-    @Override
-    public BranchCourseGroup getDegreeModule() {
-	return (BranchCourseGroup) super.getDegreeModule();
-    }
+	public BranchCurriculumGroup(CurriculumGroup parentNode, BranchCourseGroup branch, ExecutionSemester executionSemester) {
+		super();
+		init(parentNode, branch, executionSemester);
+	}
 
-    public BranchType getBranchType() {
-	return this.getDegreeModule().getBranchType();
-    }
+	@Override
+	protected void checkInitConstraints(CurriculumGroup parent, CourseGroup courseGroup) {
+		super.checkInitConstraints(parent, courseGroup);
 
-    @Override
-    public Set<BranchCurriculumGroup> getBranchCurriculumGroups() {
-	return Collections.singleton(this);
-    }
+		final BranchCourseGroup branchCourseGroup = (BranchCourseGroup) courseGroup;
 
-    @Override
-    public Set<BranchCurriculumGroup> getBranchCurriculumGroups(BranchType branchType) {
-	return getBranchType() == branchType ? Collections.<BranchCurriculumGroup> singleton(this) : Collections
-		.<BranchCurriculumGroup> emptySet();
-    }
+		final CycleCurriculumGroup cycle = parent.getParentCycleCurriculumGroup();
+		if (cycle != null && cycle.hasBranchCurriculumGroup(branchCourseGroup.getBranchType())) {
+			throw new DomainException("error.BranchCurriculumGroup.parent.cycle.cannot.have.another.branch.with.same.type");
+		}
+	}
 
-    @Override
-    public BranchCurriculumGroup getParentBranchCurriculumGroup() {
-	return this;
-    }
+	@Override
+	public boolean isBranchCurriculumGroup() {
+		return true;
+	}
 
-    @Override
-    public boolean hasBranchCurriculumGroup(final BranchType type) {
-	return getBranchType() == type;
-    }
+	@Override
+	public void setDegreeModule(DegreeModule degreeModule) {
+		if (degreeModule != null && !(degreeModule instanceof BranchCourseGroup)) {
+			throw new DomainException("error.curriculumGroup.BranchParentDegreeModuleCanOnlyBeBranchCourseGroup");
+		}
+		super.setDegreeModule(degreeModule);
+	}
 
-    public boolean isMajor() {
-	return getDegreeModule().isMajor();
-    }
+	@Override
+	public BranchCourseGroup getDegreeModule() {
+		return (BranchCourseGroup) super.getDegreeModule();
+	}
 
-    public boolean isMinor() {
-	return getDegreeModule().isMinor();
-    }
+	public BranchType getBranchType() {
+		return this.getDegreeModule().getBranchType();
+	}
+
+	@Override
+	public Set<BranchCurriculumGroup> getBranchCurriculumGroups() {
+		return Collections.singleton(this);
+	}
+
+	@Override
+	public Set<BranchCurriculumGroup> getBranchCurriculumGroups(BranchType branchType) {
+		return getBranchType() == branchType ? Collections.<BranchCurriculumGroup> singleton(this) : Collections
+				.<BranchCurriculumGroup> emptySet();
+	}
+
+	@Override
+	public BranchCurriculumGroup getParentBranchCurriculumGroup() {
+		return this;
+	}
+
+	@Override
+	public boolean hasBranchCurriculumGroup(final BranchType type) {
+		return getBranchType() == type;
+	}
+
+	public boolean isMajor() {
+		return getDegreeModule().isMajor();
+	}
+
+	public boolean isMinor() {
+		return getDegreeModule().isMinor();
+	}
 
 }

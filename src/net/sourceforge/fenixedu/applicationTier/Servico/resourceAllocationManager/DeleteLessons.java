@@ -18,25 +18,25 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class DeleteLessons extends FenixService {
 
-    @Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
-    @Service
-    public static void run(final List<Integer> lessonOIDs) throws FenixServiceException {
-	final List<DomainException> exceptionList = new ArrayList<DomainException>();
+	@Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
+	@Service
+	public static void run(final List<Integer> lessonOIDs) throws FenixServiceException {
+		final List<DomainException> exceptionList = new ArrayList<DomainException>();
 
-	for (final Integer lessonOID : lessonOIDs) {
-	    try {
-		Lesson lesson = rootDomainObject.readLessonByOID(lessonOID);
-		if (lesson != null) {
-		    lesson.delete();
+		for (final Integer lessonOID : lessonOIDs) {
+			try {
+				Lesson lesson = rootDomainObject.readLessonByOID(lessonOID);
+				if (lesson != null) {
+					lesson.delete();
+				}
+			} catch (DomainException e) {
+				exceptionList.add(e);
+			}
 		}
-	    } catch (DomainException e) {
-		exceptionList.add(e);
-	    }
-	}
 
-	if (!exceptionList.isEmpty()) {
-	    throw new FenixServiceMultipleException(exceptionList);
+		if (!exceptionList.isEmpty()) {
+			throw new FenixServiceMultipleException(exceptionList);
+		}
 	}
-    }
 
 }

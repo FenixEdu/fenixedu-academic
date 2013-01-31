@@ -3,25 +3,25 @@ package net.sourceforge.fenixedu.presentationTier.renderers.providers.pedagogica
 import net.sourceforge.fenixedu.dataTransferObject.commons.delegates.DelegateSearchBean;
 import net.sourceforge.fenixedu.dataTransferObject.pedagogicalCouncil.delegates.DelegateBean;
 import net.sourceforge.fenixedu.domain.Degree;
-
 import pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyConverter;
-
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class DegreesGivenDegreeTypeForDelegatesManagement implements DataProvider {
 
-    public Object provide(Object source, Object currentValue) {
+	@Override
+	public Object provide(Object source, Object currentValue) {
 
-	if (source instanceof DelegateBean) {
-	    return Degree.readAllByDegreeType(((DelegateBean) source).getDegreeType());
-	} else {
-	    return Degree.readAllByDegreeType(((DelegateSearchBean) source).getDegreeType());
+		if (source instanceof DelegateBean) {
+			return Degree.readAllByDegreeType(((DelegateBean) source).getDegreeType());
+		} else {
+			return Degree.readAllByDegreeType(((DelegateSearchBean) source).getDegreeType());
+		}
+
 	}
 
-    }
-
-    public Converter getConverter() {
-	return new DomainObjectKeyConverter();
-    }
+	@Override
+	public Converter getConverter() {
+		return new DomainObjectKeyConverter();
+	}
 }

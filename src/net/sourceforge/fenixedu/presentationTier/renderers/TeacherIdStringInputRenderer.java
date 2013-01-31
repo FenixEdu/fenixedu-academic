@@ -9,15 +9,15 @@ import pt.ist.fenixWebFramework.renderers.components.HtmlFormComponent;
 // MARK DELTA
 public class TeacherIdStringInputRenderer extends StringInputRenderer {
 
-    @Override
-    protected HtmlComponent createTextField(Object object, Class type) {
+	@Override
+	protected HtmlComponent createTextField(Object object, Class type) {
 
-	Teacher teacher = (Teacher) object;
-	String number = teacher.getPerson().getIstUsername();
+		Teacher teacher = (Teacher) object;
+		String number = teacher.getPerson().getIstUsername();
 
-	HtmlFormComponent formComponent = (HtmlFormComponent) super.createTextField(number, type);
-	formComponent.setConverter(new TeacherNumberConverter());
+		HtmlFormComponent formComponent = (HtmlFormComponent) super.createTextField(number, type);
+		formComponent.setConverter(new TeacherNumberConverter());
 
-	return formComponent;
-    }
+		return formComponent;
+	}
 }

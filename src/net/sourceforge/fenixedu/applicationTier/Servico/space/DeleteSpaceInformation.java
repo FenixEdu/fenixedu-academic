@@ -6,11 +6,11 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class DeleteSpaceInformation extends FenixService {
 
-    @Service
-    public static void run(final SpaceInformation spaceInformation) {
-	if (spaceInformation != null) {
-	    spaceInformation.delete();
+	@Service
+	public static void run(final SpaceInformation spaceInformation) {
+		if (spaceInformation != null) {
+			spaceInformation.delete();
+		}
 	}
-    }
 
 }

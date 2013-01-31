@@ -15,28 +15,28 @@ import java.util.List;
  */
 public class InfoSiteCurricularCourses extends DataTranferObject implements ISiteComponent {
 
-    private List curricularCourses;
+	private List curricularCourses;
 
-    /**
-     * @return
-     */
-    public List getCurricularCourses() {
-	return curricularCourses;
-    }
+	/**
+	 * @return
+	 */
+	public List getCurricularCourses() {
+		return curricularCourses;
+	}
 
-    /**
-     * @param curricularCourses
-     */
-    public void setCurricularCourses(List curricularCourses) {
-	this.curricularCourses = curricularCourses;
-	// TODO: uncomment the sort when the test data is fixed
-	// Collections.sort(this.curricularCourses);
-    }
+	/**
+	 * @param curricularCourses
+	 */
+	public void setCurricularCourses(List curricularCourses) {
+		this.curricularCourses = curricularCourses;
+		// TODO: uncomment the sort when the test data is fixed
+		// Collections.sort(this.curricularCourses);
+	}
 
-    /**
+	/**
      *  
      */
-    public InfoSiteCurricularCourses() {
-    }
+	public InfoSiteCurricularCourses() {
+	}
 
 }

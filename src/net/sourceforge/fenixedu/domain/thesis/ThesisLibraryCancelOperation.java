@@ -10,30 +10,31 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
  * @author Pedro Santos (pmrsa)
  */
 public class ThesisLibraryCancelOperation extends ThesisLibraryCancelOperation_Base {
-    public ThesisLibraryCancelOperation(Thesis thesis, Person performer) {
-	super();
-	if (thesis.getState() != ThesisState.EVALUATED || !thesis.isFinalAndApprovedThesis())
-	    throw new DomainException("thesis.makepending.notEvaluatedNorPendingArchive");
-	init(thesis, performer);
-    }
+	public ThesisLibraryCancelOperation(Thesis thesis, Person performer) {
+		super();
+		if (thesis.getState() != ThesisState.EVALUATED || !thesis.isFinalAndApprovedThesis()) {
+			throw new DomainException("thesis.makepending.notEvaluatedNorPendingArchive");
+		}
+		init(thesis, performer);
+	}
 
-    public ThesisLibraryCancelOperation(Integer thesisId, Integer performerId) {
-	this(RootDomainObject.getInstance().readThesisByOID(thesisId), (Person) RootDomainObject.getInstance().readPartyByOID(
-		performerId));
-    }
+	public ThesisLibraryCancelOperation(Integer thesisId, Integer performerId) {
+		this(RootDomainObject.getInstance().readThesisByOID(thesisId), (Person) RootDomainObject.getInstance().readPartyByOID(
+				performerId));
+	}
 
-    @Override
-    public ThesisLibraryState getState() {
-	return ThesisLibraryState.ARCHIVE_CANCELED;
-    }
+	@Override
+	public ThesisLibraryState getState() {
+		return ThesisLibraryState.ARCHIVE_CANCELED;
+	}
 
-    @Override
-    public String getPendingComment() {
-	return null;
-    }
+	@Override
+	public String getPendingComment() {
+		return null;
+	}
 
-    @Override
-    public String getLibraryReference() {
-	return null;
-    }
+	@Override
+	public String getLibraryReference() {
+		return null;
+	}
 }

@@ -8,32 +8,32 @@ import org.joda.time.DateTime;
 
 public class StudentDataShareAuthorization extends StudentDataShareAuthorization_Base {
 
-    public StudentDataShareAuthorization() {
-	super();
-    }
+	public StudentDataShareAuthorization() {
+		super();
+	}
 
-    public StudentDataShareAuthorization(Student student, StudentPersonalDataAuthorizationChoice authorization) {
-	this();
-	init(student, authorization);
-    }
+	public StudentDataShareAuthorization(Student student, StudentPersonalDataAuthorizationChoice authorization) {
+		this();
+		init(student, authorization);
+	}
 
-    protected void init(Student student, StudentPersonalDataAuthorizationChoice authorization) {
-	setStudent(student);
-	setAuthorizationChoice(authorization);
-	setSince(new DateTime());
-    }
+	protected void init(Student student, StudentPersonalDataAuthorizationChoice authorization) {
+		setStudent(student);
+		setAuthorizationChoice(authorization);
+		setSince(new DateTime());
+	}
 
-    @ConsistencyPredicate
-    public final boolean isDateNotInTheFuture() {
-	return !getSince().isAfterNow();
-    }
+	@ConsistencyPredicate
+	public final boolean isDateNotInTheFuture() {
+		return !getSince().isAfterNow();
+	}
 
-    @Override
-    protected RootDomainObject getRootDomainObject() {
-	return getStudent().getRootDomainObject();
-    }
+	@Override
+	protected RootDomainObject getRootDomainObject() {
+		return getStudent().getRootDomainObject();
+	}
 
-    public boolean isStudentDataShareAuthorization() {
-	return true;
-    }
+	public boolean isStudentDataShareAuthorization() {
+		return true;
+	}
 }

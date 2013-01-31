@@ -26,21 +26,22 @@ import org.apache.commons.collections.Transformer;
  */
 public class GetEquivalency extends FenixService {
 
-    public InfoEquivalency run(Integer equivalencyID) throws BDException {
-	InfoEquivalency infoEquivalency = null;
+	public InfoEquivalency run(Integer equivalencyID) throws BDException {
+		InfoEquivalency infoEquivalency = null;
 
-	CourseEquivalency equivalency = rootDomainObject.readCourseEquivalencyByOID(equivalencyID);
-	if (equivalency != null) {
-	    infoEquivalency = InfoEquivalency.newInfoFromDomain(equivalency);
-	    infoEquivalency.setThemes((List) CollectionUtils.collect(equivalency.getThemes(), new Transformer() {
+		CourseEquivalency equivalency = rootDomainObject.readCourseEquivalencyByOID(equivalencyID);
+		if (equivalency != null) {
+			infoEquivalency = InfoEquivalency.newInfoFromDomain(equivalency);
+			infoEquivalency.setThemes((List) CollectionUtils.collect(equivalency.getThemes(), new Transformer() {
 
-		public Object transform(Object arg0) {
+				@Override
+				public Object transform(Object arg0) {
 
-		    return InfoTheme.newInfoFromDomain((Theme) arg0);
+					return InfoTheme.newInfoFromDomain((Theme) arg0);
+				}
+			}));
 		}
-	    }));
-	}
 
-	return infoEquivalency;
-    }
+		return infoEquivalency;
+	}
 }

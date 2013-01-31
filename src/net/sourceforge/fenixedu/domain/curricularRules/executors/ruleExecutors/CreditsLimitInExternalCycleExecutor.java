@@ -13,209 +13,213 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.ExternalCurriculumGroup
 
 public class CreditsLimitInExternalCycleExecutor extends CurricularRuleExecutor {
 
-    @Override
-    protected RuleResult executeEnrolmentInEnrolmentEvaluation(ICurricularRule curricularRule,
-	    IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, EnrolmentContext enrolmentContext) {
+	@Override
+	protected RuleResult executeEnrolmentInEnrolmentEvaluation(ICurricularRule curricularRule,
+			IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, EnrolmentContext enrolmentContext) {
 
-	return RuleResult.createNA(sourceDegreeModuleToEvaluate.getDegreeModule());
-    }
-
-    @Override
-    protected RuleResult executeEnrolmentWithRulesAndTemporaryEnrolment(ICurricularRule curricularRule,
-	    IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, EnrolmentContext enrolmentContext) {
-	final CreditsLimitInExternalCycle creditsLimitInExternalCycle = (CreditsLimitInExternalCycle) curricularRule;
-	final ExternalCurriculumGroup externalCurriculumGroup = creditsLimitInExternalCycle.getExternalCurriculumGroup();
-
-	if (!isToApply(sourceDegreeModuleToEvaluate, enrolmentContext, externalCurriculumGroup)) {
-	    return RuleResult.createNA(sourceDegreeModuleToEvaluate.getDegreeModule());
+		return RuleResult.createNA(sourceDegreeModuleToEvaluate.getDegreeModule());
 	}
 
-	if (isEnrolingDissertation(enrolmentContext, externalCurriculumGroup)) {
-	    return createRuleResultForEnrolingDissertation(sourceDegreeModuleToEvaluate, creditsLimitInExternalCycle);
+	@Override
+	protected RuleResult executeEnrolmentWithRulesAndTemporaryEnrolment(ICurricularRule curricularRule,
+			IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, EnrolmentContext enrolmentContext) {
+		final CreditsLimitInExternalCycle creditsLimitInExternalCycle = (CreditsLimitInExternalCycle) curricularRule;
+		final ExternalCurriculumGroup externalCurriculumGroup = creditsLimitInExternalCycle.getExternalCurriculumGroup();
+
+		if (!isToApply(sourceDegreeModuleToEvaluate, enrolmentContext, externalCurriculumGroup)) {
+			return RuleResult.createNA(sourceDegreeModuleToEvaluate.getDegreeModule());
+		}
+
+		if (isEnrolingDissertation(enrolmentContext, externalCurriculumGroup)) {
+			return createRuleResultForEnrolingDissertation(sourceDegreeModuleToEvaluate, creditsLimitInExternalCycle);
+		}
+
+		final CycleCurriculumGroup previousCycleCurriclumGroup = creditsLimitInExternalCycle.getPreviousCycleCurriculumGroup();
+		final Double totalCreditsInPreviousCycle = previousCycleCurriclumGroup.getAprovedEctsCredits();
+
+		if (!creditsLimitInExternalCycle.creditsInPreviousCycleSufficient(totalCreditsInPreviousCycle)) {
+			return createRuleResultForNotSatisfiedCreditsForPreviousCycle(sourceDegreeModuleToEvaluate,
+					creditsLimitInExternalCycle, previousCycleCurriclumGroup);
+		}
+
+		final Double totalCredits = calculateApprovedAndEnrollingTotalCredits(enrolmentContext, externalCurriculumGroup);
+		if (creditsLimitInExternalCycle.creditsExceedMaximumInExternalCycle(totalCredits, totalCreditsInPreviousCycle)) {
+			return createRuleResultForMaxCreditsExceededInExternalCycle(sourceDegreeModuleToEvaluate,
+					creditsLimitInExternalCycle, totalCredits, totalCreditsInPreviousCycle);
+		}
+
+		final Double totalEctsWithEnroledEctsCreditsFromPreviousPeriod =
+				totalCredits
+						+ externalCurriculumGroup.getEnroledEctsCredits(enrolmentContext.getExecutionPeriod()
+								.getPreviousExecutionPeriod());
+		if (creditsLimitInExternalCycle.creditsExceedMaximumInExternalCycle(totalEctsWithEnroledEctsCreditsFromPreviousPeriod,
+				totalCreditsInPreviousCycle)) {
+			return RuleResult.createTrue(EnrolmentResultType.TEMPORARY, sourceDegreeModuleToEvaluate.getDegreeModule(),
+					"curricularRules.ruleExecutors.CreditsLimitInExternalCycleExecutor.external.cycle.limit.exceeded",
+					creditsLimitInExternalCycle.getExternalCurriculumGroup().getName().getContent(),
+					totalEctsWithEnroledEctsCreditsFromPreviousPeriod.toString(), creditsLimitInExternalCycle
+							.getMaxCreditsInExternalCycle(totalCreditsInPreviousCycle).toString(), totalCreditsInPreviousCycle
+							.toString());
+		}
+
+		return RuleResult.createTrue(sourceDegreeModuleToEvaluate.getDegreeModule());
 	}
 
-	final CycleCurriculumGroup previousCycleCurriclumGroup = creditsLimitInExternalCycle.getPreviousCycleCurriculumGroup();
-	final Double totalCreditsInPreviousCycle = previousCycleCurriclumGroup.getAprovedEctsCredits();
+	private RuleResult createRuleResultForNotSatisfiedCreditsForPreviousCycle(
+			IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, final CreditsLimitInExternalCycle creditsLimitInExternalCycle,
+			final CycleCurriculumGroup previousCycleCurriclumGroup) {
+		if (sourceDegreeModuleToEvaluate.isEnroled() && sourceDegreeModuleToEvaluate.isLeaf()) {
+			return RuleResult
+					.createImpossible(
+							sourceDegreeModuleToEvaluate.getDegreeModule(),
+							"curricularRules.ruleExecutors.CreditsLimitInExternalCycleExecutor.previous.cycle.minimum.credits.not.fulfilled",
+							creditsLimitInExternalCycle.getExternalCurriculumGroup().getName().getContent(),
+							creditsLimitInExternalCycle.getMinCreditsInPreviousCycle().toString(), previousCycleCurriclumGroup
+									.getName().getContent());
+		}
 
-	if (!creditsLimitInExternalCycle.creditsInPreviousCycleSufficient(totalCreditsInPreviousCycle)) {
-	    return createRuleResultForNotSatisfiedCreditsForPreviousCycle(sourceDegreeModuleToEvaluate,
-		    creditsLimitInExternalCycle, previousCycleCurriclumGroup);
+		return RuleResult.createFalse(sourceDegreeModuleToEvaluate.getDegreeModule(),
+				"curricularRules.ruleExecutors.CreditsLimitInExternalCycleExecutor.previous.cycle.minimum.credits.not.fulfilled",
+				creditsLimitInExternalCycle.getExternalCurriculumGroup().getName().getContent(), creditsLimitInExternalCycle
+						.getMinCreditsInPreviousCycle().toString(), previousCycleCurriclumGroup.getName().getContent());
 	}
 
-	final Double totalCredits = calculateApprovedAndEnrollingTotalCredits(enrolmentContext, externalCurriculumGroup);
-	if (creditsLimitInExternalCycle.creditsExceedMaximumInExternalCycle(totalCredits, totalCreditsInPreviousCycle)) {
-	    return createRuleResultForMaxCreditsExceededInExternalCycle(sourceDegreeModuleToEvaluate,
-		    creditsLimitInExternalCycle, totalCredits, totalCreditsInPreviousCycle);
+	private boolean isToApply(IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, final EnrolmentContext enrolmentContext,
+			final ExternalCurriculumGroup externalCurriculumGroup) {
+		if (!sourceDegreeModuleToEvaluate.isLeaf()) {
+			return false;
+		}
+
+		for (final IDegreeModuleToEvaluate degreeModuleToEvaluate : enrolmentContext.getDegreeModulesToEvaluate()) {
+			if (externalCurriculumGroup.hasCurriculumModule(degreeModuleToEvaluate.getCurriculumGroup())
+					&& (isEnrolingInSemester(enrolmentContext, degreeModuleToEvaluate))) {
+				return true;
+			}
+		}
+
+		return false;
+
 	}
 
-	final Double totalEctsWithEnroledEctsCreditsFromPreviousPeriod = totalCredits
-		+ externalCurriculumGroup.getEnroledEctsCredits(enrolmentContext.getExecutionPeriod()
-			.getPreviousExecutionPeriod());
-	if (creditsLimitInExternalCycle.creditsExceedMaximumInExternalCycle(totalEctsWithEnroledEctsCreditsFromPreviousPeriod,
-		totalCreditsInPreviousCycle)) {
-	    return RuleResult.createTrue(EnrolmentResultType.TEMPORARY, sourceDegreeModuleToEvaluate.getDegreeModule(),
-		    "curricularRules.ruleExecutors.CreditsLimitInExternalCycleExecutor.external.cycle.limit.exceeded",
-		    creditsLimitInExternalCycle.getExternalCurriculumGroup().getName().getContent(),
-		    totalEctsWithEnroledEctsCreditsFromPreviousPeriod.toString(), creditsLimitInExternalCycle
-			    .getMaxCreditsInExternalCycle(totalCreditsInPreviousCycle).toString(), totalCreditsInPreviousCycle
-			    .toString());
+	private boolean isEnroledIn(IDegreeModuleToEvaluate degreeModuleToEvaluate, ExecutionSemester executionSemester) {
+		if (degreeModuleToEvaluate.isLeaf()) {
+			final EnroledCurriculumModuleWrapper curriculumModuleEnroledWrapper =
+					(EnroledCurriculumModuleWrapper) degreeModuleToEvaluate;
+			final CurriculumLine curriculumLine = (CurriculumLine) (curriculumModuleEnroledWrapper).getCurriculumModule();
+
+			if (curriculumLine.isEnrolment()) {
+				return curriculumLine.getExecutionPeriod() == executionSemester;
+			}
+
+			return false;
+		}
+
+		return false;
 	}
 
-	return RuleResult.createTrue(sourceDegreeModuleToEvaluate.getDegreeModule());
-    }
+	private Double calculateApprovedAndEnrollingTotalCredits(final EnrolmentContext enrolmentContext,
+			final ExternalCurriculumGroup externalCurriculumGroup) {
+		double result = 0;
+		final ExecutionSemester executionSemester = enrolmentContext.getExecutionPeriod();
+		for (final IDegreeModuleToEvaluate degreeModuleToEvaluate : enrolmentContext.getDegreeModulesToEvaluate()) {
+			if (degreeModuleToEvaluate.isLeaf()
+					&& externalCurriculumGroup.hasCurriculumModule(degreeModuleToEvaluate.getCurriculumGroup())) {
+				result += degreeModuleToEvaluate.getEctsCredits(executionSemester);
+			}
+		}
 
-    private RuleResult createRuleResultForNotSatisfiedCreditsForPreviousCycle(
-	    IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, final CreditsLimitInExternalCycle creditsLimitInExternalCycle,
-	    final CycleCurriculumGroup previousCycleCurriclumGroup) {
-	if (sourceDegreeModuleToEvaluate.isEnroled() && sourceDegreeModuleToEvaluate.isLeaf()) {
-	    return RuleResult
-		    .createImpossible(
-			    sourceDegreeModuleToEvaluate.getDegreeModule(),
-			    "curricularRules.ruleExecutors.CreditsLimitInExternalCycleExecutor.previous.cycle.minimum.credits.not.fulfilled",
-			    creditsLimitInExternalCycle.getExternalCurriculumGroup().getName().getContent(),
-			    creditsLimitInExternalCycle.getMinCreditsInPreviousCycle().toString(), previousCycleCurriclumGroup
-				    .getName().getContent());
+		result += externalCurriculumGroup.getAprovedEctsCredits();
+
+		return result;
 	}
 
-	return RuleResult.createFalse(sourceDegreeModuleToEvaluate.getDegreeModule(),
-		"curricularRules.ruleExecutors.CreditsLimitInExternalCycleExecutor.previous.cycle.minimum.credits.not.fulfilled",
-		creditsLimitInExternalCycle.getExternalCurriculumGroup().getName().getContent(), creditsLimitInExternalCycle
-			.getMinCreditsInPreviousCycle().toString(), previousCycleCurriclumGroup.getName().getContent());
-    }
+	@Override
+	protected RuleResult executeEnrolmentVerificationWithRules(ICurricularRule curricularRule,
+			IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, EnrolmentContext enrolmentContext) {
 
-    private boolean isToApply(IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, final EnrolmentContext enrolmentContext,
-	    final ExternalCurriculumGroup externalCurriculumGroup) {
-	if (!sourceDegreeModuleToEvaluate.isLeaf()) {
-	    return false;
+		final CreditsLimitInExternalCycle creditsLimitInExternalCycle = (CreditsLimitInExternalCycle) curricularRule;
+		final ExternalCurriculumGroup externalCurriculumGroup = creditsLimitInExternalCycle.getExternalCurriculumGroup();
+
+		if (!isToApply(sourceDegreeModuleToEvaluate, enrolmentContext, externalCurriculumGroup)) {
+			return RuleResult.createNA(sourceDegreeModuleToEvaluate.getDegreeModule());
+		}
+
+		if (isEnrolingDissertation(enrolmentContext, externalCurriculumGroup)) {
+			return createRuleResultForEnrolingDissertation(sourceDegreeModuleToEvaluate, creditsLimitInExternalCycle);
+		}
+
+		final CycleCurriculumGroup previousCycleCurriclumGroup = creditsLimitInExternalCycle.getPreviousCycleCurriculumGroup();
+		final Double totalCreditsInPreviousCycle = previousCycleCurriclumGroup.getAprovedEctsCredits();
+
+		if (!creditsLimitInExternalCycle.creditsInPreviousCycleSufficient(totalCreditsInPreviousCycle)) {
+			return createRuleResultForNotSatisfiedCreditsForPreviousCycle(sourceDegreeModuleToEvaluate,
+					creditsLimitInExternalCycle, previousCycleCurriclumGroup);
+		}
+
+		final Double totalCreditsInExternalCycle =
+				calculateApprovedAndEnrollingTotalCredits(enrolmentContext, externalCurriculumGroup);
+		if (creditsLimitInExternalCycle.creditsExceedMaximumInExternalCycle(totalCreditsInExternalCycle,
+				totalCreditsInPreviousCycle)) {
+			return createRuleResultForMaxCreditsExceededInExternalCycle(sourceDegreeModuleToEvaluate,
+					creditsLimitInExternalCycle, totalCreditsInExternalCycle, totalCreditsInPreviousCycle);
+		}
+
+		return RuleResult.createTrue(sourceDegreeModuleToEvaluate.getDegreeModule());
+
 	}
 
-	for (final IDegreeModuleToEvaluate degreeModuleToEvaluate : enrolmentContext.getDegreeModulesToEvaluate()) {
-	    if (externalCurriculumGroup.hasCurriculumModule(degreeModuleToEvaluate.getCurriculumGroup())
-		    && (isEnrolingInSemester(enrolmentContext, degreeModuleToEvaluate))) {
+	private RuleResult createRuleResultForEnrolingDissertation(final IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate,
+			final CreditsLimitInExternalCycle creditsLimitInExternalCycle) {
+
+		if (sourceDegreeModuleToEvaluate.isEnroled() && sourceDegreeModuleToEvaluate.isLeaf()) {
+			return RuleResult.createImpossible(sourceDegreeModuleToEvaluate.getDegreeModule(),
+					"curricularRules.ruleExecutors.CreditsLimitInExternalCycleExecutor.enroling.dissertation");
+		}
+		return RuleResult.createFalse(sourceDegreeModuleToEvaluate.getDegreeModule(),
+				"curricularRules.ruleExecutors.CreditsLimitInExternalCycleExecutor.enroling.dissertation");
+	}
+
+	private boolean isEnrolingDissertation(final EnrolmentContext enrolmentContext,
+			final ExternalCurriculumGroup externalCurriculumGroup) {
+
+		for (final IDegreeModuleToEvaluate degreeModuleToEvaluate : enrolmentContext.getDegreeModulesToEvaluate()) {
+			if (degreeModuleToEvaluate.isDissertation()
+					&& externalCurriculumGroup.hasCurriculumModule(degreeModuleToEvaluate.getCurriculumGroup())
+					&& isEnrolingInSemester(enrolmentContext, degreeModuleToEvaluate)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private boolean isEnrolingInSemester(final EnrolmentContext enrolmentContext,
+			final IDegreeModuleToEvaluate degreeModuleToEvaluate) {
+		return degreeModuleToEvaluate.isEnroling() || isEnroledIn(degreeModuleToEvaluate, enrolmentContext.getExecutionPeriod());
+	}
+
+	private RuleResult createRuleResultForMaxCreditsExceededInExternalCycle(IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate,
+			final CreditsLimitInExternalCycle creditsLimitInExternalCycle, final Double totalCreditsInExternalCycle,
+			final Double totalCreditsInPreviousCycle) {
+		if (sourceDegreeModuleToEvaluate.isEnroled() && sourceDegreeModuleToEvaluate.isLeaf()) {
+			return RuleResult.createImpossible(sourceDegreeModuleToEvaluate.getDegreeModule(),
+					"curricularRules.ruleExecutors.CreditsLimitInExternalCycleExecutor.external.cycle.limit.exceeded",
+					creditsLimitInExternalCycle.getExternalCurriculumGroup().getName().getContent(),
+					totalCreditsInExternalCycle.toString(),
+					creditsLimitInExternalCycle.getMaxCreditsInExternalCycle(totalCreditsInPreviousCycle).toString(),
+					totalCreditsInPreviousCycle.toString());
+		}
+		return RuleResult.createFalse(sourceDegreeModuleToEvaluate.getDegreeModule(),
+				"curricularRules.ruleExecutors.CreditsLimitInExternalCycleExecutor.external.cycle.limit.exceeded",
+				creditsLimitInExternalCycle.getExternalCurriculumGroup().getName().getContent(),
+				totalCreditsInExternalCycle.toString(),
+				creditsLimitInExternalCycle.getMaxCreditsInExternalCycle(totalCreditsInPreviousCycle).toString(),
+				totalCreditsInPreviousCycle.toString());
+	}
+
+	@Override
+	protected boolean canBeEvaluated(ICurricularRule curricularRule, IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate,
+			EnrolmentContext enrolmentContext) {
 		return true;
-	    }
 	}
-
-	return false;
-
-    }
-
-    private boolean isEnroledIn(IDegreeModuleToEvaluate degreeModuleToEvaluate, ExecutionSemester executionSemester) {
-	if (degreeModuleToEvaluate.isLeaf()) {
-	    final EnroledCurriculumModuleWrapper curriculumModuleEnroledWrapper = (EnroledCurriculumModuleWrapper) degreeModuleToEvaluate;
-	    final CurriculumLine curriculumLine = (CurriculumLine) (curriculumModuleEnroledWrapper).getCurriculumModule();
-
-	    if (curriculumLine.isEnrolment()) {
-		return curriculumLine.getExecutionPeriod() == executionSemester;
-	    }
-
-	    return false;
-	}
-
-	return false;
-    }
-
-    private Double calculateApprovedAndEnrollingTotalCredits(final EnrolmentContext enrolmentContext,
-	    final ExternalCurriculumGroup externalCurriculumGroup) {
-	double result = 0;
-	final ExecutionSemester executionSemester = enrolmentContext.getExecutionPeriod();
-	for (final IDegreeModuleToEvaluate degreeModuleToEvaluate : enrolmentContext.getDegreeModulesToEvaluate()) {
-	    if (degreeModuleToEvaluate.isLeaf()
-		    && externalCurriculumGroup.hasCurriculumModule(degreeModuleToEvaluate.getCurriculumGroup())) {
-		result += degreeModuleToEvaluate.getEctsCredits(executionSemester);
-	    }
-	}
-
-	result += externalCurriculumGroup.getAprovedEctsCredits();
-
-	return result;
-    }
-
-    @Override
-    protected RuleResult executeEnrolmentVerificationWithRules(ICurricularRule curricularRule,
-	    IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, EnrolmentContext enrolmentContext) {
-
-	final CreditsLimitInExternalCycle creditsLimitInExternalCycle = (CreditsLimitInExternalCycle) curricularRule;
-	final ExternalCurriculumGroup externalCurriculumGroup = creditsLimitInExternalCycle.getExternalCurriculumGroup();
-
-	if (!isToApply(sourceDegreeModuleToEvaluate, enrolmentContext, externalCurriculumGroup)) {
-	    return RuleResult.createNA(sourceDegreeModuleToEvaluate.getDegreeModule());
-	}
-
-	if (isEnrolingDissertation(enrolmentContext, externalCurriculumGroup)) {
-	    return createRuleResultForEnrolingDissertation(sourceDegreeModuleToEvaluate, creditsLimitInExternalCycle);
-	}
-
-	final CycleCurriculumGroup previousCycleCurriclumGroup = creditsLimitInExternalCycle.getPreviousCycleCurriculumGroup();
-	final Double totalCreditsInPreviousCycle = previousCycleCurriclumGroup.getAprovedEctsCredits();
-
-	if (!creditsLimitInExternalCycle.creditsInPreviousCycleSufficient(totalCreditsInPreviousCycle)) {
-	    return createRuleResultForNotSatisfiedCreditsForPreviousCycle(sourceDegreeModuleToEvaluate,
-		    creditsLimitInExternalCycle, previousCycleCurriclumGroup);
-	}
-
-	final Double totalCreditsInExternalCycle = calculateApprovedAndEnrollingTotalCredits(enrolmentContext,
-		externalCurriculumGroup);
-	if (creditsLimitInExternalCycle.creditsExceedMaximumInExternalCycle(totalCreditsInExternalCycle,
-		totalCreditsInPreviousCycle)) {
-	    return createRuleResultForMaxCreditsExceededInExternalCycle(sourceDegreeModuleToEvaluate,
-		    creditsLimitInExternalCycle, totalCreditsInExternalCycle, totalCreditsInPreviousCycle);
-	}
-
-	return RuleResult.createTrue(sourceDegreeModuleToEvaluate.getDegreeModule());
-
-    }
-
-    private RuleResult createRuleResultForEnrolingDissertation(final IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate,
-	    final CreditsLimitInExternalCycle creditsLimitInExternalCycle) {
-
-	if (sourceDegreeModuleToEvaluate.isEnroled() && sourceDegreeModuleToEvaluate.isLeaf()) {
-	    return RuleResult.createImpossible(sourceDegreeModuleToEvaluate.getDegreeModule(),
-		    "curricularRules.ruleExecutors.CreditsLimitInExternalCycleExecutor.enroling.dissertation");
-	}
-	return RuleResult.createFalse(sourceDegreeModuleToEvaluate.getDegreeModule(),
-		"curricularRules.ruleExecutors.CreditsLimitInExternalCycleExecutor.enroling.dissertation");
-    }
-
-    private boolean isEnrolingDissertation(final EnrolmentContext enrolmentContext,
-	    final ExternalCurriculumGroup externalCurriculumGroup) {
-
-	for (final IDegreeModuleToEvaluate degreeModuleToEvaluate : enrolmentContext.getDegreeModulesToEvaluate()) {
-	    if (degreeModuleToEvaluate.isDissertation()
-		    && externalCurriculumGroup.hasCurriculumModule(degreeModuleToEvaluate.getCurriculumGroup())
-		    && isEnrolingInSemester(enrolmentContext, degreeModuleToEvaluate)) {
-		return true;
-	    }
-	}
-	return false;
-    }
-
-    private boolean isEnrolingInSemester(final EnrolmentContext enrolmentContext,
-	    final IDegreeModuleToEvaluate degreeModuleToEvaluate) {
-	return degreeModuleToEvaluate.isEnroling() || isEnroledIn(degreeModuleToEvaluate, enrolmentContext.getExecutionPeriod());
-    }
-
-    private RuleResult createRuleResultForMaxCreditsExceededInExternalCycle(IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate,
-	    final CreditsLimitInExternalCycle creditsLimitInExternalCycle, final Double totalCreditsInExternalCycle,
-	    final Double totalCreditsInPreviousCycle) {
-	if (sourceDegreeModuleToEvaluate.isEnroled() && sourceDegreeModuleToEvaluate.isLeaf()) {
-	    return RuleResult.createImpossible(sourceDegreeModuleToEvaluate.getDegreeModule(),
-		    "curricularRules.ruleExecutors.CreditsLimitInExternalCycleExecutor.external.cycle.limit.exceeded",
-		    creditsLimitInExternalCycle.getExternalCurriculumGroup().getName().getContent(), totalCreditsInExternalCycle
-			    .toString(), creditsLimitInExternalCycle.getMaxCreditsInExternalCycle(totalCreditsInPreviousCycle)
-			    .toString(), totalCreditsInPreviousCycle.toString());
-	}
-	return RuleResult.createFalse(sourceDegreeModuleToEvaluate.getDegreeModule(),
-		"curricularRules.ruleExecutors.CreditsLimitInExternalCycleExecutor.external.cycle.limit.exceeded",
-		creditsLimitInExternalCycle.getExternalCurriculumGroup().getName().getContent(), totalCreditsInExternalCycle
-			.toString(), creditsLimitInExternalCycle.getMaxCreditsInExternalCycle(totalCreditsInPreviousCycle)
-			.toString(), totalCreditsInPreviousCycle.toString());
-    }
-
-    @Override
-    protected boolean canBeEvaluated(ICurricularRule curricularRule, IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate,
-	    EnrolmentContext enrolmentContext) {
-	return true;
-    }
 
 }

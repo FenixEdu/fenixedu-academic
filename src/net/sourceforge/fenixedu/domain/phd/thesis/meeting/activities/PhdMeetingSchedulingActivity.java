@@ -15,42 +15,42 @@ import net.sourceforge.fenixedu.util.phd.PhdProperties;
 
 abstract public class PhdMeetingSchedulingActivity extends Activity<PhdMeetingSchedulingProcess> {
 
-    @Override
-    final public void checkPreConditions(final PhdMeetingSchedulingProcess process, final IUserView userView) {
-	processPreConditions(process, userView);
-	activityPreConditions(process, userView);
-    }
-
-    protected void processPreConditions(final PhdMeetingSchedulingProcess process, final IUserView userView) {
-    }
-
-    abstract protected void activityPreConditions(final PhdMeetingSchedulingProcess process, final IUserView userView);
-
-    public static String getAccessInformation(PhdIndividualProgramProcess process, PhdParticipant participant,
-	    String coordinatorMessage, String teacherMessage) {
-
-	if (!participant.isInternal()) {
-	    return AlertMessage.get("message.phd.external.access", PhdProperties.getPhdExternalAccessLink(),
-		    participant.getAccessHashCode(), participant.getPassword());
-
-	} else {
-	    final Person person = ((InternalPhdParticipant) participant).getPerson();
-
-	    if (process.isCoordinatorForPhdProgram(person)) {
-		return AlertMessage.get(coordinatorMessage);
-
-	    } else if (process.isGuiderOrAssistentGuider(person) || person.hasTeacher()) {
-		return AlertMessage.get(teacherMessage);
-	    }
+	@Override
+	final public void checkPreConditions(final PhdMeetingSchedulingProcess process, final IUserView userView) {
+		processPreConditions(process, userView);
+		activityPreConditions(process, userView);
 	}
 
-	throw new DomainException("error.PhdThesisProcess.unexpected.participant.type");
-    }
+	protected void processPreConditions(final PhdMeetingSchedulingProcess process, final IUserView userView) {
+	}
 
-    @Override
-    protected void log(PhdMeetingSchedulingProcess process, IUserView userView, Object object) {
-	PhdThesisProcess thesisProcess = process.getThesisProcess();
+	abstract protected void activityPreConditions(final PhdMeetingSchedulingProcess process, final IUserView userView);
 
-	PhdLog.logActivity(this, thesisProcess, userView, object);
-    }
+	public static String getAccessInformation(PhdIndividualProgramProcess process, PhdParticipant participant,
+			String coordinatorMessage, String teacherMessage) {
+
+		if (!participant.isInternal()) {
+			return AlertMessage.get("message.phd.external.access", PhdProperties.getPhdExternalAccessLink(),
+					participant.getAccessHashCode(), participant.getPassword());
+
+		} else {
+			final Person person = ((InternalPhdParticipant) participant).getPerson();
+
+			if (process.isCoordinatorForPhdProgram(person)) {
+				return AlertMessage.get(coordinatorMessage);
+
+			} else if (process.isGuiderOrAssistentGuider(person) || person.hasTeacher()) {
+				return AlertMessage.get(teacherMessage);
+			}
+		}
+
+		throw new DomainException("error.PhdThesisProcess.unexpected.participant.type");
+	}
+
+	@Override
+	protected void log(PhdMeetingSchedulingProcess process, IUserView userView, Object object) {
+		PhdThesisProcess thesisProcess = process.getThesisProcess();
+
+		PhdLog.logActivity(this, thesisProcess, userView, object);
+	}
 }

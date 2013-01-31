@@ -19,23 +19,23 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class UpdatePersonInformationFromCitizenCard extends FenixService {
 
-    @Service
-    public static void run(PersonInformationFromUniqueCardDTO personDTO) {
-	Collection<Person> persons = Person.readByDocumentIdNumber(personDTO.getDocumentIdNumber());
-	if (persons.isEmpty() || persons.size() > 1) {
-	    throw new DomainException("UpdatePersonInformationFromCitizenCard.error.personNotFound");
-	}
+	@Service
+	public static void run(PersonInformationFromUniqueCardDTO personDTO) {
+		Collection<Person> persons = Person.readByDocumentIdNumber(personDTO.getDocumentIdNumber());
+		if (persons.isEmpty() || persons.size() > 1) {
+			throw new DomainException("UpdatePersonInformationFromCitizenCard.error.personNotFound");
+		}
 
-	Person person = persons.iterator().next();
-	if (person.getIdDocumentType() != IDDocumentType.IDENTITY_CARD) {
-	    throw new DomainException("UpdatePersonInformationFromCitizenCard.error.personIdTypeNotIdentityCard");
-	}
+		Person person = persons.iterator().next();
+		if (person.getIdDocumentType() != IDDocumentType.IDENTITY_CARD) {
+			throw new DomainException("UpdatePersonInformationFromCitizenCard.error.personIdTypeNotIdentityCard");
+		}
 
-	try {
-	    person.editFromBean(personDTO);
-	} catch (ParseException e) {
-	    throw new DomainException("UpdatePersonInformationFromCitizenCard.error.dateParseError", e);
+		try {
+			person.editFromBean(personDTO);
+		} catch (ParseException e) {
+			throw new DomainException("UpdatePersonInformationFromCitizenCard.error.dateParseError", e);
+		}
 	}
-    }
 
 }

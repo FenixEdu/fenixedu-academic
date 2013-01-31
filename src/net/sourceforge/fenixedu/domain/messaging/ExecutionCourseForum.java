@@ -10,50 +10,50 @@ import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class ExecutionCourseForum extends ExecutionCourseForum_Base {
 
-    public ExecutionCourseForum() {
-	super();
-    }
-
-    public ExecutionCourseForum(MultiLanguageString name, MultiLanguageString description) {
-	this();
-	init(name, description);
-    }
-
-    @Override
-    public void setName(MultiLanguageString name) {
-	if (this.getForumExecutionCourse() != null) {
-	    getForumExecutionCourse().checkIfCanAddForum(name);
+	public ExecutionCourseForum() {
+		super();
 	}
 
-	super.setName(name);
-    }
+	public ExecutionCourseForum(MultiLanguageString name, MultiLanguageString description) {
+		this();
+		init(name, description);
+	}
 
-    @Override
-    public Group getReadersGroup() {
-	return getExecutionCourseMembersGroup();
-    }
+	@Override
+	public void setName(MultiLanguageString name) {
+		if (this.getForumExecutionCourse() != null) {
+			getForumExecutionCourse().checkIfCanAddForum(name);
+		}
 
-    @Override
-    public Group getWritersGroup() {
-	return getExecutionCourseMembersGroup();
-    }
+		super.setName(name);
+	}
 
-    @Override
-    public Group getAdminGroup() {
-	return new ExecutionCourseTeachersGroup(getForumExecutionCourse());
-    }
+	@Override
+	public Group getReadersGroup() {
+		return getExecutionCourseMembersGroup();
+	}
 
-    private Group getExecutionCourseMembersGroup() {
-	return new GroupUnion(new ExecutionCourseTeachersGroup(getForumExecutionCourse()), new ExecutionCourseStudentsGroup(
-		getForumExecutionCourse()));
-    }
+	@Override
+	public Group getWritersGroup() {
+		return getExecutionCourseMembersGroup();
+	}
 
-    @Deprecated
-    public ExecutionCourse getExecutionCourse() {
-	return getForumExecutionCourse();
-    }
+	@Override
+	public Group getAdminGroup() {
+		return new ExecutionCourseTeachersGroup(getForumExecutionCourse());
+	}
 
-    public ExecutionCourse getForumExecutionCourse() {
-	return hasAnyParents() ? ((ExecutionCourseSite) getUniqueParentContainer()).getSiteExecutionCourse() : null;
-    }
+	private Group getExecutionCourseMembersGroup() {
+		return new GroupUnion(new ExecutionCourseTeachersGroup(getForumExecutionCourse()), new ExecutionCourseStudentsGroup(
+				getForumExecutionCourse()));
+	}
+
+	@Deprecated
+	public ExecutionCourse getExecutionCourse() {
+		return getForumExecutionCourse();
+	}
+
+	public ExecutionCourse getForumExecutionCourse() {
+		return hasAnyParents() ? ((ExecutionCourseSite) getUniqueParentContainer()).getSiteExecutionCourse() : null;
+	}
 }

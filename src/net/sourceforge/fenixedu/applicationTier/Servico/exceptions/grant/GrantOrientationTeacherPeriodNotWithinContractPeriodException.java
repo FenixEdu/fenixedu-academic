@@ -15,26 +15,27 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 
 public class GrantOrientationTeacherPeriodNotWithinContractPeriodException extends FenixServiceException {
 
-    public GrantOrientationTeacherPeriodNotWithinContractPeriodException() {
-    }
+	public GrantOrientationTeacherPeriodNotWithinContractPeriodException() {
+	}
 
-    public GrantOrientationTeacherPeriodNotWithinContractPeriodException(String message) {
-	super(message);
-    }
+	public GrantOrientationTeacherPeriodNotWithinContractPeriodException(String message) {
+		super(message);
+	}
 
-    public GrantOrientationTeacherPeriodNotWithinContractPeriodException(Throwable cause) {
-	super(cause);
-    }
+	public GrantOrientationTeacherPeriodNotWithinContractPeriodException(Throwable cause) {
+		super(cause);
+	}
 
-    public GrantOrientationTeacherPeriodNotWithinContractPeriodException(String message, Throwable cause) {
-	super(message, cause);
-    }
+	public GrantOrientationTeacherPeriodNotWithinContractPeriodException(String message, Throwable cause) {
+		super(message, cause);
+	}
 
-    public String toString() {
-	String result = "[GrantOrientationTeacherPeriodNotWithinContractPeriodException\n";
-	result += "message" + this.getMessage() + "\n";
-	result += "cause" + this.getCause() + "\n";
-	result += "]";
-	return result;
-    }
+	@Override
+	public String toString() {
+		String result = "[GrantOrientationTeacherPeriodNotWithinContractPeriodException\n";
+		result += "message" + this.getMessage() + "\n";
+		result += "cause" + this.getCause() + "\n";
+		result += "]";
+		return result;
+	}
 }

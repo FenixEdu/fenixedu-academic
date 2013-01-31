@@ -14,95 +14,97 @@ import net.sourceforge.fenixedu.domain.util.LogicOperator;
 
 public class RestrictionBetweenDegreeModules extends RestrictionBetweenDegreeModules_Base {
 
-    private RestrictionBetweenDegreeModules(final DegreeModule precedenceDegreeModule, final Double minimumCredits) {
-	super();
-	checkParameters(precedenceDegreeModule, minimumCredits);
-	setPrecedenceDegreeModule(precedenceDegreeModule);
-	setMinimumCredits(minimumCredits);
-	setCurricularRuleType(CurricularRuleType.PRECEDENCY_BETWEEN_DEGREE_MODULES);
-    }
-
-    private void checkParameters(final DegreeModule precedenceDegreeModule, final Double minimumCredits) throws DomainException {
-	if (precedenceDegreeModule == null || minimumCredits == null) {
-	    throw new DomainException("curricular.rule.invalid.parameters");
-	}
-    }
-
-    protected RestrictionBetweenDegreeModules(final DegreeModule degreeModuleToApplyRule,
-	    final DegreeModule precedenceDegreeModule, final Double minimumCredits, final CourseGroup contextCourseGroup,
-	    final ExecutionSemester begin, final ExecutionSemester end) {
-
-	this(precedenceDegreeModule, minimumCredits);
-	init(degreeModuleToApplyRule, contextCourseGroup, begin, end);
-    }
-
-    protected void edit(final DegreeModule precedenceDegreeModule, final Double minimumCredits,
-	    final CourseGroup contextCourseGroup) {
-	checkParameters(precedenceDegreeModule, minimumCredits);
-	setPrecedenceDegreeModule(precedenceDegreeModule);
-	setMinimumCredits(minimumCredits);
-	setContextCourseGroup(contextCourseGroup);
-    }
-
-    @Override
-    public List<GenericPair<Object, Boolean>> getLabel() {
-	final List<GenericPair<Object, Boolean>> labelList = new ArrayList<GenericPair<Object, Boolean>>();
-
-	if (belongsToCompositeRule() && getParentCompositeRule().getCompositeRuleType().equals(LogicOperator.NOT)) {
-	    labelList.add(new GenericPair<Object, Boolean>("label.precedence", true));
-	} else {
-	    labelList.add(new GenericPair<Object, Boolean>("label.precedence", true));
+	private RestrictionBetweenDegreeModules(final DegreeModule precedenceDegreeModule, final Double minimumCredits) {
+		super();
+		checkParameters(precedenceDegreeModule, minimumCredits);
+		setPrecedenceDegreeModule(precedenceDegreeModule);
+		setMinimumCredits(minimumCredits);
+		setCurricularRuleType(CurricularRuleType.PRECEDENCY_BETWEEN_DEGREE_MODULES);
 	}
 
-	labelList.add(new GenericPair<Object, Boolean>(" ", false));
-	labelList.add(new GenericPair<Object, Boolean>("label.of", true));
-	labelList.add(new GenericPair<Object, Boolean>(" ", false));
-	labelList.add(new GenericPair<Object, Boolean>("label.module", true));
-	labelList.add(new GenericPair<Object, Boolean>(": ", false));
-
-	// getting full name only for course groups
-	String precedenceDegreeModule = (getPrecedenceDegreeModule().isLeaf()) ? getPrecedenceDegreeModule().getName()
-		: getPrecedenceDegreeModule().getOneFullName();
-	labelList.add(new GenericPair<Object, Boolean>(precedenceDegreeModule, false));
-
-	if (getMinimumCredits().doubleValue() != 0.0) {
-	    labelList.add(new GenericPair<Object, Boolean>(" ", false));
-	    labelList.add(new GenericPair<Object, Boolean>("label.with", true));
-	    labelList.add(new GenericPair<Object, Boolean>(", ", false));
-
-	    labelList.add(new GenericPair<Object, Boolean>("label.in", true));
-	    labelList.add(new GenericPair<Object, Boolean>(" ", false));
-	    labelList.add(new GenericPair<Object, Boolean>("label.minimum", true));
-	    labelList.add(new GenericPair<Object, Boolean>(", ", false));
-
-	    labelList.add(new GenericPair<Object, Boolean>(getMinimumCredits(), false));
-	    labelList.add(new GenericPair<Object, Boolean>(" ", false));
-	    labelList.add(new GenericPair<Object, Boolean>("label.credits", true));
+	private void checkParameters(final DegreeModule precedenceDegreeModule, final Double minimumCredits) throws DomainException {
+		if (precedenceDegreeModule == null || minimumCredits == null) {
+			throw new DomainException("curricular.rule.invalid.parameters");
+		}
 	}
 
-	if (getContextCourseGroup() != null) {
-	    labelList.add(new GenericPair<Object, Boolean>(", ", false));
-	    labelList.add(new GenericPair<Object, Boolean>("label.inContext", true));
-	    labelList.add(new GenericPair<Object, Boolean>(" ", false));
-	    labelList.add(new GenericPair<Object, Boolean>(getContextCourseGroup().getOneFullName(), false));
+	protected RestrictionBetweenDegreeModules(final DegreeModule degreeModuleToApplyRule,
+			final DegreeModule precedenceDegreeModule, final Double minimumCredits, final CourseGroup contextCourseGroup,
+			final ExecutionSemester begin, final ExecutionSemester end) {
+
+		this(precedenceDegreeModule, minimumCredits);
+		init(degreeModuleToApplyRule, contextCourseGroup, begin, end);
 	}
-	return labelList;
-    }
 
-    @Override
-    protected boolean appliesToPeriod(final Context context) {
-	return getDegreeModuleToApplyRule().isCourseGroup() || super.appliesToPeriod(context);
-    }
+	protected void edit(final DegreeModule precedenceDegreeModule, final Double minimumCredits,
+			final CourseGroup contextCourseGroup) {
+		checkParameters(precedenceDegreeModule, minimumCredits);
+		setPrecedenceDegreeModule(precedenceDegreeModule);
+		setMinimumCredits(minimumCredits);
+		setContextCourseGroup(contextCourseGroup);
+	}
 
-    public boolean hasMinimumCredits() {
-	return getMinimumCredits() != null && getMinimumCredits().doubleValue() != 0.0;
-    }
+	@Override
+	public List<GenericPair<Object, Boolean>> getLabel() {
+		final List<GenericPair<Object, Boolean>> labelList = new ArrayList<GenericPair<Object, Boolean>>();
 
-    public boolean allowCredits(final Double credits) {
-	return credits.doubleValue() >= getMinimumCredits().doubleValue();
-    }
+		if (belongsToCompositeRule() && getParentCompositeRule().getCompositeRuleType().equals(LogicOperator.NOT)) {
+			labelList.add(new GenericPair<Object, Boolean>("label.precedence", true));
+		} else {
+			labelList.add(new GenericPair<Object, Boolean>("label.precedence", true));
+		}
 
-    public VerifyRuleExecutor createVerifyRuleExecutor() {
-	return VerifyRuleExecutor.NULL_VERIFY_EXECUTOR;
-    }
+		labelList.add(new GenericPair<Object, Boolean>(" ", false));
+		labelList.add(new GenericPair<Object, Boolean>("label.of", true));
+		labelList.add(new GenericPair<Object, Boolean>(" ", false));
+		labelList.add(new GenericPair<Object, Boolean>("label.module", true));
+		labelList.add(new GenericPair<Object, Boolean>(": ", false));
+
+		// getting full name only for course groups
+		String precedenceDegreeModule =
+				(getPrecedenceDegreeModule().isLeaf()) ? getPrecedenceDegreeModule().getName() : getPrecedenceDegreeModule()
+						.getOneFullName();
+		labelList.add(new GenericPair<Object, Boolean>(precedenceDegreeModule, false));
+
+		if (getMinimumCredits().doubleValue() != 0.0) {
+			labelList.add(new GenericPair<Object, Boolean>(" ", false));
+			labelList.add(new GenericPair<Object, Boolean>("label.with", true));
+			labelList.add(new GenericPair<Object, Boolean>(", ", false));
+
+			labelList.add(new GenericPair<Object, Boolean>("label.in", true));
+			labelList.add(new GenericPair<Object, Boolean>(" ", false));
+			labelList.add(new GenericPair<Object, Boolean>("label.minimum", true));
+			labelList.add(new GenericPair<Object, Boolean>(", ", false));
+
+			labelList.add(new GenericPair<Object, Boolean>(getMinimumCredits(), false));
+			labelList.add(new GenericPair<Object, Boolean>(" ", false));
+			labelList.add(new GenericPair<Object, Boolean>("label.credits", true));
+		}
+
+		if (getContextCourseGroup() != null) {
+			labelList.add(new GenericPair<Object, Boolean>(", ", false));
+			labelList.add(new GenericPair<Object, Boolean>("label.inContext", true));
+			labelList.add(new GenericPair<Object, Boolean>(" ", false));
+			labelList.add(new GenericPair<Object, Boolean>(getContextCourseGroup().getOneFullName(), false));
+		}
+		return labelList;
+	}
+
+	@Override
+	protected boolean appliesToPeriod(final Context context) {
+		return getDegreeModuleToApplyRule().isCourseGroup() || super.appliesToPeriod(context);
+	}
+
+	public boolean hasMinimumCredits() {
+		return getMinimumCredits() != null && getMinimumCredits().doubleValue() != 0.0;
+	}
+
+	public boolean allowCredits(final Double credits) {
+		return credits.doubleValue() >= getMinimumCredits().doubleValue();
+	}
+
+	@Override
+	public VerifyRuleExecutor createVerifyRuleExecutor() {
+		return VerifyRuleExecutor.NULL_VERIFY_EXECUTOR;
+	}
 }

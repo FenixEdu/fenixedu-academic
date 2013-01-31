@@ -21,39 +21,39 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class ListPayedInsurancesByDates extends FenixService {
 
-    @Service
-    public static List<InsuranceTransaction> run(ExecutionYear executionYear, YearMonthDay beginDate, YearMonthDay endDate) {
+	@Service
+	public static List<InsuranceTransaction> run(ExecutionYear executionYear, YearMonthDay beginDate, YearMonthDay endDate) {
 
-	List<InsuranceTransaction> insuranceTransactions = new ArrayList<InsuranceTransaction>();
+		List<InsuranceTransaction> insuranceTransactions = new ArrayList<InsuranceTransaction>();
 
-	List<Transaction> transactions = rootDomainObject.getTransactions();
-	for (Transaction transaction : transactions) {
-	    if (transaction instanceof InsuranceTransaction) {
-		InsuranceTransaction insuranceTransaction = (InsuranceTransaction) transaction;
+		List<Transaction> transactions = rootDomainObject.getTransactions();
+		for (Transaction transaction : transactions) {
+			if (transaction instanceof InsuranceTransaction) {
+				InsuranceTransaction insuranceTransaction = (InsuranceTransaction) transaction;
 
-		if (insuranceTransaction.isReimbursed()) {
-		    continue;
+				if (insuranceTransaction.isReimbursed()) {
+					continue;
+				}
+
+				if (executionYear != null && !insuranceTransaction.getExecutionYear().equals(executionYear)) {
+					continue;
+				}
+
+				if (beginDate != null
+						&& insuranceTransaction.getTransactionDateDateTime().isBefore(beginDate.toDateTimeAtMidnight())) {
+					continue;
+				}
+
+				if (endDate != null && insuranceTransaction.getTransactionDateDateTime().isAfter(endDate.toDateTimeAtMidnight())) {
+					continue;
+				}
+
+				insuranceTransactions.add(insuranceTransaction);
+			}
 		}
 
-		if (executionYear != null && !insuranceTransaction.getExecutionYear().equals(executionYear)) {
-		    continue;
-		}
+		return insuranceTransactions;
 
-		if (beginDate != null
-			&& insuranceTransaction.getTransactionDateDateTime().isBefore(beginDate.toDateTimeAtMidnight())) {
-		    continue;
-		}
-
-		if (endDate != null && insuranceTransaction.getTransactionDateDateTime().isAfter(endDate.toDateTimeAtMidnight())) {
-		    continue;
-		}
-
-		insuranceTransactions.add(insuranceTransaction);
-	    }
 	}
-
-	return insuranceTransactions;
-
-    }
 
 }

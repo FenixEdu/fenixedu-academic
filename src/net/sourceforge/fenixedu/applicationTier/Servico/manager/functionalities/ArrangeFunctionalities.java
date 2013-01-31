@@ -18,19 +18,19 @@ import pt.utl.ist.fenix.tools.util.Pair;
  */
 public class ArrangeFunctionalities extends FenixService {
 
-    /**
-     * Every pair in the given list will be changed so that the value is make a
-     * child of the key.
-     * 
-     * @param arrangements
-     *            list of pairs (parent, child)
-     */
-    @Checked("RolePredicates.MANAGER_PREDICATE")
-    @Service
-    public static void run(List<Pair<Module, Content>> arrangements) {
-	for (Pair<Module, Content> pair : arrangements) {
-	    ((IFunctionality) pair.getValue()).setModule(pair.getKey());
+	/**
+	 * Every pair in the given list will be changed so that the value is make a
+	 * child of the key.
+	 * 
+	 * @param arrangements
+	 *            list of pairs (parent, child)
+	 */
+	@Checked("RolePredicates.MANAGER_PREDICATE")
+	@Service
+	public static void run(List<Pair<Module, Content>> arrangements) {
+		for (Pair<Module, Content> pair : arrangements) {
+			((IFunctionality) pair.getValue()).setModule(pair.getKey());
+		}
 	}
-    }
 
 }

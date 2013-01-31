@@ -16,66 +16,66 @@ import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
  */
 public class InfoSiteStudentsTestMarksStatistics extends DataTranferObject implements ISiteComponent {
 
-    private List correctAnswersPercentage;
+	private List correctAnswersPercentage;
 
-    private List partiallyCorrectAnswersPercentage;
+	private List partiallyCorrectAnswersPercentage;
 
-    private List wrongAnswersPercentage;
+	private List wrongAnswersPercentage;
 
-    private List notAnsweredPercentage;
+	private List notAnsweredPercentage;
 
-    private List answeredPercentage;
+	private List answeredPercentage;
 
-    private DistributedTest distributedTest;
+	private DistributedTest distributedTest;
 
-    public InfoSiteStudentsTestMarksStatistics() {
-    }
+	public InfoSiteStudentsTestMarksStatistics() {
+	}
 
-    public List getCorrectAnswersPercentage() {
-	return correctAnswersPercentage;
-    }
+	public List getCorrectAnswersPercentage() {
+		return correctAnswersPercentage;
+	}
 
-    public DistributedTest getDistributedTest() {
-	return distributedTest;
-    }
+	public DistributedTest getDistributedTest() {
+		return distributedTest;
+	}
 
-    public List getNotAnsweredPercentage() {
-	return notAnsweredPercentage;
-    }
+	public List getNotAnsweredPercentage() {
+		return notAnsweredPercentage;
+	}
 
-    public List getWrongAnswersPercentage() {
-	return wrongAnswersPercentage;
-    }
+	public List getWrongAnswersPercentage() {
+		return wrongAnswersPercentage;
+	}
 
-    public void setCorrectAnswersPercentage(List list) {
-	correctAnswersPercentage = list;
-    }
+	public void setCorrectAnswersPercentage(List list) {
+		correctAnswersPercentage = list;
+	}
 
-    public void setDistributedTest(DistributedTest distributedTest) {
-	this.distributedTest = distributedTest;
-    }
+	public void setDistributedTest(DistributedTest distributedTest) {
+		this.distributedTest = distributedTest;
+	}
 
-    public void setNotAnsweredPercentage(List list) {
-	notAnsweredPercentage = list;
-    }
+	public void setNotAnsweredPercentage(List list) {
+		notAnsweredPercentage = list;
+	}
 
-    public void setWrongAnswersPercentage(List list) {
-	wrongAnswersPercentage = list;
-    }
+	public void setWrongAnswersPercentage(List list) {
+		wrongAnswersPercentage = list;
+	}
 
-    public List getPartiallyCorrectAnswersPercentage() {
-	return partiallyCorrectAnswersPercentage;
-    }
+	public List getPartiallyCorrectAnswersPercentage() {
+		return partiallyCorrectAnswersPercentage;
+	}
 
-    public void setPartiallyCorrectAnswersPercentage(List partiallyCorrectAnswersPercentage) {
-	this.partiallyCorrectAnswersPercentage = partiallyCorrectAnswersPercentage;
-    }
+	public void setPartiallyCorrectAnswersPercentage(List partiallyCorrectAnswersPercentage) {
+		this.partiallyCorrectAnswersPercentage = partiallyCorrectAnswersPercentage;
+	}
 
-    public List getAnsweredPercentage() {
-	return answeredPercentage;
-    }
+	public List getAnsweredPercentage() {
+		return answeredPercentage;
+	}
 
-    public void setAnsweredPercentage(List answeredPercentage) {
-	this.answeredPercentage = answeredPercentage;
-    }
+	public void setAnsweredPercentage(List answeredPercentage) {
+		this.answeredPercentage = answeredPercentage;
+	}
 }

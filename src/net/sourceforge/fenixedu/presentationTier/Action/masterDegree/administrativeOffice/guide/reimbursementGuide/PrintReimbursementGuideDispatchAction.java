@@ -40,67 +40,69 @@ import pt.ist.fenixWebFramework.security.UserView;
  */
 public class PrintReimbursementGuideDispatchAction extends FenixDispatchAction {
 
-    public ActionForward print(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-	    throws FenixActionException, FenixFilterException {
+	public ActionForward print(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+			throws FenixActionException, FenixFilterException {
 
-	IUserView userView = UserView.getUser();
+		IUserView userView = UserView.getUser();
 
-	Integer reimbursementGuideId = new Integer(this.getFromRequest("id", request));
+		Integer reimbursementGuideId = new Integer(this.getFromRequest("id", request));
 
-	InfoReimbursementGuide infoReimbursementGuide = null;
-	List infoStudents = null;
-	InfoStudent infoStudent = null;
+		InfoReimbursementGuide infoReimbursementGuide = null;
+		List infoStudents = null;
+		InfoStudent infoStudent = null;
 
-	try {
-	    infoReimbursementGuide = (InfoReimbursementGuide) ViewReimbursementGuide.run(reimbursementGuideId);
+		try {
+			infoReimbursementGuide = ViewReimbursementGuide.run(reimbursementGuideId);
 
-	    Object args2[] = { infoReimbursementGuide.getInfoGuide().getInfoPerson() };
+			Object args2[] = { infoReimbursementGuide.getInfoGuide().getInfoPerson() };
 
-	    infoStudents = (List) ServiceUtils.executeService("ReadStudentsByPerson", args2);
+			infoStudents = (List) ServiceUtils.executeService("ReadStudentsByPerson", args2);
 
-	    Iterator it = infoStudents.iterator();
-	    while (it.hasNext()) {
-		infoStudent = (InfoStudent) it.next();
-		if (infoStudent.getDegreeType().equals(DegreeType.MASTER_DEGREE))
-		    break;
-	    }
+			Iterator it = infoStudents.iterator();
+			while (it.hasNext()) {
+				infoStudent = (InfoStudent) it.next();
+				if (infoStudent.getDegreeType().equals(DegreeType.MASTER_DEGREE)) {
+					break;
+				}
+			}
 
-	} catch (FenixServiceException e) {
-	    throw new FenixActionException(e.getMessage(), mapping.findForward("error"));
+		} catch (FenixServiceException e) {
+			throw new FenixActionException(e.getMessage(), mapping.findForward("error"));
+		}
+
+		Locale locale = this.getLocale(request);
+
+		Date date = null;
+		InfoReimbursementGuideSituation infoReimbursementGuideSituation = null;
+
+		List infoReimbursementGuideSituations = infoReimbursementGuide.getInfoReimbursementGuideSituations();
+
+		Iterator it = infoReimbursementGuideSituations.iterator();
+		while (it.hasNext()) {
+			infoReimbursementGuideSituation = (InfoReimbursementGuideSituation) it.next();
+			if (infoReimbursementGuideSituation.getReimbursementGuideState().equals(ReimbursementGuideState.ISSUED)) {
+				date = infoReimbursementGuideSituation.getOfficialDate().getTime();
+			}
+		}
+
+		String formatedDate = DateFormat.getDateInstance(DateFormat.LONG, locale).format(date);
+
+		request.setAttribute(PresentationConstants.DATE, formatedDate);
+		request.setAttribute(PresentationConstants.REIMBURSEMENT_GUIDE, infoReimbursementGuide);
+		if (infoStudent != null) {
+			request.setAttribute(PresentationConstants.STUDENT, infoStudent);
+		}
+
+		return mapping.findForward("start");
+
 	}
 
-	Locale locale = this.getLocale(request);
-
-	Date date = null;
-	InfoReimbursementGuideSituation infoReimbursementGuideSituation = null;
-
-	List infoReimbursementGuideSituations = infoReimbursementGuide.getInfoReimbursementGuideSituations();
-
-	Iterator it = infoReimbursementGuideSituations.iterator();
-	while (it.hasNext()) {
-	    infoReimbursementGuideSituation = (InfoReimbursementGuideSituation) it.next();
-	    if (infoReimbursementGuideSituation.getReimbursementGuideState().equals(ReimbursementGuideState.ISSUED))
-		date = infoReimbursementGuideSituation.getOfficialDate().getTime();
+	private String getFromRequest(String parameter, HttpServletRequest request) {
+		String parameterString = request.getParameter(parameter);
+		if (parameterString == null) {
+			parameterString = (String) request.getAttribute(parameter);
+		}
+		return parameterString;
 	}
-
-	String formatedDate = DateFormat.getDateInstance(DateFormat.LONG, locale).format(date);
-
-	request.setAttribute(PresentationConstants.DATE, formatedDate);
-	request.setAttribute(PresentationConstants.REIMBURSEMENT_GUIDE, infoReimbursementGuide);
-	if (infoStudent != null) {
-	    request.setAttribute(PresentationConstants.STUDENT, infoStudent);
-	}
-
-	return mapping.findForward("start");
-
-    }
-
-    private String getFromRequest(String parameter, HttpServletRequest request) {
-	String parameterString = request.getParameter(parameter);
-	if (parameterString == null) {
-	    parameterString = (String) request.getAttribute(parameter);
-	}
-	return parameterString;
-    }
 
 }

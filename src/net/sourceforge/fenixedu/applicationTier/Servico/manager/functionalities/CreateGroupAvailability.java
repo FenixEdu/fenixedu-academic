@@ -14,19 +14,19 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class CreateGroupAvailability extends FenixService {
 
-    @Checked("RolePredicates.MANAGER_PREDICATE")
-    @Service
-    public static ExpressionGroupAvailability run(Content functionality, String expression) {
-	if (!isEmpty(expression)) {
-	    return new ExpressionGroupAvailability(functionality, expression);
-	} else {
-	    functionality.setAvailabilityPolicy(null);
-	    return null;
+	@Checked("RolePredicates.MANAGER_PREDICATE")
+	@Service
+	public static ExpressionGroupAvailability run(Content functionality, String expression) {
+		if (!isEmpty(expression)) {
+			return new ExpressionGroupAvailability(functionality, expression);
+		} else {
+			functionality.setAvailabilityPolicy(null);
+			return null;
+		}
 	}
-    }
 
-    private static boolean isEmpty(String expression) {
-	return expression == null || expression.trim().length() == 0;
-    }
+	private static boolean isEmpty(String expression) {
+		return expression == null || expression.trim().length() == 0;
+	}
 
 }

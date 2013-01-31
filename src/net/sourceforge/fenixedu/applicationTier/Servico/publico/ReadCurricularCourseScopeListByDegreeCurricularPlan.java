@@ -15,38 +15,39 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadCurricularCourseScopeListByDegreeCurricularPlan extends FenixService {
 
-    @Service
-    public static List run(Integer idDegreeCurricularPlan) throws FenixServiceException {
+	@Service
+	public static List run(Integer idDegreeCurricularPlan) throws FenixServiceException {
 
-	List allCurricularCourseScope = new ArrayList();
+		List allCurricularCourseScope = new ArrayList();
 
-	DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(idDegreeCurricularPlan);
-	List<CurricularCourse> allCurricularCourses = degreeCurricularPlan.getCurricularCourses();
+		DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(idDegreeCurricularPlan);
+		List<CurricularCourse> allCurricularCourses = degreeCurricularPlan.getCurricularCourses();
 
-	if (allCurricularCourses == null || allCurricularCourses.isEmpty())
-	    return allCurricularCourses;
-
-	// build the result of this service, ie, curricular course scope's
-	// list
-	// for each curricular course, add it scopes in the result list
-	Iterator iterator = allCurricularCourses.iterator();
-
-	CurricularCourse curricularCourse = null;
-	ListIterator iteratorScopes = null;
-	while (iterator.hasNext()) {
-	    curricularCourse = (CurricularCourse) iterator.next();
-
-	    List<CurricularCourseScope> curricularCourseScopes = curricularCourse.getActiveScopes();
-
-	    if (curricularCourseScopes != null) {
-		iteratorScopes = curricularCourseScopes.listIterator();
-		while (iteratorScopes.hasNext()) {
-		    allCurricularCourseScope.add(InfoCurricularCourseScope
-			    .newInfoFromDomain((CurricularCourseScope) iteratorScopes.next()));
+		if (allCurricularCourses == null || allCurricularCourses.isEmpty()) {
+			return allCurricularCourses;
 		}
-	    }
-	}
 
-	return allCurricularCourseScope;
-    }
+		// build the result of this service, ie, curricular course scope's
+		// list
+		// for each curricular course, add it scopes in the result list
+		Iterator iterator = allCurricularCourses.iterator();
+
+		CurricularCourse curricularCourse = null;
+		ListIterator iteratorScopes = null;
+		while (iterator.hasNext()) {
+			curricularCourse = (CurricularCourse) iterator.next();
+
+			List<CurricularCourseScope> curricularCourseScopes = curricularCourse.getActiveScopes();
+
+			if (curricularCourseScopes != null) {
+				iteratorScopes = curricularCourseScopes.listIterator();
+				while (iteratorScopes.hasNext()) {
+					allCurricularCourseScope.add(InfoCurricularCourseScope
+							.newInfoFromDomain((CurricularCourseScope) iteratorScopes.next()));
+				}
+			}
+		}
+
+		return allCurricularCourseScope;
+	}
 }

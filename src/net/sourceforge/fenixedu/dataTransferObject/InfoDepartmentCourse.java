@@ -9,63 +9,65 @@ package net.sourceforge.fenixedu.dataTransferObject;
 
 public class InfoDepartmentCourse extends InfoObject {
 
-    private String name;
+	private String name;
 
-    private String code;
+	private String code;
 
-    private InfoDepartment infoDepartment;
+	private InfoDepartment infoDepartment;
 
-    public InfoDepartmentCourse() {
-	setName("");
-	setCode("");
-    }
-
-    public InfoDepartmentCourse(String name, String code, InfoDepartment infoDepartment) {
-	setName(name);
-	setCode(code);
-	setInfoDepartment(infoDepartment);
-    }
-
-    public boolean equals(Object obj) {
-	boolean result = false;
-	if (obj instanceof InfoDepartmentCourse) {
-	    InfoDepartmentCourse d = (InfoDepartmentCourse) obj;
-	    result = (getName().equals(d.getName()) && getCode().equals(d.getCode()));
+	public InfoDepartmentCourse() {
+		setName("");
+		setCode("");
 	}
-	return result;
-    }
 
-    public String toString() {
-	String result = "[" + this.getClass().getName() + ": ";
-	result += ", sigla=" + code;
-	result += ", nome=" + name;
-	result += ", departamento=" + infoDepartment;
-	result += "]";
-	return result;
-    }
+	public InfoDepartmentCourse(String name, String code, InfoDepartment infoDepartment) {
+		setName(name);
+		setCode(code);
+		setInfoDepartment(infoDepartment);
+	}
 
-    public String getCode() {
-	return code;
-    }
+	@Override
+	public boolean equals(Object obj) {
+		boolean result = false;
+		if (obj instanceof InfoDepartmentCourse) {
+			InfoDepartmentCourse d = (InfoDepartmentCourse) obj;
+			result = (getName().equals(d.getName()) && getCode().equals(d.getCode()));
+		}
+		return result;
+	}
 
-    public String getName() {
-	return name;
-    }
+	@Override
+	public String toString() {
+		String result = "[" + this.getClass().getName() + ": ";
+		result += ", sigla=" + code;
+		result += ", nome=" + name;
+		result += ", departamento=" + infoDepartment;
+		result += "]";
+		return result;
+	}
 
-    public InfoDepartment getInfoDepartment() {
-	return infoDepartment;
-    }
+	public String getCode() {
+		return code;
+	}
 
-    public void setCode(String code) {
-	this.code = code;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public void setName(String name) {
-	this.name = name;
-    }
+	public InfoDepartment getInfoDepartment() {
+		return infoDepartment;
+	}
 
-    public void setInfoDepartment(InfoDepartment infoDepartment) {
-	this.infoDepartment = infoDepartment;
-    }
+	public void setCode(String code) {
+		this.code = code;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public void setInfoDepartment(InfoDepartment infoDepartment) {
+		this.infoDepartment = infoDepartment;
+	}
 
 }

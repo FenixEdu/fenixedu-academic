@@ -20,10 +20,10 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class ReadTeachersByExecutionCourseProfessorship extends FenixService {
 
-    @Service
-    public static List run(InfoExecutionCourse infoExecutionCourse) throws FenixServiceException {
-	ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(infoExecutionCourse.getIdInternal());
-	return executionCourse == null ? null : executionCourse.getProfessorships();
-    }
+	@Service
+	public static List run(InfoExecutionCourse infoExecutionCourse) throws FenixServiceException {
+		ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(infoExecutionCourse.getIdInternal());
+		return executionCourse == null ? null : executionCourse.getProfessorships();
+	}
 
 }

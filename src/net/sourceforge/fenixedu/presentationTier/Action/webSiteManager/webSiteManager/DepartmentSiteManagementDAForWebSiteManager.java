@@ -1,21 +1,11 @@
 package net.sourceforge.fenixedu.presentationTier.Action.webSiteManager.webSiteManager;
 
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(module = "webSiteManager", path = "/manageDepartmentSite", scope = "session", parameter = "method")
-@Forwards(value = {
-		@Forward(name = "confirmDeleteFunction", path = "departmentSite-confirmDeleteFunction"),
+@Forwards(value = { @Forward(name = "confirmDeleteFunction", path = "departmentSite-confirmDeleteFunction"),
 		@Forward(name = "changePersonFunctions", path = "departmentSite-changePersonFunctions"),
 		@Forward(name = "createPersonFunction", path = "departmentSite-createPersonFunction"),
 		@Forward(name = "editSideBanner", path = "departmentSite-edit-side-banner"),
@@ -54,5 +44,6 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
 		@Forward(name = "createItem", path = "departmentSite-createItem"),
 		@Forward(name = "manageFunctions", path = "departmentSite-manageFunctions"),
 		@Forward(name = "editPersonFunction", path = "departmentSite-editPersonFunction") })
-public class DepartmentSiteManagementDAForWebSiteManager extends net.sourceforge.fenixedu.presentationTier.Action.webSiteManager.DepartmentSiteManagementDA {
+public class DepartmentSiteManagementDAForWebSiteManager extends
+		net.sourceforge.fenixedu.presentationTier.Action.webSiteManager.DepartmentSiteManagementDA {
 }

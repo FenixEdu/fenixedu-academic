@@ -10,29 +10,29 @@ import org.joda.time.DateTime;
 
 public class TransitionalState extends TransitionalState_Base {
 
-    private TransitionalState() {
-	super();
-    }
+	private TransitionalState() {
+		super();
+	}
 
-    protected TransitionalState(final Registration registration, final Person responsiblePerson, final DateTime stateDate) {
-	this();
-	init(registration, responsiblePerson, stateDate);
-    }
+	protected TransitionalState(final Registration registration, final Person responsiblePerson, final DateTime stateDate) {
+		this();
+		init(registration, responsiblePerson, stateDate);
+	}
 
-    @Override
-    public RegistrationStateType getStateType() {
-	return RegistrationStateType.TRANSITION;
-    }
+	@Override
+	public RegistrationStateType getStateType() {
+		return RegistrationStateType.TRANSITION;
+	}
 
-    @Override
-    public Set<String> getValidNextStates() {
-	final Set<String> result = new HashSet<String>();
-	result.add(RegistrationStateType.TRANSITED.name());
-	result.add(RegistrationStateType.CANCELED.name());
-	result.add(RegistrationStateType.REGISTERED.name());
-	result.add(RegistrationStateType.CONCLUDED.name());
+	@Override
+	public Set<String> getValidNextStates() {
+		final Set<String> result = new HashSet<String>();
+		result.add(RegistrationStateType.TRANSITED.name());
+		result.add(RegistrationStateType.CANCELED.name());
+		result.add(RegistrationStateType.REGISTERED.name());
+		result.add(RegistrationStateType.CONCLUDED.name());
 
-	return result;
-    }
+		return result;
+	}
 
 }

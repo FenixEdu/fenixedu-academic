@@ -22,14 +22,6 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
 import pt.ist.fenixWebFramework.security.UserView;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
@@ -39,90 +31,100 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
  * @author David Santos in Jul 28, 2004
  */
 
-@Mapping(module = "manager", path = "/makePrecedenceConjunction", input = "/makePrecedenceConjunction.do?method=showFirstPage", attribute = "mergePrecedencesForm", formBean = "mergePrecedencesForm", scope = "request", parameter = "method")
+@Mapping(
+		module = "manager",
+		path = "/makePrecedenceConjunction",
+		input = "/makePrecedenceConjunction.do?method=showFirstPage",
+		attribute = "mergePrecedencesForm",
+		formBean = "mergePrecedencesForm",
+		scope = "request",
+		parameter = "method")
 @Forwards(value = {
-		@Forward(name = "showSecondPage", path = "/manager/precedences/mergePrecedencesPage2.jsp", tileProperties = @Tile(navLocal = "/manager/degreeCurricularPlanNavLocalManager.jsp")),
-		@Forward(name = "backToBeginig", path = "/manager/precedences/managePrecedences.jsp", tileProperties = @Tile(navLocal = "/manager/degreeCurricularPlanNavLocalManager.jsp")),
-		@Forward(name = "showFirstPage", path = "/manager/precedences/mergePrecedencesPage1.jsp", tileProperties = @Tile(navLocal = "/manager/degreeCurricularPlanNavLocalManager.jsp")) })
+		@Forward(name = "showSecondPage", path = "/manager/precedences/mergePrecedencesPage2.jsp", tileProperties = @Tile(
+				navLocal = "/manager/degreeCurricularPlanNavLocalManager.jsp")),
+		@Forward(name = "backToBeginig", path = "/manager/precedences/managePrecedences.jsp", tileProperties = @Tile(
+				navLocal = "/manager/degreeCurricularPlanNavLocalManager.jsp")),
+		@Forward(name = "showFirstPage", path = "/manager/precedences/mergePrecedencesPage1.jsp", tileProperties = @Tile(
+				navLocal = "/manager/degreeCurricularPlanNavLocalManager.jsp")) })
 public class MakePrecedenceConjunctionForDegreeCurricularPlanDA extends FenixDispatchAction {
 
-    public ActionForward showFirstPage(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixActionException, FenixFilterException {
+	public ActionForward showFirstPage(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
-	IUserView userView = UserView.getUser();
+		IUserView userView = UserView.getUser();
 
-	Integer degreeID = new Integer(request.getParameter("degreeId"));
-	Integer degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanId"));
+		Integer degreeID = new Integer(request.getParameter("degreeId"));
+		Integer degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanId"));
 
-	if (degreeID == null && degreeCurricularPlanID == null) {
-	    degreeID = (Integer) request.getAttribute("degreeId");
-	    degreeCurricularPlanID = (Integer) request.getAttribute("degreeCurricularPlanId");
+		if (degreeID == null && degreeCurricularPlanID == null) {
+			degreeID = (Integer) request.getAttribute("degreeId");
+			degreeCurricularPlanID = (Integer) request.getAttribute("degreeCurricularPlanId");
+		}
+
+		try {
+			Map result = ReadPrecedencesFromDegreeCurricularPlan.run(degreeCurricularPlanID);
+			request.setAttribute("precedences", result);
+		} catch (FenixServiceException e) {
+			throw new FenixActionException(e);
+		}
+
+		request.setAttribute("degreeId", degreeID);
+		request.setAttribute("degreeCurricularPlanId", degreeCurricularPlanID);
+
+		return mapping.findForward("showFirstPage");
 	}
 
-	try {
-	    Map result = ReadPrecedencesFromDegreeCurricularPlan.run(degreeCurricularPlanID);
-	    request.setAttribute("precedences", result);
-	} catch (FenixServiceException e) {
-	    throw new FenixActionException(e);
+	public ActionForward showSecondPage(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws FenixActionException, FenixFilterException {
+
+		DynaActionForm mergePrecedencesForm = (DynaActionForm) form;
+		IUserView userView = UserView.getUser();
+
+		Integer degreeID = (Integer) mergePrecedencesForm.get("degreeId");
+		Integer degreeCurricularPlanID = (Integer) mergePrecedencesForm.get("degreeCurricularPlanId");
+		Integer firstPrecedenceID = (Integer) mergePrecedencesForm.get("firstPrecedence");
+
+		try {
+			Map result = ReadPrecedencesFromDegreeCurricularPlan.run(degreeCurricularPlanID);
+			request.setAttribute("precedences", result);
+		} catch (FenixServiceException e) {
+			throw new FenixActionException(e);
+		}
+
+		mergePrecedencesForm.set("firstPrecedence", firstPrecedenceID);
+		request.setAttribute("degreeId", degreeID);
+		request.setAttribute("degreeCurricularPlanId", degreeCurricularPlanID);
+
+		return mapping.findForward("showSecondPage");
 	}
 
-	request.setAttribute("degreeId", degreeID);
-	request.setAttribute("degreeCurricularPlanId", degreeCurricularPlanID);
+	public ActionForward merge(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+			throws FenixActionException, FenixFilterException {
 
-	return mapping.findForward("showFirstPage");
-    }
+		ActionErrors errors = new ActionErrors();
+		DynaActionForm mergePrecedencesForm = (DynaActionForm) form;
+		IUserView userView = UserView.getUser();
 
-    public ActionForward showSecondPage(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixActionException, FenixFilterException {
+		Integer degreeID = (Integer) mergePrecedencesForm.get("degreeId");
+		Integer degreeCurricularPlanID = (Integer) mergePrecedencesForm.get("degreeCurricularPlanId");
+		Integer firstPrecedenceID = (Integer) mergePrecedencesForm.get("firstPrecedence");
+		Integer secondPrecedenceID = (Integer) mergePrecedencesForm.get("secondPrecedence");
 
-	DynaActionForm mergePrecedencesForm = (DynaActionForm) form;
-	IUserView userView = UserView.getUser();
+		try {
+			MergePrecedencesForDegreeCurricularPlan.run(firstPrecedenceID, secondPrecedenceID);
+			Map result = ReadPrecedencesFromDegreeCurricularPlan.run(degreeCurricularPlanID);
+			request.setAttribute("precedences", result);
+		} catch (InvalidArgumentsServiceException e) {
+			errors.add(e.getMessage(), new ActionError(e.getMessage()));
+			saveErrors(request, errors);
+			return mapping.getInputForward();
+		} catch (FenixServiceException e) {
+			throw new FenixActionException(e);
+		}
 
-	Integer degreeID = (Integer) mergePrecedencesForm.get("degreeId");
-	Integer degreeCurricularPlanID = (Integer) mergePrecedencesForm.get("degreeCurricularPlanId");
-	Integer firstPrecedenceID = (Integer) mergePrecedencesForm.get("firstPrecedence");
+		request.setAttribute("degreeId", degreeID);
+		request.setAttribute("degreeCurricularPlanId", degreeCurricularPlanID);
 
-	try {
-	    Map result = ReadPrecedencesFromDegreeCurricularPlan.run(degreeCurricularPlanID);
-	    request.setAttribute("precedences", result);
-	} catch (FenixServiceException e) {
-	    throw new FenixActionException(e);
+		return mapping.findForward("backToBeginig");
 	}
-
-	mergePrecedencesForm.set("firstPrecedence", firstPrecedenceID);
-	request.setAttribute("degreeId", degreeID);
-	request.setAttribute("degreeCurricularPlanId", degreeCurricularPlanID);
-
-	return mapping.findForward("showSecondPage");
-    }
-
-    public ActionForward merge(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-	    throws FenixActionException, FenixFilterException {
-
-	ActionErrors errors = new ActionErrors();
-	DynaActionForm mergePrecedencesForm = (DynaActionForm) form;
-	IUserView userView = UserView.getUser();
-
-	Integer degreeID = (Integer) mergePrecedencesForm.get("degreeId");
-	Integer degreeCurricularPlanID = (Integer) mergePrecedencesForm.get("degreeCurricularPlanId");
-	Integer firstPrecedenceID = (Integer) mergePrecedencesForm.get("firstPrecedence");
-	Integer secondPrecedenceID = (Integer) mergePrecedencesForm.get("secondPrecedence");
-
-	try {
-	    MergePrecedencesForDegreeCurricularPlan.run(firstPrecedenceID, secondPrecedenceID);
-	    Map result = ReadPrecedencesFromDegreeCurricularPlan.run(degreeCurricularPlanID);
-	    request.setAttribute("precedences", result);
-	} catch (InvalidArgumentsServiceException e) {
-	    errors.add(e.getMessage(), new ActionError(e.getMessage()));
-	    saveErrors(request, errors);
-	    return mapping.getInputForward();
-	} catch (FenixServiceException e) {
-	    throw new FenixActionException(e);
-	}
-
-	request.setAttribute("degreeId", degreeID);
-	request.setAttribute("degreeCurricularPlanId", degreeCurricularPlanID);
-
-	return mapping.findForward("backToBeginig");
-    }
 }

@@ -9,14 +9,14 @@ import pt.ist.fenixWebFramework.renderers.converters.EnumArrayConverter;
 
 public class PhdMigrationProcessStateTypeProvider implements DataProvider {
 
-    @Override
-    public Object provide(Object source, Object currentValue) {
-	return Arrays.asList(PhdMigrationProcessStateType.values());
-    }
+	@Override
+	public Object provide(Object source, Object currentValue) {
+		return Arrays.asList(PhdMigrationProcessStateType.values());
+	}
 
-    @Override
-    public Converter getConverter() {
-	return new EnumArrayConverter(PhdMigrationProcessStateType.class);
-    }
+	@Override
+	public Converter getConverter() {
+		return new EnumArrayConverter(PhdMigrationProcessStateType.class);
+	}
 
 }

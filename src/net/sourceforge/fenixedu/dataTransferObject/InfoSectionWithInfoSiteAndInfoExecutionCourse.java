@@ -13,22 +13,23 @@ import net.sourceforge.fenixedu.domain.Section;
  */
 public class InfoSectionWithInfoSiteAndInfoExecutionCourse extends InfoSection {
 
-    public void copyFromDomain(Section section) {
-	super.copyFromDomain(section);
-	if (section != null) {
-	    ExecutionCourseSite site = (ExecutionCourseSite) section.getSite();
-	    final InfoSite infoSite = InfoSite.newInfoFromDomain(site);
-	    infoSite.setInfoExecutionCourse(InfoExecutionCourse.newInfoFromDomain(site.getExecutionCourse()));
-	    setInfoSite(infoSite);
+	@Override
+	public void copyFromDomain(Section section) {
+		super.copyFromDomain(section);
+		if (section != null) {
+			ExecutionCourseSite site = (ExecutionCourseSite) section.getSite();
+			final InfoSite infoSite = InfoSite.newInfoFromDomain(site);
+			infoSite.setInfoExecutionCourse(InfoExecutionCourse.newInfoFromDomain(site.getExecutionCourse()));
+			setInfoSite(infoSite);
+		}
 	}
-    }
 
-    public static InfoSection newInfoFromDomain(Section section) {
-	InfoSectionWithInfoSiteAndInfoExecutionCourse infoSection = null;
-	if (section != null) {
-	    infoSection = new InfoSectionWithInfoSiteAndInfoExecutionCourse();
-	    infoSection.copyFromDomain(section);
+	public static InfoSection newInfoFromDomain(Section section) {
+		InfoSectionWithInfoSiteAndInfoExecutionCourse infoSection = null;
+		if (section != null) {
+			infoSection = new InfoSectionWithInfoSiteAndInfoExecutionCourse();
+			infoSection.copyFromDomain(section);
+		}
+		return infoSection;
 	}
-	return infoSection;
-    }
 }

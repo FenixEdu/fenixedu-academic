@@ -7,20 +7,21 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class DegreeChangePublicIndividualCandidacyDegreesProvider implements DataProvider {
 
-    @Override
-    public Object provide(Object source, Object currentValue) {
-	IndividualCandidacyProcessWithPrecedentDegreeInformationBean bean = (IndividualCandidacyProcessWithPrecedentDegreeInformationBean) source;
+	@Override
+	public Object provide(Object source, Object currentValue) {
+		IndividualCandidacyProcessWithPrecedentDegreeInformationBean bean =
+				(IndividualCandidacyProcessWithPrecedentDegreeInformationBean) source;
 
-	if (bean.getCandidacyProcess() != null) {
-	    return bean.getCandidacyProcess().getDegree();
-	} else {
-	    return bean.getIndividualCandidacyProcess().getCandidacyProcess().getDegree();
+		if (bean.getCandidacyProcess() != null) {
+			return bean.getCandidacyProcess().getDegree();
+		} else {
+			return bean.getIndividualCandidacyProcess().getCandidacyProcess().getDegree();
+		}
 	}
-    }
 
-    @Override
-    public Converter getConverter() {
-	return new DomainObjectKeyConverter();
-    }
+	@Override
+	public Converter getConverter() {
+		return new DomainObjectKeyConverter();
+	}
 
 }

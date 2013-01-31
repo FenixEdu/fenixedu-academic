@@ -16,60 +16,63 @@ import net.sourceforge.fenixedu.domain.student.Student;
 
 public class StudentsByDegreeAndCurricularYear extends LeafGroup {
 
-    private final Degree degree;
+	private final Degree degree;
 
-    private final CurricularYear curricularYear;
+	private final CurricularYear curricularYear;
 
-    private final ExecutionYear executionYear;
+	private final ExecutionYear executionYear;
 
-    public StudentsByDegreeAndCurricularYear(final Degree degree, final CurricularYear curricularYear,
-	    final ExecutionYear executionYear) {
-	this.degree = degree;
-	this.executionYear = executionYear;
-	this.curricularYear = curricularYear;
-    }
-
-    @Override
-    public Set<Person> getElements() {
-	final Set<Person> persons = new HashSet<Person>();
-	for (Student student : getDegree().getStudentsFromGivenCurricularYear(getCurricularYear().getYear(), getExecutionYear())) {
-	    persons.add(student.getPerson());
-	}
-	return persons;
-    }
-
-    @Override
-    protected Argument[] getExpressionArguments() {
-	return new Argument[] { new IdOperator(getDegree()), new IdOperator(getCurricularYear()),
-		new IdOperator(getExecutionYear()) };
-    }
-
-    public Degree getDegree() {
-	return (degree);
-    }
-
-    public CurricularYear getCurricularYear() {
-	return (curricularYear);
-    }
-
-    public ExecutionYear getExecutionYear() {
-	return (executionYear);
-    }
-
-    public static class Builder implements GroupBuilder {
-
-	public Group build(Object[] arguments) {
-	    return new StudentsByDegreeAndCurricularYear((Degree) arguments[0], (CurricularYear) arguments[1],
-		    (ExecutionYear) arguments[2]);
+	public StudentsByDegreeAndCurricularYear(final Degree degree, final CurricularYear curricularYear,
+			final ExecutionYear executionYear) {
+		this.degree = degree;
+		this.executionYear = executionYear;
+		this.curricularYear = curricularYear;
 	}
 
-	public int getMaxArguments() {
-	    return 3;
+	@Override
+	public Set<Person> getElements() {
+		final Set<Person> persons = new HashSet<Person>();
+		for (Student student : getDegree().getStudentsFromGivenCurricularYear(getCurricularYear().getYear(), getExecutionYear())) {
+			persons.add(student.getPerson());
+		}
+		return persons;
 	}
 
-	public int getMinArguments() {
-	    return 3;
+	@Override
+	protected Argument[] getExpressionArguments() {
+		return new Argument[] { new IdOperator(getDegree()), new IdOperator(getCurricularYear()),
+				new IdOperator(getExecutionYear()) };
 	}
 
-    }
+	public Degree getDegree() {
+		return (degree);
+	}
+
+	public CurricularYear getCurricularYear() {
+		return (curricularYear);
+	}
+
+	public ExecutionYear getExecutionYear() {
+		return (executionYear);
+	}
+
+	public static class Builder implements GroupBuilder {
+
+		@Override
+		public Group build(Object[] arguments) {
+			return new StudentsByDegreeAndCurricularYear((Degree) arguments[0], (CurricularYear) arguments[1],
+					(ExecutionYear) arguments[2]);
+		}
+
+		@Override
+		public int getMaxArguments() {
+			return 3;
+		}
+
+		@Override
+		public int getMinArguments() {
+			return 3;
+		}
+
+	}
 }

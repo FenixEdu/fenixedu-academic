@@ -16,82 +16,80 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
-@Mapping(module = "masterDegreeAdministrativeOffice", path = "/dfaPeriodsManagement", attribute = "chooseExecutionYearForm", formBean = "chooseExecutionYearForm", scope = "request", parameter = "method")
-@Forwards(value = {
-		@Forward(name = "chooseExecutionYear", path = "dfa.periodsManagement.chooseExecutionYear"),
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+
+@Mapping(
+		module = "masterDegreeAdministrativeOffice",
+		path = "/dfaPeriodsManagement",
+		attribute = "chooseExecutionYearForm",
+		formBean = "chooseExecutionYearForm",
+		scope = "request",
+		parameter = "method")
+@Forwards(value = { @Forward(name = "chooseExecutionYear", path = "dfa.periodsManagement.chooseExecutionYear"),
 		@Forward(name = "editCandidacyPeriod", path = "dfa.periodsManagement.editCandidacyPeriod"),
 		@Forward(name = "showExecutionDegrees", path = "dfa.periodsManagement.showExecutionDegrees"),
 		@Forward(name = "editRegistrationPeriod", path = "dfa.periodsManagement.editRegistrationPeriod") })
 public class DFAPeriodsManagementDispatchAction extends FenixDispatchAction {
 
-    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
-	((DynaActionForm) form).set("executionYear", ExecutionYear.readCurrentExecutionYear().getIdInternal().toString());
-	request.setAttribute("executionYears", ExecutionYear.readNotClosedExecutionYears());
+	public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+		((DynaActionForm) form).set("executionYear", ExecutionYear.readCurrentExecutionYear().getIdInternal().toString());
+		request.setAttribute("executionYears", ExecutionYear.readNotClosedExecutionYears());
 
-	return mapping.findForward("chooseExecutionYear");
-    }
-
-    public ActionForward showExecutionDegrees(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
-	final List<ExecutionDegree> executionDegrees = getExecutionYear(request, (DynaActionForm) form).getExecutionDegreesFor(
-		DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA);
-	Collections.sort(executionDegrees, ExecutionDegree.EXECUTION_DEGREE_COMPARATORY_BY_DEGREE_TYPE_AND_NAME);
-	request.setAttribute("executionDegrees", executionDegrees);
-
-	return mapping.findForward("showExecutionDegrees");
-    }
-
-    private ExecutionYear getExecutionYear(final HttpServletRequest request, final DynaActionForm dynaActionForm) {
-	if (!StringUtils.isEmpty(dynaActionForm.getString("executionYear"))) {
-	    return rootDomainObject.readExecutionYearByOID(Integer.valueOf(dynaActionForm.getString("executionYear")));
-	} else if (request.getParameter("executionYearId") != null) {
-	    return rootDomainObject.readExecutionYearByOID(getRequestParameterAsInteger(request, "executionYearId"));
-	} else {
-	    return ExecutionYear.readCurrentExecutionYear();
+		return mapping.findForward("chooseExecutionYear");
 	}
-    }
 
-    public ActionForward prepareEditCandidacyPeriod(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
+	public ActionForward showExecutionDegrees(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) {
+		final List<ExecutionDegree> executionDegrees =
+				getExecutionYear(request, (DynaActionForm) form).getExecutionDegreesFor(
+						DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA);
+		Collections.sort(executionDegrees, ExecutionDegree.EXECUTION_DEGREE_COMPARATORY_BY_DEGREE_TYPE_AND_NAME);
+		request.setAttribute("executionDegrees", executionDegrees);
 
-	final ExecutionDegree executionDegree = getExecutionDegree(request);
+		return mapping.findForward("showExecutionDegrees");
+	}
 
-	request.setAttribute("executionDegree", executionDegree);
-	request.setAttribute("candidacyPeriod", executionDegree.getDegreeCurricularPlan().getCandidacyPeriod(
-		executionDegree.getExecutionYear()));
+	private ExecutionYear getExecutionYear(final HttpServletRequest request, final DynaActionForm dynaActionForm) {
+		if (!StringUtils.isEmpty(dynaActionForm.getString("executionYear"))) {
+			return rootDomainObject.readExecutionYearByOID(Integer.valueOf(dynaActionForm.getString("executionYear")));
+		} else if (request.getParameter("executionYearId") != null) {
+			return rootDomainObject.readExecutionYearByOID(getRequestParameterAsInteger(request, "executionYearId"));
+		} else {
+			return ExecutionYear.readCurrentExecutionYear();
+		}
+	}
 
-	return mapping.findForward("editCandidacyPeriod");
+	public ActionForward prepareEditCandidacyPeriod(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) {
 
-    }
+		final ExecutionDegree executionDegree = getExecutionDegree(request);
 
-    public ActionForward prepareEditRegistrationPeriod(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
+		request.setAttribute("executionDegree", executionDegree);
+		request.setAttribute("candidacyPeriod",
+				executionDegree.getDegreeCurricularPlan().getCandidacyPeriod(executionDegree.getExecutionYear()));
 
-	final ExecutionDegree executionDegree = getExecutionDegree(request);
+		return mapping.findForward("editCandidacyPeriod");
 
-	request.setAttribute("executionDegree", executionDegree);
-	request.setAttribute("registrationPeriod", executionDegree.getDegreeCurricularPlan().getRegistrationPeriod(
-		executionDegree.getExecutionYear()));
+	}
 
-	return mapping.findForward("editRegistrationPeriod");
+	public ActionForward prepareEditRegistrationPeriod(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) {
 
-    }
+		final ExecutionDegree executionDegree = getExecutionDegree(request);
 
-    private ExecutionDegree getExecutionDegree(HttpServletRequest request) {
-	return rootDomainObject.readExecutionDegreeByOID(getRequestParameterAsInteger(request, "executionDegreeId"));
-    }
+		request.setAttribute("executionDegree", executionDegree);
+		request.setAttribute("registrationPeriod",
+				executionDegree.getDegreeCurricularPlan().getRegistrationPeriod(executionDegree.getExecutionYear()));
+
+		return mapping.findForward("editRegistrationPeriod");
+
+	}
+
+	private ExecutionDegree getExecutionDegree(HttpServletRequest request) {
+		return rootDomainObject.readExecutionDegreeByOID(getRequestParameterAsInteger(request, "executionDegreeId"));
+	}
 
 }

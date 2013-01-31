@@ -6,8 +6,8 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class AcceptRegulation extends FenixService {
 
-    @Service
-    public static void run(final ParkingParty parkingParty) {
-	parkingParty.setAcceptedRegulation(Boolean.TRUE);
-    }
+	@Service
+	public static void run(final ParkingParty parkingParty) {
+		parkingParty.setAcceptedRegulation(Boolean.TRUE);
+	}
 }

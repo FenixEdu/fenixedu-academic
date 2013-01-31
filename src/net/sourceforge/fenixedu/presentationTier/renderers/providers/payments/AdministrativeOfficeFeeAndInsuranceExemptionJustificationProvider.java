@@ -9,12 +9,14 @@ import pt.ist.fenixWebFramework.renderers.converters.EnumConverter;
 
 public class AdministrativeOfficeFeeAndInsuranceExemptionJustificationProvider implements DataProvider {
 
-    public Object provide(Object source, Object currentValue) {
-	return Arrays.asList(AdministrativeOfficeFeeAndInsuranceExemptionJustificationType.values());
-    }
+	@Override
+	public Object provide(Object source, Object currentValue) {
+		return Arrays.asList(AdministrativeOfficeFeeAndInsuranceExemptionJustificationType.values());
+	}
 
-    public Converter getConverter() {
-	return new EnumConverter();
-    }
+	@Override
+	public Converter getConverter() {
+		return new EnumConverter();
+	}
 
 }

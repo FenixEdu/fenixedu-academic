@@ -22,29 +22,29 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class UpdateProfessorshipsHours extends FenixService {
 
-    @Checked("RolePredicates.CREDITS_MANAGER_PREDICATE")
-    @Service
-    public static Boolean run(Integer teacherId, Integer executionYearId, final HashMap hours) throws FenixServiceException {
+	@Checked("RolePredicates.CREDITS_MANAGER_PREDICATE")
+	@Service
+	public static Boolean run(Integer teacherId, Integer executionYearId, final HashMap hours) throws FenixServiceException {
 
-	Iterator entries = hours.entrySet().iterator();
-	while (entries.hasNext()) {
-	    Map.Entry entry = (Entry) entries.next();
+		Iterator entries = hours.entrySet().iterator();
+		while (entries.hasNext()) {
+			Map.Entry entry = (Entry) entries.next();
 
-	    String key = entry.getKey().toString();
-	    Integer executionCourseId = Integer.valueOf(key);
-	    String value = (String) entry.getValue();
-	    if (value != null) {
-		try {
-		    Double ecHours = Double.valueOf(value);
-		    Teacher teacher = rootDomainObject.readTeacherByOID(teacherId);
-		    ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);
-		    Professorship professorship = teacher.getProfessorshipByExecutionCourse(executionCourse);
-		    professorship.setHours(ecHours);
-		} catch (NumberFormatException e1) {
-		    // ignored
+			String key = entry.getKey().toString();
+			Integer executionCourseId = Integer.valueOf(key);
+			String value = (String) entry.getValue();
+			if (value != null) {
+				try {
+					Double ecHours = Double.valueOf(value);
+					Teacher teacher = rootDomainObject.readTeacherByOID(teacherId);
+					ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);
+					Professorship professorship = teacher.getProfessorshipByExecutionCourse(executionCourse);
+					professorship.setHours(ecHours);
+				} catch (NumberFormatException e1) {
+					// ignored
+				}
+			}
 		}
-	    }
+		return Boolean.TRUE;
 	}
-	return Boolean.TRUE;
-    }
 }

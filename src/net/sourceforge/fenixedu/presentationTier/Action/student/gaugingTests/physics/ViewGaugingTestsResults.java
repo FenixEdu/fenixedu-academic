@@ -18,18 +18,10 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionEx
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
  * @author <a href="mailto:joao.mota@ist.utl.pt">João Mota </a> 26/Nov/2003
@@ -39,19 +31,20 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
 @Forwards(value = { @Forward(name = "viewGaugingTestsResults", path = "definition.gaugingTestResults") })
 public class ViewGaugingTestsResults extends FenixAction {
 
-    public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixActionException, FenixFilterException {
+	@Override
+	public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
-	IUserView userView = getUserView(request);
+		IUserView userView = getUserView(request);
 
-	try {
-	    InfoGaugingTestResult result = (InfoGaugingTestResult) readGaugingTestsResults.run(userView);
-	    request.setAttribute("gaugingTestResult", result);
-	} catch (FenixServiceException e) {
-	    throw new FenixActionException(e);
+		try {
+			InfoGaugingTestResult result = readGaugingTestsResults.run(userView);
+			request.setAttribute("gaugingTestResult", result);
+		} catch (FenixServiceException e) {
+			throw new FenixActionException(e);
+		}
+
+		return mapping.findForward("viewGaugingTestsResults");
 	}
-
-	return mapping.findForward("viewGaugingTestsResults");
-    }
 
 }

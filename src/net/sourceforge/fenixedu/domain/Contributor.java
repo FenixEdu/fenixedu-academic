@@ -11,36 +11,36 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 @Deprecated
 public class Contributor extends Contributor_Base {
 
-    private Contributor() {
-	throw new DomainException("Contributor.class.is.deprecated");
-    }
-
-    public void edit(Integer contributorNumber, String contributorName, String contributorAddress) {
-	Contributor contributor = Contributor.readByContributorNumber(contributorNumber);
-	if (contributor != null && !contributor.equals(this)) {
-	    throw new DomainException("duplicate.contributor.number");
+	private Contributor() {
+		throw new DomainException("Contributor.class.is.deprecated");
 	}
 
-	this.setContributorNumber(contributorNumber);
-	this.setContributorName(contributorName);
-	this.setContributorAddress(contributorAddress);
-    }
+	public void edit(Integer contributorNumber, String contributorName, String contributorAddress) {
+		Contributor contributor = Contributor.readByContributorNumber(contributorNumber);
+		if (contributor != null && !contributor.equals(this)) {
+			throw new DomainException("duplicate.contributor.number");
+		}
 
-    public void delete() {
-	if (hasAnyGuides()) {
-	    throw new DomainException("contributor.cannot.be.deleted");
+		this.setContributorNumber(contributorNumber);
+		this.setContributorName(contributorName);
+		this.setContributorAddress(contributorAddress);
 	}
-	removeRootDomainObject();
-	super.deleteDomainObject();
-    }
 
-    public static Contributor readByContributorNumber(final Integer contributorNumber) {
-	for (final Contributor contributor : RootDomainObject.getInstance().getContributors()) {
-	    if (contributor.getContributorNumber().equals(contributorNumber)) {
-		return contributor;
-	    }
+	public void delete() {
+		if (hasAnyGuides()) {
+			throw new DomainException("contributor.cannot.be.deleted");
+		}
+		removeRootDomainObject();
+		super.deleteDomainObject();
 	}
-	return null;
-    }
+
+	public static Contributor readByContributorNumber(final Integer contributorNumber) {
+		for (final Contributor contributor : RootDomainObject.getInstance().getContributors()) {
+			if (contributor.getContributorNumber().equals(contributorNumber)) {
+				return contributor;
+			}
+		}
+		return null;
+	}
 
 }

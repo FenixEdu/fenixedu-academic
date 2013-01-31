@@ -45,132 +45,132 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 })
 public class PublicPresentationSeminarProcessDA extends CommonPublicPresentationSeminarDA {
 
-    public ActionForward revertToWaitingForComissionConstitution(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) {
+	public ActionForward revertToWaitingForComissionConstitution(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) {
 
-	try {
-	    ExecuteProcessActivity.run(getProcess(request), RevertToWaitingForComissionConstitution.class,
-		    getRenderedObject("submitComissionBean"));
+		try {
+			ExecuteProcessActivity.run(getProcess(request), RevertToWaitingForComissionConstitution.class,
+					getRenderedObject("submitComissionBean"));
 
-	    addSuccessMessage(request, "message.comission.submitted.with.success");
+			addSuccessMessage(request, "message.comission.submitted.with.success");
 
-	} catch (DomainException e) {
-	    addErrorMessage(request, e.getKey(), e.getArgs());
-	    return mapping.findForward("submitComission");
+		} catch (DomainException e) {
+			addErrorMessage(request, e.getKey(), e.getArgs());
+			return mapping.findForward("submitComission");
+		}
+
+		return viewIndividualProgramProcess(request, getProcess(request));
 	}
 
-	return viewIndividualProgramProcess(request, getProcess(request));
-    }
+	public ActionForward revertToWaitingComissionValidation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) {
+		try {
+			ExecuteProcessActivity.run(getProcess(request), RevertToWaitingComissionForValidation.class,
+					getRenderedObject("submitComissionBean"));
 
-    public ActionForward revertToWaitingComissionValidation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
-	try {
-	    ExecuteProcessActivity.run(getProcess(request), RevertToWaitingComissionForValidation.class,
-		    getRenderedObject("submitComissionBean"));
+			addSuccessMessage(request, "message.comission.submitted.with.success");
 
-	    addSuccessMessage(request, "message.comission.submitted.with.success");
+		} catch (DomainException e) {
+			addErrorMessage(request, e.getKey(), e.getArgs());
+			return mapping.findForward("submitComission");
+		}
 
-	} catch (DomainException e) {
-	    addErrorMessage(request, e.getKey(), e.getArgs());
-	    return mapping.findForward("submitComission");
+		return viewIndividualProgramProcess(request, getProcess(request));
 	}
 
-	return viewIndividualProgramProcess(request, getProcess(request));
-    }
+	public ActionForward manageStates(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) {
+		final PublicPresentationSeminarProcessBean bean =
+				new PublicPresentationSeminarProcessBean(getProcess(request).getIndividualProgramProcess());
 
-    public ActionForward manageStates(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
-	final PublicPresentationSeminarProcessBean bean = new PublicPresentationSeminarProcessBean(getProcess(request)
-		.getIndividualProgramProcess());
-
-	request.setAttribute("processBean", bean);
-	return mapping.findForward("manageStates");
-    }
-
-    public ActionForward addState(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
-	PublicPresentationSeminarProcessBean bean = getRenderedObject("processBean");
-
-	try {
-	    ExecuteProcessActivity.run(getProcess(request), AddState.class, bean);
-	} catch (final DomainException e) {
-	    addErrorMessage(request, e.getMessage(), e.getArgs());
-
-	    return manageStates(mapping, form, request, response);
+		request.setAttribute("processBean", bean);
+		return mapping.findForward("manageStates");
 	}
 
-	return manageStates(mapping, form, request, response);
-    }
+	public ActionForward addState(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+		PublicPresentationSeminarProcessBean bean = getRenderedObject("processBean");
 
-    public ActionForward addStateInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
-	PublicPresentationSeminarProcessBean bean = getRenderedObject("processBean");
-	request.setAttribute("processBean", bean);
+		try {
+			ExecuteProcessActivity.run(getProcess(request), AddState.class, bean);
+		} catch (final DomainException e) {
+			addErrorMessage(request, e.getMessage(), e.getArgs());
 
-	return mapping.findForward("manageStates");
-    }
+			return manageStates(mapping, form, request, response);
+		}
 
-    public ActionForward removeLastState(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
-	try {
-	    ExecuteProcessActivity.run(getProcess(request), RemoveLastState.class, null);
-	} catch (final DomainException e) {
-	    addErrorMessage(request, e.getMessage(), e.getArgs());
+		return manageStates(mapping, form, request, response);
 	}
-	return manageStates(mapping, form, request, response);
-    }
 
-    public ActionForward prepareEditProcessAttributes(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
-	PublicPresentationSeminarProcessBean bean = new PublicPresentationSeminarProcessBean(getProcess(request)
-		.getIndividualProgramProcess());
-	request.setAttribute("processBean", bean);
+	public ActionForward addStateInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) {
+		PublicPresentationSeminarProcessBean bean = getRenderedObject("processBean");
+		request.setAttribute("processBean", bean);
 
-	return mapping.findForward("editProcessAttributes");
-    }
+		return mapping.findForward("manageStates");
+	}
 
-    public ActionForward editProcessAttributesInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
-	request.setAttribute("processBean", getRenderedObject("processBean"));
-	return mapping.findForward("editProcessAttributes");
-    }
+	public ActionForward removeLastState(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) {
+		try {
+			ExecuteProcessActivity.run(getProcess(request), RemoveLastState.class, null);
+		} catch (final DomainException e) {
+			addErrorMessage(request, e.getMessage(), e.getArgs());
+		}
+		return manageStates(mapping, form, request, response);
+	}
 
-    public ActionForward editProcessAttributes(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
-	PublicPresentationSeminarProcessBean bean = getRenderedObject("processBean");
+	public ActionForward prepareEditProcessAttributes(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) {
+		PublicPresentationSeminarProcessBean bean =
+				new PublicPresentationSeminarProcessBean(getProcess(request).getIndividualProgramProcess());
+		request.setAttribute("processBean", bean);
 
-	ExecuteProcessActivity.run(getProcess(request), EditProcessAttributes.class, bean);
+		return mapping.findForward("editProcessAttributes");
+	}
 
-	return viewIndividualProgramProcess(mapping, form, request, response);
-    }
+	public ActionForward editProcessAttributesInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) {
+		request.setAttribute("processBean", getRenderedObject("processBean"));
+		return mapping.findForward("editProcessAttributes");
+	}
 
-    /* EDIT PHD STATES */
+	public ActionForward editProcessAttributes(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) {
+		PublicPresentationSeminarProcessBean bean = getRenderedObject("processBean");
 
-    public ActionForward prepareEditState(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
-	PhdProcessState state = getDomainObject(request, "stateId");
-	PhdProcessStateBean bean = new PhdProcessStateBean(state);
+		ExecuteProcessActivity.run(getProcess(request), EditProcessAttributes.class, bean);
 
-	request.setAttribute("bean", bean);
+		return viewIndividualProgramProcess(mapping, form, request, response);
+	}
 
-	return mapping.findForward("editPhdProcessState");
-    }
+	/* EDIT PHD STATES */
 
-    public ActionForward editState(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
-	PhdProcessStateBean bean = getRenderedObject("bean");
-	bean.getState().editStateDate(bean);
+	public ActionForward prepareEditState(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) {
+		PhdProcessState state = getDomainObject(request, "stateId");
+		PhdProcessStateBean bean = new PhdProcessStateBean(state);
 
-	return manageStates(mapping, form, request, response);
-    }
+		request.setAttribute("bean", bean);
 
-    public ActionForward editStateInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
-	PhdProcessStateBean bean = getRenderedObject("bean");
-	request.setAttribute("bean", bean);
+		return mapping.findForward("editPhdProcessState");
+	}
 
-	return mapping.findForward("editPhdProcessState");
-    }
+	public ActionForward editState(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) {
+		PhdProcessStateBean bean = getRenderedObject("bean");
+		bean.getState().editStateDate(bean);
 
-    /* EDIT PHD STATES */
+		return manageStates(mapping, form, request, response);
+	}
+
+	public ActionForward editStateInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) {
+		PhdProcessStateBean bean = getRenderedObject("bean");
+		request.setAttribute("bean", bean);
+
+		return mapping.findForward("editPhdProcessState");
+	}
+
+	/* EDIT PHD STATES */
 
 }

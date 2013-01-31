@@ -13,44 +13,44 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.NoCourseGroupCurriculum
 
 public class EmptyDegreeImprovementStudentCurriculumGroupBean extends ImprovementStudentCurriculumGroupBean {
 
-    static private final long serialVersionUID = 1L;
+	static private final long serialVersionUID = 1L;
 
-    public EmptyDegreeImprovementStudentCurriculumGroupBean(final CurriculumGroup curriculumGroup,
-	    final ExecutionSemester executionSemester) {
-	super(curriculumGroup, executionSemester);
-    }
-
-    @Override
-    protected List<StudentCurriculumGroupBean> buildCurriculumGroupsEnroled(CurriculumGroup parentGroup,
-	    ExecutionSemester executionSemester, int[] curricularYears) {
-
-	final List<StudentCurriculumGroupBean> result = new ArrayList<StudentCurriculumGroupBean>();
-
-	for (final CurriculumGroup curriculumGroup : filterGroups(parentGroup)) {
-	    result.add(new EmptyDegreeImprovementStudentCurriculumGroupBean(curriculumGroup, executionSemester));
+	public EmptyDegreeImprovementStudentCurriculumGroupBean(final CurriculumGroup curriculumGroup,
+			final ExecutionSemester executionSemester) {
+		super(curriculumGroup, executionSemester);
 	}
 
-	return result;
-    }
+	@Override
+	protected List<StudentCurriculumGroupBean> buildCurriculumGroupsEnroled(CurriculumGroup parentGroup,
+			ExecutionSemester executionSemester, int[] curricularYears) {
 
-    private Set<CurriculumGroup> filterGroups(CurriculumGroup parentGroup) {
-	final Set<CurriculumGroup> groups = new TreeSet<CurriculumGroup>(CurriculumModule.COMPARATOR_BY_NAME_AND_ID);
+		final List<StudentCurriculumGroupBean> result = new ArrayList<StudentCurriculumGroupBean>();
 
-	for (final CurriculumModule curriculumModule : parentGroup.getCurriculumModules()) {
-
-	    if (!curriculumModule.isLeaf()) {
-
-		if (curriculumModule.isNoCourseGroupCurriculumGroup()) {
-		    final NoCourseGroupCurriculumGroup noCourseGroup = (NoCourseGroupCurriculumGroup) curriculumModule;
-		    if (noCourseGroup.getNoCourseGroupCurriculumGroupType() != NoCourseGroupCurriculumGroupType.STANDALONE) {
-			continue;
-		    }
+		for (final CurriculumGroup curriculumGroup : filterGroups(parentGroup)) {
+			result.add(new EmptyDegreeImprovementStudentCurriculumGroupBean(curriculumGroup, executionSemester));
 		}
 
-		groups.add((CurriculumGroup) curriculumModule);
-	    }
+		return result;
 	}
-	return groups;
-    }
+
+	private Set<CurriculumGroup> filterGroups(CurriculumGroup parentGroup) {
+		final Set<CurriculumGroup> groups = new TreeSet<CurriculumGroup>(CurriculumModule.COMPARATOR_BY_NAME_AND_ID);
+
+		for (final CurriculumModule curriculumModule : parentGroup.getCurriculumModules()) {
+
+			if (!curriculumModule.isLeaf()) {
+
+				if (curriculumModule.isNoCourseGroupCurriculumGroup()) {
+					final NoCourseGroupCurriculumGroup noCourseGroup = (NoCourseGroupCurriculumGroup) curriculumModule;
+					if (noCourseGroup.getNoCourseGroupCurriculumGroupType() != NoCourseGroupCurriculumGroupType.STANDALONE) {
+						continue;
+					}
+				}
+
+				groups.add((CurriculumGroup) curriculumModule);
+			}
+		}
+		return groups;
+	}
 
 }

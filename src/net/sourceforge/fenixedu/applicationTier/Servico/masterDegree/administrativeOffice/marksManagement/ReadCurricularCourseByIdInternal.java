@@ -12,12 +12,12 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class ReadCurricularCourseByIdInternal extends FenixService {
 
-    @Service
-    public static InfoCurricularCourse run(Integer curricularCourseCode) throws FenixServiceException {
-	InfoCurricularCourse infoCurricularCourse = null;
-	CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(curricularCourseCode);
+	@Service
+	public static InfoCurricularCourse run(Integer curricularCourseCode) throws FenixServiceException {
+		InfoCurricularCourse infoCurricularCourse = null;
+		CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(curricularCourseCode);
 
-	infoCurricularCourse = InfoCurricularCourse.newInfoFromDomain(curricularCourse);
-	return infoCurricularCourse;
-    }
+		infoCurricularCourse = InfoCurricularCourse.newInfoFromDomain(curricularCourse);
+		return infoCurricularCourse;
+	}
 }

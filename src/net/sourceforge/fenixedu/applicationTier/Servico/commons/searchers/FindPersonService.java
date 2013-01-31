@@ -12,23 +12,23 @@ import net.sourceforge.fenixedu.domain.Person;
 
 public class FindPersonService extends SearchService {
 
-    @Override
-    protected InfoObject newInfoFromDomain(DomainObject object) {
-	return InfoPerson.newInfoFromDomain((Person) object);
-    }
-
-    @Override
-    protected List doSearch(HashMap searchParameters) {
-
-	String request = (String) searchParameters.get("teacherId");
-	Person person = Person.readPersonByIstUsername(request.trim());
-
-	List<Person> returnList = new ArrayList<Person>();
-	if (person != null) {
-	    returnList.add(person);
+	@Override
+	protected InfoObject newInfoFromDomain(DomainObject object) {
+		return InfoPerson.newInfoFromDomain((Person) object);
 	}
 
-	return returnList;
-    }
+	@Override
+	protected List doSearch(HashMap searchParameters) {
+
+		String request = (String) searchParameters.get("teacherId");
+		Person person = Person.readPersonByIstUsername(request.trim());
+
+		List<Person> returnList = new ArrayList<Person>();
+		if (person != null) {
+			returnList.add(person);
+		}
+
+		return returnList;
+	}
 
 }

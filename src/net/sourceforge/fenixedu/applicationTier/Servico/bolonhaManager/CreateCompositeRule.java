@@ -11,20 +11,20 @@ import net.sourceforge.fenixedu.domain.util.LogicOperator;
 
 public class CreateCompositeRule extends FenixService {
 
-    public void run(LogicOperator logicOperator, Integer[] selectedCurricularRuleIDs) throws FenixServiceException {
-	if (selectedCurricularRuleIDs != null) {
-	    final CurricularRule[] curricularRules = new CurricularRule[selectedCurricularRuleIDs.length];
+	public void run(LogicOperator logicOperator, Integer[] selectedCurricularRuleIDs) throws FenixServiceException {
+		if (selectedCurricularRuleIDs != null) {
+			final CurricularRule[] curricularRules = new CurricularRule[selectedCurricularRuleIDs.length];
 
-	    for (int i = 0; i < selectedCurricularRuleIDs.length; i++) {
-		final CurricularRule curricularRule = rootDomainObject.readCurricularRuleByOID(selectedCurricularRuleIDs[i]);
-		if (curricularRule == null) {
-		    throw new FenixServiceException("error.invalidCurricularRule");
+			for (int i = 0; i < selectedCurricularRuleIDs.length; i++) {
+				final CurricularRule curricularRule = rootDomainObject.readCurricularRuleByOID(selectedCurricularRuleIDs[i]);
+				if (curricularRule == null) {
+					throw new FenixServiceException("error.invalidCurricularRule");
+				}
+				curricularRules[i] = curricularRule;
+			}
+
+			CurricularRulesManager.createCompositeRule(logicOperator, curricularRules);
 		}
-		curricularRules[i] = curricularRule;
-	    }
-
-	    CurricularRulesManager.createCompositeRule(logicOperator, curricularRules);
 	}
-    }
 
 }

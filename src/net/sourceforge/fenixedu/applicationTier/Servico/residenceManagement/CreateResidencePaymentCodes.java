@@ -10,13 +10,13 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class CreateResidencePaymentCodes extends FenixService {
 
-    @Service
-    public static void run(List<ResidenceEvent> events) {
-	for (ResidenceEvent event : events) {
-	    AccountingEventPaymentCode
-		    .create(PaymentCodeType.RESIDENCE_FEE, event.getPaymentStartDate().toYearMonthDay(), event
-			    .getPaymentLimitDate().toYearMonthDay(), event, event.getRoomValue(), event.getRoomValue(), event
-			    .getPerson());
+	@Service
+	public static void run(List<ResidenceEvent> events) {
+		for (ResidenceEvent event : events) {
+			AccountingEventPaymentCode
+					.create(PaymentCodeType.RESIDENCE_FEE, event.getPaymentStartDate().toYearMonthDay(), event
+							.getPaymentLimitDate().toYearMonthDay(), event, event.getRoomValue(), event.getRoomValue(), event
+							.getPerson());
+		}
 	}
-    }
 }

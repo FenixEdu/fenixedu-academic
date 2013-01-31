@@ -10,43 +10,44 @@ package net.sourceforge.fenixedu.applicationTier.Servico.exceptions;
  */
 public class InvalidArgumentsServiceException extends FenixServiceException {
 
-    /**
+	/**
      *  
      */
-    public InvalidArgumentsServiceException() {
+	public InvalidArgumentsServiceException() {
 
-    }
+	}
 
-    /**
-     * @param s
-     */
-    public InvalidArgumentsServiceException(String s) {
-	super(s);
+	/**
+	 * @param s
+	 */
+	public InvalidArgumentsServiceException(String s) {
+		super(s);
 
-    }
+	}
 
-    /**
-     * @param cause
-     */
-    public InvalidArgumentsServiceException(Throwable cause) {
-	super(cause);
+	/**
+	 * @param cause
+	 */
+	public InvalidArgumentsServiceException(Throwable cause) {
+		super(cause);
 
-    }
+	}
 
-    /**
-     * @param message
-     * @param cause
-     */
-    public InvalidArgumentsServiceException(String message, Throwable cause) {
-	super(message, cause);
+	/**
+	 * @param message
+	 * @param cause
+	 */
+	public InvalidArgumentsServiceException(String message, Throwable cause) {
+		super(message, cause);
 
-    }
+	}
 
-    public String toString() {
-	String result = "[InvalidArgumentsServiceException\n";
-	result += "message" + this.getMessage() + "\n";
-	result += "cause" + this.getCause() + "\n";
-	result += "]";
-	return result;
-    }
+	@Override
+	public String toString() {
+		String result = "[InvalidArgumentsServiceException\n";
+		result += "message" + this.getMessage() + "\n";
+		result += "cause" + this.getCause() + "\n";
+		result += "]";
+		return result;
+	}
 }

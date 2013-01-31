@@ -8,21 +8,21 @@ import net.sourceforge.fenixedu.domain.phd.email.PhdIndividualProgramProcessEmai
 
 public class SendPhdEmail extends PhdIndividualProgramProcessActivity {
 
-    @Override
-    protected void activityPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
-	if (!process.isAllowedToManageProcess(userView)) {
-	    throw new PreConditionNotValidException();
+	@Override
+	protected void activityPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
+		if (!process.isAllowedToManageProcess(userView)) {
+			throw new PreConditionNotValidException();
+		}
 	}
-    }
 
-    @Override
-    protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView, Object object) {
+	@Override
+	protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView, Object object) {
 
-	final PhdIndividualProgramProcessEmailBean bean = (PhdIndividualProgramProcessEmailBean) object;
-	bean.setProcess(process);
-	PhdIndividualProgramProcessEmail.createEmail(bean);
+		final PhdIndividualProgramProcessEmailBean bean = (PhdIndividualProgramProcessEmailBean) object;
+		bean.setProcess(process);
+		PhdIndividualProgramProcessEmail.createEmail(bean);
 
-	return process;
-    }
+		return process;
+	}
 
 }

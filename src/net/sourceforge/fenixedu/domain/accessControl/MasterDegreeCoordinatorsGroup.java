@@ -25,39 +25,39 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
  */
 public class MasterDegreeCoordinatorsGroup extends Group {
 
-    private static final long serialVersionUID = 5928255128153111582L;
+	private static final long serialVersionUID = 5928255128153111582L;
 
-    @Override
-    public Set<Person> getElements() {
-	final Set<Person> elements = super.buildSet();
-	final Collection<ExecutionYear> executionYears = RootDomainObject.getInstance().getExecutionYears();
-	for (final ExecutionYear executionYear : executionYears) {
-	    if (executionYear.isCurrent()) {
-		for (final ExecutionDegree executionDegree : executionYear.getExecutionDegrees()) {
-		    final DegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
-		    final Degree degree = degreeCurricularPlan.getDegree();
-		    if (degree.getDegreeType() == DegreeType.MASTER_DEGREE) {
-			for (final Coordinator coordinator : executionDegree.getCoordinatorsList()) {
-			    final Person person = coordinator.getPerson();
-			    elements.add(person);
+	@Override
+	public Set<Person> getElements() {
+		final Set<Person> elements = super.buildSet();
+		final Collection<ExecutionYear> executionYears = RootDomainObject.getInstance().getExecutionYears();
+		for (final ExecutionYear executionYear : executionYears) {
+			if (executionYear.isCurrent()) {
+				for (final ExecutionDegree executionDegree : executionYear.getExecutionDegrees()) {
+					final DegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
+					final Degree degree = degreeCurricularPlan.getDegree();
+					if (degree.getDegreeType() == DegreeType.MASTER_DEGREE) {
+						for (final Coordinator coordinator : executionDegree.getCoordinatorsList()) {
+							final Person person = coordinator.getPerson();
+							elements.add(person);
+						}
+					}
+				}
+				break;
 			}
-		    }
 		}
-		break;
-	    }
+		return elements;
 	}
-	return elements;
-    }
 
-    @Override
-    public boolean isMember(Person person) {
-	return person != null && person.hasTeacher()
-		&& person.isMasterDegreeOrBolonhaMasterDegreeCoordinatorFor(ExecutionYear.readCurrentExecutionYear());
-    }
+	@Override
+	public boolean isMember(Person person) {
+		return person != null && person.hasTeacher()
+				&& person.isMasterDegreeOrBolonhaMasterDegreeCoordinatorFor(ExecutionYear.readCurrentExecutionYear());
+	}
 
-    @Override
-    protected Argument[] getExpressionArguments() {
-	return new Argument[0];
-    }
+	@Override
+	protected Argument[] getExpressionArguments() {
+		return new Argument[0];
+	}
 
 }

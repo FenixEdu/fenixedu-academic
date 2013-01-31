@@ -7,36 +7,36 @@ import net.sourceforge.fenixedu.domain.research.project.ProjectParticipation.Pro
 
 public class ProjectParticipantUnitCreationBean implements Serializable {
 
-    private Unit unit;
-    private String role;
-    private String unitName;
+	private Unit unit;
+	private String role;
+	private String unitName;
 
-    public ProjectParticipantUnitCreationBean() {
-	role = ProjectParticipationType.getDefaultUnitRoleType().toString();
-    }
+	public ProjectParticipantUnitCreationBean() {
+		role = ProjectParticipationType.getDefaultUnitRoleType().toString();
+	}
 
-    public ProjectParticipationType getRole() {
-	return ProjectParticipationType.valueOf(role);
-    }
+	public ProjectParticipationType getRole() {
+		return ProjectParticipationType.valueOf(role);
+	}
 
-    public void setRole(ProjectParticipationType projectParticipationRole) {
-	this.role = projectParticipationRole.toString();
-    }
+	public void setRole(ProjectParticipationType projectParticipationRole) {
+		this.role = projectParticipationRole.toString();
+	}
 
-    public String getUnitName() {
-	return unitName;
-    }
+	public String getUnitName() {
+		return unitName;
+	}
 
-    public void setUnitName(String name) {
-	this.unitName = name;
-    }
+	public void setUnitName(String name) {
+		this.unitName = name;
+	}
 
-    public Unit getUnit() {
-	return this.unit;
-    }
+	public Unit getUnit() {
+		return this.unit;
+	}
 
-    public void setUnit(Unit unit) {
-	this.unit = unit;
-    }
+	public void setUnit(Unit unit) {
+		this.unit = unit;
+	}
 
 }

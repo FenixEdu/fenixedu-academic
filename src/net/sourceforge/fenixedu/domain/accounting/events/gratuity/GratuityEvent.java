@@ -28,236 +28,237 @@ import dml.runtime.RelationAdapter;
 
 public abstract class GratuityEvent extends GratuityEvent_Base {
 
-    static {
+	static {
 
-	GratuityEventStudentCurricularPlan.addListener(new RelationAdapter<GratuityEvent, StudentCurricularPlan>() {
-	    @Override
-	    public void beforeAdd(GratuityEvent gratuityEvent, StudentCurricularPlan studentCurricularPlan) {
-		if (gratuityEvent != null
-			&& studentCurricularPlan != null
-			&& studentCurricularPlan.getRegistration().hasGratuityEvent(gratuityEvent.getExecutionYear(),
-				gratuityEvent.getClass())) {
-		    throw new DomainException(
-			    "error.accounting.events.gratuity.GratuityEvent.person.already.has.gratuity.event.in.registration.and.year");
+		GratuityEventStudentCurricularPlan.addListener(new RelationAdapter<GratuityEvent, StudentCurricularPlan>() {
+			@Override
+			public void beforeAdd(GratuityEvent gratuityEvent, StudentCurricularPlan studentCurricularPlan) {
+				if (gratuityEvent != null
+						&& studentCurricularPlan != null
+						&& studentCurricularPlan.getRegistration().hasGratuityEvent(gratuityEvent.getExecutionYear(),
+								gratuityEvent.getClass())) {
+					throw new DomainException(
+							"error.accounting.events.gratuity.GratuityEvent.person.already.has.gratuity.event.in.registration.and.year");
 
+				}
+			}
+		});
+	}
+
+	protected GratuityEvent() {
+		super();
+	}
+
+	protected void init(AdministrativeOffice administrativeOffice, Person person, StudentCurricularPlan studentCurricularPlan,
+			ExecutionYear executionYear) {
+
+		init(administrativeOffice, EventType.GRATUITY, person, studentCurricularPlan, executionYear);
+
+	}
+
+	protected void init(AdministrativeOffice administrativeOffice, EventType eventType, Person person,
+			StudentCurricularPlan studentCurricularPlan, ExecutionYear executionYear) {
+		super.init(administrativeOffice, eventType, person, executionYear);
+		checkParameters(administrativeOffice, studentCurricularPlan);
+		super.setStudentCurricularPlan(studentCurricularPlan);
+
+	}
+
+	private void checkParameters(AdministrativeOffice administrativeOffice, StudentCurricularPlan studentCurricularPlan) {
+		if (studentCurricularPlan == null) {
+			throw new DomainException("error.accounting.events.gratuity.GratuityEvent.studentCurricularPlan.cannot.be.null");
 		}
-	    }
-	});
-    }
 
-    protected GratuityEvent() {
-	super();
-    }
-
-    protected void init(AdministrativeOffice administrativeOffice, Person person, StudentCurricularPlan studentCurricularPlan,
-	    ExecutionYear executionYear) {
-
-	init(administrativeOffice, EventType.GRATUITY, person, studentCurricularPlan, executionYear);
-
-    }
-
-    protected void init(AdministrativeOffice administrativeOffice, EventType eventType, Person person,
-	    StudentCurricularPlan studentCurricularPlan, ExecutionYear executionYear) {
-	super.init(administrativeOffice, eventType, person, executionYear);
-	checkParameters(administrativeOffice, studentCurricularPlan);
-	super.setStudentCurricularPlan(studentCurricularPlan);
-
-    }
-
-    private void checkParameters(AdministrativeOffice administrativeOffice, StudentCurricularPlan studentCurricularPlan) {
-	if (studentCurricularPlan == null) {
-	    throw new DomainException("error.accounting.events.gratuity.GratuityEvent.studentCurricularPlan.cannot.be.null");
+		if (administrativeOffice == null) {
+			throw new DomainException("error.accounting.events.gratuity.GratuityEvent.administrativeOffice.cannot.be.null");
+		}
 	}
 
-	if (administrativeOffice == null) {
-	    throw new DomainException("error.accounting.events.gratuity.GratuityEvent.administrativeOffice.cannot.be.null");
+	@Override
+	public Account getToAccount() {
+		return getUnit().getAccountBy(AccountType.INTERNAL);
 	}
-    }
 
-    @Override
-    public Account getToAccount() {
-	return getUnit().getAccountBy(AccountType.INTERNAL);
-    }
-
-    @Override
-    protected Account getFromAccount() {
-	return getPerson().getAccountBy(AccountType.EXTERNAL);
-    }
-
-    private Unit getUnit() {
-	return getDegree().getUnit();
-    }
-
-    public Degree getDegree() {
-	return getDegreeCurricularPlan().getDegree();
-    }
-
-    @Override
-    public LabelFormatter getDescriptionForEntryType(EntryType entryType) {
-	final LabelFormatter labelFormatter = new LabelFormatter();
-	labelFormatter.appendLabel(entryType.name(), LabelFormatter.ENUMERATION_RESOURCES).appendLabel(" (").appendLabel(getDegree().getDegreeType().name(),
-		LabelFormatter.ENUMERATION_RESOURCES).appendLabel(" - ").appendLabel(getDegree().getNameFor(getExecutionYear()).getContent())
-		.appendLabel(" - ").appendLabel(getExecutionYear().getYear()).appendLabel(")");
-
-	return labelFormatter;
-    }
-
-    @Override
-    public LabelFormatter getDescription() {
-	final LabelFormatter labelFormatter = super.getDescription();
-	labelFormatter.appendLabel(" ");
-	labelFormatter.appendLabel(getDegree().getDegreeType().name(), LabelFormatter.ENUMERATION_RESOURCES).appendLabel(" - ");
-	labelFormatter.appendLabel(getDegree().getNameFor(getExecutionYear()).getContent()).appendLabel(" - ");
-	labelFormatter.appendLabel(getExecutionYear().getYear());
-	return labelFormatter;
-    }
-
-    @Override
-    protected DegreeCurricularPlanServiceAgreementTemplate getServiceAgreementTemplate() {
-	return getDegreeCurricularPlan().getServiceAgreementTemplate();
-    }
-
-    private DegreeCurricularPlan getDegreeCurricularPlan() {
-	return getStudentCurricularPlan().getDegreeCurricularPlan();
-    }
-
-    public Registration getRegistration() {
-	return getStudentCurricularPlan().getRegistration();
-    }
-
-    @Checked("RolePredicates.MANAGER_PREDICATE")
-    @Override
-    public void setStudentCurricularPlan(StudentCurricularPlan studentCurricularPlan) {
-	super.setStudentCurricularPlan(studentCurricularPlan);
-    }
-
-    public boolean isCompleteEnrolmentModel() {
-	return getRegistration().isCompleteEnrolmentModel(getExecutionYear());
-    }
-
-    public boolean isCustomEnrolmentModel() {
-	return getRegistration().isCustomEnrolmentModel(getExecutionYear());
-    }
-
-    public double getEnrolmentsEctsForRegistration() {
-	return getRegistration().getEnrolmentsEcts(getExecutionYear());
-    }
-
-    public int getNumberOfEnrolmentsForRegistration() {
-	return getRegistration().getEnrolments(getExecutionYear()).size();
-    }
-
-    public boolean canRemoveExemption(final DateTime when) {
-	if (hasGratuityExemption()) {
-	    if (isClosed()) {
-		return getPayedAmount().greaterOrEqualThan(calculateTotalAmountToPayWithoutDiscount(when));
-	    }
+	@Override
+	protected Account getFromAccount() {
+		return getPerson().getAccountBy(AccountType.EXTERNAL);
 	}
-	return true;
-    }
 
-    public boolean hasGratuityExemption() {
-	for (final Exemption exemption : getExemptionsSet()) {
-	    if (exemption instanceof GratuityExemption) {
+	private Unit getUnit() {
+		return getDegree().getUnit();
+	}
+
+	public Degree getDegree() {
+		return getDegreeCurricularPlan().getDegree();
+	}
+
+	@Override
+	public LabelFormatter getDescriptionForEntryType(EntryType entryType) {
+		final LabelFormatter labelFormatter = new LabelFormatter();
+		labelFormatter.appendLabel(entryType.name(), LabelFormatter.ENUMERATION_RESOURCES).appendLabel(" (")
+				.appendLabel(getDegree().getDegreeType().name(), LabelFormatter.ENUMERATION_RESOURCES).appendLabel(" - ")
+				.appendLabel(getDegree().getNameFor(getExecutionYear()).getContent()).appendLabel(" - ")
+				.appendLabel(getExecutionYear().getYear()).appendLabel(")");
+
+		return labelFormatter;
+	}
+
+	@Override
+	public LabelFormatter getDescription() {
+		final LabelFormatter labelFormatter = super.getDescription();
+		labelFormatter.appendLabel(" ");
+		labelFormatter.appendLabel(getDegree().getDegreeType().name(), LabelFormatter.ENUMERATION_RESOURCES).appendLabel(" - ");
+		labelFormatter.appendLabel(getDegree().getNameFor(getExecutionYear()).getContent()).appendLabel(" - ");
+		labelFormatter.appendLabel(getExecutionYear().getYear());
+		return labelFormatter;
+	}
+
+	@Override
+	protected DegreeCurricularPlanServiceAgreementTemplate getServiceAgreementTemplate() {
+		return getDegreeCurricularPlan().getServiceAgreementTemplate();
+	}
+
+	private DegreeCurricularPlan getDegreeCurricularPlan() {
+		return getStudentCurricularPlan().getDegreeCurricularPlan();
+	}
+
+	public Registration getRegistration() {
+		return getStudentCurricularPlan().getRegistration();
+	}
+
+	@Checked("RolePredicates.MANAGER_PREDICATE")
+	@Override
+	public void setStudentCurricularPlan(StudentCurricularPlan studentCurricularPlan) {
+		super.setStudentCurricularPlan(studentCurricularPlan);
+	}
+
+	public boolean isCompleteEnrolmentModel() {
+		return getRegistration().isCompleteEnrolmentModel(getExecutionYear());
+	}
+
+	public boolean isCustomEnrolmentModel() {
+		return getRegistration().isCustomEnrolmentModel(getExecutionYear());
+	}
+
+	public double getEnrolmentsEctsForRegistration() {
+		return getRegistration().getEnrolmentsEcts(getExecutionYear());
+	}
+
+	public int getNumberOfEnrolmentsForRegistration() {
+		return getRegistration().getEnrolments(getExecutionYear()).size();
+	}
+
+	public boolean canRemoveExemption(final DateTime when) {
+		if (hasGratuityExemption()) {
+			if (isClosed()) {
+				return getPayedAmount().greaterOrEqualThan(calculateTotalAmountToPayWithoutDiscount(when));
+			}
+		}
 		return true;
-	    }
 	}
 
-	return false;
-    }
+	public boolean hasGratuityExemption() {
+		for (final Exemption exemption : getExemptionsSet()) {
+			if (exemption instanceof GratuityExemption) {
+				return true;
+			}
+		}
 
-    public GratuityExemption getGratuityExemption() {
-	for (final Exemption exemption : getExemptionsSet()) {
-	    if (exemption instanceof GratuityExemption) {
-		return (GratuityExemption) exemption;
-	    }
+		return false;
 	}
 
-	return null;
-    }
+	public GratuityExemption getGratuityExemption() {
+		for (final Exemption exemption : getExemptionsSet()) {
+			if (exemption instanceof GratuityExemption) {
+				return (GratuityExemption) exemption;
+			}
+		}
 
-    private Money calculateTotalAmountToPayWithoutDiscount(final DateTime when) {
-	return getPostingRule().calculateTotalAmountToPay(this, when, false);
-    }
-
-    public boolean isGratuityExemptionAvailable() {
-	return hasGratuityExemption();
-    }
-
-    public boolean isGratuityExemptionNotAvailable() {
-	return !hasGratuityExemption();
-    }
-
-    public boolean canApplyExemption(final GratuityExemptionJustificationType justificationType) {
-	return true;
-    }
-
-    public BigDecimal calculateDiscountPercentage(final Money amount) {
-	return hasGratuityExemption() ? getGratuityExemption().calculateDiscountPercentage(amount) : BigDecimal.ZERO;
-    }
-
-    @Checked("RolePredicates.MANAGER_PREDICATE")
-    @Override
-    protected void disconnect() {
-	super.setStudentCurricularPlan(null);
-	super.disconnect();
-    }
-
-    public boolean isGratuityEventWithPaymentPlan() {
-	return false;
-    }
-
-    @Override
-    public boolean isOpen() {
-	if (isCancelled()) {
-	    return false;
+		return null;
 	}
 
-	return calculateAmountToPay(new DateTime()).greaterThan(Money.ZERO);
-    }
-
-    @Override
-    public boolean isClosed() {
-	if (isCancelled()) {
-	    return false;
+	private Money calculateTotalAmountToPayWithoutDiscount(final DateTime when) {
+		return getPostingRule().calculateTotalAmountToPay(this, when, false);
 	}
 
-	return calculateAmountToPay(new DateTime()).lessOrEqualThan(Money.ZERO);
-    }
-
-    @Override
-    public boolean isInState(final EventState eventState) {
-	if (eventState == EventState.OPEN) {
-	    return isOpen();
-	} else if (eventState == EventState.CLOSED) {
-	    return isClosed();
-	} else if (eventState == EventState.CANCELLED) {
-	    return isCancelled();
-	} else {
-	    throw new DomainException(
-		    "error.net.sourceforge.fenixedu.domain.accounting.events.gratuity.DfaGratuityEvent.unexpected.state.to.test");
+	public boolean isGratuityExemptionAvailable() {
+		return hasGratuityExemption();
 	}
-    }
 
-    @Override
-    protected void internalRecalculateState(DateTime whenRegistered) {
-	if (canCloseEvent(whenRegistered)) {
-	    closeNonProcessedCodes();
-	    closeEvent();
-	} else {
-	    if (getCurrentEventState() != EventState.OPEN) {
-		changeState(EventState.OPEN, new DateTime());
-		reopenCancelledCodes();
-	    }
+	public boolean isGratuityExemptionNotAvailable() {
+		return !hasGratuityExemption();
 	}
-    }
 
-    @Override
-    public boolean isGratuity() {
-	return true;
-    }
+	public boolean canApplyExemption(final GratuityExemptionJustificationType justificationType) {
+		return true;
+	}
 
-    public boolean isDfaGratuityEvent() {
-	return false;
-    }
+	public BigDecimal calculateDiscountPercentage(final Money amount) {
+		return hasGratuityExemption() ? getGratuityExemption().calculateDiscountPercentage(amount) : BigDecimal.ZERO;
+	}
+
+	@Checked("RolePredicates.MANAGER_PREDICATE")
+	@Override
+	protected void disconnect() {
+		super.setStudentCurricularPlan(null);
+		super.disconnect();
+	}
+
+	public boolean isGratuityEventWithPaymentPlan() {
+		return false;
+	}
+
+	@Override
+	public boolean isOpen() {
+		if (isCancelled()) {
+			return false;
+		}
+
+		return calculateAmountToPay(new DateTime()).greaterThan(Money.ZERO);
+	}
+
+	@Override
+	public boolean isClosed() {
+		if (isCancelled()) {
+			return false;
+		}
+
+		return calculateAmountToPay(new DateTime()).lessOrEqualThan(Money.ZERO);
+	}
+
+	@Override
+	public boolean isInState(final EventState eventState) {
+		if (eventState == EventState.OPEN) {
+			return isOpen();
+		} else if (eventState == EventState.CLOSED) {
+			return isClosed();
+		} else if (eventState == EventState.CANCELLED) {
+			return isCancelled();
+		} else {
+			throw new DomainException(
+					"error.net.sourceforge.fenixedu.domain.accounting.events.gratuity.DfaGratuityEvent.unexpected.state.to.test");
+		}
+	}
+
+	@Override
+	protected void internalRecalculateState(DateTime whenRegistered) {
+		if (canCloseEvent(whenRegistered)) {
+			closeNonProcessedCodes();
+			closeEvent();
+		} else {
+			if (getCurrentEventState() != EventState.OPEN) {
+				changeState(EventState.OPEN, new DateTime());
+				reopenCancelledCodes();
+			}
+		}
+	}
+
+	@Override
+	public boolean isGratuity() {
+		return true;
+	}
+
+	public boolean isDfaGratuityEvent() {
+		return false;
+	}
 }

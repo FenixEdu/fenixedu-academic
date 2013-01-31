@@ -10,19 +10,19 @@ import pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyCon
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
-public class RegistrationProtocolsProvider implements DataProvider{
+public class RegistrationProtocolsProvider implements DataProvider {
 
-    @Override
-    public Converter getConverter() {
-	return new DomainObjectKeyConverter();
-    }
+	@Override
+	public Converter getConverter() {
+		return new DomainObjectKeyConverter();
+	}
 
-    @Override
-    public Object provide(Object source, Object currentValue) {
-	List<RegistrationProtocol> registrationProtocolsSet = new ArrayList<RegistrationProtocol>();
-	registrationProtocolsSet.addAll(RootDomainObject.getInstance().getRegistrationProtocols());
-	Collections.sort(registrationProtocolsSet, RegistrationProtocol.AGREEMENT_COMPARATOR);
-	return registrationProtocolsSet;
-    }
+	@Override
+	public Object provide(Object source, Object currentValue) {
+		List<RegistrationProtocol> registrationProtocolsSet = new ArrayList<RegistrationProtocol>();
+		registrationProtocolsSet.addAll(RootDomainObject.getInstance().getRegistrationProtocols());
+		Collections.sort(registrationProtocolsSet, RegistrationProtocol.AGREEMENT_COMPARATOR);
+		return registrationProtocolsSet;
+	}
 
 }

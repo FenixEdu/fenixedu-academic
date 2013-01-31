@@ -22,24 +22,28 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.utl.ist.fenix.tools.util.CollectionPager;
 
 @Mapping(module = "SpaceManager", path = "/listChangesInTheSpaces", scope = "session", parameter = "method")
-@Forwards(value = { @Forward(name = "listChangesInTheSpaces", path = "/spaceManager/listChangesInTheSpaces.jsp", tileProperties = @Tile(  title = "private.spacemanagement.listchanges")) })
+@Forwards(value = { @Forward(
+		name = "listChangesInTheSpaces",
+		path = "/spaceManager/listChangesInTheSpaces.jsp",
+		tileProperties = @Tile(title = "private.spacemanagement.listchanges")) })
 public class ListChangesInTheSpacesDA extends FenixDispatchAction {
 
-    public ActionForward changesList(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
+	public ActionForward changesList(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) {
 
-	Set<DomainObjectActionLog> listOfChangesInSpaces = Space.getListOfChangesInSpacesOrderedByInstant();
-	CollectionPager<DomainObjectActionLog> collectionPager = new CollectionPager<DomainObjectActionLog>(
-		listOfChangesInSpaces != null ? listOfChangesInSpaces : new ArrayList(), 50);
+		Set<DomainObjectActionLog> listOfChangesInSpaces = Space.getListOfChangesInSpacesOrderedByInstant();
+		CollectionPager<DomainObjectActionLog> collectionPager =
+				new CollectionPager<DomainObjectActionLog>(
+						listOfChangesInSpaces != null ? listOfChangesInSpaces : new ArrayList(), 50);
 
-	final String pageNumberString = request.getParameter("pageNumber");
-	final Integer pageNumber = !StringUtils.isEmpty(pageNumberString) ? Integer.valueOf(pageNumberString) : Integer
-		.valueOf(1);
+		final String pageNumberString = request.getParameter("pageNumber");
+		final Integer pageNumber =
+				!StringUtils.isEmpty(pageNumberString) ? Integer.valueOf(pageNumberString) : Integer.valueOf(1);
 
-	request.setAttribute("pageNumber", pageNumber);
-	request.setAttribute("domainObjectActionLogs", collectionPager.getPage(pageNumber.intValue()));
-	request.setAttribute("numberOfPages", Integer.valueOf(collectionPager.getNumberOfPages()));
+		request.setAttribute("pageNumber", pageNumber);
+		request.setAttribute("domainObjectActionLogs", collectionPager.getPage(pageNumber.intValue()));
+		request.setAttribute("numberOfPages", Integer.valueOf(collectionPager.getNumberOfPages()));
 
-	return mapping.findForward("listChangesInTheSpaces");
-    }
+		return mapping.findForward("listChangesInTheSpaces");
+	}
 }

@@ -9,14 +9,14 @@ import pt.ist.fenixWebFramework.renderers.converters.EnumArrayConverter;
 
 public class ThesisStateProvider implements DataProvider {
 
-    @Override
-    public Object provide(Object source, Object currentValue) {
-	return Arrays.asList(ThesisState.values());
-    }
+	@Override
+	public Object provide(Object source, Object currentValue) {
+		return Arrays.asList(ThesisState.values());
+	}
 
-    @Override
-    public Converter getConverter() {
-	return new EnumArrayConverter(ThesisState.class);
-    }
+	@Override
+	public Converter getConverter() {
+		return new EnumArrayConverter(ThesisState.class);
+	}
 
 }

@@ -16,18 +16,10 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionEx
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
@@ -37,31 +29,32 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
  * 
  */
 @Mapping(module = "student", path = "/cancelCandidacy", scope = "request")
-@Forwards(value = {
-		@Forward(name = "invalidQueryString", path = "naoAutorizado.do"),
+@Forwards(value = { @Forward(name = "invalidQueryString", path = "naoAutorizado.do"),
 		@Forward(name = "candidacyCanceled", path = "/listAllSeminaries.do") })
 public class CancelCandidacy extends FenixAction {
-    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-	    throws FenixActionException {
-	IUserView userView = getUserView(request);
-	String candidacyIDString = request.getParameter("objectCode");
-	Integer candidacyID;
-	if (candidacyIDString == null)
-	    throw new FenixActionException(mapping.findForward("invalidQueryString"));
-	try {
-	    candidacyID = new Integer(candidacyIDString);
-	} catch (Exception ex) {
-	    throw new FenixActionException(mapping.findForward("invalidQueryString"));
-	}
-	ActionForward destiny = null;
-	try {
-	    Object[] argsReadSeminary = { candidacyID };
-	    ServiceManagerServiceFactory.executeService("Seminaries.DeleteCandidacy", argsReadSeminary);
-	} catch (Exception e) {
-	    throw new FenixActionException();
-	}
+	@Override
+	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+			throws FenixActionException {
+		IUserView userView = getUserView(request);
+		String candidacyIDString = request.getParameter("objectCode");
+		Integer candidacyID;
+		if (candidacyIDString == null) {
+			throw new FenixActionException(mapping.findForward("invalidQueryString"));
+		}
+		try {
+			candidacyID = new Integer(candidacyIDString);
+		} catch (Exception ex) {
+			throw new FenixActionException(mapping.findForward("invalidQueryString"));
+		}
+		ActionForward destiny = null;
+		try {
+			Object[] argsReadSeminary = { candidacyID };
+			ServiceManagerServiceFactory.executeService("Seminaries.DeleteCandidacy", argsReadSeminary);
+		} catch (Exception e) {
+			throw new FenixActionException();
+		}
 
-	destiny = mapping.findForward("candidacyCanceled");
-	return destiny;
-    }
+		destiny = mapping.findForward("candidacyCanceled");
+		return destiny;
+	}
 }

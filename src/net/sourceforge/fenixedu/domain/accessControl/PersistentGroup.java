@@ -10,65 +10,65 @@ import net.sourceforge.fenixedu.domain.accessControl.groups.language.operators.I
 
 public class PersistentGroup extends DomainBackedGroup<PersistentGroupMembers> {
 
-    private static final long serialVersionUID = 156456365385985497L;
+	private static final long serialVersionUID = 156456365385985497L;
 
-    public PersistentGroup(PersistentGroupMembers object) {
-	super(object);
-    }
+	public PersistentGroup(PersistentGroupMembers object) {
+		super(object);
+	}
 
-    public PersistentGroupMembers getPersistentGroupMembers() {
-	return getObject();
-    }
+	public PersistentGroupMembers getPersistentGroupMembers() {
+		return getObject();
+	}
 
-    @Override
-    public String getName() {
-	return getObject().getName();
-    }
+	@Override
+	public String getName() {
+		return getObject().getName();
+	}
 
-    @Override
-    public boolean hasPresentationNameDynamic() {
-	return true;
-    }
+	@Override
+	public boolean hasPresentationNameDynamic() {
+		return true;
+	}
 
-    @Override
-    public Set<Person> getElements() {
-	PersistentGroupMembers groupMembers = getObject();
-	return Collections.unmodifiableSet(groupMembers.getPersonsSet());
-    }
+	@Override
+	public Set<Person> getElements() {
+		PersistentGroupMembers groupMembers = getObject();
+		return Collections.unmodifiableSet(groupMembers.getPersonsSet());
+	}
 
-    @Override
-    protected Argument[] getExpressionArguments() {
-	return new Argument[] { new IdOperator(getObject()) };
-    }
+	@Override
+	protected Argument[] getExpressionArguments() {
+		return new Argument[] { new IdOperator(getObject()) };
+	}
 
-    @Override
-    public boolean isMember(Person person) {
-	if (person != null) {
-	    PersistentGroupMembers groupMembers = getObject();
-	    for (Person groupPerson : groupMembers.getPersons()) {
-		if (person.equals(groupPerson)) {
-		    return true;
+	@Override
+	public boolean isMember(Person person) {
+		if (person != null) {
+			PersistentGroupMembers groupMembers = getObject();
+			for (Person groupPerson : groupMembers.getPersons()) {
+				if (person.equals(groupPerson)) {
+					return true;
+				}
+			}
 		}
-	    }
-	}
-	return false;
-    }
-
-    public static class Builder implements GroupBuilder {
-
-	@Override
-	public Group build(Object[] arguments) {
-	    return new PersistentGroup((PersistentGroupMembers) arguments[0]);
+		return false;
 	}
 
-	@Override
-	public int getMinArguments() {
-	    return 1;
-	}
+	public static class Builder implements GroupBuilder {
 
-	@Override
-	public int getMaxArguments() {
-	    return 1;
+		@Override
+		public Group build(Object[] arguments) {
+			return new PersistentGroup((PersistentGroupMembers) arguments[0]);
+		}
+
+		@Override
+		public int getMinArguments() {
+			return 1;
+		}
+
+		@Override
+		public int getMaxArguments() {
+			return 1;
+		}
 	}
-    }
 }

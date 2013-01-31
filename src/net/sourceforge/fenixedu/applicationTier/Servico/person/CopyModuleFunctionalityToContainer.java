@@ -14,28 +14,28 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class CopyModuleFunctionalityToContainer extends FenixService {
 
-    @Service
-    public static void run(Module module, Container container) {
-	process(module, container);
-    }
+	@Service
+	public static void run(Module module, Container container) {
+		process(module, container);
+	}
 
-    private static void process(Module module, Container container) {
-	mimicPolicy(module.getAvailabilityPolicy(), container);
-	for (Functionality functionality : module.getFunctionalities()) {
-	    final ExplicitOrderNode explicitOrderNode = new ExplicitOrderNode(container, functionality);
+	private static void process(Module module, Container container) {
+		mimicPolicy(module.getAvailabilityPolicy(), container);
+		for (Functionality functionality : module.getFunctionalities()) {
+			final ExplicitOrderNode explicitOrderNode = new ExplicitOrderNode(container, functionality);
+		}
+		for (Module subModule : module.getChildren(Module.class)) {
+			Section section = new Section(container, subModule.getName());
+			mimicPolicy(module.getAvailabilityPolicy(), section);
+			process(subModule, section);
+		}
 	}
-	for (Module subModule : module.getChildren(Module.class)) {
-	    Section section = new Section(container, subModule.getName());
-	    mimicPolicy(module.getAvailabilityPolicy(), section);
-	    process(subModule, section);
-	}
-    }
 
-    private static void mimicPolicy(AvailabilityPolicy availabilityPolicy, Content content) {
-	if (availabilityPolicy instanceof GroupAvailability) {
-	    new GroupAvailability(content, ((GroupAvailability) availabilityPolicy).getTargetGroup());
-	} else if (availabilityPolicy instanceof ExpressionGroupAvailability) {
-	    new ExpressionGroupAvailability(content, ((ExpressionGroupAvailability) availabilityPolicy).getExpression());
+	private static void mimicPolicy(AvailabilityPolicy availabilityPolicy, Content content) {
+		if (availabilityPolicy instanceof GroupAvailability) {
+			new GroupAvailability(content, ((GroupAvailability) availabilityPolicy).getTargetGroup());
+		} else if (availabilityPolicy instanceof ExpressionGroupAvailability) {
+			new ExpressionGroupAvailability(content, ((ExpressionGroupAvailability) availabilityPolicy).getExpression());
+		}
 	}
-    }
 }

@@ -10,35 +10,35 @@ import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess;
 
 public class UploadCandidacyReview extends PhdProgramCandidacyProcessActivity {
 
-    @Override
-    protected void activityPreConditions(PhdProgramCandidacyProcess process, IUserView userView) {
-	if (process.isInState(PhdProgramCandidacyProcessState.PENDING_FOR_COORDINATOR_OPINION)) {
-	    if ((process.isAllowedToManageProcess(userView) || process.getIndividualProgramProcess().isCoordinatorForPhdProgram(
-		    userView.getPerson()))) {
-		return;
-	    }
+	@Override
+	protected void activityPreConditions(PhdProgramCandidacyProcess process, IUserView userView) {
+		if (process.isInState(PhdProgramCandidacyProcessState.PENDING_FOR_COORDINATOR_OPINION)) {
+			if ((process.isAllowedToManageProcess(userView) || process.getIndividualProgramProcess().isCoordinatorForPhdProgram(
+					userView.getPerson()))) {
+				return;
+			}
+		}
+
+		if (process.isInState(PhdProgramCandidacyProcessState.WAITING_FOR_SCIENTIFIC_COUNCIL_RATIFICATION)) {
+			if (process.isAllowedToManageProcess(userView)) {
+				return;
+			}
+		}
+
+		throw new PreConditionNotValidException();
 	}
 
-	if (process.isInState(PhdProgramCandidacyProcessState.WAITING_FOR_SCIENTIFIC_COUNCIL_RATIFICATION)) {
-	    if (process.isAllowedToManageProcess(userView)) {
-		return;
-	    }
+	@Override
+	@SuppressWarnings("unchecked")
+	protected PhdProgramCandidacyProcess executeActivity(PhdProgramCandidacyProcess process, IUserView userView, Object object) {
+
+		for (final PhdProgramDocumentUploadBean each : (List<PhdProgramDocumentUploadBean>) object) {
+			if (each.hasAnyInformation()) {
+				process.addDocument(each, userView != null ? userView.getPerson() : null);
+			}
+		}
+
+		return process;
 	}
-
-	throw new PreConditionNotValidException();
-    }
-
-    @Override
-    @SuppressWarnings("unchecked")
-    protected PhdProgramCandidacyProcess executeActivity(PhdProgramCandidacyProcess process, IUserView userView, Object object) {
-
-	for (final PhdProgramDocumentUploadBean each : (List<PhdProgramDocumentUploadBean>) object) {
-	    if (each.hasAnyInformation()) {
-		process.addDocument(each, userView != null ? userView.getPerson() : null);
-	    }
-	}
-
-	return process;
-    }
 
 }

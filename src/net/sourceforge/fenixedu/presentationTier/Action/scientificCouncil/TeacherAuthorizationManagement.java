@@ -44,303 +44,314 @@ import pt.utl.ist.fenix.tools.util.FileUtils;
 
 @Mapping(path = "/teacherAuthorization", module = "scientificCouncil")
 @Forwards({
-	@Forward(name = "createTeacherAuthorization", path = "/scientificCouncil/createTeacherAuthorization.jsp", tileProperties = @Tile(  title = "private.scientificcouncil.teachers.authorizations")),
-	@Forward(name = "listTeacherAuthorization", path = "/scientificCouncil/listTeacherAuthorization.jsp", tileProperties = @Tile(  title = "private.scientificcouncil.teachers.authorizations")),
-	@Forward(name = "teacherAuthorizationsUpload", path = "/scientificCouncil/teacherAuthorizationsUpload.jsp", tileProperties = @Tile(  title = "private.scientificcouncil.teachers.authorizations")) })
+		@Forward(
+				name = "createTeacherAuthorization",
+				path = "/scientificCouncil/createTeacherAuthorization.jsp",
+				tileProperties = @Tile(title = "private.scientificcouncil.teachers.authorizations")),
+		@Forward(
+				name = "listTeacherAuthorization",
+				path = "/scientificCouncil/listTeacherAuthorization.jsp",
+				tileProperties = @Tile(title = "private.scientificcouncil.teachers.authorizations")),
+		@Forward(
+				name = "teacherAuthorizationsUpload",
+				path = "/scientificCouncil/teacherAuthorizationsUpload.jsp",
+				tileProperties = @Tile(title = "private.scientificcouncil.teachers.authorizations")) })
 public class TeacherAuthorizationManagement extends FenixDispatchAction {
 
-    public static class TeacherAuthorizationManagementBean implements Serializable {
-	private String istUsername;
-	private ProfessionalCategory professionalCategory;
-	private ExecutionSemester executionSemester;
-	private Double lessonHours;
-	private Boolean canPark;
-	private Boolean canHaveCard;
-	private Department department;
+	public static class TeacherAuthorizationManagementBean implements Serializable {
+		private String istUsername;
+		private ProfessionalCategory professionalCategory;
+		private ExecutionSemester executionSemester;
+		private Double lessonHours;
+		private Boolean canPark;
+		private Boolean canHaveCard;
+		private Department department;
 
-	public TeacherAuthorizationManagementBean() {
-	}
+		public TeacherAuthorizationManagementBean() {
+		}
 
-	public void setIstUsername(String istUsername) {
-	    this.istUsername = istUsername;
-	}
+		public void setIstUsername(String istUsername) {
+			this.istUsername = istUsername;
+		}
 
-	public String getIstUsername() {
-	    return istUsername;
-	}
+		public String getIstUsername() {
+			return istUsername;
+		}
 
-	public void setProfessionalCategory(ProfessionalCategory professionalCategory) {
-	    this.professionalCategory = professionalCategory;
-	}
+		public void setProfessionalCategory(ProfessionalCategory professionalCategory) {
+			this.professionalCategory = professionalCategory;
+		}
 
-	public ProfessionalCategory getProfessionalCategory() {
-	    return professionalCategory;
-	}
+		public ProfessionalCategory getProfessionalCategory() {
+			return professionalCategory;
+		}
 
-	public void setExecutionSemester(ExecutionSemester executionSemester) {
-	    this.executionSemester = executionSemester;
-	}
+		public void setExecutionSemester(ExecutionSemester executionSemester) {
+			this.executionSemester = executionSemester;
+		}
 
-	public ExecutionSemester getExecutionSemester() {
-	    return executionSemester;
-	}
+		public ExecutionSemester getExecutionSemester() {
+			return executionSemester;
+		}
 
-	@Service
-	ExternalTeacherAuthorization create() throws FenixActionException {
+		@Service
+		ExternalTeacherAuthorization create() throws FenixActionException {
 
-	    User user = User.readUserByUserUId(getIstUsername());
-	    if (user == null) {
-		throw new FenixActionException("label.invalid.istUsername");
-	    }
-	    final Person person = user.getPerson();
-
-	    if (person.hasTeacher()) {
-		for (final TeacherAuthorization teacherAuthorization : person.getTeacher().getAuthorizationSet()) {
-		    if (teacherAuthorization instanceof ExternalTeacherAuthorization) {
-			final ExternalTeacherAuthorization auth = (ExternalTeacherAuthorization) teacherAuthorization;
-			if (auth.getActive().booleanValue() && auth.getExecutionSemester() == getExecutionSemester()) {
-			    throw new FenixActionException("already.created.teacher.authorization");
+			User user = User.readUserByUserUId(getIstUsername());
+			if (user == null) {
+				throw new FenixActionException("label.invalid.istUsername");
 			}
-		    }
+			final Person person = user.getPerson();
+
+			if (person.hasTeacher()) {
+				for (final TeacherAuthorization teacherAuthorization : person.getTeacher().getAuthorizationSet()) {
+					if (teacherAuthorization instanceof ExternalTeacherAuthorization) {
+						final ExternalTeacherAuthorization auth = (ExternalTeacherAuthorization) teacherAuthorization;
+						if (auth.getActive().booleanValue() && auth.getExecutionSemester() == getExecutionSemester()) {
+							throw new FenixActionException("already.created.teacher.authorization");
+						}
+					}
+				}
+			}
+
+			ExternalTeacherAuthorization eta = new ExternalTeacherAuthorization();
+			eta.setAuthorizer(AccessControl.getPerson());
+			eta.setExecutionSemester(getExecutionSemester());
+			eta.setProfessionalCategory(getProfessionalCategory());
+			eta.setRootDomainObject(RootDomainObject.getInstance());
+			eta.setActive(true);
+			eta.setCanPark(getCanPark());
+			eta.setCanHaveCard(false);
+			eta.setLessonHours(Double.valueOf(getLessonHours()));
+			eta.setDepartment(getDepartment());
+			if (person.getTeacher() != null) {
+				eta.setTeacher(person.getTeacher());
+			} else {
+				Teacher teacher = new Teacher(person);
+				eta.setTeacher(teacher);
+			}
+			return eta;
 		}
-	    }
 
-	    ExternalTeacherAuthorization eta = new ExternalTeacherAuthorization();
-	    eta.setAuthorizer(AccessControl.getPerson());
-	    eta.setExecutionSemester(getExecutionSemester());
-	    eta.setProfessionalCategory(getProfessionalCategory());
-	    eta.setRootDomainObject(RootDomainObject.getInstance());
-	    eta.setActive(true);
-	    eta.setCanPark(getCanPark());
-	    eta.setCanHaveCard(false);
-	    eta.setLessonHours(Double.valueOf(getLessonHours()));
-	    eta.setDepartment(getDepartment());
-	    if (person.getTeacher() != null) {
-		eta.setTeacher(person.getTeacher());
-	    } else {
-		Teacher teacher = new Teacher(person);
-		eta.setTeacher(teacher);
-	    }
-	    return eta;
+		public void setLessonHours(Double lessonHours) {
+			this.lessonHours = lessonHours;
+		}
+
+		public Double getLessonHours() {
+			return lessonHours;
+		}
+
+		public void setCanPark(Boolean canPark) {
+			this.canPark = canPark;
+		}
+
+		public Boolean getCanPark() {
+			return canPark;
+		}
+
+		public void setCanHaveCard(Boolean canHaveCard) {
+			this.canHaveCard = canHaveCard;
+		}
+
+		public Boolean getCanHaveCard() {
+			return canHaveCard;
+		}
+
+		public Department getDepartment() {
+			return department;
+		}
+
+		public void setDepartment(Department departments) {
+			this.department = departments;
+		}
 	}
 
-	public void setLessonHours(Double lessonHours) {
-	    this.lessonHours = lessonHours;
+	public static class TeacherAuthorizationsUploadBean implements Serializable {
+
+		private ExecutionSemester executionSemester = ExecutionSemester.readActualExecutionSemester();
+
+		private transient InputStream inputStream;
+
+		private transient String fileContent;
+
+		private String filename;
+
+		public TeacherAuthorizationsUploadBean() {
+		}
+
+		public ExecutionSemester getExecutionSemester() {
+			return executionSemester;
+		}
+
+		public void setExecutionSemester(final ExecutionSemester executionSemester) {
+			this.executionSemester = executionSemester;
+		}
+
+		public InputStream getInputStream() {
+			return inputStream;
+		}
+
+		public void setInputStream(final InputStream inputStream) {
+			this.inputStream = inputStream;
+		}
+
+		public String getFilename() {
+			return filename;
+		}
+
+		public void setFilename(final String filename) {
+			this.filename = filename;
+		}
+
+		public String getFileContent() {
+			if (fileContent == null) {
+				try {
+					fileContent = FileUtils.readFile(new InputStreamReader(inputStream, PropertiesManager.DEFAULT_CHARSET));
+				} catch (final UnsupportedEncodingException e) {
+					throw new Error(e);
+				} catch (final IOException e) {
+					throw new Error(e);
+				}
+			}
+			return fileContent;
+		}
+
+		private Set<TeacherAuthorizationManagementBean> getTeacherAuthorizationManagementBeans(final List<String> messages) {
+			final Set<TeacherAuthorizationManagementBean> result =
+					new HashSet<TeacherAuthorizationManagement.TeacherAuthorizationManagementBean>();
+			int lineCount = 0;
+			for (final String line : getFileContent().split("\n")) {
+				lineCount++;
+				final String tline = line.trim();
+				if (!tline.isEmpty()) {
+					final String splitChar = tline.indexOf(';') > 0 ? ";" : "\t";
+					final String[] parts = tline.split(splitChar);
+
+					if (parts.length != 6) {
+						messages.add(BundleUtil.getStringFromResourceBundle("resources.ScientificCouncilResources",
+								"label.message.invalid.line.format", Integer.toString(lineCount)));
+						continue;
+					}
+
+					final String istUsername = parts[0].trim();
+					final ProfessionalCategory professionalCategory =
+							ProfessionalCategory.find(parts[1].trim(), CategoryType.TEACHER);
+					final String i = parts[2].trim();
+					final Double lessonHours =
+							StringUtils.isNumeric(i.replace(".", " ").replace(',', ' ').replace(" ", "")) ? Double.valueOf(i
+									.replace(',', '.')) : null;
+					final Boolean canPark = Boolean.valueOf("S".equalsIgnoreCase(parts[3].trim()));
+					final Boolean canHaveCard = Boolean.valueOf("S".equalsIgnoreCase(parts[4].trim()));
+					final Department department = Department.find(parts[5].trim());
+
+					if (istUsername == null || istUsername.isEmpty() || User.readUserByUserUId(istUsername) == null) {
+						messages.add(BundleUtil.getStringFromResourceBundle("resources.ScientificCouncilResources",
+								"label.message.istUsername.invalid", Integer.toString(lineCount), parts[0].trim()));
+						continue;
+					}
+
+					if (professionalCategory == null) {
+						messages.add(BundleUtil.getStringFromResourceBundle("resources.ScientificCouncilResources",
+								"label.message.professionalCategory.invalid", Integer.toString(lineCount), parts[1].trim()));
+						continue;
+					}
+
+					if (department == null) {
+						messages.add(BundleUtil.getStringFromResourceBundle("resources.ScientificCouncilResources",
+								"label.message.department.invalid", Integer.toString(lineCount), parts[5].trim()));
+						continue;
+					}
+
+					if (lessonHours == null) {
+						messages.add(BundleUtil.getStringFromResourceBundle("resources.ScientificCouncilResources",
+								"label.message.lessonHours.invalid", Integer.toString(lineCount), parts[2].trim()));
+						continue;
+					}
+
+					final TeacherAuthorizationManagementBean bean = new TeacherAuthorizationManagementBean();
+					bean.setIstUsername(istUsername);
+					bean.setProfessionalCategory(professionalCategory);
+					bean.setLessonHours(lessonHours);
+					bean.setCanPark(canPark);
+					bean.setCanHaveCard(canHaveCard);
+					bean.setDepartment(department);
+					bean.setExecutionSemester(executionSemester);
+					result.add(bean);
+				}
+			}
+			return result;
+		}
+
+		@Service
+		public List<String> create() {
+			final List<String> messages = new ArrayList<String>();
+			for (final TeacherAuthorizationManagementBean bean : getTeacherAuthorizationManagementBeans(messages)) {
+				try {
+					bean.create();
+				} catch (final FenixActionException ex) {
+					messages.add(BundleUtil.getStringFromResourceBundle("resources.ScientificCouncilResources", ex.getMessage(),
+							bean.getIstUsername()));
+				}
+			}
+			return messages;
+		}
+
 	}
 
-	public Double getLessonHours() {
-	    return lessonHours;
+	public ActionForward list(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		ArrayList<ExternalTeacherAuthorization> teacher = new ArrayList<ExternalTeacherAuthorization>();
+
+		for (TeacherAuthorization teacherAuthorization : RootDomainObject.getInstance().getTeacherAuthorization()) {
+			if (teacherAuthorization instanceof ExternalTeacherAuthorization) {
+				teacher.add((ExternalTeacherAuthorization) teacherAuthorization);
+			}
+		}
+
+		request.setAttribute("auths", teacher);
+		return mapping.findForward("listTeacherAuthorization");
 	}
 
-	public void setCanPark(Boolean canPark) {
-	    this.canPark = canPark;
+	public ActionForward pre(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		request.setAttribute("bean", new TeacherAuthorizationManagementBean());
+		return mapping.findForward("createTeacherAuthorization");
 	}
 
-	public Boolean getCanPark() {
-	    return canPark;
+	public ActionForward prepareUpload(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		request.setAttribute("teacherAuthorizationsUploadBean", new TeacherAuthorizationsUploadBean());
+		return mapping.findForward("teacherAuthorizationsUpload");
 	}
 
-	public void setCanHaveCard(Boolean canHaveCard) {
-	    this.canHaveCard = canHaveCard;
+	public ActionForward upload(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		final TeacherAuthorizationsUploadBean teacherAuthorizationsUploadBea = getRenderedObject();
+		final List<String> uploadMessages = teacherAuthorizationsUploadBea.create();
+		request.setAttribute("uploadMessages", uploadMessages);
+		return list(mapping, actionForm, request, response);
 	}
 
-	public Boolean getCanHaveCard() {
-	    return canHaveCard;
-	}
+	public ActionForward create(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		TeacherAuthorizationManagementBean tamb = ((TeacherAuthorizationManagementBean) getRenderedObject("bean"));
 
-	public Department getDepartment() {
-	    return department;
-	}
-
-	public void setDepartment(Department departments) {
-	    this.department = departments;
-	}
-    }
-
-    public static class TeacherAuthorizationsUploadBean implements Serializable {
-
-	private ExecutionSemester executionSemester = ExecutionSemester.readActualExecutionSemester();
-
-	private transient InputStream inputStream;
-
-	private transient String fileContent;
-
-	private String filename;
-
-	public TeacherAuthorizationsUploadBean() {
-	}
-
-	public ExecutionSemester getExecutionSemester() {
-	    return executionSemester;
-	}
-
-	public void setExecutionSemester(final ExecutionSemester executionSemester) {
-	    this.executionSemester = executionSemester;
-	}
-
-	public InputStream getInputStream() {
-	    return inputStream;
-	}
-
-	public void setInputStream(final InputStream inputStream) {
-	    this.inputStream = inputStream;
-	}
-
-	public String getFilename() {
-	    return filename;
-	}
-
-	public void setFilename(final String filename) {
-	    this.filename = filename;
-	}
-
-	public String getFileContent() {
-	    if (fileContent == null) {
 		try {
-		    fileContent = FileUtils.readFile(new InputStreamReader(inputStream, PropertiesManager.DEFAULT_CHARSET));
-		} catch (final UnsupportedEncodingException e) {
-		    throw new Error(e);
-		} catch (final IOException e) {
-		    throw new Error(e);
+			tamb.create();
+		} catch (FenixActionException e) {
+			RenderUtils.invalidateViewState();
+			request.setAttribute("bean", tamb);
+			addActionMessage(request, e.getMessage(), tamb.getIstUsername());
+			return mapping.findForward("createTeacherAuthorization");
 		}
-	    }
-	    return fileContent;
+
+		return list(mapping, actionForm, request, response);
 	}
 
-	private Set<TeacherAuthorizationManagementBean> getTeacherAuthorizationManagementBeans(final List<String> messages) {
-	    final Set<TeacherAuthorizationManagementBean> result = new HashSet<TeacherAuthorizationManagement.TeacherAuthorizationManagementBean>();
-	    int lineCount = 0;
-	    for (final String line : getFileContent().split("\n")) {
-		lineCount++;
-		final String tline = line.trim();
-		if (!tline.isEmpty()) {
-		    final String splitChar = tline.indexOf(';') > 0 ? ";" : "\t";
-		    final String[] parts = tline.split(splitChar);
-
-		    if (parts.length != 6) {
-			messages.add(BundleUtil.getStringFromResourceBundle("resources.ScientificCouncilResources",
-				"label.message.invalid.line.format", Integer.toString(lineCount)));
-			continue;
-		    }
-
-		    final String istUsername = parts[0].trim();
-		    final ProfessionalCategory professionalCategory = ProfessionalCategory.find(parts[1].trim(),
-			    CategoryType.TEACHER);
-		    final String i = parts[2].trim();
-		    final Double lessonHours = StringUtils.isNumeric(i.replace(".", " ").replace(',', ' ').replace(" ", "")) ? Double
-			    .valueOf(i.replace(',', '.')) : null;
-		    final Boolean canPark = Boolean.valueOf("S".equalsIgnoreCase(parts[3].trim()));
-		    final Boolean canHaveCard = Boolean.valueOf("S".equalsIgnoreCase(parts[4].trim()));
-		    final Department department = Department.find(parts[5].trim());
-
-		    if (istUsername == null || istUsername.isEmpty() || User.readUserByUserUId(istUsername) == null) {
-			messages.add(BundleUtil.getStringFromResourceBundle("resources.ScientificCouncilResources",
-				"label.message.istUsername.invalid", Integer.toString(lineCount), parts[0].trim()));
-			continue;
-		    }
-
-		    if (professionalCategory == null) {
-			messages.add(BundleUtil.getStringFromResourceBundle("resources.ScientificCouncilResources",
-				"label.message.professionalCategory.invalid", Integer.toString(lineCount), parts[1].trim()));
-			continue;
-		    }
-
-		    if (department == null) {
-			messages.add(BundleUtil.getStringFromResourceBundle("resources.ScientificCouncilResources",
-				"label.message.department.invalid", Integer.toString(lineCount), parts[5].trim()));
-			continue;
-		    }
-
-		    if (lessonHours == null) {
-			messages.add(BundleUtil.getStringFromResourceBundle("resources.ScientificCouncilResources",
-				"label.message.lessonHours.invalid", Integer.toString(lineCount), parts[2].trim()));
-			continue;
-		    }
-
-		    final TeacherAuthorizationManagementBean bean = new TeacherAuthorizationManagementBean();
-		    bean.setIstUsername(istUsername);
-		    bean.setProfessionalCategory(professionalCategory);
-		    bean.setLessonHours(lessonHours);
-		    bean.setCanPark(canPark);
-		    bean.setCanHaveCard(canHaveCard);
-		    bean.setDepartment(department);
-		    bean.setExecutionSemester(executionSemester);
-		    result.add(bean);
-		}
-	    }
-	    return result;
+	public ActionForward revoke(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		ExternalTeacherAuthorization auth = rootDomainObject.fromExternalId(request.getParameter("oid"));
+		auth.revoke();
+		return list(mapping, actionForm, request, response);
 	}
-
-	@Service
-	public List<String> create() {
-	    final List<String> messages = new ArrayList<String>();
-	    for (final TeacherAuthorizationManagementBean bean : getTeacherAuthorizationManagementBeans(messages)) {
-		try {
-		    bean.create();
-		} catch (final FenixActionException ex) {
-		    messages.add(BundleUtil.getStringFromResourceBundle("resources.ScientificCouncilResources", ex.getMessage(),
-			    bean.getIstUsername()));
-		}
-	    }
-	    return messages;
-	}
-
-    }
-
-    public ActionForward list(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-	ArrayList<ExternalTeacherAuthorization> teacher = new ArrayList<ExternalTeacherAuthorization>();
-
-	for (TeacherAuthorization teacherAuthorization : RootDomainObject.getInstance().getTeacherAuthorization()) {
-	    if (teacherAuthorization instanceof ExternalTeacherAuthorization) {
-		teacher.add((ExternalTeacherAuthorization) teacherAuthorization);
-	    }
-	}
-
-	request.setAttribute("auths", teacher);
-	return mapping.findForward("listTeacherAuthorization");
-    }
-
-    public ActionForward pre(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-	request.setAttribute("bean", new TeacherAuthorizationManagementBean());
-	return mapping.findForward("createTeacherAuthorization");
-    }
-
-    public ActionForward prepareUpload(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-	request.setAttribute("teacherAuthorizationsUploadBean", new TeacherAuthorizationsUploadBean());
-	return mapping.findForward("teacherAuthorizationsUpload");
-    }
-
-    public ActionForward upload(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-	final TeacherAuthorizationsUploadBean teacherAuthorizationsUploadBea = getRenderedObject();
-	final List<String> uploadMessages = teacherAuthorizationsUploadBea.create();
-	request.setAttribute("uploadMessages", uploadMessages);
-	return list(mapping, actionForm, request, response);
-    }
-
-    public ActionForward create(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-	TeacherAuthorizationManagementBean tamb = ((TeacherAuthorizationManagementBean) getRenderedObject("bean"));
-
-	try {
-	    tamb.create();
-	} catch (FenixActionException e) {
-	    RenderUtils.invalidateViewState();
-	    request.setAttribute("bean", tamb);
-	    addActionMessage(request, e.getMessage(), tamb.getIstUsername());
-	    return mapping.findForward("createTeacherAuthorization");
-	}
-
-	return list(mapping, actionForm, request, response);
-    }
-
-    public ActionForward revoke(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-	ExternalTeacherAuthorization auth = rootDomainObject.fromExternalId(request.getParameter("oid"));
-	auth.revoke();
-	return list(mapping, actionForm, request, response);
-    }
 }

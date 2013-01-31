@@ -16,9 +16,9 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class CalculateFirstDayOfLesson extends FenixService {
 
-    @Service
-    public static Calendar run(final Integer lessonId) {
-	final Lesson lesson = rootDomainObject.readLessonByOID(lessonId);
-	return lesson.getPeriod().getStartDate();
-    }
+	@Service
+	public static Calendar run(final Integer lessonId) {
+		final Lesson lesson = rootDomainObject.readLessonByOID(lessonId);
+		return lesson.getPeriod().getStartDate();
+	}
 }

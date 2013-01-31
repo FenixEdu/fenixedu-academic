@@ -20,18 +20,9 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.security.UserView;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
  * @author Leonor Almeida
@@ -40,32 +31,33 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
 @Mapping(module = "gep", path = "/readCourseInformation", scope = "request")
 @Forwards(value = { @Forward(name = "show", path = "/gep/courses/viewCourseInformation.jsp") })
 public class ReadCourseInformationAction extends FenixAction {
-    /*
-     * (non-Javadoc)
-     * 
-     * @seeorg.apache.struts.action.Action#execute(org.apache.struts.action.
-     * ActionMapping, org.apache.struts.action.ActionForm,
-     * javax.servlet.http.HttpServletRequest,
-     * javax.servlet.http.HttpServletResponse)
-     */
-    public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-	IUserView userView = UserView.getUser();
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @seeorg.apache.struts.action.Action#execute(org.apache.struts.action.
+	 * ActionMapping, org.apache.struts.action.ActionForm,
+	 * javax.servlet.http.HttpServletRequest,
+	 * javax.servlet.http.HttpServletResponse)
+	 */
+	@Override
+	public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		IUserView userView = UserView.getUser();
 
-	Object[] args1 = { new Integer(request.getParameter("executionCourseId")) };
-	TeacherAdministrationSiteView teacherAdministrationSiteView = (TeacherAdministrationSiteView) ServiceUtils
-		.executeService("ReadCourseInformation", args1);
-	InfoSiteCourseInformation infoSiteCourseInformation = (InfoSiteCourseInformation) teacherAdministrationSiteView
-		.getComponent();
-	request.setAttribute("infoSiteCourseInformation", infoSiteCourseInformation);
+		Object[] args1 = { new Integer(request.getParameter("executionCourseId")) };
+		TeacherAdministrationSiteView teacherAdministrationSiteView =
+				(TeacherAdministrationSiteView) ServiceUtils.executeService("ReadCourseInformation", args1);
+		InfoSiteCourseInformation infoSiteCourseInformation =
+				(InfoSiteCourseInformation) teacherAdministrationSiteView.getComponent();
+		request.setAttribute("infoSiteCourseInformation", infoSiteCourseInformation);
 
-	if (request.getParameter("executionDegreeId") != null) {
+		if (request.getParameter("executionDegreeId") != null) {
 
-	    InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) ReadExecutionDegreeByOID.run(new Integer(request
-		    .getParameter("executionDegreeId")));
-	    request.setAttribute("infoExecutionDegree", infoExecutionDegree);
+			InfoExecutionDegree infoExecutionDegree =
+					ReadExecutionDegreeByOID.run(new Integer(request.getParameter("executionDegreeId")));
+			request.setAttribute("infoExecutionDegree", infoExecutionDegree);
+		}
+
+		return mapping.findForward("show");
 	}
-
-	return mapping.findForward("show");
-    }
 }

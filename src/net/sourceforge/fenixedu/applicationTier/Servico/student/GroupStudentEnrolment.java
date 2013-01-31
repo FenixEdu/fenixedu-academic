@@ -32,65 +32,65 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class GroupStudentEnrolment extends FenixService {
 
-    private static final MessageResources messages = MessageResources.getMessageResources("resources/GlobalResources");
+	private static final MessageResources messages = MessageResources.getMessageResources("resources/GlobalResources");
 
-    @Checked("RolePredicates.STUDENT_PREDICATE")
-    @Service
-    public static Boolean run(Integer studentGroupCode, String username) throws FenixServiceException {
+	@Checked("RolePredicates.STUDENT_PREDICATE")
+	@Service
+	public static Boolean run(Integer studentGroupCode, String username) throws FenixServiceException {
 
-	final StudentGroup studentGroup = rootDomainObject.readStudentGroupByOID(studentGroupCode);
-	if (studentGroup == null) {
-	    throw new InvalidArgumentsServiceException();
+		final StudentGroup studentGroup = rootDomainObject.readStudentGroupByOID(studentGroupCode);
+		if (studentGroup == null) {
+			throw new InvalidArgumentsServiceException();
+		}
+		final Registration registration = Registration.readByUsername(username);
+		if (registration == null) {
+			throw new InvalidArgumentsServiceException();
+		}
+
+		final Grouping grouping = studentGroup.getGrouping();
+		final Attends studentAttend = grouping.getStudentAttend(registration);
+		if (studentAttend == null) {
+			throw new NotAuthorizedException();
+		}
+		if (studentGroup.getAttends().contains(studentAttend)) {
+			throw new InvalidSituationServiceException();
+		}
+
+		final IGroupEnrolmentStrategyFactory enrolmentGroupPolicyStrategyFactory = GroupEnrolmentStrategyFactory.getInstance();
+		final IGroupEnrolmentStrategy strategy = enrolmentGroupPolicyStrategyFactory.getGroupEnrolmentStrategyInstance(grouping);
+
+		boolean result = strategy.checkPossibleToEnrolInExistingGroup(grouping, studentGroup);
+		if (!result) {
+			throw new InvalidArgumentsServiceException();
+		}
+
+		checkIfStudentIsNotEnrolledInOtherGroups(grouping.getStudentGroups(), studentGroup, studentAttend);
+
+		studentGroup.addAttends(studentAttend);
+
+		informStudents(studentGroup, registration, grouping);
+
+		return Boolean.TRUE;
 	}
-	final Registration registration = Registration.readByUsername(username);
-	if (registration == null) {
-	    throw new InvalidArgumentsServiceException();
+
+	private static void informStudents(final StudentGroup studentGroup, final Registration registration, final Grouping grouping) {
+
+		final StringBuilder executionCourseNames = new StringBuilder();
+		for (final ExecutionCourse executionCourse : grouping.getExecutionCourses()) {
+			if (executionCourseNames.length() > 0) {
+				executionCourseNames.append(", ");
+			}
+			executionCourseNames.append(executionCourse.getNome());
+		}
 	}
 
-	final Grouping grouping = studentGroup.getGrouping();
-	final Attends studentAttend = grouping.getStudentAttend(registration);
-	if (studentAttend == null) {
-	    throw new NotAuthorizedException();
+	private static void checkIfStudentIsNotEnrolledInOtherGroups(final List<StudentGroup> studentGroups,
+			final StudentGroup studentGroupEnrolled, final Attends studentAttend) throws InvalidSituationServiceException {
+
+		for (final StudentGroup studentGroup : studentGroups) {
+			if (studentGroup != studentGroupEnrolled && studentGroup.getAttends().contains(studentAttend)) {
+				throw new InvalidSituationServiceException();
+			}
+		}
 	}
-	if (studentGroup.getAttends().contains(studentAttend)) {
-	    throw new InvalidSituationServiceException();
-	}
-
-	final IGroupEnrolmentStrategyFactory enrolmentGroupPolicyStrategyFactory = GroupEnrolmentStrategyFactory.getInstance();
-	final IGroupEnrolmentStrategy strategy = enrolmentGroupPolicyStrategyFactory.getGroupEnrolmentStrategyInstance(grouping);
-
-	boolean result = strategy.checkPossibleToEnrolInExistingGroup(grouping, studentGroup);
-	if (!result) {
-	    throw new InvalidArgumentsServiceException();
-	}
-
-	checkIfStudentIsNotEnrolledInOtherGroups(grouping.getStudentGroups(), studentGroup, studentAttend);
-
-	studentGroup.addAttends(studentAttend);
-
-	informStudents(studentGroup, registration, grouping);
-
-	return Boolean.TRUE;
-    }
-
-    private static void informStudents(final StudentGroup studentGroup, final Registration registration, final Grouping grouping) {
-
-	final StringBuilder executionCourseNames = new StringBuilder();
-	for (final ExecutionCourse executionCourse : grouping.getExecutionCourses()) {
-	    if (executionCourseNames.length() > 0) {
-		executionCourseNames.append(", ");
-	    }
-	    executionCourseNames.append(executionCourse.getNome());
-	}
-    }
-
-    private static void checkIfStudentIsNotEnrolledInOtherGroups(final List<StudentGroup> studentGroups,
-	    final StudentGroup studentGroupEnrolled, final Attends studentAttend) throws InvalidSituationServiceException {
-
-	for (final StudentGroup studentGroup : studentGroups) {
-	    if (studentGroup != studentGroupEnrolled && studentGroup.getAttends().contains(studentAttend)) {
-		throw new InvalidSituationServiceException();
-	    }
-	}
-    }
 }

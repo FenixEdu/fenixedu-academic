@@ -11,17 +11,19 @@ import net.sourceforge.fenixedu.domain.Guide;
  * 
  */
 public class InfoGuideWithPersonAndExecutionDegreeAndContributorAndExecutionYear extends
-	InfoGuideWithPersonAndExecutionDegreeAndContributor {
+		InfoGuideWithPersonAndExecutionDegreeAndContributor {
 
-    public void copyFromDomain(Guide guide) {
-	super.copyFromDomain(guide);
-    }
-
-    public static InfoGuide newInfoFromDomain(Guide guide) {
-	InfoGuideWithPersonAndExecutionDegreeAndContributorAndExecutionYear infoGuide = new InfoGuideWithPersonAndExecutionDegreeAndContributorAndExecutionYear();
-	if (guide != null) {
-	    infoGuide.copyFromDomain(guide);
+	@Override
+	public void copyFromDomain(Guide guide) {
+		super.copyFromDomain(guide);
 	}
-	return infoGuide;
-    }
+
+	public static InfoGuide newInfoFromDomain(Guide guide) {
+		InfoGuideWithPersonAndExecutionDegreeAndContributorAndExecutionYear infoGuide =
+				new InfoGuideWithPersonAndExecutionDegreeAndContributorAndExecutionYear();
+		if (guide != null) {
+			infoGuide.copyFromDomain(guide);
+		}
+		return infoGuide;
+	}
 }

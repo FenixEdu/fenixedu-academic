@@ -20,37 +20,37 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class ManageTeacherServiceCommentsDispatchAction extends FenixDispatchAction {
 
-    public ActionForward editTeacherServiceComment(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws NumberFormatException, FenixFilterException, FenixServiceException {
+	public ActionForward editTeacherServiceComment(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws NumberFormatException, FenixFilterException, FenixServiceException {
 
-	TeacherServiceComment teacherServiceComment = AbstractDomainObject.fromExternalId((String) getFromRequest(request,
-		"teacherServiceCommentOid"));
-	if (teacherServiceComment != null) {
-	    request.setAttribute("teacherServiceComment", teacherServiceComment);
-	} else {
-	    Teacher teacher = AbstractDomainObject.fromExternalId((String) getFromRequest(request, "teacherOid"));
-	    ExecutionYear executionYear = AbstractDomainObject
-		    .fromExternalId((String) getFromRequest(request, "executionYearOid"));
+		TeacherServiceComment teacherServiceComment =
+				AbstractDomainObject.fromExternalId((String) getFromRequest(request, "teacherServiceCommentOid"));
+		if (teacherServiceComment != null) {
+			request.setAttribute("teacherServiceComment", teacherServiceComment);
+		} else {
+			Teacher teacher = AbstractDomainObject.fromExternalId((String) getFromRequest(request, "teacherOid"));
+			ExecutionYear executionYear =
+					AbstractDomainObject.fromExternalId((String) getFromRequest(request, "executionYearOid"));
 
-	    ExecutionSemester firstExecutionPeriod = executionYear.getFirstExecutionPeriod();
-	    TeacherService teacherService = TeacherService.getTeacherService(teacher, firstExecutionPeriod);
+			ExecutionSemester firstExecutionPeriod = executionYear.getFirstExecutionPeriod();
+			TeacherService teacherService = TeacherService.getTeacherService(teacher, firstExecutionPeriod);
 
-	    request.setAttribute("teacherService", teacherService);
+			request.setAttribute("teacherService", teacherService);
+		}
+		return mapping.findForward("editTeacherServiceComment");
 	}
-	return mapping.findForward("editTeacherServiceComment");
-    }
 
-    public ActionForward deleteTeacherServiceComment(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws NumberFormatException, FenixFilterException, FenixServiceException {
+	public ActionForward deleteTeacherServiceComment(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws NumberFormatException, FenixFilterException, FenixServiceException {
 
-	TeacherServiceComment teacherServiceComment = AbstractDomainObject.fromExternalId((String) getFromRequest(request,
-		"teacherServiceCommentOid"));
-	request.setAttribute("teacherOid", teacherServiceComment.getTeacherService().getTeacher().getExternalId());
-	request.setAttribute("executionYearOid", teacherServiceComment.getTeacherService().getExecutionPeriod()
-		.getExecutionYear().getExternalId());
-	if (teacherServiceComment != null) {
-	    teacherServiceComment.delete();
+		TeacherServiceComment teacherServiceComment =
+				AbstractDomainObject.fromExternalId((String) getFromRequest(request, "teacherServiceCommentOid"));
+		request.setAttribute("teacherOid", teacherServiceComment.getTeacherService().getTeacher().getExternalId());
+		request.setAttribute("executionYearOid", teacherServiceComment.getTeacherService().getExecutionPeriod()
+				.getExecutionYear().getExternalId());
+		if (teacherServiceComment != null) {
+			teacherServiceComment.delete();
+		}
+		return mapping.findForward("viewAnnualTeachingCredits");
 	}
-	return mapping.findForward("viewAnnualTeachingCredits");
-    }
 }

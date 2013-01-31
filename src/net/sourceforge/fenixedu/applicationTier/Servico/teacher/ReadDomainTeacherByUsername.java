@@ -15,23 +15,25 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadDomainTeacherByUsername extends FenixService {
 
-    @Service
-    public static Teacher run(final String username) {
-	List<Role> roles = rootDomainObject.getRoles();
-	Role teacherRole = (Role) CollectionUtils.find(roles, new Predicate() {
-	    public boolean evaluate(Object object) {
-		Role role = (Role) object;
-		return role.getRoleType().equals(RoleType.TEACHER);
-	    }
-	});
+	@Service
+	public static Teacher run(final String username) {
+		List<Role> roles = rootDomainObject.getRoles();
+		Role teacherRole = (Role) CollectionUtils.find(roles, new Predicate() {
+			@Override
+			public boolean evaluate(Object object) {
+				Role role = (Role) object;
+				return role.getRoleType().equals(RoleType.TEACHER);
+			}
+		});
 
-	Person person = (Person) CollectionUtils.find(teacherRole.getAssociatedPersons(), new Predicate() {
-	    public boolean evaluate(Object object) {
-		Person tempPerson = (Person) object;
-		return tempPerson.hasUsername(username);
-	    }
-	});
-	return person.getTeacher();
-    }
+		Person person = (Person) CollectionUtils.find(teacherRole.getAssociatedPersons(), new Predicate() {
+			@Override
+			public boolean evaluate(Object object) {
+				Person tempPerson = (Person) object;
+				return tempPerson.hasUsername(username);
+			}
+		});
+		return person.getTeacher();
+	}
 
 }

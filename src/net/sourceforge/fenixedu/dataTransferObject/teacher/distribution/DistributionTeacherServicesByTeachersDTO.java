@@ -21,368 +21,371 @@ import org.joda.time.format.PeriodFormatterBuilder;
  */
 public class DistributionTeacherServicesByTeachersDTO extends DataTranferObject {
 
-    public class ExecutionCourseTeacherServiceDTO {
-	private Integer executionCourseIdInternal;
+	public class ExecutionCourseTeacherServiceDTO {
+		private Integer executionCourseIdInternal;
 
-	private String executionCourseName;
+		private String executionCourseName;
 
-	private Integer hoursSpentByTeacher;
+		private Integer hoursSpentByTeacher;
 
-	private Duration timeSpentByTeacher;
+		private Duration timeSpentByTeacher;
 
-	private Map<Integer, String> courseDegreesList;
+		private Map<Integer, String> courseDegreesList;
 
-	private String executionPeriodName;
+		private String executionPeriodName;
 
-	private Map<Integer, Set<String>> executionYearsSet;
+		private Map<Integer, Set<String>> executionYearsSet;
 
-	public ExecutionCourseTeacherServiceDTO(Integer idInternal, String name, Integer hours, Duration timeSpentByTeacher,
-		Map<Integer, String> executionCourseDegreesNameMap, Map<Integer, Set<String>> executionYearsMap, String periodName) {
-	    super();
+		public ExecutionCourseTeacherServiceDTO(Integer idInternal, String name, Integer hours, Duration timeSpentByTeacher,
+				Map<Integer, String> executionCourseDegreesNameMap, Map<Integer, Set<String>> executionYearsMap, String periodName) {
+			super();
 
-	    this.executionCourseIdInternal = idInternal;
-	    this.hoursSpentByTeacher = hours;
-	    this.timeSpentByTeacher = timeSpentByTeacher;
-	    this.executionCourseName = name;
-	    this.executionYearsSet = executionYearsMap;
-	    this.executionPeriodName = periodName;
-	    this.courseDegreesList = executionCourseDegreesNameMap;
-	}
-
-	public Integer getExecutionCourseIdInternal() {
-	    return executionCourseIdInternal;
-	}
-
-	public String getExecutionCourseName() {
-	    return executionCourseName;
-	}
-
-	public Integer getHoursSpentByTeacher() {
-	    return hoursSpentByTeacher;
-	}
-
-	public Map<Integer, String> getCourseDegreesList() {
-	    return courseDegreesList;
-	}
-
-	public String getExecutionPeriodName() {
-	    return executionPeriodName;
-	}
-
-	public Duration getTimeSpentByTeacher() {
-	    return timeSpentByTeacher;
-	}
-
-	public String getDescription() {
-	    StringBuilder finalString = new StringBuilder(getExecutionCourseName());
-
-	    finalString.append("(");
-
-	    Set<Integer> degreeIdSet = courseDegreesList.keySet();
-
-	    Iterator<Integer> iteratorDegreeIdSet = degreeIdSet.iterator();
-
-	    if (iteratorDegreeIdSet.hasNext()) {
-		Integer firstDegreeIdInternal = iteratorDegreeIdSet.next();
-
-		finalString.append(courseDegreesList.get(firstDegreeIdInternal));
-		finalString.append(" (");
-
-		Set<String> firstCurricularYearsSet = executionYearsSet.get(firstDegreeIdInternal);
-
-		Iterator<String> iteratorFirstCurricularYearsSet = firstCurricularYearsSet.iterator();
-
-		if (iteratorFirstCurricularYearsSet.hasNext()) {
-		    finalString.append(iteratorFirstCurricularYearsSet.next());
-
-		    while (iteratorFirstCurricularYearsSet.hasNext()) {
-			finalString.append(", ");
-			finalString.append(iteratorFirstCurricularYearsSet.next());
-		    }
-
-		    finalString.append("ºano");
+			this.executionCourseIdInternal = idInternal;
+			this.hoursSpentByTeacher = hours;
+			this.timeSpentByTeacher = timeSpentByTeacher;
+			this.executionCourseName = name;
+			this.executionYearsSet = executionYearsMap;
+			this.executionPeriodName = periodName;
+			this.courseDegreesList = executionCourseDegreesNameMap;
 		}
 
-		finalString.append(")");
+		public Integer getExecutionCourseIdInternal() {
+			return executionCourseIdInternal;
+		}
 
-		while (iteratorDegreeIdSet.hasNext()) {
-		    finalString.append(", ");
+		public String getExecutionCourseName() {
+			return executionCourseName;
+		}
 
-		    Integer degreeIdInternal = iteratorDegreeIdSet.next();
+		public Integer getHoursSpentByTeacher() {
+			return hoursSpentByTeacher;
+		}
 
-		    finalString.append(courseDegreesList.get(degreeIdInternal));
-		    finalString.append(" (");
+		public Map<Integer, String> getCourseDegreesList() {
+			return courseDegreesList;
+		}
 
-		    Set<String> curricularYearsSet = executionYearsSet.get(degreeIdInternal);
+		public String getExecutionPeriodName() {
+			return executionPeriodName;
+		}
 
-		    Iterator<String> iteratorCurricularYearsSet = curricularYearsSet.iterator();
+		public Duration getTimeSpentByTeacher() {
+			return timeSpentByTeacher;
+		}
 
-		    if (iteratorCurricularYearsSet.hasNext()) {
-			finalString.append(iteratorCurricularYearsSet.next());
+		public String getDescription() {
+			StringBuilder finalString = new StringBuilder(getExecutionCourseName());
 
-			while (iteratorCurricularYearsSet.hasNext()) {
-			    finalString.append(", ");
-			    finalString.append(iteratorCurricularYearsSet.next());
+			finalString.append("(");
+
+			Set<Integer> degreeIdSet = courseDegreesList.keySet();
+
+			Iterator<Integer> iteratorDegreeIdSet = degreeIdSet.iterator();
+
+			if (iteratorDegreeIdSet.hasNext()) {
+				Integer firstDegreeIdInternal = iteratorDegreeIdSet.next();
+
+				finalString.append(courseDegreesList.get(firstDegreeIdInternal));
+				finalString.append(" (");
+
+				Set<String> firstCurricularYearsSet = executionYearsSet.get(firstDegreeIdInternal);
+
+				Iterator<String> iteratorFirstCurricularYearsSet = firstCurricularYearsSet.iterator();
+
+				if (iteratorFirstCurricularYearsSet.hasNext()) {
+					finalString.append(iteratorFirstCurricularYearsSet.next());
+
+					while (iteratorFirstCurricularYearsSet.hasNext()) {
+						finalString.append(", ");
+						finalString.append(iteratorFirstCurricularYearsSet.next());
+					}
+
+					finalString.append("ºano");
+				}
+
+				finalString.append(")");
+
+				while (iteratorDegreeIdSet.hasNext()) {
+					finalString.append(", ");
+
+					Integer degreeIdInternal = iteratorDegreeIdSet.next();
+
+					finalString.append(courseDegreesList.get(degreeIdInternal));
+					finalString.append(" (");
+
+					Set<String> curricularYearsSet = executionYearsSet.get(degreeIdInternal);
+
+					Iterator<String> iteratorCurricularYearsSet = curricularYearsSet.iterator();
+
+					if (iteratorCurricularYearsSet.hasNext()) {
+						finalString.append(iteratorCurricularYearsSet.next());
+
+						while (iteratorCurricularYearsSet.hasNext()) {
+							finalString.append(", ");
+							finalString.append(iteratorCurricularYearsSet.next());
+						}
+
+						finalString.append("ºano");
+					}
+					finalString.append(")");
+
+				}
+
+				finalString.append(")");
 			}
 
-			finalString.append("ºano");
-		    }
-		    finalString.append(")");
-
+			finalString.append("/");
+			finalString.append("(");
+			finalString.append(executionPeriodName);
+			finalString.append(")");
+			finalString.append(" - ");
+			PeriodFormatter periodFormatter =
+					new PeriodFormatterBuilder().printZeroAlways().minimumPrintedDigits(2).appendHours().appendSuffix(":")
+							.appendMinutes().toFormatter();
+			finalString.append(periodFormatter.print(getTimeSpentByTeacher().toPeriod()));
+			return finalString.toString();
 		}
 
-		finalString.append(")");
-	    }
-
-	    finalString.append("/");
-	    finalString.append("(");
-	    finalString.append(executionPeriodName);
-	    finalString.append(")");
-	    finalString.append(" - ");
-	    PeriodFormatter periodFormatter = new PeriodFormatterBuilder().printZeroAlways().minimumPrintedDigits(2)
-		    .appendHours().appendSuffix(":").appendMinutes().toFormatter();
-	    finalString.append(periodFormatter.print(getTimeSpentByTeacher().toPeriod()));
-	    return finalString.toString();
 	}
 
-    }
+	public class TeacherCreditsInfoDTO {
+		private Set<PersonContractSituation> exemptionTypes;
 
-    public class TeacherCreditsInfoDTO {
-	private Set<PersonContractSituation> exemptionTypes;
+		private String functionName;
 
-	private String functionName;
+		private Double credits;
 
-	private Double credits;
+		TeacherCreditsInfoDTO(Set<PersonContractSituation> exemptionTypes, Double credits) {
+			this.exemptionTypes = exemptionTypes;
+			this.credits = credits;
+		}
 
-	TeacherCreditsInfoDTO(Set<PersonContractSituation> exemptionTypes, Double credits) {
-	    this.exemptionTypes = exemptionTypes;
-	    this.credits = credits;
+		TeacherCreditsInfoDTO(String functionName, Double credits) {
+			this.functionName = functionName;
+			this.credits = credits;
+		}
+
+		public Double getCredits() {
+			return credits;
+		}
+
+		public Set<PersonContractSituation> getExemptionTypes() {
+			return exemptionTypes;
+		}
+
+		public String getFunctionName() {
+			return functionName;
+		}
 	}
 
-	TeacherCreditsInfoDTO(String functionName, Double credits) {
-	    this.functionName = functionName;
-	    this.credits = credits;
-	}
+	public class TeacherDistributionServiceEntryDTO implements Comparable {
+		private Integer teacherIdInternal;
 
-	public Double getCredits() {
-	    return credits;
-	}
+		private String teacherId;
 
-	public Set<PersonContractSituation> getExemptionTypes() {
-	    return exemptionTypes;
-	}
+		private String teacherCategory;
 
-	public String getFunctionName() {
-	    return functionName;
-	}
-    }
+		private String teacherName;
 
-    public class TeacherDistributionServiceEntryDTO implements Comparable {
-	private Integer teacherIdInternal;
+		private Double teacherRequiredHours;
 
-	private String teacherId;
+		private Double teacherAccumulatedCredits;
 
-	private String teacherCategory;
+		List<ExecutionCourseTeacherServiceDTO> executionCourseTeacherServiceList;
 
-	private String teacherName;
+		List<TeacherCreditsInfoDTO> managementFunctionList;
 
-	private Double teacherRequiredHours;
+		List<TeacherCreditsInfoDTO> exemptionSituationList;
 
-	private Double teacherAccumulatedCredits;
+		public TeacherDistributionServiceEntryDTO(Integer internal, String teacherId, String category, String name, Double hours,
+				Double accumulatedCredits) {
+			this.teacherId = teacherId;
+			teacherCategory = category;
+			teacherIdInternal = internal;
+			teacherName = name;
+			teacherRequiredHours = hours;
+			teacherAccumulatedCredits = accumulatedCredits;
 
-	List<ExecutionCourseTeacherServiceDTO> executionCourseTeacherServiceList;
+			executionCourseTeacherServiceList = new ArrayList<ExecutionCourseTeacherServiceDTO>();
 
-	List<TeacherCreditsInfoDTO> managementFunctionList;
+			managementFunctionList = new ArrayList<TeacherCreditsInfoDTO>();
 
-	List<TeacherCreditsInfoDTO> exemptionSituationList;
+			exemptionSituationList = new ArrayList<TeacherCreditsInfoDTO>();
+		}
 
-	public TeacherDistributionServiceEntryDTO(Integer internal, String teacherId, String category, String name, Double hours,
-		Double accumulatedCredits) {
-	    this.teacherId = teacherId;
-	    teacherCategory = category;
-	    teacherIdInternal = internal;
-	    teacherName = name;
-	    teacherRequiredHours = hours;
-	    teacherAccumulatedCredits = accumulatedCredits;
+		public List<ExecutionCourseTeacherServiceDTO> getExecutionCourseTeacherServiceList() {
+			return executionCourseTeacherServiceList;
+		}
 
-	    executionCourseTeacherServiceList = new ArrayList<ExecutionCourseTeacherServiceDTO>();
+		public String getTeacherCategory() {
+			return teacherCategory;
+		}
 
-	    managementFunctionList = new ArrayList<TeacherCreditsInfoDTO>();
+		public Integer getTeacherIdInternal() {
+			return teacherIdInternal;
+		}
 
-	    exemptionSituationList = new ArrayList<TeacherCreditsInfoDTO>();
-	}
+		public String getTeacherName() {
+			return teacherName;
+		}
 
-	public List<ExecutionCourseTeacherServiceDTO> getExecutionCourseTeacherServiceList() {
-	    return executionCourseTeacherServiceList;
-	}
+		public Double getTeacherRequiredHours() {
+			return teacherRequiredHours;
+		}
 
-	public String getTeacherCategory() {
-	    return teacherCategory;
-	}
+		public Double getTeacherSpentCredits() {
+			double credits = 0d;
 
-	public Integer getTeacherIdInternal() {
-	    return teacherIdInternal;
-	}
+			for (TeacherCreditsInfoDTO managementCredits : managementFunctionList) {
+				credits += managementCredits.getCredits();
+			}
+			for (TeacherCreditsInfoDTO exemptionCredits : exemptionSituationList) {
+				credits += exemptionCredits.getCredits();
+			}
 
-	public String getTeacherName() {
-	    return teacherName;
-	}
+			return credits;
+		}
 
-	public Double getTeacherRequiredHours() {
-	    return teacherRequiredHours;
-	}
+		public void addExecutionCourse(ExecutionCourseTeacherServiceDTO executionCourse) {
+			executionCourseTeacherServiceList.add(executionCourse);
+		}
 
-	public Double getTeacherSpentCredits() {
-	    double credits = 0d;
+		public String getTeacherId() {
+			return teacherId;
+		}
 
-	    for (TeacherCreditsInfoDTO managementCredits : managementFunctionList) {
-		credits += managementCredits.getCredits();
-	    }
-	    for (TeacherCreditsInfoDTO exemptionCredits : exemptionSituationList) {
-		credits += exemptionCredits.getCredits();
-	    }
+		private String getFormattedValue(Double value) {
+			StringBuilder sb = new StringBuilder();
+			Formatter formatter = new Formatter(sb);
 
-	    return credits;
-	}
+			formatter.format("%.1f", value);
+			return sb.toString();
+		}
 
-	public void addExecutionCourse(ExecutionCourseTeacherServiceDTO executionCourse) {
-	    executionCourseTeacherServiceList.add(executionCourse);
-	}
+		public String getFormattedTeacherSpentCredits() {
 
-	public String getTeacherId() {
-	    return teacherId;
-	}
+			return getFormattedValue(getTeacherSpentCredits());
+		}
 
-	private String getFormattedValue(Double value) {
-	    StringBuilder sb = new StringBuilder();
-	    Formatter formatter = new Formatter(sb);
+		public String getFormattedTeacherAccumulatedCredits() {
 
-	    formatter.format("%.1f", value);
-	    return sb.toString();
-	}
+			return getFormattedValue(getAccumulatedCredits());
+		}
 
-	public String getFormattedTeacherSpentCredits() {
+		public Integer getTotalLecturedHours() {
+			int totalHours = 0;
 
-	    return getFormattedValue(getTeacherSpentCredits());
-	}
+			for (ExecutionCourseTeacherServiceDTO executionCourse : executionCourseTeacherServiceList) {
+				totalHours += executionCourse.getHoursSpentByTeacher();
+			}
 
-	public String getFormattedTeacherAccumulatedCredits() {
+			return totalHours;
+		}
 
-	    return getFormattedValue(getAccumulatedCredits());
-	}
+		public Integer getAvailability() {
+			double availability = getTeacherRequiredHours() - getTotalLecturedHours() - getTeacherSpentCredits();
 
-	public Integer getTotalLecturedHours() {
-	    int totalHours = 0;
+			return new Double(StrictMath.ceil(StrictMath.abs(availability)) * StrictMath.signum(availability)).intValue();
+		}
 
-	    for (ExecutionCourseTeacherServiceDTO executionCourse : executionCourseTeacherServiceList) {
-		totalHours += executionCourse.getHoursSpentByTeacher();
-	    }
+		public Double getAccumulatedCredits() {
+			return teacherAccumulatedCredits;
+		}
 
-	    return totalHours;
-	}
+		@Override
+		public int compareTo(Object obj) {
+			if (obj instanceof TeacherDistributionServiceEntryDTO) {
+				TeacherDistributionServiceEntryDTO teacher1 = (TeacherDistributionServiceEntryDTO) obj;
+				if (this.getTeacherId() != null) {
+					return this.getTeacherId().compareTo(teacher1.getTeacherId());
+				} else {
+					if (this.getTeacherId().equals(teacher1.getTeacherId())) {
+						return 0;
+					} else {
+						return 1;
+					}
 
-	public Integer getAvailability() {
-	    double availability = getTeacherRequiredHours() - getTotalLecturedHours() - getTeacherSpentCredits();
-
-	    return new Double(StrictMath.ceil(StrictMath.abs(availability)) * StrictMath.signum(availability)).intValue();
-	}
-
-	public Double getAccumulatedCredits() {
-	    return teacherAccumulatedCredits;
-	}
-
-	public int compareTo(Object obj) {
-	    if (obj instanceof TeacherDistributionServiceEntryDTO) {
-		TeacherDistributionServiceEntryDTO teacher1 = (TeacherDistributionServiceEntryDTO) obj;
-		if (this.getTeacherId() != null) {
-		    return this.getTeacherId().compareTo(teacher1.getTeacherId());
-		} else {
-		    if (this.getTeacherId().equals(teacher1.getTeacherId())) {
+				}
+			}
 			return 0;
-		    } else {
-			return 1;
-		    }
-
 		}
-	    }
-	    return 0;
+
+		public void setTeacherRequiredHours(Double teacherRequiredHours) {
+			this.teacherRequiredHours = teacherRequiredHours;
+		}
+
+		public List<TeacherCreditsInfoDTO> getManagementFunctionList() {
+			return managementFunctionList;
+		}
+
+		public void addToManagementFunction(String function, Double credits) {
+			managementFunctionList.add(new TeacherCreditsInfoDTO(function, credits));
+		}
+
+		public void addToExemptionSituation(Set<PersonContractSituation> exemptionType, Double credits) {
+			exemptionSituationList.add(new TeacherCreditsInfoDTO(exemptionType, credits));
+		}
+
+		public List<TeacherCreditsInfoDTO> getExemptionSituationList() {
+			return exemptionSituationList;
+		}
 	}
 
-	public void setTeacherRequiredHours(Double teacherRequiredHours) {
-	    this.teacherRequiredHours = teacherRequiredHours;
+	private Map<Integer, TeacherDistributionServiceEntryDTO> teachersMap;
+
+	public DistributionTeacherServicesByTeachersDTO() {
+		teachersMap = new HashMap<Integer, TeacherDistributionServiceEntryDTO>();
 	}
 
-	public List<TeacherCreditsInfoDTO> getManagementFunctionList() {
-	    return managementFunctionList;
+	public void addTeacher(Integer key, String teacherId, String category, String name, Double hours, Double accumulatedCredits) {
+		TeacherDistributionServiceEntryDTO t =
+				new TeacherDistributionServiceEntryDTO(key, teacherId, category, name, hours, accumulatedCredits);
+
+		if (!teachersMap.containsKey(key)) {
+			teachersMap.put(key, t);
+		}
 	}
 
-	public void addToManagementFunction(String function, Double credits) {
-	    managementFunctionList.add(new TeacherCreditsInfoDTO(function, credits));
+	public void addExecutionCourseToTeacher(Integer keyTeacher, Integer executionCourseIdInternal, String executionCourseName,
+			Integer hours, Duration timeSpentByTeacher, Map<Integer, String> executionCourseDegreesNameSet,
+			Map<Integer, Set<String>> curricularYearsSet, String periodName) {
+		ExecutionCourseTeacherServiceDTO executionCourse =
+				new ExecutionCourseTeacherServiceDTO(executionCourseIdInternal, executionCourseName, hours, timeSpentByTeacher,
+						executionCourseDegreesNameSet, curricularYearsSet, periodName);
+
+		teachersMap.get(keyTeacher).addExecutionCourse(executionCourse);
+
 	}
 
-	public void addToExemptionSituation(Set<PersonContractSituation> exemptionType, Double credits) {
-	    exemptionSituationList.add(new TeacherCreditsInfoDTO(exemptionType, credits));
+	public void addHoursToTeacher(Integer keyTeacher, double hours) {
+		TeacherDistributionServiceEntryDTO teacher = teachersMap.get(keyTeacher);
+
+		if (teacher != null) {
+			teacher.setTeacherRequiredHours(teacher.getTeacherRequiredHours() + hours);
+		}
 	}
 
-	public List<TeacherCreditsInfoDTO> getExemptionSituationList() {
-	    return exemptionSituationList;
+	public boolean isTeacherPresent(Integer keyTeacher) {
+		return teachersMap.containsKey((keyTeacher));
 	}
-    }
 
-    private Map<Integer, TeacherDistributionServiceEntryDTO> teachersMap;
-
-    public DistributionTeacherServicesByTeachersDTO() {
-	teachersMap = new HashMap<Integer, TeacherDistributionServiceEntryDTO>();
-    }
-
-    public void addTeacher(Integer key, String teacherId, String category, String name, Double hours, Double accumulatedCredits) {
-	TeacherDistributionServiceEntryDTO t = new TeacherDistributionServiceEntryDTO(key, teacherId, category, name, hours,
-		accumulatedCredits);
-
-	if (!teachersMap.containsKey(key)) {
-	    teachersMap.put(key, t);
+	public Map<Integer, TeacherDistributionServiceEntryDTO> getTeachersMap() {
+		return teachersMap;
 	}
-    }
 
-    public void addExecutionCourseToTeacher(Integer keyTeacher, Integer executionCourseIdInternal, String executionCourseName,
-	    Integer hours, Duration timeSpentByTeacher, Map<Integer, String> executionCourseDegreesNameSet,
-	    Map<Integer, Set<String>> curricularYearsSet, String periodName) {
-	ExecutionCourseTeacherServiceDTO executionCourse = new ExecutionCourseTeacherServiceDTO(executionCourseIdInternal,
-		executionCourseName, hours, timeSpentByTeacher, executionCourseDegreesNameSet, curricularYearsSet, periodName);
+	public void addManagementFunctionToTeacher(Integer keyTeacher, String managementFunction, Double credits) {
+		TeacherDistributionServiceEntryDTO teacher = teachersMap.get(keyTeacher);
 
-	teachersMap.get(keyTeacher).addExecutionCourse(executionCourse);
-
-    }
-
-    public void addHoursToTeacher(Integer keyTeacher, double hours) {
-	TeacherDistributionServiceEntryDTO teacher = teachersMap.get(keyTeacher);
-
-	if (teacher != null) {
-	    teacher.setTeacherRequiredHours(teacher.getTeacherRequiredHours() + hours);
+		if (teacher != null) {
+			teacher.addToManagementFunction(managementFunction, credits);
+		}
 	}
-    }
 
-    public boolean isTeacherPresent(Integer keyTeacher) {
-	return teachersMap.containsKey((keyTeacher));
-    }
+	public void addExemptionSituationToTeacher(Integer keyTeacher, Set<PersonContractSituation> exemptionTypes, Double credits) {
+		TeacherDistributionServiceEntryDTO teacher = teachersMap.get(keyTeacher);
 
-    public Map<Integer, TeacherDistributionServiceEntryDTO> getTeachersMap() {
-	return teachersMap;
-    }
-
-    public void addManagementFunctionToTeacher(Integer keyTeacher, String managementFunction, Double credits) {
-	TeacherDistributionServiceEntryDTO teacher = teachersMap.get(keyTeacher);
-
-	if (teacher != null) {
-	    teacher.addToManagementFunction(managementFunction, credits);
+		if (teacher != null) {
+			teacher.addToExemptionSituation(exemptionTypes, credits);
+		}
 	}
-    }
-
-    public void addExemptionSituationToTeacher(Integer keyTeacher, Set<PersonContractSituation> exemptionTypes, Double credits) {
-	TeacherDistributionServiceEntryDTO teacher = teachersMap.get(keyTeacher);
-
-	if (teacher != null) {
-	    teacher.addToExemptionSituation(exemptionTypes, credits);
-	}
-    }
 }

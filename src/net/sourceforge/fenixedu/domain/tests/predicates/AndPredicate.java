@@ -7,24 +7,26 @@ import net.sourceforge.fenixedu.domain.tests.NewQuestion;
 
 public class AndPredicate extends CompositePredicate implements Predicate {
 
-    public AndPredicate() {
-	super();
-    }
-
-    public boolean evaluate(NewQuestion question, Person person) {
-	for (Predicate predicate : this.getPredicates()) {
-	    if (!predicate.evaluate(question, person)) {
-		return false;
-	    }
+	public AndPredicate() {
+		super();
 	}
 
-	return true;
-    }
+	@Override
+	public boolean evaluate(NewQuestion question, Person person) {
+		for (Predicate predicate : this.getPredicates()) {
+			if (!predicate.evaluate(question, person)) {
+				return false;
+			}
+		}
 
-    public Predicate transform(HashMap<Object, Object> transformMap) {
-	AndPredicate andPredicate = new AndPredicate();
+		return true;
+	}
 
-	return initCopy(transformMap, this, andPredicate);
-    }
+	@Override
+	public Predicate transform(HashMap<Object, Object> transformMap) {
+		AndPredicate andPredicate = new AndPredicate();
+
+		return initCopy(transformMap, this, andPredicate);
+	}
 
 }

@@ -13,16 +13,16 @@ import net.sourceforge.fenixedu.util.DiaSemana;
 
 public abstract class InfoShowOccupation extends InfoObject implements ISiteComponent {
 
-    public abstract InfoShift getInfoShift();
+	public abstract InfoShift getInfoShift();
 
-    public abstract ShiftType getTipo();
+	public abstract ShiftType getTipo();
 
-    public abstract InfoRoomOccupation getInfoRoomOccupation();
+	public abstract InfoRoomOccupation getInfoRoomOccupation();
 
-    public abstract DiaSemana getDiaSemana();
+	public abstract DiaSemana getDiaSemana();
 
-    public abstract Calendar getInicio();
+	public abstract Calendar getInicio();
 
-    public abstract Calendar getFim();
+	public abstract Calendar getFim();
 
 }

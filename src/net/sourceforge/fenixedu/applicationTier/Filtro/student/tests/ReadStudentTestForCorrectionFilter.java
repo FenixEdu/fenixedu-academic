@@ -10,17 +10,18 @@ import java.util.Calendar;
  * @author jpvl
  */
 public class ReadStudentTestForCorrectionFilter extends ReadStudentTestBaseFilter {
-    public ReadStudentTestForCorrectionFilter() {
-    }
+	public ReadStudentTestForCorrectionFilter() {
+	}
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @seeServidorAplicacao.Filtro.student.tests.StudentReadTestToDoFilter#
-     * testIfCanReadTest(java.util.Calendar, java.util.Calendar,
-     * java.util.Calendar)
-     */
-    protected boolean canReadTest(Calendar now, Calendar beginDate, Calendar endDate) {
-	return endDate.before(now);
-    }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @seeServidorAplicacao.Filtro.student.tests.StudentReadTestToDoFilter#
+	 * testIfCanReadTest(java.util.Calendar, java.util.Calendar,
+	 * java.util.Calendar)
+	 */
+	@Override
+	protected boolean canReadTest(Calendar now, Calendar beginDate, Calendar endDate) {
+		return endDate.before(now);
+	}
 }

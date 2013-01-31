@@ -8,24 +8,24 @@ import org.apache.commons.lang.StringUtils;
 
 public class DefaultPathProcessor extends AbstractPathProcessor {
 
-    protected String getTemplatedIdString(final String path) {
-	final int indexOfSlash = path.indexOf('/');
-	return indexOfSlash >= 0 ? path.substring(0, indexOfSlash) : path;
-    }
+	protected String getTemplatedIdString(final String path) {
+		final int indexOfSlash = path.indexOf('/');
+		return indexOfSlash >= 0 ? path.substring(0, indexOfSlash) : path;
+	}
 
-    protected Integer getTemplatedId(final String path) {
-	final String templatedIdString = getTemplatedIdString(path);
-	return StringUtils.isEmpty(templatedIdString) ? null : Integer.valueOf(templatedIdString);
-    }
+	protected Integer getTemplatedId(final String path) {
+		final String templatedIdString = getTemplatedIdString(path);
+		return StringUtils.isEmpty(templatedIdString) ? null : Integer.valueOf(templatedIdString);
+	}
 
-    protected Container getTemplatedContent(final String path) {
-	final Integer id = getTemplatedId(path);
-	return id == null ? null : (Container) RootDomainObject.getInstance().readContentByOID(id);
-    }
+	protected Container getTemplatedContent(final String path) {
+		final Integer id = getTemplatedId(path);
+		return id == null ? null : (Container) RootDomainObject.getInstance().readContentByOID(id);
+	}
 
-    @Override
-    public Content processPath(String path) {
-	return getTemplatedContent(path);
-    }
+	@Override
+	public Content processPath(String path) {
+		return getTemplatedContent(path);
+	}
 
 }

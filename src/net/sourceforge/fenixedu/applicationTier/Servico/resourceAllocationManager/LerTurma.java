@@ -12,20 +12,20 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class LerTurma extends FenixService {
 
-    @Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
-    @Service
-    public static InfoClass run(String className, InfoExecutionDegree infoExecutionDegree, InfoExecutionPeriod infoExecutionPeriod) {
-	final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(infoExecutionDegree.getIdInternal());
-	final ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(infoExecutionPeriod
-		.getIdInternal());
+	@Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
+	@Service
+	public static InfoClass run(String className, InfoExecutionDegree infoExecutionDegree, InfoExecutionPeriod infoExecutionPeriod) {
+		final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(infoExecutionDegree.getIdInternal());
+		final ExecutionSemester executionSemester =
+				rootDomainObject.readExecutionSemesterByOID(infoExecutionPeriod.getIdInternal());
 
-	final SchoolClass turma = executionDegree.findSchoolClassesByExecutionPeriodAndName(executionSemester, className);
+		final SchoolClass turma = executionDegree.findSchoolClassesByExecutionPeriodAndName(executionSemester, className);
 
-	if (turma != null) {
-	    return InfoClass.newInfoFromDomain(turma);
+		if (turma != null) {
+			return InfoClass.newInfoFromDomain(turma);
+		}
+
+		return null;
 	}
-
-	return null;
-    }
 
 }

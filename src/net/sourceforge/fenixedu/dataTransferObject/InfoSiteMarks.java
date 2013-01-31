@@ -10,140 +10,140 @@ import java.util.ListIterator;
  * 
  */
 public class InfoSiteMarks extends DataTranferObject implements ISiteComponent {
-    private InfoEvaluation infoEvaluation;
+	private InfoEvaluation infoEvaluation;
 
-    private List marksList;
+	private List marksList;
 
-    private List infoAttends;
+	private List infoAttends;
 
-    private List marksListErrors;
+	private List marksListErrors;
 
-    private List studentsListErrors;
+	private List studentsListErrors;
 
-    private HashMap hashMarks;
+	private HashMap hashMarks;
 
-    public boolean equals(Object objectToCompare) {
-	boolean result = false;
+	@Override
+	public boolean equals(Object objectToCompare) {
+		boolean result = false;
 
-	if (objectToCompare instanceof InfoSiteMarks
-		&& (((((InfoSiteMarks) objectToCompare).getInfoEvaluation() != null && this.getInfoEvaluation() != null && ((InfoSiteMarks) objectToCompare)
-			.getInfoEvaluation().equals(this.getInfoEvaluation())) || ((InfoSiteMarks) objectToCompare)
-			.getInfoEvaluation() == null
-			&& this.getInfoEvaluation() == null))) {
-	    result = true;
+		if (objectToCompare instanceof InfoSiteMarks
+				&& (((((InfoSiteMarks) objectToCompare).getInfoEvaluation() != null && this.getInfoEvaluation() != null && ((InfoSiteMarks) objectToCompare)
+						.getInfoEvaluation().equals(this.getInfoEvaluation())) || ((InfoSiteMarks) objectToCompare)
+						.getInfoEvaluation() == null && this.getInfoEvaluation() == null))) {
+			result = true;
+		}
+
+		if (((InfoSiteMarks) objectToCompare).getMarksList() == null && this.getMarksList() == null && result == true) {
+			return true;
+		}
+
+		if (((InfoSiteMarks) objectToCompare).getMarksList() == null || this.getMarksList() == null
+				|| ((InfoSiteMarks) objectToCompare).getMarksList().size() != this.getMarksList().size()) {
+			return false;
+		}
+
+		ListIterator iter1 = ((InfoSiteMarks) objectToCompare).getMarksList().listIterator();
+		ListIterator iter2 = this.getMarksList().listIterator();
+		while (result && iter1.hasNext()) {
+			InfoMark infoMark1 = (InfoMark) iter1.next();
+			InfoMark infoMark2 = (InfoMark) iter2.next();
+			if (!infoMark1.equals(infoMark2)) {
+				result = false;
+			}
+		}
+
+		return result;
 	}
 
-	if (((InfoSiteMarks) objectToCompare).getMarksList() == null && this.getMarksList() == null && result == true) {
-	    return true;
+	/**
+	 * @return
+	 */
+	public List getMarksList() {
+		return marksList;
 	}
 
-	if (((InfoSiteMarks) objectToCompare).getMarksList() == null || this.getMarksList() == null
-		|| ((InfoSiteMarks) objectToCompare).getMarksList().size() != this.getMarksList().size()) {
-	    return false;
+	/**
+	 * @param list
+	 */
+	public void setMarksList(List list) {
+		marksList = list;
 	}
 
-	ListIterator iter1 = ((InfoSiteMarks) objectToCompare).getMarksList().listIterator();
-	ListIterator iter2 = this.getMarksList().listIterator();
-	while (result && iter1.hasNext()) {
-	    InfoMark infoMark1 = (InfoMark) iter1.next();
-	    InfoMark infoMark2 = (InfoMark) iter2.next();
-	    if (!infoMark1.equals(infoMark2)) {
-		result = false;
-	    }
+	/**
+	 * @return
+	 */
+	public InfoEvaluation getInfoEvaluation() {
+		return infoEvaluation;
 	}
 
-	return result;
-    }
+	/**
+	 * @param exam
+	 */
+	public void setInfoEvaluation(InfoEvaluation evaluation) {
+		infoEvaluation = evaluation;
+	}
 
-    /**
-     * @return
-     */
-    public List getMarksList() {
-	return marksList;
-    }
+	/**
+	 * @return
+	 */
+	public List getMarksListErrors() {
+		return marksListErrors;
+	}
 
-    /**
-     * @param list
-     */
-    public void setMarksList(List list) {
-	marksList = list;
-    }
+	/**
+	 * @param marksListErrors
+	 */
+	public void setMarksListErrors(List marksListErrors) {
+		this.marksListErrors = marksListErrors;
+	}
 
-    /**
-     * @return
-     */
-    public InfoEvaluation getInfoEvaluation() {
-	return infoEvaluation;
-    }
+	/**
+	 * @return
+	 */
+	public List getStudentsListErrors() {
+		return studentsListErrors;
+	}
 
-    /**
-     * @param exam
-     */
-    public void setInfoEvaluation(InfoEvaluation evaluation) {
-	infoEvaluation = evaluation;
-    }
+	/**
+	 * @param list
+	 */
+	public void setStudentsListErrors(List list) {
+		studentsListErrors = list;
+	}
 
-    /**
-     * @return
-     */
-    public List getMarksListErrors() {
-	return marksListErrors;
-    }
+	/**
+	 * @return Returns the attendsList.
+	 */
+	public List getInfoAttends() {
+		return infoAttends;
+	}
 
-    /**
-     * @param marksListErrors
-     */
-    public void setMarksListErrors(List marksListErrors) {
-	this.marksListErrors = marksListErrors;
-    }
+	/**
+	 * @param attendsList
+	 *            The attendsList to set.
+	 */
+	public void setInfoAttends(List attendsList) {
+		this.infoAttends = attendsList;
+	}
 
-    /**
-     * @return
-     */
-    public List getStudentsListErrors() {
-	return studentsListErrors;
-    }
+	/**
+	 * @return Returns the hashMarks.
+	 */
+	public HashMap getHashMarks() {
+		return hashMarks;
+	}
 
-    /**
-     * @param list
-     */
-    public void setStudentsListErrors(List list) {
-	studentsListErrors = list;
-    }
+	/**
+	 * @param hashMarks
+	 *            The hashMarks to set.
+	 */
+	public void setHashMarks(HashMap hashMarks) {
+		this.hashMarks = hashMarks;
+	}
 
-    /**
-     * @return Returns the attendsList.
-     */
-    public List getInfoAttends() {
-	return infoAttends;
-    }
+	public String getMarks(String studentNumber) {
+		return (String) hashMarks.get(studentNumber);
 
-    /**
-     * @param attendsList
-     *            The attendsList to set.
-     */
-    public void setInfoAttends(List attendsList) {
-	this.infoAttends = attendsList;
-    }
-
-    /**
-     * @return Returns the hashMarks.
-     */
-    public HashMap getHashMarks() {
-	return hashMarks;
-    }
-
-    /**
-     * @param hashMarks
-     *            The hashMarks to set.
-     */
-    public void setHashMarks(HashMap hashMarks) {
-	this.hashMarks = hashMarks;
-    }
-
-    public String getMarks(String studentNumber) {
-	return (String) hashMarks.get(studentNumber);
-
-    }
+	}
 
 }

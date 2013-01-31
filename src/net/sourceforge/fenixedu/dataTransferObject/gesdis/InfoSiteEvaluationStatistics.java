@@ -13,79 +13,79 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
  * 
  */
 public class InfoSiteEvaluationStatistics extends DataTranferObject {
-    private Integer enrolled;
+	private Integer enrolled;
 
-    private Integer evaluated;
+	private Integer evaluated;
 
-    private Integer approved;
+	private Integer approved;
 
-    private InfoExecutionPeriod infoExecutionPeriod;
+	private InfoExecutionPeriod infoExecutionPeriod;
 
-    /**
+	/**
      *  
      */
-    public InfoSiteEvaluationStatistics() {
-	super();
-    }
+	public InfoSiteEvaluationStatistics() {
+		super();
+	}
 
-    /**
-     * @return Returns the infoExecutionPeriod.
-     */
-    public InfoExecutionPeriod getInfoExecutionPeriod() {
-	return infoExecutionPeriod;
-    }
+	/**
+	 * @return Returns the infoExecutionPeriod.
+	 */
+	public InfoExecutionPeriod getInfoExecutionPeriod() {
+		return infoExecutionPeriod;
+	}
 
-    /**
-     * @param infoExecutionPeriod
-     *            The infoExecutionPeriod to set.
-     */
-    public void setInfoExecutionPeriod(InfoExecutionPeriod infoExecutionPeriod) {
-	this.infoExecutionPeriod = infoExecutionPeriod;
-    }
+	/**
+	 * @param infoExecutionPeriod
+	 *            The infoExecutionPeriod to set.
+	 */
+	public void setInfoExecutionPeriod(InfoExecutionPeriod infoExecutionPeriod) {
+		this.infoExecutionPeriod = infoExecutionPeriod;
+	}
 
-    /**
-     * @return Returns the approved.
-     */
-    public Integer getApproved() {
-	return approved;
-    }
+	/**
+	 * @return Returns the approved.
+	 */
+	public Integer getApproved() {
+		return approved;
+	}
 
-    /**
-     * @param approved
-     *            The approved to set.
-     */
-    public void setApproved(Integer approved) {
-	this.approved = approved;
-    }
+	/**
+	 * @param approved
+	 *            The approved to set.
+	 */
+	public void setApproved(Integer approved) {
+		this.approved = approved;
+	}
 
-    /**
-     * @return Returns the enrolled.
-     */
-    public Integer getEnrolled() {
-	return enrolled;
-    }
+	/**
+	 * @return Returns the enrolled.
+	 */
+	public Integer getEnrolled() {
+		return enrolled;
+	}
 
-    /**
-     * @param enrolled
-     *            The enrolled to set.
-     */
-    public void setEnrolled(Integer enrolled) {
-	this.enrolled = enrolled;
-    }
+	/**
+	 * @param enrolled
+	 *            The enrolled to set.
+	 */
+	public void setEnrolled(Integer enrolled) {
+		this.enrolled = enrolled;
+	}
 
-    /**
-     * @return Returns the evaluated.
-     */
-    public Integer getEvaluated() {
-	return evaluated;
-    }
+	/**
+	 * @return Returns the evaluated.
+	 */
+	public Integer getEvaluated() {
+		return evaluated;
+	}
 
-    /**
-     * @param evaluated
-     *            The evaluated to set.
-     */
-    public void setEvaluated(Integer evaluated) {
-	this.evaluated = evaluated;
-    }
+	/**
+	 * @param evaluated
+	 *            The evaluated to set.
+	 */
+	public void setEvaluated(Integer evaluated) {
+		this.evaluated = evaluated;
+	}
 
 }

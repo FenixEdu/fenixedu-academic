@@ -12,7 +12,7 @@ package net.sourceforge.fenixedu.injectionCode;
  * @version $Id$
  */
 public class IllegalAction extends RuntimeException {
-    public IllegalAction(String msg) {
-	super(msg);
-    }
+	public IllegalAction(String msg) {
+		super(msg);
+	}
 }

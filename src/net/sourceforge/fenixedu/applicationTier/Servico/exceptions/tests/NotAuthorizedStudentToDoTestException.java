@@ -12,47 +12,48 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
  */
 public class NotAuthorizedStudentToDoTestException extends FenixServiceException {
 
-    /**
+	/**
      *  
      */
-    public NotAuthorizedStudentToDoTestException() {
-	super();
-    }
+	public NotAuthorizedStudentToDoTestException() {
+		super();
+	}
 
-    /**
-     * @param errorType
-     */
-    public NotAuthorizedStudentToDoTestException(int errorType) {
-	super(errorType);
-    }
+	/**
+	 * @param errorType
+	 */
+	public NotAuthorizedStudentToDoTestException(int errorType) {
+		super(errorType);
+	}
 
-    /**
-     * @param s
-     */
-    public NotAuthorizedStudentToDoTestException(String s) {
-	super(s);
-    }
+	/**
+	 * @param s
+	 */
+	public NotAuthorizedStudentToDoTestException(String s) {
+		super(s);
+	}
 
-    /**
-     * @param cause
-     */
-    public NotAuthorizedStudentToDoTestException(Throwable cause) {
-	super(cause);
-    }
+	/**
+	 * @param cause
+	 */
+	public NotAuthorizedStudentToDoTestException(Throwable cause) {
+		super(cause);
+	}
 
-    /**
-     * @param message
-     * @param cause
-     */
-    public NotAuthorizedStudentToDoTestException(String message, Throwable cause) {
-	super(message, cause);
-    }
+	/**
+	 * @param message
+	 * @param cause
+	 */
+	public NotAuthorizedStudentToDoTestException(String message, Throwable cause) {
+		super(message, cause);
+	}
 
-    public String toString() {
-	String result = "[NotAuthorizedStudentToDoTestException\n";
-	result += "message" + this.getMessage() + "\n";
-	result += "cause" + this.getCause() + "\n";
-	result += "]";
-	return result;
-    }
+	@Override
+	public String toString() {
+		String result = "[NotAuthorizedStudentToDoTestException\n";
+		result += "message" + this.getMessage() + "\n";
+		result += "cause" + this.getCause() + "\n";
+		result += "]";
+		return result;
+	}
 }

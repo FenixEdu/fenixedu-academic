@@ -19,39 +19,39 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class ReadInsuranceTransactionByStudentIDAndExecutionYearID extends FenixService {
 
-    /**
-     * Constructor
-     */
-    public ReadInsuranceTransactionByStudentIDAndExecutionYearID() {
-    }
-
-    @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
-    @Service
-    public static InfoInsuranceTransaction run(Integer studentId, Integer executionYearId) throws FenixServiceException {
-
-	InfoInsuranceTransaction infoInsuranceTransaction = null;
-
-	ExecutionYear executionYear = rootDomainObject.readExecutionYearByOID(executionYearId);
-
-	Registration registration = rootDomainObject.readRegistrationByOID(studentId);
-
-	if ((executionYear == null) || (registration == null)) {
-	    return null;
+	/**
+	 * Constructor
+	 */
+	public ReadInsuranceTransactionByStudentIDAndExecutionYearID() {
 	}
 
-	List insuranceTransactionList = registration.readAllNonReimbursedInsuranceTransactionsByExecutionYear(executionYear);
+	@Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
+	@Service
+	public static InfoInsuranceTransaction run(Integer studentId, Integer executionYearId) throws FenixServiceException {
 
-	if (insuranceTransactionList.size() > 1) {
-	    throw new FenixServiceException(
-		    "Database is incoerent. Its not supposed to exist more than one insurance transaction not reimbursed");
+		InfoInsuranceTransaction infoInsuranceTransaction = null;
 
+		ExecutionYear executionYear = rootDomainObject.readExecutionYearByOID(executionYearId);
+
+		Registration registration = rootDomainObject.readRegistrationByOID(studentId);
+
+		if ((executionYear == null) || (registration == null)) {
+			return null;
+		}
+
+		List insuranceTransactionList = registration.readAllNonReimbursedInsuranceTransactionsByExecutionYear(executionYear);
+
+		if (insuranceTransactionList.size() > 1) {
+			throw new FenixServiceException(
+					"Database is incoerent. Its not supposed to exist more than one insurance transaction not reimbursed");
+
+		}
+
+		if (insuranceTransactionList.size() == 1) {
+			infoInsuranceTransaction =
+					InfoInsuranceTransaction.newInfoFromDomain((InsuranceTransaction) insuranceTransactionList.get(0));
+		}
+
+		return infoInsuranceTransaction;
 	}
-
-	if (insuranceTransactionList.size() == 1) {
-	    infoInsuranceTransaction = InfoInsuranceTransaction.newInfoFromDomain((InsuranceTransaction) insuranceTransactionList
-		    .get(0));
-	}
-
-	return infoInsuranceTransaction;
-    }
 }

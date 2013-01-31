@@ -5,18 +5,18 @@ import java.io.Writer;
 
 public abstract class InvalidRequest extends RemoteRequest {
 
-    @Override
-    protected void writeResponseBody(final Writer writer) throws IOException {
-	writer.write("<invalidRequest>");
-	writeTag(writer, "description", getDescription());
-	writeTag(writer, "details", getDetails());
-	writer.write("</invalidRequest>");
-    }
+	@Override
+	protected void writeResponseBody(final Writer writer) throws IOException {
+		writer.write("<invalidRequest>");
+		writeTag(writer, "description", getDescription());
+		writeTag(writer, "details", getDetails());
+		writer.write("</invalidRequest>");
+	}
 
-    protected abstract String getDescription();
+	protected abstract String getDescription();
 
-    protected String getDetails() {
-	return null;
-    }
+	protected String getDetails() {
+		return null;
+	}
 
 }

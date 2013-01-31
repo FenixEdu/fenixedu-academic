@@ -25,20 +25,20 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class ReadDegreeCurricularPlans extends FenixService {
 
-    /**
-     * Executes the service. Returns the current InfoDegreeCurricularPlan.
-     * 
-     * @throws ExcepcaoPersistencia
-     */
-    @Service
-    public static List run() {
-	final List curricularPlans = DegreeCurricularPlan.readByCurricularStage(CurricularStage.OLD);
-	final List infoCurricularPlans = new ArrayList(curricularPlans.size());
+	/**
+	 * Executes the service. Returns the current InfoDegreeCurricularPlan.
+	 * 
+	 * @throws ExcepcaoPersistencia
+	 */
+	@Service
+	public static List run() {
+		final List curricularPlans = DegreeCurricularPlan.readByCurricularStage(CurricularStage.OLD);
+		final List infoCurricularPlans = new ArrayList(curricularPlans.size());
 
-	for (final Iterator iter = curricularPlans.iterator(); iter.hasNext();) {
-	    final DegreeCurricularPlan curricularPlan = (DegreeCurricularPlan) iter.next();
-	    infoCurricularPlans.add(InfoDegreeCurricularPlan.newInfoFromDomain(curricularPlan));
+		for (final Iterator iter = curricularPlans.iterator(); iter.hasNext();) {
+			final DegreeCurricularPlan curricularPlan = (DegreeCurricularPlan) iter.next();
+			infoCurricularPlans.add(InfoDegreeCurricularPlan.newInfoFromDomain(curricularPlan));
+		}
+		return infoCurricularPlans;
 	}
-	return infoCurricularPlans;
-    }
 }

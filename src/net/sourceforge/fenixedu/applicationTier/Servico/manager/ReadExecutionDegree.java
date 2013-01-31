@@ -15,14 +15,14 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
 
 public class ReadExecutionDegree extends FenixService {
 
-    public InfoExecutionDegree run(Integer idInternal) throws FenixServiceException {
-	final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(idInternal);
+	public InfoExecutionDegree run(Integer idInternal) throws FenixServiceException {
+		final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(idInternal);
 
-	if (executionDegree == null) {
-	    throw new NonExistingServiceException();
+		if (executionDegree == null) {
+			throw new NonExistingServiceException();
+		}
+
+		return InfoExecutionDegree.newInfoFromDomain(executionDegree);
 	}
-
-	return InfoExecutionDegree.newInfoFromDomain(executionDegree);
-    }
 
 }

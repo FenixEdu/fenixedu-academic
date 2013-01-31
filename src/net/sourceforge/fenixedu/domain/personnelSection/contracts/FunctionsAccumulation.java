@@ -6,19 +6,19 @@ import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class FunctionsAccumulation extends FunctionsAccumulation_Base {
 
-    public FunctionsAccumulation(final String giafId, final MultiLanguageString name) {
-	super();
-	check(giafId, "");
-	check(name, "");
-	setRootDomainObject(RootDomainObject.getInstance());
-	setGiafId(giafId);
-	setName(name);
-    }
+	public FunctionsAccumulation(final String giafId, final MultiLanguageString name) {
+		super();
+		check(giafId, "");
+		check(name, "");
+		setRootDomainObject(RootDomainObject.getInstance());
+		setGiafId(giafId);
+		setName(name);
+	}
 
-    @Service
-    public void edit(final MultiLanguageString name) {
-	check(name, "");
-	setName(name);
-    }
+	@Service
+	public void edit(final MultiLanguageString name) {
+		check(name, "");
+		setName(name);
+	}
 
 }

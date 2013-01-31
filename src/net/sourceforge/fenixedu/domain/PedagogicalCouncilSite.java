@@ -15,51 +15,50 @@ import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
  * Specific site instance that is associated with the unit that represents the
  * Pedagogical Council of the institution.
  * <p>
- * There should exist only one instance of this site (matching the single unit
- * that represents the council). Nevertheless that is not verified.
+ * There should exist only one instance of this site (matching the single unit that represents the council). Nevertheless that is
+ * not verified.
  * 
  * @author cfgi
  */
 public class PedagogicalCouncilSite extends PedagogicalCouncilSite_Base {
 
-    public PedagogicalCouncilSite(PedagogicalCouncilUnit pedagogicalCouncil) {
-	super();
+	public PedagogicalCouncilSite(PedagogicalCouncilUnit pedagogicalCouncil) {
+		super();
 
-	setUnit(pedagogicalCouncil);
-    }
+		setUnit(pedagogicalCouncil);
+	}
 
-    @Override
-    public IGroup getOwner() {
-	return new GroupUnion(new RoleTypeGroup(RoleType.PEDAGOGICAL_COUNCIL), new RoleTypeGroup(RoleType.TUTORSHIP),
-		new FixedSetGroup(getManagers()));
-    }
+	@Override
+	public IGroup getOwner() {
+		return new GroupUnion(new RoleTypeGroup(RoleType.PEDAGOGICAL_COUNCIL), new RoleTypeGroup(RoleType.TUTORSHIP),
+				new FixedSetGroup(getManagers()));
+	}
 
-    @Override
-    public List<IGroup> getContextualPermissionGroups() {
-	List<IGroup> list = super.getContextualPermissionGroups();
+	@Override
+	public List<IGroup> getContextualPermissionGroups() {
+		List<IGroup> list = super.getContextualPermissionGroups();
 
-	list.add(new DegreeCoordinatorsGroup());
+		list.add(new DegreeCoordinatorsGroup());
 
-	return list;
-    }
+		return list;
+	}
 
-    /**
-     * This method searchs for the first instance of a PedagogicalCouncilSite.
-     * 
-     * @return the site associated with the Pedagogical Council or
-     *         <code>null</code> if there is no such site
-     */
-    public static PedagogicalCouncilSite getSite() {
-	final PedagogicalCouncilUnit pedagogicalCouncilUnit = PedagogicalCouncilUnit.getPedagogicalCouncilUnit();
-	return pedagogicalCouncilUnit == null ? null : (PedagogicalCouncilSite) pedagogicalCouncilUnit.getSite();
-    }
+	/**
+	 * This method searchs for the first instance of a PedagogicalCouncilSite.
+	 * 
+	 * @return the site associated with the Pedagogical Council or <code>null</code> if there is no such site
+	 */
+	public static PedagogicalCouncilSite getSite() {
+		final PedagogicalCouncilUnit pedagogicalCouncilUnit = PedagogicalCouncilUnit.getPedagogicalCouncilUnit();
+		return pedagogicalCouncilUnit == null ? null : (PedagogicalCouncilSite) pedagogicalCouncilUnit.getSite();
+	}
 
-    @Override
-    public void appendReversePathPart(final StringBuilder stringBuilder) {
-    }
+	@Override
+	public void appendReversePathPart(final StringBuilder stringBuilder) {
+	}
 
-    @Override
-    public MultiLanguageString getName() {
-	return new MultiLanguageString("");
-    }
+	@Override
+	public MultiLanguageString getName() {
+		return new MultiLanguageString("");
+	}
 }

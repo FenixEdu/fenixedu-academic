@@ -10,9 +10,9 @@ import net.sourceforge.fenixedu.domain.tests.NewTestModel;
 import pt.ist.fenixWebFramework.services.Service;
 
 public class SelectAtomicQuestionRestrictions extends FenixService {
-    @Service
-    public static void run(NewTestModel testModel, List<NewModelRestriction> atomicRestrictions, NewModelGroup destinationGroup,
-	    Double value) throws FenixServiceException {
-	testModel.selectAtomicQuestionRestrictions(atomicRestrictions, destinationGroup, value);
-    }
+	@Service
+	public static void run(NewTestModel testModel, List<NewModelRestriction> atomicRestrictions, NewModelGroup destinationGroup,
+			Double value) throws FenixServiceException {
+		testModel.selectAtomicQuestionRestrictions(atomicRestrictions, destinationGroup, value);
+	}
 }

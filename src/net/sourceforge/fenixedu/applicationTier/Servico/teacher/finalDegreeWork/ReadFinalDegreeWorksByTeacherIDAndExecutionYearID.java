@@ -13,15 +13,15 @@ import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
  */
 public class ReadFinalDegreeWorksByTeacherIDAndExecutionYearID extends FenixService {
 
-    public List<Proposal> run(Integer teacherID, Integer executionYearID) throws FenixServiceException {
-	Teacher teacher = rootDomainObject.readTeacherByOID(teacherID);
-	ExecutionYear executionYear = rootDomainObject.readExecutionYearByOID(executionYearID);
+	public List<Proposal> run(Integer teacherID, Integer executionYearID) throws FenixServiceException {
+		Teacher teacher = rootDomainObject.readTeacherByOID(teacherID);
+		ExecutionYear executionYear = rootDomainObject.readExecutionYearByOID(executionYearID);
 
-	ExecutionYear previousExecutionYear = executionYear.getPreviousExecutionYear();
+		ExecutionYear previousExecutionYear = executionYear.getPreviousExecutionYear();
 
-	List<Proposal> finalDegreeWorks = teacher.getFinalDegreeWorksByExecutionYear(previousExecutionYear);
+		List<Proposal> finalDegreeWorks = teacher.getFinalDegreeWorksByExecutionYear(previousExecutionYear);
 
-	return finalDegreeWorks;
+		return finalDegreeWorks;
 
-    }
+	}
 }

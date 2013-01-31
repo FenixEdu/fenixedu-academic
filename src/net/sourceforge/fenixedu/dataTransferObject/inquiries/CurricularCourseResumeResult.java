@@ -26,165 +26,168 @@ import org.apache.commons.beanutils.BeanComparator;
 
 public class CurricularCourseResumeResult extends BlockResumeResult implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    private ExecutionCourse executionCourse;
-    private ExecutionDegree executionDegree;
-    private YearDelegate yearDelegate;
-    private List<TeacherShiftTypeResultsBean> teachersResults;
-    private boolean showAllComments;
-    private boolean allowComment;
+	private ExecutionCourse executionCourse;
+	private ExecutionDegree executionDegree;
+	private YearDelegate yearDelegate;
+	private List<TeacherShiftTypeResultsBean> teachersResults;
+	private boolean showAllComments;
+	private boolean allowComment;
 
-    public CurricularCourseResumeResult(ExecutionCourse executionCourse, ExecutionDegree executionDegree,
-	    YearDelegate yearDelegate) {
-	setExecutionCourse(executionCourse);
-	setExecutionDegree(executionDegree);
-	setYearDelegate(yearDelegate);
-	setPerson(yearDelegate.getPerson());
-	setPersonCategory(ResultPersonCategory.DELEGATE);
-	setFirstHeaderKey("label.inquiry.curricularUnit");
-	setFirstPresentationName(executionCourse.getName());
-	initResultBlocks();
-	initTeachersResults(executionCourse);
-    }
-
-    public CurricularCourseResumeResult(ExecutionCourse executionCourse, ExecutionDegree executionDegree, String firstHeaderKey,
-	    String firstPresentationName, Person person, ResultPersonCategory personCategory, boolean regentViewHimself,
-	    boolean initTeachersResults, boolean backToResume, boolean showAllComments, boolean allowComment) {
-	setExecutionCourse(executionCourse);
-	setExecutionDegree(executionDegree);
-	setFirstHeaderKey(firstHeaderKey);
-	setFirstPresentationName(firstPresentationName);
-	setPerson(person);
-	setPersonCategory(personCategory);
-	setRegentViewHimself(regentViewHimself);
-	initResultBlocks();
-	if (initTeachersResults) {
-	    initTeachersResults(executionCourse);
+	public CurricularCourseResumeResult(ExecutionCourse executionCourse, ExecutionDegree executionDegree,
+			YearDelegate yearDelegate) {
+		setExecutionCourse(executionCourse);
+		setExecutionDegree(executionDegree);
+		setYearDelegate(yearDelegate);
+		setPerson(yearDelegate.getPerson());
+		setPersonCategory(ResultPersonCategory.DELEGATE);
+		setFirstHeaderKey("label.inquiry.curricularUnit");
+		setFirstPresentationName(executionCourse.getName());
+		initResultBlocks();
+		initTeachersResults(executionCourse);
 	}
-	setBackToResume(backToResume);
-	setShowAllComments(showAllComments);
-	setAllowComment(allowComment);
-    }
 
-    protected void initResultBlocks() {
-	setResultBlocks(new TreeSet<InquiryResult>(new BeanComparator("inquiryQuestion.questionOrder")));
-	for (InquiryResult inquiryResult : getExecutionCourse().getInquiryResults()) {
-	    if ((inquiryResult.getExecutionDegree() == getExecutionDegree() || (inquiryResult.getExecutionDegree() == null && inquiryResult
-		    .getProfessorship() == null))
-		    && InquiryConnectionType.GROUP.equals(inquiryResult.getConnectionType())) { //change to COURSE_EVALUATION
-		getResultBlocks().add(inquiryResult);
-	    }
-	}
-    }
-
-    private void initTeachersResults(ExecutionCourse executionCourse) {
-	setTeachersResults(new ArrayList<TeacherShiftTypeResultsBean>());
-	for (Professorship professorship : executionCourse.getProfessorships()) {
-	    List<InquiryResult> professorshipResults = professorship.getInquiryResults();
-	    if (!professorshipResults.isEmpty()) {
-		for (ShiftType shiftType : getShiftTypes(professorshipResults)) {
-		    List<InquiryResult> teacherShiftResults = professorship.getInquiryResults(shiftType);
-		    if (!teacherShiftResults.isEmpty()) {
-			getTeachersResults().add(
-				new TeacherShiftTypeResultsBean(professorship, shiftType, executionCourse.getExecutionPeriod(),
-					teacherShiftResults, null, null));
-		    }
+	public CurricularCourseResumeResult(ExecutionCourse executionCourse, ExecutionDegree executionDegree, String firstHeaderKey,
+			String firstPresentationName, Person person, ResultPersonCategory personCategory, boolean regentViewHimself,
+			boolean initTeachersResults, boolean backToResume, boolean showAllComments, boolean allowComment) {
+		setExecutionCourse(executionCourse);
+		setExecutionDegree(executionDegree);
+		setFirstHeaderKey(firstHeaderKey);
+		setFirstPresentationName(firstPresentationName);
+		setPerson(person);
+		setPersonCategory(personCategory);
+		setRegentViewHimself(regentViewHimself);
+		initResultBlocks();
+		if (initTeachersResults) {
+			initTeachersResults(executionCourse);
 		}
-	    }
+		setBackToResume(backToResume);
+		setShowAllComments(showAllComments);
+		setAllowComment(allowComment);
 	}
 
-	Collections.sort(getTeachersResults(), new BeanComparator("professorship.person.name"));
-	Collections.sort(getTeachersResults(), new BeanComparator("shiftType"));
-    }
-
-    private Set<ShiftType> getShiftTypes(List<InquiryResult> professorshipResults) {
-	Set<ShiftType> shiftTypes = new HashSet<ShiftType>();
-	for (InquiryResult inquiryResult : professorshipResults) {
-	    shiftTypes.add(inquiryResult.getShiftType());
-	}
-	return shiftTypes;
-    }
-
-    protected InquiryAnswer getInquiryAnswer() {
-	InquiryDelegateAnswer inquiryDelegateAnswer = null;
-	for (InquiryDelegateAnswer delegateAnswer : getYearDelegate().getInquiryDelegateAnswers()) {
-	    if (delegateAnswer.getExecutionCourse() == getExecutionCourse()) {
-		inquiryDelegateAnswer = delegateAnswer;
-	    }
-	}
-	return inquiryDelegateAnswer;
-    }
-
-    protected int getNumberOfInquiryQuestions() {
-	DelegateInquiryTemplate inquiryTemplate = DelegateInquiryTemplate.getTemplateByExecutionPeriod(getExecutionCourse()
-		.getExecutionPeriod());
-	return inquiryTemplate.getNumberOfQuestions();
-    }
-
-    protected List<InquiryResult> getInquiryResultsByQuestion(InquiryQuestion inquiryQuestion) {
-	List<InquiryResult> inquiryResults = new ArrayList<InquiryResult>();
-	for (InquiryResult inquiryResult : getExecutionCourse().getInquiryResults()) {
-	    if (inquiryResult.getExecutionDegree() == getExecutionDegree()
-		    || (inquiryResult.getExecutionDegree() == null && inquiryResult.getShiftType() != null)) {
-		if (inquiryResult.getInquiryQuestion() == inquiryQuestion && inquiryResult.getResultClassification() != null) {
-		    inquiryResults.add(inquiryResult);
+	@Override
+	protected void initResultBlocks() {
+		setResultBlocks(new TreeSet<InquiryResult>(new BeanComparator("inquiryQuestion.questionOrder")));
+		for (InquiryResult inquiryResult : getExecutionCourse().getInquiryResults()) {
+			if ((inquiryResult.getExecutionDegree() == getExecutionDegree() || (inquiryResult.getExecutionDegree() == null && inquiryResult
+					.getProfessorship() == null)) && InquiryConnectionType.GROUP.equals(inquiryResult.getConnectionType())) { //change to COURSE_EVALUATION
+				getResultBlocks().add(inquiryResult);
+			}
 		}
-	    }
 	}
-	return inquiryResults;
-    }
 
-    @Override
-    public int hashCode() {
-	return getExecutionCourse().hashCode() + getExecutionDegree().hashCode();
-    }
+	private void initTeachersResults(ExecutionCourse executionCourse) {
+		setTeachersResults(new ArrayList<TeacherShiftTypeResultsBean>());
+		for (Professorship professorship : executionCourse.getProfessorships()) {
+			List<InquiryResult> professorshipResults = professorship.getInquiryResults();
+			if (!professorshipResults.isEmpty()) {
+				for (ShiftType shiftType : getShiftTypes(professorshipResults)) {
+					List<InquiryResult> teacherShiftResults = professorship.getInquiryResults(shiftType);
+					if (!teacherShiftResults.isEmpty()) {
+						getTeachersResults().add(
+								new TeacherShiftTypeResultsBean(professorship, shiftType, executionCourse.getExecutionPeriod(),
+										teacherShiftResults, null, null));
+					}
+				}
+			}
+		}
 
-    public void setYearDelegate(YearDelegate yearDelegate) {
-	this.yearDelegate = yearDelegate;
-    }
+		Collections.sort(getTeachersResults(), new BeanComparator("professorship.person.name"));
+		Collections.sort(getTeachersResults(), new BeanComparator("shiftType"));
+	}
 
-    public YearDelegate getYearDelegate() {
-	return yearDelegate;
-    }
+	private Set<ShiftType> getShiftTypes(List<InquiryResult> professorshipResults) {
+		Set<ShiftType> shiftTypes = new HashSet<ShiftType>();
+		for (InquiryResult inquiryResult : professorshipResults) {
+			shiftTypes.add(inquiryResult.getShiftType());
+		}
+		return shiftTypes;
+	}
 
-    public void setTeachersResults(List<TeacherShiftTypeResultsBean> teachersResults) {
-	this.teachersResults = teachersResults;
-    }
+	@Override
+	protected InquiryAnswer getInquiryAnswer() {
+		InquiryDelegateAnswer inquiryDelegateAnswer = null;
+		for (InquiryDelegateAnswer delegateAnswer : getYearDelegate().getInquiryDelegateAnswers()) {
+			if (delegateAnswer.getExecutionCourse() == getExecutionCourse()) {
+				inquiryDelegateAnswer = delegateAnswer;
+			}
+		}
+		return inquiryDelegateAnswer;
+	}
 
-    public List<TeacherShiftTypeResultsBean> getTeachersResults() {
-	return teachersResults;
-    }
+	@Override
+	protected int getNumberOfInquiryQuestions() {
+		DelegateInquiryTemplate inquiryTemplate =
+				DelegateInquiryTemplate.getTemplateByExecutionPeriod(getExecutionCourse().getExecutionPeriod());
+		return inquiryTemplate.getNumberOfQuestions();
+	}
 
-    public void setExecutionCourse(ExecutionCourse executionCourse) {
-	this.executionCourse = executionCourse;
-    }
+	@Override
+	protected List<InquiryResult> getInquiryResultsByQuestion(InquiryQuestion inquiryQuestion) {
+		List<InquiryResult> inquiryResults = new ArrayList<InquiryResult>();
+		for (InquiryResult inquiryResult : getExecutionCourse().getInquiryResults()) {
+			if (inquiryResult.getExecutionDegree() == getExecutionDegree()
+					|| (inquiryResult.getExecutionDegree() == null && inquiryResult.getShiftType() != null)) {
+				if (inquiryResult.getInquiryQuestion() == inquiryQuestion && inquiryResult.getResultClassification() != null) {
+					inquiryResults.add(inquiryResult);
+				}
+			}
+		}
+		return inquiryResults;
+	}
 
-    public ExecutionCourse getExecutionCourse() {
-	return executionCourse;
-    }
+	@Override
+	public int hashCode() {
+		return getExecutionCourse().hashCode() + getExecutionDegree().hashCode();
+	}
 
-    public void setExecutionDegree(ExecutionDegree executionDegree) {
-	this.executionDegree = executionDegree;
-    }
+	public void setYearDelegate(YearDelegate yearDelegate) {
+		this.yearDelegate = yearDelegate;
+	}
 
-    public ExecutionDegree getExecutionDegree() {
-	return executionDegree;
-    }
+	public YearDelegate getYearDelegate() {
+		return yearDelegate;
+	}
 
-    public void setShowAllComments(boolean showAllComments) {
-	this.showAllComments = showAllComments;
-    }
+	public void setTeachersResults(List<TeacherShiftTypeResultsBean> teachersResults) {
+		this.teachersResults = teachersResults;
+	}
 
-    public boolean isShowAllComments() {
-	return showAllComments;
-    }
+	public List<TeacherShiftTypeResultsBean> getTeachersResults() {
+		return teachersResults;
+	}
 
-    public void setAllowComment(boolean allowComment) {
-	this.allowComment = allowComment;
-    }
+	public void setExecutionCourse(ExecutionCourse executionCourse) {
+		this.executionCourse = executionCourse;
+	}
 
-    public boolean isAllowComment() {
-	return allowComment;
-    }
+	public ExecutionCourse getExecutionCourse() {
+		return executionCourse;
+	}
+
+	public void setExecutionDegree(ExecutionDegree executionDegree) {
+		this.executionDegree = executionDegree;
+	}
+
+	public ExecutionDegree getExecutionDegree() {
+		return executionDegree;
+	}
+
+	public void setShowAllComments(boolean showAllComments) {
+		this.showAllComments = showAllComments;
+	}
+
+	public boolean isShowAllComments() {
+		return showAllComments;
+	}
+
+	public void setAllowComment(boolean allowComment) {
+		this.allowComment = allowComment;
+	}
+
+	public boolean isAllowComment() {
+		return allowComment;
+	}
 }

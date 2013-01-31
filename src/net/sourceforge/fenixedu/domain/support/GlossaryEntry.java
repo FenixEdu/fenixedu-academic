@@ -12,14 +12,14 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
  */
 public class GlossaryEntry extends GlossaryEntry_Base {
 
-    public GlossaryEntry() {
-	super();
-	setRootDomainObject(RootDomainObject.getInstance());
-    }
+	public GlossaryEntry() {
+		super();
+		setRootDomainObject(RootDomainObject.getInstance());
+	}
 
-    public void delete() {
-	removeRootDomainObject();
-	deleteDomainObject();
-    }
+	public void delete() {
+		removeRootDomainObject();
+		deleteDomainObject();
+	}
 
 }

@@ -14,20 +14,21 @@ import org.apache.struts.config.ExceptionConfig;
 
 public class FenixDomainExceptionHandler extends FenixExceptionHandler {
 
-    public ActionForward execute(Exception ex, ExceptionConfig exceptionConfig, ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws ServletException {
+	@Override
+	public ActionForward execute(Exception ex, ExceptionConfig exceptionConfig, ActionMapping mapping, ActionForm actionForm,
+			HttpServletRequest request, HttpServletResponse response) throws ServletException {
 
-	ActionForward forward = mapping.getInputForward();
+		ActionForward forward = mapping.getInputForward();
 
-	if (ex instanceof DomainException) {
-	    super.execute(ex, exceptionConfig, mapping, actionForm, request, response);
+		if (ex instanceof DomainException) {
+			super.execute(ex, exceptionConfig, mapping, actionForm, request, response);
 
-	    DomainException domainException = (DomainException) ex;
-	    String property = domainException.getKey();
-	    ActionMessage error = new ActionMessage(domainException.getKey(), domainException.getArgs());
-	    super.storeException(request, property, error, forward, exceptionConfig.getScope());
+			DomainException domainException = (DomainException) ex;
+			String property = domainException.getKey();
+			ActionMessage error = new ActionMessage(domainException.getKey(), domainException.getArgs());
+			super.storeException(request, property, error, forward, exceptionConfig.getScope());
+		}
+		return forward;
 	}
-	return forward;
-    }
 
 }

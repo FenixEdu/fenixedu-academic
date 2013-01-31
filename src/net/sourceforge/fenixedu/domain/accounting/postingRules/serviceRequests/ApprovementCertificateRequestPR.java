@@ -11,41 +11,41 @@ import org.joda.time.DateTime;
 
 public class ApprovementCertificateRequestPR extends ApprovementCertificateRequestPR_Base {
 
-    private ApprovementCertificateRequestPR() {
-	super();
-    }
-
-    public ApprovementCertificateRequestPR(DateTime startDate, DateTime endDate,
-	    ServiceAgreementTemplate serviceAgreementTemplate, Money baseAmount, Money amountPerUnit, Money amountPerPage,
-	    Money maximumAmount) {
-	init(EntryType.APPROVEMENT_CERTIFICATE_REQUEST_FEE, EventType.APPROVEMENT_CERTIFICATE_REQUEST, startDate, endDate,
-		serviceAgreementTemplate, baseAmount, amountPerUnit, amountPerPage, maximumAmount);
-    }
-
-    @Override
-    public Money getAmountForUnits(Integer numberOfUnits) {
-	if (numberOfUnits <= 1) {
-	    return Money.ZERO;
+	private ApprovementCertificateRequestPR() {
+		super();
 	}
 
-	Money totalAmountOfUnits = getAmountPerUnit().multiply(new BigDecimal(numberOfUnits - 1));
-
-	if (this.getMaximumAmount().greaterThan(Money.ZERO)) {
-	    if (totalAmountOfUnits.greaterThan(this.getMaximumAmount())) {
-		totalAmountOfUnits = this.getMaximumAmount();
-	    }
+	public ApprovementCertificateRequestPR(DateTime startDate, DateTime endDate,
+			ServiceAgreementTemplate serviceAgreementTemplate, Money baseAmount, Money amountPerUnit, Money amountPerPage,
+			Money maximumAmount) {
+		init(EntryType.APPROVEMENT_CERTIFICATE_REQUEST_FEE, EventType.APPROVEMENT_CERTIFICATE_REQUEST, startDate, endDate,
+				serviceAgreementTemplate, baseAmount, amountPerUnit, amountPerPage, maximumAmount);
 	}
 
-	return totalAmountOfUnits;
-    }
+	@Override
+	public Money getAmountForUnits(Integer numberOfUnits) {
+		if (numberOfUnits <= 1) {
+			return Money.ZERO;
+		}
 
-    @Override
-    public ApprovementCertificateRequestPR edit(Money baseAmount, Money amountPerUnit, Money amountPerPage, Money maximumAmount) {
+		Money totalAmountOfUnits = getAmountPerUnit().multiply(new BigDecimal(numberOfUnits - 1));
 
-	deactivate();
+		if (this.getMaximumAmount().greaterThan(Money.ZERO)) {
+			if (totalAmountOfUnits.greaterThan(this.getMaximumAmount())) {
+				totalAmountOfUnits = this.getMaximumAmount();
+			}
+		}
 
-	return new ApprovementCertificateRequestPR(new DateTime().minus(1000), null, getServiceAgreementTemplate(), baseAmount,
-		amountPerUnit, amountPerPage, maximumAmount);
-    }
+		return totalAmountOfUnits;
+	}
+
+	@Override
+	public ApprovementCertificateRequestPR edit(Money baseAmount, Money amountPerUnit, Money amountPerPage, Money maximumAmount) {
+
+		deactivate();
+
+		return new ApprovementCertificateRequestPR(new DateTime().minus(1000), null, getServiceAgreementTemplate(), baseAmount,
+				amountPerUnit, amountPerPage, maximumAmount);
+	}
 
 }

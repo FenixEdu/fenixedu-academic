@@ -12,42 +12,42 @@ import org.apache.commons.beanutils.BeanComparator;
 
 public class InfoSiteEvaluationMarks extends DataTranferObject implements ISiteComponent {
 
-    private static final Comparator comparator = new BeanComparator("attend.aluno.number");
+	private static final Comparator comparator = new BeanComparator("attend.aluno.number");
 
-    private Integer evaluationID;
+	private Integer evaluationID;
 
-    private Evaluation evaluation;
+	private Evaluation evaluation;
 
-    private ExecutionCourse executionCourse;
+	private ExecutionCourse executionCourse;
 
-    public Evaluation getEvaluation() {
-	return evaluation;
-    }
+	public Evaluation getEvaluation() {
+		return evaluation;
+	}
 
-    public void setEvaluation(Evaluation evaluation) {
-	this.evaluation = evaluation;
-    }
+	public void setEvaluation(Evaluation evaluation) {
+		this.evaluation = evaluation;
+	}
 
-    public Integer getEvaluationID() {
-	return evaluationID;
-    }
+	public Integer getEvaluationID() {
+		return evaluationID;
+	}
 
-    public void setEvaluationID(Integer evaluationID) {
-	this.evaluationID = evaluationID;
-    }
+	public void setEvaluationID(Integer evaluationID) {
+		this.evaluationID = evaluationID;
+	}
 
-    public Collection<Mark> getSortedMarks() {
-	final Collection<Mark> sortedMarks = new TreeSet<Mark>(comparator);
-	sortedMarks.addAll(getEvaluation().getMarks());
-	return sortedMarks;
-    }
+	public Collection<Mark> getSortedMarks() {
+		final Collection<Mark> sortedMarks = new TreeSet<Mark>(comparator);
+		sortedMarks.addAll(getEvaluation().getMarks());
+		return sortedMarks;
+	}
 
-    public ExecutionCourse getExecutionCourse() {
-	return executionCourse;
-    }
+	public ExecutionCourse getExecutionCourse() {
+		return executionCourse;
+	}
 
-    public void setExecutionCourse(ExecutionCourse executionCourse) {
-	this.executionCourse = executionCourse;
-    }
+	public void setExecutionCourse(ExecutionCourse executionCourse) {
+		this.executionCourse = executionCourse;
+	}
 
 }

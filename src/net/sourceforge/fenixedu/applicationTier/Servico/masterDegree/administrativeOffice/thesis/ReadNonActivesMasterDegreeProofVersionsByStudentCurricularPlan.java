@@ -23,24 +23,25 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class ReadNonActivesMasterDegreeProofVersionsByStudentCurricularPlan extends FenixService {
 
-    @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
-    @Service
-    public static List run(InfoStudentCurricularPlan infoStudentCurricularPlan) throws FenixServiceException {
+	@Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
+	@Service
+	public static List run(InfoStudentCurricularPlan infoStudentCurricularPlan) throws FenixServiceException {
 
-	StudentCurricularPlan studentCurricularPlan = rootDomainObject.readStudentCurricularPlanByOID(infoStudentCurricularPlan
-		.getIdInternal());
+		StudentCurricularPlan studentCurricularPlan =
+				rootDomainObject.readStudentCurricularPlanByOID(infoStudentCurricularPlan.getIdInternal());
 
-	List masterDegreeProofVersions = studentCurricularPlan.readNotActiveMasterDegreeProofVersions();
+		List masterDegreeProofVersions = studentCurricularPlan.readNotActiveMasterDegreeProofVersions();
 
-	CollectionUtils.transform(masterDegreeProofVersions, new Transformer() {
+		CollectionUtils.transform(masterDegreeProofVersions, new Transformer() {
 
-	    public Object transform(Object arg0) {
-		MasterDegreeProofVersion masterDegreeProofVersion = (MasterDegreeProofVersion) arg0;
-		return InfoMasterDegreeProofVersion.newInfoFromDomain(masterDegreeProofVersion);
-	    }
+			@Override
+			public Object transform(Object arg0) {
+				MasterDegreeProofVersion masterDegreeProofVersion = (MasterDegreeProofVersion) arg0;
+				return InfoMasterDegreeProofVersion.newInfoFromDomain(masterDegreeProofVersion);
+			}
 
-	});
+		});
 
-	return masterDegreeProofVersions;
-    }
+		return masterDegreeProofVersions;
+	}
 }

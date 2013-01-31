@@ -30,255 +30,254 @@ import pt.utl.ist.fenix.tools.util.Pair;
 
 public class FunctionalitiesDispatchAction extends FenixDispatchAction {
 
-    protected void addMessage(HttpServletRequest request, String name, String key, String... args) {
-	ActionMessages messages = getMessages(request);
-	messages.add(name, new ActionMessage(key, args));
-	saveMessages(request, messages);
-    }
-
-    public ActionForward forwardTo(ActionForward forward, HttpServletRequest request, Content functionality) throws Exception {
-	setBreadCrumbs(request, functionality);
-	request.setAttribute("functionality", functionality);
-
-	return forward;
-    }
-
-    public ActionForward forwardTo(ActionForward forward, HttpServletRequest request, Module module, boolean includeLast)
-	    throws Exception {
-	setBreadCrumbs(request, module, includeLast);
-
-	if (includeLast) {
-	    request.setAttribute("parent", module);
+	protected void addMessage(HttpServletRequest request, String name, String key, String... args) {
+		ActionMessages messages = getMessages(request);
+		messages.add(name, new ActionMessage(key, args));
+		saveMessages(request, messages);
 	}
 
-	request.setAttribute("module", module);
+	public ActionForward forwardTo(ActionForward forward, HttpServletRequest request, Content functionality) throws Exception {
+		setBreadCrumbs(request, functionality);
+		request.setAttribute("functionality", functionality);
 
-	return forward;
-    }
-
-    public ActionForward viewRoot(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-	Module module = Module.getRootModule();
-
-	return viewModule(module, mapping, actionForm, request, response);
-    }
-
-    protected ActionForward viewModule(Module module, ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-	if (module == null) {
-	    return viewRoot(mapping, actionForm, request, response);
-	} else {
-	    setBreadCrumbs(request, module);
-
-	    request.setAttribute("module", module);
-	    request.setAttribute("functionalities", module.getOrderedFunctionalities());
-
-	    return mapping.findForward("view.module");
-	}
-    }
-
-    protected List<Module> getBreadCrumbs(HttpServletRequest request, Content content) {
-	List<Module> crumbs = new ArrayList<Module>();
-
-	IFunctionality functionality = (IFunctionality) content;
-	for (Module parent = functionality.getModule(); parent != null; parent = parent.getModule()) {
-	    if (crumbs.isEmpty()) {
-		crumbs.add(parent);
-	    } else {
-		crumbs.add(0, parent);
-	    }
+		return forward;
 	}
 
-	return crumbs;
-    }
+	public ActionForward forwardTo(ActionForward forward, HttpServletRequest request, Module module, boolean includeLast)
+			throws Exception {
+		setBreadCrumbs(request, module, includeLast);
 
-    protected void setBreadCrumbs(HttpServletRequest request, Content functionality) {
-	List<Module> crumbs = getBreadCrumbs(request, functionality);
-	request.setAttribute("crumbs", crumbs);
-    }
+		if (includeLast) {
+			request.setAttribute("parent", module);
+		}
 
-    protected void setBreadCrumbs(HttpServletRequest request, Module module, boolean includeLast) {
-	List<Module> crumbs = getBreadCrumbs(request, module);
+		request.setAttribute("module", module);
 
-	if (includeLast) {
-	    crumbs.add(module);
+		return forward;
 	}
 
-	request.setAttribute("crumbs", crumbs);
-    }
+	public ActionForward viewRoot(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		Module module = Module.getRootModule();
 
-    public ActionForward confirm(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-	Content functionality = getFunctionality(request);
-
-	if (functionality == null) {
-	    return viewRoot(mapping, actionForm, request, response);
+		return viewModule(module, mapping, actionForm, request, response);
 	}
 
-	return forwardTo(mapping.findForward("confirm"), request, functionality);
-    }
+	protected ActionForward viewModule(Module module, ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		if (module == null) {
+			return viewRoot(mapping, actionForm, request, response);
+		} else {
+			setBreadCrumbs(request, module);
 
-    public ActionForward delete(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-	Content functionality = getFunctionality(request);
+			request.setAttribute("module", module);
+			request.setAttribute("functionalities", module.getOrderedFunctionalities());
 
-	if (functionality == null) {
-	    return viewRoot(mapping, actionForm, request, response);
+			return mapping.findForward("view.module");
+		}
 	}
 
-	if (request.getParameter("confirm") != null) {
-	    Module parent = ((IFunctionality) functionality).getModule();
-	    deleteFunctionality(functionality);
+	protected List<Module> getBreadCrumbs(HttpServletRequest request, Content content) {
+		List<Module> crumbs = new ArrayList<Module>();
 
-	    return viewModule(parent, mapping, actionForm, request, response);
-	} else {
-	    if (functionality instanceof Module) {
-		return viewModule((Module) functionality, mapping, actionForm, request, response);
-	    } else {
-		return forwardTo(mapping.findForward("view"), request, functionality);
-	    }
-	}
-    }
+		IFunctionality functionality = (IFunctionality) content;
+		for (Module parent = functionality.getModule(); parent != null; parent = parent.getModule()) {
+			if (crumbs.isEmpty()) {
+				crumbs.add(parent);
+			} else {
+				crumbs.add(0, parent);
+			}
+		}
 
-    protected Module getModule(HttpServletRequest request) {
-	return (Module) getObject(request, Module.class, "module");
-    }
-
-    protected Content getFunctionality(HttpServletRequest request) {
-	return (Content) getObject(request, Content.class, "functionality");
-    }
-
-    protected DomainObject getObject(HttpServletRequest request, Class type, String parameter) {
-	Integer objectId = getObjectId(request, parameter);
-
-	if (objectId == null) {
-	    return null;
+		return crumbs;
 	}
 
-	return readDomainObject(request, type, objectId);
-    }
-
-    protected Integer getObjectId(HttpServletRequest request, String name) {
-	return getId(request.getParameter(name));
-    }
-
-    protected Integer getId(String id) {
-	if (id == null) {
-	    return null;
+	protected void setBreadCrumbs(HttpServletRequest request, Content functionality) {
+		List<Module> crumbs = getBreadCrumbs(request, functionality);
+		request.setAttribute("crumbs", crumbs);
 	}
 
-	try {
-	    return new Integer(id);
-	} catch (NumberFormatException e) {
-	    e.printStackTrace();
-	    return null;
+	protected void setBreadCrumbs(HttpServletRequest request, Module module, boolean includeLast) {
+		List<Module> crumbs = getBreadCrumbs(request, module);
+
+		if (includeLast) {
+			crumbs.add(module);
+		}
+
+		request.setAttribute("crumbs", crumbs);
 	}
-    }
 
-    //
-    // Auxiliary methods
-    //
+	public ActionForward confirm(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		Content functionality = getFunctionality(request);
 
-    /**
-     * Auxiliary method that invokes the real service that will delete the
-     * functionality.
-     * 
-     * @param functionality
-     *            the functionality that will be deleted
-     * @throws Exception
-     *             the exception throw by the service
-     */
-    public static void deleteFunctionality(Content functionality) throws Exception {
-	DeleteFunctionality.run(functionality);
-    }
+		if (functionality == null) {
+			return viewRoot(mapping, actionForm, request, response);
+		}
 
-    /**
-     * Auxiliary method that invokes the real service that will rearrange all
-     * the functionalities. All pairs passed as argument describe the new
-     * module/functionality relations. Relations will be broken and created
-     * between all the referred functionalities in one transaction.
-     * 
-     * @param arrangements
-     *            a list of pairs (parent, child)
-     * @throws Exception
-     *             the exception thrown by the service
-     */
-    public static void rearrangeFunctionalities(List<Pair<Module, Content>> arrangements) throws Exception {
-	ArrangeFunctionalities.run(arrangements);
-    }
+		return forwardTo(mapping.findForward("confirm"), request, functionality);
+	}
 
-    /**
-     * Auxiliary method that invokes the service to enable the given
-     * functionality.
-     * 
-     * @param functionality
-     *            the functionality to enable
-     * @throws Exception
-     *             the exception thrown by the service
-     */
-    public static void enable(Functionality functionality) throws Exception {
-	ServiceUtils.executeService("ChangeEnableInFunctionality", new Object[] { functionality, true });
-    }
+	public ActionForward delete(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		Content functionality = getFunctionality(request);
 
-    /**
-     * Auxiliary method that invokes the service to disable the given
-     * functionality.
-     * 
-     * @param functionality
-     *            the functionality to disable
-     * @throws Exception
-     *             the exception thrown by the service
-     */
-    public static void disable(Functionality functionality) throws Exception {
-	ServiceUtils.executeService("ChangeEnableInFunctionality", new Object[] { functionality, false });
-    }
+		if (functionality == null) {
+			return viewRoot(mapping, actionForm, request, response);
+		}
 
-    /**
-     * Auxiliary method that invokes a service to create a
-     * {@link GroupAvailability} for the given functinolity
-     * 
-     * @param functionality
-     *            the functionality that will have it's availability changed
-     * @param expression
-     *            the group expression used to the create the new group
-     *            availability
-     */
-    public static void setGroupAvailability(Content functionality, String expression) throws Exception {
-	CreateGroupAvailability.run(functionality, expression);
-    }
+		if (request.getParameter("confirm") != null) {
+			Module parent = ((IFunctionality) functionality).getModule();
+			deleteFunctionality(functionality);
 
-    /**
-     * Auxiliary method that invokes a service to import functionalities from a
-     * file and include those functionalities in a module.
-     * 
-     * @param module
-     *            the module that will hold all the imported functionalities
-     * @param stream
-     *            the input stream corresponding to the XML document containing
-     *            the structure
-     * @param principalPreserved
-     *            if <code>false</code> then all functionalities will have the
-     *            value of <tt>principal</tt> set to false, possibly avoiding
-     *            conflicts with existing functionalities
-     * @param uuidUsed
-     *            if the uuid declared in the document should be used as the new
-     *            functionality uuid, that is, functionalities will be imported
-     *            with the same uuids
-     */
-    public static void importFunctionalities(Module module, InputStream stream, boolean principalPreserved, boolean uuidUsed)
-	    throws Exception {
-	ImportFunctionalities.run(module, stream, principalPreserved, uuidUsed);
-    }
+			return viewModule(parent, mapping, actionForm, request, response);
+		} else {
+			if (functionality instanceof Module) {
+				return viewModule((Module) functionality, mapping, actionForm, request, response);
+			} else {
+				return forwardTo(mapping.findForward("view"), request, functionality);
+			}
+		}
+	}
 
-    /**
-     * Auxiliary method that invokes a service to import functionalities from a
-     * file using the parent declared in that file or by creating a new top
-     * level module to hold them.
-     * 
-     * @param stream
-     *            the stream containing the XML funcitonalities structure
-     */
-    public static void importStartupFunctionalities(InputStream stream) throws Exception {
-	ServiceUtils.executeService("ImportStartupFunctionalities", new Object[] { stream });
-    }
+	protected Module getModule(HttpServletRequest request) {
+		return (Module) getObject(request, Module.class, "module");
+	}
+
+	protected Content getFunctionality(HttpServletRequest request) {
+		return (Content) getObject(request, Content.class, "functionality");
+	}
+
+	protected DomainObject getObject(HttpServletRequest request, Class type, String parameter) {
+		Integer objectId = getObjectId(request, parameter);
+
+		if (objectId == null) {
+			return null;
+		}
+
+		return readDomainObject(request, type, objectId);
+	}
+
+	protected Integer getObjectId(HttpServletRequest request, String name) {
+		return getId(request.getParameter(name));
+	}
+
+	protected Integer getId(String id) {
+		if (id == null) {
+			return null;
+		}
+
+		try {
+			return new Integer(id);
+		} catch (NumberFormatException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	//
+	// Auxiliary methods
+	//
+
+	/**
+	 * Auxiliary method that invokes the real service that will delete the
+	 * functionality.
+	 * 
+	 * @param functionality
+	 *            the functionality that will be deleted
+	 * @throws Exception
+	 *             the exception throw by the service
+	 */
+	public static void deleteFunctionality(Content functionality) throws Exception {
+		DeleteFunctionality.run(functionality);
+	}
+
+	/**
+	 * Auxiliary method that invokes the real service that will rearrange all
+	 * the functionalities. All pairs passed as argument describe the new
+	 * module/functionality relations. Relations will be broken and created
+	 * between all the referred functionalities in one transaction.
+	 * 
+	 * @param arrangements
+	 *            a list of pairs (parent, child)
+	 * @throws Exception
+	 *             the exception thrown by the service
+	 */
+	public static void rearrangeFunctionalities(List<Pair<Module, Content>> arrangements) throws Exception {
+		ArrangeFunctionalities.run(arrangements);
+	}
+
+	/**
+	 * Auxiliary method that invokes the service to enable the given
+	 * functionality.
+	 * 
+	 * @param functionality
+	 *            the functionality to enable
+	 * @throws Exception
+	 *             the exception thrown by the service
+	 */
+	public static void enable(Functionality functionality) throws Exception {
+		ServiceUtils.executeService("ChangeEnableInFunctionality", new Object[] { functionality, true });
+	}
+
+	/**
+	 * Auxiliary method that invokes the service to disable the given
+	 * functionality.
+	 * 
+	 * @param functionality
+	 *            the functionality to disable
+	 * @throws Exception
+	 *             the exception thrown by the service
+	 */
+	public static void disable(Functionality functionality) throws Exception {
+		ServiceUtils.executeService("ChangeEnableInFunctionality", new Object[] { functionality, false });
+	}
+
+	/**
+	 * Auxiliary method that invokes a service to create a {@link GroupAvailability} for the given functinolity
+	 * 
+	 * @param functionality
+	 *            the functionality that will have it's availability changed
+	 * @param expression
+	 *            the group expression used to the create the new group
+	 *            availability
+	 */
+	public static void setGroupAvailability(Content functionality, String expression) throws Exception {
+		CreateGroupAvailability.run(functionality, expression);
+	}
+
+	/**
+	 * Auxiliary method that invokes a service to import functionalities from a
+	 * file and include those functionalities in a module.
+	 * 
+	 * @param module
+	 *            the module that will hold all the imported functionalities
+	 * @param stream
+	 *            the input stream corresponding to the XML document containing
+	 *            the structure
+	 * @param principalPreserved
+	 *            if <code>false</code> then all functionalities will have the
+	 *            value of <tt>principal</tt> set to false, possibly avoiding
+	 *            conflicts with existing functionalities
+	 * @param uuidUsed
+	 *            if the uuid declared in the document should be used as the new
+	 *            functionality uuid, that is, functionalities will be imported
+	 *            with the same uuids
+	 */
+	public static void importFunctionalities(Module module, InputStream stream, boolean principalPreserved, boolean uuidUsed)
+			throws Exception {
+		ImportFunctionalities.run(module, stream, principalPreserved, uuidUsed);
+	}
+
+	/**
+	 * Auxiliary method that invokes a service to import functionalities from a
+	 * file using the parent declared in that file or by creating a new top
+	 * level module to hold them.
+	 * 
+	 * @param stream
+	 *            the stream containing the XML funcitonalities structure
+	 */
+	public static void importStartupFunctionalities(InputStream stream) throws Exception {
+		ServiceUtils.executeService("ImportStartupFunctionalities", new Object[] { stream });
+	}
 }

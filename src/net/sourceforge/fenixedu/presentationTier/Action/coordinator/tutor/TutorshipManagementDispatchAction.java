@@ -19,219 +19,211 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(module = "coordinator", path = "/tutorshipManagement", scope = "request", parameter = "method")
-@Forwards(value = {
-		@Forward(name = "transferTutorships", path = "/coordinator/tutors/transferTutorships.jsp"),
+@Forwards(value = { @Forward(name = "transferTutorships", path = "/coordinator/tutors/transferTutorships.jsp"),
 		@Forward(name = "showStudentsByTutor", path = "/coordinator/tutors/tutorManagement.jsp") })
 public class TutorshipManagementDispatchAction extends TutorManagementDispatchAction {
 
-    public ActionForward insertTutorshipWithOneStudent(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
+	public ActionForward insertTutorshipWithOneStudent(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
 
-	TutorshipManagementBean bean = (TutorshipManagementBean) RenderUtils.getViewState("associateOneStudentBean")
-		.getMetaObject().getObject();
-	RenderUtils.invalidateViewState("associateOneStudentBean");
+		TutorshipManagementBean bean =
+				(TutorshipManagementBean) RenderUtils.getViewState("associateOneStudentBean").getMetaObject().getObject();
+		RenderUtils.invalidateViewState("associateOneStudentBean");
 
-	final Teacher teacher = bean.getTeacher();
+		final Teacher teacher = bean.getTeacher();
 
-	Object[] args = new Object[] { bean.getExecutionDegreeID(), bean };
-	try {
-	    executeService("InsertTutorship", args);
-	} catch (FenixServiceException e) {
-	    addActionMessage(request, e.getMessage(), e.getArgs());
-	}
-
-	bean.setStudentNumber(null);
-	bean.setTutorshipEndMonth(Month.SEPTEMBER);
-	bean.setTutorshipEndYear(Tutorship.getLastPossibleTutorshipYear());
-
-	if (!teacher.getActiveTutorships().isEmpty()) {
-	    List<TutorshipManagementByEntryYearBean> beans = getTutorshipManagementBeansByEntryYear(teacher, teacher
-		    .getActiveTutorships());
-	    request.setAttribute("tutorshipManagementBeansByEntryYear", beans);
-	}
-
-	request.setAttribute("tutorshipManagementBean", bean);
-	return mapping.findForward("showStudentsByTutor");
-    }
-
-    public ActionForward manageTutorships(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-	final TutorshipManagementBean bean = (TutorshipManagementBean) RenderUtils.getViewState("tutorshipManagementBean")
-		.getMetaObject().getObject();
-
-	if (request.getParameter("remove") != null) {
-	    return removeTutorships(mapping, actionForm, request, response, bean);
-	} else if (request.getParameter("transfer") != null) {
-	    return prepareTransferTutorship(mapping, actionForm, request, response, bean);
-	}
-
-	request.setAttribute("tutorshipManagementBean", bean);
-	return mapping.findForward("showStudentsByTutor");
-    }
-
-    public ActionForward removeTutorships(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response, TutorshipManagementBean bean) throws Exception {
-
-	final Teacher teacher = bean.getTeacher();
-	List<Tutorship> tutorshipsToRemove = getTutorshipsToRemove();
-
-	if (tutorshipsToRemove.isEmpty()) {
-	    addActionMessage(request, "error.coordinator.tutor.manageTutorships.mustSelectStudents");
-	} else {
-	    Object[] args = { bean.getExecutionDegreeID(), bean.getTeacherId(), tutorshipsToRemove };
-
-	    List<TutorshipErrorBean> tutorshipsNotRemoved = new ArrayList<TutorshipErrorBean>();
-	    try {
-		tutorshipsNotRemoved = (List<TutorshipErrorBean>) executeService("DeleteTutorship", args);
-	    } catch (FenixServiceException e) {
-		addActionMessage(request, e.getMessage(), e.getArgs());
-	    }
-
-	    if (!tutorshipsNotRemoved.isEmpty()) {
-		for (TutorshipErrorBean tutorship : tutorshipsNotRemoved) {
-		    addActionMessage(request, tutorship.getMessage(), tutorship.getArgs());
+		Object[] args = new Object[] { bean.getExecutionDegreeID(), bean };
+		try {
+			executeService("InsertTutorship", args);
+		} catch (FenixServiceException e) {
+			addActionMessage(request, e.getMessage(), e.getArgs());
 		}
-	    }
+
+		bean.setStudentNumber(null);
+		bean.setTutorshipEndMonth(Month.SEPTEMBER);
+		bean.setTutorshipEndYear(Tutorship.getLastPossibleTutorshipYear());
+
+		if (!teacher.getActiveTutorships().isEmpty()) {
+			List<TutorshipManagementByEntryYearBean> beans =
+					getTutorshipManagementBeansByEntryYear(teacher, teacher.getActiveTutorships());
+			request.setAttribute("tutorshipManagementBeansByEntryYear", beans);
+		}
+
+		request.setAttribute("tutorshipManagementBean", bean);
+		return mapping.findForward("showStudentsByTutor");
 	}
 
-	if (!teacher.getActiveTutorships().isEmpty()) {
-	    List<TutorshipManagementByEntryYearBean> beans = getTutorshipManagementBeansByEntryYear(teacher, teacher
-		    .getActiveTutorships());
-	    request.setAttribute("tutorshipManagementBeansByEntryYear", beans);
+	public ActionForward manageTutorships(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		final TutorshipManagementBean bean =
+				(TutorshipManagementBean) RenderUtils.getViewState("tutorshipManagementBean").getMetaObject().getObject();
+
+		if (request.getParameter("remove") != null) {
+			return removeTutorships(mapping, actionForm, request, response, bean);
+		} else if (request.getParameter("transfer") != null) {
+			return prepareTransferTutorship(mapping, actionForm, request, response, bean);
+		}
+
+		request.setAttribute("tutorshipManagementBean", bean);
+		return mapping.findForward("showStudentsByTutor");
 	}
 
-	request.setAttribute("tutorshipManagementBean", bean);
-	return mapping.findForward("showStudentsByTutor");
-    }
+	public ActionForward removeTutorships(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response, TutorshipManagementBean bean) throws Exception {
 
-    public ActionForward prepareTransferTutorship(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response, TutorshipManagementBean bean) throws Exception {
+		final Teacher teacher = bean.getTeacher();
+		List<Tutorship> tutorshipsToRemove = getTutorshipsToRemove();
 
-	List<TutorshipManagementByEntryYearBean> tutorshipsToTransferBeans = getTutorshipsToTransferBeans();
+		if (tutorshipsToRemove.isEmpty()) {
+			addActionMessage(request, "error.coordinator.tutor.manageTutorships.mustSelectStudents");
+		} else {
+			Object[] args = { bean.getExecutionDegreeID(), bean.getTeacherId(), tutorshipsToRemove };
 
-	List<Tutorship> tutorshipsToTransfer = new ArrayList<Tutorship>();
-	for (TutorshipManagementByEntryYearBean tutorshipToTransferBean : tutorshipsToTransferBeans) {
-	    tutorshipsToTransfer.addAll(tutorshipToTransferBean.getStudentsList());
+			List<TutorshipErrorBean> tutorshipsNotRemoved = new ArrayList<TutorshipErrorBean>();
+			try {
+				tutorshipsNotRemoved = (List<TutorshipErrorBean>) executeService("DeleteTutorship", args);
+			} catch (FenixServiceException e) {
+				addActionMessage(request, e.getMessage(), e.getArgs());
+			}
+
+			if (!tutorshipsNotRemoved.isEmpty()) {
+				for (TutorshipErrorBean tutorship : tutorshipsNotRemoved) {
+					addActionMessage(request, tutorship.getMessage(), tutorship.getArgs());
+				}
+			}
+		}
+
+		if (!teacher.getActiveTutorships().isEmpty()) {
+			List<TutorshipManagementByEntryYearBean> beans =
+					getTutorshipManagementBeansByEntryYear(teacher, teacher.getActiveTutorships());
+			request.setAttribute("tutorshipManagementBeansByEntryYear", beans);
+		}
+
+		request.setAttribute("tutorshipManagementBean", bean);
+		return mapping.findForward("showStudentsByTutor");
 	}
 
-	if (tutorshipsToTransfer.isEmpty()) {
-	    addActionMessage(request, "error.coordinator.tutor.manageTutorships.mustSelectStudents");
+	public ActionForward prepareTransferTutorship(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response, TutorshipManagementBean bean) throws Exception {
 
-	    final Teacher teacher = bean.getTeacher();
+		List<TutorshipManagementByEntryYearBean> tutorshipsToTransferBeans = getTutorshipsToTransferBeans();
 
-	    if (!teacher.getActiveTutorships().isEmpty()) {
-		List<TutorshipManagementByEntryYearBean> beans = getTutorshipManagementBeansByEntryYear(teacher, teacher
-			.getActiveTutorships());
-		request.setAttribute("tutorshipManagementBeansByEntryYear", beans);
-	    }
+		List<Tutorship> tutorshipsToTransfer = new ArrayList<Tutorship>();
+		for (TutorshipManagementByEntryYearBean tutorshipToTransferBean : tutorshipsToTransferBeans) {
+			tutorshipsToTransfer.addAll(tutorshipToTransferBean.getStudentsList());
+		}
 
-	    request.setAttribute("tutorshipManagementBean", bean);
-	    return mapping.findForward("showStudentsByTutor");
+		if (tutorshipsToTransfer.isEmpty()) {
+			addActionMessage(request, "error.coordinator.tutor.manageTutorships.mustSelectStudents");
+
+			final Teacher teacher = bean.getTeacher();
+
+			if (!teacher.getActiveTutorships().isEmpty()) {
+				List<TutorshipManagementByEntryYearBean> beans =
+						getTutorshipManagementBeansByEntryYear(teacher, teacher.getActiveTutorships());
+				request.setAttribute("tutorshipManagementBeansByEntryYear", beans);
+			}
+
+			request.setAttribute("tutorshipManagementBean", bean);
+			return mapping.findForward("showStudentsByTutor");
+		}
+
+		TutorshipManagementBean targetTutorBean =
+				new TutorshipManagementBean(bean.getExecutionDegreeID(), bean.getDegreeCurricularPlanID());
+
+		request.setAttribute("targetTutorManagementBean", targetTutorBean);
+		request.setAttribute("tutorshipsToTransfer", tutorshipsToTransferBeans);
+		request.setAttribute("tutorshipManagementBean", bean);
+		return mapping.findForward("transferTutorships");
 	}
 
-	TutorshipManagementBean targetTutorBean = new TutorshipManagementBean(bean.getExecutionDegreeID(), bean
-		.getDegreeCurricularPlanID());
+	public ActionForward transferTutorship(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		// Bean with previous tutor
+		final TutorshipManagementBean tutorshipManagementBean =
+				(TutorshipManagementBean) RenderUtils.getViewState("tutorshipManagementBean").getMetaObject().getObject();
+		RenderUtils.invalidateViewState("tutorshipBean");
 
-	request.setAttribute("targetTutorManagementBean", targetTutorBean);
-	request.setAttribute("tutorshipsToTransfer", tutorshipsToTransferBeans);
-	request.setAttribute("tutorshipManagementBean", bean);
-	return mapping.findForward("transferTutorships");
-    }
+		// Bean with target tutor
+		TutorshipManagementBean targetTutorBean =
+				(TutorshipManagementBean) RenderUtils.getViewState("targetTutorBean").getMetaObject().getObject();
+		RenderUtils.invalidateViewState("targetTutorBean");
 
-    public ActionForward transferTutorship(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-	// Bean with previous tutor
-	final TutorshipManagementBean tutorshipManagementBean = (TutorshipManagementBean) RenderUtils.getViewState(
-		"tutorshipManagementBean").getMetaObject().getObject();
-	RenderUtils.invalidateViewState("tutorshipBean");
+		List<TutorshipManagementByEntryYearBean> tutorshipsToTransferBeans =
+				(List<TutorshipManagementByEntryYearBean>) RenderUtils.getViewState("tutorshipsToTransferBean").getMetaObject()
+						.getObject();
+		RenderUtils.invalidateViewState("tutorshipsToTransferBean");
 
-	// Bean with target tutor
-	TutorshipManagementBean targetTutorBean = (TutorshipManagementBean) RenderUtils.getViewState("targetTutorBean")
-		.getMetaObject().getObject();
-	RenderUtils.invalidateViewState("targetTutorBean");
+		Object[] args = new Object[] { targetTutorBean.getExecutionDegreeID(), targetTutorBean, tutorshipsToTransferBeans };
 
-	List<TutorshipManagementByEntryYearBean> tutorshipsToTransferBeans = (List<TutorshipManagementByEntryYearBean>) RenderUtils
-		.getViewState("tutorshipsToTransferBean").getMetaObject().getObject();
-	RenderUtils.invalidateViewState("tutorshipsToTransferBean");
+		List<TutorshipErrorBean> tutorshipsNotRemoved = new ArrayList<TutorshipErrorBean>();
+		try {
+			tutorshipsNotRemoved = (List<TutorshipErrorBean>) executeService("TransferTutorship", args);
+		} catch (FenixServiceException e) {
+			addActionMessage(request, e.getMessage(), e.getArgs());
 
-	Object[] args = new Object[] { targetTutorBean.getExecutionDegreeID(), targetTutorBean, tutorshipsToTransferBeans };
+			request.setAttribute("tutorshipsToTransfer", tutorshipsToTransferBeans);
+			request.setAttribute("targetTutorManagementBean", targetTutorBean);
+			request.setAttribute("tutorshipManagementBean", tutorshipManagementBean);
+			return mapping.findForward("transferTutorships");
+		}
 
-	List<TutorshipErrorBean> tutorshipsNotRemoved = new ArrayList<TutorshipErrorBean>();
-	try {
-	    tutorshipsNotRemoved = (List<TutorshipErrorBean>) executeService("TransferTutorship", args);
-	} catch (FenixServiceException e) {
-	    addActionMessage(request, e.getMessage(), e.getArgs());
+		if (!tutorshipsNotRemoved.isEmpty()) {
+			for (TutorshipErrorBean tutorship : tutorshipsNotRemoved) {
+				addActionMessage(request, tutorship.getMessage(), tutorship.getArgs());
+			}
+		}
 
-	    request.setAttribute("tutorshipsToTransfer", tutorshipsToTransferBeans);
-	    request.setAttribute("targetTutorManagementBean", targetTutorBean);
-	    request.setAttribute("tutorshipManagementBean", tutorshipManagementBean);
-	    return mapping.findForward("transferTutorships");
+		final Teacher teacher = tutorshipManagementBean.getTeacher();
+
+		if (!teacher.getActiveTutorships().isEmpty()) {
+			List<TutorshipManagementByEntryYearBean> beans =
+					getTutorshipManagementBeansByEntryYear(teacher, teacher.getActiveTutorships());
+			request.setAttribute("tutorshipManagementBeansByEntryYear", beans);
+		}
+
+		request.setAttribute("tutorshipManagementBean", tutorshipManagementBean);
+		return mapping.findForward("showStudentsByTutor");
+
 	}
 
-	if (!tutorshipsNotRemoved.isEmpty()) {
-	    for (TutorshipErrorBean tutorship : tutorshipsNotRemoved) {
-		addActionMessage(request, tutorship.getMessage(), tutorship.getArgs());
-	    }
+	/*
+	 * AUXILIARY METHODS
+	 */
+
+	/*
+	 * Returns the list of tutorships to remove from the current teacher
+	 */
+	private List<Tutorship> getTutorshipsToRemove() {
+		List<Tutorship> tutorshipsToRemove = new ArrayList<Tutorship>();
+
+		for (int i = 0; RenderUtils.getViewState("manageTutorshipBean" + i) != null; i++) {
+			TutorshipManagementByEntryYearBean manageTutorshipBean =
+					(TutorshipManagementByEntryYearBean) RenderUtils.getViewState("manageTutorshipBean" + i).getMetaObject()
+							.getObject();
+			RenderUtils.invalidateViewState("manageTutorshipBean" + i);
+			tutorshipsToRemove.addAll(manageTutorshipBean.getStudentsList());
+		}
+		return tutorshipsToRemove;
 	}
 
-	final Teacher teacher = tutorshipManagementBean.getTeacher();
+	/*
+	 * Returns a list of beans that contains the tutorships to transfer to
+	 * another teacher, grouped by students entry year
+	 */
+	private List<TutorshipManagementByEntryYearBean> getTutorshipsToTransferBeans() {
+		List<TutorshipManagementByEntryYearBean> tutorshipsToTransfer = new ArrayList<TutorshipManagementByEntryYearBean>();
 
-	if (!teacher.getActiveTutorships().isEmpty()) {
-	    List<TutorshipManagementByEntryYearBean> beans = getTutorshipManagementBeansByEntryYear(teacher, teacher
-		    .getActiveTutorships());
-	    request.setAttribute("tutorshipManagementBeansByEntryYear", beans);
+		for (int i = 0; RenderUtils.getViewState("manageTutorshipBean" + i) != null; i++) {
+			tutorshipsToTransfer.add((TutorshipManagementByEntryYearBean) RenderUtils.getViewState("manageTutorshipBean" + i)
+					.getMetaObject().getObject());
+			RenderUtils.invalidateViewState("manageTutorshipBean" + i);
+		}
+		return tutorshipsToTransfer;
 	}
-
-	request.setAttribute("tutorshipManagementBean", tutorshipManagementBean);
-	return mapping.findForward("showStudentsByTutor");
-
-    }
-
-    /*
-     * AUXILIARY METHODS
-     */
-
-    /*
-     * Returns the list of tutorships to remove from the current teacher
-     */
-    private List<Tutorship> getTutorshipsToRemove() {
-	List<Tutorship> tutorshipsToRemove = new ArrayList<Tutorship>();
-
-	for (int i = 0; RenderUtils.getViewState("manageTutorshipBean" + i) != null; i++) {
-	    TutorshipManagementByEntryYearBean manageTutorshipBean = (TutorshipManagementByEntryYearBean) RenderUtils
-		    .getViewState("manageTutorshipBean" + i).getMetaObject().getObject();
-	    RenderUtils.invalidateViewState("manageTutorshipBean" + i);
-	    tutorshipsToRemove.addAll(manageTutorshipBean.getStudentsList());
-	}
-	return tutorshipsToRemove;
-    }
-
-    /*
-     * Returns a list of beans that contains the tutorships to transfer to
-     * another teacher, grouped by students entry year
-     */
-    private List<TutorshipManagementByEntryYearBean> getTutorshipsToTransferBeans() {
-	List<TutorshipManagementByEntryYearBean> tutorshipsToTransfer = new ArrayList<TutorshipManagementByEntryYearBean>();
-
-	for (int i = 0; RenderUtils.getViewState("manageTutorshipBean" + i) != null; i++) {
-	    tutorshipsToTransfer.add((TutorshipManagementByEntryYearBean) RenderUtils.getViewState("manageTutorshipBean" + i)
-		    .getMetaObject().getObject());
-	    RenderUtils.invalidateViewState("manageTutorshipBean" + i);
-	}
-	return tutorshipsToTransfer;
-    }
 }

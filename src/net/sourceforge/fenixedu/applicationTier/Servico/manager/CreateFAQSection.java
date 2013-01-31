@@ -15,17 +15,17 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class CreateFAQSection extends FenixService {
 
-    @Checked("RolePredicates.MANAGER_PREDICATE")
-    @Service
-    public static void run(InfoFAQSection infoFAQSection) {
-	FAQSection parentFAQSection = null;
-	if (infoFAQSection.getParentSection() != null && infoFAQSection.getParentSection().getIdInternal() != null) {
-	    parentFAQSection = rootDomainObject.readFAQSectionByOID(infoFAQSection.getParentSection().getIdInternal());
-	}
+	@Checked("RolePredicates.MANAGER_PREDICATE")
+	@Service
+	public static void run(InfoFAQSection infoFAQSection) {
+		FAQSection parentFAQSection = null;
+		if (infoFAQSection.getParentSection() != null && infoFAQSection.getParentSection().getIdInternal() != null) {
+			parentFAQSection = rootDomainObject.readFAQSectionByOID(infoFAQSection.getParentSection().getIdInternal());
+		}
 
-	FAQSection faqSection = new FAQSection();
-	faqSection.setSectionName(infoFAQSection.getSectionName());
-	faqSection.setParentSection(parentFAQSection);
-    }
+		FAQSection faqSection = new FAQSection();
+		faqSection.setSectionName(infoFAQSection.getSectionName());
+		faqSection.setParentSection(parentFAQSection);
+	}
 
 }

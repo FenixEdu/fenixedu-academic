@@ -4,114 +4,136 @@ import java.io.Serializable;
 
 public class GeneratedOverheadsReportLine implements Serializable, IGeneratedOverheadsReportLine {
 
-    private Integer explorationUnit;
+	private Integer explorationUnit;
 
-    private Integer projectNumber;
+	private Integer projectNumber;
 
-    private String acronim;
+	private String acronim;
 
-    private Integer coordinatorNumber;
+	private Integer coordinatorNumber;
 
-    private String coordinatorName;
+	private String coordinatorName;
 
-    private String type;
+	private String type;
 
-    private String date;
+	private String date;
 
-    private String description;
+	private String description;
 
-    private Double revenue;
+	private Double revenue;
 
-    private Double overheadPerscentage;
+	private Double overheadPerscentage;
 
-    private Double overheadValue;
+	private Double overheadValue;
 
-    public String getAcronim() {
-	return acronim;
-    }
+	@Override
+	public String getAcronim() {
+		return acronim;
+	}
 
-    public void setAcronim(String acronim) {
-	this.acronim = acronim;
-    }
+	@Override
+	public void setAcronim(String acronim) {
+		this.acronim = acronim;
+	}
 
-    public String getCoordinatorName() {
-	return coordinatorName;
-    }
+	@Override
+	public String getCoordinatorName() {
+		return coordinatorName;
+	}
 
-    public void setCoordinatorName(String coordinatorName) {
-	this.coordinatorName = coordinatorName;
-    }
+	@Override
+	public void setCoordinatorName(String coordinatorName) {
+		this.coordinatorName = coordinatorName;
+	}
 
-    public Integer getCoordinatorNumber() {
-	return coordinatorNumber;
-    }
+	@Override
+	public Integer getCoordinatorNumber() {
+		return coordinatorNumber;
+	}
 
-    public void setCoordinatorNumber(Integer coordinatorNumber) {
-	this.coordinatorNumber = coordinatorNumber;
-    }
+	@Override
+	public void setCoordinatorNumber(Integer coordinatorNumber) {
+		this.coordinatorNumber = coordinatorNumber;
+	}
 
-    public String getDate() {
-	return date;
-    }
+	@Override
+	public String getDate() {
+		return date;
+	}
 
-    public void setDate(String date) {
-	this.date = date;
-    }
+	@Override
+	public void setDate(String date) {
+		this.date = date;
+	}
 
-    public String getDescription() {
-	return description;
-    }
+	@Override
+	public String getDescription() {
+		return description;
+	}
 
-    public void setDescription(String description) {
-	this.description = description;
-    }
+	@Override
+	public void setDescription(String description) {
+		this.description = description;
+	}
 
-    public Integer getExplorationUnit() {
-	return explorationUnit;
-    }
+	@Override
+	public Integer getExplorationUnit() {
+		return explorationUnit;
+	}
 
-    public void setExplorationUnit(Integer explorationUnit) {
-	this.explorationUnit = explorationUnit;
-    }
+	@Override
+	public void setExplorationUnit(Integer explorationUnit) {
+		this.explorationUnit = explorationUnit;
+	}
 
-    public Double getOverheadPerscentage() {
-	return overheadPerscentage;
-    }
+	@Override
+	public Double getOverheadPerscentage() {
+		return overheadPerscentage;
+	}
 
-    public void setOverheadPerscentage(Double overheadPerscentage) {
-	this.overheadPerscentage = overheadPerscentage;
-    }
+	@Override
+	public void setOverheadPerscentage(Double overheadPerscentage) {
+		this.overheadPerscentage = overheadPerscentage;
+	}
 
-    public Double getOverheadValue() {
-	return overheadValue;
-    }
+	@Override
+	public Double getOverheadValue() {
+		return overheadValue;
+	}
 
-    public void setOverheadValue(Double overheadValue) {
-	this.overheadValue = overheadValue;
-    }
+	@Override
+	public void setOverheadValue(Double overheadValue) {
+		this.overheadValue = overheadValue;
+	}
 
-    public Integer getProjectNumber() {
-	return projectNumber;
-    }
+	@Override
+	public Integer getProjectNumber() {
+		return projectNumber;
+	}
 
-    public void setProjectNumber(Integer projectNumber) {
-	this.projectNumber = projectNumber;
-    }
+	@Override
+	public void setProjectNumber(Integer projectNumber) {
+		this.projectNumber = projectNumber;
+	}
 
-    public Double getRevenue() {
-	return revenue;
-    }
+	@Override
+	public Double getRevenue() {
+		return revenue;
+	}
 
-    public void setRevenue(Double revenue) {
-	this.revenue = revenue;
-    }
+	@Override
+	public void setRevenue(Double revenue) {
+		this.revenue = revenue;
+	}
 
-    public String getType() {
-	return type;
-    }
+	@Override
+	public String getType() {
+		return type;
+	}
 
-    public void setType(String type) {
-	this.type = type;
-    }
+	@Override
+	public void setType(String type) {
+		this.type = type;
+	}
 
 }

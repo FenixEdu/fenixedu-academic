@@ -35,139 +35,138 @@ import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 public class InstitutionAffiliationEvent extends InstitutionAffiliationEvent_Base {
 
-    protected InstitutionAffiliationEvent() {
-	super();
-    }
-
-    public InstitutionAffiliationEvent(Person person) {
-	super();
-	init(person);
-    }
-
-    protected void init(Person person) {
-	super.init(EventType.INSTITUTION_AFFILIATION, person);
-	setInstitution(RootDomainObject.getInstance().getInstitutionUnit());
-	setInstitutionWhereOpen(getInstitution());
-    }
-
-    @Override
-    protected Account getFromAccount() {
-	return getPerson().getAccountBy(AccountType.EXTERNAL);
-    }
-
-    @Override
-    public Account getToAccount() {
-	return getInstitution().getAccountBy(AccountType.INTERNAL);
-    }
-
-    @Override
-    public LabelFormatter getDescriptionForEntryType(EntryType entryType) {
-	final LabelFormatter labelFormatter = new LabelFormatter();
-	labelFormatter.appendLabel(entryType.name(), LabelFormatter.ENUMERATION_RESOURCES);
-	return labelFormatter;
-    }
-
-    @Override
-    public PostingRule getPostingRule() {
-	return getInstitution().getUnitServiceAgreementTemplate().findPostingRuleBy(getEventType(), getWhenOccured(), null);
-    }
-
-    @Override
-    protected List<AccountingEventPaymentCode> createPaymentCodes() {
-	return Collections.singletonList(AccountingEventPaymentCode.create(PaymentCodeType.INSTITUTION_ACCOUNT_CREDIT,
-		new YearMonthDay(), new YearMonthDay().plusMonths(6), this, getOriginalAmountToPay(), null, getPerson()));
-    }
-
-    @Override
-    protected List<AccountingEventPaymentCode> updatePaymentCodes() {
-	return getNonProcessedPaymentCodes();
-    }
-
-    @Override
-    protected boolean canCloseEvent(DateTime whenRegistered) {
-	// these events are closed when the affiliation status changes.
-	return false;
-    }
-
-    @Override
-    protected Set<Entry> internalProcess(User responsibleUser, AccountingEventPaymentCode paymentCode, Money amountToPay,
-	    SibsTransactionDetailDTO transactionDetail) {
-	return internalProcess(responsibleUser,
-		Collections.singletonList(new EntryDTO(EntryType.INSTITUTION_ACCOUNT_CREDIT, this, amountToPay)),
-		transactionDetail);
-    }
-
-    @Override
-    public Unit getOwnerUnit() {
-	return getInstitution();
-    }
-
-    public Money calculateBalance() {
-	Money totalCredit = getPayedAmount();
-	for (MicroPaymentEvent microPayments : getMicroPaymentEventSet()) {
-	    totalCredit = totalCredit.subtract(microPayments.getPayedAmount());
+	protected InstitutionAffiliationEvent() {
+		super();
 	}
-	return totalCredit;
-    }
 
-    public Money getBalance() {
-	return calculateBalance();
-    }
-
-    public SortedSet<MicroPaymentEvent> getSortedMicroPaymentEvents() {
-	final SortedSet<MicroPaymentEvent> result = new TreeSet<MicroPaymentEvent>(MicroPaymentEvent.COMPARATOR_BY_DATE);
-	result.addAll(getMicroPaymentEventSet());
-	return result;
-    }
-
-    @Override
-    public SortedSet<AccountingTransaction> getSortedTransactionsForPresentation() {
-	final SortedSet<AccountingTransaction> result = super.getSortedTransactionsForPresentation();
-	for (final Event event : getMicroPaymentEventSet()) {
-	    result.addAll(event.getAdjustedTransactions());
+	public InstitutionAffiliationEvent(Person person) {
+		super();
+		init(person);
 	}
-	return result;
-    }
 
-    public boolean acceptedTermsAndConditions() {
-	return getAcceptedTermsAndConditions() != null && getAcceptedTermsAndConditions().isBeforeNow();
-    }
-
-    public String generatePaymentTicket() {
-	return isOpen() && acceptedTermsAndConditions() ?
-	    new InstitutionAffiliationEventTicket(this).getTicket() : StringUtils.EMPTY;
-    }
-
-    @Service
-    public void acceptTermsAndConditions() {
-	final Person person = AccessControl.getPerson();
-	if (person == null || person != getPerson()) {
-	    throw new DomainException("error.only.the.accounts.owner.can.accept.the.terms.and.conditions");
+	protected void init(Person person) {
+		super.init(EventType.INSTITUTION_AFFILIATION, person);
+		setInstitution(RootDomainObject.getInstance().getInstitutionUnit());
+		setInstitutionWhereOpen(getInstitution());
 	}
-	setAcceptedTermsAndConditions(new DateTime());
-    }
 
-    public void consumeTicket(final String paymentTicket, final Event event) {
-	final InstitutionAffiliationEventTicket ticket = findTicket(paymentTicket);
-	if (ticket == null) {
-	    throw new DomainException("error.payment.ticket.invalid.for.user");
+	@Override
+	protected Account getFromAccount() {
+		return getPerson().getAccountBy(AccountType.EXTERNAL);
 	}
-	ticket.consume(event);
-    }
 
-    private InstitutionAffiliationEventTicket findTicket(final String validationCode) {
-	for (final InstitutionAffiliationEventTicket ticket : getGeneratedTicketSet()) {
-	    if (ticket.getTicket().equals(validationCode)) {
-		return ticket;
-	    }
+	@Override
+	public Account getToAccount() {
+		return getInstitution().getAccountBy(AccountType.INTERNAL);
 	}
-	return null;
-    }
 
-    public void invalidateExistingTickets() {
-	for (final InstitutionAffiliationEventTicket ticket : getGeneratedTicketSet()) {
-	    ticket.invalidate();
+	@Override
+	public LabelFormatter getDescriptionForEntryType(EntryType entryType) {
+		final LabelFormatter labelFormatter = new LabelFormatter();
+		labelFormatter.appendLabel(entryType.name(), LabelFormatter.ENUMERATION_RESOURCES);
+		return labelFormatter;
 	}
-    }
+
+	@Override
+	public PostingRule getPostingRule() {
+		return getInstitution().getUnitServiceAgreementTemplate().findPostingRuleBy(getEventType(), getWhenOccured(), null);
+	}
+
+	@Override
+	protected List<AccountingEventPaymentCode> createPaymentCodes() {
+		return Collections.singletonList(AccountingEventPaymentCode.create(PaymentCodeType.INSTITUTION_ACCOUNT_CREDIT,
+				new YearMonthDay(), new YearMonthDay().plusMonths(6), this, getOriginalAmountToPay(), null, getPerson()));
+	}
+
+	@Override
+	protected List<AccountingEventPaymentCode> updatePaymentCodes() {
+		return getNonProcessedPaymentCodes();
+	}
+
+	@Override
+	protected boolean canCloseEvent(DateTime whenRegistered) {
+		// these events are closed when the affiliation status changes.
+		return false;
+	}
+
+	@Override
+	protected Set<Entry> internalProcess(User responsibleUser, AccountingEventPaymentCode paymentCode, Money amountToPay,
+			SibsTransactionDetailDTO transactionDetail) {
+		return internalProcess(responsibleUser,
+				Collections.singletonList(new EntryDTO(EntryType.INSTITUTION_ACCOUNT_CREDIT, this, amountToPay)),
+				transactionDetail);
+	}
+
+	@Override
+	public Unit getOwnerUnit() {
+		return getInstitution();
+	}
+
+	public Money calculateBalance() {
+		Money totalCredit = getPayedAmount();
+		for (MicroPaymentEvent microPayments : getMicroPaymentEventSet()) {
+			totalCredit = totalCredit.subtract(microPayments.getPayedAmount());
+		}
+		return totalCredit;
+	}
+
+	public Money getBalance() {
+		return calculateBalance();
+	}
+
+	public SortedSet<MicroPaymentEvent> getSortedMicroPaymentEvents() {
+		final SortedSet<MicroPaymentEvent> result = new TreeSet<MicroPaymentEvent>(MicroPaymentEvent.COMPARATOR_BY_DATE);
+		result.addAll(getMicroPaymentEventSet());
+		return result;
+	}
+
+	@Override
+	public SortedSet<AccountingTransaction> getSortedTransactionsForPresentation() {
+		final SortedSet<AccountingTransaction> result = super.getSortedTransactionsForPresentation();
+		for (final Event event : getMicroPaymentEventSet()) {
+			result.addAll(event.getAdjustedTransactions());
+		}
+		return result;
+	}
+
+	public boolean acceptedTermsAndConditions() {
+		return getAcceptedTermsAndConditions() != null && getAcceptedTermsAndConditions().isBeforeNow();
+	}
+
+	public String generatePaymentTicket() {
+		return isOpen() && acceptedTermsAndConditions() ? new InstitutionAffiliationEventTicket(this).getTicket() : StringUtils.EMPTY;
+	}
+
+	@Service
+	public void acceptTermsAndConditions() {
+		final Person person = AccessControl.getPerson();
+		if (person == null || person != getPerson()) {
+			throw new DomainException("error.only.the.accounts.owner.can.accept.the.terms.and.conditions");
+		}
+		setAcceptedTermsAndConditions(new DateTime());
+	}
+
+	public void consumeTicket(final String paymentTicket, final Event event) {
+		final InstitutionAffiliationEventTicket ticket = findTicket(paymentTicket);
+		if (ticket == null) {
+			throw new DomainException("error.payment.ticket.invalid.for.user");
+		}
+		ticket.consume(event);
+	}
+
+	private InstitutionAffiliationEventTicket findTicket(final String validationCode) {
+		for (final InstitutionAffiliationEventTicket ticket : getGeneratedTicketSet()) {
+			if (ticket.getTicket().equals(validationCode)) {
+				return ticket;
+			}
+		}
+		return null;
+	}
+
+	public void invalidateExistingTickets() {
+		for (final InstitutionAffiliationEventTicket ticket : getGeneratedTicketSet()) {
+			ticket.invalidate();
+		}
+	}
 
 }

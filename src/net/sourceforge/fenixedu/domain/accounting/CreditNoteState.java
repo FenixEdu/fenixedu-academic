@@ -1,17 +1,17 @@
 package net.sourceforge.fenixedu.domain.accounting;
 
 public enum CreditNoteState {
-    EMITTED, PAYED, ANNULLED;
+	EMITTED, PAYED, ANNULLED;
 
-    public String getName() {
-	return name();
-    }
+	public String getName() {
+		return name();
+	}
 
-    public String getQualifiedName() {
-	return CreditNoteState.class.getSimpleName() + "." + name();
-    }
+	public String getQualifiedName() {
+		return CreditNoteState.class.getSimpleName() + "." + name();
+	}
 
-    public String getFullyQualifiedName() {
-	return CreditNoteState.class.getName() + "." + name();
-    }
+	public String getFullyQualifiedName() {
+		return CreditNoteState.class.getName() + "." + name();
+	}
 }

@@ -17,67 +17,66 @@ import net.sourceforge.fenixedu.domain.space.Campus;
 @SuppressWarnings("serial")
 public class SearchCourseResponsiblesParametersBean implements Serializable {
 
-    private ExecutionSemester executionSemester;
-    
-    private Person responsible;
+	private ExecutionSemester executionSemester;
 
-    private CurricularCourse curricularCourse;
+	private Person responsible;
 
-    private CompetenceCourse competenceCourse;
+	private CurricularCourse curricularCourse;
 
-    private final Campus campus;
+	private CompetenceCourse competenceCourse;
 
-    private final Degree degree;
+	private final Campus campus;
 
-    public SearchCourseResponsiblesParametersBean(CurricularCourse curricularCourse, CompetenceCourse competenceCourse,
-	    Person responsible, ExecutionSemester executionSemester, Campus campus, Degree degree) {
-	this.executionSemester = executionSemester;
-	this.curricularCourse = curricularCourse;
-	this.responsible = responsible;
-	this.competenceCourse = competenceCourse;
-	this.campus = campus;
-	this.degree = degree;
-    }
+	private final Degree degree;
 
-    public void setExecutionSemester(ExecutionSemester executionSemester) {
-	this.executionSemester = executionSemester;
-    }
+	public SearchCourseResponsiblesParametersBean(CurricularCourse curricularCourse, CompetenceCourse competenceCourse,
+			Person responsible, ExecutionSemester executionSemester, Campus campus, Degree degree) {
+		this.executionSemester = executionSemester;
+		this.curricularCourse = curricularCourse;
+		this.responsible = responsible;
+		this.competenceCourse = competenceCourse;
+		this.campus = campus;
+		this.degree = degree;
+	}
 
-    public ExecutionSemester getExecutionSemester() {
-	return executionSemester;
-    }
+	public void setExecutionSemester(ExecutionSemester executionSemester) {
+		this.executionSemester = executionSemester;
+	}
 
-    public void setResponsible(Person responsible) {
-	this.responsible = responsible;
-    }
+	public ExecutionSemester getExecutionSemester() {
+		return executionSemester;
+	}
 
-    public Person getResponsible() {
-	return responsible;
-    }
+	public void setResponsible(Person responsible) {
+		this.responsible = responsible;
+	}
 
-    public void setCurricularCourse(CurricularCourse curricularCourse) {
-	this.curricularCourse = curricularCourse;
-    }
+	public Person getResponsible() {
+		return responsible;
+	}
 
-    public CurricularCourse getCurricularCourse() {
-	return curricularCourse;
-    }
+	public void setCurricularCourse(CurricularCourse curricularCourse) {
+		this.curricularCourse = curricularCourse;
+	}
 
-    public void setCompetenceCourse(CompetenceCourse competenceCourse) {
-	this.competenceCourse = competenceCourse;
-    }
+	public CurricularCourse getCurricularCourse() {
+		return curricularCourse;
+	}
 
-    public CompetenceCourse getCompetenceCourse() {
-	return competenceCourse;
-    }
+	public void setCompetenceCourse(CompetenceCourse competenceCourse) {
+		this.competenceCourse = competenceCourse;
+	}
 
-    public Campus getCampus() {
-	return campus;
-    }
+	public CompetenceCourse getCompetenceCourse() {
+		return competenceCourse;
+	}
 
-    public Degree getDegree() {
-	return degree;
-    }
+	public Campus getCampus() {
+		return campus;
+	}
 
+	public Degree getDegree() {
+		return degree;
+	}
 
 }

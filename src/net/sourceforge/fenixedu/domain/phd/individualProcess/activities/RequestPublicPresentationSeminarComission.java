@@ -11,34 +11,34 @@ import net.sourceforge.fenixedu.domain.phd.seminar.PublicPresentationSeminarProc
 
 public class RequestPublicPresentationSeminarComission extends PhdIndividualProgramProcessActivity {
 
-    @Override
-    protected void activityPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
-	if (process.hasSeminarProcess() || process.getActiveState() != PhdIndividualProgramProcessState.WORK_DEVELOPMENT) {
-	    throw new PreConditionNotValidException();
+	@Override
+	protected void activityPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
+		if (process.hasSeminarProcess() || process.getActiveState() != PhdIndividualProgramProcessState.WORK_DEVELOPMENT) {
+			throw new PreConditionNotValidException();
+		}
+
+		if (!process.isAllowedToManageProcess(userView) && !process.isGuider(userView.getPerson())) {
+			throw new PreConditionNotValidException();
+		}
 	}
 
-	if (!process.isAllowedToManageProcess(userView) && !process.isGuider(userView.getPerson())) {
-	    throw new PreConditionNotValidException();
+	@Override
+	protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess individualProcess, IUserView userView,
+			Object object) {
+
+		PublicPresentationSeminarProcessBean bean = (PublicPresentationSeminarProcessBean) object;
+		bean.setPhdIndividualProgramProcess(individualProcess);
+
+		final PublicPresentationSeminarProcess publicPresentationSeminarProcess =
+				Process.createNewProcess(userView, PublicPresentationSeminarProcess.class, object);
+
+		if (((PublicPresentationSeminarProcessBean) object).getGenerateAlert()) {
+			AlertService.alertCoordinators(individualProcess,
+					"message.phd.alert.public.presentation.seminar.comission.definition.subject",
+					"message.phd.alert.public.presentation.seminar.comission.definition.body");
+
+		}
+
+		return individualProcess;
 	}
-    }
-
-    @Override
-    protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess individualProcess, IUserView userView,
-	    Object object) {
-
-	PublicPresentationSeminarProcessBean bean = (PublicPresentationSeminarProcessBean) object;
-	bean.setPhdIndividualProgramProcess(individualProcess);
-
-	final PublicPresentationSeminarProcess publicPresentationSeminarProcess = Process.createNewProcess(userView,
-		PublicPresentationSeminarProcess.class, object);
-
-	if (((PublicPresentationSeminarProcessBean) object).getGenerateAlert()) {
-	    AlertService.alertCoordinators(individualProcess,
-		    "message.phd.alert.public.presentation.seminar.comission.definition.subject",
-		    "message.phd.alert.public.presentation.seminar.comission.definition.body");
-
-	}
-
-	return individualProcess;
-    }
 }

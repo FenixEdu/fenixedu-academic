@@ -17,28 +17,28 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class DeleteDegrees extends FenixService {
 
-    // delete a set of degrees
-    @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
-    @Service
-    public static List run(List degreesInternalIds) throws FenixServiceException {
-	Iterator iter = degreesInternalIds.iterator();
+	// delete a set of degrees
+	@Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
+	@Service
+	public static List run(List degreesInternalIds) throws FenixServiceException {
+		Iterator iter = degreesInternalIds.iterator();
 
-	List<String> undeletedDegreesNames = new ArrayList<String>();
-	while (iter.hasNext()) {
-	    Integer internalId = (Integer) iter.next();
-	    Degree degree = rootDomainObject.readDegreeByOID(internalId);
+		List<String> undeletedDegreesNames = new ArrayList<String>();
+		while (iter.hasNext()) {
+			Integer internalId = (Integer) iter.next();
+			Degree degree = rootDomainObject.readDegreeByOID(internalId);
 
-	    if (degree != null) {
+			if (degree != null) {
 
-		try {
-		    degree.delete();
-		} catch (DomainException e) {
-		    undeletedDegreesNames.add(degree.getNome());
+				try {
+					degree.delete();
+				} catch (DomainException e) {
+					undeletedDegreesNames.add(degree.getNome());
+				}
+			}
 		}
-	    }
-	}
 
-	return undeletedDegreesNames;
-    }
+		return undeletedDegreesNames;
+	}
 
 }

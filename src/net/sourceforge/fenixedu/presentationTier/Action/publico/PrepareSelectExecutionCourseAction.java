@@ -25,27 +25,27 @@ import org.apache.struts.action.ActionMapping;
  */
 public class PrepareSelectExecutionCourseAction extends FenixContextAction {
 
-    @Override
-    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-	    throws FenixActionException, FenixFilterException {
-	try {
-	    super.execute(mapping, form, request, response);
-	} catch (Exception e1) {
-	    e1.printStackTrace();
+	@Override
+	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+			throws FenixActionException, FenixFilterException {
+		try {
+			super.execute(mapping, form, request, response);
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}
+
+		InfoExecutionPeriod infoExecutionPeriod =
+				(InfoExecutionPeriod) request.getAttribute(PresentationConstants.EXECUTION_PERIOD);
+
+		InfoExecutionDegree infoExecutionDegree =
+				RequestUtils.getExecutionDegreeFromRequest(request, infoExecutionPeriod.getInfoExecutionYear());
+
+		Integer curricularYear = (Integer) request.getAttribute("curYear");
+
+		List infoExecutionCourses = (List) SelectExecutionCourse.run(infoExecutionDegree, infoExecutionPeriod, curricularYear);
+		Collections.sort(infoExecutionCourses, new BeanComparator("nome"));
+		request.setAttribute("exeCourseList", infoExecutionCourses);
+		return mapping.findForward("sucess");
 	}
-
-	InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request
-		.getAttribute(PresentationConstants.EXECUTION_PERIOD);
-
-	InfoExecutionDegree infoExecutionDegree = RequestUtils.getExecutionDegreeFromRequest(request, infoExecutionPeriod
-		.getInfoExecutionYear());
-
-	Integer curricularYear = (Integer) request.getAttribute("curYear");
-
-	List infoExecutionCourses = (List) SelectExecutionCourse.run(infoExecutionDegree, infoExecutionPeriod, curricularYear);
-	Collections.sort(infoExecutionCourses, new BeanComparator("nome"));
-	request.setAttribute("exeCourseList", infoExecutionCourses);
-	return mapping.findForward("sucess");
-    }
 
 }

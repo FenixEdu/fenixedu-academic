@@ -22,74 +22,74 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 @Mapping(path = "/qualification", module = "manager")
 @Forwards({ @Forward(name = "showQualifications", path = "/manager/qualifications/showQualifications.jsp"),
-	@Forward(name = "qualification", path = "/manager/qualifications/qualification.jsp"),
-	@Forward(name = "viewPerson", path = "/manager/personManagement/viewPerson.jsp"),
-	@Forward(name = "viewStudentLogChanges", path = "/manager/personManagement/viewStudentLogChanges.jsp") })
+		@Forward(name = "qualification", path = "/manager/qualifications/qualification.jsp"),
+		@Forward(name = "viewPerson", path = "/manager/personManagement/viewPerson.jsp"),
+		@Forward(name = "viewStudentLogChanges", path = "/manager/personManagement/viewStudentLogChanges.jsp") })
 public class QualificationDA extends FenixDispatchAction {
 
-    public ActionForward showQualifications(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-	setAttributePerson(request);
-	return mapping.findForward("showQualifications");
-    }
+	public ActionForward showQualifications(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		setAttributePerson(request);
+		return mapping.findForward("showQualifications");
+	}
 
-    public ActionForward prepareCreateQualification(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-	setAttributePerson(request);
-	return mapping.findForward("qualification");
-    }
+	public ActionForward prepareCreateQualification(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		setAttributePerson(request);
+		return mapping.findForward("qualification");
+	}
 
-    public ActionForward prepareEditQualification(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-	Qualification qualification = getQualificationFromParameter(request);
-	request.setAttribute("qualification", qualification);
-	setAttributePerson(request);
-	return mapping.findForward("qualification");
-    }
+	public ActionForward prepareEditQualification(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		Qualification qualification = getQualificationFromParameter(request);
+		request.setAttribute("qualification", qualification);
+		setAttributePerson(request);
+		return mapping.findForward("qualification");
+	}
 
-    @Service
-    public ActionForward deleteQualification(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-	Qualification qualification = getQualificationFromParameter(request);
-	qualification.delete();
-	return backToShowQualifications(mapping, actionForm, request, response);
-    }
+	@Service
+	public ActionForward deleteQualification(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		Qualification qualification = getQualificationFromParameter(request);
+		qualification.delete();
+		return backToShowQualifications(mapping, actionForm, request, response);
+	}
 
-    public ActionForward backToShowQualifications(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-	setAttributePerson(request);
-	return mapping.findForward("showQualifications");
-    }
+	public ActionForward backToShowQualifications(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		setAttributePerson(request);
+		return mapping.findForward("showQualifications");
+	}
 
-    public ActionForward backToViewPerson(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-	setAttributePerson(request);
-	return mapping.findForward("viewPerson");
-    }
+	public ActionForward backToViewPerson(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		setAttributePerson(request);
+		return mapping.findForward("viewPerson");
+	}
 
-    protected Person getPersonSelectedFromParameter(HttpServletRequest request) {
-	String personIDString = request.getParameter("personID");
-	return AbstractDomainObject.fromExternalId(personIDString);
+	protected Person getPersonSelectedFromParameter(HttpServletRequest request) {
+		String personIDString = request.getParameter("personID");
+		return AbstractDomainObject.fromExternalId(personIDString);
 
-    }
+	}
 
-    protected Qualification getQualificationFromParameter(HttpServletRequest request) {
-	String qualificationIDString = request.getParameter("qualificationId");
-	return AbstractDomainObject.fromExternalId(qualificationIDString);
-    }
+	protected Qualification getQualificationFromParameter(HttpServletRequest request) {
+		String qualificationIDString = request.getParameter("qualificationId");
+		return AbstractDomainObject.fromExternalId(qualificationIDString);
+	}
 
-    private void setAttributePerson(HttpServletRequest request) {
-	Person person = getPersonSelectedFromParameter(request);
-	request.setAttribute("person", person);
-    }
+	private void setAttributePerson(HttpServletRequest request) {
+		Person person = getPersonSelectedFromParameter(request);
+		request.setAttribute("person", person);
+	}
 
-    public ActionForward viewStudentLog(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) {
-	Person person = getPersonSelectedFromParameter(request);
+	public ActionForward viewStudentLog(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) {
+		Person person = getPersonSelectedFromParameter(request);
 
-	List<PersonInformationLog> logsList = person.getPersonInformationLogs();
-	request.setAttribute("person", person);
-	request.setAttribute("logsList", logsList);
-	return mapping.findForward("viewStudentLogChanges");
-    }
+		List<PersonInformationLog> logsList = person.getPersonInformationLogs();
+		request.setAttribute("person", person);
+		request.setAttribute("logsList", logsList);
+		return mapping.findForward("viewStudentLogChanges");
+	}
 }

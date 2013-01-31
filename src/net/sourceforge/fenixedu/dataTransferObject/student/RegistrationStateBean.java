@@ -15,42 +15,42 @@ import net.sourceforge.fenixedu.domain.util.workflow.StateBean;
  */
 public class RegistrationStateBean extends StateBean implements Serializable {
 
-    Registration registration;
+	Registration registration;
 
-    String remarks;
+	String remarks;
 
-    public RegistrationStateBean(Registration registration) {
-	super();
-	this.registration = registration;
-	setStateDate(null);
-    }
+	public RegistrationStateBean(Registration registration) {
+		super();
+		this.registration = registration;
+		setStateDate(null);
+	}
 
-    public RegistrationStateBean(final RegistrationStateType type) {
-	super(type.name());
-    }
+	public RegistrationStateBean(final RegistrationStateType type) {
+		super(type.name());
+	}
 
-    public Registration getRegistration() {
-	return registration;
-    }
+	public Registration getRegistration() {
+		return registration;
+	}
 
-    public String getRemarks() {
-	return remarks;
-    }
+	public String getRemarks() {
+		return remarks;
+	}
 
-    public RegistrationStateType getStateType() {
-	return getNextState() == null ? null : RegistrationStateType.valueOf(getNextState());
-    }
+	public RegistrationStateType getStateType() {
+		return getNextState() == null ? null : RegistrationStateType.valueOf(getNextState());
+	}
 
-    public void setRegistration(Registration registration) {
-	this.registration = registration;
-    }
+	public void setRegistration(Registration registration) {
+		this.registration = registration;
+	}
 
-    public void setRemarks(String remarks) {
-	this.remarks = remarks;
-    }
+	public void setRemarks(String remarks) {
+		this.remarks = remarks;
+	}
 
-    public void setStateType(final RegistrationStateType stateType) {
-	setNextState(stateType == null ? null : stateType.name());
-    }
+	public void setStateType(final RegistrationStateType stateType) {
+		setNextState(stateType == null ? null : stateType.name());
+	}
 
 }

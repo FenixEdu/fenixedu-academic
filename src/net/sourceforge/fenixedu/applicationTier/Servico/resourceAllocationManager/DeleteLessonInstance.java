@@ -10,11 +10,11 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class DeleteLessonInstance extends FenixService {
 
-    @Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
-    @Service
-    public static void run(Lesson lesson, YearMonthDay day) {
-	if (lesson != null && day != null) {
-	    lesson.deleteLessonInstanceIn(day);
+	@Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
+	@Service
+	public static void run(Lesson lesson, YearMonthDay day) {
+		if (lesson != null && day != null) {
+			lesson.deleteLessonInstanceIn(day);
+		}
 	}
-    }
 }

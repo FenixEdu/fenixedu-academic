@@ -30,87 +30,90 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadStudentsFinalEvaluationForConfirmation extends FenixService {
 
-    @Service
-    public static InfoSiteEnrolmentEvaluation run(Integer curricularCourseCode, String yearString) throws FenixServiceException {
+	@Service
+	public static InfoSiteEnrolmentEvaluation run(Integer curricularCourseCode, String yearString) throws FenixServiceException {
 
-	List infoEnrolmentEvaluations = new ArrayList();
-	InfoTeacher infoTeacher = null;
+		List infoEnrolmentEvaluations = new ArrayList();
+		InfoTeacher infoTeacher = null;
 
-	final CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(curricularCourseCode);
-	final List<Enrolment> enrolments = (yearString != null) ? curricularCourse.getEnrolmentsByYear(yearString)
-		: curricularCourse.getEnrolments();
+		final CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(curricularCourseCode);
+		final List<Enrolment> enrolments =
+				(yearString != null) ? curricularCourse.getEnrolmentsByYear(yearString) : curricularCourse.getEnrolments();
 
-	final List<EnrolmentEvaluation> enrolmentEvaluations = new ArrayList<EnrolmentEvaluation>();
-	for (final Enrolment enrolment : enrolments) {
-	    enrolmentEvaluations.add(enrolment.getEvaluations().get(enrolment.getEvaluationsCount() - 1));
+		final List<EnrolmentEvaluation> enrolmentEvaluations = new ArrayList<EnrolmentEvaluation>();
+		for (final Enrolment enrolment : enrolments) {
+			enrolmentEvaluations.add(enrolment.getEvaluations().get(enrolment.getEvaluationsCount() - 1));
+		}
+
+		if (!enrolmentEvaluations.isEmpty()) {
+
+			List temporaryEnrolmentEvaluations = checkForInvalidSituations(enrolmentEvaluations);
+			Person person = ((EnrolmentEvaluation) temporaryEnrolmentEvaluations.get(0)).getPersonResponsibleForGrade();
+			Teacher teacher = Teacher.readTeacherByUsername(person.getUsername());
+			infoTeacher = InfoTeacher.newInfoFromDomain(teacher);
+
+			// transform evaluations in databeans
+			ListIterator iter = temporaryEnrolmentEvaluations.listIterator();
+			while (iter.hasNext()) {
+				EnrolmentEvaluation elem = (EnrolmentEvaluation) iter.next();
+				InfoEnrolmentEvaluation infoEnrolmentEvaluation =
+						InfoEnrolmentEvaluationWithResponsibleForGrade.newInfoFromDomain(elem);
+
+				infoEnrolmentEvaluation.setInfoEnrolment(InfoEnrolment.newInfoFromDomain(elem.getEnrolment()));
+				infoEnrolmentEvaluations.add(infoEnrolmentEvaluation);
+			}
+		}
+		if (infoEnrolmentEvaluations.size() == 0) {
+			throw new NonExistingServiceException();
+		}
+		final ExecutionSemester executionSemester = ExecutionSemester.readActualExecutionSemester();
+		InfoExecutionPeriod infoExecutionPeriod = InfoExecutionPeriod.newInfoFromDomain(executionSemester);
+
+		InfoSiteEnrolmentEvaluation infoSiteEnrolmentEvaluation = new InfoSiteEnrolmentEvaluation();
+		infoSiteEnrolmentEvaluation.setEnrolmentEvaluations(infoEnrolmentEvaluations);
+		infoSiteEnrolmentEvaluation.setInfoTeacher(infoTeacher);
+		Date evaluationDate = ((InfoEnrolmentEvaluation) infoEnrolmentEvaluations.get(0)).getGradeAvailableDate();
+		infoSiteEnrolmentEvaluation.setLastEvaluationDate(evaluationDate);
+		infoSiteEnrolmentEvaluation.setInfoExecutionPeriod(infoExecutionPeriod);
+
+		return infoSiteEnrolmentEvaluation;
 	}
 
-	if (!enrolmentEvaluations.isEmpty()) {
+	private static List checkForInvalidSituations(List enrolmentEvaluations) throws ExistingServiceException,
+			InvalidSituationServiceException {
+		// evaluations can only be confirmated if they are not already
+		// confirmated
+		List temporaryEnrolmentEvaluations = (List) CollectionUtils.select(enrolmentEvaluations, new Predicate() {
+			@Override
+			public boolean evaluate(Object arg0) {
+				EnrolmentEvaluation enrolmentEvaluation = (EnrolmentEvaluation) arg0;
+				return enrolmentEvaluation.isTemporary();
+			}
+		});
 
-	    List temporaryEnrolmentEvaluations = checkForInvalidSituations(enrolmentEvaluations);
-	    Person person = ((EnrolmentEvaluation) temporaryEnrolmentEvaluations.get(0)).getPersonResponsibleForGrade();
-	    Teacher teacher = Teacher.readTeacherByUsername(person.getUsername());
-	    infoTeacher = InfoTeacher.newInfoFromDomain(teacher);
+		if (temporaryEnrolmentEvaluations == null || temporaryEnrolmentEvaluations.size() == 0) {
+			throw new ExistingServiceException();
+		}
 
-	    // transform evaluations in databeans
-	    ListIterator iter = temporaryEnrolmentEvaluations.listIterator();
-	    while (iter.hasNext()) {
-		EnrolmentEvaluation elem = (EnrolmentEvaluation) iter.next();
-		InfoEnrolmentEvaluation infoEnrolmentEvaluation = InfoEnrolmentEvaluationWithResponsibleForGrade
-			.newInfoFromDomain(elem);
+		List enrolmentEvaluationsWithoutGrade = (List) CollectionUtils.select(temporaryEnrolmentEvaluations, new Predicate() {
+			@Override
+			public boolean evaluate(Object input) {
+				// see if there are evaluations without grade
+				EnrolmentEvaluation enrolmentEvaluationInput = (EnrolmentEvaluation) input;
+				if (enrolmentEvaluationInput.getGrade().isEmpty()) {
+					return true;
+				}
+				return false;
+			}
+		});
+		if (enrolmentEvaluationsWithoutGrade != null) {
+			if (enrolmentEvaluationsWithoutGrade.size() == temporaryEnrolmentEvaluations.size()) {
+				throw new InvalidSituationServiceException();
+			}
+			temporaryEnrolmentEvaluations =
+					(List) CollectionUtils.subtract(temporaryEnrolmentEvaluations, enrolmentEvaluationsWithoutGrade);
+		}
 
-		infoEnrolmentEvaluation.setInfoEnrolment(InfoEnrolment.newInfoFromDomain(elem.getEnrolment()));
-		infoEnrolmentEvaluations.add(infoEnrolmentEvaluation);
-	    }
+		return temporaryEnrolmentEvaluations;
 	}
-	if (infoEnrolmentEvaluations.size() == 0) {
-	    throw new NonExistingServiceException();
-	}
-	final ExecutionSemester executionSemester = ExecutionSemester.readActualExecutionSemester();
-	InfoExecutionPeriod infoExecutionPeriod = InfoExecutionPeriod.newInfoFromDomain(executionSemester);
-
-	InfoSiteEnrolmentEvaluation infoSiteEnrolmentEvaluation = new InfoSiteEnrolmentEvaluation();
-	infoSiteEnrolmentEvaluation.setEnrolmentEvaluations(infoEnrolmentEvaluations);
-	infoSiteEnrolmentEvaluation.setInfoTeacher(infoTeacher);
-	Date evaluationDate = ((InfoEnrolmentEvaluation) infoEnrolmentEvaluations.get(0)).getGradeAvailableDate();
-	infoSiteEnrolmentEvaluation.setLastEvaluationDate(evaluationDate);
-	infoSiteEnrolmentEvaluation.setInfoExecutionPeriod(infoExecutionPeriod);
-
-	return infoSiteEnrolmentEvaluation;
-    }
-
-    private static List checkForInvalidSituations(List enrolmentEvaluations) throws ExistingServiceException,
-	    InvalidSituationServiceException {
-	// evaluations can only be confirmated if they are not already
-	// confirmated
-	List temporaryEnrolmentEvaluations = (List) CollectionUtils.select(enrolmentEvaluations, new Predicate() {
-	    public boolean evaluate(Object arg0) {
-		EnrolmentEvaluation enrolmentEvaluation = (EnrolmentEvaluation) arg0;
-		return enrolmentEvaluation.isTemporary();
-	    }
-	});
-
-	if (temporaryEnrolmentEvaluations == null || temporaryEnrolmentEvaluations.size() == 0) {
-	    throw new ExistingServiceException();
-	}
-
-	List enrolmentEvaluationsWithoutGrade = (List) CollectionUtils.select(temporaryEnrolmentEvaluations, new Predicate() {
-	    public boolean evaluate(Object input) {
-		// see if there are evaluations without grade
-		EnrolmentEvaluation enrolmentEvaluationInput = (EnrolmentEvaluation) input;
-		if (enrolmentEvaluationInput.getGrade().isEmpty())
-		    return true;
-		return false;
-	    }
-	});
-	if (enrolmentEvaluationsWithoutGrade != null) {
-	    if (enrolmentEvaluationsWithoutGrade.size() == temporaryEnrolmentEvaluations.size()) {
-		throw new InvalidSituationServiceException();
-	    }
-	    temporaryEnrolmentEvaluations = (List) CollectionUtils.subtract(temporaryEnrolmentEvaluations,
-		    enrolmentEvaluationsWithoutGrade);
-	}
-
-	return temporaryEnrolmentEvaluations;
-    }
 }

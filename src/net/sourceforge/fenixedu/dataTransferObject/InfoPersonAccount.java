@@ -11,66 +11,66 @@ import net.sourceforge.fenixedu.domain.PersonAccount;
  */
 public class InfoPersonAccount extends InfoObject {
 
-    private Double balance;
+	private Double balance;
 
-    private InfoPerson infoPerson;
+	private InfoPerson infoPerson;
 
-    private List InfoTransactions;
+	private List InfoTransactions;
 
-    public InfoPersonAccount() {
-    }
+	public InfoPersonAccount() {
+	}
 
-    public static InfoPersonAccount copyFromDomain(PersonAccount personAccount) {
-	InfoPersonAccount infoPersonAccount = new InfoPersonAccount();
+	public static InfoPersonAccount copyFromDomain(PersonAccount personAccount) {
+		InfoPersonAccount infoPersonAccount = new InfoPersonAccount();
 
-	infoPersonAccount.setIdInternal(personAccount.getIdInternal());
-	infoPersonAccount.setBalance(personAccount.getBalance());
+		infoPersonAccount.setIdInternal(personAccount.getIdInternal());
+		infoPersonAccount.setBalance(personAccount.getBalance());
 
-	return infoPersonAccount;
-    }
+		return infoPersonAccount;
+	}
 
-    /**
-     * @return Returns the balance.
-     */
-    public Double getBalance() {
-	return balance;
-    }
+	/**
+	 * @return Returns the balance.
+	 */
+	public Double getBalance() {
+		return balance;
+	}
 
-    /**
-     * @param balance
-     *            The balance to set.
-     */
-    public void setBalance(Double balance) {
-	this.balance = balance;
-    }
+	/**
+	 * @param balance
+	 *            The balance to set.
+	 */
+	public void setBalance(Double balance) {
+		this.balance = balance;
+	}
 
-    /**
-     * @return Returns the infoPerson.
-     */
-    public InfoPerson getInfoPerson() {
-	return infoPerson;
-    }
+	/**
+	 * @return Returns the infoPerson.
+	 */
+	public InfoPerson getInfoPerson() {
+		return infoPerson;
+	}
 
-    /**
-     * @param infoPerson
-     *            The infoPerson to set.
-     */
-    public void setInfoPerson(InfoPerson infoPerson) {
-	this.infoPerson = infoPerson;
-    }
+	/**
+	 * @param infoPerson
+	 *            The infoPerson to set.
+	 */
+	public void setInfoPerson(InfoPerson infoPerson) {
+		this.infoPerson = infoPerson;
+	}
 
-    /**
-     * @return Returns the infoTransactions.
-     */
-    public List getInfoTransactions() {
-	return InfoTransactions;
-    }
+	/**
+	 * @return Returns the infoTransactions.
+	 */
+	public List getInfoTransactions() {
+		return InfoTransactions;
+	}
 
-    /**
-     * @param infoTransactions
-     *            The infoTransactions to set.
-     */
-    public void setInfoTransactions(List infoTransactions) {
-	InfoTransactions = infoTransactions;
-    }
+	/**
+	 * @param infoTransactions
+	 *            The infoTransactions to set.
+	 */
+	public void setInfoTransactions(List infoTransactions) {
+		InfoTransactions = infoTransactions;
+	}
 }

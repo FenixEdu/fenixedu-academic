@@ -18,18 +18,9 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.security.UserView;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
  * @author Luis Cruz
@@ -38,48 +29,48 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
 @Forwards(value = { @Forward(name = "Show", path = "/manager/monitorUsers_bd.jsp") })
 public class MonitorUsersDA extends FenixDispatchAction {
 
-    public ActionForward monitor(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-	    throws Exception {
+	public ActionForward monitor(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
 
-	IUserView userView = UserView.getUser();
+		IUserView userView = UserView.getUser();
 
-	Boolean userLoggingIsOn = ServiceManagerServiceFactory.userLoggingIsOn(userView);
-	request.setAttribute("userLoggingIsOn", userLoggingIsOn);
+		Boolean userLoggingIsOn = ServiceManagerServiceFactory.userLoggingIsOn(userView);
+		request.setAttribute("userLoggingIsOn", userLoggingIsOn);
 
-	Map userLogs = ServiceManagerServiceFactory.getUsersLogInfo(userView);
-	request.setAttribute("userLogs", userLogs);
+		Map userLogs = ServiceManagerServiceFactory.getUsersLogInfo(userView);
+		request.setAttribute("userLogs", userLogs);
 
-	return mapping.findForward("Show");
-    }
+		return mapping.findForward("Show");
+	}
 
-    public ActionForward activateMonotoring(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
+	public ActionForward activateMonotoring(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
 
-	IUserView userView = UserView.getUser();
+		IUserView userView = UserView.getUser();
 
-	ServiceManagerServiceFactory.turnUserLoggingOn(userView);
+		ServiceManagerServiceFactory.turnUserLoggingOn(userView);
 
-	return monitor(mapping, form, request, response);
-    }
+		return monitor(mapping, form, request, response);
+	}
 
-    public ActionForward deactivateMonotoring(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
+	public ActionForward deactivateMonotoring(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
 
-	IUserView userView = UserView.getUser();
+		IUserView userView = UserView.getUser();
 
-	ServiceManagerServiceFactory.turnUserLoggingOff(userView);
+		ServiceManagerServiceFactory.turnUserLoggingOff(userView);
 
-	return monitor(mapping, form, request, response);
-    }
+		return monitor(mapping, form, request, response);
+	}
 
-    public ActionForward clearUserLogs(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
+	public ActionForward clearUserLogs(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
 
-	IUserView userView = UserView.getUser();
+		IUserView userView = UserView.getUser();
 
-	ServiceManagerServiceFactory.clearUserLogHistory(userView);
+		ServiceManagerServiceFactory.clearUserLogHistory(userView);
 
-	return monitor(mapping, form, request, response);
-    }
+		return monitor(mapping, form, request, response);
+	}
 
 }

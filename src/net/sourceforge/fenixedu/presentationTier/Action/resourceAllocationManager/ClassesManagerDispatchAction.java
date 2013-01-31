@@ -30,31 +30,32 @@ import org.apache.struts.action.ActionMapping;
  * 
  */
 public class ClassesManagerDispatchAction extends
-	FenixClassAndExecutionCourseAndExecutionDegreeAndCurricularYearContextDispatchAction {
-    static public final String CLASS_LIST_KEY = "classesList";
+		FenixClassAndExecutionCourseAndExecutionDegreeAndCurricularYearContextDispatchAction {
+	static public final String CLASS_LIST_KEY = "classesList";
 
-    public ActionForward listClasses(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
+	public ActionForward listClasses(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
 
-	InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request
-		.getAttribute(PresentationConstants.EXECUTION_PERIOD);
+		InfoExecutionPeriod infoExecutionPeriod =
+				(InfoExecutionPeriod) request.getAttribute(PresentationConstants.EXECUTION_PERIOD);
 
-	InfoCurricularYear infoCurricularYear = (InfoCurricularYear) request.getAttribute(PresentationConstants.CURRICULAR_YEAR);
+		InfoCurricularYear infoCurricularYear = (InfoCurricularYear) request.getAttribute(PresentationConstants.CURRICULAR_YEAR);
 
-	Integer curricularYear = infoCurricularYear.getYear();
+		Integer curricularYear = infoCurricularYear.getYear();
 
-	InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) request
-		.getAttribute(PresentationConstants.EXECUTION_DEGREE);
+		InfoExecutionDegree infoExecutionDegree =
+				(InfoExecutionDegree) request.getAttribute(PresentationConstants.EXECUTION_DEGREE);
 
-	List classesList = (List) LerTurmas.run(infoExecutionDegree, infoExecutionPeriod, curricularYear);
+		List classesList = LerTurmas.run(infoExecutionDegree, infoExecutionPeriod, curricularYear);
 
-	if (classesList != null && !classesList.isEmpty())
-	    request.setAttribute(CLASS_LIST_KEY, classesList);
+		if (classesList != null && !classesList.isEmpty()) {
+			request.setAttribute(CLASS_LIST_KEY, classesList);
+		}
 
-	request.removeAttribute(PresentationConstants.EXECUTION_COURSE);
-	request.removeAttribute(PresentationConstants.CLASS_VIEW);
+		request.removeAttribute(PresentationConstants.EXECUTION_COURSE);
+		request.removeAttribute(PresentationConstants.CLASS_VIEW);
 
-	return mapping.findForward("listClasses");
-    }
+		return mapping.findForward("listClasses");
+	}
 
 }

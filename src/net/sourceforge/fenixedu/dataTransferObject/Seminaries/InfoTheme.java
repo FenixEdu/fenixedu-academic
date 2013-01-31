@@ -17,89 +17,90 @@ import net.sourceforge.fenixedu.domain.Seminaries.Theme;
  */
 public class InfoTheme extends InfoObject {
 
-    private String description;
+	private String description;
 
-    private String name;
+	private String name;
 
-    private String shortName;
+	private String shortName;
 
-    public InfoTheme() {
+	public InfoTheme() {
 
-    }
-
-    public InfoTheme(Integer idInternal) {
-	super(idInternal);
-    }
-
-    /**
-     * @return
-     */
-    public String getDescription() {
-	return description;
-    }
-
-    /**
-     * @return
-     */
-    public String getName() {
-	return name;
-    }
-
-    /**
-     * @param string
-     */
-    public void setDescription(String string) {
-	description = string;
-    }
-
-    /**
-     * @param string
-     */
-    public void setName(String string) {
-	name = string;
-    }
-
-    /**
-     * @return
-     */
-    public String getShortName() {
-	return shortName;
-    }
-
-    /**
-     * @param string
-     */
-    public void setShortName(String string) {
-	shortName = string;
-    }
-
-    public String toString() {
-	String retorno;
-	retorno = "[InfoTheme:";
-	retorno += "ID=" + this.getIdInternal();
-	retorno += "Name=" + this.getName();
-	retorno += ",Description=" + this.getDescription();
-	retorno += ",Short Name=" + this.getShortName() + "]";
-	return retorno;
-    }
-
-    public void copyFromDomain(Theme theme) {
-	super.copyFromDomain(theme);
-	if (theme != null) {
-	    setDescription(theme.getDescription());
-	    setName(theme.getName());
-	    setShortName(theme.getShortName());
 	}
-    }
 
-    public static InfoTheme newInfoFromDomain(Theme theme) {
-	InfoTheme infoTheme = null;
-
-	if (theme != null) {
-	    infoTheme = new InfoTheme();
-	    infoTheme.copyFromDomain(theme);
+	public InfoTheme(Integer idInternal) {
+		super(idInternal);
 	}
-	return infoTheme;
-    }
+
+	/**
+	 * @return
+	 */
+	public String getDescription() {
+		return description;
+	}
+
+	/**
+	 * @return
+	 */
+	public String getName() {
+		return name;
+	}
+
+	/**
+	 * @param string
+	 */
+	public void setDescription(String string) {
+		description = string;
+	}
+
+	/**
+	 * @param string
+	 */
+	public void setName(String string) {
+		name = string;
+	}
+
+	/**
+	 * @return
+	 */
+	public String getShortName() {
+		return shortName;
+	}
+
+	/**
+	 * @param string
+	 */
+	public void setShortName(String string) {
+		shortName = string;
+	}
+
+	@Override
+	public String toString() {
+		String retorno;
+		retorno = "[InfoTheme:";
+		retorno += "ID=" + this.getIdInternal();
+		retorno += "Name=" + this.getName();
+		retorno += ",Description=" + this.getDescription();
+		retorno += ",Short Name=" + this.getShortName() + "]";
+		return retorno;
+	}
+
+	public void copyFromDomain(Theme theme) {
+		super.copyFromDomain(theme);
+		if (theme != null) {
+			setDescription(theme.getDescription());
+			setName(theme.getName());
+			setShortName(theme.getShortName());
+		}
+	}
+
+	public static InfoTheme newInfoFromDomain(Theme theme) {
+		InfoTheme infoTheme = null;
+
+		if (theme != null) {
+			infoTheme = new InfoTheme();
+			infoTheme.copyFromDomain(theme);
+		}
+		return infoTheme;
+	}
 
 }

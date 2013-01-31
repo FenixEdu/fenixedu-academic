@@ -22,39 +22,40 @@ import com.google.common.collect.Collections2;
 
 public class SecondCycleIndividualCandidacyDegreesProvider implements DataProvider {
 
-    @Override
-    public Object provide(Object source, Object currentValue) {
+	@Override
+	public Object provide(Object source, Object currentValue) {
 
-	final Set<AcademicProgram> programs = AcademicAuthorizationGroup.getProgramsForOperation(AccessControl.getPerson(),
-		AcademicOperationType.MANAGE_INDIVIDUAL_CANDIDACIES);
+		final Set<AcademicProgram> programs =
+				AcademicAuthorizationGroup.getProgramsForOperation(AccessControl.getPerson(),
+						AcademicOperationType.MANAGE_INDIVIDUAL_CANDIDACIES);
 
-	return Collections2.filter(getDegrees(source), new Predicate<Degree>() {
-	    @Override
-	    public boolean apply(Degree degree) {
-		return programs.contains(degree);
-	    }
-	});
-    }
-
-    private Collection<Degree> getDegrees(Object source) {
-	if (source instanceof SecondCycleIndividualCandidacyProcessBean) {
-	    final SecondCycleIndividualCandidacyProcessBean bean = (SecondCycleIndividualCandidacyProcessBean) source;
-	    return bean.getAvailableDegrees();
+		return Collections2.filter(getDegrees(source), new Predicate<Degree>() {
+			@Override
+			public boolean apply(Degree degree) {
+				return programs.contains(degree);
+			}
+		});
 	}
-	if (source instanceof ChooseDegreeBean) {
-	    final ChooseDegreeBean bean = (ChooseDegreeBean) source;
-	    final CandidacyProcess candidacyProcess = bean.getCandidacyProcess();
-	    if (candidacyProcess instanceof SecondCycleCandidacyProcess) {
-		final SecondCycleCandidacyProcess secondCycleCandidacyProcess = (SecondCycleCandidacyProcess) candidacyProcess;
-		return secondCycleCandidacyProcess.getAvailableDegrees();
-	    }
-	}
-	return Degree.readAllByDegreeType(DegreeType.BOLONHA_MASTER_DEGREE, DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE);
-    }
 
-    @Override
-    public Converter getConverter() {
-	return new DomainObjectKeyConverter();
-    }
+	private Collection<Degree> getDegrees(Object source) {
+		if (source instanceof SecondCycleIndividualCandidacyProcessBean) {
+			final SecondCycleIndividualCandidacyProcessBean bean = (SecondCycleIndividualCandidacyProcessBean) source;
+			return bean.getAvailableDegrees();
+		}
+		if (source instanceof ChooseDegreeBean) {
+			final ChooseDegreeBean bean = (ChooseDegreeBean) source;
+			final CandidacyProcess candidacyProcess = bean.getCandidacyProcess();
+			if (candidacyProcess instanceof SecondCycleCandidacyProcess) {
+				final SecondCycleCandidacyProcess secondCycleCandidacyProcess = (SecondCycleCandidacyProcess) candidacyProcess;
+				return secondCycleCandidacyProcess.getAvailableDegrees();
+			}
+		}
+		return Degree.readAllByDegreeType(DegreeType.BOLONHA_MASTER_DEGREE, DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE);
+	}
+
+	@Override
+	public Converter getConverter() {
+		return new DomainObjectKeyConverter();
+	}
 
 }

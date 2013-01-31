@@ -27,104 +27,104 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Mapping(path = "/rectorateIncomingBatches", module = "rectorate")
 @Forwards({ @Forward(name = "index", path = "/rectorate/incomingBatches.jsp"),
-	@Forward(name = "viewBatch", path = "/rectorate/showBatch.jsp") })
+		@Forward(name = "viewBatch", path = "/rectorate/showBatch.jsp") })
 public class RectorateIncomingBatchesDispatchAction extends FenixDispatchAction {
 
-    public ActionForward index(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) {
-	Set<RectorateSubmissionBatch> batches = new HashSet<RectorateSubmissionBatch>();
-	for (RectorateSubmissionBatch batch : RectorateSubmissionBatch.getRectorateSubmissionBatchesByState(
-		rootDomainObject.getAdministrativeOfficesSet(), RectorateSubmissionState.SENT)) {
-	    if (!getRelevantDocuments(batch.getDocumentRequestSet()).isEmpty()) {
-		batches.add(batch);
-	    }
+	public ActionForward index(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) {
+		Set<RectorateSubmissionBatch> batches = new HashSet<RectorateSubmissionBatch>();
+		for (RectorateSubmissionBatch batch : RectorateSubmissionBatch.getRectorateSubmissionBatchesByState(
+				rootDomainObject.getAdministrativeOfficesSet(), RectorateSubmissionState.SENT)) {
+			if (!getRelevantDocuments(batch.getDocumentRequestSet()).isEmpty()) {
+				batches.add(batch);
+			}
+		}
+		request.setAttribute("batches", batches);
+		return mapping.findForward("index");
 	}
-	request.setAttribute("batches", batches);
-	return mapping.findForward("index");
-    }
 
-    private boolean obeysToPresentationRestriction(AcademicServiceRequest docRequest) {
-	return !docRequest.isCancelled() && !docRequest.isRejected() && docRequest.isRegistryDiploma()
-		|| docRequest.isDiplomaSupplement();
-    }
-
-    private Set<AcademicServiceRequest> getRelevantDocuments(Set<AcademicServiceRequest> documentRequestSet) {
-	Set<AcademicServiceRequest> requests = new HashSet<AcademicServiceRequest>();
-	for (AcademicServiceRequest docRequest : documentRequestSet) {
-	    if (obeysToPresentationRestriction(docRequest)) {
-		requests.add(docRequest);
-	    }
+	private boolean obeysToPresentationRestriction(AcademicServiceRequest docRequest) {
+		return !docRequest.isCancelled() && !docRequest.isRejected() && docRequest.isRegistryDiploma()
+				|| docRequest.isDiplomaSupplement();
 	}
-	return requests;
-    }
 
-    public ActionForward viewBatch(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) {
-	RectorateSubmissionBatch batch = getDomainObject(request, "batchOid");
-	Set<String> actions = new HashSet<String>();
-
-	actions.add("generateMetadataForRegistry");
-	actions.add("zipDocuments");
-
-	request.setAttribute("batch", batch);
-
-	Set<AcademicServiceRequest> requests = getRelevantDocuments(batch.getDocumentRequestSet());
-
-	request.setAttribute("requests", requests);
-	request.setAttribute("actions", actions);
-	return mapping.findForward("viewBatch");
-    }
-
-    public ActionForward zipDocuments(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) {
-
-	RectorateSubmissionBatch batch = getDomainObject(request, "batchOid");
-	Set<AcademicServiceRequest> requestsToZip = getRelevantDocuments(batch.getDocumentRequestSet());
-
-	if (!requestsToZip.isEmpty()) {
-	    ZipUtils zipUtils = new ZipUtils();
-	    zipUtils.createAndFlushArchive(requestsToZip, response, batch);
-	    return null;
+	private Set<AcademicServiceRequest> getRelevantDocuments(Set<AcademicServiceRequest> documentRequestSet) {
+		Set<AcademicServiceRequest> requests = new HashSet<AcademicServiceRequest>();
+		for (AcademicServiceRequest docRequest : documentRequestSet) {
+			if (obeysToPresentationRestriction(docRequest)) {
+				requests.add(docRequest);
+			}
+		}
+		return requests;
 	}
-	addActionMessage(request, "error.rectorateSubmission.noDocumentsToZip");
-	request.setAttribute("batchOid", batch.getExternalId());
-	return viewBatch(mapping, actionForm, request, response);
-    }
 
-    public ActionForward generateMetadataForRegistry(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) {
-	RectorateSubmissionBatch batch = getDomainObject(request, "batchOid");
-	Set<AcademicServiceRequest> docs = getRelevantDocuments(batch.getDocumentRequestSet());
-	DocumentRequestExcelUtils excelUtils = new DocumentRequestExcelUtils(request, response);
-	excelUtils.generateSortedExcel(docs, "registos-");
-	return null;
-    }
+	public ActionForward viewBatch(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) {
+		RectorateSubmissionBatch batch = getDomainObject(request, "batchOid");
+		Set<String> actions = new HashSet<String>();
 
-    protected IDocumentRequest getDocumentRequest(HttpServletRequest request) {
-	return (IDocumentRequest) rootDomainObject.readAcademicServiceRequestByOID(getRequestParameterAsInteger(request,
-		"documentRequestId"));
-    }
+		actions.add("generateMetadataForRegistry");
+		actions.add("zipDocuments");
 
-    public ActionForward printDocument(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws IOException {
-	final IDocumentRequest documentRequest = getDocumentRequest(request);
-	try {
-	    byte[] data = documentRequest.generateDocument();
+		request.setAttribute("batch", batch);
 
-	    response.setContentLength(data.length);
-	    response.setContentType("application/pdf");
-	    response.addHeader("Content-Disposition", "attachment; filename=" + documentRequest.getReportFileName() + ".pdf");
+		Set<AcademicServiceRequest> requests = getRelevantDocuments(batch.getDocumentRequestSet());
 
-	    final ServletOutputStream writer = response.getOutputStream();
-	    writer.write(data);
-	    writer.flush();
-	    writer.close();
-
-	    response.flushBuffer();
-	    return null;
-	} catch (DomainException e) {
-	    addActionMessage(request, e.getKey());
-	    return viewBatch(mapping, actionForm, request, response);
+		request.setAttribute("requests", requests);
+		request.setAttribute("actions", actions);
+		return mapping.findForward("viewBatch");
 	}
-    }
+
+	public ActionForward zipDocuments(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) {
+
+		RectorateSubmissionBatch batch = getDomainObject(request, "batchOid");
+		Set<AcademicServiceRequest> requestsToZip = getRelevantDocuments(batch.getDocumentRequestSet());
+
+		if (!requestsToZip.isEmpty()) {
+			ZipUtils zipUtils = new ZipUtils();
+			zipUtils.createAndFlushArchive(requestsToZip, response, batch);
+			return null;
+		}
+		addActionMessage(request, "error.rectorateSubmission.noDocumentsToZip");
+		request.setAttribute("batchOid", batch.getExternalId());
+		return viewBatch(mapping, actionForm, request, response);
+	}
+
+	public ActionForward generateMetadataForRegistry(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) {
+		RectorateSubmissionBatch batch = getDomainObject(request, "batchOid");
+		Set<AcademicServiceRequest> docs = getRelevantDocuments(batch.getDocumentRequestSet());
+		DocumentRequestExcelUtils excelUtils = new DocumentRequestExcelUtils(request, response);
+		excelUtils.generateSortedExcel(docs, "registos-");
+		return null;
+	}
+
+	protected IDocumentRequest getDocumentRequest(HttpServletRequest request) {
+		return (IDocumentRequest) rootDomainObject.readAcademicServiceRequestByOID(getRequestParameterAsInteger(request,
+				"documentRequestId"));
+	}
+
+	public ActionForward printDocument(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) throws IOException {
+		final IDocumentRequest documentRequest = getDocumentRequest(request);
+		try {
+			byte[] data = documentRequest.generateDocument();
+
+			response.setContentLength(data.length);
+			response.setContentType("application/pdf");
+			response.addHeader("Content-Disposition", "attachment; filename=" + documentRequest.getReportFileName() + ".pdf");
+
+			final ServletOutputStream writer = response.getOutputStream();
+			writer.write(data);
+			writer.flush();
+			writer.close();
+
+			response.flushBuffer();
+			return null;
+		} catch (DomainException e) {
+			addActionMessage(request, e.getKey());
+			return viewBatch(mapping, actionForm, request, response);
+		}
+	}
 }

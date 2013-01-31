@@ -17,132 +17,133 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 public class DegreeCurricularPlanServiceAgreementTemplate extends DegreeCurricularPlanServiceAgreementTemplate_Base {
 
-    private DegreeCurricularPlanServiceAgreementTemplate() {
-	super();
-    }
-
-    public DegreeCurricularPlanServiceAgreementTemplate(DegreeCurricularPlan degreeCurricularPlan) {
-	this();
-	init(degreeCurricularPlan);
-    }
-
-    private void checkParameters(DegreeCurricularPlan degreeCurricularPlan) {
-	if (degreeCurricularPlan == null) {
-	    throw new DomainException(
-		    "error.accounting.agreement.serviceAgreementTemplates.DegreeCurricularPlanServiceAgreementTemplate.degreeCurricularPlan.cannot.be.null");
+	private DegreeCurricularPlanServiceAgreementTemplate() {
+		super();
 	}
 
-    }
-
-    protected void init(DegreeCurricularPlan degreeCurricularPlan) {
-	checkParameters(degreeCurricularPlan);
-	checkRulesToCreate(degreeCurricularPlan);
-	super.setDegreeCurricularPlan(degreeCurricularPlan);
-    }
-
-    private void checkRulesToCreate(DegreeCurricularPlan degreeCurricularPlan) {
-	if (readByDegreeCurricularPlan(degreeCurricularPlan) != null) {
-	    throw new DomainException(
-		    "error.net.sourceforge.fenixedu.domain.accounting.serviceAgreementTemplates.DegreeCurricularPlanServiceAgreementTemplate.degree.curricular.plan.already.has.template.defined");
+	public DegreeCurricularPlanServiceAgreementTemplate(DegreeCurricularPlan degreeCurricularPlan) {
+		this();
+		init(degreeCurricularPlan);
 	}
 
-    }
-
-    @Override
-    public void setDegreeCurricularPlan(DegreeCurricularPlan degreeCurricularPlan) {
-	throw new DomainException(
-		"error.accounting.agreement.serviceAgreementTemplates.DegreeCurricularPlanServiceAgreementTemplate.cannot.modify.degreeCurricularPlan");
-    }
-
-    public GratuityPaymentPlan getGratuityPaymentPlanFor(final StudentCurricularPlan studentCurricularPlan,
-	    final ExecutionYear executionYear) {
-	GratuityPaymentPlan result = null;
-	for (final PaymentPlan paymentPlan : getPaymentPlansSet()) {
-	    if (paymentPlan instanceof GratuityPaymentPlan
-		    && ((GratuityPaymentPlan) paymentPlan).isAppliableFor(studentCurricularPlan, executionYear)) {
-		GratuityPaymentPlan gratuityPaymentPlan = (GratuityPaymentPlan) paymentPlan;
-		
-		if (result == null) {
-		    result = (GratuityPaymentPlan) paymentPlan;
-		} else {
-		    if (gratuityPaymentPlan.hasPrecedenceOver(result.getClass())) {
-			result = gratuityPaymentPlan;
-		    }
-		    
-		    if (!result.hasPrecedenceOver(gratuityPaymentPlan.getClass())) {
-			// Incompatible payment plans
+	private void checkParameters(DegreeCurricularPlan degreeCurricularPlan) {
+		if (degreeCurricularPlan == null) {
 			throw new DomainException(
-				"error.net.sourceforge.fenixedu.domain.accounting.serviceAgreementTemplates.DegreeCurricularPlanServiceAgreementTemplate.more.than.one.gratuity.payment.plan.is.appliable");
-		    }
+					"error.accounting.agreement.serviceAgreementTemplates.DegreeCurricularPlanServiceAgreementTemplate.degreeCurricularPlan.cannot.be.null");
 		}
-	    }
+
 	}
 
-	return result == null ? getDefaultPaymentPlan(executionYear) : result;
-    }
-
-    public List<GratuityPaymentPlan> getGratuityPaymentPlans() {
-	final List<GratuityPaymentPlan> result = new ArrayList<GratuityPaymentPlan>();
-	for (final PaymentPlan paymentPlan : getPaymentPlansSet()) {
-	    if (paymentPlan instanceof GratuityPaymentPlan) {
-		result.add((GratuityPaymentPlan) paymentPlan);
-	    }
+	protected void init(DegreeCurricularPlan degreeCurricularPlan) {
+		checkParameters(degreeCurricularPlan);
+		checkRulesToCreate(degreeCurricularPlan);
+		super.setDegreeCurricularPlan(degreeCurricularPlan);
 	}
 
-	return result;
-    }
-
-    @Override
-    public GratuityPaymentPlan getDefaultPaymentPlan(ExecutionYear executionYear) {
-	return (GratuityPaymentPlan) super.getDefaultPaymentPlan(executionYear);
-    }
-
-    public boolean hasFullGratuityPaymentPlanFor(final ExecutionYear executionYear) {
-	for (final PaymentPlan paymentPlan : getPaymentPlansSet()) {
-	    if (paymentPlan instanceof FullGratuityPaymentPlan && paymentPlan.getExecutionYear() == executionYear) {
-		return true;
-	    }
-	}
-	return false;
-    }
-
-    public boolean hasGratuityPaymentPlanForStudentsEnroledOnlyInSecondSemesterBy(final ExecutionYear executionYear) {
-	for (final PaymentPlan paymentPlan : getPaymentPlansSet()) {
-	    if (paymentPlan instanceof GratuityPaymentPlanForStudentsEnroledOnlyInSecondSemester
-		    && paymentPlan.getExecutionYear() == executionYear) {
-		return true;
-	    }
-	}
-	return false;
-    }
-
-    public static DegreeCurricularPlanServiceAgreementTemplate readByDegreeCurricularPlan(
-	    final DegreeCurricularPlan degreeCurricularPlan) {
-	for (final ServiceAgreementTemplate serviceAgreementTemplate : RootDomainObject.getInstance()
-		.getServiceAgreementTemplates()) {
-
-	    if (serviceAgreementTemplate instanceof DegreeCurricularPlanServiceAgreementTemplate) {
-		final DegreeCurricularPlanServiceAgreementTemplate degreeCurricularPlanServiceAgreementTemplate = (DegreeCurricularPlanServiceAgreementTemplate) serviceAgreementTemplate;
-
-		if (degreeCurricularPlanServiceAgreementTemplate.getDegreeCurricularPlan() == degreeCurricularPlan) {
-		    return degreeCurricularPlanServiceAgreementTemplate;
+	private void checkRulesToCreate(DegreeCurricularPlan degreeCurricularPlan) {
+		if (readByDegreeCurricularPlan(degreeCurricularPlan) != null) {
+			throw new DomainException(
+					"error.net.sourceforge.fenixedu.domain.accounting.serviceAgreementTemplates.DegreeCurricularPlanServiceAgreementTemplate.degree.curricular.plan.already.has.template.defined");
 		}
-	    }
+
 	}
 
-	return null;
-    }
-
-    public List<GratuityPaymentPlan> getGratuityPaymentPlansFor(final ExecutionYear executionYear) {
-	final List<GratuityPaymentPlan> result = new ArrayList<GratuityPaymentPlan>();
-
-	for (final ServiceAgreementTemplatePaymentPlan paymentPlan : getPaymentPlansSet()) {
-	    if (paymentPlan instanceof GratuityPaymentPlan && paymentPlan.isFor(executionYear)) {
-		result.add((GratuityPaymentPlan) paymentPlan);
-	    }
+	@Override
+	public void setDegreeCurricularPlan(DegreeCurricularPlan degreeCurricularPlan) {
+		throw new DomainException(
+				"error.accounting.agreement.serviceAgreementTemplates.DegreeCurricularPlanServiceAgreementTemplate.cannot.modify.degreeCurricularPlan");
 	}
 
-	return result;
-    }
+	public GratuityPaymentPlan getGratuityPaymentPlanFor(final StudentCurricularPlan studentCurricularPlan,
+			final ExecutionYear executionYear) {
+		GratuityPaymentPlan result = null;
+		for (final PaymentPlan paymentPlan : getPaymentPlansSet()) {
+			if (paymentPlan instanceof GratuityPaymentPlan
+					&& ((GratuityPaymentPlan) paymentPlan).isAppliableFor(studentCurricularPlan, executionYear)) {
+				GratuityPaymentPlan gratuityPaymentPlan = (GratuityPaymentPlan) paymentPlan;
+
+				if (result == null) {
+					result = (GratuityPaymentPlan) paymentPlan;
+				} else {
+					if (gratuityPaymentPlan.hasPrecedenceOver(result.getClass())) {
+						result = gratuityPaymentPlan;
+					}
+
+					if (!result.hasPrecedenceOver(gratuityPaymentPlan.getClass())) {
+						// Incompatible payment plans
+						throw new DomainException(
+								"error.net.sourceforge.fenixedu.domain.accounting.serviceAgreementTemplates.DegreeCurricularPlanServiceAgreementTemplate.more.than.one.gratuity.payment.plan.is.appliable");
+					}
+				}
+			}
+		}
+
+		return result == null ? getDefaultPaymentPlan(executionYear) : result;
+	}
+
+	public List<GratuityPaymentPlan> getGratuityPaymentPlans() {
+		final List<GratuityPaymentPlan> result = new ArrayList<GratuityPaymentPlan>();
+		for (final PaymentPlan paymentPlan : getPaymentPlansSet()) {
+			if (paymentPlan instanceof GratuityPaymentPlan) {
+				result.add((GratuityPaymentPlan) paymentPlan);
+			}
+		}
+
+		return result;
+	}
+
+	@Override
+	public GratuityPaymentPlan getDefaultPaymentPlan(ExecutionYear executionYear) {
+		return (GratuityPaymentPlan) super.getDefaultPaymentPlan(executionYear);
+	}
+
+	public boolean hasFullGratuityPaymentPlanFor(final ExecutionYear executionYear) {
+		for (final PaymentPlan paymentPlan : getPaymentPlansSet()) {
+			if (paymentPlan instanceof FullGratuityPaymentPlan && paymentPlan.getExecutionYear() == executionYear) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public boolean hasGratuityPaymentPlanForStudentsEnroledOnlyInSecondSemesterBy(final ExecutionYear executionYear) {
+		for (final PaymentPlan paymentPlan : getPaymentPlansSet()) {
+			if (paymentPlan instanceof GratuityPaymentPlanForStudentsEnroledOnlyInSecondSemester
+					&& paymentPlan.getExecutionYear() == executionYear) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public static DegreeCurricularPlanServiceAgreementTemplate readByDegreeCurricularPlan(
+			final DegreeCurricularPlan degreeCurricularPlan) {
+		for (final ServiceAgreementTemplate serviceAgreementTemplate : RootDomainObject.getInstance()
+				.getServiceAgreementTemplates()) {
+
+			if (serviceAgreementTemplate instanceof DegreeCurricularPlanServiceAgreementTemplate) {
+				final DegreeCurricularPlanServiceAgreementTemplate degreeCurricularPlanServiceAgreementTemplate =
+						(DegreeCurricularPlanServiceAgreementTemplate) serviceAgreementTemplate;
+
+				if (degreeCurricularPlanServiceAgreementTemplate.getDegreeCurricularPlan() == degreeCurricularPlan) {
+					return degreeCurricularPlanServiceAgreementTemplate;
+				}
+			}
+		}
+
+		return null;
+	}
+
+	public List<GratuityPaymentPlan> getGratuityPaymentPlansFor(final ExecutionYear executionYear) {
+		final List<GratuityPaymentPlan> result = new ArrayList<GratuityPaymentPlan>();
+
+		for (final ServiceAgreementTemplatePaymentPlan paymentPlan : getPaymentPlansSet()) {
+			if (paymentPlan instanceof GratuityPaymentPlan && paymentPlan.isFor(executionYear)) {
+				result.add((GratuityPaymentPlan) paymentPlan);
+			}
+		}
+
+		return result;
+	}
 
 }

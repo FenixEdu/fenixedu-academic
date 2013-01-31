@@ -23,91 +23,91 @@ import org.joda.time.DateTime;
 
 public class FixedAmountPR extends FixedAmountPR_Base {
 
-    protected FixedAmountPR() {
-	super();
-    }
-
-    public FixedAmountPR(EntryType entryType, EventType eventType, DateTime startDate, DateTime endDate,
-	    ServiceAgreementTemplate serviceAgreementTemplate, Money fixedAmount) {
-	this();
-	init(entryType, eventType, startDate, endDate, serviceAgreementTemplate, fixedAmount);
-    }
-
-    private void checkParameters(Money fixedAmount) {
-	if (fixedAmount == null) {
-	    throw new DomainException("error.accounting.postingRules.FixedAmountPR.fixedAmount.cannot.be.null");
+	protected FixedAmountPR() {
+		super();
 	}
 
-    }
-
-    protected void init(EntryType entryType, EventType eventType, DateTime startDate, DateTime endDate,
-	    ServiceAgreementTemplate serviceAgreementTemplate, Money fixedAmount) {
-	super.init(entryType, eventType, startDate, endDate, serviceAgreementTemplate);
-	checkParameters(fixedAmount);
-	super.setFixedAmount(fixedAmount);
-    }
-
-    @Override
-    protected Set<AccountingTransaction> internalProcess(User user, Collection<EntryDTO> entryDTOs, Event event,
-	    Account fromAccount, Account toAccount, AccountingTransactionDetailDTO transactionDetail) {
-
-	if (entryDTOs.size() != 1) {
-	    throw new DomainException("error.accounting.postingRules.FixedAmountPR.invalid.number.of.entryDTOs");
+	public FixedAmountPR(EntryType entryType, EventType eventType, DateTime startDate, DateTime endDate,
+			ServiceAgreementTemplate serviceAgreementTemplate, Money fixedAmount) {
+		this();
+		init(entryType, eventType, startDate, endDate, serviceAgreementTemplate, fixedAmount);
 	}
 
-	final EntryDTO entryDTO = entryDTOs.iterator().next();
-	checkIfCanAddAmount(entryDTO.getAmountToPay(), event, transactionDetail.getWhenRegistered());
+	private void checkParameters(Money fixedAmount) {
+		if (fixedAmount == null) {
+			throw new DomainException("error.accounting.postingRules.FixedAmountPR.fixedAmount.cannot.be.null");
+		}
 
-	return Collections.singleton(makeAccountingTransaction(user, event, fromAccount, toAccount, entryDTO.getEntryType(),
-		entryDTO.getAmountToPay(), transactionDetail));
-
-    }
-
-    @Override
-    public void setFixedAmount(Money fixedAmount) {
-	throw new DomainException("error.accounting.postingRules.FixedAmountPR.cannot.modify.fixedAmount");
-    }
-
-    protected void checkIfCanAddAmount(Money amountToPay, final Event event, final DateTime when) {
-	if (amountToPay.compareTo(calculateTotalAmountToPay(event, when)) < 0) {
-	    throw new DomainExceptionWithLabelFormatter(
-		    "error.accounting.postingRules.FixedAmountPR.amount.being.payed.must.match.amount.to.pay",
-		    event.getDescriptionForEntryType(getEntryType()));
-	}
-    }
-
-    @Override
-    public List<EntryDTO> calculateEntries(Event event, DateTime when) {
-	final Money totalAmountToPay = calculateTotalAmountToPay(event, when);
-	return Collections.singletonList(new EntryDTO(getEntryType(), event, totalAmountToPay, Money.ZERO, totalAmountToPay,
-		event.getDescriptionForEntryType(getEntryType()), totalAmountToPay));
-    }
-
-    @Override
-    protected Money doCalculationForAmountToPay(Event event, DateTime when, boolean applyDiscount) {
-	return getFixedAmount();
-    }
-
-    @Override
-    protected Money subtractFromExemptions(Event event, DateTime when, boolean applyDiscount, Money amountToPay) {
-
-	if (event instanceof AcademicEvent) {
-	    final AcademicEvent requestEvent = (AcademicEvent) event;
-	    if (requestEvent.hasAcademicEventExemption()) {
-		amountToPay = amountToPay.subtract(requestEvent.getAcademicEventExemption().getValue());
-	    }
-
-	    return amountToPay.isPositive() ? amountToPay : Money.ZERO;
 	}
 
-	return amountToPay;
-    }
+	protected void init(EntryType entryType, EventType eventType, DateTime startDate, DateTime endDate,
+			ServiceAgreementTemplate serviceAgreementTemplate, Money fixedAmount) {
+		super.init(entryType, eventType, startDate, endDate, serviceAgreementTemplate);
+		checkParameters(fixedAmount);
+		super.setFixedAmount(fixedAmount);
+	}
 
-    public FixedAmountPR edit(final Money fixedAmount) {
+	@Override
+	protected Set<AccountingTransaction> internalProcess(User user, Collection<EntryDTO> entryDTOs, Event event,
+			Account fromAccount, Account toAccount, AccountingTransactionDetailDTO transactionDetail) {
 
-	deactivate();
-	return new FixedAmountPR(getEntryType(), getEventType(), new DateTime().minus(1000), null, getServiceAgreementTemplate(),
-		fixedAmount);
-    }
+		if (entryDTOs.size() != 1) {
+			throw new DomainException("error.accounting.postingRules.FixedAmountPR.invalid.number.of.entryDTOs");
+		}
+
+		final EntryDTO entryDTO = entryDTOs.iterator().next();
+		checkIfCanAddAmount(entryDTO.getAmountToPay(), event, transactionDetail.getWhenRegistered());
+
+		return Collections.singleton(makeAccountingTransaction(user, event, fromAccount, toAccount, entryDTO.getEntryType(),
+				entryDTO.getAmountToPay(), transactionDetail));
+
+	}
+
+	@Override
+	public void setFixedAmount(Money fixedAmount) {
+		throw new DomainException("error.accounting.postingRules.FixedAmountPR.cannot.modify.fixedAmount");
+	}
+
+	protected void checkIfCanAddAmount(Money amountToPay, final Event event, final DateTime when) {
+		if (amountToPay.compareTo(calculateTotalAmountToPay(event, when)) < 0) {
+			throw new DomainExceptionWithLabelFormatter(
+					"error.accounting.postingRules.FixedAmountPR.amount.being.payed.must.match.amount.to.pay",
+					event.getDescriptionForEntryType(getEntryType()));
+		}
+	}
+
+	@Override
+	public List<EntryDTO> calculateEntries(Event event, DateTime when) {
+		final Money totalAmountToPay = calculateTotalAmountToPay(event, when);
+		return Collections.singletonList(new EntryDTO(getEntryType(), event, totalAmountToPay, Money.ZERO, totalAmountToPay,
+				event.getDescriptionForEntryType(getEntryType()), totalAmountToPay));
+	}
+
+	@Override
+	protected Money doCalculationForAmountToPay(Event event, DateTime when, boolean applyDiscount) {
+		return getFixedAmount();
+	}
+
+	@Override
+	protected Money subtractFromExemptions(Event event, DateTime when, boolean applyDiscount, Money amountToPay) {
+
+		if (event instanceof AcademicEvent) {
+			final AcademicEvent requestEvent = (AcademicEvent) event;
+			if (requestEvent.hasAcademicEventExemption()) {
+				amountToPay = amountToPay.subtract(requestEvent.getAcademicEventExemption().getValue());
+			}
+
+			return amountToPay.isPositive() ? amountToPay : Money.ZERO;
+		}
+
+		return amountToPay;
+	}
+
+	public FixedAmountPR edit(final Money fixedAmount) {
+
+		deactivate();
+		return new FixedAmountPR(getEntryType(), getEventType(), new DateTime().minus(1000), null, getServiceAgreementTemplate(),
+				fixedAmount);
+	}
 
 }

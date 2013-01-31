@@ -9,40 +9,40 @@ import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess;
 
 public class PhdCandidacyFeedbackRequestProcessBean implements Serializable {
 
-    static private final long serialVersionUID = 1L;
+	static private final long serialVersionUID = 1L;
 
-    private PhdProgramCandidacyProcess candidacyProcess;
+	private PhdProgramCandidacyProcess candidacyProcess;
 
-    private List<PhdIndividualProgramDocumentType> sharedDocuments;
+	private List<PhdIndividualProgramDocumentType> sharedDocuments;
 
-    public PhdCandidacyFeedbackRequestProcessBean() {
-	super();
-    }
-
-    public PhdCandidacyFeedbackRequestProcessBean(PhdProgramCandidacyProcess process) {
-	
-	setCandidacyProcess(process);
-	
-	if (process.hasFeedbackRequest()) {
-	    setSharedDocuments(new ArrayList<PhdIndividualProgramDocumentType>(process.getFeedbackRequest()
-		    .getSortedSharedDocumentTypes()));
+	public PhdCandidacyFeedbackRequestProcessBean() {
+		super();
 	}
-    }
 
-    public PhdProgramCandidacyProcess getCandidacyProcess() {
-	return candidacyProcess;
-    }
+	public PhdCandidacyFeedbackRequestProcessBean(PhdProgramCandidacyProcess process) {
 
-    public void setCandidacyProcess(PhdProgramCandidacyProcess candidacyProcess) {
-	this.candidacyProcess = candidacyProcess;
-    }
+		setCandidacyProcess(process);
 
-    public List<PhdIndividualProgramDocumentType> getSharedDocuments() {
-	return sharedDocuments;
-    }
+		if (process.hasFeedbackRequest()) {
+			setSharedDocuments(new ArrayList<PhdIndividualProgramDocumentType>(process.getFeedbackRequest()
+					.getSortedSharedDocumentTypes()));
+		}
+	}
 
-    public void setSharedDocuments(List<PhdIndividualProgramDocumentType> sharedDocuments) {
-	this.sharedDocuments = sharedDocuments;
-    }
+	public PhdProgramCandidacyProcess getCandidacyProcess() {
+		return candidacyProcess;
+	}
+
+	public void setCandidacyProcess(PhdProgramCandidacyProcess candidacyProcess) {
+		this.candidacyProcess = candidacyProcess;
+	}
+
+	public List<PhdIndividualProgramDocumentType> getSharedDocuments() {
+		return sharedDocuments;
+	}
+
+	public void setSharedDocuments(List<PhdIndividualProgramDocumentType> sharedDocuments) {
+		this.sharedDocuments = sharedDocuments;
+	}
 
 }

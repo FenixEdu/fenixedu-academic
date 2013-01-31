@@ -34,80 +34,82 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 @Mapping(module = "departmentMember", path = "/creditsReductions", scope = "request", parameter = "method")
 @Forwards(value = { @Forward(name = "editReductionService", path = "/credits/degreeTeachingService/editCreditsReduction.jsp"),
-	@Forward(name = "viewAnnualTeachingCredits", path = "/credits.do?method=viewAnnualTeachingCredits"),
-	@Forward(name = "showReductionServices", path = "/credits/reductionService/showReductionServices.jsp"),
-	@Forward(name = "showReductionService", path = "/credits/reductionService/showReductionService.jsp") })
+		@Forward(name = "viewAnnualTeachingCredits", path = "/credits.do?method=viewAnnualTeachingCredits"),
+		@Forward(name = "showReductionServices", path = "/credits/reductionService/showReductionServices.jsp"),
+		@Forward(name = "showReductionService", path = "/credits/reductionService/showReductionService.jsp") })
 public class DepartmentMemberManageCreditsReductionsDA extends ManageCreditsReductionsDispatchAction {
 
-    public ActionForward showReductionServices(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws NumberFormatException, FenixFilterException, FenixServiceException {
-	ExecutionSemester executionSemester = ExecutionSemester.readActualExecutionSemester();
-	IUserView userView = UserView.getUser();
-	Department department = userView.getPerson().getTeacher().getCurrentWorkingDepartment();
-	List<ReductionService> creditsReductions = new ArrayList<ReductionService>();
-	if (department != null && department.isCurrentUserCurrentDepartmentPresident()) {
-	    for (Teacher teacher : department.getAllCurrentTeachers()) {
-		TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionSemester);
-		if (teacherService != null && teacherService.getReductionService() != null) {
-		    creditsReductions.add(teacherService.getReductionService());
-		}
-	    }
-	}
-	Collections.sort(creditsReductions, new BeanComparator("teacherService.teacher.teacherId"));
-	request.setAttribute("creditsReductions", creditsReductions);
-	return mapping.findForward("showReductionServices");
-    }
-
-    public ActionForward aproveReductionService(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws NumberFormatException, FenixFilterException, FenixServiceException {
-	ReductionService reductionService = AbstractDomainObject.fromExternalId((String) getFromRequest(request,
-		"reductionServiceOID"));
-	ReductionServiceBean reductionServiceBean = null;
-	if (reductionService != null) {
-	    reductionServiceBean = new ReductionServiceBean(reductionService);
-	} else {
-	    reductionServiceBean = getRenderedObject("reductionServiceBean");
-	    if (reductionServiceBean != null && reductionServiceBean.getTeacher() != null) {
+	public ActionForward showReductionServices(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws NumberFormatException, FenixFilterException, FenixServiceException {
+		ExecutionSemester executionSemester = ExecutionSemester.readActualExecutionSemester();
 		IUserView userView = UserView.getUser();
 		Department department = userView.getPerson().getTeacher().getCurrentWorkingDepartment();
-		if (!isTeacherFromDepartment(reductionServiceBean.getTeacher(), department)) {
-		    addActionMessage("error", request, "message.teacher.not-found-or-not-belong-to-department");
-		    return selectTeacher(mapping, form, request, response);
+		List<ReductionService> creditsReductions = new ArrayList<ReductionService>();
+		if (department != null && department.isCurrentUserCurrentDepartmentPresident()) {
+			for (Teacher teacher : department.getAllCurrentTeachers()) {
+				TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionSemester);
+				if (teacherService != null && teacherService.getReductionService() != null) {
+					creditsReductions.add(teacherService.getReductionService());
+				}
+			}
 		}
-		if (reductionServiceBean.getReductionService() == null) {
-		    TeacherService teacherService = reductionServiceBean.getTeacher().getTeacherServiceByExecutionPeriod(
-			    ExecutionSemester.readActualExecutionSemester());
-		    if (teacherService != null) {
-			reductionServiceBean.setReductionService(teacherService.getReductionService());
-		    }
+		Collections.sort(creditsReductions, new BeanComparator("teacherService.teacher.teacherId"));
+		request.setAttribute("creditsReductions", creditsReductions);
+		return mapping.findForward("showReductionServices");
+	}
+
+	public ActionForward aproveReductionService(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws NumberFormatException, FenixFilterException, FenixServiceException {
+		ReductionService reductionService =
+				AbstractDomainObject.fromExternalId((String) getFromRequest(request, "reductionServiceOID"));
+		ReductionServiceBean reductionServiceBean = null;
+		if (reductionService != null) {
+			reductionServiceBean = new ReductionServiceBean(reductionService);
+		} else {
+			reductionServiceBean = getRenderedObject("reductionServiceBean");
+			if (reductionServiceBean != null && reductionServiceBean.getTeacher() != null) {
+				IUserView userView = UserView.getUser();
+				Department department = userView.getPerson().getTeacher().getCurrentWorkingDepartment();
+				if (!isTeacherFromDepartment(reductionServiceBean.getTeacher(), department)) {
+					addActionMessage("error", request, "message.teacher.not-found-or-not-belong-to-department");
+					return selectTeacher(mapping, form, request, response);
+				}
+				if (reductionServiceBean.getReductionService() == null) {
+					TeacherService teacherService =
+							reductionServiceBean.getTeacher().getTeacherServiceByExecutionPeriod(
+									ExecutionSemester.readActualExecutionSemester());
+					if (teacherService != null) {
+						reductionServiceBean.setReductionService(teacherService.getReductionService());
+					}
+				}
+			}
 		}
-	    }
+		if (request.getParameter("invalidated") == null) {
+			RenderUtils.invalidateViewState();
+		}
+		request.setAttribute("reductionServiceBean", reductionServiceBean);
+		return mapping.findForward("showReductionService");
 	}
-	if (request.getParameter("invalidated") == null) {
-	    RenderUtils.invalidateViewState();
-	}
-	request.setAttribute("reductionServiceBean", reductionServiceBean);
-	return mapping.findForward("showReductionService");
-    }
 
-    public ActionForward selectTeacher(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws NumberFormatException, FenixFilterException, FenixServiceException {
-	request.setAttribute("reductionServiceBean", new ReductionServiceBean());
-	return mapping.findForward("showReductionService");
-    }
-
-    private boolean isTeacherFromDepartment(Teacher teacher, Department department) {
-	ExecutionSemester executionSemester = ExecutionSemester.readActualExecutionSemester();
-	List<Unit> workingPlacesByPeriod = teacher.getWorkingPlacesByPeriod(executionSemester.getBeginDateYearMonthDay(),
-		executionSemester.getEndDateYearMonthDay());
-	for (Unit unit : workingPlacesByPeriod) {
-	    DepartmentUnit departmentUnit = unit.getDepartmentUnit();
-	    Department teacherDepartment = departmentUnit != null ? departmentUnit.getDepartment() : null;
-	    if (teacherDepartment != null && teacherDepartment.equals(department)) {
-		return true;
-	    }
+	public ActionForward selectTeacher(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws NumberFormatException, FenixFilterException, FenixServiceException {
+		request.setAttribute("reductionServiceBean", new ReductionServiceBean());
+		return mapping.findForward("showReductionService");
 	}
-	return false;
-    }
+
+	private boolean isTeacherFromDepartment(Teacher teacher, Department department) {
+		ExecutionSemester executionSemester = ExecutionSemester.readActualExecutionSemester();
+		List<Unit> workingPlacesByPeriod =
+				teacher.getWorkingPlacesByPeriod(executionSemester.getBeginDateYearMonthDay(),
+						executionSemester.getEndDateYearMonthDay());
+		for (Unit unit : workingPlacesByPeriod) {
+			DepartmentUnit departmentUnit = unit.getDepartmentUnit();
+			Department teacherDepartment = departmentUnit != null ? departmentUnit.getDepartment() : null;
+			if (teacherDepartment != null && teacherDepartment.equals(department)) {
+				return true;
+			}
+		}
+		return false;
+	}
 
 }

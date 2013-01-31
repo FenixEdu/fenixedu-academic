@@ -12,53 +12,53 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class AssociateEnrolmentsToNotNeedToEnrol extends FenixService {
 
-    @Service
-    public static void run(Student student, NotNeedToEnrollInCurricularCourse notNeedToEnrollInCurricularCourse,
-	    Collection<Enrolment> selectedEnrolments, Collection<ExternalEnrolment> externalEnrolments)
-	    throws FenixServiceException {
+	@Service
+	public static void run(Student student, NotNeedToEnrollInCurricularCourse notNeedToEnrollInCurricularCourse,
+			Collection<Enrolment> selectedEnrolments, Collection<ExternalEnrolment> externalEnrolments)
+			throws FenixServiceException {
 
-	for (Enrolment enrolment : notNeedToEnrollInCurricularCourse.getEnrolmentsSet()) {
-	    if (selectedEnrolments == null || !selectedEnrolments.contains(enrolment)) {
-		notNeedToEnrollInCurricularCourse.removeEnrolments(enrolment);
-	    }
-	}
-
-	if (selectedEnrolments != null && !selectedEnrolments.isEmpty()) {
-	    Collection<Enrolment> aprovedEnrolments = student.getApprovedEnrolments();
-	    for (Enrolment selectedEnrolment : selectedEnrolments) {
-		Enrolment enrolment = getAprovedEnrolment(aprovedEnrolments, selectedEnrolment);
-		if (enrolment == null) {
-		    throw new FenixServiceException();
+		for (Enrolment enrolment : notNeedToEnrollInCurricularCourse.getEnrolmentsSet()) {
+			if (selectedEnrolments == null || !selectedEnrolments.contains(enrolment)) {
+				notNeedToEnrollInCurricularCourse.removeEnrolments(enrolment);
+			}
 		}
 
-		notNeedToEnrollInCurricularCourse.addEnrolments(enrolment);
-	    }
-	}
+		if (selectedEnrolments != null && !selectedEnrolments.isEmpty()) {
+			Collection<Enrolment> aprovedEnrolments = student.getApprovedEnrolments();
+			for (Enrolment selectedEnrolment : selectedEnrolments) {
+				Enrolment enrolment = getAprovedEnrolment(aprovedEnrolments, selectedEnrolment);
+				if (enrolment == null) {
+					throw new FenixServiceException();
+				}
 
-	for (ExternalEnrolment enrolment : notNeedToEnrollInCurricularCourse.getExternalEnrolmentsSet()) {
-	    if (externalEnrolments == null || !externalEnrolments.contains(enrolment)) {
-		notNeedToEnrollInCurricularCourse.removeExternalEnrolments(enrolment);
-	    }
-	}
-
-	if (externalEnrolments != null && !externalEnrolments.isEmpty()) {
-	    for (ExternalEnrolment selectedExternalEnrolment : externalEnrolments) {
-		if (selectedExternalEnrolment.getRegistration().getStudent() != student) {
-		    throw new FenixServiceException();
+				notNeedToEnrollInCurricularCourse.addEnrolments(enrolment);
+			}
 		}
-		notNeedToEnrollInCurricularCourse.addExternalEnrolments(selectedExternalEnrolment);
-	    }
+
+		for (ExternalEnrolment enrolment : notNeedToEnrollInCurricularCourse.getExternalEnrolmentsSet()) {
+			if (externalEnrolments == null || !externalEnrolments.contains(enrolment)) {
+				notNeedToEnrollInCurricularCourse.removeExternalEnrolments(enrolment);
+			}
+		}
+
+		if (externalEnrolments != null && !externalEnrolments.isEmpty()) {
+			for (ExternalEnrolment selectedExternalEnrolment : externalEnrolments) {
+				if (selectedExternalEnrolment.getRegistration().getStudent() != student) {
+					throw new FenixServiceException();
+				}
+				notNeedToEnrollInCurricularCourse.addExternalEnrolments(selectedExternalEnrolment);
+			}
+		}
+
 	}
 
-    }
-
-    private static Enrolment getAprovedEnrolment(Collection<Enrolment> aprovedEnrolments, Enrolment selectedEnrolment) {
-	for (Enrolment enrolment : aprovedEnrolments) {
-	    if (enrolment.equals(selectedEnrolment)) {
-		return enrolment;
-	    }
+	private static Enrolment getAprovedEnrolment(Collection<Enrolment> aprovedEnrolments, Enrolment selectedEnrolment) {
+		for (Enrolment enrolment : aprovedEnrolments) {
+			if (enrolment.equals(selectedEnrolment)) {
+				return enrolment;
+			}
+		}
+		return null;
 	}
-	return null;
-    }
 
 }

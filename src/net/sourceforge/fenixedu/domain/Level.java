@@ -1,9 +1,9 @@
 package net.sourceforge.fenixedu.domain;
 
 public enum Level {
-    LOW,
+	LOW,
 
-    MEDIUM,
+	MEDIUM,
 
-    HIGH
+	HIGH
 }

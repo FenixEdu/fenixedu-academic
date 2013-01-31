@@ -15,26 +15,27 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 
 public class GrantOrientationTeacherPeriodConflictException extends FenixServiceException {
 
-    public GrantOrientationTeacherPeriodConflictException() {
-    }
+	public GrantOrientationTeacherPeriodConflictException() {
+	}
 
-    public GrantOrientationTeacherPeriodConflictException(String message) {
-	super(message);
-    }
+	public GrantOrientationTeacherPeriodConflictException(String message) {
+		super(message);
+	}
 
-    public GrantOrientationTeacherPeriodConflictException(Throwable cause) {
-	super(cause);
-    }
+	public GrantOrientationTeacherPeriodConflictException(Throwable cause) {
+		super(cause);
+	}
 
-    public GrantOrientationTeacherPeriodConflictException(String message, Throwable cause) {
-	super(message, cause);
-    }
+	public GrantOrientationTeacherPeriodConflictException(String message, Throwable cause) {
+		super(message, cause);
+	}
 
-    public String toString() {
-	String result = "[GrantOrientationTeacherPeriodConflictException\n";
-	result += "message" + this.getMessage() + "\n";
-	result += "cause" + this.getCause() + "\n";
-	result += "]";
-	return result;
-    }
+	@Override
+	public String toString() {
+		String result = "[GrantOrientationTeacherPeriodConflictException\n";
+		result += "message" + this.getMessage() + "\n";
+		result += "cause" + this.getCause() + "\n";
+		result += "]";
+		return result;
+	}
 }

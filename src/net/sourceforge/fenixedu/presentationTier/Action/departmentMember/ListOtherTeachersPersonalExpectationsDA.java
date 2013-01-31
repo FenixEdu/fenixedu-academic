@@ -17,87 +17,87 @@ import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(module = "departmentMember", path = "/listTeachersPersonalExpectations", scope = "request", parameter = "method")
 @Forwards(value = {
-		@Forward(name = "seeTeacherPersonalExpectationsByYear", path = "/departmentMember/expectationManagement/seeTeacherPersonalExpectations.jsp"),
-		@Forward(name = "listTeacherPersonalExpectations", path = "/departmentMember/expectationManagement/listTeacherPersonalExpectations.jsp") })
+		@Forward(
+				name = "seeTeacherPersonalExpectationsByYear",
+				path = "/departmentMember/expectationManagement/seeTeacherPersonalExpectations.jsp"),
+		@Forward(
+				name = "listTeacherPersonalExpectations",
+				path = "/departmentMember/expectationManagement/listTeacherPersonalExpectations.jsp") })
 public class ListOtherTeachersPersonalExpectationsDA extends ListTeachersPersonalExpectationsDA {
 
-    public ActionForward listTeachersPersonalExpectationsForSelectedExecutionYear(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+	@Override
+	public ActionForward listTeachersPersonalExpectationsForSelectedExecutionYear(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-	IViewState viewState = RenderUtils.getViewState("executionYear");
-	ExecutionYear executionYear = (ExecutionYear) viewState.getMetaObject().getObject();
-	return readAndSetList(mapping, request, executionYear);
-    }
-
-    public ActionForward listTeachersPersonalExpectationsByExecutionYear(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
-
-	ExecutionYear executionYear = getExecutionYearFromParameter(request);
-	return readAndSetList(mapping, request, executionYear);
-    }
-
-    public ActionForward listTeachersPersonalExpectations(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-
-	ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
-	return readAndSetList(mapping, request, executionYear);
-    }
-
-    public ActionForward seeTeacherPersonalExpectation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-
-	TeacherPersonalExpectation teacherPersonalExpectation = getTeacherPersonalExpectationFromParameter(request);
-	ExecutionYear executionYear = teacherPersonalExpectation.getExecutionYear();
-	Teacher teacher = teacherPersonalExpectation.getTeacher();
-
-	Department loggedTeacherDepartment = getDepartment(request);
-	Department teacherWorkingDepartment = teacher.getLastWorkingDepartment(executionYear.getBeginDateYearMonthDay(),
-		executionYear.getEndDateYearMonthDay());
-
-	TeacherPersonalExpectationsVisualizationPeriod visualizationPeriod = loggedTeacherDepartment
-		.getTeacherPersonalExpectationsVisualizationPeriodByExecutionYear(executionYear);
-
-	if (visualizationPeriod != null && visualizationPeriod.isPeriodOpen() && teacherWorkingDepartment != null
-		&& teacherWorkingDepartment.equals(loggedTeacherDepartment)) {
-
-	    request.setAttribute("noEdit", true);
-	    request.setAttribute("teacherPersonalExpectation", teacherPersonalExpectation);
+		IViewState viewState = RenderUtils.getViewState("executionYear");
+		ExecutionYear executionYear = (ExecutionYear) viewState.getMetaObject().getObject();
+		return readAndSetList(mapping, request, executionYear);
 	}
 
-	return mapping.findForward("seeTeacherPersonalExpectationsByYear");
-    }
+	@Override
+	public ActionForward listTeachersPersonalExpectationsByExecutionYear(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-    private Department getDepartment(HttpServletRequest request) {
-	return getLoggedPerson(request).getTeacher().getCurrentWorkingDepartment();
-    }
-
-    protected ActionForward readAndSetList(ActionMapping mapping, HttpServletRequest request, ExecutionYear executionYear) {
-	Department department = getDepartment(request);
-	TeacherPersonalExpectationsVisualizationPeriod visualizationPeriod = null;
-	if (department != null) {
-	    visualizationPeriod = department.getTeacherPersonalExpectationsVisualizationPeriodByExecutionYear(executionYear);
+		ExecutionYear executionYear = getExecutionYearFromParameter(request);
+		return readAndSetList(mapping, request, executionYear);
 	}
 
-	if (visualizationPeriod == null || !visualizationPeriod.isPeriodOpen()) {
-	    request.setAttribute("executionYearBean", new ExecutionYearBean(executionYear));
-	    return mapping.findForward("listTeacherPersonalExpectations");
-	} else {
-	    return super.readAndSetList(mapping, request, executionYear);
+	@Override
+	public ActionForward listTeachersPersonalExpectations(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+
+		ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
+		return readAndSetList(mapping, request, executionYear);
 	}
-    }
+
+	@Override
+	public ActionForward seeTeacherPersonalExpectation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+
+		TeacherPersonalExpectation teacherPersonalExpectation = getTeacherPersonalExpectationFromParameter(request);
+		ExecutionYear executionYear = teacherPersonalExpectation.getExecutionYear();
+		Teacher teacher = teacherPersonalExpectation.getTeacher();
+
+		Department loggedTeacherDepartment = getDepartment(request);
+		Department teacherWorkingDepartment =
+				teacher.getLastWorkingDepartment(executionYear.getBeginDateYearMonthDay(), executionYear.getEndDateYearMonthDay());
+
+		TeacherPersonalExpectationsVisualizationPeriod visualizationPeriod =
+				loggedTeacherDepartment.getTeacherPersonalExpectationsVisualizationPeriodByExecutionYear(executionYear);
+
+		if (visualizationPeriod != null && visualizationPeriod.isPeriodOpen() && teacherWorkingDepartment != null
+				&& teacherWorkingDepartment.equals(loggedTeacherDepartment)) {
+
+			request.setAttribute("noEdit", true);
+			request.setAttribute("teacherPersonalExpectation", teacherPersonalExpectation);
+		}
+
+		return mapping.findForward("seeTeacherPersonalExpectationsByYear");
+	}
+
+	private Department getDepartment(HttpServletRequest request) {
+		return getLoggedPerson(request).getTeacher().getCurrentWorkingDepartment();
+	}
+
+	@Override
+	protected ActionForward readAndSetList(ActionMapping mapping, HttpServletRequest request, ExecutionYear executionYear) {
+		Department department = getDepartment(request);
+		TeacherPersonalExpectationsVisualizationPeriod visualizationPeriod = null;
+		if (department != null) {
+			visualizationPeriod = department.getTeacherPersonalExpectationsVisualizationPeriodByExecutionYear(executionYear);
+		}
+
+		if (visualizationPeriod == null || !visualizationPeriod.isPeriodOpen()) {
+			request.setAttribute("executionYearBean", new ExecutionYearBean(executionYear));
+			return mapping.findForward("listTeacherPersonalExpectations");
+		} else {
+			return super.readAndSetList(mapping, request, executionYear);
+		}
+	}
 }

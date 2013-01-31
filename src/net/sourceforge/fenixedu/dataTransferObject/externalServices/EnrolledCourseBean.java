@@ -13,67 +13,67 @@ import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 
 public class EnrolledCourseBean {
 
-    private String name;
-    private String acronym;
-    private String pageURL;
-    private List<EnrolledGroupBean> enrolledGroups = new ArrayList<EnrolledGroupBean>();
-    private List<EvaluationBean> evaluations = new ArrayList<EvaluationBean>();
+	private String name;
+	private String acronym;
+	private String pageURL;
+	private List<EnrolledGroupBean> enrolledGroups = new ArrayList<EnrolledGroupBean>();
+	private List<EvaluationBean> evaluations = new ArrayList<EvaluationBean>();
 
-    public EnrolledCourseBean(final Attends attend) {
-	setName(attend.getExecutionCourse().getName());
-	setAcronym(attend.getExecutionCourse().getSigla());
-	setPageURL("http://fenix.ist.utl.pt" + attend.getExecutionCourse().getSite().getReversePath());
-	//grupos
-	for (StudentGroup studentGroup : attend.getAllStudentGroups()) {
-	    getEnrolledGroups().add(new EnrolledGroupBean(studentGroup, attend));
+	public EnrolledCourseBean(final Attends attend) {
+		setName(attend.getExecutionCourse().getName());
+		setAcronym(attend.getExecutionCourse().getSigla());
+		setPageURL("http://fenix.ist.utl.pt" + attend.getExecutionCourse().getSite().getReversePath());
+		//grupos
+		for (StudentGroup studentGroup : attend.getAllStudentGroups()) {
+			getEnrolledGroups().add(new EnrolledGroupBean(studentGroup, attend));
+		}
+		//exames e testes
+		for (WrittenEvaluation writtenEvaluation : attend.getExecutionCourse().getWrittenEvaluations()) {
+			getEvaluations().add(new EvaluationBean(writtenEvaluation));
+		}
+		//projectos
+		for (Project project : attend.getExecutionCourse().getAssociatedProjects()) {
+			getEvaluations().add(new EvaluationBean(project));
+		}
 	}
-	//exames e testes
-	for (WrittenEvaluation writtenEvaluation : attend.getExecutionCourse().getWrittenEvaluations()) {
-	    getEvaluations().add(new EvaluationBean(writtenEvaluation));
+
+	public String getName() {
+		return name;
 	}
-	//projectos
-	for (Project project : attend.getExecutionCourse().getAssociatedProjects()) {
-	    getEvaluations().add(new EvaluationBean(project));
+
+	public void setName(String name) {
+		this.name = name;
 	}
-    }
 
-    public String getName() {
-	return name;
-    }
+	public String getAcronym() {
+		return acronym;
+	}
 
-    public void setName(String name) {
-	this.name = name;
-    }
+	public void setAcronym(String acronym) {
+		this.acronym = acronym;
+	}
 
-    public String getAcronym() {
-	return acronym;
-    }
+	public String getPageURL() {
+		return pageURL;
+	}
 
-    public void setAcronym(String acronym) {
-	this.acronym = acronym;
-    }
+	public void setPageURL(String pageURL) {
+		this.pageURL = pageURL;
+	}
 
-    public String getPageURL() {
-	return pageURL;
-    }
+	public void setEnrolledGroups(List<EnrolledGroupBean> enrolledGroups) {
+		this.enrolledGroups = enrolledGroups;
+	}
 
-    public void setPageURL(String pageURL) {
-	this.pageURL = pageURL;
-    }
+	public List<EnrolledGroupBean> getEnrolledGroups() {
+		return enrolledGroups;
+	}
 
-    public void setEnrolledGroups(List<EnrolledGroupBean> enrolledGroups) {
-	this.enrolledGroups = enrolledGroups;
-    }
+	public void setEvaluations(List<EvaluationBean> evaluations) {
+		this.evaluations = evaluations;
+	}
 
-    public List<EnrolledGroupBean> getEnrolledGroups() {
-	return enrolledGroups;
-    }
-
-    public void setEvaluations(List<EvaluationBean> evaluations) {
-	this.evaluations = evaluations;
-    }
-
-    public List<EvaluationBean> getEvaluations() {
-	return evaluations;
-    }
+	public List<EvaluationBean> getEvaluations() {
+		return evaluations;
+	}
 }

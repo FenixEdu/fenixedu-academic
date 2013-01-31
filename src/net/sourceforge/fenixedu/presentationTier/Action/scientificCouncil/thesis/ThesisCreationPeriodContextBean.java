@@ -7,27 +7,27 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 
 public class ThesisCreationPeriodContextBean implements Serializable {
 
-    private ExecutionYear executionYear;
+	private ExecutionYear executionYear;
 
-    private ExecutionDegree executionDegree;
+	private ExecutionDegree executionDegree;
 
-    public ThesisCreationPeriodContextBean() {
-    }
+	public ThesisCreationPeriodContextBean() {
+	}
 
-    public ExecutionYear getExecutionYear() {
-	return executionYear;
-    }
+	public ExecutionYear getExecutionYear() {
+		return executionYear;
+	}
 
-    public ExecutionDegree getExecutionDegree() {
-	return executionDegree;
-    }
+	public ExecutionDegree getExecutionDegree() {
+		return executionDegree;
+	}
 
-    public void setExecutionYear(final ExecutionYear executionYear) {
-	this.executionYear = executionYear;
-    }
+	public void setExecutionYear(final ExecutionYear executionYear) {
+		this.executionYear = executionYear;
+	}
 
-    public void setExecutionDegree(final ExecutionDegree executionDegree) {
-	this.executionDegree = executionDegree;
-    }
+	public void setExecutionDegree(final ExecutionDegree executionDegree) {
+		this.executionDegree = executionDegree;
+	}
 
 }

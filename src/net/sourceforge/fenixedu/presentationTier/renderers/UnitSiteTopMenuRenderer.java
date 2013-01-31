@@ -25,37 +25,36 @@ import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
  * </ul>
  * <li>C
  * </ul>
- * If the site contains a section structure like the one presented then only the
- * subsections of top (A and B) are presented.
+ * If the site contains a section structure like the one presented then only the subsections of top (A and B) are presented.
  * 
  * @author cfgi
  */
 public class UnitSiteTopMenuRenderer extends UnitSiteMenuRenderer {
 
-    @Override
-    protected MultiLanguageString getTargetSectionName() {
-	return i18n("Topo", "Top");
-    }
+	@Override
+	protected MultiLanguageString getTargetSectionName() {
+		return i18n("Topo", "Top");
+	}
 
-    @Override
-    protected List<Section> getBaseSections(Site site) {
-	return new ArrayList<Section>();
-    }
+	@Override
+	protected List<Section> getBaseSections(Site site) {
+		return new ArrayList<Section>();
+	}
 
-    @Override
-    protected List<MenuEntry> getDefaultEntries(Site site) {
-	return new ArrayList<MenuEntry>();
-    }
+	@Override
+	protected List<MenuEntry> getDefaultEntries(Site site) {
+		return new ArrayList<MenuEntry>();
+	}
 
-    @Override
-    protected String getPath(FilterFunctionalityContext context, Content content) {
-	List<String> subPaths = new ArrayList<String>();
-	subPaths.add(Content.normalize(getTargetSectionName().getContent()));
-	return MenuRenderer.findPathFor(context.getRequest().getContextPath(), content, context, subPaths);
-    }
+	@Override
+	protected String getPath(FilterFunctionalityContext context, Content content) {
+		List<String> subPaths = new ArrayList<String>();
+		subPaths.add(Content.normalize(getTargetSectionName().getContent()));
+		return MenuRenderer.findPathFor(context.getRequest().getContextPath(), content, context, subPaths);
+	}
 
-    @Override
-    protected boolean allowsSubMenus() {
-	return false;
-    }
+	@Override
+	protected boolean allowsSubMenus() {
+		return false;
+	}
 }

@@ -18,50 +18,50 @@ import net.sourceforge.fenixedu.domain.transactions.Transaction;
  */
 public class PersonAccount extends PersonAccount_Base {
 
-    public PersonAccount() {
-	super();
-	setRootDomainObject(RootDomainObject.getInstance());
-    }
-
-    public PersonAccount(Person person) {
-	this();
-	setPerson(person);
-	setBalance(new Double(0));
-
-    }
-
-    public List getPaymentTransactions() {
-
-	List result = new ArrayList<PaymentTransaction>();
-	for (Transaction transaction : this.getTransactions()) {
-	    if (transaction instanceof PaymentTransaction) {
-		result.add(transaction);
-	    }
+	public PersonAccount() {
+		super();
+		setRootDomainObject(RootDomainObject.getInstance());
 	}
 
-	return result;
-    }
+	public PersonAccount(Person person) {
+		this();
+		setPerson(person);
+		setBalance(new Double(0));
 
-    public List getInsuranceTransactions() {
-
-	List result = new ArrayList<InsuranceTransaction>();
-	for (Transaction transaction : this.getTransactions()) {
-	    if (transaction instanceof InsuranceTransaction) {
-		result.add(transaction);
-	    }
-	}
-	return result;
-    }
-
-    public void delete() {
-
-	if (getTransactionsCount() > 0) {
-	    throw new DomainException("error.person.cannot.be.deleted");
 	}
 
-	removeRootDomainObject();
-	removePerson();
-	super.deleteDomainObject();
-    }
+	public List getPaymentTransactions() {
+
+		List result = new ArrayList<PaymentTransaction>();
+		for (Transaction transaction : this.getTransactions()) {
+			if (transaction instanceof PaymentTransaction) {
+				result.add(transaction);
+			}
+		}
+
+		return result;
+	}
+
+	public List getInsuranceTransactions() {
+
+		List result = new ArrayList<InsuranceTransaction>();
+		for (Transaction transaction : this.getTransactions()) {
+			if (transaction instanceof InsuranceTransaction) {
+				result.add(transaction);
+			}
+		}
+		return result;
+	}
+
+	public void delete() {
+
+		if (getTransactionsCount() > 0) {
+			throw new DomainException("error.person.cannot.be.deleted");
+		}
+
+		removeRootDomainObject();
+		removePerson();
+		super.deleteDomainObject();
+	}
 
 }

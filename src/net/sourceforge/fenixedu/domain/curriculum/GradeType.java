@@ -6,51 +6,56 @@ import java.util.List;
 import net.sourceforge.fenixedu.domain.GradeScale;
 
 public enum GradeType {
-    GRADETWENTY {
-	public IGrade average(List<IGrade> grades) {
-	    long sum = numericSum(grades);
+	GRADETWENTY {
+		@Override
+		public IGrade average(List<IGrade> grades) {
+			long sum = numericSum(grades);
 
-	    BigDecimal divider = (new BigDecimal(sum)).divide(new BigDecimal(grades.size()), BigDecimal.ROUND_HALF_EVEN);
-	    return GradeFactory.getInstance().getGrade((int) divider.longValue());
+			BigDecimal divider = (new BigDecimal(sum)).divide(new BigDecimal(grades.size()), BigDecimal.ROUND_HALF_EVEN);
+			return GradeFactory.getInstance().getGrade((int) divider.longValue());
+		}
+	},
+
+	GRADEFIVE {
+		@Override
+		public IGrade average(List<IGrade> grades) {
+			long sum = numericSum(grades);
+
+			BigDecimal divider = (new BigDecimal(sum)).divide(new BigDecimal(grades.size()), BigDecimal.ROUND_HALF_EVEN);
+			return GradeFactory.getInstance().getGrade((int) divider.longValue());
+		}
+	},
+
+	GRADEAP {
+		@Override
+		public IGrade average(List<IGrade> grades) {
+			return GradeFactory.getInstance().getGrade(GradeScale.AP);
+		}
+	},
+
+	GRADERE {
+		@Override
+		public IGrade average(List<IGrade> grades) {
+			return GradeFactory.getInstance().getGrade(GradeScale.RE);
+		}
+	},
+
+	GRADENA {
+		@Override
+		public IGrade average(List<IGrade> grades) {
+			return GradeFactory.getInstance().getGrade(GradeScale.NA);
+		}
+	};
+
+	protected long numericSum(List<IGrade> grades) {
+		long sum = 0;
+
+		for (IGrade grade : grades) {
+			sum += ((Integer) grade.getGradeValue()).intValue();
+		}
+
+		return sum;
 	}
-    },
 
-    GRADEFIVE {
-	public IGrade average(List<IGrade> grades) {
-	    long sum = numericSum(grades);
-
-	    BigDecimal divider = (new BigDecimal(sum)).divide(new BigDecimal(grades.size()), BigDecimal.ROUND_HALF_EVEN);
-	    return GradeFactory.getInstance().getGrade((int) divider.longValue());
-	}
-    },
-
-    GRADEAP {
-	public IGrade average(List<IGrade> grades) {
-	    return GradeFactory.getInstance().getGrade(GradeScale.AP);
-	}
-    },
-
-    GRADERE {
-	public IGrade average(List<IGrade> grades) {
-	    return GradeFactory.getInstance().getGrade(GradeScale.RE);
-	}
-    },
-
-    GRADENA {
-	public IGrade average(List<IGrade> grades) {
-	    return GradeFactory.getInstance().getGrade(GradeScale.NA);
-	}
-    };
-
-    protected long numericSum(List<IGrade> grades) {
-	long sum = 0;
-
-	for (IGrade grade : grades) {
-	    sum += ((Integer) grade.getGradeValue()).intValue();
-	}
-
-	return sum;
-    }
-
-    public abstract IGrade average(List<IGrade> grades);
+	public abstract IGrade average(List<IGrade> grades);
 }

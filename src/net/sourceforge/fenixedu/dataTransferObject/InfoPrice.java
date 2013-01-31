@@ -11,102 +11,106 @@ import net.sourceforge.fenixedu.domain.Price;
 
 public class InfoPrice extends InfoObject {
 
-    protected GraduationType graduationType;
+	protected GraduationType graduationType;
 
-    protected Double price;
+	protected Double price;
 
-    protected String description;
+	protected String description;
 
-    protected DocumentType documentType;
+	protected DocumentType documentType;
 
-    public InfoPrice() {
-    }
-
-    public boolean equals(Object obj) {
-	boolean resultado = false;
-	if (obj instanceof InfoPrice) {
-	    InfoPrice infoPrice = (InfoPrice) obj;
-	    resultado = this.getGraduationType().equals(infoPrice.getGraduationType())
-		    && this.getPrice().equals(infoPrice.getPrice()) && this.getDescription().equals(infoPrice.getDescription())
-		    && this.getDocumentType().equals(infoPrice.getDocumentType());
-
+	public InfoPrice() {
 	}
-	return resultado;
-    }
 
-    public String toString() {
-	String result = "[" + this.getClass().getName() + ": ";
-	result += "graduationType = " + this.graduationType + "; ";
-	result += "price = " + this.price + "]";
-	result += "description = " + this.description + "]";
-	result += "documentType = " + this.documentType + "]";
-	return result;
-    }
+	@Override
+	public boolean equals(Object obj) {
+		boolean resultado = false;
+		if (obj instanceof InfoPrice) {
+			InfoPrice infoPrice = (InfoPrice) obj;
+			resultado =
+					this.getGraduationType().equals(infoPrice.getGraduationType())
+							&& this.getPrice().equals(infoPrice.getPrice())
+							&& this.getDescription().equals(infoPrice.getDescription())
+							&& this.getDocumentType().equals(infoPrice.getDocumentType());
 
-    /**
-     * @return
-     */
-    public String getDescription() {
-	return description;
-    }
+		}
+		return resultado;
+	}
 
-    /**
-     * @return
-     */
-    public DocumentType getDocumentType() {
-	return documentType;
-    }
+	@Override
+	public String toString() {
+		String result = "[" + this.getClass().getName() + ": ";
+		result += "graduationType = " + this.graduationType + "; ";
+		result += "price = " + this.price + "]";
+		result += "description = " + this.description + "]";
+		result += "documentType = " + this.documentType + "]";
+		return result;
+	}
 
-    /**
-     * @return
-     */
-    public GraduationType getGraduationType() {
-	return graduationType;
-    }
+	/**
+	 * @return
+	 */
+	public String getDescription() {
+		return description;
+	}
 
-    /**
-     * @return
-     */
-    public Double getPrice() {
-	return price;
-    }
+	/**
+	 * @return
+	 */
+	public DocumentType getDocumentType() {
+		return documentType;
+	}
 
-    /**
-     * @param string
-     */
-    public void setDescription(String string) {
-	description = string;
-    }
+	/**
+	 * @return
+	 */
+	public GraduationType getGraduationType() {
+		return graduationType;
+	}
 
-    /**
-     * @param type
-     */
-    public void setDocumentType(DocumentType type) {
-	documentType = type;
-    }
+	/**
+	 * @return
+	 */
+	public Double getPrice() {
+		return price;
+	}
 
-    /**
-     * @param type
-     */
-    public void setGraduationType(GraduationType type) {
-	graduationType = type;
-    }
+	/**
+	 * @param string
+	 */
+	public void setDescription(String string) {
+		description = string;
+	}
 
-    /**
-     * @param double1
-     */
-    public void setPrice(Double double1) {
-	price = double1;
-    }
+	/**
+	 * @param type
+	 */
+	public void setDocumentType(DocumentType type) {
+		documentType = type;
+	}
 
-    public static InfoPrice newInfoFromDoaim(Price price2) {
-	InfoPrice infoPrice = new InfoPrice();
-	infoPrice.setDescription(price2.getDescription());
-	infoPrice.setDocumentType(price2.getDocumentType());
-	infoPrice.setGraduationType(price2.getGraduationType());
-	infoPrice.setIdInternal(price2.getIdInternal());
-	infoPrice.setPrice(price2.getPrice());
-	return infoPrice;
-    }
+	/**
+	 * @param type
+	 */
+	public void setGraduationType(GraduationType type) {
+		graduationType = type;
+	}
+
+	/**
+	 * @param double1
+	 */
+	public void setPrice(Double double1) {
+		price = double1;
+	}
+
+	public static InfoPrice newInfoFromDoaim(Price price2) {
+		InfoPrice infoPrice = new InfoPrice();
+		infoPrice.setDescription(price2.getDescription());
+		infoPrice.setDocumentType(price2.getDocumentType());
+		infoPrice.setGraduationType(price2.getGraduationType());
+		infoPrice.setIdInternal(price2.getIdInternal());
+		infoPrice.setPrice(price2.getPrice());
+		return infoPrice;
+	}
 
 }

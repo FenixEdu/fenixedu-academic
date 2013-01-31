@@ -19,130 +19,130 @@ import net.sourceforge.fenixedu.domain.student.Student;
 
 public class DelegateStudentsGroup extends LeafGroup {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    private final FunctionType functionType;
+	private final FunctionType functionType;
 
-    private final Integer personFunctionId;
+	private final Integer personFunctionId;
 
-    public DelegateStudentsGroup(final PersonFunction delegateFunction, final FunctionType functionType) {
-	personFunctionId = delegateFunction.getIdInternal();
-	this.functionType = functionType;
-    }
-
-    public DelegateStudentsGroup(PersonFunction delegateFunction) {
-	this(delegateFunction, delegateFunction.getFunction().getFunctionType());
-    }
-
-    @Override
-    public Set<Person> getElements() {
-	Set<Person> people = new HashSet<Person>();
-
-	if (getSender().hasStudent()) {
-	    for (Student student : getStudent().getStudentsResponsibleForGivenFunctionType(getFunctionType(), getExecutionYear())) {
-		people.add(student.getPerson());
-	    }
-	} else {
-	    if (getSender().hasAnyCoordinators()) {
-		for (Coordinator coordinator : getSender().getCoordinators()) {
-		    final Degree degree = coordinator.getExecutionDegree().getDegree();
-		    for (Student student : degree.getAllStudents()) {
-			people.add(student.getPerson());
-		    }
-		}
-	    }
+	public DelegateStudentsGroup(final PersonFunction delegateFunction, final FunctionType functionType) {
+		personFunctionId = delegateFunction.getIdInternal();
+		this.functionType = functionType;
 	}
 
-	return people;
-    }
-
-    @Override
-    protected Argument[] getExpressionArguments() {
-	if (functionType == null) {
-	    return new Argument[] { new IdOperator(getPersonFunction()) };
-	} else {
-	    return new Argument[] { new IdOperator(getPersonFunction()), new StaticArgument(functionType.getName()) };
+	public DelegateStudentsGroup(PersonFunction delegateFunction) {
+		this(delegateFunction, delegateFunction.getFunction().getFunctionType());
 	}
-    }
-
-    public static class Builder implements GroupBuilder {
 
 	@Override
-	public Group build(Object[] arguments) {
-	    try {
-		if (arguments.length > 1 && arguments[1] != null) {
-		    final String functionTypeName = (String) arguments[1];
-		    final FunctionType functionType = FunctionType.valueOf(functionTypeName);
-		    return new DelegateStudentsGroup((PersonFunction) arguments[0], functionType);
+	public Set<Person> getElements() {
+		Set<Person> people = new HashSet<Person>();
+
+		if (getSender().hasStudent()) {
+			for (Student student : getStudent().getStudentsResponsibleForGivenFunctionType(getFunctionType(), getExecutionYear())) {
+				people.add(student.getPerson());
+			}
 		} else {
-		    return new DelegateStudentsGroup((PersonFunction) arguments[0]);
+			if (getSender().hasAnyCoordinators()) {
+				for (Coordinator coordinator : getSender().getCoordinators()) {
+					final Degree degree = coordinator.getExecutionDegree().getDegree();
+					for (Student student : degree.getAllStudents()) {
+						people.add(student.getPerson());
+					}
+				}
+			}
 		}
-	    } catch (ClassCastException e) {
-		throw new GroupDynamicExpressionException("accessControl.group.builder.executionCourse.notExecutionCourse",
-			arguments[0].toString());
-	    }
+
+		return people;
 	}
 
 	@Override
-	public int getMinArguments() {
-	    return 1;
+	protected Argument[] getExpressionArguments() {
+		if (functionType == null) {
+			return new Argument[] { new IdOperator(getPersonFunction()) };
+		} else {
+			return new Argument[] { new IdOperator(getPersonFunction()), new StaticArgument(functionType.getName()) };
+		}
+	}
+
+	public static class Builder implements GroupBuilder {
+
+		@Override
+		public Group build(Object[] arguments) {
+			try {
+				if (arguments.length > 1 && arguments[1] != null) {
+					final String functionTypeName = (String) arguments[1];
+					final FunctionType functionType = FunctionType.valueOf(functionTypeName);
+					return new DelegateStudentsGroup((PersonFunction) arguments[0], functionType);
+				} else {
+					return new DelegateStudentsGroup((PersonFunction) arguments[0]);
+				}
+			} catch (ClassCastException e) {
+				throw new GroupDynamicExpressionException("accessControl.group.builder.executionCourse.notExecutionCourse",
+						arguments[0].toString());
+			}
+		}
+
+		@Override
+		public int getMinArguments() {
+			return 1;
+		}
+
+		@Override
+		public int getMaxArguments() {
+			return 2;
+		}
+
 	}
 
 	@Override
-	public int getMaxArguments() {
-	    return 2;
+	public boolean isMember(Person person) {
+		if (person.hasStudent()) {
+			if (getElements().contains(person.getStudent())) {
+				return true;
+			}
+		}
+		return false;
 	}
 
-    }
-
-    @Override
-    public boolean isMember(Person person) {
-	if (person.hasStudent()) {
-	    if (getElements().contains(person.getStudent())) {
-		return true;
-	    }
+	@Override
+	public String getPresentationNameBundle() {
+		return "resources.DelegateResources";
 	}
-	return false;
-    }
 
-    @Override
-    public String getPresentationNameBundle() {
-	return "resources.DelegateResources";
-    }
+	@Override
+	public String getPresentationNameKey() {
+		return "label." + getClass().getSimpleName() + "." + getFunctionType().getName()
+				+ (getSender().hasStudent() ? "" : ".coordinator");
+	}
 
-    @Override
-    public String getPresentationNameKey() {
-	return "label." + getClass().getSimpleName() + "." + getFunctionType().getName()
-		+ (getSender().hasStudent() ? "" : ".coordinator");
-    }
+	public FunctionType getFunctionType() {
+		return functionType;
+	}
 
-    public FunctionType getFunctionType() {
-	return functionType;
-    }
+	public PersonFunction getPersonFunction() {
+		return personFunctionId != null ? (PersonFunction) RootDomainObject.getInstance().readAccountabilityByOID(
+				personFunctionId) : null;
+	}
 
-    public PersonFunction getPersonFunction() {
-	return personFunctionId != null ? (PersonFunction) RootDomainObject.getInstance().readAccountabilityByOID(
-		personFunctionId) : null;
-    }
+	public Student getStudent() {
+		final PersonFunction personFunction = getPersonFunction();
+		final Person person = personFunction.getPerson();
+		return person.hasStudent() ? person.getStudent() : null;
+	}
 
-    public Student getStudent() {
-	final PersonFunction personFunction = getPersonFunction();
-	final Person person = personFunction.getPerson();
-	return person.hasStudent() ? person.getStudent() : null;
-    }
+	public ExecutionYear getExecutionYear() {
+		final PersonFunction personFunction = getPersonFunction();
+		return ExecutionYear.getExecutionYearByDate(personFunction.getBeginDate());
+	}
 
-    public ExecutionYear getExecutionYear() {
-	final PersonFunction personFunction = getPersonFunction();
-	return ExecutionYear.getExecutionYearByDate(personFunction.getBeginDate());
-    }
+	public Person getPerson() {
+		final PersonFunction personFunction = getPersonFunction();
+		return personFunction.getPerson();
+	}
 
-    public Person getPerson() {
-	final PersonFunction personFunction = getPersonFunction();
-	return personFunction.getPerson();
-    }
-
-    private Person getSender() {
-	return getPerson();
-    }
+	private Person getSender() {
+		return getPerson();
+	}
 
 }

@@ -23,35 +23,37 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 @Mapping(module = "scientificCouncil", path = "/credits", scope = "request", parameter = "method")
 @Forwards(value = {
-	@Forward(name = "selectTeacher", path = "/credits/selectTeacher.jsp", tileProperties = @Tile(title = "private.scientificcouncil.credits.summary")),
-	@Forward(name = "showTeacherCredits", path = "/credits/showTeacherCredits.jsp", tileProperties = @Tile(title = "private.scientificcouncil.credits.summary")),
-	@Forward(name = "showPastTeacherCredits", path = "/credits/showPastTeacherCredits.jsp"),
-	@Forward(name = "showAnnualTeacherCredits", path = "/credits/showAnnualTeacherCredits.jsp") })
+		@Forward(name = "selectTeacher", path = "/credits/selectTeacher.jsp", tileProperties = @Tile(
+				title = "private.scientificcouncil.credits.summary")),
+		@Forward(name = "showTeacherCredits", path = "/credits/showTeacherCredits.jsp", tileProperties = @Tile(
+				title = "private.scientificcouncil.credits.summary")),
+		@Forward(name = "showPastTeacherCredits", path = "/credits/showPastTeacherCredits.jsp"),
+		@Forward(name = "showAnnualTeacherCredits", path = "/credits/showAnnualTeacherCredits.jsp") })
 public class ScientificCouncilViewTeacherCreditsDA extends ViewTeacherCreditsDA {
-    @Override
-    public ActionForward viewAnnualTeachingCredits(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws NumberFormatException, FenixServiceException, Exception {
-	return viewAnnualTeachingCredits(mapping, form, request, response, RoleType.SCIENTIFIC_COUNCIL);
-    }
+	@Override
+	public ActionForward viewAnnualTeachingCredits(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws NumberFormatException, FenixServiceException, Exception {
+		return viewAnnualTeachingCredits(mapping, form, request, response, RoleType.SCIENTIFIC_COUNCIL);
+	}
 
-    @Override
-    public ActionForward showTeacherCredits(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws NumberFormatException, FenixServiceException, Exception {
-	TeacherCreditsBean teacherBean = getRenderedObject();
-	teacherBean.prepareAnnualTeachingCredits(RoleType.SCIENTIFIC_COUNCIL);
-	request.setAttribute("teacherBean", teacherBean);
-	return mapping.findForward("showTeacherCredits");
-    }
+	@Override
+	public ActionForward showTeacherCredits(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws NumberFormatException, FenixServiceException, Exception {
+		TeacherCreditsBean teacherBean = getRenderedObject();
+		teacherBean.prepareAnnualTeachingCredits(RoleType.SCIENTIFIC_COUNCIL);
+		request.setAttribute("teacherBean", teacherBean);
+		return mapping.findForward("showTeacherCredits");
+	}
 
-    public ActionForward unlockTeacherCredits(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws NumberFormatException, FenixServiceException, Exception {
-	Teacher teacher = AbstractDomainObject.fromExternalId((String) getFromRequest(request, "teacherOid"));
-	ExecutionSemester executionSemester = AbstractDomainObject.fromExternalId((String) getFromRequest(request,
-		"executionPeriodOid"));
-	TeacherService teacherService = TeacherService.getTeacherService(teacher, executionSemester);
-	teacherService.unlockTeacherCredits();
-	request.setAttribute("teacherOid", teacher.getExternalId());
-	request.setAttribute("executionYearOid", executionSemester.getExecutionYear().getExternalId());
-	return viewAnnualTeachingCredits(mapping, form, request, response, RoleType.SCIENTIFIC_COUNCIL);
-    }
+	public ActionForward unlockTeacherCredits(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws NumberFormatException, FenixServiceException, Exception {
+		Teacher teacher = AbstractDomainObject.fromExternalId((String) getFromRequest(request, "teacherOid"));
+		ExecutionSemester executionSemester =
+				AbstractDomainObject.fromExternalId((String) getFromRequest(request, "executionPeriodOid"));
+		TeacherService teacherService = TeacherService.getTeacherService(teacher, executionSemester);
+		teacherService.unlockTeacherCredits();
+		request.setAttribute("teacherOid", teacher.getExternalId());
+		request.setAttribute("executionYearOid", executionSemester.getExecutionYear().getExternalId());
+		return viewAnnualTeachingCredits(mapping, form, request, response, RoleType.SCIENTIFIC_COUNCIL);
+	}
 }

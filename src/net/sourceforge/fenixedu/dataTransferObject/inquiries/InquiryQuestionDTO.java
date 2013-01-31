@@ -11,100 +11,100 @@ import net.sourceforge.fenixedu.domain.inquiries.StudentInquiryRegistry;
 
 public class InquiryQuestionDTO implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    private StudentInquiryRegistry studentInquiryRegistry;
-    private InquiryQuestion inquiryQuestion;
-    private QuestionAnswer questionAnswer;
-    private String responseValue;
-    private boolean isVisible;
-    private String[] conditionValues;
+	private StudentInquiryRegistry studentInquiryRegistry;
+	private InquiryQuestion inquiryQuestion;
+	private QuestionAnswer questionAnswer;
+	private String responseValue;
+	private boolean isVisible;
+	private String[] conditionValues;
 
-    public InquiryQuestionDTO(InquiryQuestion inquiryQuestion, StudentInquiryRegistry studentInquiryRegistry) {
-	setInquiryQuestion(inquiryQuestion);
-	setStudentInquiryRegistry(studentInquiryRegistry);
-	setConditionOptions(studentInquiryRegistry);
-    }
-
-    public InquiryQuestionDTO(InquiryQuestion inquiryQuestion, InquiryAnswer inquiryAnswer) {
-	setInquiryQuestion(inquiryQuestion);
-	setVisible(true);
-	setQuestionAnswer(inquiryAnswer != null ? inquiryAnswer.getQuestionAnswer(inquiryQuestion) : null);
-	if (getQuestionAnswer() != null) {
-	    setResponseValue(getQuestionAnswer().getAnswer());
+	public InquiryQuestionDTO(InquiryQuestion inquiryQuestion, StudentInquiryRegistry studentInquiryRegistry) {
+		setInquiryQuestion(inquiryQuestion);
+		setStudentInquiryRegistry(studentInquiryRegistry);
+		setConditionOptions(studentInquiryRegistry);
 	}
-    }
 
-    public InquiryQuestionDTO(InquiryQuestion inquiryQuestion) {
-	setInquiryQuestion(inquiryQuestion);
-	setVisible(true);
-    }
+	public InquiryQuestionDTO(InquiryQuestion inquiryQuestion, InquiryAnswer inquiryAnswer) {
+		setInquiryQuestion(inquiryQuestion);
+		setVisible(true);
+		setQuestionAnswer(inquiryAnswer != null ? inquiryAnswer.getQuestionAnswer(inquiryQuestion) : null);
+		if (getQuestionAnswer() != null) {
+			setResponseValue(getQuestionAnswer().getAnswer());
+		}
+	}
 
-    private void setConditionOptions(StudentInquiryRegistry studentInquiryRegistry) {
-	setVisible(getInquiryQuestion().isVisible(studentInquiryRegistry));
-	setConditionValues(getInquiryQuestion().getConditionValues(studentInquiryRegistry));
-    }
+	public InquiryQuestionDTO(InquiryQuestion inquiryQuestion) {
+		setInquiryQuestion(inquiryQuestion);
+		setVisible(true);
+	}
 
-    public void setInquiryQuestion(InquiryQuestion inquiryQuestion) {
-	this.inquiryQuestion = inquiryQuestion;
-    }
+	private void setConditionOptions(StudentInquiryRegistry studentInquiryRegistry) {
+		setVisible(getInquiryQuestion().isVisible(studentInquiryRegistry));
+		setConditionValues(getInquiryQuestion().getConditionValues(studentInquiryRegistry));
+	}
 
-    public InquiryQuestion getInquiryQuestion() {
-	return inquiryQuestion;
-    }
+	public void setInquiryQuestion(InquiryQuestion inquiryQuestion) {
+		this.inquiryQuestion = inquiryQuestion;
+	}
 
-    public String getResponseValue() {
-	return responseValue;
-    }
+	public InquiryQuestion getInquiryQuestion() {
+		return inquiryQuestion;
+	}
 
-    public void setResponseValue(String responseValue) {
-	this.responseValue = responseValue;
-    }
+	public String getResponseValue() {
+		return responseValue;
+	}
 
-    public String getFinalValue() {
-	if (getResponseValue() != null) {
-	    if (getInquiryQuestion() instanceof InquiryCheckBoxQuestion) {
-		if (getResponseValue().equals("on")) {
-		    return "1";
+	public void setResponseValue(String responseValue) {
+		this.responseValue = responseValue;
+	}
+
+	public String getFinalValue() {
+		if (getResponseValue() != null) {
+			if (getInquiryQuestion() instanceof InquiryCheckBoxQuestion) {
+				if (getResponseValue().equals("on")) {
+					return "1";
+				}
+				return getResponseValue();
+			}
+			if (getInquiryQuestion() instanceof InquiryTextBoxQuestion) {
+				return getResponseValue().isEmpty() ? null : getResponseValue();
+			}
 		}
 		return getResponseValue();
-	    }
-	    if (getInquiryQuestion() instanceof InquiryTextBoxQuestion) {
-		return getResponseValue().isEmpty() ? null : getResponseValue();
-	    }
 	}
-	return getResponseValue();
-    }
 
-    public void setVisible(boolean isVisible) {
-	this.isVisible = isVisible;
-    }
+	public void setVisible(boolean isVisible) {
+		this.isVisible = isVisible;
+	}
 
-    public boolean isVisible() {
-	return isVisible;
-    }
+	public boolean isVisible() {
+		return isVisible;
+	}
 
-    public void setConditionValues(String[] conditionValues) {
-	this.conditionValues = conditionValues;
-    }
+	public void setConditionValues(String[] conditionValues) {
+		this.conditionValues = conditionValues;
+	}
 
-    public String[] getConditionValues() {
-	return conditionValues;
-    }
+	public String[] getConditionValues() {
+		return conditionValues;
+	}
 
-    public void setStudentInquiryRegistry(StudentInquiryRegistry studentInquiryRegistry) {
-	this.studentInquiryRegistry = studentInquiryRegistry;
-    }
+	public void setStudentInquiryRegistry(StudentInquiryRegistry studentInquiryRegistry) {
+		this.studentInquiryRegistry = studentInquiryRegistry;
+	}
 
-    public StudentInquiryRegistry getStudentInquiryRegistry() {
-	return studentInquiryRegistry;
-    }
+	public StudentInquiryRegistry getStudentInquiryRegistry() {
+		return studentInquiryRegistry;
+	}
 
-    public void setQuestionAnswer(QuestionAnswer questionAnswer) {
-	this.questionAnswer = questionAnswer;
-    }
+	public void setQuestionAnswer(QuestionAnswer questionAnswer) {
+		this.questionAnswer = questionAnswer;
+	}
 
-    public QuestionAnswer getQuestionAnswer() {
-	return questionAnswer;
-    }
+	public QuestionAnswer getQuestionAnswer() {
+		return questionAnswer;
+	}
 }

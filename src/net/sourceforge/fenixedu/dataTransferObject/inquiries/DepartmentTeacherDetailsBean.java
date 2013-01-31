@@ -19,92 +19,94 @@ import org.apache.commons.beanutils.BeanComparator;
 
 public class DepartmentTeacherDetailsBean extends GlobalCommentsResultsBean {
 
-    private static final long serialVersionUID = 1L;
-    private Person teacher;
-    private ExecutionSemester executionSemester;
-    private Map<Professorship, List<TeacherShiftTypeResultsBean>> teachersResultsToImproveMap;
+	private static final long serialVersionUID = 1L;
+	private Person teacher;
+	private ExecutionSemester executionSemester;
+	private Map<Professorship, List<TeacherShiftTypeResultsBean>> teachersResultsToImproveMap;
 
-    public DepartmentTeacherDetailsBean(Person teacher, ExecutionSemester executionSemester, Person president,
-	    boolean backToResume) {
-	super(null, president, backToResume);
-	setTeacher(teacher);
-	setExecutionSemester(executionSemester);
-	initTeacherResults(teacher);
-    }
-
-    private void initTeacherResults(Person teacher) {
-	setTeachersResultsMap(new HashMap<Professorship, List<TeacherShiftTypeResultsBean>>());
-	setTeachersResultsToImproveMap(new HashMap<Professorship, List<TeacherShiftTypeResultsBean>>());
-	for (Professorship teacherProfessorship : getProfessorships()) {
-	    ArrayList<TeacherShiftTypeResultsBean> teachersResults = new ArrayList<TeacherShiftTypeResultsBean>();
-	    List<InquiryResult> professorshipResults = teacherProfessorship.getInquiryResults();
-	    if (!professorshipResults.isEmpty()) {
-		for (ShiftType shiftType : getShiftTypes(professorshipResults)) {
-		    List<InquiryResult> teacherShiftResults = teacherProfessorship.getInquiryResults(shiftType);
-		    if (!teacherShiftResults.isEmpty()) {
-			teachersResults.add(new TeacherShiftTypeResultsBean(teacherProfessorship, shiftType, teacherProfessorship
-				.getExecutionCourse().getExecutionPeriod(), teacherShiftResults, teacher, getPersonCategory()));
-		    }
-		}
-		Collections.sort(teachersResults, new BeanComparator("professorship.person.name"));
-		Collections.sort(teachersResults, new BeanComparator("shiftType"));
-		if (teacherProfessorship.hasResultsToImprove()) {
-		    getTeachersResultsToImproveMap().put(teacherProfessorship, teachersResults);
-		} else {
-		    getTeachersResultsMap().put(teacherProfessorship, teachersResults);
-		}
-	    }
+	public DepartmentTeacherDetailsBean(Person teacher, ExecutionSemester executionSemester, Person president,
+			boolean backToResume) {
+		super(null, president, backToResume);
+		setTeacher(teacher);
+		setExecutionSemester(executionSemester);
+		initTeacherResults(teacher);
 	}
-    }
 
-    public List<InquiryResultComment> getAllTeacherComments() {
-	List<InquiryResultComment> commentsMade = getExecutionSemester().getAuditCommentsMadeOnTeacher(getTeacher());
-	Collections.sort(commentsMade, new BeanComparator("person.name"));
-	return commentsMade;
-    }
-
-    @Override
-    protected InquiryGlobalComment createGlobalComment() {
-	return new InquiryGlobalComment(getTeacher(), getExecutionSemester());
-    }
-
-    @Override
-    protected ResultPersonCategory getPersonCategory() {
-	return ResultPersonCategory.DEPARTMENT_PRESIDENT;
-    }
-
-    protected List<Professorship> getProfessorships() {
-	if (getTeacher() == null) {
-	    return new ArrayList<Professorship>();
+	private void initTeacherResults(Person teacher) {
+		setTeachersResultsMap(new HashMap<Professorship, List<TeacherShiftTypeResultsBean>>());
+		setTeachersResultsToImproveMap(new HashMap<Professorship, List<TeacherShiftTypeResultsBean>>());
+		for (Professorship teacherProfessorship : getProfessorships()) {
+			ArrayList<TeacherShiftTypeResultsBean> teachersResults = new ArrayList<TeacherShiftTypeResultsBean>();
+			List<InquiryResult> professorshipResults = teacherProfessorship.getInquiryResults();
+			if (!professorshipResults.isEmpty()) {
+				for (ShiftType shiftType : getShiftTypes(professorshipResults)) {
+					List<InquiryResult> teacherShiftResults = teacherProfessorship.getInquiryResults(shiftType);
+					if (!teacherShiftResults.isEmpty()) {
+						teachersResults.add(new TeacherShiftTypeResultsBean(teacherProfessorship, shiftType, teacherProfessorship
+								.getExecutionCourse().getExecutionPeriod(), teacherShiftResults, teacher, getPersonCategory()));
+					}
+				}
+				Collections.sort(teachersResults, new BeanComparator("professorship.person.name"));
+				Collections.sort(teachersResults, new BeanComparator("shiftType"));
+				if (teacherProfessorship.hasResultsToImprove()) {
+					getTeachersResultsToImproveMap().put(teacherProfessorship, teachersResults);
+				} else {
+					getTeachersResultsMap().put(teacherProfessorship, teachersResults);
+				}
+			}
+		}
 	}
-	return getTeacher().getProfessorships(getExecutionSemester());
-    }
 
-    public InquiryGlobalComment getInquiryGlobalComment() {
-	return getTeacher().getInquiryGlobalComment(getExecutionSemester());
-    }
+	public List<InquiryResultComment> getAllTeacherComments() {
+		List<InquiryResultComment> commentsMade = getExecutionSemester().getAuditCommentsMadeOnTeacher(getTeacher());
+		Collections.sort(commentsMade, new BeanComparator("person.name"));
+		return commentsMade;
+	}
 
-    public void setTeacher(Person teacher) {
-	this.teacher = teacher;
-    }
+	@Override
+	protected InquiryGlobalComment createGlobalComment() {
+		return new InquiryGlobalComment(getTeacher(), getExecutionSemester());
+	}
 
-    public Person getTeacher() {
-	return teacher;
-    }
+	@Override
+	protected ResultPersonCategory getPersonCategory() {
+		return ResultPersonCategory.DEPARTMENT_PRESIDENT;
+	}
 
-    public void setExecutionSemester(ExecutionSemester executionSemester) {
-	this.executionSemester = executionSemester;
-    }
+	@Override
+	protected List<Professorship> getProfessorships() {
+		if (getTeacher() == null) {
+			return new ArrayList<Professorship>();
+		}
+		return getTeacher().getProfessorships(getExecutionSemester());
+	}
 
-    public ExecutionSemester getExecutionSemester() {
-	return executionSemester;
-    }
+	@Override
+	public InquiryGlobalComment getInquiryGlobalComment() {
+		return getTeacher().getInquiryGlobalComment(getExecutionSemester());
+	}
 
-    public void setTeachersResultsToImproveMap(Map<Professorship, List<TeacherShiftTypeResultsBean>> teachersResultsToImproveMap) {
-	this.teachersResultsToImproveMap = teachersResultsToImproveMap;
-    }
+	public void setTeacher(Person teacher) {
+		this.teacher = teacher;
+	}
 
-    public Map<Professorship, List<TeacherShiftTypeResultsBean>> getTeachersResultsToImproveMap() {
-	return teachersResultsToImproveMap;
-    }
+	public Person getTeacher() {
+		return teacher;
+	}
+
+	public void setExecutionSemester(ExecutionSemester executionSemester) {
+		this.executionSemester = executionSemester;
+	}
+
+	public ExecutionSemester getExecutionSemester() {
+		return executionSemester;
+	}
+
+	public void setTeachersResultsToImproveMap(Map<Professorship, List<TeacherShiftTypeResultsBean>> teachersResultsToImproveMap) {
+		this.teachersResultsToImproveMap = teachersResultsToImproveMap;
+	}
+
+	public Map<Professorship, List<TeacherShiftTypeResultsBean>> getTeachersResultsToImproveMap() {
+		return teachersResultsToImproveMap;
+	}
 }

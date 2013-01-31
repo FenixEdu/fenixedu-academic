@@ -4,9 +4,11 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
 
 @Deprecated
 public enum PartyClassification {
-    TEACHER, EMPLOYEE, RESEARCHER, GRANT_OWNER, MASTER_DEGREE, DEGREE, BOLONHA_SPECIALIZATION_DEGREE, BOLONHA_ADVANCED_FORMATION_DIPLOMA, BOLONHA_MASTER_DEGREE, BOLONHA_INTEGRATED_MASTER_DEGREE, BOLONHA_ADVANCED_SPECIALIZATION_DIPLOMA, BOLONHA_DEGREE, PERSON, UNIT;
+	TEACHER, EMPLOYEE, RESEARCHER, GRANT_OWNER, MASTER_DEGREE, DEGREE, BOLONHA_SPECIALIZATION_DEGREE,
+	BOLONHA_ADVANCED_FORMATION_DIPLOMA, BOLONHA_MASTER_DEGREE, BOLONHA_INTEGRATED_MASTER_DEGREE,
+	BOLONHA_ADVANCED_SPECIALIZATION_DIPLOMA, BOLONHA_DEGREE, PERSON, UNIT;
 
-    public static PartyClassification getClassificationByDegreeType(DegreeType degreeType) {
-	return valueOf(degreeType.name());
-    }
+	public static PartyClassification getClassificationByDegreeType(DegreeType degreeType) {
+		return valueOf(degreeType.name());
+	}
 }

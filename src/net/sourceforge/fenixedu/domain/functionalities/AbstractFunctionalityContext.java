@@ -21,83 +21,91 @@ import pt.ist.fenixWebFramework.security.UserView;
  */
 public abstract class AbstractFunctionalityContext implements FunctionalityContext {
 
-    private HttpServletRequest request;
-    private IUserView userView;
+	private HttpServletRequest request;
+	private IUserView userView;
 
-    protected String encoding = PropertiesManager.DEFAULT_CHARSET;
+	protected String encoding = PropertiesManager.DEFAULT_CHARSET;
 
-    public AbstractFunctionalityContext(HttpServletRequest request) {
-	super();
+	public AbstractFunctionalityContext(HttpServletRequest request) {
+		super();
 
-	this.request = request;
-	this.userView = UserView.getUser();
-	this.userView = UserView.getUser();
-    }
-
-    public HttpServletRequest getRequest() {
-	return this.request;
-    }
-
-    public IUserView getUserView() {
-	return this.userView;
-    }
-
-    public User getLoggedUser() {
-	final IUserView userView = getUserView();
-	return userView == null ? null : userView.getPerson().getUser();
-    }
-
-    protected String getPath(final String encoding) {
-	final String requestedPath = getRequest().getRequestURI().substring(getRequest().getContextPath().length());
-	try {
-	    if (requestedPath.matches("/dotIstPortal.do")) {
-		return getRequest().getParameter("prefix") + getRequest().getParameter("page");
-	    }
-	    return requestedPath.length() == 0 ? requestedPath : URLDecoder.decode(requestedPath.substring(1), encoding);
-	} catch (UnsupportedEncodingException e) {
-	    throw new Error(e);
+		this.request = request;
+		this.userView = UserView.getUser();
+		this.userView = UserView.getUser();
 	}
-    }
 
-    protected String getParentPath() {
-	return getParentPath(getPath(encoding));
-    }
+	@Override
+	public HttpServletRequest getRequest() {
+		return this.request;
+	}
 
-    protected String getSubPath() {
-	return getSubPath(getPath(encoding));
-    }
+	@Override
+	public IUserView getUserView() {
+		return this.userView;
+	}
 
-    protected static String getSubPath(final String path) {
-	final int indexOfSlash = path.indexOf('/');
-	return indexOfSlash >= 0 ? path.substring(0, indexOfSlash) : path;
-    }
+	@Override
+	public User getLoggedUser() {
+		final IUserView userView = getUserView();
+		return userView == null ? null : userView.getPerson().getUser();
+	}
 
-    protected static String getParentPath(final String path) {
-	final int indexOfLantSlash = path.lastIndexOf('/');
-	return indexOfLantSlash >= 0 ? path.substring(0, indexOfLantSlash) : null;
-    }
+	protected String getPath(final String encoding) {
+		final String requestedPath = getRequest().getRequestURI().substring(getRequest().getContextPath().length());
+		try {
+			if (requestedPath.matches("/dotIstPortal.do")) {
+				return getRequest().getParameter("prefix") + getRequest().getParameter("page");
+			}
+			return requestedPath.length() == 0 ? requestedPath : URLDecoder.decode(requestedPath.substring(1), encoding);
+		} catch (UnsupportedEncodingException e) {
+			throw new Error(e);
+		}
+	}
 
-    public Container getSelectedContainer() {
-	// TODO Auto-generated method stub
-	return null;
-    }
+	protected String getParentPath() {
+		return getParentPath(getPath(encoding));
+	}
 
-    public abstract Container getSelectedTopLevelContainer();
+	protected String getSubPath() {
+		return getSubPath(getPath(encoding));
+	}
 
-    public static FunctionalityContext getCurrentContext(HttpServletRequest request) {
-	FunctionalityContext context = (FunctionalityContext) request.getAttribute(FunctionalityContext.CONTEXT_KEY);
-	return context;
-    }
+	protected static String getSubPath(final String path) {
+		final int indexOfSlash = path.indexOf('/');
+		return indexOfSlash >= 0 ? path.substring(0, indexOfSlash) : path;
+	}
 
-    public Content getLastContentInPath(Class type) {
-	return getSelectedContainer();
-    }
+	protected static String getParentPath(final String path) {
+		final int indexOfLantSlash = path.lastIndexOf('/');
+		return indexOfLantSlash >= 0 ? path.substring(0, indexOfLantSlash) : null;
+	}
 
-    public List<Content> getSelectedContents() {
-	return Collections.emptyList();
-    }
+	@Override
+	public Container getSelectedContainer() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
-    public Content getSelectedContent() {
-	return null;
-    }
+	@Override
+	public abstract Container getSelectedTopLevelContainer();
+
+	public static FunctionalityContext getCurrentContext(HttpServletRequest request) {
+		FunctionalityContext context = (FunctionalityContext) request.getAttribute(FunctionalityContext.CONTEXT_KEY);
+		return context;
+	}
+
+	@Override
+	public Content getLastContentInPath(Class type) {
+		return getSelectedContainer();
+	}
+
+	@Override
+	public List<Content> getSelectedContents() {
+		return Collections.emptyList();
+	}
+
+	@Override
+	public Content getSelectedContent() {
+		return null;
+	}
 }

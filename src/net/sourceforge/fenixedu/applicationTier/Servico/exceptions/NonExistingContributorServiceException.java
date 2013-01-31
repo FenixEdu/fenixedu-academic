@@ -6,23 +6,24 @@ package net.sourceforge.fenixedu.applicationTier.Servico.exceptions;
  */
 public class NonExistingContributorServiceException extends FenixServiceException {
 
-    public NonExistingContributorServiceException() {
-    }
+	public NonExistingContributorServiceException() {
+	}
 
-    public NonExistingContributorServiceException(Throwable cause) {
-	super(cause);
-    }
+	public NonExistingContributorServiceException(Throwable cause) {
+		super(cause);
+	}
 
-    public NonExistingContributorServiceException(String message, Throwable cause) {
-	super(message, cause);
-    }
+	public NonExistingContributorServiceException(String message, Throwable cause) {
+		super(message, cause);
+	}
 
-    public String toString() {
-	String result = "[NonExistingContributorServiceException\n";
-	result += "message" + this.getMessage() + "\n";
-	result += "cause" + this.getCause() + "\n";
-	result += "]";
-	return result;
-    }
+	@Override
+	public String toString() {
+		String result = "[NonExistingContributorServiceException\n";
+		result += "message" + this.getMessage() + "\n";
+		result += "cause" + this.getCause() + "\n";
+		result += "]";
+		return result;
+	}
 
 }

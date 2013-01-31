@@ -8,12 +8,12 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class CreateExternalCurricularCourse extends FenixService {
 
-    @Service
-    public static ExternalCurricularCourse run(final CreateExternalCurricularCourseBean bean) throws FenixServiceException {
+	@Service
+	public static ExternalCurricularCourse run(final CreateExternalCurricularCourseBean bean) throws FenixServiceException {
 
-	final ExternalCurricularCourse externalCurricularCourse = new ExternalCurricularCourse(bean.getParentUnit(),
-		bean.getName(), bean.getCode());
+		final ExternalCurricularCourse externalCurricularCourse =
+				new ExternalCurricularCourse(bean.getParentUnit(), bean.getName(), bean.getCode());
 
-	return externalCurricularCourse;
-    }
+		return externalCurricularCourse;
+	}
 }

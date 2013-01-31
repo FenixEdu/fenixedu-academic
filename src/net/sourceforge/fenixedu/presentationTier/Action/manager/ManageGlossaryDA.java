@@ -28,41 +28,41 @@ import org.apache.struts.action.DynaActionForm;
  */
 public class ManageGlossaryDA extends FenixDispatchAction {
 
-    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-	    throws Exception {
-	List infoGlossaryEntries = (List) ReadGlossaryEntries.run();
-	Collections.sort(infoGlossaryEntries, new BeanComparator("term"));
-	request.setAttribute("infoGlossaryEntries", infoGlossaryEntries);
+	public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+		List infoGlossaryEntries = ReadGlossaryEntries.run();
+		Collections.sort(infoGlossaryEntries, new BeanComparator("term"));
+		request.setAttribute("infoGlossaryEntries", infoGlossaryEntries);
 
-	return mapping.findForward("Manage");
-    }
-
-    public ActionForward createGlossaryEntry(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-	DynaActionForm dynaActionForm = (DynaActionForm) form;
-	String term = (String) dynaActionForm.get("term");
-	String definition = (String) dynaActionForm.get("definition");
-
-	InfoGlossaryEntry infoGlossaryEntry = new InfoGlossaryEntry();
-	infoGlossaryEntry.setTerm(term);
-	infoGlossaryEntry.setDefinition(definition);
-
-	CreateGlossaryEntry.run(infoGlossaryEntry);
-
-	return mapping.getInputForward();
-    }
-
-    public ActionForward deleteGlossaryEntry(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-	String entryIdString = request.getParameter("entryId");
-
-	if (entryIdString != null && StringUtils.isNumeric(entryIdString)) {
-	    Integer entryId = new Integer(entryIdString);
-
-	    DeleteGlossaryEntry.run(entryId);
+		return mapping.findForward("Manage");
 	}
 
-	return mapping.getInputForward();
-    }
+	public ActionForward createGlossaryEntry(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		DynaActionForm dynaActionForm = (DynaActionForm) form;
+		String term = (String) dynaActionForm.get("term");
+		String definition = (String) dynaActionForm.get("definition");
+
+		InfoGlossaryEntry infoGlossaryEntry = new InfoGlossaryEntry();
+		infoGlossaryEntry.setTerm(term);
+		infoGlossaryEntry.setDefinition(definition);
+
+		CreateGlossaryEntry.run(infoGlossaryEntry);
+
+		return mapping.getInputForward();
+	}
+
+	public ActionForward deleteGlossaryEntry(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		String entryIdString = request.getParameter("entryId");
+
+		if (entryIdString != null && StringUtils.isNumeric(entryIdString)) {
+			Integer entryId = new Integer(entryIdString);
+
+			DeleteGlossaryEntry.run(entryId);
+		}
+
+		return mapping.getInputForward();
+	}
 
 }

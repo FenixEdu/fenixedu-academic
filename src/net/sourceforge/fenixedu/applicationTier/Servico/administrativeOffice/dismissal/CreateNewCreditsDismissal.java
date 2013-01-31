@@ -5,11 +5,11 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class CreateNewCreditsDismissal {
 
-    @Service
-    public static void run(DismissalBean dismissalBean) {
-	dismissalBean.getStudentCurricularPlan().createNewCreditsDismissal(dismissalBean.getCourseGroup(),
-		dismissalBean.getCurriculumGroup(), dismissalBean.getAllDismissals(), dismissalBean.getSelectedEnrolments(),
-		dismissalBean.getCredits(), dismissalBean.getExecutionPeriod());
-    }
+	@Service
+	public static void run(DismissalBean dismissalBean) {
+		dismissalBean.getStudentCurricularPlan().createNewCreditsDismissal(dismissalBean.getCourseGroup(),
+				dismissalBean.getCurriculumGroup(), dismissalBean.getAllDismissals(), dismissalBean.getSelectedEnrolments(),
+				dismissalBean.getCredits(), dismissalBean.getExecutionPeriod());
+	}
 
 }

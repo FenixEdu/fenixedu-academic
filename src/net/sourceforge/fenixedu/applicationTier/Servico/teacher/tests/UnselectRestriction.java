@@ -7,10 +7,10 @@ import net.sourceforge.fenixedu.domain.tests.NewTestModel;
 import pt.ist.fenixWebFramework.services.Service;
 
 public class UnselectRestriction extends FenixService {
-    @Service
-    public static void run(NewModelRestriction modelRestriction) throws FenixServiceException {
-	NewTestModel testModel = modelRestriction.getTestModel();
+	@Service
+	public static void run(NewModelRestriction modelRestriction) throws FenixServiceException {
+		NewTestModel testModel = modelRestriction.getTestModel();
 
-	testModel.unselectRestriction(modelRestriction);
-    }
+		testModel.unselectRestriction(modelRestriction);
+	}
 }

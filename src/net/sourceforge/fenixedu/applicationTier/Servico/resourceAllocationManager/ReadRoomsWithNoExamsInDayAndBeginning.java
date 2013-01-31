@@ -22,29 +22,29 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadRoomsWithNoExamsInDayAndBeginning extends FenixService {
 
-    @Service
-    public static List run(Calendar day, Calendar beginning) {
-	List exams = Exam.getAllByDate(day, beginning);
-	Collection<AllocatableSpace> allRooms = AllocatableSpace.getAllActiveAllocatableSpacesForEducation();
+	@Service
+	public static List run(Calendar day, Calendar beginning) {
+		List exams = Exam.getAllByDate(day, beginning);
+		Collection<AllocatableSpace> allRooms = AllocatableSpace.getAllActiveAllocatableSpacesForEducation();
 
-	List occupiedRooms = new ArrayList();
-	for (int i = 0; i < exams.size(); i++) {
-	    List examRooms = ((Exam) exams.get(i)).getAssociatedRooms();
-	    if (examRooms != null && examRooms.size() > 0) {
-		for (int r = 0; r < examRooms.size(); r++) {
-		    occupiedRooms.add(examRooms.get(r));
+		List occupiedRooms = new ArrayList();
+		for (int i = 0; i < exams.size(); i++) {
+			List examRooms = ((Exam) exams.get(i)).getAssociatedRooms();
+			if (examRooms != null && examRooms.size() > 0) {
+				for (int r = 0; r < examRooms.size(); r++) {
+					occupiedRooms.add(examRooms.get(r));
+				}
+			}
 		}
-	    }
-	}
 
-	List availableInfoRooms = new ArrayList();
-	List availableRooms = (ArrayList) CollectionUtils.subtract(allRooms, occupiedRooms);
-	for (int i = 0; i < availableRooms.size(); i++) {
-	    AllocatableSpace room = (AllocatableSpace) availableRooms.get(i);
-	    InfoRoom infoRoom = InfoRoom.newInfoFromDomain(room);
-	    availableInfoRooms.add(infoRoom);
-	}
+		List availableInfoRooms = new ArrayList();
+		List availableRooms = (ArrayList) CollectionUtils.subtract(allRooms, occupiedRooms);
+		for (int i = 0; i < availableRooms.size(); i++) {
+			AllocatableSpace room = (AllocatableSpace) availableRooms.get(i);
+			InfoRoom infoRoom = InfoRoom.newInfoFromDomain(room);
+			availableInfoRooms.add(infoRoom);
+		}
 
-	return availableInfoRooms;
-    }
+		return availableInfoRooms;
+	}
 }

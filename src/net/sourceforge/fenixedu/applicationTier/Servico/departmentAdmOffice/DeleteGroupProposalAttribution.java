@@ -6,11 +6,11 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class DeleteGroupProposalAttribution extends FenixService {
 
-    @Service
-    public static void run(final GroupProposal groupProposal) {
-	if (groupProposal != null) {
-	    groupProposal.deleteAttributions();
+	@Service
+	public static void run(final GroupProposal groupProposal) {
+		if (groupProposal != null) {
+			groupProposal.deleteAttributions();
+		}
 	}
-    }
 
 }

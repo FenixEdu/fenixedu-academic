@@ -12,24 +12,23 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadStudentCurricularPlan extends FenixService {
 
-    @Service
-    public static InfoStudentCurricularPlan run(final Integer studentCurricularPlanID) throws FenixServiceException {
-	if (studentCurricularPlanID == null) {
-	    throw new FenixServiceException("Persistence layer error");
-	}
+	@Service
+	public static InfoStudentCurricularPlan run(final Integer studentCurricularPlanID) throws FenixServiceException {
+		if (studentCurricularPlanID == null) {
+			throw new FenixServiceException("Persistence layer error");
+		}
 
-	final StudentCurricularPlan studentCurricularPlan = rootDomainObject
-		.readStudentCurricularPlanByOID(studentCurricularPlanID);
-	if (studentCurricularPlan == null) {
-	    throw new NonExistingServiceException();
-	}
+		final StudentCurricularPlan studentCurricularPlan =
+				rootDomainObject.readStudentCurricularPlanByOID(studentCurricularPlanID);
+		if (studentCurricularPlan == null) {
+			throw new NonExistingServiceException();
+		}
 
-	return InfoStudentCurricularPlan.newInfoFromDomain(studentCurricularPlan);
-    }
+		return InfoStudentCurricularPlan.newInfoFromDomain(studentCurricularPlan);
+	}
 
 }

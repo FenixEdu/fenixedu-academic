@@ -32,74 +32,74 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class ReadStudentsWithoutGroup extends FenixService {
 
-    public class NewStudentGroupAlreadyExists extends FenixServiceException {
-    }
-
-    @Checked("RolePredicates.STUDENT_PREDICATE")
-    @Service
-    public static ISiteComponent run(final Integer groupPropertiesCode, final String username) throws FenixServiceException {
-
-	final InfoSiteStudentsWithoutGroup infoSiteStudentsWithoutGroup = new InfoSiteStudentsWithoutGroup();
-	final Grouping grouping = rootDomainObject.readGroupingByOID(groupPropertiesCode);
-	if (grouping == null) {
-	    throw new ExistingServiceException();
+	public class NewStudentGroupAlreadyExists extends FenixServiceException {
 	}
 
-	final List allStudentsGroups = grouping.getStudentGroups();
+	@Checked("RolePredicates.STUDENT_PREDICATE")
+	@Service
+	public static ISiteComponent run(final Integer groupPropertiesCode, final String username) throws FenixServiceException {
 
-	final Integer groupNumber = grouping.findMaxGroupNumber() + 1;
+		final InfoSiteStudentsWithoutGroup infoSiteStudentsWithoutGroup = new InfoSiteStudentsWithoutGroup();
+		final Grouping grouping = rootDomainObject.readGroupingByOID(groupPropertiesCode);
+		if (grouping == null) {
+			throw new ExistingServiceException();
+		}
 
-	infoSiteStudentsWithoutGroup.setGroupNumber(groupNumber);
-	infoSiteStudentsWithoutGroup.setInfoGrouping(InfoGrouping.newInfoFromDomain(grouping));
+		final List allStudentsGroups = grouping.getStudentGroups();
 
-	final List<Attends> attends = grouping.getAttends();
+		final Integer groupNumber = grouping.findMaxGroupNumber() + 1;
 
-	Registration userStudent = null;
-	for (final Iterator iterator = attends.iterator(); iterator.hasNext();) {
-	    final Attends attend = (Attends) iterator.next();
-	    final Registration registration = attend.getRegistration();
-	    final Person person = registration.getPerson();
-	    if (person.hasUsername(username)) {
-		userStudent = registration;
-		break;
-	    }
+		infoSiteStudentsWithoutGroup.setGroupNumber(groupNumber);
+		infoSiteStudentsWithoutGroup.setInfoGrouping(InfoGrouping.newInfoFromDomain(grouping));
+
+		final List<Attends> attends = grouping.getAttends();
+
+		Registration userStudent = null;
+		for (Object element : attends) {
+			final Attends attend = (Attends) element;
+			final Registration registration = attend.getRegistration();
+			final Person person = registration.getPerson();
+			if (person.hasUsername(username)) {
+				userStudent = registration;
+				break;
+			}
+		}
+		final InfoStudent infoStudent = getInfoStudentFromStudent(userStudent);
+		infoSiteStudentsWithoutGroup.setInfoUserStudent(infoStudent);
+
+		if (grouping.getEnrolmentPolicy().equals(new EnrolmentGroupPolicyType(2))) {
+			return infoSiteStudentsWithoutGroup;
+		}
+
+		final Set<Attends> attendsWithOutGroupsSet = new HashSet<Attends>(attends);
+		for (final Iterator iterator = allStudentsGroups.iterator(); iterator.hasNext();) {
+			final StudentGroup studentGroup = (StudentGroup) iterator.next();
+
+			final List allStudentGroupsAttends = studentGroup.getAttends();
+
+			for (final Iterator iterator2 = allStudentGroupsAttends.iterator(); iterator2.hasNext();) {
+				final Attends studentGroupAttend = (Attends) iterator2.next();
+				attendsWithOutGroupsSet.remove(studentGroupAttend);
+			}
+		}
+
+		final List<InfoStudent> infoStudentList = new ArrayList<InfoStudent>(attendsWithOutGroupsSet.size());
+		for (Object element : attendsWithOutGroupsSet) {
+			final Attends attend = (Attends) element;
+			final Registration registration = attend.getRegistration();
+
+			if (!registration.equals(userStudent)) {
+				final InfoStudent infoStudent2 = getInfoStudentFromStudent(registration);
+				infoStudentList.add(infoStudent2);
+			}
+
+		}
+		infoSiteStudentsWithoutGroup.setInfoStudentList(infoStudentList);
+
+		return infoSiteStudentsWithoutGroup;
 	}
-	final InfoStudent infoStudent = getInfoStudentFromStudent(userStudent);
-	infoSiteStudentsWithoutGroup.setInfoUserStudent(infoStudent);
 
-	if (grouping.getEnrolmentPolicy().equals(new EnrolmentGroupPolicyType(2))) {
-	    return infoSiteStudentsWithoutGroup;
+	protected static InfoStudent getInfoStudentFromStudent(Registration userStudent) {
+		return InfoStudent.newInfoFromDomain(userStudent);
 	}
-
-	final Set<Attends> attendsWithOutGroupsSet = new HashSet<Attends>(attends);
-	for (final Iterator iterator = allStudentsGroups.iterator(); iterator.hasNext();) {
-	    final StudentGroup studentGroup = (StudentGroup) iterator.next();
-
-	    final List allStudentGroupsAttends = studentGroup.getAttends();
-
-	    for (final Iterator iterator2 = allStudentGroupsAttends.iterator(); iterator2.hasNext();) {
-		final Attends studentGroupAttend = (Attends) iterator2.next();
-		attendsWithOutGroupsSet.remove(studentGroupAttend);
-	    }
-	}
-
-	final List<InfoStudent> infoStudentList = new ArrayList<InfoStudent>(attendsWithOutGroupsSet.size());
-	for (final Iterator iterator = attendsWithOutGroupsSet.iterator(); iterator.hasNext();) {
-	    final Attends attend = (Attends) iterator.next();
-	    final Registration registration = attend.getRegistration();
-
-	    if (!registration.equals(userStudent)) {
-		final InfoStudent infoStudent2 = getInfoStudentFromStudent(registration);
-		infoStudentList.add(infoStudent2);
-	    }
-
-	}
-	infoSiteStudentsWithoutGroup.setInfoStudentList(infoStudentList);
-
-	return infoSiteStudentsWithoutGroup;
-    }
-
-    protected static InfoStudent getInfoStudentFromStudent(Registration userStudent) {
-	return InfoStudent.newInfoFromDomain(userStudent);
-    }
 }

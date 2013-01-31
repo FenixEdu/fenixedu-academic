@@ -23,33 +23,32 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 @Forwards({ @Forward(name = "prepare", path = "/manager/student/candidacies/manageFirstCandidacySummaryFile.jsp") })
 public class FirstTimeCandidacySummaryFileDA extends FenixDispatchAction {
 
-    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
-	request.setAttribute("studentNumberBean", new StudentNumberBean());
-	return mapping.findForward("prepare");
-    }
-
-    public ActionForward searchCandidacy(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
-
-	final StudentNumberBean numberBean = (StudentNumberBean) getRenderedObject("student-number-bean");
-
-	StudentCandidacy studentCandidacy = findCandidacy(numberBean.getNumber());
-	request.setAttribute("candidacy", studentCandidacy);
-
-	if (studentCandidacy != null && studentCandidacy.hasSummaryFile()) {
-	    request.setAttribute("hasPDF", "true");
+	public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+		request.setAttribute("studentNumberBean", new StudentNumberBean());
+		return mapping.findForward("prepare");
 	}
 
-	return mapping.findForward("prepare");
-    }
+	public ActionForward searchCandidacy(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) {
 
-    private StudentCandidacy findCandidacy(Integer studentNumber) {
-	final Student student = Student.readStudentByNumber(studentNumber);
-	final List<Registration> registrations = student.getRegistrations();
-	if (registrations != null && registrations.size() > 0) {
-	    return registrations.iterator().next().getStudentCandidacy();
+		final StudentNumberBean numberBean = (StudentNumberBean) getRenderedObject("student-number-bean");
+
+		StudentCandidacy studentCandidacy = findCandidacy(numberBean.getNumber());
+		request.setAttribute("candidacy", studentCandidacy);
+
+		if (studentCandidacy != null && studentCandidacy.hasSummaryFile()) {
+			request.setAttribute("hasPDF", "true");
+		}
+
+		return mapping.findForward("prepare");
 	}
-	return null;
-    }
+
+	private StudentCandidacy findCandidacy(Integer studentNumber) {
+		final Student student = Student.readStudentByNumber(studentNumber);
+		final List<Registration> registrations = student.getRegistrations();
+		if (registrations != null && registrations.size() > 0) {
+			return registrations.iterator().next().getStudentCandidacy();
+		}
+		return null;
+	}
 }

@@ -16,13 +16,23 @@ import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
 import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
-@Mapping(module = "scientificCouncil", path = "/institutionWorkingTimeManagement", input = "/institutionWorkingTimeManagement.do?method=prepareEdit&page=0", attribute = "teacherInstitutionWorkingTimeForm", formBean = "teacherInstitutionWorkingTimeForm", scope = "request", parameter = "method")
-@Exceptions(value = { @ExceptionHandling(type = net.sourceforge.fenixedu.domain.exceptions.DomainException.class, handler = net.sourceforge.fenixedu.presentationTier.config.FenixDomainExceptionHandler.class, scope = "request") })
+@Mapping(
+		module = "scientificCouncil",
+		path = "/institutionWorkingTimeManagement",
+		input = "/institutionWorkingTimeManagement.do?method=prepareEdit&page=0",
+		attribute = "teacherInstitutionWorkingTimeForm",
+		formBean = "teacherInstitutionWorkingTimeForm",
+		scope = "request",
+		parameter = "method")
+@Exceptions(value = { @ExceptionHandling(
+		type = net.sourceforge.fenixedu.domain.exceptions.DomainException.class,
+		handler = net.sourceforge.fenixedu.presentationTier.config.FenixDomainExceptionHandler.class,
+		scope = "request") })
 public class ScientificCouncilManageTeacherInstitutionWorkingTimeDispatchAction extends
-	ManageTeacherInstitutionWorkingTimeDispatchAction {
+		ManageTeacherInstitutionWorkingTimeDispatchAction {
 
-    public ActionForward delete(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-	    throws NumberFormatException, FenixFilterException, FenixServiceException {
-	return delete(mapping, form, request, response, RoleType.SCIENTIFIC_COUNCIL);
-    }
+	public ActionForward delete(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+			throws NumberFormatException, FenixFilterException, FenixServiceException {
+		return delete(mapping, form, request, response, RoleType.SCIENTIFIC_COUNCIL);
+	}
 }

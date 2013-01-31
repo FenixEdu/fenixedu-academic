@@ -12,15 +12,9 @@ import org.apache.struts.action.ActionMapping;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(path = "/curriculumLinesLocationManagement", module = "manager")
-@Forwards( {
+@Forwards({
 
 @Forward(name = "showCurriculum", path = "/manager/curriculum/curriculumLines/location/showCurriculum.jsp"),
 
@@ -31,15 +25,15 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
 })
 public class CurriculumLinesLocationManagementDA extends AbstractCurriculumLinesLocationManagementDA {
 
-    @Override
-    protected boolean isWithRules(final HttpServletRequest request) {
-	return false;
-    }
+	@Override
+	protected boolean isWithRules(final HttpServletRequest request) {
+		return false;
+	}
 
-    public ActionForward backToStudentEnrolments(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
-	request.setAttribute("studentId", getStudentCurricularPlan(request).getRegistration().getStudent().getIdInternal());
-	return mapping.findForward("backToChooseStudentCurricularPlan");
-    }
+	public ActionForward backToStudentEnrolments(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) {
+		request.setAttribute("studentId", getStudentCurricularPlan(request).getRegistration().getStudent().getIdInternal());
+		return mapping.findForward("backToChooseStudentCurricularPlan");
+	}
 
 }

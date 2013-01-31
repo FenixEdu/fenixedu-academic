@@ -5,39 +5,39 @@ import java.util.List;
 
 public enum ExemptionGratuityType {
 
-    INSTITUTION,
+	INSTITUTION,
 
-    INSTITUTION_GRANT_OWNER,
+	INSTITUTION_GRANT_OWNER,
 
-    OTHER_INSTITUTION,
+	OTHER_INSTITUTION,
 
-    UNIVERSITY_TEACHER,
+	UNIVERSITY_TEACHER,
 
-    POLYTECHNICAL_TEACHER,
+	POLYTECHNICAL_TEACHER,
 
-    PALOP_TEACHER,
+	PALOP_TEACHER,
 
-    STUDENT_TEACH,
+	STUDENT_TEACH,
 
-    FCT_GRANT_OWNER,
+	FCT_GRANT_OWNER,
 
-    MILITARY_SON,
+	MILITARY_SON,
 
-    OTHER;
+	OTHER;
 
-    public static List percentageOfExemption() {
-	List percentage = new ArrayList();
+	public static List percentageOfExemption() {
+		List percentage = new ArrayList();
 
-	percentage.add(Integer.valueOf(25));
-	percentage.add(Integer.valueOf(50));
-	percentage.add(Integer.valueOf(75));
-	percentage.add(Integer.valueOf(100));
+		percentage.add(Integer.valueOf(25));
+		percentage.add(Integer.valueOf(50));
+		percentage.add(Integer.valueOf(75));
+		percentage.add(Integer.valueOf(100));
 
-	return percentage;
-    }
+		return percentage;
+	}
 
-    public String getName() {
-	return name();
-    }
+	public String getName() {
+		return name();
+	}
 
 }

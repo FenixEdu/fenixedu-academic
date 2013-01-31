@@ -18,65 +18,65 @@ import pt.ist.fenixWebFramework.security.UserView;
  */
 public class AccessControl {
 
-    static public IUserView getUserView() {
-	return UserView.getUser();
-    }
-
-    static public Person getPerson() {
-	final IUserView userView = getUserView();
-	return userView == null ? null : userView.getPerson();
-    }
-
-    static public boolean hasPerson() {
-	return getPerson() != null;
-    }
-
-    static public void check(DomainObject c, AccessControlPredicate<DomainObject> predicate) {
-	Person requester = AccessControl.getPerson();
-	boolean result = false;
-
-	result |= (predicate != null && predicate.evaluate(c));
-
-	if (!result) {
-	    StringBuilder message = new StringBuilder();
-	    message.append("User ").append(requester == null ? "" : requester.getUsername()).append(
-		    " tried to execute access content instance number").append(c.getIdInternal());
-	    message.append("but he/she is not authorized to do so");
-
-	    throw new IllegalDataAccessException(message.toString(), requester);
+	static public IUserView getUserView() {
+		return UserView.getUser();
 	}
-    }
 
-    static public void check(Object c, AccessControlPredicate<Object> predicate) {
-	Person requester = AccessControl.getPerson();
-	boolean result = false;
-
-	result |= (predicate != null && predicate.evaluate(c));
-
-	if (!result) {
-	    StringBuilder message = new StringBuilder();
-	    message.append("User ").append(requester.getUsername()).append(" tried to execute access content instance number")
-		    .append(c.toString());
-	    message.append("but he/she is not authorized to do so");
-
-	    throw new IllegalDataAccessException(message.toString(), requester);
+	static public Person getPerson() {
+		final IUserView userView = getUserView();
+		return userView == null ? null : userView.getPerson();
 	}
-    }
 
-    static public void check(AccessControlPredicate<Object> predicate) {
-	Person requester = AccessControl.getPerson();
-	boolean result = false;
-
-	result |= (predicate != null && predicate.evaluate(null));
-
-	if (!result) {
-	    StringBuilder message = new StringBuilder();
-	    final String username = requester == null ? "<nobody>" : requester.getUsername();
-	    message.append("User ");
-	    message.append(username);
-	    message.append(" tried to execute method but he/she is not authorized to do so");
-	    throw new IllegalDataAccessException(message.toString(), requester);
+	static public boolean hasPerson() {
+		return getPerson() != null;
 	}
-    }
+
+	static public void check(DomainObject c, AccessControlPredicate<DomainObject> predicate) {
+		Person requester = AccessControl.getPerson();
+		boolean result = false;
+
+		result |= (predicate != null && predicate.evaluate(c));
+
+		if (!result) {
+			StringBuilder message = new StringBuilder();
+			message.append("User ").append(requester == null ? "" : requester.getUsername())
+					.append(" tried to execute access content instance number").append(c.getIdInternal());
+			message.append("but he/she is not authorized to do so");
+
+			throw new IllegalDataAccessException(message.toString(), requester);
+		}
+	}
+
+	static public void check(Object c, AccessControlPredicate<Object> predicate) {
+		Person requester = AccessControl.getPerson();
+		boolean result = false;
+
+		result |= (predicate != null && predicate.evaluate(c));
+
+		if (!result) {
+			StringBuilder message = new StringBuilder();
+			message.append("User ").append(requester.getUsername()).append(" tried to execute access content instance number")
+					.append(c.toString());
+			message.append("but he/she is not authorized to do so");
+
+			throw new IllegalDataAccessException(message.toString(), requester);
+		}
+	}
+
+	static public void check(AccessControlPredicate<Object> predicate) {
+		Person requester = AccessControl.getPerson();
+		boolean result = false;
+
+		result |= (predicate != null && predicate.evaluate(null));
+
+		if (!result) {
+			StringBuilder message = new StringBuilder();
+			final String username = requester == null ? "<nobody>" : requester.getUsername();
+			message.append("User ");
+			message.append(username);
+			message.append(" tried to execute method but he/she is not authorized to do so");
+			throw new IllegalDataAccessException(message.toString(), requester);
+		}
+	}
 
 }

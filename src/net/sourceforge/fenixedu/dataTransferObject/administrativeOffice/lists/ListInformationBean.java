@@ -20,96 +20,96 @@ import net.sourceforge.fenixedu.util.EnrolmentEvaluationState;
  */
 public class ListInformationBean extends ExecutionDegreeListBean {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    private List<RegistrationAgreement> registrationAgreement;
+	private List<RegistrationAgreement> registrationAgreement;
 
-    private List<RegistrationStateType> registrationStateType;
+	private List<RegistrationStateType> registrationStateType;
 
-    private EnrolmentEvaluationState enrolmentEvaluationState;
+	private EnrolmentEvaluationState enrolmentEvaluationState;
 
-    private EnrollmentState enrollmentState;
+	private EnrollmentState enrollmentState;
 
-    private RegistrationState registrationState;
+	private RegistrationState registrationState;
 
-    private Collection<DegreeModuleScope> degreeModuleScope;
+	private Collection<DegreeModuleScope> degreeModuleScope;
 
-    private Boolean with_equivalence;
+	private Boolean with_equivalence;
 
-    public Collection<DegreeModuleScope> getDegreeModuleScope() {
-	return this.degreeModuleScope;
-    }
+	public Collection<DegreeModuleScope> getDegreeModuleScope() {
+		return this.degreeModuleScope;
+	}
 
-    public void setDegreeModuleScope(Collection<DegreeModuleScope> degreeModuleScope) {
-	this.degreeModuleScope = degreeModuleScope;
-    }
+	public void setDegreeModuleScope(Collection<DegreeModuleScope> degreeModuleScope) {
+		this.degreeModuleScope = degreeModuleScope;
+	}
 
-    public ListInformationBean() {
-	super();
+	public ListInformationBean() {
+		super();
 
-	this.registrationAgreement = new ArrayList<RegistrationAgreement>();
-	this.registrationStateType = new ArrayList<RegistrationStateType>();
-	this.degreeModuleScope = new ArrayList<DegreeModuleScope>();
-	this.with_equivalence = new Boolean(false);
-	this.enrolmentEvaluationState = null;
-	this.enrollmentState = null;
+		this.registrationAgreement = new ArrayList<RegistrationAgreement>();
+		this.registrationStateType = new ArrayList<RegistrationStateType>();
+		this.degreeModuleScope = new ArrayList<DegreeModuleScope>();
+		this.with_equivalence = new Boolean(false);
+		this.enrolmentEvaluationState = null;
+		this.enrollmentState = null;
 
-    }
+	}
 
-    public List<RegistrationAgreement> getRegistrationAgreement() {
-	return this.registrationAgreement;
-    }
+	public List<RegistrationAgreement> getRegistrationAgreement() {
+		return this.registrationAgreement;
+	}
 
-    public void setRegistrationAgreement(List<RegistrationAgreement> registrationAgreement) {
-	this.registrationAgreement = registrationAgreement;
-    }
+	public void setRegistrationAgreement(List<RegistrationAgreement> registrationAgreement) {
+		this.registrationAgreement = registrationAgreement;
+	}
 
-    public void clearAgreement() {
-	this.registrationAgreement = null;
-    }
+	public void clearAgreement() {
+		this.registrationAgreement = null;
+	}
 
-    public List<RegistrationStateType> getRegistrationStateType() {
-	return this.registrationStateType;
-    }
+	public List<RegistrationStateType> getRegistrationStateType() {
+		return this.registrationStateType;
+	}
 
-    public void setRegistrationStateType(List<RegistrationStateType> registrationStateType) {
-	this.registrationStateType = registrationStateType;
-    }
+	public void setRegistrationStateType(List<RegistrationStateType> registrationStateType) {
+		this.registrationStateType = registrationStateType;
+	}
 
-    public void clearRegistrationStateType() {
-	this.registrationStateType = null;
-    }
+	public void clearRegistrationStateType() {
+		this.registrationStateType = null;
+	}
 
-    public Boolean getWith_equivalence() {
-	return with_equivalence;
-    }
+	public Boolean getWith_equivalence() {
+		return with_equivalence;
+	}
 
-    public void setWith_equivalence(Boolean with_equivalence) {
-	this.with_equivalence = with_equivalence;
-    }
+	public void setWith_equivalence(Boolean with_equivalence) {
+		this.with_equivalence = with_equivalence;
+	}
 
-    public RegistrationState getRegistrationState() {
-	return this.registrationState;
-    }
+	public RegistrationState getRegistrationState() {
+		return this.registrationState;
+	}
 
-    public void setRegistrationState(RegistrationState registrationState) {
-	this.registrationState = registrationState;
-    }
+	public void setRegistrationState(RegistrationState registrationState) {
+		this.registrationState = registrationState;
+	}
 
-    public EnrollmentState getEnrollmentState() {
-	return this.enrollmentState;
-    }
+	public EnrollmentState getEnrollmentState() {
+		return this.enrollmentState;
+	}
 
-    public void setEnrollmentState(EnrollmentState enrollmentState) {
-	this.enrollmentState = enrollmentState;
-    }
+	public void setEnrollmentState(EnrollmentState enrollmentState) {
+		this.enrollmentState = enrollmentState;
+	}
 
-    public EnrolmentEvaluationState getEnrolmentEvaluationState() {
-	return this.enrolmentEvaluationState;
-    }
+	public EnrolmentEvaluationState getEnrolmentEvaluationState() {
+		return this.enrolmentEvaluationState;
+	}
 
-    public void setEnrolmentEvaluationState(EnrolmentEvaluationState enrolmentEvaluationState) {
-	this.enrolmentEvaluationState = enrolmentEvaluationState;
-    }
+	public void setEnrolmentEvaluationState(EnrolmentEvaluationState enrolmentEvaluationState) {
+		this.enrolmentEvaluationState = enrolmentEvaluationState;
+	}
 
 }

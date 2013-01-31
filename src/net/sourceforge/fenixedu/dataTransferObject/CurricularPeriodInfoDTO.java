@@ -11,22 +11,22 @@ import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicPeriod;
  */
 public class CurricularPeriodInfoDTO extends DataTranferObject {
 
-    private AcademicPeriod periodType;
+	private AcademicPeriod periodType;
 
-    private Integer order;
+	private Integer order;
 
-    public CurricularPeriodInfoDTO(Integer order, AcademicPeriod type) {
-	super();
-	this.order = order;
-	this.periodType = type;
-    }
+	public CurricularPeriodInfoDTO(Integer order, AcademicPeriod type) {
+		super();
+		this.order = order;
+		this.periodType = type;
+	}
 
-    public Integer getOrder() {
-	return order;
-    }
+	public Integer getOrder() {
+		return order;
+	}
 
-    public AcademicPeriod getPeriodType() {
-	return periodType;
-    }
+	public AcademicPeriod getPeriodType() {
+		return periodType;
+	}
 
 }

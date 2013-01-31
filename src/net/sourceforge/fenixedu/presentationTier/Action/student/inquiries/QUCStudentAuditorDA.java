@@ -10,38 +10,32 @@ import net.sourceforge.fenixedu.presentationTier.Action.departmentMember.QUCAudi
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(path = "/qucAudit", module = "student")
-@Forwards( { @Forward(name = "viewAuditProcesses", path = "/student/inquiries/viewAuditProcesses.jsp"),
-	@Forward(name = "viewProcessDetails", path = "/student/inquiries/viewProcessDetails.jsp"),
-	@Forward(name = "editProcess", path = "/student/inquiries/editProcess.jsp"),
-	@Forward(name = "manageAuditFiles", path = "/student/inquiries/manageAuditFiles.jsp")})
+@Forwards({ @Forward(name = "viewAuditProcesses", path = "/student/inquiries/viewAuditProcesses.jsp"),
+		@Forward(name = "viewProcessDetails", path = "/student/inquiries/viewProcessDetails.jsp"),
+		@Forward(name = "editProcess", path = "/student/inquiries/editProcess.jsp"),
+		@Forward(name = "manageAuditFiles", path = "/student/inquiries/manageAuditFiles.jsp") })
 public class QUCStudentAuditorDA extends QUCAuditorDA {
 
-    @Override
-    protected List<ExecutionCourseAudit> getExecutionCoursesAudit(ExecutionSemester executionSemester) {
-	Student student = AccessControl.getPerson().getStudent();
-	return student.getExecutionCourseAudits(executionSemester);
-    }
+	@Override
+	protected List<ExecutionCourseAudit> getExecutionCoursesAudit(ExecutionSemester executionSemester) {
+		Student student = AccessControl.getPerson().getStudent();
+		return student.getExecutionCourseAudits(executionSemester);
+	}
 
-    @Override
-    protected boolean isTeacher() {
-	return false;
-    }
+	@Override
+	protected boolean isTeacher() {
+		return false;
+	}
 
-    @Override
-    protected String getApprovedSelf() {
-	return "approvedByStudent";
-    }
+	@Override
+	protected String getApprovedSelf() {
+		return "approvedByStudent";
+	}
 
-    @Override
-    protected String getApprovedOther() {
-	return "approvedByTeacher";
-    }
+	@Override
+	protected String getApprovedOther() {
+		return "approvedByTeacher";
+	}
 }

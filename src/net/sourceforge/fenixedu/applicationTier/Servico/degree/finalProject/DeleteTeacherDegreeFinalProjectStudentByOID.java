@@ -6,13 +6,13 @@ import net.sourceforge.fenixedu.domain.degree.finalProject.TeacherDegreeFinalPro
 
 public class DeleteTeacherDegreeFinalProjectStudentByOID extends FenixService {
 
-    public void run(Integer teacherDegreeFinalProjectStudentID) throws FenixServiceException {
-	final TeacherDegreeFinalProjectStudent teacherDegreeFinalProjectStudent = rootDomainObject
-		.readTeacherDegreeFinalProjectStudentByOID(teacherDegreeFinalProjectStudentID);
-	if (teacherDegreeFinalProjectStudent == null) {
-	    throw new FenixServiceException("message.noTeacherDegreeFinalProjectStudent");
+	public void run(Integer teacherDegreeFinalProjectStudentID) throws FenixServiceException {
+		final TeacherDegreeFinalProjectStudent teacherDegreeFinalProjectStudent =
+				rootDomainObject.readTeacherDegreeFinalProjectStudentByOID(teacherDegreeFinalProjectStudentID);
+		if (teacherDegreeFinalProjectStudent == null) {
+			throw new FenixServiceException("message.noTeacherDegreeFinalProjectStudent");
+		}
+		teacherDegreeFinalProjectStudent.delete();
 	}
-	teacherDegreeFinalProjectStudent.delete();
-    }
 
 }

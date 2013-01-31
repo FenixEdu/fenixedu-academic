@@ -14,36 +14,36 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class AssociateExecutionCourseToCurricularCourse extends FenixService {
 
-    @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
-    @Service
-    public static void run(Integer executionCourseId, Integer curricularCourseId, Integer executionPeriodId)
-	    throws FenixServiceException {
+	@Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
+	@Service
+	public static void run(Integer executionCourseId, Integer curricularCourseId, Integer executionPeriodId)
+			throws FenixServiceException {
 
-	final CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(curricularCourseId);
-	if (curricularCourse == null) {
-	    throw new NonExistingServiceException("message.nonExistingCurricularCourse", null);
-	}
+		final CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(curricularCourseId);
+		if (curricularCourse == null) {
+			throw new NonExistingServiceException("message.nonExistingCurricularCourse", null);
+		}
 
-	final ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(executionPeriodId);
-	if (executionSemester == null) {
-	    throw new NonExistingServiceException("message.nonExistingExecutionPeriod", null);
-	}
+		final ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(executionPeriodId);
+		if (executionSemester == null) {
+			throw new NonExistingServiceException("message.nonExistingExecutionPeriod", null);
+		}
 
-	List<ExecutionCourse> executionCourses = curricularCourse.getAssociatedExecutionCourses();
-	for (ExecutionCourse executionCourse : executionCourses) {
-	    if (executionCourse.getExecutionPeriod() == executionSemester) {
-		throw new ExistingServiceException("message.unavailable.execution.period", null);
-	    }
-	}
+		List<ExecutionCourse> executionCourses = curricularCourse.getAssociatedExecutionCourses();
+		for (ExecutionCourse executionCourse : executionCourses) {
+			if (executionCourse.getExecutionPeriod() == executionSemester) {
+				throw new ExistingServiceException("message.unavailable.execution.period", null);
+			}
+		}
 
-	final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);
-	if (executionCourse == null) {
-	    throw new NonExistingServiceException("message.nonExisting.executionCourse", null);
-	}
+		final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);
+		if (executionCourse == null) {
+			throw new NonExistingServiceException("message.nonExisting.executionCourse", null);
+		}
 
-	if (!curricularCourse.hasAssociatedExecutionCourses(executionCourse)) {
-	    curricularCourse.addAssociatedExecutionCourses(executionCourse);
+		if (!curricularCourse.hasAssociatedExecutionCourses(executionCourse)) {
+			curricularCourse.addAssociatedExecutionCourses(executionCourse);
+		}
 	}
-    }
 
 }

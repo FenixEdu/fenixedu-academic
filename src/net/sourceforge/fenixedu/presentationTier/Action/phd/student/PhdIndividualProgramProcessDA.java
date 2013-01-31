@@ -20,15 +20,9 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.utl.ist.fenix.tools.predicates.PredicateContainer;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(path = "/phdIndividualProgramProcess", module = "student")
-@Forwards( {
+@Forwards({
 
 @Forward(name = "viewProcess", path = "/phd/student/viewProcess.jsp"),
 
@@ -47,68 +41,68 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
 })
 public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramProcessDA {
 
-    @Override
-    public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
+	@Override
+	public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
 
-	final PhdIndividualProgramProcess process = getProcess(request);
+		final PhdIndividualProgramProcess process = getProcess(request);
 
-	if (process != null) {
-	    request.setAttribute("processAlertMessagesToNotify", process.getUnreadedAlertMessagesFor(getLoggedPerson(request)));
+		if (process != null) {
+			request.setAttribute("processAlertMessagesToNotify", process.getUnreadedAlertMessagesFor(getLoggedPerson(request)));
+		}
+
+		return super.execute(mapping, actionForm, request, response);
 	}
 
-	return super.execute(mapping, actionForm, request, response);
-    }
-
-    @Override
-    protected PhdIndividualProgramProcess getProcess(HttpServletRequest request) {
-	final Person person = getLoggedPerson(request);
-	PhdIndividualProgramProcess process = super.getProcess(request);
-	if ((process == null) && (person.getPhdIndividualProgramProcessesCount() == 1)) {
-	    process = person.getPhdIndividualProgramProcesses().get(0);
-	}
-	return process;
-    }
-
-    @Override
-    public ActionForward viewProcess(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) {
-
-	final Person person = getLoggedPerson(request);
-
-	final PhdIndividualProgramProcess process = getProcess(request);
-	if (process != null) {
-	    request.setAttribute("process", process);
-	    return mapping.findForward("viewProcess");
+	@Override
+	protected PhdIndividualProgramProcess getProcess(HttpServletRequest request) {
+		final Person person = getLoggedPerson(request);
+		PhdIndividualProgramProcess process = super.getProcess(request);
+		if ((process == null) && (person.getPhdIndividualProgramProcessesCount() == 1)) {
+			process = person.getPhdIndividualProgramProcesses().get(0);
+		}
+		return process;
 	}
 
-	request.setAttribute("processes", person.getPhdIndividualProgramProcesses());
-	return mapping.findForward("choosePhdProcess");
-    }
+	@Override
+	public ActionForward viewProcess(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) {
 
-    @Override
-    protected List<PredicateContainer<?>> getCandidacyCategory() {
-	return Collections.emptyList();
-    }
+		final Person person = getLoggedPerson(request);
 
-    @Override
-    protected PhdInactivePredicateContainer getConcludedContainer() {
-	return null;
-    }
+		final PhdIndividualProgramProcess process = getProcess(request);
+		if (process != null) {
+			request.setAttribute("process", process);
+			return mapping.findForward("viewProcess");
+		}
 
-    @Override
-    protected List<PredicateContainer<?>> getSeminarCategory() {
-	return Collections.emptyList();
-    }
+		request.setAttribute("processes", person.getPhdIndividualProgramProcesses());
+		return mapping.findForward("choosePhdProcess");
+	}
 
-    @Override
-    protected List<PredicateContainer<?>> getThesisCategory() {
-	return Collections.emptyList();
-    }
+	@Override
+	protected List<PredicateContainer<?>> getCandidacyCategory() {
+		return Collections.emptyList();
+	}
 
-    @Override
-    protected SearchPhdIndividualProgramProcessBean initializeSearchBean(HttpServletRequest request) {
-	return null;
-    }
+	@Override
+	protected PhdInactivePredicateContainer getConcludedContainer() {
+		return null;
+	}
+
+	@Override
+	protected List<PredicateContainer<?>> getSeminarCategory() {
+		return Collections.emptyList();
+	}
+
+	@Override
+	protected List<PredicateContainer<?>> getThesisCategory() {
+		return Collections.emptyList();
+	}
+
+	@Override
+	protected SearchPhdIndividualProgramProcessBean initializeSearchBean(HttpServletRequest request) {
+		return null;
+	}
 
 }

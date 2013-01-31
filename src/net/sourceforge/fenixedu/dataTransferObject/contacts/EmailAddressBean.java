@@ -8,49 +8,49 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class EmailAddressBean extends PartyContactBean {
 
-    private static final String CONTACT_NAME = "EmailAddress";
+	private static final String CONTACT_NAME = "EmailAddress";
 
-    private static final long serialVersionUID = 8521361651957831331L;
+	private static final long serialVersionUID = 8521361651957831331L;
 
-    public EmailAddressBean(Party party) {
-	super(party);
-    }
-
-    public EmailAddressBean(EmailAddress email) {
-	super(email);
-	setValue(email.getValue());
-    }
-
-    @Override
-    public String getContactName() {
-	return CONTACT_NAME;
-    }
-
-    @Override
-    public EmailAddress getContact() {
-	// TODO Auto-generated method stub
-	return (EmailAddress) super.getContact();
-    }
-
-    @Override
-    @Service
-    public Boolean edit() {
-	boolean isValueChanged = super.edit();
-	if (isValueChanged) {
-	    getContact().edit(getValue());
+	public EmailAddressBean(Party party) {
+		super(party);
 	}
-	return isValueChanged;
-    }
 
-    @Override
-    public boolean isValueChanged() {
-	return !getValue().equals(getContact().getValue());
-    }
+	public EmailAddressBean(EmailAddress email) {
+		super(email);
+		setValue(email.getValue());
+	}
 
-    @Override
-    @Checked("RolePredicates.PARTY_CONTACT_BEAN_PREDICATE")
-    public PartyContact createNewContact() {
-	return EmailAddress.createEmailAddress(getParty(), getValue(), getType(), getDefaultContact(), getVisibleToPublic(),
-		getVisibleToStudents(), getVisibleToTeachers(), getVisibleToEmployees(), getVisibleToAlumni());
-    }
+	@Override
+	public String getContactName() {
+		return CONTACT_NAME;
+	}
+
+	@Override
+	public EmailAddress getContact() {
+		// TODO Auto-generated method stub
+		return (EmailAddress) super.getContact();
+	}
+
+	@Override
+	@Service
+	public Boolean edit() {
+		boolean isValueChanged = super.edit();
+		if (isValueChanged) {
+			getContact().edit(getValue());
+		}
+		return isValueChanged;
+	}
+
+	@Override
+	public boolean isValueChanged() {
+		return !getValue().equals(getContact().getValue());
+	}
+
+	@Override
+	@Checked("RolePredicates.PARTY_CONTACT_BEAN_PREDICATE")
+	public PartyContact createNewContact() {
+		return EmailAddress.createEmailAddress(getParty(), getValue(), getType(), getDefaultContact(), getVisibleToPublic(),
+				getVisibleToStudents(), getVisibleToTeachers(), getVisibleToEmployees(), getVisibleToAlumni());
+	}
 }

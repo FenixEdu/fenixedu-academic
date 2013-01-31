@@ -5,8 +5,8 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 
 public class ExecutionCourseShiftTypesToShowSummariesProvider extends ExecutionCourseShiftTypesToCreateLessonPlanningProvider {
 
-    @Override
-    public ExecutionCourse getExecutionCourse(Object source) {
-	return ((ShowSummariesBean) source).getExecutionCourse();
-    }
+	@Override
+	public ExecutionCourse getExecutionCourse(Object source) {
+		return ((ShowSummariesBean) source).getExecutionCourse();
+	}
 }

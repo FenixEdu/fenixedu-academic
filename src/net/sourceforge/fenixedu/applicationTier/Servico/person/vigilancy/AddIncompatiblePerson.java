@@ -7,13 +7,13 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class AddIncompatiblePerson extends FenixService {
 
-    @Service
-    public static void run(VigilantWrapper vigilantWrapper, Person person) {
-	if (vigilantWrapper.getPerson().getIncompatibleVigilantPerson() != null) {
-	    vigilantWrapper.getPerson().getIncompatibleVigilantPerson().setIncompatibleVigilantPerson(null);
+	@Service
+	public static void run(VigilantWrapper vigilantWrapper, Person person) {
+		if (vigilantWrapper.getPerson().getIncompatibleVigilantPerson() != null) {
+			vigilantWrapper.getPerson().getIncompatibleVigilantPerson().setIncompatibleVigilantPerson(null);
+		}
+		vigilantWrapper.getPerson().setIncompatibleVigilantPerson(person);
+		person.setIncompatibleVigilantPerson(vigilantWrapper.getPerson());
 	}
-	vigilantWrapper.getPerson().setIncompatibleVigilantPerson(person);
-	person.setIncompatibleVigilantPerson(vigilantWrapper.getPerson());
-    }
 
 }

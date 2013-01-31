@@ -14,7 +14,8 @@ import net.sourceforge.fenixedu.persistenceTierOracle.Oracle.PersistentProjectUs
  * @author Susana Fernandes
  */
 public class ReadCostCenter extends FenixService {
-    public InfoRubric run(String username, String costCenter, BackendInstance instance, String userNumber) throws ExcepcaoPersistencia {
-	return InfoRubric.newInfoFromDomain(new PersistentProjectUser().getCostCenterByID(new Integer(costCenter), instance));
-    }
+	public InfoRubric run(String username, String costCenter, BackendInstance instance, String userNumber)
+			throws ExcepcaoPersistencia {
+		return InfoRubric.newInfoFromDomain(new PersistentProjectUser().getCostCenterByID(new Integer(costCenter), instance));
+	}
 }

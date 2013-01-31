@@ -26,55 +26,55 @@ import net.sourceforge.fenixedu.domain.StudentGroup;
 
 public class DeleteGroupingMembers extends FenixService {
 
-    public Boolean run(Integer executionCourseCode, Integer groupingCode, List<String> studentUsernames)
-	    throws FenixServiceException {
+	public Boolean run(Integer executionCourseCode, Integer groupingCode, List<String> studentUsernames)
+			throws FenixServiceException {
 
-	final Grouping grouping = rootDomainObject.readGroupingByOID(groupingCode);
-	if (grouping == null) {
-	    throw new ExistingServiceException();
+		final Grouping grouping = rootDomainObject.readGroupingByOID(groupingCode);
+		if (grouping == null) {
+			throw new ExistingServiceException();
+		}
+
+		final IGroupEnrolmentStrategyFactory enrolmentGroupPolicyStrategyFactory = GroupEnrolmentStrategyFactory.getInstance();
+		IGroupEnrolmentStrategy strategy = enrolmentGroupPolicyStrategyFactory.getGroupEnrolmentStrategyInstance(grouping);
+
+		if (!strategy.checkStudentsUserNamesInGrouping(studentUsernames, grouping)) {
+			throw new InvalidSituationServiceException();
+		}
+
+		StringBuilder sbStudentNumbers = new StringBuilder("");
+		sbStudentNumbers.setLength(0);
+
+		for (final String studentUsername : studentUsernames) {
+			Attends attend = grouping.getStudentAttend(studentUsername);
+			if (sbStudentNumbers.length() != 0) {
+				sbStudentNumbers.append(", " + attend.getRegistration().getNumber().toString());
+			} else {
+				sbStudentNumbers.append(attend.getRegistration().getNumber().toString());
+			}
+			removeAttendFromStudentGroups(grouping, attend);
+			grouping.removeAttends(attend);
+		}
+
+		// no students means no log entry -- list may contain invalid values, so
+		// its size cannot be used to test
+		if (sbStudentNumbers.length() != 0) {
+			List<ExecutionCourse> ecs = grouping.getExecutionCourses();
+			for (ExecutionCourse ec : ecs) {
+				GroupsAndShiftsManagementLog.createLog(ec, "resources.MessagingResources",
+						"log.executionCourse.groupAndShifts.grouping.memberSet.removed",
+						Integer.toString(studentUsernames.size()), sbStudentNumbers.toString(), grouping.getName(), ec.getNome(),
+						ec.getDegreePresentationString());
+			}
+		}
+
+		return true;
 	}
 
-	final IGroupEnrolmentStrategyFactory enrolmentGroupPolicyStrategyFactory = GroupEnrolmentStrategyFactory.getInstance();
-	IGroupEnrolmentStrategy strategy = enrolmentGroupPolicyStrategyFactory.getGroupEnrolmentStrategyInstance(grouping);
-
-	if (!strategy.checkStudentsUserNamesInGrouping(studentUsernames, grouping)) {
-	    throw new InvalidSituationServiceException();
+	private void removeAttendFromStudentGroups(final Grouping grouping, Attends attend) {
+		if (attend != null) {
+			for (final StudentGroup studentGroup : grouping.getStudentGroups()) {
+				studentGroup.removeAttends(attend);
+			}
+		}
 	}
-
-	StringBuilder sbStudentNumbers = new StringBuilder("");
-	sbStudentNumbers.setLength(0);
-
-	for (final String studentUsername : (List<String>) studentUsernames) {
-	    Attends attend = grouping.getStudentAttend(studentUsername);
-	    if (sbStudentNumbers.length() != 0) {
-		sbStudentNumbers.append(", " + attend.getRegistration().getNumber().toString());
-	    } else {
-		sbStudentNumbers.append(attend.getRegistration().getNumber().toString());
-	    }
-	    removeAttendFromStudentGroups(grouping, attend);
-	    grouping.removeAttends(attend);
-	}
-
-	// no students means no log entry -- list may contain invalid values, so
-	// its size cannot be used to test
-	if (sbStudentNumbers.length() != 0) {
-	    List<ExecutionCourse> ecs = grouping.getExecutionCourses();
-	    for (ExecutionCourse ec : ecs) {
-		GroupsAndShiftsManagementLog.createLog(ec, "resources.MessagingResources",
-			"log.executionCourse.groupAndShifts.grouping.memberSet.removed",
-			Integer.toString(studentUsernames.size()), sbStudentNumbers.toString(), grouping.getName(), ec.getNome(),
-			ec.getDegreePresentationString());
-	    }
-	}
-
-	return true;
-    }
-
-    private void removeAttendFromStudentGroups(final Grouping grouping, Attends attend) {
-	if (attend != null) {
-	    for (final StudentGroup studentGroup : grouping.getStudentGroups()) {
-		studentGroup.removeAttends(attend);
-	    }
-	}
-    }
 }

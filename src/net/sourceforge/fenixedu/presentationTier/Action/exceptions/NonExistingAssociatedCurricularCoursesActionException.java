@@ -6,48 +6,49 @@ package net.sourceforge.fenixedu.presentationTier.Action.exceptions;
  */
 public class NonExistingAssociatedCurricularCoursesActionException extends FenixActionException {
 
-    public static String key = "error.nonExisting.AssociatedCurricularCourses";
+	public static String key = "error.nonExisting.AssociatedCurricularCourses";
 
-    public NonExistingAssociatedCurricularCoursesActionException() {
-	super(key);
-    }
+	public NonExistingAssociatedCurricularCoursesActionException() {
+		super(key);
+	}
 
-    public NonExistingAssociatedCurricularCoursesActionException(Throwable cause) {
-	super(key, cause);
-    }
+	public NonExistingAssociatedCurricularCoursesActionException(Throwable cause) {
+		super(key, cause);
+	}
 
-    public NonExistingAssociatedCurricularCoursesActionException(Object value, Throwable cause) {
-	super(key, value, cause);
-    }
+	public NonExistingAssociatedCurricularCoursesActionException(Object value, Throwable cause) {
+		super(key, value, cause);
+	}
 
-    public NonExistingAssociatedCurricularCoursesActionException(Object[] values, Throwable cause) {
-	super(key, values, cause);
-    }
+	public NonExistingAssociatedCurricularCoursesActionException(Object[] values, Throwable cause) {
+		super(key, values, cause);
+	}
 
-    /**
-     * @return String
-     */
-    public static String getKey() {
-	return key;
-    }
+	/**
+	 * @return String
+	 */
+	public static String getKey() {
+		return key;
+	}
 
-    /**
-     * Sets the key.
-     * 
-     * @param key
-     *            The key to set
-     */
-    public static void setKey(String key) {
-	NonExistingAssociatedCurricularCoursesActionException.key = key;
-    }
+	/**
+	 * Sets the key.
+	 * 
+	 * @param key
+	 *            The key to set
+	 */
+	public static void setKey(String key) {
+		NonExistingAssociatedCurricularCoursesActionException.key = key;
+	}
 
-    public String toString() {
-	String result = "[NonExistingAssociatedCurricularCoursesActionException\n";
-	result += "property" + this.getProperty() + "\n";
-	result += "error" + this.getError() + "\n";
-	result += "cause" + this.getCause() + "\n";
-	result += "]";
-	return result;
-    }
+	@Override
+	public String toString() {
+		String result = "[NonExistingAssociatedCurricularCoursesActionException\n";
+		result += "property" + this.getProperty() + "\n";
+		result += "error" + this.getError() + "\n";
+		result += "cause" + this.getCause() + "\n";
+		result += "]";
+		return result;
+	}
 
 }

@@ -24,32 +24,32 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class ChangePersonalStudentInfo extends FenixService {
 
-    @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
-    @Service
-    public static InfoPerson run(InfoPersonEditor newInfoPerson) throws FenixServiceException {
+	@Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
+	@Service
+	public static InfoPerson run(InfoPersonEditor newInfoPerson) throws FenixServiceException {
 
-	final Person person = (Person) rootDomainObject.readPartyByOID(newInfoPerson.getIdInternal());
-	if (person == null) {
-	    throw new ExcepcaoInexistente("error.changePersonalStudentInfo.noPerson");
+		final Person person = (Person) rootDomainObject.readPartyByOID(newInfoPerson.getIdInternal());
+		if (person == null) {
+			throw new ExcepcaoInexistente("error.changePersonalStudentInfo.noPerson");
+		}
+
+		// Get new Country
+		Country country = null;
+		if ((newInfoPerson.getInfoPais() != null) && (newInfoPerson.getInfoPais().getNationality().length() != 0)) {
+			if ((person.getCountry() == null)
+					|| (!newInfoPerson.getInfoPais().getNationality().equals(person.getCountry().getNationality()))) {
+				country = Country.readCountryByNationality(newInfoPerson.getInfoPais().getNationality());
+			} else {
+				country = person.getCountry();
+			}
+		} else {
+			country = Country.readDefault();
+		}
+
+		// Change personal Information
+		person.edit(newInfoPerson, country);
+
+		return InfoPerson.newInfoFromDomain(person);
 	}
-
-	// Get new Country
-	Country country = null;
-	if ((newInfoPerson.getInfoPais() != null) && (newInfoPerson.getInfoPais().getNationality().length() != 0)) {
-	    if ((person.getCountry() == null)
-		    || (!newInfoPerson.getInfoPais().getNationality().equals(person.getCountry().getNationality()))) {
-		country = Country.readCountryByNationality(newInfoPerson.getInfoPais().getNationality());
-	    } else {
-		country = person.getCountry();
-	    }
-	} else {
-	    country = Country.readDefault();
-	}
-
-	// Change personal Information
-	person.edit(newInfoPerson, country);
-
-	return InfoPerson.newInfoFromDomain(person);
-    }
 
 }

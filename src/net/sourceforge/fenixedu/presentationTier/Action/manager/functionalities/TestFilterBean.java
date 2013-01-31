@@ -14,111 +14,111 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
  */
 public class TestFilterBean implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    private String personName;
-    private Person person;
-    private Integer personId;
-    private String parameters;
+	private String personName;
+	private Person person;
+	private Integer personId;
+	private String parameters;
 
-    public TestFilterBean() {
-	super();
+	public TestFilterBean() {
+		super();
 
-	this.person = null;
-    }
+		this.person = null;
+	}
 
-    public String getPersonName() {
-	return this.personName;
-    }
+	public String getPersonName() {
+		return this.personName;
+	}
 
-    public void setPersonName(String personName) {
-	this.personName = personName;
-    }
+	public void setPersonName(String personName) {
+		this.personName = personName;
+	}
 
-    public Person getPerson() {
-	return this.person;
-    }
+	public Person getPerson() {
+		return this.person;
+	}
 
-    public void setPerson(Person person) {
-	this.person = person;
-    }
+	public void setPerson(Person person) {
+		this.person = person;
+	}
 
-    public Integer getPersonId() {
-	return this.personId;
-    }
+	public Integer getPersonId() {
+		return this.personId;
+	}
 
-    public void setPersonId(Integer personId) {
-	this.personId = personId;
-    }
+	public void setPersonId(Integer personId) {
+		this.personId = personId;
+	}
 
-    public String getParameters() {
-	return this.parameters;
-    }
+	public String getParameters() {
+		return this.parameters;
+	}
 
-    public void setParameters(String parameters) {
-	this.parameters = parameters;
-    }
+	public void setParameters(String parameters) {
+		this.parameters = parameters;
+	}
 
-    public Map<String, String[]> getParametersMap() {
-	Map<String, String[]> map = new Hashtable<String, String[]>();
+	public Map<String, String[]> getParametersMap() {
+		Map<String, String[]> map = new Hashtable<String, String[]>();
 
-	String parameters = getParameters();
-	if (parameters != null && parameters.trim().length() > 0) {
-	    String[] parameterParts = parameters.split(",");
-	    for (int i = 0; i < parameterParts.length; i++) {
-		String part = parameterParts[i].trim();
+		String parameters = getParameters();
+		if (parameters != null && parameters.trim().length() > 0) {
+			String[] parameterParts = parameters.split(",");
+			for (String parameterPart : parameterParts) {
+				String part = parameterPart.trim();
 
-		if (part.length() > 0) {
-		    String[] components = part.split("=");
+				if (part.length() > 0) {
+					String[] components = part.split("=");
 
-		    String name;
-		    String value;
+					String name;
+					String value;
 
-		    name = components[0].trim();
-		    value = components.length > 1 ? components[1] : "";
+					name = components[0].trim();
+					value = components.length > 1 ? components[1] : "";
 
-		    if (map.containsKey(name)) {
-			String[] values = map.get(name);
-			String[] newValues = new String[values.length + 1];
+					if (map.containsKey(name)) {
+						String[] values = map.get(name);
+						String[] newValues = new String[values.length + 1];
 
-			System.arraycopy(values, 0, newValues, 0, values.length);
-			newValues[values.length] = value;
-		    } else {
-			map.put(name, new String[] { value });
-		    }
+						System.arraycopy(values, 0, newValues, 0, values.length);
+						newValues[values.length] = value;
+					} else {
+						map.put(name, new String[] { value });
+					}
+				}
+			}
 		}
-	    }
+
+		return map;
 	}
 
-	return map;
-    }
+	public Person getTargetPerson() {
+		Person person = getPerson();
 
-    public Person getTargetPerson() {
-	Person person = getPerson();
+		if (person != null) {
+			updateInfo(person);
+			return person;
+		} else {
+			Integer oid = getPersonId();
 
-	if (person != null) {
-	    updateInfo(person);
-	    return person;
-	} else {
-	    Integer oid = getPersonId();
+			if (oid == null) {
+				return null;
+			}
 
-	    if (oid == null) {
-		return null;
-	    }
+			person = (Person) RootDomainObject.readDomainObjectByOID(Person.class, oid);
+			setPerson(person);
 
-	    person = (Person) RootDomainObject.readDomainObjectByOID(Person.class, oid);
-	    setPerson(person);
-
-	    updateInfo(person);
-	    return person;
+			updateInfo(person);
+			return person;
+		}
 	}
-    }
 
-    private void updateInfo(Person person) {
-	if (person != null) {
-	    setPerson(person);
-	    setPersonId(person.getIdInternal());
+	private void updateInfo(Person person) {
+		if (person != null) {
+			setPerson(person);
+			setPersonId(person.getIdInternal());
+		}
 	}
-    }
 
 }

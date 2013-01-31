@@ -18,42 +18,42 @@ import pt.ist.fenixWebFramework.renderers.layouts.Layout;
  */
 public class InquiriesRadioGroupQuestionRenderer extends InputRenderer {
 
-    private List<QuestionChoice> radioGroupChoices;
+	private List<QuestionChoice> radioGroupChoices;
 
-    public List<QuestionChoice> getRadioGroupChoices() {
-	return radioGroupChoices;
-    }
+	public List<QuestionChoice> getRadioGroupChoices() {
+		return radioGroupChoices;
+	}
 
-    public void setRadioGroupChoices(List<QuestionChoice> radioGroupChoices) {
-	this.radioGroupChoices = radioGroupChoices;
-    }
+	public void setRadioGroupChoices(List<QuestionChoice> radioGroupChoices) {
+		this.radioGroupChoices = radioGroupChoices;
+	}
 
-    @Override
-    protected Layout getLayout(Object object, Class type) {
+	@Override
+	protected Layout getLayout(Object object, Class type) {
 
-	return new Layout() {
+		return new Layout() {
 
-	    @Override
-	    public HtmlComponent createComponent(Object object, Class type) {
+			@Override
+			public HtmlComponent createComponent(Object object, Class type) {
 
-		List<QuestionChoice> choices = (List<QuestionChoice>) getContext().getProperties().get("radioGroupChoices");
+				List<QuestionChoice> choices = (List<QuestionChoice>) getContext().getProperties().get("radioGroupChoices");
 
-		HtmlRadioButtonGroup group = new HtmlRadioButtonGroup();
-		for (int i = 0; i < choices.size(); i++) {
-		    HtmlRadioButton button = group.createRadioButton();
-		    final QuestionChoice choice = choices.get(i);
-		    button.setUserValue(choice.getValue());
-		    if (choice.isShowLabel()) {
-			button.setText(choice.getLabel());
-		    }
-		    if (object != null && object.equals(choice.getValue())) {
-			button.setChecked(true);
-		    }
-		}
+				HtmlRadioButtonGroup group = new HtmlRadioButtonGroup();
+				for (int i = 0; i < choices.size(); i++) {
+					HtmlRadioButton button = group.createRadioButton();
+					final QuestionChoice choice = choices.get(i);
+					button.setUserValue(choice.getValue());
+					if (choice.isShowLabel()) {
+						button.setText(choice.getLabel());
+					}
+					if (object != null && object.equals(choice.getValue())) {
+						button.setChecked(true);
+					}
+				}
 
-		return group;
-	    }
+				return group;
+			}
 
-	};
-    }
+		};
+	}
 }

@@ -6,9 +6,9 @@ import net.sourceforge.fenixedu.domain.TutorshipSummary;
 
 public class EditSummaryBean extends CreateSummaryBean implements Serializable {
 
-    private static final long serialVersionUID = 161580336110944806L;
+	private static final long serialVersionUID = 161580336110944806L;
 
-    public EditSummaryBean(TutorshipSummary tutorshipSummary) {
-	super(tutorshipSummary);
-    }
+	public EditSummaryBean(TutorshipSummary tutorshipSummary) {
+		super(tutorshipSummary);
+	}
 }

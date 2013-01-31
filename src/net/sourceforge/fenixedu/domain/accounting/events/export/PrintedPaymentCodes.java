@@ -7,41 +7,41 @@ import net.sourceforge.fenixedu.domain.accounting.PaymentCode;
 
 public class PrintedPaymentCodes {
 
-    private Set<String> paymentCodes;
+	private Set<String> paymentCodes;
 
-    public PrintedPaymentCodes() {
-	this.paymentCodes = new HashSet<String>();
-    }
-
-    public String exportAsString() {
-	StringBuilder result = new StringBuilder();
-
-	for (String code : this.paymentCodes) {
-	    result.append(code).append(",");
+	public PrintedPaymentCodes() {
+		this.paymentCodes = new HashSet<String>();
 	}
 
-	result.delete(result.length() - 1, result.length());
+	public String exportAsString() {
+		StringBuilder result = new StringBuilder();
 
-	return result.toString();
-    }
+		for (String code : this.paymentCodes) {
+			result.append(code).append(",");
+		}
 
-    public Set<String> getPaymentCodes() {
-	return paymentCodes;
-    }
+		result.delete(result.length() - 1, result.length());
 
-    public void addPaymentCode(final PaymentCode paymentCode) {
-	this.paymentCodes.add(paymentCode.getCode());
-    }
-
-    public static PrintedPaymentCodes importFromString(final String value) {
-	String[] codes = value.split(",");
-
-	PrintedPaymentCodes printPaymentCodes = new PrintedPaymentCodes();
-
-	for (String c : codes) {
-	    printPaymentCodes.paymentCodes.add(c);
+		return result.toString();
 	}
 
-	return printPaymentCodes;
-    }
+	public Set<String> getPaymentCodes() {
+		return paymentCodes;
+	}
+
+	public void addPaymentCode(final PaymentCode paymentCode) {
+		this.paymentCodes.add(paymentCode.getCode());
+	}
+
+	public static PrintedPaymentCodes importFromString(final String value) {
+		String[] codes = value.split(",");
+
+		PrintedPaymentCodes printPaymentCodes = new PrintedPaymentCodes();
+
+		for (String c : codes) {
+			printPaymentCodes.paymentCodes.add(c);
+		}
+
+		return printPaymentCodes;
+	}
 }

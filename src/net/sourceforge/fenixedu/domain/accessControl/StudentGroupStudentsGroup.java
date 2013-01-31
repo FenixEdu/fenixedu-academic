@@ -12,69 +12,69 @@ import net.sourceforge.fenixedu.domain.accessControl.groups.language.operators.I
 
 public class StudentGroupStudentsGroup extends DomainBackedGroup<StudentGroup> {
 
-    private static final long serialVersionUID = -7462413677592415379L;
+	private static final long serialVersionUID = -7462413677592415379L;
 
-    public StudentGroupStudentsGroup(StudentGroup object) {
-	super(object);
-    }
-
-    private StudentGroup getStudentGroup() {
-	return this.getObject();
-    }
-
-    @Override
-    public Set<Person> getElements() {
-	Set<Person> elements = super.buildSet();
-
-	final StudentGroup studentGroup = getStudentGroup();
-	if (studentGroup != null) {
-	    for (Attends attends : getStudentGroup().getAttends()) {
-		elements.add(attends.getRegistration().getPerson());
-	    }
+	public StudentGroupStudentsGroup(StudentGroup object) {
+		super(object);
 	}
 
-	return super.freezeSet(elements);
-    }
+	private StudentGroup getStudentGroup() {
+		return this.getObject();
+	}
 
-    @Override
-    public boolean isMember(Person person) {
-	if (person != null && person.hasStudent()) {
-	    for (final Attends attends : getStudentGroup().getAttendsSet()) {
-		if (attends.getRegistration().getStudent().getPerson() == person) {
-		    return true;
+	@Override
+	public Set<Person> getElements() {
+		Set<Person> elements = super.buildSet();
+
+		final StudentGroup studentGroup = getStudentGroup();
+		if (studentGroup != null) {
+			for (Attends attends : getStudentGroup().getAttends()) {
+				elements.add(attends.getRegistration().getPerson());
+			}
 		}
-	    }
-	}
 
-	return false;
-    }
-
-    @Override
-    protected Argument[] getExpressionArguments() {
-	return new Argument[] { new IdOperator(getObject()) };
-    }
-
-    public static class Builder implements GroupBuilder {
-
-	@Override
-	public Group build(Object[] arguments) {
-	    try {
-		return new StudentGroupStudentsGroup((StudentGroup) arguments[0]);
-	    } catch (ClassCastException e) {
-		throw new GroupDynamicExpressionException("accessControl.group.builder.studentGroupStudents.notStudentGroup",
-			arguments[0].toString());
-	    }
+		return super.freezeSet(elements);
 	}
 
 	@Override
-	public int getMinArguments() {
-	    return 1;
+	public boolean isMember(Person person) {
+		if (person != null && person.hasStudent()) {
+			for (final Attends attends : getStudentGroup().getAttendsSet()) {
+				if (attends.getRegistration().getStudent().getPerson() == person) {
+					return true;
+				}
+			}
+		}
+
+		return false;
 	}
 
 	@Override
-	public int getMaxArguments() {
-	    return 1;
+	protected Argument[] getExpressionArguments() {
+		return new Argument[] { new IdOperator(getObject()) };
 	}
 
-    }
+	public static class Builder implements GroupBuilder {
+
+		@Override
+		public Group build(Object[] arguments) {
+			try {
+				return new StudentGroupStudentsGroup((StudentGroup) arguments[0]);
+			} catch (ClassCastException e) {
+				throw new GroupDynamicExpressionException("accessControl.group.builder.studentGroupStudents.notStudentGroup",
+						arguments[0].toString());
+			}
+		}
+
+		@Override
+		public int getMinArguments() {
+			return 1;
+		}
+
+		@Override
+		public int getMaxArguments() {
+			return 1;
+		}
+
+	}
 }

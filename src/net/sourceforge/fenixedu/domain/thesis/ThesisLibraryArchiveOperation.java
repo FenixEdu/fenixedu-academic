@@ -11,26 +11,27 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
  * @author Pedro Santos (pmrsa)
  */
 public class ThesisLibraryArchiveOperation extends ThesisLibraryArchiveOperation_Base {
-    public ThesisLibraryArchiveOperation(Thesis thesis, Person performer, String libraryReference) {
-	super();
-	if (thesis.getState() != ThesisState.EVALUATED || !thesis.isFinalAndApprovedThesis())
-	    throw new DomainException("thesis.makepending.notEvaluatedNorPendingArchive");
-	init(thesis, performer);
-	setLibraryReference(libraryReference);
-    }
+	public ThesisLibraryArchiveOperation(Thesis thesis, Person performer, String libraryReference) {
+		super();
+		if (thesis.getState() != ThesisState.EVALUATED || !thesis.isFinalAndApprovedThesis()) {
+			throw new DomainException("thesis.makepending.notEvaluatedNorPendingArchive");
+		}
+		init(thesis, performer);
+		setLibraryReference(libraryReference);
+	}
 
-    public ThesisLibraryArchiveOperation(Integer thesisId, Integer performerId, String comment) {
-	this(RootDomainObject.getInstance().readThesisByOID(thesisId), (Person) RootDomainObject.getInstance().readPartyByOID(
-		performerId), comment);
-    }
+	public ThesisLibraryArchiveOperation(Integer thesisId, Integer performerId, String comment) {
+		this(RootDomainObject.getInstance().readThesisByOID(thesisId), (Person) RootDomainObject.getInstance().readPartyByOID(
+				performerId), comment);
+	}
 
-    @Override
-    public ThesisLibraryState getState() {
-	return ThesisLibraryState.ARCHIVE;
-    }
+	@Override
+	public ThesisLibraryState getState() {
+		return ThesisLibraryState.ARCHIVE;
+	}
 
-    @Override
-    public String getPendingComment() {
-	return null;
-    }
+	@Override
+	public String getPendingComment() {
+		return null;
+	}
 }

@@ -30,92 +30,94 @@ import pt.ist.fenixWebFramework.security.UserView;
  */
 public class PrepararEscolherContextoFormAction extends FenixContextAction {
 
-    @Override
-    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-	    throws Exception {
+	@Override
+	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
 
-	super.execute(mapping, form, request, response);
+		super.execute(mapping, form, request, response);
 
-	InfoExecutionPeriod infoExecutionPeriod = setExecutionContext(request);
+		InfoExecutionPeriod infoExecutionPeriod = setExecutionContext(request);
 
-	List anosCurriculares = new ArrayList();
-	anosCurriculares.add(new LabelValueBean("escolher", ""));
-	anosCurriculares.add(new LabelValueBean("1 º", "1"));
-	anosCurriculares.add(new LabelValueBean("2 º", "2"));
-	anosCurriculares.add(new LabelValueBean("3 º", "3"));
-	anosCurriculares.add(new LabelValueBean("4 º", "4"));
-	anosCurriculares.add(new LabelValueBean("5 º", "5"));
-	request.setAttribute("anosCurriculares", anosCurriculares);
+		List anosCurriculares = new ArrayList();
+		anosCurriculares.add(new LabelValueBean("escolher", ""));
+		anosCurriculares.add(new LabelValueBean("1 º", "1"));
+		anosCurriculares.add(new LabelValueBean("2 º", "2"));
+		anosCurriculares.add(new LabelValueBean("3 º", "3"));
+		anosCurriculares.add(new LabelValueBean("4 º", "4"));
+		anosCurriculares.add(new LabelValueBean("5 º", "5"));
+		request.setAttribute("anosCurriculares", anosCurriculares);
 
-	/* Cria o form bean com as licenciaturas em execucao. */
+		/* Cria o form bean com as licenciaturas em execucao. */
 
-	List executionDegreeList = ReadExecutionDegreesByExecutionYear.run(infoExecutionPeriod.getInfoExecutionYear());
+		List executionDegreeList = ReadExecutionDegreesByExecutionYear.run(infoExecutionPeriod.getInfoExecutionYear());
 
-	Collections.sort(executionDegreeList, new ComparatorByNameForInfoExecutionDegree());
+		Collections.sort(executionDegreeList, new ComparatorByNameForInfoExecutionDegree());
 
-	List licenciaturas = new ArrayList();
+		List licenciaturas = new ArrayList();
 
-	licenciaturas.add(new LabelValueBean("escolher", ""));
+		licenciaturas.add(new LabelValueBean("escolher", ""));
 
-	Iterator iterator = executionDegreeList.iterator();
+		Iterator iterator = executionDegreeList.iterator();
 
-	int index = 0;
-	while (iterator.hasNext()) {
-	    InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) iterator.next();
-	    String name = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getNome();
+		int index = 0;
+		while (iterator.hasNext()) {
+			InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) iterator.next();
+			String name = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getNome();
 
-	    name = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getDegreeType().toString() + " de " + name;
+			name = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getDegreeType().toString() + " de " + name;
 
-	    name += duplicateInfoDegree(executionDegreeList, infoExecutionDegree) ? "-"
-		    + infoExecutionDegree.getInfoDegreeCurricularPlan().getName() : "";
+			name +=
+					duplicateInfoDegree(executionDegreeList, infoExecutionDegree) ? "-"
+							+ infoExecutionDegree.getInfoDegreeCurricularPlan().getName() : "";
 
-	    licenciaturas.add(new LabelValueBean(name, String.valueOf(index++)));
+			licenciaturas.add(new LabelValueBean(name, String.valueOf(index++)));
+		}
+
+		request.setAttribute(PresentationConstants.INFO_EXECUTION_DEGREE_LIST_KEY, executionDegreeList);
+
+		request.setAttribute("licenciaturas", licenciaturas);
+
+		return mapping.findForward("Sucesso");
 	}
 
-	request.setAttribute(PresentationConstants.INFO_EXECUTION_DEGREE_LIST_KEY, executionDegreeList);
+	/**
+	 * Method existencesOfInfoDegree.
+	 * 
+	 * @param executionDegreeList
+	 * @param infoExecutionDegree
+	 * @return int
+	 */
+	private boolean duplicateInfoDegree(List executionDegreeList, InfoExecutionDegree infoExecutionDegree) {
+		InfoDegree infoDegree = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree();
+		Iterator iterator = executionDegreeList.iterator();
 
-	request.setAttribute("licenciaturas", licenciaturas);
+		while (iterator.hasNext()) {
+			InfoExecutionDegree infoExecutionDegree2 = (InfoExecutionDegree) iterator.next();
+			if (infoDegree.equals(infoExecutionDegree2.getInfoDegreeCurricularPlan().getInfoDegree())
+					&& !(infoExecutionDegree.equals(infoExecutionDegree2))) {
+				return true;
+			}
 
-	return mapping.findForward("Sucesso");
-    }
-
-    /**
-     * Method existencesOfInfoDegree.
-     * 
-     * @param executionDegreeList
-     * @param infoExecutionDegree
-     * @return int
-     */
-    private boolean duplicateInfoDegree(List executionDegreeList, InfoExecutionDegree infoExecutionDegree) {
-	InfoDegree infoDegree = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree();
-	Iterator iterator = executionDegreeList.iterator();
-
-	while (iterator.hasNext()) {
-	    InfoExecutionDegree infoExecutionDegree2 = (InfoExecutionDegree) iterator.next();
-	    if (infoDegree.equals(infoExecutionDegree2.getInfoDegreeCurricularPlan().getInfoDegree())
-		    && !(infoExecutionDegree.equals(infoExecutionDegree2)))
-		return true;
-
+		}
+		return false;
 	}
-	return false;
-    }
 
-    /**
-     * Method setExecutionContext.
-     * 
-     * @param request
-     */
-    private InfoExecutionPeriod setExecutionContext(HttpServletRequest request) throws Exception {
+	/**
+	 * Method setExecutionContext.
+	 * 
+	 * @param request
+	 */
+	private InfoExecutionPeriod setExecutionContext(HttpServletRequest request) throws Exception {
 
-	InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request
-		.getAttribute(PresentationConstants.INFO_EXECUTION_PERIOD_KEY);
-	if (infoExecutionPeriod == null) {
-	    IUserView userView = UserView.getUser();
-	    infoExecutionPeriod = ReadCurrentExecutionPeriod.run();
+		InfoExecutionPeriod infoExecutionPeriod =
+				(InfoExecutionPeriod) request.getAttribute(PresentationConstants.INFO_EXECUTION_PERIOD_KEY);
+		if (infoExecutionPeriod == null) {
+			IUserView userView = UserView.getUser();
+			infoExecutionPeriod = ReadCurrentExecutionPeriod.run();
 
-	    request.setAttribute(PresentationConstants.INFO_EXECUTION_PERIOD_KEY, infoExecutionPeriod);
+			request.setAttribute(PresentationConstants.INFO_EXECUTION_PERIOD_KEY, infoExecutionPeriod);
+		}
+		return infoExecutionPeriod;
 	}
-	return infoExecutionPeriod;
-    }
 
 }

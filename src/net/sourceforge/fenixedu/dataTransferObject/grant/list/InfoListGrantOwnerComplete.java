@@ -21,38 +21,38 @@ import net.sourceforge.fenixedu.domain.grant.owner.GrantOwner;
  */
 public class InfoListGrantOwnerComplete extends InfoObject {
 
-    private final GrantOwner domainReference;
+	private final GrantOwner domainReference;
 
-    public InfoListGrantOwnerComplete(final GrantOwner domainObject) {
-	domainReference = domainObject;
-    }
-
-    private GrantOwner getGrantOwner() {
-	return domainReference;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-	return obj != null && getGrantOwner() == ((InfoListGrantOwnerComplete) obj).getGrantOwner();
-    }
-
-    public InfoGrantOwner getInfoGrantOwner() {
-	return InfoGrantOwnerWithPerson.newInfoFromDomain(getGrantOwner());
-    }
-
-    public List<InfoListGrantContract> getInfoListGrantContracts() {
-	final List<InfoListGrantContract> result = new ArrayList<InfoListGrantContract>();
-
-	for (GrantContract grantContract : getGrantOwner().getGrantContracts()) {
-	    result.add(new InfoListGrantContract(grantContract));
+	public InfoListGrantOwnerComplete(final GrantOwner domainObject) {
+		domainReference = domainObject;
 	}
 
-	Collections.reverse(result);
-	return result;
-    }
+	private GrantOwner getGrantOwner() {
+		return domainReference;
+	}
 
-    public List<Qualification> getInfoQualifications() {
-	return getGrantOwner().getPerson().getAssociatedQualifications();
-    }
+	@Override
+	public boolean equals(Object obj) {
+		return obj != null && getGrantOwner() == ((InfoListGrantOwnerComplete) obj).getGrantOwner();
+	}
+
+	public InfoGrantOwner getInfoGrantOwner() {
+		return InfoGrantOwnerWithPerson.newInfoFromDomain(getGrantOwner());
+	}
+
+	public List<InfoListGrantContract> getInfoListGrantContracts() {
+		final List<InfoListGrantContract> result = new ArrayList<InfoListGrantContract>();
+
+		for (GrantContract grantContract : getGrantOwner().getGrantContracts()) {
+			result.add(new InfoListGrantContract(grantContract));
+		}
+
+		Collections.reverse(result);
+		return result;
+	}
+
+	public List<Qualification> getInfoQualifications() {
+		return getGrantOwner().getPerson().getAssociatedQualifications();
+	}
 
 }

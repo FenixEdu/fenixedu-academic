@@ -22,53 +22,54 @@ import com.google.common.collect.Collections2;
 
 public class CurriculumGroupsProviderForMoveCurriculumLines implements DataProvider {
 
-    @Override
-    public Object provide(Object source, Object currentValue) {
-	final CurriculumLineLocationBean bean = (CurriculumLineLocationBean) source;
+	@Override
+	public Object provide(Object source, Object currentValue) {
+		final CurriculumLineLocationBean bean = (CurriculumLineLocationBean) source;
 
-	final Student student = bean.getStudent();
-	final Set<CurriculumGroup> result = new HashSet<CurriculumGroup>();
+		final Student student = bean.getStudent();
+		final Set<CurriculumGroup> result = new HashSet<CurriculumGroup>();
 
-	for (final Registration registration : student.getRegistrations()) {
+		for (final Registration registration : student.getRegistrations()) {
 
-	    if (!registration.isBolonha()) {
-		result.addAll(registration.getLastStudentCurricularPlan().getAllCurriculumGroups());
-		continue;
-	    }
+			if (!registration.isBolonha()) {
+				result.addAll(registration.getLastStudentCurricularPlan().getAllCurriculumGroups());
+				continue;
+			}
 
-	    final StudentCurricularPlan studentCurricularPlan = registration.getLastStudentCurricularPlan();
-	    result.addAll(studentCurricularPlan.getNoCourseGroupCurriculumGroups());
+			final StudentCurricularPlan studentCurricularPlan = registration.getLastStudentCurricularPlan();
+			result.addAll(studentCurricularPlan.getNoCourseGroupCurriculumGroups());
 
-	    for (final CycleCurriculumGroup cycle : studentCurricularPlan.getCycleCurriculumGroups()) {
+			for (final CycleCurriculumGroup cycle : studentCurricularPlan.getCycleCurriculumGroups()) {
 
-		if (bean.isWithRules() && isConcluded(student, cycle)) {
-		    continue;
+				if (bean.isWithRules() && isConcluded(student, cycle)) {
+					continue;
+				}
+
+				result.addAll(cycle.getAllCurriculumGroups());
+			}
 		}
 
-		result.addAll(cycle.getAllCurriculumGroups());
-	    }
+		final Set<AcademicProgram> programs =
+				AcademicAuthorizationGroup.getProgramsForOperation(AccessControl.getPerson(),
+						AcademicOperationType.STUDENT_ENROLMENTS);
+
+		return Collections2.filter(result, new Predicate<CurriculumGroup>() {
+			@Override
+			public boolean apply(CurriculumGroup group) {
+
+				return programs.contains(group.getDegreeCurricularPlanOfStudent().getDegree());
+			}
+		});
 	}
 
-	final Set<AcademicProgram> programs = AcademicAuthorizationGroup.getProgramsForOperation(AccessControl.getPerson(),
-		AcademicOperationType.STUDENT_ENROLMENTS);
+	private boolean isConcluded(final Student student, final CycleCurriculumGroup cycle) {
+		return cycle.hasConclusionProcess()
+				|| (cycle.isExternal() && student.hasRegistrationFor(cycle.getDegreeCurricularPlanOfDegreeModule()));
+	}
 
-	return Collections2.filter(result, new Predicate<CurriculumGroup>() {
-	    @Override
-	    public boolean apply(CurriculumGroup group) {
-
-		return programs.contains(group.getDegreeCurricularPlanOfStudent().getDegree());
-	    }
-	});
-    }
-
-    private boolean isConcluded(final Student student, final CycleCurriculumGroup cycle) {
-	return cycle.hasConclusionProcess()
-		|| (cycle.isExternal() && student.hasRegistrationFor(cycle.getDegreeCurricularPlanOfDegreeModule()));
-    }
-
-    @Override
-    public Converter getConverter() {
-	return new DomainObjectKeyConverter();
-    }
+	@Override
+	public Converter getConverter() {
+		return new DomainObjectKeyConverter();
+	}
 
 }

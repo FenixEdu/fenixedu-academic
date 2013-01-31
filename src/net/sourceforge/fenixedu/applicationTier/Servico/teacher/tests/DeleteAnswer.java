@@ -6,8 +6,8 @@ import net.sourceforge.fenixedu.domain.tests.NewAtomicQuestion;
 import pt.ist.fenixWebFramework.services.Service;
 
 public class DeleteAnswer extends FenixService {
-    @Service
-    public static void run(NewAtomicQuestion atomicQuestion) throws FenixServiceException {
-	atomicQuestion.deleteAnswer();
-    }
+	@Service
+	public static void run(NewAtomicQuestion atomicQuestion) throws FenixServiceException {
+		atomicQuestion.deleteAnswer();
+	}
 }

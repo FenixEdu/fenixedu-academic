@@ -10,35 +10,36 @@ import bibtex.dom.BibtexEntry;
  */
 public abstract class ConferenceArticles extends ConferenceArticles_Base {
 
-    public ConferenceArticles() {
-	super();
-    }
-
-    @Checked("ResultPredicates.writePredicate")
-    public void delete() {
-	if (this.hasEventConferenceArticlesAssociation()) {
-	    this.getEventConferenceArticlesAssociation().delete();
-	    this.setEventConferenceArticlesAssociation(null);
+	public ConferenceArticles() {
+		super();
 	}
-	super.delete();
-    }
 
-    public Month getOldMonth() {
-	return super.getMonth();
-    }
+	@Override
+	@Checked("ResultPredicates.writePredicate")
+	public void delete() {
+		if (this.hasEventConferenceArticlesAssociation()) {
+			this.getEventConferenceArticlesAssociation().delete();
+			this.setEventConferenceArticlesAssociation(null);
+		}
+		super.delete();
+	}
 
-    public String getOldOrganization() {
-	return super.getOrganization();
-    }
+	public Month getOldMonth() {
+		return super.getMonth();
+	}
 
-    public Integer getOldYear() {
-	return super.getYear();
-    }
+	public String getOldOrganization() {
+		return super.getOrganization();
+	}
 
-    @Override
-    public abstract BibtexEntry exportToBibtexEntry();
+	public Integer getOldYear() {
+		return super.getYear();
+	}
 
-    @Override
-    public abstract String getResume();
+	@Override
+	public abstract BibtexEntry exportToBibtexEntry();
+
+	@Override
+	public abstract String getResume();
 
 }

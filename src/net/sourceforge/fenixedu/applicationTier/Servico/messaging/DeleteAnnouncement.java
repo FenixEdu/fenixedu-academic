@@ -14,10 +14,10 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class DeleteAnnouncement extends FenixService {
 
-    @Service
-    public static void run(Announcement announcement) {
+	@Service
+	public static void run(Announcement announcement) {
 
-	announcement.delete();
-    }
+		announcement.delete();
+	}
 
 }

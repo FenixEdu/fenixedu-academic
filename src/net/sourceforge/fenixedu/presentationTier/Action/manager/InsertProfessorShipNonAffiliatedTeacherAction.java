@@ -35,135 +35,142 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
  * @author Ricardo Rodrigues
  * 
  */
 
-@Mapping(module = "manager", path = "/insertProfessorShipNonAffiliatedTeacher", input = "/insertProfessorShipNonAffiliatedTeacher.do?method=prepare&page=0", attribute = "nonAffiliatedTeacherForm", formBean = "nonAffiliatedTeacherForm", scope = "request", parameter = "method")
+@Mapping(
+		module = "manager",
+		path = "/insertProfessorShipNonAffiliatedTeacher",
+		input = "/insertProfessorShipNonAffiliatedTeacher.do?method=prepare&page=0",
+		attribute = "nonAffiliatedTeacherForm",
+		formBean = "nonAffiliatedTeacherForm",
+		scope = "request",
+		parameter = "method")
 @Forwards(value = {
-		@Forward(name = "insertProfessorShip", path = "/manager/insertNonAffiliatedTeacher_bd.jsp", tileProperties = @Tile(navLocal = "/manager/teachersBodyModificationNavLocalManager.jsp")),
+		@Forward(name = "insertProfessorShip", path = "/manager/insertNonAffiliatedTeacher_bd.jsp", tileProperties = @Tile(
+				navLocal = "/manager/teachersBodyModificationNavLocalManager.jsp")),
 		@Forward(name = "readTeacherInCharge", path = "/readTeacherInCharge.do?page=0") })
-@Exceptions(value = { @ExceptionHandling(type = net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException.class, key = "resources.Action.exceptions.NonExistingActionException", handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class, scope = "request") })
+@Exceptions(value = { @ExceptionHandling(
+		type = net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException.class,
+		key = "resources.Action.exceptions.NonExistingActionException",
+		handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class,
+		scope = "request") })
 public class InsertProfessorShipNonAffiliatedTeacherAction extends FenixDispatchAction {
 
-    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-	    throws FenixFilterException, FenixServiceException, NonExistingActionException {
+	public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+			throws FenixFilterException, FenixServiceException, NonExistingActionException {
 
-	List institutions = ReadInstitutions.run();
+		List institutions = ReadInstitutions.run();
 
-	if (request.getAttribute("insertInstitution") != null) {
-	    request.setAttribute("insertInstitution", "true");
-	}
-	request.setAttribute("institutions", institutions);
+		if (request.getAttribute("insertInstitution") != null) {
+			request.setAttribute("insertInstitution", "true");
+		}
+		request.setAttribute("institutions", institutions);
 
-	return mapping.findForward("insertProfessorShip");
-    }
-
-    public ActionForward insertInstitution(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixFilterException, FenixServiceException, NonExistingActionException {
-
-	DynaActionForm dynaForm = (DynaActionForm) form;
-	String institutionName = (String) dynaForm.get("institutionName");
-
-	try {
-	    InsertInstitution.run(institutionName);
-	} catch (FenixServiceException e) {
-	    ActionMessages actionMessages = new ActionMessages();
-	    actionMessages.add("", new ActionMessage(e.getMessage()));
-	    saveMessages(request, actionMessages);
-	    return mapping.getInputForward();
+		return mapping.findForward("insertProfessorShip");
 	}
 
-	List institutions = ReadInstitutions.run();
-	request.setAttribute("institutions", institutions);
+	public ActionForward insertInstitution(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws FenixFilterException, FenixServiceException, NonExistingActionException {
 
-	return mapping.findForward("insertProfessorShip");
-    }
+		DynaActionForm dynaForm = (DynaActionForm) form;
+		String institutionName = (String) dynaForm.get("institutionName");
 
-    public ActionForward insertNonAffiliatedTeacher(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixFilterException, FenixServiceException, NonExistingActionException {
+		try {
+			InsertInstitution.run(institutionName);
+		} catch (FenixServiceException e) {
+			ActionMessages actionMessages = new ActionMessages();
+			actionMessages.add("", new ActionMessage(e.getMessage()));
+			saveMessages(request, actionMessages);
+			return mapping.getInputForward();
+		}
 
-	DynaActionForm dynaForm = (DynaActionForm) form;
-	Integer institutionID = (Integer) dynaForm.get("institutionID");
-	String nonAffiliatedTeacherNameToInsert = (String) dynaForm.get("nonAffiliatedTeacherNameToInsert");
+		List institutions = ReadInstitutions.run();
+		request.setAttribute("institutions", institutions);
 
-	if (nonAffiliatedTeacherNameToInsert == null || nonAffiliatedTeacherNameToInsert.equals("")) {
-	    ActionMessages actionMessages = new ActionMessages();
-	    actionMessages.add("", new ActionMessage("errors.required", "Nome do Docente"));
-	    saveMessages(request, actionMessages);
-	    return mapping.getInputForward();
+		return mapping.findForward("insertProfessorShip");
 	}
 
-	Object[] args = { nonAffiliatedTeacherNameToInsert, institutionID };
+	public ActionForward insertNonAffiliatedTeacher(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws FenixFilterException, FenixServiceException, NonExistingActionException {
 
-	try {
-	    ServiceUtils.executeService("InsertNonAffiliatedTeacher", args);
-	} catch (NotExistingServiceException e) {
-	    ActionMessages actionMessages = new ActionMessages();
-	    actionMessages.add("", new ActionMessage(e.getMessage()));
-	    saveMessages(request, actionMessages);
-	    return mapping.getInputForward();
+		DynaActionForm dynaForm = (DynaActionForm) form;
+		Integer institutionID = (Integer) dynaForm.get("institutionID");
+		String nonAffiliatedTeacherNameToInsert = (String) dynaForm.get("nonAffiliatedTeacherNameToInsert");
+
+		if (nonAffiliatedTeacherNameToInsert == null || nonAffiliatedTeacherNameToInsert.equals("")) {
+			ActionMessages actionMessages = new ActionMessages();
+			actionMessages.add("", new ActionMessage("errors.required", "Nome do Docente"));
+			saveMessages(request, actionMessages);
+			return mapping.getInputForward();
+		}
+
+		Object[] args = { nonAffiliatedTeacherNameToInsert, institutionID };
+
+		try {
+			ServiceUtils.executeService("InsertNonAffiliatedTeacher", args);
+		} catch (NotExistingServiceException e) {
+			ActionMessages actionMessages = new ActionMessages();
+			actionMessages.add("", new ActionMessage(e.getMessage()));
+			saveMessages(request, actionMessages);
+			return mapping.getInputForward();
+		}
+
+		if (request.getAttribute("insertInstitution") != null) {
+			request.setAttribute("insertInstitution", "true");
+		}
+		List institutions = ReadInstitutions.run();
+
+		request.setAttribute("institutions", institutions);
+		return mapping.findForward("insertProfessorShip");
 	}
 
-	if (request.getAttribute("insertInstitution") != null) {
-	    request.setAttribute("insertInstitution", "true");
+	public ActionForward search(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+			throws FenixFilterException, FenixServiceException, NonExistingActionException {
+
+		DynaActionForm dynaForm = (DynaActionForm) form;
+		String nonAffiliatedTeacherNameToInsert = (String) dynaForm.get("nonAffiliatedTeacherName");
+
+		List nonAffiliatedTeachers =
+				(List) ServiceUtils.executeService("ReadNonAffiliatedTeachersByName",
+						new Object[] { nonAffiliatedTeacherNameToInsert });
+
+		request.setAttribute("nonAffiliatedTeachers", nonAffiliatedTeachers);
+
+		List institutions = null;
+		institutions = ReadInstitutions.run();
+
+		request.setAttribute("institutions", institutions);
+
+		return mapping.findForward("insertProfessorShip");
 	}
-	List institutions = ReadInstitutions.run();
 
-	request.setAttribute("institutions", institutions);
-	return mapping.findForward("insertProfessorShip");
-    }
+	public ActionForward insertProfessorship(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws FenixFilterException, FenixServiceException, FenixActionException {
 
-    public ActionForward search(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-	    throws FenixFilterException, FenixServiceException, NonExistingActionException {
+		IUserView userView = UserView.getUser();
+		Integer executionCourseID = new Integer(request.getParameter("executionCourseId"));
+		Integer nonAffiliatedTeacherID = new Integer(request.getParameter("nonAffiliatedTeacherID"));
 
-	DynaActionForm dynaForm = (DynaActionForm) form;
-	String nonAffiliatedTeacherNameToInsert = (String) dynaForm.get("nonAffiliatedTeacherName");
+		insertProfessorshipOperation(mapping, userView, executionCourseID, nonAffiliatedTeacherID);
 
-	List nonAffiliatedTeachers = (List) ServiceUtils.executeService("ReadNonAffiliatedTeachersByName",
-		new Object[] { nonAffiliatedTeacherNameToInsert });
-
-	request.setAttribute("nonAffiliatedTeachers", nonAffiliatedTeachers);
-
-	List institutions = null;
-	institutions = ReadInstitutions.run();
-
-	request.setAttribute("institutions", institutions);
-
-	return mapping.findForward("insertProfessorShip");
-    }
-
-    public ActionForward insertProfessorship(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixFilterException, FenixServiceException, FenixActionException {
-
-	IUserView userView = UserView.getUser();
-	Integer executionCourseID = new Integer(request.getParameter("executionCourseId"));
-	Integer nonAffiliatedTeacherID = new Integer(request.getParameter("nonAffiliatedTeacherID"));
-
-	insertProfessorshipOperation(mapping, userView, executionCourseID, nonAffiliatedTeacherID);
-
-	return mapping.findForward("readTeacherInCharge");
-    }
-
-    private void insertProfessorshipOperation(ActionMapping mapping, IUserView userView, Integer executionCourseID,
-	    Integer nonAffiliatedTeacherID) throws FenixFilterException, NonExistingActionException, FenixActionException {
-	Object args[] = { nonAffiliatedTeacherID, executionCourseID };
-
-	try {
-	    ServiceUtils.executeService("InsertProfessorShipNonAffiliatedTeacher", args);
-
-	} catch (NonExistingServiceException ex) {
-	    throw new NonExistingActionException(ex.getMessage(), mapping.findForward("insertProfessorShip"));
-	} catch (FenixServiceException e) {
-	    throw new FenixActionException(e.getMessage());
+		return mapping.findForward("readTeacherInCharge");
 	}
-    }
+
+	private void insertProfessorshipOperation(ActionMapping mapping, IUserView userView, Integer executionCourseID,
+			Integer nonAffiliatedTeacherID) throws FenixFilterException, NonExistingActionException, FenixActionException {
+		Object args[] = { nonAffiliatedTeacherID, executionCourseID };
+
+		try {
+			ServiceUtils.executeService("InsertProfessorShipNonAffiliatedTeacher", args);
+
+		} catch (NonExistingServiceException ex) {
+			throw new NonExistingActionException(ex.getMessage(), mapping.findForward("insertProfessorShip"));
+		} catch (FenixServiceException e) {
+			throw new FenixActionException(e.getMessage());
+		}
+	}
 }

@@ -15,31 +15,31 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class InsertDegree extends FenixService {
 
-    @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
-    @Service
-    public static void run(final String code, final String name, final String nameEn, final DegreeType degreeType,
-	    final GradeScale gradeScale) throws FenixServiceException {
-	if (name == null || nameEn == null || code == null || degreeType == null) {
-	    throw new InvalidArgumentsServiceException();
+	@Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
+	@Service
+	public static void run(final String code, final String name, final String nameEn, final DegreeType degreeType,
+			final GradeScale gradeScale) throws FenixServiceException {
+		if (name == null || nameEn == null || code == null || degreeType == null) {
+			throw new InvalidArgumentsServiceException();
+		}
+
+		final List<Degree> degrees = Degree.readOldDegrees();
+
+		// assert unique degree code and unique pair name/type
+		for (Degree degree : degrees) {
+			if (degree.getSigla().equalsIgnoreCase(code)) {
+				throw new FenixServiceException("error.existing.code");
+			}
+			ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
+
+			if ((degree.getNameFor(currentExecutionYear).getContent(Language.pt).equalsIgnoreCase(name) || degree
+					.getNameFor(currentExecutionYear).getContent(Language.en).equalsIgnoreCase(nameEn))
+					&& degree.getDegreeType().equals(degreeType)) {
+				throw new FenixServiceException("error.existing.name.and.type");
+			}
+		}
+
+		new Degree(name, nameEn, code, degreeType, gradeScale);
 	}
-
-	final List<Degree> degrees = Degree.readOldDegrees();
-
-	// assert unique degree code and unique pair name/type
-	for (Degree degree : degrees) {
-	    if (degree.getSigla().equalsIgnoreCase(code)) {
-		throw new FenixServiceException("error.existing.code");
-	    }
-	    ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
-
-	    if ((degree.getNameFor(currentExecutionYear).getContent(Language.pt).equalsIgnoreCase(name) || degree.getNameFor(
-		    currentExecutionYear).getContent(Language.en).equalsIgnoreCase(nameEn))
-		    && degree.getDegreeType().equals(degreeType)) {
-		throw new FenixServiceException("error.existing.name.and.type");
-	    }
-	}
-
-	new Degree(name, nameEn, code, degreeType, gradeScale);
-    }
 
 }

@@ -13,67 +13,67 @@ import pt.ist.fenixframework.pstm.DomainClassInfo;
 
 public class RemoteClassDescriptionRequest extends RemoteRequest {
 
-    private final Class clazz;
+	private final Class clazz;
 
-    public RemoteClassDescriptionRequest(final Class clazz) {
-	this.clazz = clazz;
-    }
-
-    @Override
-    protected int getStatus() {
-	return HttpServletResponse.SC_OK;
-    }
-
-    @Override
-    protected void writeResponseBody(Writer writer) throws IOException {
-	writer.write("<" + getTag() + ">");
-
-	writeIdentificationInfo(writer);
-
-	writer.write("<methods>");
-	for (final Method method : clazz.getMethods()) {
-	    if (isMethodAvailable(method)) {
-		writeMethod(writer, method);
-	    }
+	public RemoteClassDescriptionRequest(final Class clazz) {
+		this.clazz = clazz;
 	}
-	writer.write("</methods>");
 
-	writer.write("</" + getTag() + ">");
-    }
+	@Override
+	protected int getStatus() {
+		return HttpServletResponse.SC_OK;
+	}
 
-    protected void writeIdentificationInfo(final Writer writer) throws IOException {
-	final int mapClassToId = DomainClassInfo.mapClassToId(clazz);
-	writeTag(writer, "domainClassId", Integer.toString(mapClassToId));
-	writeTag(writer, "domainClassName", clazz.getName());
-    }
+	@Override
+	protected void writeResponseBody(Writer writer) throws IOException {
+		writer.write("<" + getTag() + ">");
 
-    protected String getTag() {
-	return "domainClass";
-    }
+		writeIdentificationInfo(writer);
 
-    protected UriType getUriType() {
-	return UriType.CLASS;
-    }
+		writer.write("<methods>");
+		for (final Method method : clazz.getMethods()) {
+			if (isMethodAvailable(method)) {
+				writeMethod(writer, method);
+			}
+		}
+		writer.write("</methods>");
 
-    protected String getResource() {
-	return clazz.getName();
-    }
+		writer.write("</" + getTag() + ">");
+	}
 
-    protected boolean isMethodAvailable(final Method method) {
-	final int modifiers = method.getModifiers();
-	final Class<?>[] parameterTypes = method.getParameterTypes();
-	return Modifier.isPublic(modifiers) && Modifier.isStatic(modifiers)
-		&& (parameterTypes == null || parameterTypes.length == 0);
-    }
+	protected void writeIdentificationInfo(final Writer writer) throws IOException {
+		final int mapClassToId = DomainClassInfo.mapClassToId(clazz);
+		writeTag(writer, "domainClassId", Integer.toString(mapClassToId));
+		writeTag(writer, "domainClassName", clazz.getName());
+	}
 
-    protected void writeMethod(final Writer writer, final Method method) throws IOException {
-	writer.write("<method>");
+	protected String getTag() {
+		return "domainClass";
+	}
 
-	final String name = method.getName();
-	writeTag(writer, "name", name);
-	writeTag(writer, "url", RemoteServlet.getMappingPatternPrefix() + getUriType().type() + "/" + getResource() + "/" + name);
+	protected UriType getUriType() {
+		return UriType.CLASS;
+	}
 
-	writer.write("</method>");
-    }
+	protected String getResource() {
+		return clazz.getName();
+	}
+
+	protected boolean isMethodAvailable(final Method method) {
+		final int modifiers = method.getModifiers();
+		final Class<?>[] parameterTypes = method.getParameterTypes();
+		return Modifier.isPublic(modifiers) && Modifier.isStatic(modifiers)
+				&& (parameterTypes == null || parameterTypes.length == 0);
+	}
+
+	protected void writeMethod(final Writer writer, final Method method) throws IOException {
+		writer.write("<method>");
+
+		final String name = method.getName();
+		writeTag(writer, "name", name);
+		writeTag(writer, "url", RemoteServlet.getMappingPatternPrefix() + getUriType().type() + "/" + getResource() + "/" + name);
+
+		writer.write("</method>");
+	}
 
 }

@@ -6,28 +6,28 @@ import pt.utl.ist.fenix.tools.util.EMail;
 
 public class EmailListValidator extends HtmlValidator {
 
-    public EmailListValidator() {
-	setMessage("renderers.validator.list.emails");
-    }
-
-    public boolean validateEmailList(String emailListString) {
-	if (!StringUtils.isEmpty(emailListString)) {
-	    String[] emails = emailListString.split(",");
-	    for (String emailString : emails) {
-		final String email = emailString.trim();
-		if (!email.matches(EMail.W3C_EMAIL_SINTAX_VALIDATOR)) {
-		    return false;
-		}
-	    }
+	public EmailListValidator() {
+		setMessage("renderers.validator.list.emails");
 	}
 
-	return true;
-    }
+	public boolean validateEmailList(String emailListString) {
+		if (!StringUtils.isEmpty(emailListString)) {
+			String[] emails = emailListString.split(",");
+			for (String emailString : emails) {
+				final String email = emailString.trim();
+				if (!email.matches(EMail.W3C_EMAIL_SINTAX_VALIDATOR)) {
+					return false;
+				}
+			}
+		}
 
-    @Override
-    public void performValidation() {
-	String text = getComponent().getValue();
-	setValid(validateEmailList(text));
-    }
+		return true;
+	}
+
+	@Override
+	public void performValidation() {
+		String text = getComponent().getValue();
+		setValid(validateEmailList(text));
+	}
 
 }

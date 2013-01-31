@@ -21,94 +21,96 @@ import pt.ist.fenixWebFramework.renderers.components.HtmlText;
  */
 public class InquiryDelegateCoursesResumeRenderer extends InquiryBlocksResumeRenderer {
 
-    @Override
-    protected void createHeaderFinalCells(final HtmlTableRow headerRow) {
-	final HtmlTableCell fillingStatus = headerRow.createCell(CellType.HEADER);
-	fillingStatus.setBody(new HtmlText("Estado do preenchimento"));
-	fillingStatus.setClasses("col-fill");
+	@Override
+	protected void createHeaderFinalCells(final HtmlTableRow headerRow) {
+		final HtmlTableCell fillingStatus = headerRow.createCell(CellType.HEADER);
+		fillingStatus.setBody(new HtmlText("Estado do preenchimento"));
+		fillingStatus.setClasses("col-fill");
 
-	final HtmlTableCell finalCell = headerRow.createCell(CellType.HEADER);
-	finalCell.setClasses("col-actions");
-    }
-
-    @Override
-    protected void createFinalCells(HtmlTableRow tableRow, BlockResumeResult blockResumeResult) {
-	HtmlTableCell fillingStatus = tableRow.createCell();
-	CurricularCourseResumeResult courseResumeResult = (CurricularCourseResumeResult) blockResumeResult;
-	fillingStatus.setBody(new HtmlText(courseResumeResult.getCompletionState()));
-	fillingStatus.setClasses("col-fill");
-
-	HtmlInlineContainer container = new HtmlInlineContainer();
-	HtmlTableCell linksCell = tableRow.createCell();
-	String fillInParameters = buildFillInParameters(courseResumeResult);
-	String resultsParameters = buildParametersForResults(courseResumeResult);
-
-	HtmlLink link = new HtmlLink();
-	link.setUrl("/delegateInquiry.do?" + resultsParameters
-		+ "&method=viewCourseInquiryResults&" +  net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME + "=/delegado/delegado");
-	link.setEscapeAmpersand(false);
-
-	HtmlMenu menu = new HtmlMenu();
-	menu
-		.setOnChange("var value=this.options[this.selectedIndex].value; this.selectedIndex=0; if(value!= ''){ window.open(value,'_blank'); }");
-	menu.setStyle("width: 150px");
-	HtmlMenuOption optionEmpty = menu.createOption("-- Ver resultados --");
-	HtmlMenuOption optionUC = menu.createOption("Resultados UC");
-	String calculatedUrl = link.calculateUrl();
-	optionUC.setValue(calculatedUrl
-		+ "&_request_checksum_="
-		+ pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter
-			.calculateChecksum(calculatedUrl));
-
-	for (TeacherShiftTypeResultsBean teacherShiftTypeResultsBean : courseResumeResult.getTeachersResults()) {
-	    String teacherResultsParameters = buildParametersForTeacherResults(teacherShiftTypeResultsBean);
-	    HtmlLink teacherLink = new HtmlLink();
-	    teacherLink.setEscapeAmpersand(false);
-	    teacherLink.setUrl("/delegateInquiry.do?" + teacherResultsParameters
-		    + "&method=viewTeacherShiftTypeInquiryResults&" +  net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME + "=/delegado/delegado");
-	    calculatedUrl = teacherLink.calculateUrl();
-
-	    HtmlMenuOption optionTeacher = menu.createOption(teacherShiftTypeResultsBean.getShiftType().getFullNameTipoAula()
-		    + " - " + teacherShiftTypeResultsBean.getProfessorship().getPerson().getName());
-	    optionTeacher.setValue(calculatedUrl
-		    + "&_request_checksum_="
-		    + pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter
-			    .calculateChecksum(calculatedUrl));
+		final HtmlTableCell finalCell = headerRow.createCell(CellType.HEADER);
+		finalCell.setClasses("col-actions");
 	}
 
-	container.addChild(menu);
+	@Override
+	protected void createFinalCells(HtmlTableRow tableRow, BlockResumeResult blockResumeResult) {
+		HtmlTableCell fillingStatus = tableRow.createCell();
+		CurricularCourseResumeResult courseResumeResult = (CurricularCourseResumeResult) blockResumeResult;
+		fillingStatus.setBody(new HtmlText(courseResumeResult.getCompletionState()));
+		fillingStatus.setClasses("col-fill");
 
-	container.addChild(new HtmlText("&nbsp;|&nbsp;", false));
+		HtmlInlineContainer container = new HtmlInlineContainer();
+		HtmlTableCell linksCell = tableRow.createCell();
+		String fillInParameters = buildFillInParameters(courseResumeResult);
+		String resultsParameters = buildParametersForResults(courseResumeResult);
 
-	HtmlLink fillInlink = new HtmlLink();
-	fillInlink.setUrl("/delegateInquiry.do?" + fillInParameters + "&method=showFillInquiryPage");
-	fillInlink.setText("Preencher");
-	container.addChild(fillInlink);
+		HtmlLink link = new HtmlLink();
+		link.setUrl("/delegateInquiry.do?" + resultsParameters + "&method=viewCourseInquiryResults&"
+				+ net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME
+				+ "=/delegado/delegado");
+		link.setEscapeAmpersand(false);
 
-	linksCell.setBody(container);
-	linksCell.setClasses("col-actions");
-    }
+		HtmlMenu menu = new HtmlMenu();
+		menu.setOnChange("var value=this.options[this.selectedIndex].value; this.selectedIndex=0; if(value!= ''){ window.open(value,'_blank'); }");
+		menu.setStyle("width: 150px");
+		HtmlMenuOption optionEmpty = menu.createOption("-- Ver resultados --");
+		HtmlMenuOption optionUC = menu.createOption("Resultados UC");
+		String calculatedUrl = link.calculateUrl();
+		optionUC.setValue(calculatedUrl
+				+ "&_request_checksum_="
+				+ pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter
+						.calculateChecksum(calculatedUrl));
 
-    private String buildParametersForTeacherResults(TeacherShiftTypeResultsBean teacherShiftTypeResultsBean) {
-	StringBuilder builder = new StringBuilder();
-	builder.append("shiftType=").append(teacherShiftTypeResultsBean.getShiftType().name());
-	builder.append("&professorshipOID=").append(teacherShiftTypeResultsBean.getProfessorship().getExternalId());
-	return builder.toString();
-    }
+		for (TeacherShiftTypeResultsBean teacherShiftTypeResultsBean : courseResumeResult.getTeachersResults()) {
+			String teacherResultsParameters = buildParametersForTeacherResults(teacherShiftTypeResultsBean);
+			HtmlLink teacherLink = new HtmlLink();
+			teacherLink.setEscapeAmpersand(false);
+			teacherLink.setUrl("/delegateInquiry.do?" + teacherResultsParameters + "&method=viewTeacherShiftTypeInquiryResults&"
+					+ net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME
+					+ "=/delegado/delegado");
+			calculatedUrl = teacherLink.calculateUrl();
 
-    private String buildFillInParameters(CurricularCourseResumeResult courseResumeResult) {
-	StringBuilder builder = new StringBuilder();
-	builder.append("yearDelegateOID=").append(courseResumeResult.getYearDelegate().getExternalId());
-	builder.append("&executionDegreeOID=").append(courseResumeResult.getExecutionDegree().getExternalId());
-	builder.append("&executionCourseOID=").append(courseResumeResult.getExecutionCourse().getExternalId());
-	return builder.toString();
-    }
+			HtmlMenuOption optionTeacher =
+					menu.createOption(teacherShiftTypeResultsBean.getShiftType().getFullNameTipoAula() + " - "
+							+ teacherShiftTypeResultsBean.getProfessorship().getPerson().getName());
+			optionTeacher.setValue(calculatedUrl
+					+ "&_request_checksum_="
+					+ pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter
+							.calculateChecksum(calculatedUrl));
+		}
 
-    private String buildParametersForResults(CurricularCourseResumeResult courseResumeResult) {
-	StringBuilder builder = new StringBuilder();
-	builder.append("degreeCurricularPlanOID=").append(
-		courseResumeResult.getExecutionDegree().getDegreeCurricularPlan().getExternalId());
-	builder.append("&executionCourseOID=").append(courseResumeResult.getExecutionCourse().getExternalId());
-	return builder.toString();
-    }
+		container.addChild(menu);
+
+		container.addChild(new HtmlText("&nbsp;|&nbsp;", false));
+
+		HtmlLink fillInlink = new HtmlLink();
+		fillInlink.setUrl("/delegateInquiry.do?" + fillInParameters + "&method=showFillInquiryPage");
+		fillInlink.setText("Preencher");
+		container.addChild(fillInlink);
+
+		linksCell.setBody(container);
+		linksCell.setClasses("col-actions");
+	}
+
+	private String buildParametersForTeacherResults(TeacherShiftTypeResultsBean teacherShiftTypeResultsBean) {
+		StringBuilder builder = new StringBuilder();
+		builder.append("shiftType=").append(teacherShiftTypeResultsBean.getShiftType().name());
+		builder.append("&professorshipOID=").append(teacherShiftTypeResultsBean.getProfessorship().getExternalId());
+		return builder.toString();
+	}
+
+	private String buildFillInParameters(CurricularCourseResumeResult courseResumeResult) {
+		StringBuilder builder = new StringBuilder();
+		builder.append("yearDelegateOID=").append(courseResumeResult.getYearDelegate().getExternalId());
+		builder.append("&executionDegreeOID=").append(courseResumeResult.getExecutionDegree().getExternalId());
+		builder.append("&executionCourseOID=").append(courseResumeResult.getExecutionCourse().getExternalId());
+		return builder.toString();
+	}
+
+	private String buildParametersForResults(CurricularCourseResumeResult courseResumeResult) {
+		StringBuilder builder = new StringBuilder();
+		builder.append("degreeCurricularPlanOID=").append(
+				courseResumeResult.getExecutionDegree().getDegreeCurricularPlan().getExternalId());
+		builder.append("&executionCourseOID=").append(courseResumeResult.getExecutionCourse().getExternalId());
+		return builder.toString();
+	}
 }

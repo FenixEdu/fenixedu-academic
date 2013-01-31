@@ -8,28 +8,28 @@ import org.joda.time.PeriodType;
 
 public class AcademicSemesters extends AcademicPeriod {
 
-    protected AcademicSemesters(int period, String name) {
-	super(period, name);
-    }
+	protected AcademicSemesters(int period, String name) {
+		super(period, name);
+	}
 
-    @Override
-    public DurationFieldType getFieldType() {
-	return AcademicSemestersDurationFieldType.academicSemesters();
-    }
+	@Override
+	public DurationFieldType getFieldType() {
+		return AcademicSemestersDurationFieldType.academicSemesters();
+	}
 
-    @Override
-    public PeriodType getPeriodType() {
-	return AcademicPeriodType.academicSemesters();
-    }
+	@Override
+	public PeriodType getPeriodType() {
+		return AcademicPeriodType.academicSemesters();
+	}
 
-    @Override
-    public float getWeight() {
-	return getValue() / 2f;
-    }
+	@Override
+	public float getWeight() {
+		return getValue() / 2f;
+	}
 
-    @Override
-    public AcademicPeriod getPossibleChild() {
-	return getValue() > 1 ? AcademicPeriod.SEMESTER : AcademicPeriod.TRIMESTER;
-    }
+	@Override
+	public AcademicPeriod getPossibleChild() {
+		return getValue() > 1 ? AcademicPeriod.SEMESTER : AcademicPeriod.TRIMESTER;
+	}
 
 }

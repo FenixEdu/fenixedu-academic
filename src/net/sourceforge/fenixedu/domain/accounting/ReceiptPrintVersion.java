@@ -10,54 +10,54 @@ import pt.ist.fenixWebFramework.security.accessControl.Checked;
 
 public class ReceiptPrintVersion extends ReceiptPrintVersion_Base {
 
-    private ReceiptPrintVersion() {
-	super();
-	setRootDomainObject(RootDomainObject.getInstance());
-    }
-
-    ReceiptPrintVersion(Receipt receipt, Person person) {
-	this();
-	init(receipt, person);
-    }
-
-    private void init(Receipt receipt, Person person) {
-	checkParameters(receipt, person);
-	super.setWhenCreated(new DateTime());
-	super.setReceipt(receipt);
-	super.setPerson(person);
-    }
-
-    private void checkParameters(Receipt receipt, Person person) {
-	if (receipt == null) {
-	    throw new DomainException("error.accounting.receiptVersion.receipt.cannot.be.null");
+	private ReceiptPrintVersion() {
+		super();
+		setRootDomainObject(RootDomainObject.getInstance());
 	}
 
-	if (person == null) {
-	    throw new DomainException("error.accounting.receiptVersion.person.cannot.be.null");
+	ReceiptPrintVersion(Receipt receipt, Person person) {
+		this();
+		init(receipt, person);
 	}
 
-    }
-    
-    @Override
-    public void setPerson(Person person) {
-	throw new DomainException("error.accounting.receiptVersion.cannot.modify.person");
-    }
+	private void init(Receipt receipt, Person person) {
+		checkParameters(receipt, person);
+		super.setWhenCreated(new DateTime());
+		super.setReceipt(receipt);
+		super.setPerson(person);
+	}
 
-    @Override
-    public void setReceipt(Receipt receipt) {
-	throw new DomainException("error.accounting.receiptVersion.cannot.modify.receipt");
-    }
+	private void checkParameters(Receipt receipt, Person person) {
+		if (receipt == null) {
+			throw new DomainException("error.accounting.receiptVersion.receipt.cannot.be.null");
+		}
 
-    @Override
-    public void setWhenCreated(DateTime whenCreated) {
-	throw new DomainException("error.accounting.receiptVersion.cannot.modify.whenCreated");
-    }
+		if (person == null) {
+			throw new DomainException("error.accounting.receiptVersion.person.cannot.be.null");
+		}
 
-    @Checked("RolePredicates.MANAGER_PREDICATE")
-    void delete() {
-	super.setPerson(null);
-	super.setReceipt(null);
-	removeRootDomainObject();
-	super.deleteDomainObject();
-    }
+	}
+
+	@Override
+	public void setPerson(Person person) {
+		throw new DomainException("error.accounting.receiptVersion.cannot.modify.person");
+	}
+
+	@Override
+	public void setReceipt(Receipt receipt) {
+		throw new DomainException("error.accounting.receiptVersion.cannot.modify.receipt");
+	}
+
+	@Override
+	public void setWhenCreated(DateTime whenCreated) {
+		throw new DomainException("error.accounting.receiptVersion.cannot.modify.whenCreated");
+	}
+
+	@Checked("RolePredicates.MANAGER_PREDICATE")
+	void delete() {
+		super.setPerson(null);
+		super.setReceipt(null);
+		removeRootDomainObject();
+		super.deleteDomainObject();
+	}
 }

@@ -23,34 +23,34 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class SetBasicCurricularCoursesService extends FenixService {
 
-    @Checked("RolePredicates.SCIENTIFIC_COUNCIL_PREDICATE")
-    @Service
-    public static Boolean run(List curricularCoursesIds, Integer degreeCurricularPlanId) throws FenixServiceException {
+	@Checked("RolePredicates.SCIENTIFIC_COUNCIL_PREDICATE")
+	@Service
+	public static Boolean run(List curricularCoursesIds, Integer degreeCurricularPlanId) throws FenixServiceException {
 
-	DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanId);
+		DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanId);
 
-	List<CurricularCourse> basicCurricularCourses = degreeCurricularPlan.getCurricularCoursesByBasicAttribute(Boolean.TRUE);
+		List<CurricularCourse> basicCurricularCourses = degreeCurricularPlan.getCurricularCoursesByBasicAttribute(Boolean.TRUE);
 
-	Iterator itBCCourses = basicCurricularCourses.iterator();
-	CurricularCourse basicCourse;
+		Iterator itBCCourses = basicCurricularCourses.iterator();
+		CurricularCourse basicCourse;
 
-	while (itBCCourses.hasNext()) {
+		while (itBCCourses.hasNext()) {
 
-	    basicCourse = (CurricularCourse) itBCCourses.next();
-	    basicCourse.setBasic(new Boolean(false));
+			basicCourse = (CurricularCourse) itBCCourses.next();
+			basicCourse.setBasic(new Boolean(false));
+		}
+
+		Iterator itId = curricularCoursesIds.iterator();
+
+		while (itId.hasNext()) {
+
+			CurricularCourse curricularCourseBasic =
+					(CurricularCourse) rootDomainObject.readDegreeModuleByOID((Integer) itId.next());
+			curricularCourseBasic.setBasic(new Boolean(true));
+
+		}
+
+		return true;
 	}
-
-	Iterator itId = curricularCoursesIds.iterator();
-
-	while (itId.hasNext()) {
-
-	    CurricularCourse curricularCourseBasic = (CurricularCourse) rootDomainObject.readDegreeModuleByOID((Integer) itId
-		    .next());
-	    curricularCourseBasic.setBasic(new Boolean(true));
-
-	}
-
-	return true;
-    }
 
 }

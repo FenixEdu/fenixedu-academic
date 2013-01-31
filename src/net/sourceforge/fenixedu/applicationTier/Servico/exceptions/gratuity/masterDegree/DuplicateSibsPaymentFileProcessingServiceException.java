@@ -12,40 +12,41 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
  */
 public class DuplicateSibsPaymentFileProcessingServiceException extends FenixServiceException {
 
-    /**
+	/**
      *  
      */
-    public DuplicateSibsPaymentFileProcessingServiceException() {
-	super();
-    }
+	public DuplicateSibsPaymentFileProcessingServiceException() {
+		super();
+	}
 
-    /**
-     * @param errorType
-     */
-    public DuplicateSibsPaymentFileProcessingServiceException(String message) {
-	super(message);
-    }
+	/**
+	 * @param errorType
+	 */
+	public DuplicateSibsPaymentFileProcessingServiceException(String message) {
+		super(message);
+	}
 
-    /**
-     * @param cause
-     */
-    public DuplicateSibsPaymentFileProcessingServiceException(Throwable cause) {
-	super(cause);
-    }
+	/**
+	 * @param cause
+	 */
+	public DuplicateSibsPaymentFileProcessingServiceException(Throwable cause) {
+		super(cause);
+	}
 
-    /**
-     * @param message
-     * @param cause
-     */
-    public DuplicateSibsPaymentFileProcessingServiceException(String message, Throwable cause) {
-	super(message, cause);
-    }
+	/**
+	 * @param message
+	 * @param cause
+	 */
+	public DuplicateSibsPaymentFileProcessingServiceException(String message, Throwable cause) {
+		super(message, cause);
+	}
 
-    public String toString() {
-	String result = "[DuplicateSibsPaymentFileProcessingException\n";
-	result += "message" + this.getMessage() + "\n";
-	result += "cause" + this.getCause() + "\n";
-	result += "]";
-	return result;
-    }
+	@Override
+	public String toString() {
+		String result = "[DuplicateSibsPaymentFileProcessingException\n";
+		result += "message" + this.getMessage() + "\n";
+		result += "cause" + this.getCause() + "\n";
+		result += "]";
+		return result;
+	}
 }

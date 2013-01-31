@@ -6,10 +6,10 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class RenewUnlimitedParkingRequest extends FenixService {
 
-    @Service
-    public static void run(ParkingRequest oldParkingRequest, Boolean limitlessAccessCard) {
-	if (oldParkingRequest.getParkingParty().getCanRequestUnlimitedCardAndIsInAnyRequestPeriod()) {
-	    new ParkingRequest(oldParkingRequest, limitlessAccessCard);
+	@Service
+	public static void run(ParkingRequest oldParkingRequest, Boolean limitlessAccessCard) {
+		if (oldParkingRequest.getParkingParty().getCanRequestUnlimitedCardAndIsInAnyRequestPeriod()) {
+			new ParkingRequest(oldParkingRequest, limitlessAccessCard);
+		}
 	}
-    }
 }

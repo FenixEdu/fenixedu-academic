@@ -12,63 +12,63 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
 
 public class InternalSubstitutionDismissalBean extends DismissalBean {
 
-    static private final long serialVersionUID = 1L;
+	static private final long serialVersionUID = 1L;
 
-    @Override
-    public Collection<? extends CurricularCourse> getAllCurricularCoursesToDismissal() {
+	@Override
+	public Collection<? extends CurricularCourse> getAllCurricularCoursesToDismissal() {
 
-	final Collection<CurricularCourse> result = new HashSet<CurricularCourse>();
+		final Collection<CurricularCourse> result = new HashSet<CurricularCourse>();
 
-	final StudentCurricularPlan scp = getStudentCurricularPlan();
-	final Collection<CycleType> cyclesToEnrol = scp.getDegreeType().getSupportedCyclesToEnrol();
+		final StudentCurricularPlan scp = getStudentCurricularPlan();
+		final Collection<CycleType> cyclesToEnrol = scp.getDegreeType().getSupportedCyclesToEnrol();
 
-	if (cyclesToEnrol.isEmpty()) {
+		if (cyclesToEnrol.isEmpty()) {
 
-	    for (final CurricularCourse curricularCourse : scp.getDegreeCurricularPlan().getCurricularCoursesSet()) {
-		if (curricularCourse.isActive(getExecutionPeriod()) && !isApproved(scp, curricularCourse)) {
-		    result.add(curricularCourse);
-		}
-	    }
-
-	} else {
-
-	    for (final CycleType cycleType : cyclesToEnrol) {
-		final CourseGroup courseGroup = getCourseGroupWithCycleTypeToCollectCurricularCourses(scp, cycleType);
-		if (courseGroup != null) {
-		    for (final CurricularCourse curricularCourse : courseGroup.getAllCurricularCourses(getExecutionPeriod())) {
-			if (!isApproved(scp, curricularCourse)) {
-			    result.add(curricularCourse);
+			for (final CurricularCourse curricularCourse : scp.getDegreeCurricularPlan().getCurricularCoursesSet()) {
+				if (curricularCourse.isActive(getExecutionPeriod()) && !isApproved(scp, curricularCourse)) {
+					result.add(curricularCourse);
+				}
 			}
-		    }
+
+		} else {
+
+			for (final CycleType cycleType : cyclesToEnrol) {
+				final CourseGroup courseGroup = getCourseGroupWithCycleTypeToCollectCurricularCourses(scp, cycleType);
+				if (courseGroup != null) {
+					for (final CurricularCourse curricularCourse : courseGroup.getAllCurricularCourses(getExecutionPeriod())) {
+						if (!isApproved(scp, curricularCourse)) {
+							result.add(curricularCourse);
+						}
+					}
+				}
+			}
+
 		}
-	    }
 
+		return result;
 	}
 
-	return result;
-    }
-
-    /**
-     * Do not use isApproved from StudentCurricularPlan, because that method
-     * also check global equivalences, and in internal substitution we can not
-     * check that.
-     */
-    private boolean isApproved(final StudentCurricularPlan studentCurricularPlan, final CurricularCourse curricularCourse) {
-	for (final Enrolment enrolment : studentCurricularPlan.getEnrolments()) {
-	    if (enrolment.getCurricularCourse().isEquivalent(curricularCourse) && enrolment.isApproved()) {
-		return true;
-	    }
+	/**
+	 * Do not use isApproved from StudentCurricularPlan, because that method
+	 * also check global equivalences, and in internal substitution we can not
+	 * check that.
+	 */
+	private boolean isApproved(final StudentCurricularPlan studentCurricularPlan, final CurricularCourse curricularCourse) {
+		for (final Enrolment enrolment : studentCurricularPlan.getEnrolments()) {
+			if (enrolment.getCurricularCourse().isEquivalent(curricularCourse) && enrolment.isApproved()) {
+				return true;
+			}
+		}
+		return false;
 	}
-	return false;
-    }
 
-    private CourseGroup getCourseGroupWithCycleTypeToCollectCurricularCourses(final StudentCurricularPlan studentCurricularPlan,
-	    final CycleType cycleType) {
+	private CourseGroup getCourseGroupWithCycleTypeToCollectCurricularCourses(final StudentCurricularPlan studentCurricularPlan,
+			final CycleType cycleType) {
 
-	final CycleCurriculumGroup curriculumGroup = studentCurricularPlan.getCycle(cycleType);
-	return curriculumGroup != null ? curriculumGroup.getDegreeModule() : studentCurricularPlan.getDegreeCurricularPlan()
-		.getCycleCourseGroup(cycleType);
+		final CycleCurriculumGroup curriculumGroup = studentCurricularPlan.getCycle(cycleType);
+		return curriculumGroup != null ? curriculumGroup.getDegreeModule() : studentCurricularPlan.getDegreeCurricularPlan()
+				.getCycleCourseGroup(cycleType);
 
-    }
+	}
 
 }

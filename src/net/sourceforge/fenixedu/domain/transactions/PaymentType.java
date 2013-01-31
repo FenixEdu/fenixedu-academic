@@ -2,20 +2,20 @@ package net.sourceforge.fenixedu.domain.transactions;
 
 public enum PaymentType {
 
-    CASH,
+	CASH,
 
-    ATM,
+	ATM,
 
-    CHEQUE,
+	CHEQUE,
 
-    NIB_TRANSFER,
+	NIB_TRANSFER,
 
-    POSTAL,
+	POSTAL,
 
-    SIBS;
+	SIBS;
 
-    public String getName() {
-	return name();
-    }
+	public String getName() {
+		return name();
+	}
 
 }

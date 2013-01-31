@@ -7,12 +7,14 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class SecondCycleDegreesProvider implements DataProvider {
 
-    public Object provide(Object source, Object currentValue) {
-	return Degree.readAllByDegreeType(DegreeType.BOLONHA_MASTER_DEGREE, DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE);
-    }
+	@Override
+	public Object provide(Object source, Object currentValue) {
+		return Degree.readAllByDegreeType(DegreeType.BOLONHA_MASTER_DEGREE, DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE);
+	}
 
-    public Converter getConverter() {
-	return null;
-    }
+	@Override
+	public Converter getConverter() {
+		return null;
+	}
 
 }

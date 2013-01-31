@@ -26,43 +26,43 @@ import org.joda.time.DateTime;
  * transaction with whatever value was payed.
  */
 public class InstitutionAccountCreditPR extends InstitutionAccountCreditPR_Base {
-    public InstitutionAccountCreditPR(ServiceAgreementTemplate template) {
-	super();
-	super.init(EntryType.INSTITUTION_ACCOUNT_CREDIT, EventType.INSTITUTION_AFFILIATION, new DateTime(), null, template);
-    }
-
-    @Override
-    protected Money doCalculationForAmountToPay(final Event event, final DateTime when, final boolean applyDiscount) {
-	Money result = Money.ZERO;
-	final InstitutionAffiliationEvent iaEvent = (InstitutionAffiliationEvent) event;
-	for (final MicroPaymentEvent otherEvent : iaEvent.getMicroPaymentEventSet()) {
-	    result = result.add(otherEvent.getAmount());
-	}
-	return result;
-    }
-    
-    @Override
-    protected Money subtractFromExemptions(Event event, DateTime when, boolean applyDiscount, Money amountToPay) {
-	return amountToPay;
-    }
-
-    @Override
-    public List<EntryDTO> calculateEntries(Event event, DateTime when) {
-	Money amounToPay = event.calculateAmountToPay(when);
-	return Collections.singletonList(new EntryDTO(getEntryType(), event, calculateTotalAmountToPay(event, when), amounToPay,
-		amounToPay, event.getDescriptionForEntryType(getEntryType()), amounToPay));
-    }
-
-    @Override
-    protected Set<AccountingTransaction> internalProcess(User user, Collection<EntryDTO> entryDTOs, Event event, Account fromAccount,
-	    Account toAccount, AccountingTransactionDetailDTO transactionDetail) {
-	if (entryDTOs.size() != 1) {
-	    throw new DomainException("error.accounting.postingRules.InstitutionAccountCreditPR.invalid.number.of.entryDTOs");
+	public InstitutionAccountCreditPR(ServiceAgreementTemplate template) {
+		super();
+		super.init(EntryType.INSTITUTION_ACCOUNT_CREDIT, EventType.INSTITUTION_AFFILIATION, new DateTime(), null, template);
 	}
 
-	final EntryDTO entryDTO = entryDTOs.iterator().next();
-	return Collections.singleton(makeAccountingTransaction(user, event, fromAccount, toAccount,
-		EntryType.INSTITUTION_ACCOUNT_CREDIT, entryDTO.getAmountToPay(), transactionDetail));
-    }
+	@Override
+	protected Money doCalculationForAmountToPay(final Event event, final DateTime when, final boolean applyDiscount) {
+		Money result = Money.ZERO;
+		final InstitutionAffiliationEvent iaEvent = (InstitutionAffiliationEvent) event;
+		for (final MicroPaymentEvent otherEvent : iaEvent.getMicroPaymentEventSet()) {
+			result = result.add(otherEvent.getAmount());
+		}
+		return result;
+	}
+
+	@Override
+	protected Money subtractFromExemptions(Event event, DateTime when, boolean applyDiscount, Money amountToPay) {
+		return amountToPay;
+	}
+
+	@Override
+	public List<EntryDTO> calculateEntries(Event event, DateTime when) {
+		Money amounToPay = event.calculateAmountToPay(when);
+		return Collections.singletonList(new EntryDTO(getEntryType(), event, calculateTotalAmountToPay(event, when), amounToPay,
+				amounToPay, event.getDescriptionForEntryType(getEntryType()), amounToPay));
+	}
+
+	@Override
+	protected Set<AccountingTransaction> internalProcess(User user, Collection<EntryDTO> entryDTOs, Event event,
+			Account fromAccount, Account toAccount, AccountingTransactionDetailDTO transactionDetail) {
+		if (entryDTOs.size() != 1) {
+			throw new DomainException("error.accounting.postingRules.InstitutionAccountCreditPR.invalid.number.of.entryDTOs");
+		}
+
+		final EntryDTO entryDTO = entryDTOs.iterator().next();
+		return Collections.singleton(makeAccountingTransaction(user, event, fromAccount, toAccount,
+				EntryType.INSTITUTION_ACCOUNT_CREDIT, entryDTO.getAmountToPay(), transactionDetail));
+	}
 
 }

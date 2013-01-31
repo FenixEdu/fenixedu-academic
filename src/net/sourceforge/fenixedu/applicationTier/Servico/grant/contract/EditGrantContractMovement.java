@@ -18,60 +18,60 @@ import net.sourceforge.fenixedu.domain.grant.contract.GrantContractMovement;
  */
 public class EditGrantContractMovement extends EditDomainObjectService {
 
-    @Override
-    protected DomainObject readObjectByUnique(InfoObject infoObject) {
-	InfoGrantContractMovement infoGrantContractMovement = (InfoGrantContractMovement) infoObject;
-	return rootDomainObject.readGrantContractMovementByOID(infoGrantContractMovement.getIdInternal());
-    }
-
-    @Override
-    protected void doAfterLock(DomainObject domainObjectLocked, InfoObject infoObject) throws FenixServiceException {
-
-	try {
-	    /*
-	     * In case of a new Movement, the Contract associated needs to be
-	     * set.
-	     */
-	    GrantContractMovement grantContractMovement = (GrantContractMovement) domainObjectLocked;
-	    InfoGrantContractMovement infoGrantContractMovement = (InfoGrantContractMovement) infoObject;
-
-	    GrantContract grantContract = rootDomainObject.readGrantContractByOID(infoGrantContractMovement
-		    .getInfoGrantContract().getIdInternal());
-	    grantContractMovement.setGrantContract(grantContract);
-	    domainObjectLocked = grantContractMovement;
-	} catch (Exception e) {
-	    throw new FenixServiceException(e.getMessage());
+	@Override
+	protected DomainObject readObjectByUnique(InfoObject infoObject) {
+		InfoGrantContractMovement infoGrantContractMovement = (InfoGrantContractMovement) infoObject;
+		return rootDomainObject.readGrantContractMovementByOID(infoGrantContractMovement.getIdInternal());
 	}
-    }
 
-    public void run(InfoGrantContractMovement infoGrantContractMovement) throws Exception {
-	super.run(Integer.valueOf(0), infoGrantContractMovement);
-    }
+	@Override
+	protected void doAfterLock(DomainObject domainObjectLocked, InfoObject infoObject) throws FenixServiceException {
 
-    @Override
-    protected void copyInformationFromInfoToDomain(InfoObject infoObject, DomainObject domainObject) {
-	InfoGrantContractMovement infoGrantContractMovement = (InfoGrantContractMovement) infoObject;
-	GrantContractMovement grantContractMovement = (GrantContractMovement) domainObject;
+		try {
+			/*
+			 * In case of a new Movement, the Contract associated needs to be
+			 * set.
+			 */
+			GrantContractMovement grantContractMovement = (GrantContractMovement) domainObjectLocked;
+			InfoGrantContractMovement infoGrantContractMovement = (InfoGrantContractMovement) infoObject;
 
-	grantContractMovement.setArrivalDate(infoGrantContractMovement.getArrivalDate());
-	grantContractMovement.setDepartureDate(infoGrantContractMovement.getDepartureDate());
+			GrantContract grantContract =
+					rootDomainObject.readGrantContractByOID(infoGrantContractMovement.getInfoGrantContract().getIdInternal());
+			grantContractMovement.setGrantContract(grantContract);
+			domainObjectLocked = grantContractMovement;
+		} catch (Exception e) {
+			throw new FenixServiceException(e.getMessage());
+		}
+	}
 
-	GrantContract grantContract = rootDomainObject.readGrantContractByOID(infoGrantContractMovement.getInfoGrantContract()
-		.getIdInternal());
-	grantContractMovement.setGrantContract(grantContract);
+	public void run(InfoGrantContractMovement infoGrantContractMovement) throws Exception {
+		super.run(Integer.valueOf(0), infoGrantContractMovement);
+	}
 
-	grantContractMovement.setLocation(infoGrantContractMovement.getLocation());
+	@Override
+	protected void copyInformationFromInfoToDomain(InfoObject infoObject, DomainObject domainObject) {
+		InfoGrantContractMovement infoGrantContractMovement = (InfoGrantContractMovement) infoObject;
+		GrantContractMovement grantContractMovement = (GrantContractMovement) domainObject;
 
-    }
+		grantContractMovement.setArrivalDate(infoGrantContractMovement.getArrivalDate());
+		grantContractMovement.setDepartureDate(infoGrantContractMovement.getDepartureDate());
 
-    @Override
-    protected DomainObject createNewDomainObject(InfoObject infoObject) {
-	return new GrantContractMovement();
-    }
+		GrantContract grantContract =
+				rootDomainObject.readGrantContractByOID(infoGrantContractMovement.getInfoGrantContract().getIdInternal());
+		grantContractMovement.setGrantContract(grantContract);
 
-    @Override
-    protected DomainObject readDomainObject(Integer idInternal) {
-	return rootDomainObject.readGrantContractMovementByOID(idInternal);
-    }
+		grantContractMovement.setLocation(infoGrantContractMovement.getLocation());
+
+	}
+
+	@Override
+	protected DomainObject createNewDomainObject(InfoObject infoObject) {
+		return new GrantContractMovement();
+	}
+
+	@Override
+	protected DomainObject readDomainObject(Integer idInternal) {
+		return rootDomainObject.readGrantContractMovementByOID(idInternal);
+	}
 
 }

@@ -25,290 +25,290 @@ import net.sourceforge.fenixedu.util.CurricularPeriodLabelFormatter;
  */
 public class CurricularPeriod extends CurricularPeriod_Base implements Comparable<CurricularPeriod> {
 
-    static {
-	CurricularPeriodParentChilds.addListener(new CurricularPeriodParentChildsListener());
-    }
-
-    public CurricularPeriod(AcademicPeriod academicPeriod) {
-	super();
-	setRootDomainObject(RootDomainObject.getInstance());
-	setAcademicPeriod(academicPeriod);
-    }
-
-    public CurricularPeriod(AcademicPeriod academicPeriod, Integer order, CurricularPeriod parent) {
-	this(academicPeriod);
-	setChildOrder(order);
-	setParent(parent);
-
-    }
-
-    public List<CurricularPeriod> getSortedChilds() {
-	List<CurricularPeriod> sortedChilds = new ArrayList<CurricularPeriod>();
-	sortedChilds.addAll(getChilds());
-	Collections.sort(sortedChilds);
-	return sortedChilds;
-    }
-
-    public CurricularPeriod getChildByOrder(Integer order) {
-
-	for (CurricularPeriod curricularPeriod : getChilds()) {
-	    if (curricularPeriod.getChildOrder().equals(order)) {
-		return curricularPeriod;
-	    }
+	static {
+		CurricularPeriodParentChilds.addListener(new CurricularPeriodParentChildsListener());
 	}
 
-	return null;
-    }
-
-    private CurricularPeriod findChild(AcademicPeriod academicPeriod, Integer order) {
-
-	for (CurricularPeriod curricularPeriod : getChilds()) {
-	    if (curricularPeriod.getChildOrder().equals(order) && curricularPeriod.getAcademicPeriod().equals(academicPeriod)) {
-		return curricularPeriod;
-	    }
+	public CurricularPeriod(AcademicPeriod academicPeriod) {
+		super();
+		setRootDomainObject(RootDomainObject.getInstance());
+		setAcademicPeriod(academicPeriod);
 	}
 
-	return null;
-    }
+	public CurricularPeriod(AcademicPeriod academicPeriod, Integer order, CurricularPeriod parent) {
+		this(academicPeriod);
+		setChildOrder(order);
+		setParent(parent);
 
-    public CurricularPeriod getCurricularPeriod(CurricularPeriodInfoDTO... curricularPeriodsPaths) {
+	}
 
-	validatePath(curricularPeriodsPaths);
+	public List<CurricularPeriod> getSortedChilds() {
+		List<CurricularPeriod> sortedChilds = new ArrayList<CurricularPeriod>();
+		sortedChilds.addAll(getChilds());
+		Collections.sort(sortedChilds);
+		return sortedChilds;
+	}
 
-	CurricularPeriod curricularPeriod = this;
+	public CurricularPeriod getChildByOrder(Integer order) {
 
-	for (CurricularPeriodInfoDTO path : curricularPeriodsPaths) {
-	    curricularPeriod = curricularPeriod.findChild(path.getPeriodType(), path.getOrder());
+		for (CurricularPeriod curricularPeriod : getChilds()) {
+			if (curricularPeriod.getChildOrder().equals(order)) {
+				return curricularPeriod;
+			}
+		}
 
-	    if (curricularPeriod == null) {
 		return null;
-	    }
 	}
 
-	return curricularPeriod;
-    }
+	private CurricularPeriod findChild(AcademicPeriod academicPeriod, Integer order) {
 
-    public CurricularPeriod addCurricularPeriod(CurricularPeriodInfoDTO... curricularPeriodsPaths) {
-
-	validatePath(curricularPeriodsPaths);
-
-	CurricularPeriod curricularPeriod = null;
-	CurricularPeriod curricularPeriodParent = this;
-
-	for (CurricularPeriodInfoDTO path : curricularPeriodsPaths) {
-	    curricularPeriod = curricularPeriodParent.findChild(path.getPeriodType(), path.getOrder());
-
-	    if (curricularPeriod == null) {
-		curricularPeriod = new CurricularPeriod(path.getPeriodType(), path.getOrder(), curricularPeriodParent);
-	    }
-
-	    curricularPeriodParent = curricularPeriod;
-	}
-
-	return curricularPeriod;
-    }
-
-    public Integer getOrderByType(AcademicPeriod academicPeriod) {
-
-	Integer resultOrder = null;
-
-	if (this.getAcademicPeriod().equals(academicPeriod)) {
-	    resultOrder = this.getChildOrder();
-	} else if (this.getParent() != null
-		&& this.getParent().getAcademicPeriod().getWeight() > this.getAcademicPeriod().getWeight()) {
-	    resultOrder = (this.getParent()).getOrderByType(academicPeriod);
-	}
-
-	return resultOrder;
-    }
-
-    private void validatePath(CurricularPeriodInfoDTO... curricularPeriodsPaths) {
-
-	Arrays.sort(curricularPeriodsPaths, new Comparator<CurricularPeriodInfoDTO>() {
-	    @Override
-	    public int compare(CurricularPeriodInfoDTO c1, CurricularPeriodInfoDTO c2) {
-		if (c1.getPeriodType().getWeight() > c2.getPeriodType().getWeight()) {
-		    return -1;
-		} else if (c1.getPeriodType().getWeight() < c2.getPeriodType().getWeight()) {
-		    return 1;
+		for (CurricularPeriod curricularPeriod : getChilds()) {
+			if (curricularPeriod.getChildOrder().equals(order) && curricularPeriod.getAcademicPeriod().equals(academicPeriod)) {
+				return curricularPeriod;
+			}
 		}
-		throw new DomainException("error.pathShouldNotHaveSameTypePeriods");
-	    }
 
-	});
-    }
-
-    public void delete() {
-
-	getContexts().clear();
-	removeDegreeCurricularPlan();
-
-	removeParent();
-	for (CurricularPeriod child : getChilds()) {
-	    child.delete();
+		return null;
 	}
 
-	removeRootDomainObject();
-	deleteDomainObject();
+	public CurricularPeriod getCurricularPeriod(CurricularPeriodInfoDTO... curricularPeriodsPaths) {
 
-    }
+		validatePath(curricularPeriodsPaths);
 
-    public String getLabel() {
-	return CurricularPeriodLabelFormatter.getLabel(this, false);
-    }
+		CurricularPeriod curricularPeriod = this;
 
-    public String getFullLabel() {
-	return CurricularPeriodLabelFormatter.getFullLabel(this, false);
-    }
+		for (CurricularPeriodInfoDTO path : curricularPeriodsPaths) {
+			curricularPeriod = curricularPeriod.findChild(path.getPeriodType(), path.getOrder());
 
-    @Override
-    public int compareTo(CurricularPeriod o) {
-	return this.getFullWeight().compareTo(o.getFullWeight());
-    }
+			if (curricularPeriod == null) {
+				return null;
+			}
+		}
 
-    private Float getWeight() {
-	float periodTypeWeight = (this.getAcademicPeriod() == null) ? 0 : this.getAcademicPeriod().getWeight();
-	float periodOrder = (this.getChildOrder() == null) ? 0 : this.getChildOrder();
-	return periodTypeWeight * periodOrder;
-    }
-
-    private Float getFullWeight() {
-	return this.getWeight() + this.collectParentsWeight(this);
-    }
-
-    private Float collectParentsWeight(CurricularPeriod period) {
-	Float result = Float.valueOf(0);
-
-	if (period.hasParent()) {
-	    result = period.getParent().getWeight() + collectParentsWeight(period.getParent());
+		return curricularPeriod;
 	}
 
-	return result;
-    }
+	public CurricularPeriod addCurricularPeriod(CurricularPeriodInfoDTO... curricularPeriodsPaths) {
 
-    private static class CurricularPeriodParentChildsListener extends
-	    dml.runtime.RelationAdapter<CurricularPeriod, CurricularPeriod> {
+		validatePath(curricularPeriodsPaths);
+
+		CurricularPeriod curricularPeriod = null;
+		CurricularPeriod curricularPeriodParent = this;
+
+		for (CurricularPeriodInfoDTO path : curricularPeriodsPaths) {
+			curricularPeriod = curricularPeriodParent.findChild(path.getPeriodType(), path.getOrder());
+
+			if (curricularPeriod == null) {
+				curricularPeriod = new CurricularPeriod(path.getPeriodType(), path.getOrder(), curricularPeriodParent);
+			}
+
+			curricularPeriodParent = curricularPeriod;
+		}
+
+		return curricularPeriod;
+	}
+
+	public Integer getOrderByType(AcademicPeriod academicPeriod) {
+
+		Integer resultOrder = null;
+
+		if (this.getAcademicPeriod().equals(academicPeriod)) {
+			resultOrder = this.getChildOrder();
+		} else if (this.getParent() != null
+				&& this.getParent().getAcademicPeriod().getWeight() > this.getAcademicPeriod().getWeight()) {
+			resultOrder = (this.getParent()).getOrderByType(academicPeriod);
+		}
+
+		return resultOrder;
+	}
+
+	private void validatePath(CurricularPeriodInfoDTO... curricularPeriodsPaths) {
+
+		Arrays.sort(curricularPeriodsPaths, new Comparator<CurricularPeriodInfoDTO>() {
+			@Override
+			public int compare(CurricularPeriodInfoDTO c1, CurricularPeriodInfoDTO c2) {
+				if (c1.getPeriodType().getWeight() > c2.getPeriodType().getWeight()) {
+					return -1;
+				} else if (c1.getPeriodType().getWeight() < c2.getPeriodType().getWeight()) {
+					return 1;
+				}
+				throw new DomainException("error.pathShouldNotHaveSameTypePeriods");
+			}
+
+		});
+	}
+
+	public void delete() {
+
+		getContexts().clear();
+		removeDegreeCurricularPlan();
+
+		removeParent();
+		for (CurricularPeriod child : getChilds()) {
+			child.delete();
+		}
+
+		removeRootDomainObject();
+		deleteDomainObject();
+
+	}
+
+	public String getLabel() {
+		return CurricularPeriodLabelFormatter.getLabel(this, false);
+	}
+
+	public String getFullLabel() {
+		return CurricularPeriodLabelFormatter.getFullLabel(this, false);
+	}
+
 	@Override
-	public void beforeAdd(CurricularPeriod parent, CurricularPeriod child) {
-	    if (parent == null) {
-		return;
-	    }
+	public int compareTo(CurricularPeriod o) {
+		return this.getFullWeight().compareTo(o.getFullWeight());
+	}
 
-	    if (child.getAcademicPeriod().getWeight() >= parent.getAcademicPeriod().getWeight()) {
-		throw new DomainException("error.childTypeGreaterThanParentType");
-	    }
+	private Float getWeight() {
+		float periodTypeWeight = (this.getAcademicPeriod() == null) ? 0 : this.getAcademicPeriod().getWeight();
+		float periodOrder = (this.getChildOrder() == null) ? 0 : this.getChildOrder();
+		return periodTypeWeight * periodOrder;
+	}
 
-	    float childsWeight = child.getAcademicPeriod().getWeight();
-	    for (CurricularPeriod period : parent.getChilds()) {
-		childsWeight += period.getAcademicPeriod().getWeight();
-	    }
+	private Float getFullWeight() {
+		return this.getWeight() + this.collectParentsWeight(this);
+	}
 
-	    if (childsWeight > parent.getAcademicPeriod().getWeight()) {
-		throw new DomainException("error.childWeightOutOfLimit");
-	    }
+	private Float collectParentsWeight(CurricularPeriod period) {
+		Float result = Float.valueOf(0);
 
-	    // re-order childs
-	    Integer order = child.getChildOrder();
-	    if (order == null) {
-		child.setChildOrder(parent.getChildsCount() + 1);
-	    } else {
-		if (parent.getChildByOrder(order) != null) {
-		    throw new DomainException("error.childAlreadyExists");
+		if (period.hasParent()) {
+			result = period.getParent().getWeight() + collectParentsWeight(period.getParent());
 		}
-	    }
-	}
-    }
 
-    public Integer getParentOrder() {
-	if (this.getParent() != null) {
-	    return this.getParent().getChildOrder();
+		return result;
 	}
 
-	return null;
-    }
+	private static class CurricularPeriodParentChildsListener extends
+			dml.runtime.RelationAdapter<CurricularPeriod, CurricularPeriod> {
+		@Override
+		public void beforeAdd(CurricularPeriod parent, CurricularPeriod child) {
+			if (parent == null) {
+				return;
+			}
 
-    public CurricularPeriod getNext() {
-	List<CurricularPeriod> brothers = this.getParent().getSortedChilds();
+			if (child.getAcademicPeriod().getWeight() >= parent.getAcademicPeriod().getWeight()) {
+				throw new DomainException("error.childTypeGreaterThanParentType");
+			}
 
-	for (Iterator<CurricularPeriod> iterator = brothers.iterator(); iterator.hasNext();) {
-	    CurricularPeriod brother = iterator.next();
+			float childsWeight = child.getAcademicPeriod().getWeight();
+			for (CurricularPeriod period : parent.getChilds()) {
+				childsWeight += period.getAcademicPeriod().getWeight();
+			}
 
-	    if (brother.getChildOrder().equals(this.getChildOrder()) && iterator.hasNext()) {
-		return iterator.next();
-	    }
+			if (childsWeight > parent.getAcademicPeriod().getWeight()) {
+				throw new DomainException("error.childWeightOutOfLimit");
+			}
+
+			// re-order childs
+			Integer order = child.getChildOrder();
+			if (order == null) {
+				child.setChildOrder(parent.getChildsCount() + 1);
+			} else {
+				if (parent.getChildByOrder(order) != null) {
+					throw new DomainException("error.childAlreadyExists");
+				}
+			}
+		}
 	}
-	return null;
-    }
 
-    public CurricularPeriod contains(AcademicPeriod academicPeriod, Integer order) {
-	if (this.getAcademicPeriod().equals(academicPeriod) && this.getChildOrder().equals(order)) {
-	    return this;
+	public Integer getParentOrder() {
+		if (this.getParent() != null) {
+			return this.getParent().getChildOrder();
+		}
+
+		return null;
 	}
-	for (CurricularPeriod curricularPeriod : getChilds()) {
-	    CurricularPeriod period = curricularPeriod.contains(academicPeriod, order);
-	    if (period != null) {
-		return period;
-	    }
+
+	public CurricularPeriod getNext() {
+		List<CurricularPeriod> brothers = this.getParent().getSortedChilds();
+
+		for (Iterator<CurricularPeriod> iterator = brothers.iterator(); iterator.hasNext();) {
+			CurricularPeriod brother = iterator.next();
+
+			if (brother.getChildOrder().equals(this.getChildOrder()) && iterator.hasNext()) {
+				return iterator.next();
+			}
+		}
+		return null;
 	}
-	return null;
-    }
 
-    public boolean hasCurricularPeriod(AcademicPeriod academicPeriod, Integer order) {
-	if (this.getAcademicPeriod().equals(academicPeriod) && this.getChildOrder().equals(order)) {
-	    return true;
+	public CurricularPeriod contains(AcademicPeriod academicPeriod, Integer order) {
+		if (this.getAcademicPeriod().equals(academicPeriod) && this.getChildOrder().equals(order)) {
+			return this;
+		}
+		for (CurricularPeriod curricularPeriod : getChilds()) {
+			CurricularPeriod period = curricularPeriod.contains(academicPeriod, order);
+			if (period != null) {
+				return period;
+			}
+		}
+		return null;
 	}
-	if (getParent() != null) {
-	    return getParent().hasCurricularPeriod(academicPeriod, order);
-	} else {
-	    return false;
+
+	public boolean hasCurricularPeriod(AcademicPeriod academicPeriod, Integer order) {
+		if (this.getAcademicPeriod().equals(academicPeriod) && this.getChildOrder().equals(order)) {
+			return true;
+		}
+		if (getParent() != null) {
+			return getParent().hasCurricularPeriod(academicPeriod, order);
+		} else {
+			return false;
+		}
 	}
-    }
 
-    @Deprecated
-    public Integer getOrder() {
-	return super.getChildOrder();
-    }
-
-    @Deprecated
-    public void setOrder(Integer order) {
-	super.setChildOrder(order);
-    }
-
-    public int getAbsoluteOrderOfChild() {
-	if (getChildOrder() == null) {
-	    return 1;
-	} else {
-	    final CurricularPeriod parentCurricularPeriod = getParent();
-	    final int absoluteOrderOfParent = parentCurricularPeriod.getAbsoluteOrderOfChild();
-	    final int numberOfBrothersAndSisters = parentCurricularPeriod.getChildsCount();
-	    return (absoluteOrderOfParent - 1) * numberOfBrothersAndSisters + getChildOrder().intValue();
+	@Deprecated
+	public Integer getOrder() {
+		return super.getChildOrder();
 	}
-    }
 
-    public List<Context> getContextsWithCurricularCourses() {
-	return getContextsWithCurricularCourses(null);
-    }
-
-    public List<Context> getContextsWithCurricularCourses(final ExecutionSemester executionSemester) {
-	return getChildContexts(CurricularCourse.class, executionSemester);
-    }
-
-    public List<Context> getChildContexts(final Class<? extends DegreeModule> clazz, final ExecutionSemester executionSemester) {
-	final List<Context> result = new ArrayList<Context>();
-	for (final Context context : super.getContextsSet()) {
-	    if ((clazz == null || clazz.isAssignableFrom(context.getChildDegreeModule().getClass()))
-		    && (executionSemester == null || context.isValid(executionSemester))) {
-		result.add(context);
-	    }
+	@Deprecated
+	public void setOrder(Integer order) {
+		super.setChildOrder(order);
 	}
-	return result;
-    }
 
-    public boolean hasChildOrder() {
-	return getChildOrder() != null;
-    }
+	public int getAbsoluteOrderOfChild() {
+		if (getChildOrder() == null) {
+			return 1;
+		} else {
+			final CurricularPeriod parentCurricularPeriod = getParent();
+			final int absoluteOrderOfParent = parentCurricularPeriod.getAbsoluteOrderOfChild();
+			final int numberOfBrothersAndSisters = parentCurricularPeriod.getChildsCount();
+			return (absoluteOrderOfParent - 1) * numberOfBrothersAndSisters + getChildOrder().intValue();
+		}
+	}
 
-    public boolean hasChildOrderValue(final Integer order) {
-	return hasChildOrder() && getChildOrder().equals(order);
-    }
+	public List<Context> getContextsWithCurricularCourses() {
+		return getContextsWithCurricularCourses(null);
+	}
+
+	public List<Context> getContextsWithCurricularCourses(final ExecutionSemester executionSemester) {
+		return getChildContexts(CurricularCourse.class, executionSemester);
+	}
+
+	public List<Context> getChildContexts(final Class<? extends DegreeModule> clazz, final ExecutionSemester executionSemester) {
+		final List<Context> result = new ArrayList<Context>();
+		for (final Context context : super.getContextsSet()) {
+			if ((clazz == null || clazz.isAssignableFrom(context.getChildDegreeModule().getClass()))
+					&& (executionSemester == null || context.isValid(executionSemester))) {
+				result.add(context);
+			}
+		}
+		return result;
+	}
+
+	public boolean hasChildOrder() {
+		return getChildOrder() != null;
+	}
+
+	public boolean hasChildOrderValue(final Integer order) {
+		return hasChildOrder() && getChildOrder().equals(order);
+	}
 }

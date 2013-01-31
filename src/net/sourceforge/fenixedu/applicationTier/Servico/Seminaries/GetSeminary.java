@@ -20,15 +20,15 @@ import net.sourceforge.fenixedu.presentationTier.Action.Seminaries.Exceptions.BD
  */
 public class GetSeminary extends FenixService {
 
-    public InfoSeminaryWithEquivalencies run(Integer seminaryID) throws BDException {
-	InfoSeminaryWithEquivalencies infoSeminary = null;
+	public InfoSeminaryWithEquivalencies run(Integer seminaryID) throws BDException {
+		InfoSeminaryWithEquivalencies infoSeminary = null;
 
-	Seminary seminary = rootDomainObject.readSeminaryByOID(seminaryID);
-	if (seminary != null) {
+		Seminary seminary = rootDomainObject.readSeminaryByOID(seminaryID);
+		if (seminary != null) {
 
-	    infoSeminary = InfoSeminaryWithEquivalenciesWithAll.newInfoFromDomain(seminary);
+			infoSeminary = InfoSeminaryWithEquivalenciesWithAll.newInfoFromDomain(seminary);
+		}
+
+		return infoSeminary;
 	}
-
-	return infoSeminary;
-    }
 }

@@ -8,24 +8,25 @@ import net.sourceforge.fenixedu.domain.precedences.RestrictionByCurricularCourse
 
 public class InfoRestrictionNotDoneCurricularCourse extends InfoRestrictionByCurricularCourse {
 
-    public InfoRestrictionNotDoneCurricularCourse() {
-    }
-
-    public void copyFromDomain(RestrictionByCurricularCourse restriction) {
-	super.copyFromDomain(restriction);
-	super.setRestrictionKindResourceKey("label.manager.restrictionNotDoneCurricularCourse");
-    }
-
-    public static InfoRestrictionByCurricularCourse newInfoFromDomain(RestrictionByCurricularCourse restriction) {
-
-	InfoRestrictionNotDoneCurricularCourse infoRestriction = null;
-
-	if (restriction != null) {
-	    infoRestriction = new InfoRestrictionNotDoneCurricularCourse();
-	    infoRestriction.copyFromDomain(restriction);
+	public InfoRestrictionNotDoneCurricularCourse() {
 	}
 
-	return infoRestriction;
-    }
+	@Override
+	public void copyFromDomain(RestrictionByCurricularCourse restriction) {
+		super.copyFromDomain(restriction);
+		super.setRestrictionKindResourceKey("label.manager.restrictionNotDoneCurricularCourse");
+	}
+
+	public static InfoRestrictionByCurricularCourse newInfoFromDomain(RestrictionByCurricularCourse restriction) {
+
+		InfoRestrictionNotDoneCurricularCourse infoRestriction = null;
+
+		if (restriction != null) {
+			infoRestriction = new InfoRestrictionNotDoneCurricularCourse();
+			infoRestriction.copyFromDomain(restriction);
+		}
+
+		return infoRestriction;
+	}
 
 }

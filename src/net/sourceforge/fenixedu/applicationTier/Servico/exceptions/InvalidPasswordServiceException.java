@@ -12,52 +12,52 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
  */
 public class InvalidPasswordServiceException extends FenixServiceException {
 
-    private IUserView userView;
+	private IUserView userView;
 
-    /**
+	/**
      *  
      */
-    public InvalidPasswordServiceException() {
-	super();
+	public InvalidPasswordServiceException() {
+		super();
 
-    }
+	}
 
-    /**
-     * @param s
-     */
-    public InvalidPasswordServiceException(String s) {
-	super(s);
+	/**
+	 * @param s
+	 */
+	public InvalidPasswordServiceException(String s) {
+		super(s);
 
-    }
+	}
 
-    /**
-     * @param cause
-     */
-    public InvalidPasswordServiceException(Throwable cause) {
-	super(cause);
+	/**
+	 * @param cause
+	 */
+	public InvalidPasswordServiceException(Throwable cause) {
+		super(cause);
 
-    }
+	}
 
-    /**
-     * @param message
-     * @param cause
-     */
-    public InvalidPasswordServiceException(String message, Throwable cause) {
-	super(message, cause);
+	/**
+	 * @param message
+	 * @param cause
+	 */
+	public InvalidPasswordServiceException(String message, Throwable cause) {
+		super(message, cause);
 
-    }
+	}
 
-    public InvalidPasswordServiceException(String s, IUserView userView) {
-	super(s);
-	setUserView(userView);
-    }
+	public InvalidPasswordServiceException(String s, IUserView userView) {
+		super(s);
+		setUserView(userView);
+	}
 
-    private void setUserView(IUserView userView) {
-	this.userView = userView;
-    }
+	private void setUserView(IUserView userView) {
+		this.userView = userView;
+	}
 
-    public IUserView getUserView() {
-	return this.userView;
-    }
+	public IUserView getUserView() {
+		return this.userView;
+	}
 
 }

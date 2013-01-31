@@ -9,8 +9,8 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import pt.ist.fenixWebFramework.services.Service;
 
 public class GetStudentTest extends FenixService {
-    @Service
-    public static NewTest run(Person person, NewTestGroup testGroup) throws FenixServiceException, ExcepcaoPersistencia {
-	return testGroup.getOrAssignTest(person);
-    }
+	@Service
+	public static NewTest run(Person person, NewTestGroup testGroup) throws FenixServiceException, ExcepcaoPersistencia {
+		return testGroup.getOrAssignTest(person);
+	}
 }

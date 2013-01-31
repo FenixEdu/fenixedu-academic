@@ -12,16 +12,15 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class CreateRectificationMarkSheet {
 
-    @Service
-    public static MarkSheet run(MarkSheet markSheet, EnrolmentEvaluation enrolmentEvaluation, Grade newGrade,
-	    Date evaluationDate,
-	    String reason, Person person) throws InvalidArgumentsServiceException {
-	if (markSheet == null) {
-	    throw new InvalidArgumentsServiceException();
+	@Service
+	public static MarkSheet run(MarkSheet markSheet, EnrolmentEvaluation enrolmentEvaluation, Grade newGrade,
+			Date evaluationDate, String reason, Person person) throws InvalidArgumentsServiceException {
+		if (markSheet == null) {
+			throw new InvalidArgumentsServiceException();
+		}
+		CurricularCourse curricularCourse = markSheet.getCurricularCourse();
+		return curricularCourse.rectifyEnrolmentEvaluation(markSheet, enrolmentEvaluation, evaluationDate, newGrade, reason,
+				person);
 	}
-	CurricularCourse curricularCourse = markSheet.getCurricularCourse();
-	return curricularCourse.rectifyEnrolmentEvaluation(markSheet, enrolmentEvaluation, evaluationDate, newGrade, reason,
-		person);
-    }
 
 }

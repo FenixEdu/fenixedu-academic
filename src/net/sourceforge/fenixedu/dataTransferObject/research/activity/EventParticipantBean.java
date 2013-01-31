@@ -4,33 +4,33 @@ import java.io.Serializable;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.DomainObject;
-import net.sourceforge.fenixedu.domain.research.activity.ResearchEvent;
 import net.sourceforge.fenixedu.domain.research.activity.Participation.ResearchActivityParticipationRole;
+import net.sourceforge.fenixedu.domain.research.activity.ResearchEvent;
 
 public class EventParticipantBean extends ParticipantBean implements Serializable {
 
-    ResearchEvent event;
+	ResearchEvent event;
 
-    public EventParticipantBean() {
-	super();
-	this.setEvent(null);
-    }
+	public EventParticipantBean() {
+		super();
+		this.setEvent(null);
+	}
 
-    public ResearchEvent getEvent() {
-	return this.event;
-    }
+	public ResearchEvent getEvent() {
+		return this.event;
+	}
 
-    public void setEvent(ResearchEvent event) {
-	this.event = event;
-    }
+	public void setEvent(ResearchEvent event) {
+		this.event = event;
+	}
 
-    @Override
-    public List<ResearchActivityParticipationRole> getAllowedRoles() {
-	return ResearchActivityParticipationRole.getAllEventParticipationRoles();
-    }
+	@Override
+	public List<ResearchActivityParticipationRole> getAllowedRoles() {
+		return ResearchActivityParticipationRole.getAllEventParticipationRoles();
+	}
 
-    @Override
-    public DomainObject getActivity() {
-	return getEvent();
-    }
+	@Override
+	public DomainObject getActivity() {
+		return getEvent();
+	}
 }

@@ -7,8 +7,8 @@ import net.sourceforge.fenixedu.domain.tests.predicates.Predicate;
 import pt.ist.fenixWebFramework.services.Service;
 
 public class ChooseValidator extends FenixService {
-    @Service
-    public static void run(NewAtomicQuestion atomicQuestion, Predicate validator) throws FenixServiceException {
-	atomicQuestion.setValidator(validator);
-    }
+	@Service
+	public static void run(NewAtomicQuestion atomicQuestion, Predicate validator) throws FenixServiceException {
+		atomicQuestion.setValidator(validator);
+	}
 }

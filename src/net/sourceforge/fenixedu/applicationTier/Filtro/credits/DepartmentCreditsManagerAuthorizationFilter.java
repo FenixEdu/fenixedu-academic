@@ -13,16 +13,17 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
  */
 public class DepartmentCreditsManagerAuthorizationFilter extends AuthorizationByRoleFilter {
 
-    public DepartmentCreditsManagerAuthorizationFilter() {
-    }
+	public DepartmentCreditsManagerAuthorizationFilter() {
+	}
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorAplicacao.Filtro.AuthorizationByRoleFilter#getRoleType()
-     */
-    protected RoleType getRoleType() {
-	return RoleType.DEPARTMENT_CREDITS_MANAGER;
-    }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see ServidorAplicacao.Filtro.AuthorizationByRoleFilter#getRoleType()
+	 */
+	@Override
+	protected RoleType getRoleType() {
+		return RoleType.DEPARTMENT_CREDITS_MANAGER;
+	}
 
 }

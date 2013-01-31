@@ -7,14 +7,14 @@ import pt.ist.fenixWebFramework.renderers.converters.EnumConverter;
 
 public class SchoolLevelTypeForMobilityStudentProvider implements DataProvider {
 
-    @Override
-    public Converter getConverter() {
-	return new EnumConverter();
-    }
+	@Override
+	public Converter getConverter() {
+		return new EnumConverter();
+	}
 
-    @Override
-    public Object provide(Object source, Object currentValue) {
-	return SchoolLevelType.getTypesForMobilityStudent();
-    }
+	@Override
+	public Object provide(Object source, Object currentValue) {
+		return SchoolLevelType.getTypesForMobilityStudent();
+	}
 
 }

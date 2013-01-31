@@ -6,59 +6,59 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 
 public class SearchPartyBean implements Serializable {
 
-    private Party party;
+	private Party party;
 
-    private String partyName;
+	private String partyName;
 
-    private String carPlateNumber;
+	private String carPlateNumber;
 
-    private Long parkingCardNumber;
+	private Long parkingCardNumber;
 
-    public SearchPartyBean() {
+	public SearchPartyBean() {
 
-    }
-
-    public SearchPartyBean(Party party, String carPlateNumber, Long parkingCardNumber) {
-	setParty(party);
-	setPartyName(party.getName());
-	setCarPlateNumber(carPlateNumber);
-	setParkingCardNumber(parkingCardNumber);
-    }
-
-    public Party getParty() {
-	return party;
-    }
-
-    public void setParty(Party party) {
-	if (party != null) {
-	    this.party = party;
-	} else {
-	    this.party = null;
 	}
-    }
 
-    public String getPartyName() {
-	return partyName;
-    }
+	public SearchPartyBean(Party party, String carPlateNumber, Long parkingCardNumber) {
+		setParty(party);
+		setPartyName(party.getName());
+		setCarPlateNumber(carPlateNumber);
+		setParkingCardNumber(parkingCardNumber);
+	}
 
-    public void setPartyName(String partyName) {
-	this.partyName = partyName;
-    }
+	public Party getParty() {
+		return party;
+	}
 
-    public String getCarPlateNumber() {
-	return carPlateNumber;
-    }
+	public void setParty(Party party) {
+		if (party != null) {
+			this.party = party;
+		} else {
+			this.party = null;
+		}
+	}
 
-    public void setCarPlateNumber(String carPlateNumber) {
-	this.carPlateNumber = carPlateNumber;
-    }
+	public String getPartyName() {
+		return partyName;
+	}
 
-    public Long getParkingCardNumber() {
-	return parkingCardNumber;
-    }
+	public void setPartyName(String partyName) {
+		this.partyName = partyName;
+	}
 
-    public void setParkingCardNumber(Long parkingCardNumber) {
-	this.parkingCardNumber = parkingCardNumber;
-    }
+	public String getCarPlateNumber() {
+		return carPlateNumber;
+	}
+
+	public void setCarPlateNumber(String carPlateNumber) {
+		this.carPlateNumber = carPlateNumber;
+	}
+
+	public Long getParkingCardNumber() {
+		return parkingCardNumber;
+	}
+
+	public void setParkingCardNumber(Long parkingCardNumber) {
+		this.parkingCardNumber = parkingCardNumber;
+	}
 
 }

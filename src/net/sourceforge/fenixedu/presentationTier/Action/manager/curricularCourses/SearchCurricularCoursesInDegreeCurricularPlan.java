@@ -20,47 +20,49 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Mapping(path = "/searchCurricularCourses", module = "manager")
-@Forwards({ @Forward(name = "searchCurricularCourses", path = "/manager/bolonha/curricularCourses/search/searchCurricularCourses.jsp") })
+@Forwards({ @Forward(
+		name = "searchCurricularCourses",
+		path = "/manager/bolonha/curricularCourses/search/searchCurricularCourses.jsp") })
 public class SearchCurricularCoursesInDegreeCurricularPlan extends FenixDispatchAction {
 
-    public ActionForward prepareSearch(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
-	DegreeCurricularPlan degreeCurricularPlan = getDomainObject(request, "dcpId");
-	
-	SearchCurricularCourseBean searchBean = new SearchCurricularCourseBean(degreeCurricularPlan);
+	public ActionForward prepareSearch(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) {
+		DegreeCurricularPlan degreeCurricularPlan = getDomainObject(request, "dcpId");
 
-	request.setAttribute("results", new ArrayList<Context>());
-	request.setAttribute("degreeCurricularPlan", degreeCurricularPlan);
-	request.setAttribute("searchBean", searchBean);
-	request.setAttribute("currentExecutionYear", ExecutionYear.readCurrentExecutionYear());
-	
-	return mapping.findForward("searchCurricularCourses");
-    }
+		SearchCurricularCourseBean searchBean = new SearchCurricularCourseBean(degreeCurricularPlan);
 
-    public ActionForward search(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
-	DegreeCurricularPlan degreeCurricularPlan = getDomainObject(request, "dcpId");
-	SearchCurricularCourseBean searchBean = getRenderedObject("searchBean");
+		request.setAttribute("results", new ArrayList<Context>());
+		request.setAttribute("degreeCurricularPlan", degreeCurricularPlan);
+		request.setAttribute("searchBean", searchBean);
+		request.setAttribute("currentExecutionYear", ExecutionYear.readCurrentExecutionYear());
 
-	request.setAttribute("results", searchBean.search());
-	request.setAttribute("degreeCurricularPlan", degreeCurricularPlan);
-	request.setAttribute("searchBean", searchBean);
-	request.setAttribute("currentExecutionYear", ExecutionYear.readCurrentExecutionYear());
+		return mapping.findForward("searchCurricularCourses");
+	}
 
-	RenderUtils.invalidateViewState();
-	return mapping.findForward("searchCurricularCourses");
-    }
+	public ActionForward search(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+		DegreeCurricularPlan degreeCurricularPlan = getDomainObject(request, "dcpId");
+		SearchCurricularCourseBean searchBean = getRenderedObject("searchBean");
 
-    public ActionForward searchInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
-	DegreeCurricularPlan degreeCurricularPlan = getDomainObject(request, "dcpId");
-	SearchCurricularCourseBean searchBean = getRenderedObject("searchBean");
+		request.setAttribute("results", searchBean.search());
+		request.setAttribute("degreeCurricularPlan", degreeCurricularPlan);
+		request.setAttribute("searchBean", searchBean);
+		request.setAttribute("currentExecutionYear", ExecutionYear.readCurrentExecutionYear());
 
-	request.setAttribute("results", new ArrayList<Context>());
-	request.setAttribute("degreeCurricularPlan", degreeCurricularPlan);
-	request.setAttribute("searchBean", searchBean);
-	request.setAttribute("currentExecutionYear", ExecutionYear.readCurrentExecutionYear());
+		RenderUtils.invalidateViewState();
+		return mapping.findForward("searchCurricularCourses");
+	}
 
-	return mapping.findForward("searchCurricularCourses");
-    }
+	public ActionForward searchInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) {
+		DegreeCurricularPlan degreeCurricularPlan = getDomainObject(request, "dcpId");
+		SearchCurricularCourseBean searchBean = getRenderedObject("searchBean");
+
+		request.setAttribute("results", new ArrayList<Context>());
+		request.setAttribute("degreeCurricularPlan", degreeCurricularPlan);
+		request.setAttribute("searchBean", searchBean);
+		request.setAttribute("currentExecutionYear", ExecutionYear.readCurrentExecutionYear());
+
+		return mapping.findForward("searchCurricularCourses");
+	}
 
 }

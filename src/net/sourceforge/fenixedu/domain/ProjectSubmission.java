@@ -13,91 +13,93 @@ import dml.runtime.RelationAdapter;
 
 public class ProjectSubmission extends ProjectSubmission_Base {
 
-    static {
-	ProjectSubmissionProject.addListener(new ProjectSubmissionProjectListener());
-    }
-
-    private static class ProjectSubmissionProjectListener extends RelationAdapter<ProjectSubmission, Project> {
-
-	@Override
-	public void beforeAdd(ProjectSubmission projectSubmission, Project project) {
-
-	    if (project != null && projectSubmission != null) {
-		if (!project.isSubmissionPeriodOpen()) {
-		    throw new DomainException("error.project.submissionPeriodAlreadyExpired");
-		}
-
-		if (!project.canAddNewSubmissionWithoutExceedLimit(projectSubmission.getStudentGroup())) {
-		    project.getOldestProjectSubmissionForStudentGroup(projectSubmission.getStudentGroup()).delete();
-		}
-
-		if (projectSubmission.getStudentGroup().getGrouping() != project.getGrouping()) {
-		    throw new DomainException("error.project.studentGroupDoesNotBelongToProjectGrouping");
-		}
-	    }
-
-	    super.beforeAdd(projectSubmission, project);
+	static {
+		ProjectSubmissionProject.addListener(new ProjectSubmissionProjectListener());
 	}
 
-    }
+	private static class ProjectSubmissionProjectListener extends RelationAdapter<ProjectSubmission, Project> {
 
-    public static Comparator<ProjectSubmission> COMPARATOR_BY_MOST_RECENT_SUBMISSION_DATE = new Comparator<ProjectSubmission>() {
-	public int compare(ProjectSubmission projectSubmission, ProjectSubmission otherProjectSubmission) {
-	    int comparationResult = projectSubmission.getSubmissionDateTime().compareTo(
-		    otherProjectSubmission.getSubmissionDateTime());
-	    return (comparationResult == 0) ? projectSubmission.getIdInternal().compareTo(otherProjectSubmission.getIdInternal())
-		    : -(comparationResult);
+		@Override
+		public void beforeAdd(ProjectSubmission projectSubmission, Project project) {
+
+			if (project != null && projectSubmission != null) {
+				if (!project.isSubmissionPeriodOpen()) {
+					throw new DomainException("error.project.submissionPeriodAlreadyExpired");
+				}
+
+				if (!project.canAddNewSubmissionWithoutExceedLimit(projectSubmission.getStudentGroup())) {
+					project.getOldestProjectSubmissionForStudentGroup(projectSubmission.getStudentGroup()).delete();
+				}
+
+				if (projectSubmission.getStudentGroup().getGrouping() != project.getGrouping()) {
+					throw new DomainException("error.project.studentGroupDoesNotBelongToProjectGrouping");
+				}
+			}
+
+			super.beforeAdd(projectSubmission, project);
+		}
+
 	}
-    };
 
-    public static Comparator COMPARATOR_BY_GROUP_NUMBER = new BeanComparator("studentGroup.groupNumber");
+	public static Comparator<ProjectSubmission> COMPARATOR_BY_MOST_RECENT_SUBMISSION_DATE = new Comparator<ProjectSubmission>() {
+		@Override
+		public int compare(ProjectSubmission projectSubmission, ProjectSubmission otherProjectSubmission) {
+			int comparationResult =
+					projectSubmission.getSubmissionDateTime().compareTo(otherProjectSubmission.getSubmissionDateTime());
+			return (comparationResult == 0) ? projectSubmission.getIdInternal().compareTo(otherProjectSubmission.getIdInternal()) : -(comparationResult);
+		}
+	};
 
-    public static Comparator COMPARATOR_BY_GROUP_NUMBER_AND_MOST_RECENT_SUBMISSION_DATE = new ComparatorChain();
+	public static Comparator COMPARATOR_BY_GROUP_NUMBER = new BeanComparator("studentGroup.groupNumber");
 
-    static {
-	((ComparatorChain) COMPARATOR_BY_GROUP_NUMBER_AND_MOST_RECENT_SUBMISSION_DATE).addComparator(COMPARATOR_BY_GROUP_NUMBER);
-	((ComparatorChain) COMPARATOR_BY_GROUP_NUMBER_AND_MOST_RECENT_SUBMISSION_DATE)
-		.addComparator(COMPARATOR_BY_MOST_RECENT_SUBMISSION_DATE);
-    }
+	public static Comparator COMPARATOR_BY_GROUP_NUMBER_AND_MOST_RECENT_SUBMISSION_DATE = new ComparatorChain();
 
-    public ProjectSubmission(Project project, StudentGroup studentGroup, Attends attends,
-	    ProjectSubmissionFile projectSubmissionFile) {
-	super();
+	static {
+		((ComparatorChain) COMPARATOR_BY_GROUP_NUMBER_AND_MOST_RECENT_SUBMISSION_DATE).addComparator(COMPARATOR_BY_GROUP_NUMBER);
+		((ComparatorChain) COMPARATOR_BY_GROUP_NUMBER_AND_MOST_RECENT_SUBMISSION_DATE)
+				.addComparator(COMPARATOR_BY_MOST_RECENT_SUBMISSION_DATE);
+	}
 
-	setRootDomainObject(RootDomainObject.getInstance());
-	setSubmissionDateTime(new DateTime());
-	setStudentGroup(studentGroup);
-	setAttends(attends);
-	setProjectSubmissionFile(projectSubmissionFile);
-	setProject(project);
+	public ProjectSubmission(Project project, StudentGroup studentGroup, Attends attends,
+			ProjectSubmissionFile projectSubmissionFile) {
+		super();
 
-    }
+		setRootDomainObject(RootDomainObject.getInstance());
+		setSubmissionDateTime(new DateTime());
+		setStudentGroup(studentGroup);
+		setAttends(attends);
+		setProjectSubmissionFile(projectSubmissionFile);
+		setProject(project);
 
-    public void delete() {
-	getProjectSubmissionFile().delete();
-	removeAttends();
-	removeProject();
-	removeStudentGroup();
-	removeRootDomainObject();
-	super.deleteDomainObject();
+	}
 
-    }
+	public void delete() {
+		getProjectSubmissionFile().delete();
+		removeAttends();
+		removeProject();
+		removeStudentGroup();
+		removeRootDomainObject();
+		super.deleteDomainObject();
 
-    public boolean isTeacherObservationAvailable() {
-	return !StringUtils.isEmpty(this.getTeacherObservation());
-    }
+	}
+
+	public boolean isTeacherObservationAvailable() {
+		return !StringUtils.isEmpty(this.getTeacherObservation());
+	}
 
 	@Deprecated
-	public java.util.Date getSubmission(){
+	public java.util.Date getSubmission() {
 		org.joda.time.DateTime dt = getSubmissionDateTime();
 		return (dt == null) ? null : new java.util.Date(dt.getMillis());
 	}
 
 	@Deprecated
-	public void setSubmission(java.util.Date date){
-		if(date == null) setSubmissionDateTime(null);
-		else setSubmissionDateTime(new org.joda.time.DateTime(date.getTime()));
+	public void setSubmission(java.util.Date date) {
+		if (date == null) {
+			setSubmissionDateTime(null);
+		} else {
+			setSubmissionDateTime(new org.joda.time.DateTime(date.getTime()));
+		}
 	}
-
 
 }

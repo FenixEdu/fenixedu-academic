@@ -10,38 +10,38 @@ import net.sourceforge.fenixedu.domain.transactions.GratuityTransaction;
  */
 public class InfoGratuityTransaction extends InfoPaymentTransaction {
 
-    private InfoGratuitySituation infoGratuitySituation;
+	private InfoGratuitySituation infoGratuitySituation;
 
-    protected void copyFromDomain(GratuityTransaction gratuityTransaction) {
-	super.copyFromDomain(gratuityTransaction);
-	this.infoGratuitySituation = InfoGratuitySituation.newInfoFromDomain(gratuityTransaction.getGratuitySituation());
+	protected void copyFromDomain(GratuityTransaction gratuityTransaction) {
+		super.copyFromDomain(gratuityTransaction);
+		this.infoGratuitySituation = InfoGratuitySituation.newInfoFromDomain(gratuityTransaction.getGratuitySituation());
 
-    }
-
-    public static InfoGratuityTransaction newInfoFromDomain(GratuityTransaction gratuityTransaction) {
-
-	if (gratuityTransaction == null) {
-	    return null;
 	}
 
-	InfoGratuityTransaction infoGratuityTransaction = new InfoGratuityTransaction();
-	infoGratuityTransaction.copyFromDomain(gratuityTransaction);
+	public static InfoGratuityTransaction newInfoFromDomain(GratuityTransaction gratuityTransaction) {
 
-	return infoGratuityTransaction;
-    }
+		if (gratuityTransaction == null) {
+			return null;
+		}
 
-    /**
-     * @return Returns the infoGratuitySituation.
-     */
-    public InfoGratuitySituation getInfoGratuitySituation() {
-	return infoGratuitySituation;
-    }
+		InfoGratuityTransaction infoGratuityTransaction = new InfoGratuityTransaction();
+		infoGratuityTransaction.copyFromDomain(gratuityTransaction);
 
-    /**
-     * @param infoGratuitySituation
-     *            The infoGratuitySituation to set.
-     */
-    public void setInfoGratuitySituation(InfoGratuitySituation infoGratuitySituation) {
-	this.infoGratuitySituation = infoGratuitySituation;
-    }
+		return infoGratuityTransaction;
+	}
+
+	/**
+	 * @return Returns the infoGratuitySituation.
+	 */
+	public InfoGratuitySituation getInfoGratuitySituation() {
+		return infoGratuitySituation;
+	}
+
+	/**
+	 * @param infoGratuitySituation
+	 *            The infoGratuitySituation to set.
+	 */
+	public void setInfoGratuitySituation(InfoGratuitySituation infoGratuitySituation) {
+		this.infoGratuitySituation = infoGratuitySituation;
+	}
 }

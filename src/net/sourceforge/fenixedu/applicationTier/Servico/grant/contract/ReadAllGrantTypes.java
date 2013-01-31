@@ -14,18 +14,19 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadAllGrantTypes extends FenixService {
 
-    @Checked("RolePredicates.GRANT_OWNER_MANAGER_PREDICATE")
-    @Service
-    public static List run() {
-	List<GrantType> grantTypes = rootDomainObject.getGrantTypes();
-	return (List) CollectionUtils.collect(grantTypes, new Transformer() {
-	    public Object transform(Object input) {
-		GrantType grantType = (GrantType) input;
-		return InfoGrantType.newInfoFromDomain(grantType);
+	@Checked("RolePredicates.GRANT_OWNER_MANAGER_PREDICATE")
+	@Service
+	public static List run() {
+		List<GrantType> grantTypes = rootDomainObject.getGrantTypes();
+		return (List) CollectionUtils.collect(grantTypes, new Transformer() {
+			@Override
+			public Object transform(Object input) {
+				GrantType grantType = (GrantType) input;
+				return InfoGrantType.newInfoFromDomain(grantType);
 
-	    }
-	});
+			}
+		});
 
-    }
+	}
 
 }

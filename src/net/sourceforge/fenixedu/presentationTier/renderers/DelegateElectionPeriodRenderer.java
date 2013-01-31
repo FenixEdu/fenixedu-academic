@@ -14,244 +14,243 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 public class DelegateElectionPeriodRenderer extends OutputRenderer {
 
-    private static final String DEFAULT_FORMAT = "dd/MM/yyyy";
+	private static final String DEFAULT_FORMAT = "dd/MM/yyyy";
 
-    private String bundle;
+	private String bundle;
 
-    private String dateFormat;
+	private String dateFormat;
 
-    private String linkFormat;
+	private String linkFormat;
 
-    private boolean contextRelative;
+	private boolean contextRelative;
 
-    private boolean moduleRelative;
+	private boolean moduleRelative;
 
-    private String destination;
+	private String destination;
 
-    private String currentPeriodClasses;
+	private String currentPeriodClasses;
 
-    private String dateHtmlSeparator;
+	private String dateHtmlSeparator;
 
-    private String periodPostLabel;
+	private String periodPostLabel;
 
-    private boolean isPeriodPostLabelKey;
+	private boolean isPeriodPostLabelKey;
 
-    public String getDateHtmlSeparator() {
-	return dateHtmlSeparator;
-    }
+	public String getDateHtmlSeparator() {
+		return dateHtmlSeparator;
+	}
 
-    public void setDateHtmlSeparator(String dateHtmlSeparator) {
-	this.dateHtmlSeparator = dateHtmlSeparator;
-    }
+	public void setDateHtmlSeparator(String dateHtmlSeparator) {
+		this.dateHtmlSeparator = dateHtmlSeparator;
+	}
 
-    public String getDateFormat() {
-	return (dateFormat != null ? dateFormat : DEFAULT_FORMAT);
-    }
+	public String getDateFormat() {
+		return (dateFormat != null ? dateFormat : DEFAULT_FORMAT);
+	}
 
-    public void setDateFormat(String dateFormat) {
-	this.dateFormat = dateFormat;
-    }
+	public void setDateFormat(String dateFormat) {
+		this.dateFormat = dateFormat;
+	}
 
-    /**
-     * This property allows you to specify the period post label. (Ex.:
-     * candidatos ou votos)
-     * 
-     * @property
-     */
-    public String getPeriodPostLabel() {
-	return periodPostLabel;
-    }
+	/**
+	 * This property allows you to specify the period post label. (Ex.:
+	 * candidatos ou votos)
+	 * 
+	 * @property
+	 */
+	public String getPeriodPostLabel() {
+		return periodPostLabel;
+	}
 
-    public void setPeriodPostLabel(String periodPostLabel) {
-	this.periodPostLabel = periodPostLabel;
-    }
+	public void setPeriodPostLabel(String periodPostLabel) {
+		this.periodPostLabel = periodPostLabel;
+	}
 
-    public boolean isPeriodPostLabelKey() {
-	return isPeriodPostLabelKey;
-    }
+	public boolean isPeriodPostLabelKey() {
+		return isPeriodPostLabelKey;
+	}
 
-    public void setIsPeriodPostLabelKey(boolean isPeriodPostLabelKey) {
-	this.isPeriodPostLabelKey = isPeriodPostLabelKey;
-    }
+	public void setIsPeriodPostLabelKey(boolean isPeriodPostLabelKey) {
+		this.isPeriodPostLabelKey = isPeriodPostLabelKey;
+	}
 
-    public String getLinkFormat() {
-	return this.linkFormat;
-    }
+	public String getLinkFormat() {
+		return this.linkFormat;
+	}
 
-    /**
-     * This property allows you to specify the format of the final link. In this
-     * format you can use properties of the object being presented. For example:
-     * 
-     * <code>
-     *  format="/some/action.do?oid=${id}"
-     * </code>
-     * 
-     * @see RenderUtils#getFormattedProperties(String, Object)
-     * @property
-     */
-    public void setLinkFormat(String linkFormat) {
-	this.linkFormat = linkFormat;
-    }
+	/**
+	 * This property allows you to specify the format of the final link. In this
+	 * format you can use properties of the object being presented. For example:
+	 * 
+	 * <code>
+	 *  format="/some/action.do?oid=${id}"
+	 * </code>
+	 * 
+	 * @see RenderUtils#getFormattedProperties(String, Object)
+	 * @property
+	 */
+	public void setLinkFormat(String linkFormat) {
+		this.linkFormat = linkFormat;
+	}
 
-    public boolean isContextRelative() {
-	return this.contextRelative;
-    }
+	public boolean isContextRelative() {
+		return this.contextRelative;
+	}
 
-    /**
-     * Indicates that the link specified should be relative to the context of
-     * the application and not to the current module. This also overrides the
-     * module if a destination is specified.
-     * 
-     * @property
-     */
-    public void setContextRelative(boolean contextRelative) {
-	this.contextRelative = contextRelative;
-    }
+	/**
+	 * Indicates that the link specified should be relative to the context of
+	 * the application and not to the current module. This also overrides the
+	 * module if a destination is specified.
+	 * 
+	 * @property
+	 */
+	public void setContextRelative(boolean contextRelative) {
+		this.contextRelative = contextRelative;
+	}
 
-    public boolean isModuleRelative() {
-	return this.moduleRelative;
-    }
+	public boolean isModuleRelative() {
+		return this.moduleRelative;
+	}
 
-    /**
-     * Allows you to choose if the generated link is relative to the current
-     * module. Note that if the link is not context relative then it also isn't
-     * module relative.
-     * 
-     * @property
-     */
-    public void setModuleRelative(boolean moduleRelative) {
-	this.moduleRelative = moduleRelative;
-    }
+	/**
+	 * Allows you to choose if the generated link is relative to the current
+	 * module. Note that if the link is not context relative then it also isn't
+	 * module relative.
+	 * 
+	 * @property
+	 */
+	public void setModuleRelative(boolean moduleRelative) {
+		this.moduleRelative = moduleRelative;
+	}
 
-    public String getDestination() {
-	return this.destination;
-    }
+	public String getDestination() {
+		return this.destination;
+	}
 
-    /**
-     * This property is an alternative to the use of the
-     * {@link #setLinkFormat(String) linkFormat}. With this property you can
-     * specify the name of the view state destination that will be used. This
-     * property allows you to select the concrete destination in each context
-     * were this configuration is used.
-     * 
-     * @property
-     */
-    public void setDestination(String destination) {
-	this.destination = destination;
-    }
+	/**
+	 * This property is an alternative to the use of the {@link #setLinkFormat(String) linkFormat}. With this property you can
+	 * specify the name of the view state destination that will be used. This
+	 * property allows you to select the concrete destination in each context
+	 * were this configuration is used.
+	 * 
+	 * @property
+	 */
+	public void setDestination(String destination) {
+		this.destination = destination;
+	}
 
-    public String getBundle() {
-	return this.bundle;
-    }
+	public String getBundle() {
+		return this.bundle;
+	}
 
-    /**
-     * The bundle were the {@link #setKey(String) key} will be fetched.
-     * 
-     * @property
-     */
-    public void setBundle(String bundle) {
-	this.bundle = bundle;
-    }
+	/**
+	 * The bundle were the {@link #setKey(String) key} will be fetched.
+	 * 
+	 * @property
+	 */
+	public void setBundle(String bundle) {
+		this.bundle = bundle;
+	}
 
-    public String getCurrentPeriodClasses() {
-	return currentPeriodClasses;
-    }
+	public String getCurrentPeriodClasses() {
+		return currentPeriodClasses;
+	}
 
-    public void setCurrentPeriodClasses(String currentPeriodClasses) {
-	this.currentPeriodClasses = currentPeriodClasses;
-    }
+	public void setCurrentPeriodClasses(String currentPeriodClasses) {
+		this.currentPeriodClasses = currentPeriodClasses;
+	}
 
-    @Override
-    protected Layout getLayout(Object object, Class type) {
-	return new Layout() {
+	@Override
+	protected Layout getLayout(Object object, Class type) {
+		return new Layout() {
 
-	    @Override
-	    public HtmlComponent createComponent(Object object, Class type) {
-		DelegateElectionPeriod period = (DelegateElectionPeriod) object;
+			@Override
+			public HtmlComponent createComponent(Object object, Class type) {
+				DelegateElectionPeriod period = (DelegateElectionPeriod) object;
 
-		if (period == null) {
-		    return new HtmlText();
-		}
+				if (period == null) {
+					return new HtmlText();
+				}
 
-		String postLabel = getElectionPeriodPostLabel(period);
+				String postLabel = getElectionPeriodPostLabel(period);
 
-		if (isLink() && getContext().getParentContext() != null) {
-		    Object targetObject = getContext().getParentContext().getMetaObject().getObject(); // Election
+				if (isLink() && getContext().getParentContext() != null) {
+					Object targetObject = getContext().getParentContext().getMetaObject().getObject(); // Election
 
-		    HtmlLink link = getLink(targetObject);
+					HtmlLink link = getLink(targetObject);
 
-		    HtmlBlockContainer container = new HtmlBlockContainer();
-		    String periodResume = getPeriodResume(period, postLabel, true);
-		    link.setBody(new HtmlText(periodResume, false));
-		    link.setClasses(getCurrentPeriodClasses()); // Classes for
-		    // current
-		    // periods
-		    container.addChild(link);
-		    return container;
-		} else {
-		    String periodResume = getPeriodResume(period, postLabel, false);
-		    return new HtmlText(periodResume, false);
-		}
-	    }
+					HtmlBlockContainer container = new HtmlBlockContainer();
+					String periodResume = getPeriodResume(period, postLabel, true);
+					link.setBody(new HtmlText(periodResume, false));
+					link.setClasses(getCurrentPeriodClasses()); // Classes for
+					// current
+					// periods
+					container.addChild(link);
+					return container;
+				} else {
+					String periodResume = getPeriodResume(period, postLabel, false);
+					return new HtmlText(periodResume, false);
+				}
+			}
 
-	    private boolean isLink() {
-		return (getLinkFormat() != null ? true : false);
-	    }
+			private boolean isLink() {
+				return (getLinkFormat() != null ? true : false);
+			}
 
-	    private HtmlLink getLink(Object usedObject) {
-		HtmlLink link = new HtmlLink();
+			private HtmlLink getLink(Object usedObject) {
+				HtmlLink link = new HtmlLink();
 
-		String url;
+				String url;
 
-		if (getDestination() != null) {
-		    ViewDestination destination = getContext().getViewState().getDestination(getDestination());
+				if (getDestination() != null) {
+					ViewDestination destination = getContext().getViewState().getDestination(getDestination());
 
-		    if (destination != null) {
-			link.setModule(destination.getModule());
-			url = destination.getPath();
-		    } else {
-			url = "#";
-		    }
-		} else {
-		    if (getLinkFormat() != null) {
-			url = getLinkFormat();
-		    } else {
-			url = "#";
-		    }
-		}
+					if (destination != null) {
+						link.setModule(destination.getModule());
+						url = destination.getPath();
+					} else {
+						url = "#";
+					}
+				} else {
+					if (getLinkFormat() != null) {
+						url = getLinkFormat();
+					} else {
+						url = "#";
+					}
+				}
 
-		link.setUrl(RenderUtils.getFormattedProperties(url, usedObject));
+				link.setUrl(RenderUtils.getFormattedProperties(url, usedObject));
 
-		link.setModuleRelative(isModuleRelative());
-		link.setContextRelative(isContextRelative());
+				link.setModuleRelative(isModuleRelative());
+				link.setContextRelative(isContextRelative());
 
-		return link;
-	    }
+				return link;
+			}
 
-	    private String getPeriodResume(DelegateElectionPeriod electionPeriod, String postLabel, boolean isLongResume) {
-		postLabel = (postLabel != null ? "&nbsp;" + postLabel : "");
+			private String getPeriodResume(DelegateElectionPeriod electionPeriod, String postLabel, boolean isLongResume) {
+				postLabel = (postLabel != null ? "&nbsp;" + postLabel : "");
 
-		String shortResume = electionPeriod.getStartDate().toString(getDateFormat()) + getDateHtmlSeparator()
-			+ electionPeriod.getEndDate().toString(getDateFormat());
+				String shortResume =
+						electionPeriod.getStartDate().toString(getDateFormat()) + getDateHtmlSeparator()
+								+ electionPeriod.getEndDate().toString(getDateFormat());
 
-		String longResume = null;
-		if (electionPeriod instanceof DelegateElectionCandidacyPeriod) {
-		    longResume = "("
-			    + ((DelegateElectionCandidacyPeriod) electionPeriod).getDelegateElection().getCandidatesCount()
-			    + postLabel + ")";
-		} else {
-		    longResume = "(" + ((DelegateElectionVotingPeriod) electionPeriod).getVotesCount() + postLabel + ")";
-		}
+				String longResume = null;
+				if (electionPeriod instanceof DelegateElectionCandidacyPeriod) {
+					longResume =
+							"(" + ((DelegateElectionCandidacyPeriod) electionPeriod).getDelegateElection().getCandidatesCount()
+									+ postLabel + ")";
+				} else {
+					longResume = "(" + ((DelegateElectionVotingPeriod) electionPeriod).getVotesCount() + postLabel + ")";
+				}
 
-		return (isLongResume ? shortResume + "<br/>" + longResume : shortResume);
-	    }
+				return (isLongResume ? shortResume + "<br/>" + longResume : shortResume);
+			}
 
-	    private String getElectionPeriodPostLabel(DelegateElectionPeriod electionPeriod) {
-		return (isPeriodPostLabelKey() ? RenderUtils.getResourceString(getBundle(), getPeriodPostLabel())
-			: getPeriodPostLabel());
-	    }
+			private String getElectionPeriodPostLabel(DelegateElectionPeriod electionPeriod) {
+				return (isPeriodPostLabelKey() ? RenderUtils.getResourceString(getBundle(), getPeriodPostLabel()) : getPeriodPostLabel());
+			}
 
-	};
-    }
+		};
+	}
 
 }

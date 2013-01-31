@@ -11,19 +11,21 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class ExecutionDegreeForAcademicSemesterSelectionBeanProvider implements DataProvider {
 
-    public Object provide(Object source, Object currentValue) {
+	@Override
+	public Object provide(Object source, Object currentValue) {
 
-	ContextSelectionBean contextSelectionBean = (ContextSelectionBean) source;
-	List<ExecutionDegree> executionDegrees = ExecutionDegree.filterByAcademicInterval(contextSelectionBean
-		.getAcademicInterval());
+		ContextSelectionBean contextSelectionBean = (ContextSelectionBean) source;
+		List<ExecutionDegree> executionDegrees =
+				ExecutionDegree.filterByAcademicInterval(contextSelectionBean.getAcademicInterval());
 
-	Collections.sort(executionDegrees, ExecutionDegree.EXECUTION_DEGREE_COMPARATORY_BY_DEGREE_TYPE_AND_NAME);
+		Collections.sort(executionDegrees, ExecutionDegree.EXECUTION_DEGREE_COMPARATORY_BY_DEGREE_TYPE_AND_NAME);
 
-	return executionDegrees;
-    }
+		return executionDegrees;
+	}
 
-    public Converter getConverter() {
-	return new DomainObjectKeyConverter();
-    }
+	@Override
+	public Converter getConverter() {
+		return new DomainObjectKeyConverter();
+	}
 
 }

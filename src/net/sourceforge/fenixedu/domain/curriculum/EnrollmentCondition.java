@@ -10,30 +10,30 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public enum EnrollmentCondition {
 
-    FINAL,
+	FINAL,
 
-    TEMPORARY,
+	TEMPORARY,
 
-    IMPOSSIBLE,
+	IMPOSSIBLE,
 
-    VALIDATED,
+	VALIDATED,
 
-    INVISIBLE;
+	INVISIBLE;
 
-    public String getName() {
-	return name();
-    }
+	public String getName() {
+		return name();
+	}
 
-    public String getQualifiedName() {
-	return EnrollmentCondition.class.getSimpleName() + "." + name();
-    }
+	public String getQualifiedName() {
+		return EnrollmentCondition.class.getSimpleName() + "." + name();
+	}
 
-    public String getAcronym() {
-	return getQualifiedName() + ".acronym";
-    }
+	public String getAcronym() {
+		return getQualifiedName() + ".acronym";
+	}
 
-    public String getDescription() {
-	return ResourceBundle.getBundle("resources.EnumerationResources", Language.getLocale()).getString(getQualifiedName());
-    }
+	public String getDescription() {
+		return ResourceBundle.getBundle("resources.EnumerationResources", Language.getLocale()).getString(getQualifiedName());
+	}
 
 }

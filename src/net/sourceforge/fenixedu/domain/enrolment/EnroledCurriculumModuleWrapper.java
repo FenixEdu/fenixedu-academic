@@ -19,182 +19,202 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 
 public class EnroledCurriculumModuleWrapper implements Serializable, IDegreeModuleToEvaluate {
 
-    private static final long serialVersionUID = 8730987603988026373L;
+	private static final long serialVersionUID = 8730987603988026373L;
 
-    private CurriculumModule curriculumModule;
+	private CurriculumModule curriculumModule;
 
-    protected Context context;
+	protected Context context;
 
-    private ExecutionSemester executionSemester;
+	private ExecutionSemester executionSemester;
 
-    public EnroledCurriculumModuleWrapper(final CurriculumModule curriculumModule, final ExecutionSemester executionSemester) {
-	setCurriculumModule(curriculumModule);
-	setExecutionPeriod(executionSemester);
-    }
-
-    public CurriculumModule getCurriculumModule() {
-	return this.curriculumModule;
-    }
-
-    public void setCurriculumModule(CurriculumModule curriculumModule) {
-	this.curriculumModule = curriculumModule;
-    }
-
-    public Context getContext() {
-	if (context == null) {
-	    if (!getCurriculumModule().isRoot()) {
-		findContext();
-	    }
+	public EnroledCurriculumModuleWrapper(final CurriculumModule curriculumModule, final ExecutionSemester executionSemester) {
+		setCurriculumModule(curriculumModule);
+		setExecutionPeriod(executionSemester);
 	}
-	return context;
-    }
 
-    private void findContext() {
-	Context result = null;
+	public CurriculumModule getCurriculumModule() {
+		return this.curriculumModule;
+	}
 
-	final CurriculumGroup parent = getCurriculumModule().getCurriculumGroup();
-	if (parent.hasDegreeModule()) {
-	    for (final Context context : parent.getDegreeModule().getValidChildContexts(getExecutionPeriod())) {
-		if (context.getChildDegreeModule() == getDegreeModule()) {
-		    if (result == null || context.getCurricularYear().intValue() < result.getCurricularYear().intValue()) {
-			result = context;
-		    }
+	public void setCurriculumModule(CurriculumModule curriculumModule) {
+		this.curriculumModule = curriculumModule;
+	}
+
+	@Override
+	public Context getContext() {
+		if (context == null) {
+			if (!getCurriculumModule().isRoot()) {
+				findContext();
+			}
 		}
-	    }
+		return context;
 	}
 
-	setContext(result);
-    }
+	private void findContext() {
+		Context result = null;
 
-    public void setContext(Context context) {
-	this.context = context;
-    }
+		final CurriculumGroup parent = getCurriculumModule().getCurriculumGroup();
+		if (parent.hasDegreeModule()) {
+			for (final Context context : parent.getDegreeModule().getValidChildContexts(getExecutionPeriod())) {
+				if (context.getChildDegreeModule() == getDegreeModule()) {
+					if (result == null || context.getCurricularYear().intValue() < result.getCurricularYear().intValue()) {
+						result = context;
+					}
+				}
+			}
+		}
 
-    public ExecutionSemester getExecutionPeriod() {
-	return this.executionSemester;
-    }
-
-    public void setExecutionPeriod(ExecutionSemester executionSemester) {
-	this.executionSemester = executionSemester;
-    }
-
-    public CurriculumGroup getCurriculumGroup() {
-	return getCurriculumModule().getCurriculumGroup();
-    }
-
-    public DegreeModule getDegreeModule() {
-	return getCurriculumModule().getDegreeModule();
-    }
-
-    public boolean hasDegreeModule() {
-	return getDegreeModule() != null;
-    }
-
-    public boolean isLeaf() {
-	if (!getCurriculumModule().isLeaf()) {
-	    return false;
+		setContext(result);
 	}
-	final CurriculumLine curriculumLine = (CurriculumLine) getCurriculumModule();
-	return curriculumLine.isEnrolment();
-    }
 
-    final public boolean isEnroled() {
-	return true;
-    }
-
-    public boolean isOptional() {
-	return false;
-    }
-
-    @Override
-    public boolean isDissertation() {
-	return false;
-    }
-
-    public boolean canCollectRules() {
-	if (getCurriculumModule().isLeaf()) {
-	    return true;
-	} else {
-	    final CurriculumGroup curriculumGroup = (CurriculumGroup) getCurriculumModule();
-	    return !curriculumGroup.hasAnyCurriculumModules();
+	public void setContext(Context context) {
+		this.context = context;
 	}
-    }
 
-    public Double getEctsCredits(final ExecutionSemester executionSemester) {
-	return getCurriculumModule().getEctsCredits();
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-	if (obj instanceof EnroledCurriculumModuleWrapper) {
-	    final EnroledCurriculumModuleWrapper moduleEnroledWrapper = (EnroledCurriculumModuleWrapper) obj;
-	    return getCurriculumModule() == moduleEnroledWrapper.getCurriculumModule();
+	@Override
+	public ExecutionSemester getExecutionPeriod() {
+		return this.executionSemester;
 	}
-	return false;
-    }
 
-    @Override
-    public int hashCode() {
-	return getCurriculumModule().hashCode();
-    }
-
-    public List<CurricularRule> getCurricularRulesFromDegreeModule(ExecutionSemester executionSemester) {
-	return hasDegreeModule() ? getDegreeModule().getCurricularRules(getContext(), executionSemester) : Collections.EMPTY_LIST;
-    }
-
-    public Set<ICurricularRule> getCurricularRulesFromCurriculumGroup(ExecutionSemester executionSemester) {
-	return getCurriculumModule().isRoot() ? Collections.EMPTY_SET : getCurriculumGroup()
-		.getCurricularRules(executionSemester);
-    }
-
-    public double getAccumulatedEctsCredits(final ExecutionSemester executionSemester) {
-	if (getCurriculumModule().isEnrolment()) {
-	    return ((Enrolment) getCurriculumModule()).getAccumulatedEctsCredits(executionSemester);
-	} else {
-	    return 0d;
+	public void setExecutionPeriod(ExecutionSemester executionSemester) {
+		this.executionSemester = executionSemester;
 	}
-    }
 
-    public String getName() {
-	return getCurriculumModule().getName().getContent();
-    }
-
-    public String getYearFullLabel() {
-	if (getExecutionPeriod() != null) {
-	    return getExecutionPeriod().getQualifiedName();
+	@Override
+	public CurriculumGroup getCurriculumGroup() {
+		return getCurriculumModule().getCurriculumGroup();
 	}
-	return "";
-    }
 
-    public boolean isOptionalCurricularCourse() {
-	return false;
-    }
-
-    public Double getEctsCredits() {
-	return getCurriculumModule().getEctsCredits();
-    }
-
-    public String getKey() {
-	StringBuilder stringBuilder = new StringBuilder();
-	stringBuilder.append(this.getCurriculumModule().getClass().getName()).append(":")
-		.append(this.getCurriculumModule().getExternalId()).append(",")
-		.append(this.getExecutionPeriod().getClass().getName()).append(":")
-		.append(this.getExecutionPeriod().getExternalId());
-	return stringBuilder.toString();
-    }
-
-    final public boolean isEnroling() {
-	return false;
-    }
-
-    public boolean isFor(final DegreeModule degreeModule) {
-	return getDegreeModule() == degreeModule;
-    }
-
-    public boolean isAnnualCurricularCourse(final ExecutionYear executionYear) {
-	if (getDegreeModule().isLeaf()) {
-	    return ((CurricularCourse) getDegreeModule()).isAnual(executionYear);
+	@Override
+	public DegreeModule getDegreeModule() {
+		return getCurriculumModule().getDegreeModule();
 	}
-	return false;
-    }
+
+	public boolean hasDegreeModule() {
+		return getDegreeModule() != null;
+	}
+
+	@Override
+	public boolean isLeaf() {
+		if (!getCurriculumModule().isLeaf()) {
+			return false;
+		}
+		final CurriculumLine curriculumLine = (CurriculumLine) getCurriculumModule();
+		return curriculumLine.isEnrolment();
+	}
+
+	@Override
+	final public boolean isEnroled() {
+		return true;
+	}
+
+	@Override
+	public boolean isOptional() {
+		return false;
+	}
+
+	@Override
+	public boolean isDissertation() {
+		return false;
+	}
+
+	@Override
+	public boolean canCollectRules() {
+		if (getCurriculumModule().isLeaf()) {
+			return true;
+		} else {
+			final CurriculumGroup curriculumGroup = (CurriculumGroup) getCurriculumModule();
+			return !curriculumGroup.hasAnyCurriculumModules();
+		}
+	}
+
+	@Override
+	public Double getEctsCredits(final ExecutionSemester executionSemester) {
+		return getCurriculumModule().getEctsCredits();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof EnroledCurriculumModuleWrapper) {
+			final EnroledCurriculumModuleWrapper moduleEnroledWrapper = (EnroledCurriculumModuleWrapper) obj;
+			return getCurriculumModule() == moduleEnroledWrapper.getCurriculumModule();
+		}
+		return false;
+	}
+
+	@Override
+	public int hashCode() {
+		return getCurriculumModule().hashCode();
+	}
+
+	@Override
+	public List<CurricularRule> getCurricularRulesFromDegreeModule(ExecutionSemester executionSemester) {
+		return hasDegreeModule() ? getDegreeModule().getCurricularRules(getContext(), executionSemester) : Collections.EMPTY_LIST;
+	}
+
+	@Override
+	public Set<ICurricularRule> getCurricularRulesFromCurriculumGroup(ExecutionSemester executionSemester) {
+		return getCurriculumModule().isRoot() ? Collections.EMPTY_SET : getCurriculumGroup()
+				.getCurricularRules(executionSemester);
+	}
+
+	@Override
+	public double getAccumulatedEctsCredits(final ExecutionSemester executionSemester) {
+		if (getCurriculumModule().isEnrolment()) {
+			return ((Enrolment) getCurriculumModule()).getAccumulatedEctsCredits(executionSemester);
+		} else {
+			return 0d;
+		}
+	}
+
+	@Override
+	public String getName() {
+		return getCurriculumModule().getName().getContent();
+	}
+
+	@Override
+	public String getYearFullLabel() {
+		if (getExecutionPeriod() != null) {
+			return getExecutionPeriod().getQualifiedName();
+		}
+		return "";
+	}
+
+	@Override
+	public boolean isOptionalCurricularCourse() {
+		return false;
+	}
+
+	@Override
+	public Double getEctsCredits() {
+		return getCurriculumModule().getEctsCredits();
+	}
+
+	@Override
+	public String getKey() {
+		StringBuilder stringBuilder = new StringBuilder();
+		stringBuilder.append(this.getCurriculumModule().getClass().getName()).append(":")
+				.append(this.getCurriculumModule().getExternalId()).append(",")
+				.append(this.getExecutionPeriod().getClass().getName()).append(":")
+				.append(this.getExecutionPeriod().getExternalId());
+		return stringBuilder.toString();
+	}
+
+	@Override
+	final public boolean isEnroling() {
+		return false;
+	}
+
+	@Override
+	public boolean isFor(final DegreeModule degreeModule) {
+		return getDegreeModule() == degreeModule;
+	}
+
+	@Override
+	public boolean isAnnualCurricularCourse(final ExecutionYear executionYear) {
+		if (getDegreeModule().isLeaf()) {
+			return ((CurricularCourse) getDegreeModule()).isAnual(executionYear);
+		}
+		return false;
+	}
 }

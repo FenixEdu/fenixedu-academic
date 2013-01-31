@@ -11,26 +11,26 @@ import pt.ist.fenixWebFramework.renderers.converters.DateConverter;
 
 public class JodaTimeInputRenderer extends DateInputRenderer {
 
-    public class JodaTimeConverter extends DateConverter {
+	public class JodaTimeConverter extends DateConverter {
 
-	public JodaTimeConverter(SimpleDateFormat format) {
-	    super(format);
+		public JodaTimeConverter(SimpleDateFormat format) {
+			super(format);
+		}
+
+		@Override
+		public Object convert(Class type, Object value) {
+			Date date = (Date) super.convert(type, value);
+
+			if (date == null) {
+				return null;
+			}
+
+			return YearMonthDay.fromDateFields(date);
+		}
 	}
 
 	@Override
-	public Object convert(Class type, Object value) {
-	    Date date = (Date) super.convert(type, value);
-
-	    if (date == null) {
-		return null;
-	    }
-
-	    return YearMonthDay.fromDateFields(date);
+	protected Converter getDateConverter(SimpleDateFormat format) {
+		return new JodaTimeConverter(format);
 	}
-    }
-
-    @Override
-    protected Converter getDateConverter(SimpleDateFormat format) {
-	return new JodaTimeConverter(format);
-    }
 }

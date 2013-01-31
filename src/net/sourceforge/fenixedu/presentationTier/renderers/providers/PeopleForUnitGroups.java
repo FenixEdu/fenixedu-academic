@@ -15,39 +15,41 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class PeopleForUnitGroups implements DataProvider {
 
-    public Converter getConverter() {
-	return null;
-    }
-
-    public Object provide(Object source, Object currentValue) {
-	Unit unit;
-	if (source instanceof Unit) {
-	    unit = (Unit) source;
-	} else {
-	    try {
-		unit = (Unit) MethodUtils.invokeMethod(source, "getUnit", null);
-	    } catch (Exception e) {
-		throw new RuntimeException(e);
-	    }
+	@Override
+	public Converter getConverter() {
+		return null;
 	}
-	return getPeopleForUnit(unit);
-    }
 
-    private Collection<Person> getPeopleForUnit(Unit unit) {
-	Set<Person> people = new HashSet<Person>();
-	people.addAll(unit.getPossibleGroupMembers());
-	for (Unit subUnit : unit.getAllSubUnits()) {
-	    if (subUnit.isResearchUnit()) {
-		people.addAll(subUnit.getPossibleGroupMembers());
-	    }
-	}
-	for (PersistentGroupMembers persistentGroupMembers : unit.getPersistentGroups()) {
-	    for (Person person : persistentGroupMembers.getPersons()) {
-		if (!people.contains(person)) {
-		    people.add(person);
+	@Override
+	public Object provide(Object source, Object currentValue) {
+		Unit unit;
+		if (source instanceof Unit) {
+			unit = (Unit) source;
+		} else {
+			try {
+				unit = (Unit) MethodUtils.invokeMethod(source, "getUnit", null);
+			} catch (Exception e) {
+				throw new RuntimeException(e);
+			}
 		}
-	    }
+		return getPeopleForUnit(unit);
 	}
-	return people;
-    }
+
+	private Collection<Person> getPeopleForUnit(Unit unit) {
+		Set<Person> people = new HashSet<Person>();
+		people.addAll(unit.getPossibleGroupMembers());
+		for (Unit subUnit : unit.getAllSubUnits()) {
+			if (subUnit.isResearchUnit()) {
+				people.addAll(subUnit.getPossibleGroupMembers());
+			}
+		}
+		for (PersistentGroupMembers persistentGroupMembers : unit.getPersistentGroups()) {
+			for (Person person : persistentGroupMembers.getPersons()) {
+				if (!people.contains(person)) {
+					people.add(person);
+				}
+			}
+		}
+		return people;
+	}
 }

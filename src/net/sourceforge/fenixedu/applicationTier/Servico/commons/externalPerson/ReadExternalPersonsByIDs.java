@@ -15,17 +15,17 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class ReadExternalPersonsByIDs extends FenixService {
 
-    @Service
-    public static Collection<InfoExternalPerson> run(Collection<Integer> externalPersonsIDs) {
+	@Service
+	public static Collection<InfoExternalPerson> run(Collection<Integer> externalPersonsIDs) {
 
-	Collection<InfoExternalPerson> infoExternalPersons = new ArrayList<InfoExternalPerson>(externalPersonsIDs.size());
+		Collection<InfoExternalPerson> infoExternalPersons = new ArrayList<InfoExternalPerson>(externalPersonsIDs.size());
 
-	Collection<ExternalContract> externalPersons = ExternalContract.readByIDs(externalPersonsIDs);
+		Collection<ExternalContract> externalPersons = ExternalContract.readByIDs(externalPersonsIDs);
 
-	for (ExternalContract externalPerson : externalPersons) {
-	    infoExternalPersons.add(InfoExternalPerson.newInfoFromDomain(externalPerson));
+		for (ExternalContract externalPerson : externalPersons) {
+			infoExternalPersons.add(InfoExternalPerson.newInfoFromDomain(externalPerson));
+		}
+
+		return infoExternalPersons;
 	}
-
-	return infoExternalPersons;
-    }
 }

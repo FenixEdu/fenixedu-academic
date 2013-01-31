@@ -43,161 +43,163 @@ import org.apache.struts.validator.DynaValidatorForm;
  */
 public class CreateProfessorshipDispatchAction extends FenixDispatchAction {
 
-    public ActionForward createProfessorship(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
+	public ActionForward createProfessorship(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
 
-	final DynaActionForm personExecutionCourseForm = (DynaActionForm) form;
+		final DynaActionForm personExecutionCourseForm = (DynaActionForm) form;
 
-	final Integer executionCourseId = Integer.valueOf((String) personExecutionCourseForm.get("executionCourseId"));
-	final Boolean responsibleFor = (Boolean) personExecutionCourseForm.get("responsibleFor");
+		final Integer executionCourseId = Integer.valueOf((String) personExecutionCourseForm.get("executionCourseId"));
+		final Boolean responsibleFor = (Boolean) personExecutionCourseForm.get("responsibleFor");
 
-	Professorship.create(responsibleFor, rootDomainObject.readExecutionCourseByOID(executionCourseId),
-		getPerson(personExecutionCourseForm), 0.0);
+		Professorship.create(responsibleFor, rootDomainObject.readExecutionCourseByOID(executionCourseId),
+				getPerson(personExecutionCourseForm), 0.0);
 
-	return mapping.findForward("final-step");
-    }
-
-    private List getExecutionDegrees(HttpServletRequest request) throws FenixServiceException, FenixFilterException {
-	InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request.getAttribute("infoExecutionPeriod");
-
-	List<InfoExecutionDegree> executionDegrees = ReadExecutionDegreesByExecutionYearAndDegreeType.run(infoExecutionPeriod
-		.getInfoExecutionYear().getYear(), null);
-
-	ComparatorChain comparatorChain = new ComparatorChain();
-
-	comparatorChain.addComparator(new BeanComparator("infoDegreeCurricularPlan.infoDegree.tipoCurso"));
-	comparatorChain.addComparator(new BeanComparator("infoDegreeCurricularPlan.infoDegree.nome"));
-
-	Collections.sort(executionDegrees, comparatorChain);
-
-	MessageResources messageResources = this.getResources(request, "ENUMERATION_RESOURCES");
-	executionDegrees = InfoExecutionDegree.buildLabelValueBeansForList(executionDegrees, messageResources);
-
-	return executionDegrees;
-    }
-
-    public Person getPerson(DynaActionForm personExecutionCourseForm) {
-	String id = (String) personExecutionCourseForm.get("teacherId");
-	Person person = Person.readPersonByIstUsername(id);
-	return person;
-    }
-
-    private void prepareConstants(DynaActionForm personExecutionCourseForm, HttpServletRequest request)
-	    throws FenixServiceException, FenixFilterException {
-
-	request.setAttribute("infoPerson", InfoPerson.newInfoFromDomain(getPerson(personExecutionCourseForm)));
-    }
-
-    private void prepareFirstStep(DynaValidatorForm personExecutionCourseForm, HttpServletRequest request)
-	    throws FenixServiceException, FenixFilterException {
-	prepareConstants(personExecutionCourseForm, request);
-
-	List executionPeriodsNotClosed = ReadNotClosedExecutionPeriods.run();
-
-	setChoosedExecutionPeriod(request, executionPeriodsNotClosed, personExecutionCourseForm);
-
-	BeanComparator initialDateComparator = new BeanComparator("beginDate");
-	Collections.sort(executionPeriodsNotClosed, new ReverseComparator(initialDateComparator));
-
-	request.setAttribute("executionPeriods", executionPeriodsNotClosed);
-    }
-
-    private void prepareSecondStep(DynaValidatorForm personExecutionCourseForm, HttpServletRequest request)
-	    throws FenixServiceException, FenixFilterException {
-	prepareFirstStep(personExecutionCourseForm, request);
-	List executionDegrees = getExecutionDegrees(request);
-	request.setAttribute("executionDegrees", executionDegrees);
-    }
-
-    private void prepareThirdStep(DynaValidatorForm personExecutionCourseForm, HttpServletRequest request)
-	    throws FenixServiceException, FenixFilterException {
-	prepareSecondStep(personExecutionCourseForm, request);
-	Integer executionDegreeId = Integer.valueOf((String) personExecutionCourseForm.get("executionDegreeId"));
-	Integer executionPeriodId = Integer.valueOf((String) personExecutionCourseForm.get("executionPeriodId"));
-
-	List executionCourses = ReadExecutionCoursesByExecutionDegreeService.run(executionDegreeId, executionPeriodId);
-	String personId = (String) personExecutionCourseForm.get("teacherId");
-
-	List executionCoursesToRemove = ReadExecutionCoursesByTeacherResponsibility.run(personId);
-	executionCourses.removeAll(executionCoursesToRemove);
-	Collections.sort(executionCourses, new BeanComparator("nome"));
-
-	request.setAttribute("executionCourses", executionCourses);
-
-    }
-
-    private void setChoosedExecutionPeriod(HttpServletRequest request, List executionPeriodsNotClosed,
-	    DynaValidatorForm personExecutionCourseForm) {
-	Integer executionPeriodIdValue = null;
-	try {
-	    executionPeriodIdValue = Integer.valueOf((String) personExecutionCourseForm.get("executionPeriodId"));
-	} catch (Exception e) {
-	    // do nothing
+		return mapping.findForward("final-step");
 	}
-	final Integer executionPeriodId = executionPeriodIdValue;
-	InfoExecutionPeriod infoExecutionPeriod = null;
-	if (executionPeriodId == null) {
-	    infoExecutionPeriod = (InfoExecutionPeriod) CollectionUtils.find(executionPeriodsNotClosed, new Predicate() {
 
-		public boolean evaluate(Object input) {
-		    InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) input;
+	private List getExecutionDegrees(HttpServletRequest request) throws FenixServiceException, FenixFilterException {
+		InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request.getAttribute("infoExecutionPeriod");
 
-		    return infoExecutionPeriod.getState().equals(PeriodState.CURRENT);
+		List<InfoExecutionDegree> executionDegrees =
+				ReadExecutionDegreesByExecutionYearAndDegreeType.run(infoExecutionPeriod.getInfoExecutionYear().getYear(), null);
+
+		ComparatorChain comparatorChain = new ComparatorChain();
+
+		comparatorChain.addComparator(new BeanComparator("infoDegreeCurricularPlan.infoDegree.tipoCurso"));
+		comparatorChain.addComparator(new BeanComparator("infoDegreeCurricularPlan.infoDegree.nome"));
+
+		Collections.sort(executionDegrees, comparatorChain);
+
+		MessageResources messageResources = this.getResources(request, "ENUMERATION_RESOURCES");
+		executionDegrees = InfoExecutionDegree.buildLabelValueBeansForList(executionDegrees, messageResources);
+
+		return executionDegrees;
+	}
+
+	public Person getPerson(DynaActionForm personExecutionCourseForm) {
+		String id = (String) personExecutionCourseForm.get("teacherId");
+		Person person = Person.readPersonByIstUsername(id);
+		return person;
+	}
+
+	private void prepareConstants(DynaActionForm personExecutionCourseForm, HttpServletRequest request)
+			throws FenixServiceException, FenixFilterException {
+
+		request.setAttribute("infoPerson", InfoPerson.newInfoFromDomain(getPerson(personExecutionCourseForm)));
+	}
+
+	private void prepareFirstStep(DynaValidatorForm personExecutionCourseForm, HttpServletRequest request)
+			throws FenixServiceException, FenixFilterException {
+		prepareConstants(personExecutionCourseForm, request);
+
+		List executionPeriodsNotClosed = ReadNotClosedExecutionPeriods.run();
+
+		setChoosedExecutionPeriod(request, executionPeriodsNotClosed, personExecutionCourseForm);
+
+		BeanComparator initialDateComparator = new BeanComparator("beginDate");
+		Collections.sort(executionPeriodsNotClosed, new ReverseComparator(initialDateComparator));
+
+		request.setAttribute("executionPeriods", executionPeriodsNotClosed);
+	}
+
+	private void prepareSecondStep(DynaValidatorForm personExecutionCourseForm, HttpServletRequest request)
+			throws FenixServiceException, FenixFilterException {
+		prepareFirstStep(personExecutionCourseForm, request);
+		List executionDegrees = getExecutionDegrees(request);
+		request.setAttribute("executionDegrees", executionDegrees);
+	}
+
+	private void prepareThirdStep(DynaValidatorForm personExecutionCourseForm, HttpServletRequest request)
+			throws FenixServiceException, FenixFilterException {
+		prepareSecondStep(personExecutionCourseForm, request);
+		Integer executionDegreeId = Integer.valueOf((String) personExecutionCourseForm.get("executionDegreeId"));
+		Integer executionPeriodId = Integer.valueOf((String) personExecutionCourseForm.get("executionPeriodId"));
+
+		List executionCourses = ReadExecutionCoursesByExecutionDegreeService.run(executionDegreeId, executionPeriodId);
+		String personId = (String) personExecutionCourseForm.get("teacherId");
+
+		List executionCoursesToRemove = ReadExecutionCoursesByTeacherResponsibility.run(personId);
+		executionCourses.removeAll(executionCoursesToRemove);
+		Collections.sort(executionCourses, new BeanComparator("nome"));
+
+		request.setAttribute("executionCourses", executionCourses);
+
+	}
+
+	private void setChoosedExecutionPeriod(HttpServletRequest request, List executionPeriodsNotClosed,
+			DynaValidatorForm personExecutionCourseForm) {
+		Integer executionPeriodIdValue = null;
+		try {
+			executionPeriodIdValue = Integer.valueOf((String) personExecutionCourseForm.get("executionPeriodId"));
+		} catch (Exception e) {
+			// do nothing
 		}
-	    });
-	} else {
-	    infoExecutionPeriod = (InfoExecutionPeriod) CollectionUtils.find(executionPeriodsNotClosed, new Predicate() {
+		final Integer executionPeriodId = executionPeriodIdValue;
+		InfoExecutionPeriod infoExecutionPeriod = null;
+		if (executionPeriodId == null) {
+			infoExecutionPeriod = (InfoExecutionPeriod) CollectionUtils.find(executionPeriodsNotClosed, new Predicate() {
 
-		public boolean evaluate(Object input) {
-		    InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) input;
+				@Override
+				public boolean evaluate(Object input) {
+					InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) input;
 
-		    return infoExecutionPeriod.getIdInternal().equals(executionPeriodId);
+					return infoExecutionPeriod.getState().equals(PeriodState.CURRENT);
+				}
+			});
+		} else {
+			infoExecutionPeriod = (InfoExecutionPeriod) CollectionUtils.find(executionPeriodsNotClosed, new Predicate() {
+
+				@Override
+				public boolean evaluate(Object input) {
+					InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) input;
+
+					return infoExecutionPeriod.getIdInternal().equals(executionPeriodId);
+				}
+			});
+
 		}
-	    });
-
-	}
-	request.setAttribute("infoExecutionPeriod", infoExecutionPeriod);
-    }
-
-    public ActionForward showExecutionDegreeExecutionCourses(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-	DynaValidatorForm personExecutionCourseForm = (DynaValidatorForm) form;
-	prepareFirstStep(personExecutionCourseForm, request);
-
-	prepareThirdStep(personExecutionCourseForm, request);
-	personExecutionCourseForm.set("page", new Integer(3));
-	return mapping.findForward("third-step");
-    }
-
-    public ActionForward showExecutionDegrees(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-	DynaValidatorForm personExecutionCourseForm = (DynaValidatorForm) form;
-
-	String personId = (String) personExecutionCourseForm.get("teacherId");
-	Person person = Person.readPersonByIstUsername(personId);
-	setChoosedExecutionPeriod(request, ReadNotClosedExecutionPeriods.run(), personExecutionCourseForm);
-	InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request.getAttribute("infoExecutionPeriod");
-	final ExecutionSemester executionPeriod = infoExecutionPeriod.getExecutionPeriod();
-	if (executionPeriod.getSemester().intValue() == 2 && executionPeriod.getExecutionYear().getYear().equals("2010/2011")) {
-	} else {
-	    if (person.getTeacher() == null
-		    || (person.getTeacher().getTeacherAuthorization(executionPeriod) == null && !person.hasRole(RoleType.TEACHER))) {
-		request.setAttribute("notAuth", true);
-		return showExecutionYearExecutionPeriods(mapping, personExecutionCourseForm, request, response);
-	    }
+		request.setAttribute("infoExecutionPeriod", infoExecutionPeriod);
 	}
 
-	prepareSecondStep(personExecutionCourseForm, request);
-	personExecutionCourseForm.set("page", new Integer(2));
-	return mapping.findForward("second-step");
-    }
+	public ActionForward showExecutionDegreeExecutionCourses(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		DynaValidatorForm personExecutionCourseForm = (DynaValidatorForm) form;
+		prepareFirstStep(personExecutionCourseForm, request);
 
-    public ActionForward showExecutionYearExecutionPeriods(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-	DynaValidatorForm personExecutionCourseForm = (DynaValidatorForm) form;
+		prepareThirdStep(personExecutionCourseForm, request);
+		personExecutionCourseForm.set("page", new Integer(3));
+		return mapping.findForward("third-step");
+	}
 
-	prepareFirstStep(personExecutionCourseForm, request);
-	personExecutionCourseForm.set("page", new Integer(1));
-	return mapping.findForward("second-step");
-    }
+	public ActionForward showExecutionDegrees(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		DynaValidatorForm personExecutionCourseForm = (DynaValidatorForm) form;
+
+		String personId = (String) personExecutionCourseForm.get("teacherId");
+		Person person = Person.readPersonByIstUsername(personId);
+		setChoosedExecutionPeriod(request, ReadNotClosedExecutionPeriods.run(), personExecutionCourseForm);
+		InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request.getAttribute("infoExecutionPeriod");
+		final ExecutionSemester executionPeriod = infoExecutionPeriod.getExecutionPeriod();
+		if (executionPeriod.getSemester().intValue() == 2 && executionPeriod.getExecutionYear().getYear().equals("2010/2011")) {
+		} else {
+			if (person.getTeacher() == null
+					|| (person.getTeacher().getTeacherAuthorization(executionPeriod) == null && !person.hasRole(RoleType.TEACHER))) {
+				request.setAttribute("notAuth", true);
+				return showExecutionYearExecutionPeriods(mapping, personExecutionCourseForm, request, response);
+			}
+		}
+
+		prepareSecondStep(personExecutionCourseForm, request);
+		personExecutionCourseForm.set("page", new Integer(2));
+		return mapping.findForward("second-step");
+	}
+
+	public ActionForward showExecutionYearExecutionPeriods(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		DynaValidatorForm personExecutionCourseForm = (DynaValidatorForm) form;
+
+		prepareFirstStep(personExecutionCourseForm, request);
+		personExecutionCourseForm.set("page", new Integer(1));
+		return mapping.findForward("second-step");
+	}
 }

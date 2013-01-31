@@ -12,55 +12,56 @@ import pt.ist.fenixWebFramework.security.accessControl.Checked;
 
 public class WeeklyWorkLoad extends WeeklyWorkLoad_Base implements Comparable<WeeklyWorkLoad> {
 
-    public WeeklyWorkLoad(final Attends attends, final Integer weekOffset, final Integer contact, final Integer autonomousStudy,
-	    final Integer other) {
-	super();
-	setRootDomainObject(RootDomainObject.getInstance());
+	public WeeklyWorkLoad(final Attends attends, final Integer weekOffset, final Integer contact, final Integer autonomousStudy,
+			final Integer other) {
+		super();
+		setRootDomainObject(RootDomainObject.getInstance());
 
-	if (attends == null || weekOffset == null) {
-	    throw new NullPointerException();
+		if (attends == null || weekOffset == null) {
+			throw new NullPointerException();
+		}
+
+		setAttends(attends);
+		setContact(contact);
+		setAutonomousStudy(autonomousStudy);
+		setOther(other);
+		setWeekOffset(weekOffset);
 	}
 
-	setAttends(attends);
-	setContact(contact);
-	setAutonomousStudy(autonomousStudy);
-	setOther(other);
-	setWeekOffset(weekOffset);
-    }
-
-    public int getTotal() {
-	final int contact = getContact() != null ? getContact() : 0;
-	final int autonomousStudy = getAutonomousStudy() != null ? getAutonomousStudy() : 0;
-	final int other = getOther() != null ? getOther() : 0;
-	return contact + autonomousStudy + other;
-    }
-
-    public int compareTo(final WeeklyWorkLoad weeklyWorkLoad) {
-	if (weeklyWorkLoad == null) {
-	    throw new NullPointerException("Cannot compare weekly work load with null");
-	}
-	if (getAttends() != weeklyWorkLoad.getAttends()) {
-	    throw new IllegalArgumentException("Cannot compare weekly work loads of different attends.");
+	public int getTotal() {
+		final int contact = getContact() != null ? getContact() : 0;
+		final int autonomousStudy = getAutonomousStudy() != null ? getAutonomousStudy() : 0;
+		final int other = getOther() != null ? getOther() : 0;
+		return contact + autonomousStudy + other;
 	}
 
-	return getWeekOffset().compareTo(weeklyWorkLoad.getWeekOffset());
-    }
+	@Override
+	public int compareTo(final WeeklyWorkLoad weeklyWorkLoad) {
+		if (weeklyWorkLoad == null) {
+			throw new NullPointerException("Cannot compare weekly work load with null");
+		}
+		if (getAttends() != weeklyWorkLoad.getAttends()) {
+			throw new IllegalArgumentException("Cannot compare weekly work loads of different attends.");
+		}
 
-    public Interval getInterval() {
-	final DateTime beginningOfSemester = new DateTime(getAttends().getBegginingOfLessonPeriod());
-	final DateTime firstMonday = beginningOfSemester.withField(DateTimeFieldType.dayOfWeek(), 1);
-	final DateTime start = firstMonday.withFieldAdded(DurationFieldType.weeks(), getWeekOffset().intValue());
-	final DateTime end = start.plusWeeks(1);
-	return new Interval(start, end);
-    }
+		return getWeekOffset().compareTo(weeklyWorkLoad.getWeekOffset());
+	}
 
-    @Checked("RolePredicates.MANAGER_OR_ACADEMIC_ADMINISTRATIVE_OFFICE_PREDICATE")
-    public void delete() {
-	removeAttends();
-	removeRootDomainObject();
+	public Interval getInterval() {
+		final DateTime beginningOfSemester = new DateTime(getAttends().getBegginingOfLessonPeriod());
+		final DateTime firstMonday = beginningOfSemester.withField(DateTimeFieldType.dayOfWeek(), 1);
+		final DateTime start = firstMonday.withFieldAdded(DurationFieldType.weeks(), getWeekOffset().intValue());
+		final DateTime end = start.plusWeeks(1);
+		return new Interval(start, end);
+	}
 
-	super.deleteDomainObject();
+	@Checked("RolePredicates.MANAGER_OR_ACADEMIC_ADMINISTRATIVE_OFFICE_PREDICATE")
+	public void delete() {
+		removeAttends();
+		removeRootDomainObject();
 
-    }
+		super.deleteDomainObject();
+
+	}
 
 }

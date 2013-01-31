@@ -10,35 +10,35 @@ import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessBean;
 
 public class RequestPublicThesisPresentation extends PhdIndividualProgramProcessActivity {
 
-    @Override
-    protected void activityPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
+	@Override
+	protected void activityPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
 
-	if (!process.hasSeminarProcess()
-		|| (!process.getSeminarProcess().isExempted() && !process.getSeminarProcess().isConcluded())) {
-	    throw new PreConditionNotValidException();
+		if (!process.hasSeminarProcess()
+				|| (!process.getSeminarProcess().isExempted() && !process.getSeminarProcess().isConcluded())) {
+			throw new PreConditionNotValidException();
+		}
+
+		if (process.hasThesisProcess() || process.getActiveState() != PhdIndividualProgramProcessState.WORK_DEVELOPMENT) {
+			throw new PreConditionNotValidException();
+		}
+
+		if (!process.isAllowedToManageProcess(userView)) {
+			throw new PreConditionNotValidException();
+		}
+
 	}
 
-	if (process.hasThesisProcess() || process.getActiveState() != PhdIndividualProgramProcessState.WORK_DEVELOPMENT) {
-	    throw new PreConditionNotValidException();
+	@Override
+	protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess individualProcess, IUserView userView,
+			Object object) {
+
+		final PhdThesisProcessBean bean = (PhdThesisProcessBean) object;
+		bean.setProcess(individualProcess);
+
+		Process.createNewProcess(userView, PhdThesisProcess.class, bean);
+		individualProcess.createState(PhdIndividualProgramProcessState.THESIS_DISCUSSION, userView.getPerson(), "");
+
+		return individualProcess;
 	}
-
-	if (!process.isAllowedToManageProcess(userView)) {
-	    throw new PreConditionNotValidException();
-	}
-
-    }
-
-    @Override
-    protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess individualProcess, IUserView userView,
-	    Object object) {
-
-	final PhdThesisProcessBean bean = (PhdThesisProcessBean) object;
-	bean.setProcess(individualProcess);
-
-	Process.createNewProcess(userView, PhdThesisProcess.class, bean);
-	individualProcess.createState(PhdIndividualProgramProcessState.THESIS_DISCUSSION, userView.getPerson(), "");
-
-	return individualProcess;
-    }
 
 }

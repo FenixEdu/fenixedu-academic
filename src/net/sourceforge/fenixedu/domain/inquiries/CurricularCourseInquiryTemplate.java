@@ -9,29 +9,29 @@ import org.joda.time.DateTime;
 
 public class CurricularCourseInquiryTemplate extends CurricularCourseInquiryTemplate_Base {
 
-    public CurricularCourseInquiryTemplate(DateTime begin, DateTime end) {
-	super();
-	init(begin, end);
-    }
-
-    public static CurricularCourseInquiryTemplate getCurrentTemplate() {
-	final List<InquiryTemplate> inquiryTemplates = RootDomainObject.getInstance().getInquiryTemplates();
-	for (final InquiryTemplate inquiryTemplate : inquiryTemplates) {
-	    if (inquiryTemplate instanceof CurricularCourseInquiryTemplate && inquiryTemplate.isOpen()) {
-		return (CurricularCourseInquiryTemplate) inquiryTemplate;
-	    }
+	public CurricularCourseInquiryTemplate(DateTime begin, DateTime end) {
+		super();
+		init(begin, end);
 	}
-	return null;
-    }
 
-    public static CurricularCourseInquiryTemplate getTemplateByExecutionPeriod(ExecutionSemester executionSemester) {
-	final List<InquiryTemplate> inquiryTemplates = RootDomainObject.getInstance().getInquiryTemplates();
-	for (final InquiryTemplate inquiryTemplate : inquiryTemplates) {
-	    if (inquiryTemplate instanceof CurricularCourseInquiryTemplate
-		    && executionSemester == inquiryTemplate.getExecutionPeriod()) {
-		return (CurricularCourseInquiryTemplate) inquiryTemplate;
-	    }
+	public static CurricularCourseInquiryTemplate getCurrentTemplate() {
+		final List<InquiryTemplate> inquiryTemplates = RootDomainObject.getInstance().getInquiryTemplates();
+		for (final InquiryTemplate inquiryTemplate : inquiryTemplates) {
+			if (inquiryTemplate instanceof CurricularCourseInquiryTemplate && inquiryTemplate.isOpen()) {
+				return (CurricularCourseInquiryTemplate) inquiryTemplate;
+			}
+		}
+		return null;
 	}
-	return null;
-    }
+
+	public static CurricularCourseInquiryTemplate getTemplateByExecutionPeriod(ExecutionSemester executionSemester) {
+		final List<InquiryTemplate> inquiryTemplates = RootDomainObject.getInstance().getInquiryTemplates();
+		for (final InquiryTemplate inquiryTemplate : inquiryTemplates) {
+			if (inquiryTemplate instanceof CurricularCourseInquiryTemplate
+					&& executionSemester == inquiryTemplate.getExecutionPeriod()) {
+				return (CurricularCourseInquiryTemplate) inquiryTemplate;
+			}
+		}
+		return null;
+	}
 }

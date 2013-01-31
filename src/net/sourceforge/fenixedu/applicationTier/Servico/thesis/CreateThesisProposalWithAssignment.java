@@ -11,37 +11,37 @@ import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class CreateThesisProposalWithAssignment extends FenixService {
 
-    public Thesis run(DegreeCurricularPlan degreeCurricularPlan, Student student, Proposal proposal, Thesis previousThesis) {
+	public Thesis run(DegreeCurricularPlan degreeCurricularPlan, Student student, Proposal proposal, Thesis previousThesis) {
 
-	Integer orientatorsCreditsPercentage;
-	Person coorientator;
-	Person orientator;
-	MultiLanguageString title;
+		Integer orientatorsCreditsPercentage;
+		Person coorientator;
+		Person orientator;
+		MultiLanguageString title;
 
-	if (previousThesis != null) {
-	    orientatorsCreditsPercentage = previousThesis.getOrientatorCreditsDistribution();
-	    ThesisEvaluationParticipant coorientatorObj = previousThesis.getCoorientator();
-	    coorientator = coorientatorObj == null ? null : coorientatorObj.getPerson();
+		if (previousThesis != null) {
+			orientatorsCreditsPercentage = previousThesis.getOrientatorCreditsDistribution();
+			ThesisEvaluationParticipant coorientatorObj = previousThesis.getCoorientator();
+			coorientator = coorientatorObj == null ? null : coorientatorObj.getPerson();
 
-	    ThesisEvaluationParticipant orientatorObj = previousThesis.getOrientator();
-	    orientator = orientatorObj == null ? null : previousThesis.getOrientator().getPerson();
+			ThesisEvaluationParticipant orientatorObj = previousThesis.getOrientator();
+			orientator = orientatorObj == null ? null : previousThesis.getOrientator().getPerson();
 
-	    title = previousThesis.getTitle();
-	} else {
-	    orientatorsCreditsPercentage = proposal.getOrientatorsCreditsPercentage();
-	    coorientator = proposal.getCoorientator();
-	    orientator = proposal.getOrientator();
-	    title = new MultiLanguageString(proposal.getTitle());
+			title = previousThesis.getTitle();
+		} else {
+			orientatorsCreditsPercentage = proposal.getOrientatorsCreditsPercentage();
+			coorientator = proposal.getCoorientator();
+			orientator = proposal.getOrientator();
+			title = new MultiLanguageString(proposal.getTitle());
+		}
+
+		Thesis thesis =
+				new Thesis(degreeCurricularPlan.getDegree(), student.getDissertationEnrolment(degreeCurricularPlan), title);
+
+		thesis.setOrientator(orientator);
+		thesis.setCoorientator(coorientator);
+		thesis.setOrientatorCreditsDistribution(orientatorsCreditsPercentage);
+
+		return thesis;
 	}
-
-	Thesis thesis = new Thesis(degreeCurricularPlan.getDegree(), student.getDissertationEnrolment(degreeCurricularPlan),
-		title);
-
-	thesis.setOrientator(orientator);
-	thesis.setCoorientator(coorientator);
-	thesis.setOrientatorCreditsDistribution(orientatorsCreditsPercentage);
-
-	return thesis;
-    }
 
 }

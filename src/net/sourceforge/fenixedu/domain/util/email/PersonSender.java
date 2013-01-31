@@ -6,21 +6,21 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class PersonSender extends PersonSender_Base {
 
-    public PersonSender() {
-	super();
-	setFromAddress(Sender.getNoreplyMail());
-	addReplyTos(new CurrentUserReplyTo());
-    }
+	public PersonSender() {
+		super();
+		setFromAddress(Sender.getNoreplyMail());
+		addReplyTos(new CurrentUserReplyTo());
+	}
 
-    public PersonSender(final Person person) {
-	this();
-	setPerson(person);
-	setFromName(person.getName());
-	setMembers(new PersonGroup(person));
-    }
+	public PersonSender(final Person person) {
+		this();
+		setPerson(person);
+		setFromName(person.getName());
+		setMembers(new PersonGroup(person));
+	}
 
-    @Service
-    public static PersonSender newInstance(final Person person) {
-	return person.hasSender() ? person.getSender() : new PersonSender(person);
-    }
+	@Service
+	public static PersonSender newInstance(final Person person) {
+		return person.hasSender() ? person.getSender() : new PersonSender(person);
+	}
 }

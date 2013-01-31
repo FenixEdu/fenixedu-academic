@@ -20,91 +20,93 @@ import org.joda.time.YearMonthDay;
 
 public class AdministrativeOfficeFeePR extends AdministrativeOfficeFeePR_Base {
 
-    protected AdministrativeOfficeFeePR() {
-	super();
-    }
-
-    public AdministrativeOfficeFeePR(DateTime startDate, DateTime endDate, ServiceAgreementTemplate serviceAgreementTemplate,
-	    Money fixedAmount, Money fixedAmountPenalty, YearMonthDay whenToApplyFixedAmountPenalty) {
-	this();
-	init(EntryType.ADMINISTRATIVE_OFFICE_FEE, EventType.ADMINISTRATIVE_OFFICE_FEE, startDate, endDate,
-		serviceAgreementTemplate, fixedAmount, fixedAmountPenalty, whenToApplyFixedAmountPenalty);
-
-    }
-
-    @Override
-    protected boolean hasPenalty(Event event, DateTime when) {
-	if (event.hasAnyPenaltyExemptionsFor(AdministrativeOfficeFeeAndInsurancePenaltyExemption.class)) {
-	    return false;
+	protected AdministrativeOfficeFeePR() {
+		super();
 	}
 
-	final AdministrativeOfficeFeeAndInsuranceEvent administrativeOfficeFeeAndInsuranceEvent = (AdministrativeOfficeFeeAndInsuranceEvent) event;
+	public AdministrativeOfficeFeePR(DateTime startDate, DateTime endDate, ServiceAgreementTemplate serviceAgreementTemplate,
+			Money fixedAmount, Money fixedAmountPenalty, YearMonthDay whenToApplyFixedAmountPenalty) {
+		this();
+		init(EntryType.ADMINISTRATIVE_OFFICE_FEE, EventType.ADMINISTRATIVE_OFFICE_FEE, startDate, endDate,
+				serviceAgreementTemplate, fixedAmount, fixedAmountPenalty, whenToApplyFixedAmountPenalty);
 
-	final YearMonthDay paymentEndDate = administrativeOfficeFeeAndInsuranceEvent.getPaymentEndDate() != null ? administrativeOfficeFeeAndInsuranceEvent
-		.getPaymentEndDate() : getWhenToApplyFixedAmountPenalty();
-
-	final Money amountPayedUntilEndDate = calculateAmountPayedUntilEndDate(administrativeOfficeFeeAndInsuranceEvent,
-		paymentEndDate);
-
-	if (!when.toYearMonthDay().isAfter(paymentEndDate)) {
-	    return false;
 	}
 
-	return amountPayedUntilEndDate.lessThan(getFixedAmount());
+	@Override
+	protected boolean hasPenalty(Event event, DateTime when) {
+		if (event.hasAnyPenaltyExemptionsFor(AdministrativeOfficeFeeAndInsurancePenaltyExemption.class)) {
+			return false;
+		}
 
-    }
+		final AdministrativeOfficeFeeAndInsuranceEvent administrativeOfficeFeeAndInsuranceEvent =
+				(AdministrativeOfficeFeeAndInsuranceEvent) event;
 
-    private Money calculateAmountPayedUntilEndDate(AdministrativeOfficeFeeAndInsuranceEvent event, YearMonthDay paymentEndDate) {
-	Money result = Money.ZERO;
+		final YearMonthDay paymentEndDate =
+				administrativeOfficeFeeAndInsuranceEvent.getPaymentEndDate() != null ? administrativeOfficeFeeAndInsuranceEvent
+						.getPaymentEndDate() : getWhenToApplyFixedAmountPenalty();
 
-	for (final AccountingTransaction transaction : event.getNonAdjustingTransactions()) {
-	    if (transaction.getToAccountEntry().getEntryType() == getEntryType()
-		    && !transaction.getWhenRegistered().toYearMonthDay().isAfter(paymentEndDate)) {
-		result = result.add(transaction.getAmountWithAdjustment());
-	    }
+		final Money amountPayedUntilEndDate =
+				calculateAmountPayedUntilEndDate(administrativeOfficeFeeAndInsuranceEvent, paymentEndDate);
+
+		if (!when.toYearMonthDay().isAfter(paymentEndDate)) {
+			return false;
+		}
+
+		return amountPayedUntilEndDate.lessThan(getFixedAmount());
+
 	}
 
-	return result;
-    }
+	private Money calculateAmountPayedUntilEndDate(AdministrativeOfficeFeeAndInsuranceEvent event, YearMonthDay paymentEndDate) {
+		Money result = Money.ZERO;
 
-    public AdministrativeOfficeFeePR edit(DateTime startDate, Money fixedAmount, Money penaltyAmount,
-	    YearMonthDay whenToApplyFixedAmountPenalty) {
+		for (final AccountingTransaction transaction : event.getNonAdjustingTransactions()) {
+			if (transaction.getToAccountEntry().getEntryType() == getEntryType()
+					&& !transaction.getWhenRegistered().toYearMonthDay().isAfter(paymentEndDate)) {
+				result = result.add(transaction.getAmountWithAdjustment());
+			}
+		}
 
-	if (!startDate.isAfter(getStartDate())) {
-	    throw new DomainException(
-		    "error.AdministrativeOfficeFeePR.startDate.is.before.then.start.date.of.previous.posting.rule");
+		return result;
 	}
 
-	deactivate(startDate);
+	public AdministrativeOfficeFeePR edit(DateTime startDate, Money fixedAmount, Money penaltyAmount,
+			YearMonthDay whenToApplyFixedAmountPenalty) {
 
-	return new AdministrativeOfficeFeePR(startDate.minus(1000), null, getServiceAgreementTemplate(), fixedAmount,
-		penaltyAmount, whenToApplyFixedAmountPenalty);
-    }
+		if (!startDate.isAfter(getStartDate())) {
+			throw new DomainException(
+					"error.AdministrativeOfficeFeePR.startDate.is.before.then.start.date.of.previous.posting.rule");
+		}
 
-    @Override
-    protected Money subtractFromExemptions(Event event, DateTime when, boolean applyDiscount, Money amountToPay) {
-	if (!applyDiscount) {
-	    return amountToPay;
+		deactivate(startDate);
+
+		return new AdministrativeOfficeFeePR(startDate.minus(1000), null, getServiceAgreementTemplate(), fixedAmount,
+				penaltyAmount, whenToApplyFixedAmountPenalty);
 	}
 
-	final AdministrativeOfficeFeeAndInsuranceEvent administrativeOfficeFeeAndInsuranceEvent = (AdministrativeOfficeFeeAndInsuranceEvent) event;
-	return administrativeOfficeFeeAndInsuranceEvent.hasAdministrativeOfficeFeeAndInsuranceExemption() ? Money.ZERO
-		: amountToPay;
-    }
+	@Override
+	protected Money subtractFromExemptions(Event event, DateTime when, boolean applyDiscount, Money amountToPay) {
+		if (!applyDiscount) {
+			return amountToPay;
+		}
 
-    @Override
-    public List<EntryDTO> calculateEntries(Event event, DateTime when) {
-	final List<EntryDTO> result = new ArrayList<EntryDTO>(super.calculateEntries(event, when));
-	final Iterator<EntryDTO> iterator = result.iterator();
-	while (iterator.hasNext()) {
-	    final EntryDTO entryDTO = iterator.next();
-
-	    if (!entryDTO.getAmountToPay().isPositive()) {
-		iterator.remove();
-	    }
+		final AdministrativeOfficeFeeAndInsuranceEvent administrativeOfficeFeeAndInsuranceEvent =
+				(AdministrativeOfficeFeeAndInsuranceEvent) event;
+		return administrativeOfficeFeeAndInsuranceEvent.hasAdministrativeOfficeFeeAndInsuranceExemption() ? Money.ZERO : amountToPay;
 	}
 
-	return result;
-    }
+	@Override
+	public List<EntryDTO> calculateEntries(Event event, DateTime when) {
+		final List<EntryDTO> result = new ArrayList<EntryDTO>(super.calculateEntries(event, when));
+		final Iterator<EntryDTO> iterator = result.iterator();
+		while (iterator.hasNext()) {
+			final EntryDTO entryDTO = iterator.next();
+
+			if (!entryDTO.getAmountToPay().isPositive()) {
+				iterator.remove();
+			}
+		}
+
+		return result;
+	}
 
 }

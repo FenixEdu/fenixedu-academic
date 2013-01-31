@@ -10,36 +10,37 @@ package net.sourceforge.fenixedu.presentationTier.Action.exceptions;
  */
 public class InvalidPasswordActionException extends FenixActionException {
 
-    // public static String key = "error.exception.invalid.existing.password";
+	// public static String key = "error.exception.invalid.existing.password";
 
-    public InvalidPasswordActionException(Throwable cause) {
-	super(cause.getMessage(), cause);
-    }
+	public InvalidPasswordActionException(Throwable cause) {
+		super(cause.getMessage(), cause);
+	}
 
-    public InvalidPasswordActionException(Object value, Throwable cause) {
-	super(cause.getMessage(), value, cause);
-    }
+	public InvalidPasswordActionException(Object value, Throwable cause) {
+		super(cause.getMessage(), value, cause);
+	}
 
-    public InvalidPasswordActionException(Object[] values, Throwable cause) {
-	super(cause.getMessage(), values, cause);
-    }
+	public InvalidPasswordActionException(Object[] values, Throwable cause) {
+		super(cause.getMessage(), values, cause);
+	}
 
-    /*
-     * public static String getKey() { return get; }
-     */
+	/*
+	 * public static String getKey() { return get; }
+	 */
 
-    /*
-     * public static void setKey(String key) {
-     * InvalidPasswordActionException.key = key; }
-     */
+	/*
+	 * public static void setKey(String key) {
+	 * InvalidPasswordActionException.key = key; }
+	 */
 
-    public String toString() {
-	String result = "[InvalidPasswordActionException\n";
-	result += "property: " + this.getProperty() + "\n";
-	result += "error: " + this.getError() + "\n";
-	result += "cause: " + this.getCause() + "\n";
-	result += "]";
-	return result;
-    }
+	@Override
+	public String toString() {
+		String result = "[InvalidPasswordActionException\n";
+		result += "property: " + this.getProperty() + "\n";
+		result += "error: " + this.getError() + "\n";
+		result += "cause: " + this.getCause() + "\n";
+		result += "]";
+		return result;
+	}
 
 }

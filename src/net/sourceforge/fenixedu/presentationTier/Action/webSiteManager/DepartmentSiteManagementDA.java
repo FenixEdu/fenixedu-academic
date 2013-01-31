@@ -7,24 +7,24 @@ import net.sourceforge.fenixedu.domain.DepartmentSite;
 
 public class DepartmentSiteManagementDA extends CustomUnitSiteManagementDA {
 
-    private Department getDepartment(final HttpServletRequest request) {
-	DepartmentSite site = (DepartmentSite) getSite(request);
-	return site == null ? null : site.getDepartment();
-    }
+	private Department getDepartment(final HttpServletRequest request) {
+		DepartmentSite site = (DepartmentSite) getSite(request);
+		return site == null ? null : site.getDepartment();
+	}
 
-    @Override
-    protected String getAuthorNameForFile(HttpServletRequest request) {
-	return getDepartment(request).getRealName();
-    }
+	@Override
+	protected String getAuthorNameForFile(HttpServletRequest request) {
+		return getDepartment(request).getRealName();
+	}
 
-    @Override
-    protected String getRemoveManagerServiceName() {
-	return "RemoveDepartmentSiteManager";
-    }
+	@Override
+	protected String getRemoveManagerServiceName() {
+		return "RemoveDepartmentSiteManager";
+	}
 
-    @Override
-    protected String getAddManagerServiceName() {
-	return "AddDepartmentSiteManager";
-    }
+	@Override
+	protected String getAddManagerServiceName() {
+		return "AddDepartmentSiteManager";
+	}
 
 }

@@ -8,42 +8,42 @@ import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class CreateConversationMessageBean implements Serializable {
 
-    private MultiLanguageString body;
+	private MultiLanguageString body;
 
-    private Person creatorReference;
+	private Person creatorReference;
 
-    private ConversationThread conversationThreadReference;
+	private ConversationThread conversationThreadReference;
 
-    public CreateConversationMessageBean() {
-	super();
-	creatorReference = null;
-	conversationThreadReference = null;
-    }
+	public CreateConversationMessageBean() {
+		super();
+		creatorReference = null;
+		conversationThreadReference = null;
+	}
 
-    public MultiLanguageString getBody() {
-	return body;
-    }
+	public MultiLanguageString getBody() {
+		return body;
+	}
 
-    public void setBody(MultiLanguageString body) {
-	this.body = body;
-    }
+	public void setBody(MultiLanguageString body) {
+		this.body = body;
+	}
 
-    public Person getCreator() {
-	return this.creatorReference;
+	public Person getCreator() {
+		return this.creatorReference;
 
-    }
+	}
 
-    public void setCreator(Person creator) {
-	this.creatorReference = creator;
-    }
+	public void setCreator(Person creator) {
+		this.creatorReference = creator;
+	}
 
-    public ConversationThread getConversationThread() {
-	return this.conversationThreadReference;
+	public ConversationThread getConversationThread() {
+		return this.conversationThreadReference;
 
-    }
+	}
 
-    public void setConversationThread(ConversationThread conversationThread) {
-	this.conversationThreadReference = conversationThread;
-    }
+	public void setConversationThread(ConversationThread conversationThread) {
+		this.conversationThreadReference = conversationThread;
+	}
 
 }

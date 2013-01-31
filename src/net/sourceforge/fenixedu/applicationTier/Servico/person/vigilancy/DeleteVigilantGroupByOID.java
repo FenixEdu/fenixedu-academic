@@ -7,12 +7,12 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class DeleteVigilantGroupByOID extends FenixService {
 
-    @Service
-    public static void run(Integer idInternal) {
+	@Service
+	public static void run(Integer idInternal) {
 
-	VigilantGroup group = (VigilantGroup) RootDomainObject.readDomainObjectByOID(VigilantGroup.class, idInternal);
-	group.delete();
+		VigilantGroup group = (VigilantGroup) RootDomainObject.readDomainObjectByOID(VigilantGroup.class, idInternal);
+		group.delete();
 
-    }
+	}
 
 }

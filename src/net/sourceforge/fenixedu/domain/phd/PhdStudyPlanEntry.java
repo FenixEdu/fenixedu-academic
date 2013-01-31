@@ -10,73 +10,73 @@ import dml.runtime.RelationAdapter;
 
 abstract public class PhdStudyPlanEntry extends PhdStudyPlanEntry_Base {
 
-    static {
-	PhdStudyPlanPhdStudyPlanEntry.addListener(new RelationAdapter<PhdStudyPlanEntry, PhdStudyPlan>() {
-	    @Override
-	    public void beforeAdd(PhdStudyPlanEntry entry, PhdStudyPlan studyPlan) {
-		if (entry != null && studyPlan != null) {
-		    if (studyPlan.hasSimilarEntry(entry)) {
-			throw new DomainException("error.phd.PhdStudyPlanEntry.found.similar.entry");
-		    }
-		}
-	    }
-	});
-    }
-
-    protected PhdStudyPlanEntry() {
-	super();
-	setRootDomainObject(RootDomainObject.getInstance());
-	setWhenCreated(new DateTime());
-	if (AccessControl.getPerson() != null) {
-	    setCreatedBy(AccessControl.getPerson().getUsername());
+	static {
+		PhdStudyPlanPhdStudyPlanEntry.addListener(new RelationAdapter<PhdStudyPlanEntry, PhdStudyPlan>() {
+			@Override
+			public void beforeAdd(PhdStudyPlanEntry entry, PhdStudyPlan studyPlan) {
+				if (entry != null && studyPlan != null) {
+					if (studyPlan.hasSimilarEntry(entry)) {
+						throw new DomainException("error.phd.PhdStudyPlanEntry.found.similar.entry");
+					}
+				}
+			}
+		});
 	}
-    }
 
-    protected PhdStudyPlanEntry(PhdStudyPlanEntryType type, PhdStudyPlan studyPlan) {
-	this();
+	protected PhdStudyPlanEntry() {
+		super();
+		setRootDomainObject(RootDomainObject.getInstance());
+		setWhenCreated(new DateTime());
+		if (AccessControl.getPerson() != null) {
+			setCreatedBy(AccessControl.getPerson().getUsername());
+		}
+	}
 
-	init(type, studyPlan);
+	protected PhdStudyPlanEntry(PhdStudyPlanEntryType type, PhdStudyPlan studyPlan) {
+		this();
 
-    }
+		init(type, studyPlan);
 
-    protected void init(PhdStudyPlanEntryType type, PhdStudyPlan studyPlan) {
-	check(type, "error.net.sourceforge.fenixedu.domain.phd.PhdStudyPlanEntry.type.cannot.be.null");
-	check(studyPlan, "error.net.sourceforge.fenixedu.domain.phd.PhdStudyPlanEntry.studyPlan.cannot.be.null");
+	}
 
-	super.setType(type);
-	super.setStudyPlan(studyPlan);
-    }
+	protected void init(PhdStudyPlanEntryType type, PhdStudyPlan studyPlan) {
+		check(type, "error.net.sourceforge.fenixedu.domain.phd.PhdStudyPlanEntry.type.cannot.be.null");
+		check(studyPlan, "error.net.sourceforge.fenixedu.domain.phd.PhdStudyPlanEntry.studyPlan.cannot.be.null");
 
-    public boolean isNormal() {
-	return getType() == PhdStudyPlanEntryType.NORMAL;
-    }
+		super.setType(type);
+		super.setStudyPlan(studyPlan);
+	}
 
-    public boolean isPropaedeutic() {
-	return getType() == PhdStudyPlanEntryType.PROPAEDEUTIC;
-    }
+	public boolean isNormal() {
+		return getType() == PhdStudyPlanEntryType.NORMAL;
+	}
 
-    public boolean isExtraCurricular() {
-	return getType() == PhdStudyPlanEntryType.EXTRA_CURRICULAR;
-    }
+	public boolean isPropaedeutic() {
+		return getType() == PhdStudyPlanEntryType.PROPAEDEUTIC;
+	}
 
-    public boolean isInternalEntry() {
-	return false;
-    }
+	public boolean isExtraCurricular() {
+		return getType() == PhdStudyPlanEntryType.EXTRA_CURRICULAR;
+	}
 
-    public boolean isExternalEntry() {
-	return false;
-    }
+	public boolean isInternalEntry() {
+		return false;
+	}
 
-    public void delete() {
-	super.setRootDomainObject(null);
-	super.setStudyPlan(null);
+	public boolean isExternalEntry() {
+		return false;
+	}
 
-	super.deleteDomainObject();
+	public void delete() {
+		super.setRootDomainObject(null);
+		super.setStudyPlan(null);
 
-    }
+		super.deleteDomainObject();
 
-    abstract public String getCourseDescription();
+	}
 
-    abstract public boolean isSimilar(PhdStudyPlanEntry entry);
+	abstract public String getCourseDescription();
+
+	abstract public boolean isSimilar(PhdStudyPlanEntry entry);
 
 }

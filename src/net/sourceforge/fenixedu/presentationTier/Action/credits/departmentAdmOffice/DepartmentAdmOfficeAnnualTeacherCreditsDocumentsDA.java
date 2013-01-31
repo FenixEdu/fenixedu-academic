@@ -16,9 +16,9 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 @Mapping(module = "departmentAdmOffice", path = "/annualTeachingCreditsDocument", scope = "request", parameter = "method")
 public class DepartmentAdmOfficeAnnualTeacherCreditsDocumentsDA extends AnnualTeacherCreditsDocumentsDA {
 
-    @Override
-    public ActionForward getAnnualTeachingCreditsPdf(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws NumberFormatException, FenixServiceException, Exception {
-	return getTeacherCreditsDocument(mapping, request, RoleType.DEPARTMENT_ADMINISTRATIVE_OFFICE);
-    }
+	@Override
+	public ActionForward getAnnualTeachingCreditsPdf(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws NumberFormatException, FenixServiceException, Exception {
+		return getTeacherCreditsDocument(mapping, request, RoleType.DEPARTMENT_ADMINISTRATIVE_OFFICE);
+	}
 }

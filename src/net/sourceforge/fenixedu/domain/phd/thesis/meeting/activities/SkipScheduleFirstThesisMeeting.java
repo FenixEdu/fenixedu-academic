@@ -11,42 +11,42 @@ import net.sourceforge.fenixedu.domain.phd.thesis.meeting.PhdMeetingSchedulingPr
 
 public class SkipScheduleFirstThesisMeeting extends PhdMeetingSchedulingActivity {
 
-    @Override
-    protected void activityPreConditions(PhdMeetingSchedulingProcess process, IUserView userView) {
+	@Override
+	protected void activityPreConditions(PhdMeetingSchedulingProcess process, IUserView userView) {
 
-	if (!process.getThesisProcess().getActiveState().equals(PhdThesisProcessStateType.WAITING_FOR_THESIS_MEETING_SCHEDULING)) {
-	    throw new PreConditionNotValidException();
+		if (!process.getThesisProcess().getActiveState().equals(PhdThesisProcessStateType.WAITING_FOR_THESIS_MEETING_SCHEDULING)) {
+			throw new PreConditionNotValidException();
+		}
+
+		if (!process.getActiveState().equals(PhdMeetingSchedulingProcessStateType.WAITING_FIRST_THESIS_MEETING_SCHEDULE)) {
+			throw new PreConditionNotValidException();
+		}
+
+		if (process.isAllowedToManageProcess(userView)) {
+			return;
+		}
+
+		if (!process.getThesisProcess().isPresidentJuryElement(userView.getPerson())) {
+			throw new PreConditionNotValidException();
+		}
 	}
 
-	if (!process.getActiveState().equals(PhdMeetingSchedulingProcessStateType.WAITING_FIRST_THESIS_MEETING_SCHEDULE)) {
-	    throw new PreConditionNotValidException();
+	@Override
+	protected PhdMeetingSchedulingProcess executeActivity(PhdMeetingSchedulingProcess process, IUserView userView, Object object) {
+
+		final PhdThesisProcessBean bean = (PhdThesisProcessBean) object;
+		final PhdThesisProcess thesisProcess = process.getThesisProcess();
+
+		thesisProcess.setMeetingDate(bean.getScheduledDate());
+		thesisProcess.setMeetingPlace(bean.getScheduledPlace());
+		thesisProcess.createState(PhdThesisProcessStateType.WAITING_FOR_THESIS_DISCUSSION_DATE_SCHEDULING, userView.getPerson(),
+				bean.getRemarks());
+
+		process.addMeeting(PhdMeeting.create(process, bean.getScheduledDate(), bean.getScheduledPlace()));
+		process.createState(PhdMeetingSchedulingProcessStateType.WITHOUT_THESIS_MEETING_REQUEST, userView.getPerson(),
+				bean.getRemarks());
+
+		return process;
 	}
-
-	if (process.isAllowedToManageProcess(userView)) {
-	    return;
-	}
-
-	if (!process.getThesisProcess().isPresidentJuryElement(userView.getPerson())) {
-	    throw new PreConditionNotValidException();
-	}
-    }
-
-    @Override
-    protected PhdMeetingSchedulingProcess executeActivity(PhdMeetingSchedulingProcess process, IUserView userView, Object object) {
-
-	final PhdThesisProcessBean bean = (PhdThesisProcessBean) object;
-	final PhdThesisProcess thesisProcess = process.getThesisProcess();
-
-	thesisProcess.setMeetingDate(bean.getScheduledDate());
-	thesisProcess.setMeetingPlace(bean.getScheduledPlace());
-	thesisProcess.createState(PhdThesisProcessStateType.WAITING_FOR_THESIS_DISCUSSION_DATE_SCHEDULING, userView.getPerson(),
-		bean.getRemarks());
-
-	process.addMeeting(PhdMeeting.create(process, bean.getScheduledDate(), bean.getScheduledPlace()));
-	process.createState(PhdMeetingSchedulingProcessStateType.WITHOUT_THESIS_MEETING_REQUEST, userView.getPerson(),
-		bean.getRemarks());
-
-	return process;
-    }
 
 }

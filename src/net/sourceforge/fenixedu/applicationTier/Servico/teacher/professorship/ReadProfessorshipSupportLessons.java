@@ -22,24 +22,24 @@ import net.sourceforge.fenixedu.domain.Teacher;
  */
 public class ReadProfessorshipSupportLessons extends FenixService {
 
-    public ProfessorshipSupportLessonsDTO run(Integer teacherId, Integer executionCourseId) throws FenixServiceException {
+	public ProfessorshipSupportLessonsDTO run(Integer teacherId, Integer executionCourseId) throws FenixServiceException {
 
-	final ProfessorshipSupportLessonsDTO professorshipSupportLessonsDTO = new ProfessorshipSupportLessonsDTO();
+		final ProfessorshipSupportLessonsDTO professorshipSupportLessonsDTO = new ProfessorshipSupportLessonsDTO();
 
-	final Teacher teacher = rootDomainObject.readTeacherByOID(teacherId);
-	final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);
-	final Professorship professorship = (teacher != null) ? teacher.getProfessorshipByExecutionCourse(executionCourse) : null;
+		final Teacher teacher = rootDomainObject.readTeacherByOID(teacherId);
+		final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);
+		final Professorship professorship = (teacher != null) ? teacher.getProfessorshipByExecutionCourse(executionCourse) : null;
 
-	professorshipSupportLessonsDTO.setInfoProfessorship(InfoProfessorship.newInfoFromDomain(professorship));
+		professorshipSupportLessonsDTO.setInfoProfessorship(InfoProfessorship.newInfoFromDomain(professorship));
 
-	final List<InfoSupportLesson> infoSupportLessons = new ArrayList<InfoSupportLesson>(professorship
-		.getSupportLessonsCount());
-	for (final SupportLesson supportLesson : professorship.getSupportLessonsSet()) {
-	    infoSupportLessons.add(InfoSupportLesson.newInfoFromDomain(supportLesson));
+		final List<InfoSupportLesson> infoSupportLessons =
+				new ArrayList<InfoSupportLesson>(professorship.getSupportLessonsCount());
+		for (final SupportLesson supportLesson : professorship.getSupportLessonsSet()) {
+			infoSupportLessons.add(InfoSupportLesson.newInfoFromDomain(supportLesson));
+		}
+		professorshipSupportLessonsDTO.setInfoSupportLessonList(infoSupportLessons);
+
+		return professorshipSupportLessonsDTO;
 	}
-	professorshipSupportLessonsDTO.setInfoSupportLessonList(infoSupportLessons);
-
-	return professorshipSupportLessonsDTO;
-    }
 
 }

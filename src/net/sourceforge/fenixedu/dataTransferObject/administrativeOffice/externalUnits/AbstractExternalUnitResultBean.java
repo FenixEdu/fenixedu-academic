@@ -13,81 +13,81 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils;
 
 public abstract class AbstractExternalUnitResultBean implements Serializable {
 
-    transient protected static final List<AccountabilityTypeEnum> ACCOUNTABILITY_TYPES = Arrays
-	    .asList(new AccountabilityTypeEnum[] { AccountabilityTypeEnum.GEOGRAPHIC,
-		    AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE, AccountabilityTypeEnum.ACADEMIC_STRUCTURE });
+	transient protected static final List<AccountabilityTypeEnum> ACCOUNTABILITY_TYPES = Arrays
+			.asList(new AccountabilityTypeEnum[] { AccountabilityTypeEnum.GEOGRAPHIC,
+					AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE, AccountabilityTypeEnum.ACADEMIC_STRUCTURE });
 
-    private PartyTypeEnum parentUnitType;
-    private String fullName;
+	private PartyTypeEnum parentUnitType;
+	private String fullName;
 
-    public AbstractExternalUnitResultBean() {
-    }
-
-    public PartyTypeEnum getParentUnitType() {
-	return parentUnitType;
-    }
-
-    public void setParentUnitType(PartyTypeEnum parentUnitType) {
-	this.parentUnitType = parentUnitType;
-    }
-
-    private boolean hasParentUnitType() {
-	return getParentUnitType() != null;
-    }
-
-    protected List<Unit> searchFullPath() {
-	final List<Unit> units = UnitUtils.getUnitFullPath(getUnit(), ACCOUNTABILITY_TYPES);
-	if (hasParentUnitType()) {
-	    removeAllUnitsUntilParentUnitType(units);
+	public AbstractExternalUnitResultBean() {
 	}
-	return units;
-    }
 
-    private void removeAllUnitsUntilParentUnitType(final List<Unit> units) {
-	final Iterator<Unit> iterUnits = units.iterator();
-	while (iterUnits.hasNext()) {
-	    if (iterUnits.next().getType() == getParentUnitType()) {
-		iterUnits.remove();
-		break;
-	    } else {
-		iterUnits.remove();
-	    }
+	public PartyTypeEnum getParentUnitType() {
+		return parentUnitType;
 	}
-    }
 
-    public String getNumberOfUniversities() {
-	return "-";
-    }
-
-    public String getNumberOfSchools() {
-	return "-";
-    }
-
-    public String getNumberOfDepartments() {
-	return "-";
-    }
-
-    public String getNumberOfExternalCurricularCourses() {
-	return "-";
-    }
-
-    public String getFullName() {
-	if (this.fullName == null) {
-	    final StringBuilder unitFullPathName = UnitUtils.getUnitFullPathName(getUnit(), ACCOUNTABILITY_TYPES);
-	    setFullName(unitFullPathName.toString() + " > " + getName());
+	public void setParentUnitType(PartyTypeEnum parentUnitType) {
+		this.parentUnitType = parentUnitType;
 	}
-	return this.fullName;
-    }
 
-    protected void setFullName(final String fullName) {
-	this.fullName = fullName;
-    }
+	private boolean hasParentUnitType() {
+		return getParentUnitType() != null;
+	}
 
-    abstract public Unit getUnit();
+	protected List<Unit> searchFullPath() {
+		final List<Unit> units = UnitUtils.getUnitFullPath(getUnit(), ACCOUNTABILITY_TYPES);
+		if (hasParentUnitType()) {
+			removeAllUnitsUntilParentUnitType(units);
+		}
+		return units;
+	}
 
-    abstract public Enum getType();
+	private void removeAllUnitsUntilParentUnitType(final List<Unit> units) {
+		final Iterator<Unit> iterUnits = units.iterator();
+		while (iterUnits.hasNext()) {
+			if (iterUnits.next().getType() == getParentUnitType()) {
+				iterUnits.remove();
+				break;
+			} else {
+				iterUnits.remove();
+			}
+		}
+	}
 
-    abstract public List<LinkObject> getFullPath();
+	public String getNumberOfUniversities() {
+		return "-";
+	}
 
-    abstract public String getName();
+	public String getNumberOfSchools() {
+		return "-";
+	}
+
+	public String getNumberOfDepartments() {
+		return "-";
+	}
+
+	public String getNumberOfExternalCurricularCourses() {
+		return "-";
+	}
+
+	public String getFullName() {
+		if (this.fullName == null) {
+			final StringBuilder unitFullPathName = UnitUtils.getUnitFullPathName(getUnit(), ACCOUNTABILITY_TYPES);
+			setFullName(unitFullPathName.toString() + " > " + getName());
+		}
+		return this.fullName;
+	}
+
+	protected void setFullName(final String fullName) {
+		this.fullName = fullName;
+	}
+
+	abstract public Unit getUnit();
+
+	abstract public Enum getType();
+
+	abstract public List<LinkObject> getFullPath();
+
+	abstract public String getName();
 }

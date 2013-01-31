@@ -8,22 +8,22 @@ import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class ManagementCouncilSite extends ManagementCouncilSite_Base {
 
-    public ManagementCouncilSite(ManagementCouncilUnit unit) {
-	super();
-	setUnit(unit);
-    }
+	public ManagementCouncilSite(ManagementCouncilUnit unit) {
+		super();
+		setUnit(unit);
+	}
 
-    @Override
-    public IGroup getOwner() {
-	return new GroupUnion(new FixedSetGroup(getManagers()));
-    }
+	@Override
+	public IGroup getOwner() {
+		return new GroupUnion(new FixedSetGroup(getManagers()));
+	}
 
-    @Override
-    public void appendReversePathPart(final StringBuilder stringBuilder) {
-    }
+	@Override
+	public void appendReversePathPart(final StringBuilder stringBuilder) {
+	}
 
-    @Override
-    public MultiLanguageString getName() {
-	return new MultiLanguageString("");
-    }
+	@Override
+	public MultiLanguageString getName() {
+		return new MultiLanguageString("");
+	}
 }

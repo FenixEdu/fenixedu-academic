@@ -6,41 +6,41 @@ import net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity.Standalo
 
 public class CreateStandaloneEnrolmentGratuityPRBean extends CreateGratuityPostingRuleBean {
 
-    static private final long serialVersionUID = 1L;
+	static private final long serialVersionUID = 1L;
 
-    private BigDecimal ectsForYear;
+	private BigDecimal ectsForYear;
 
-    private BigDecimal gratuityFactor;
+	private BigDecimal gratuityFactor;
 
-    private BigDecimal ectsFactor;
+	private BigDecimal ectsFactor;
 
-    public CreateStandaloneEnrolmentGratuityPRBean() {
-	super();
-	super.setRule(StandaloneEnrolmentGratuityPR.class);
-    }
+	public CreateStandaloneEnrolmentGratuityPRBean() {
+		super();
+		super.setRule(StandaloneEnrolmentGratuityPR.class);
+	}
 
-    public BigDecimal getEctsForYear() {
-	return ectsForYear;
-    }
+	public BigDecimal getEctsForYear() {
+		return ectsForYear;
+	}
 
-    public void setEctsForYear(BigDecimal ectsForYear) {
-	this.ectsForYear = ectsForYear;
-    }
+	public void setEctsForYear(BigDecimal ectsForYear) {
+		this.ectsForYear = ectsForYear;
+	}
 
-    public BigDecimal getGratuityFactor() {
-	return gratuityFactor;
-    }
+	public BigDecimal getGratuityFactor() {
+		return gratuityFactor;
+	}
 
-    public void setGratuityFactor(BigDecimal gratuityFactor) {
-	this.gratuityFactor = gratuityFactor;
-    }
+	public void setGratuityFactor(BigDecimal gratuityFactor) {
+		this.gratuityFactor = gratuityFactor;
+	}
 
-    public BigDecimal getEctsFactor() {
-	return ectsFactor;
-    }
+	public BigDecimal getEctsFactor() {
+		return ectsFactor;
+	}
 
-    public void setEctsFactor(BigDecimal ectsFactor) {
-	this.ectsFactor = ectsFactor;
-    }
+	public void setEctsFactor(BigDecimal ectsFactor) {
+		this.ectsFactor = ectsFactor;
+	}
 
 }

@@ -11,26 +11,26 @@ import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
  */
 public class GetEnrolmentGrade {
 
-    final public InfoEnrolmentEvaluation run(final Enrolment enrolment) {
-	if (enrolment == null) {
-	    return null;
+	final public InfoEnrolmentEvaluation run(final Enrolment enrolment) {
+		if (enrolment == null) {
+			return null;
+		}
+
+		return getInfoLatestEvaluation(enrolment.getLatestEnrolmentEvaluation());
 	}
 
-	return getInfoLatestEvaluation(enrolment.getLatestEnrolmentEvaluation());
-    }
+	final private InfoEnrolmentEvaluation getInfoLatestEvaluation(final EnrolmentEvaluation latestEvaluation) {
 
-    final private InfoEnrolmentEvaluation getInfoLatestEvaluation(final EnrolmentEvaluation latestEvaluation) {
+		final InfoEnrolmentEvaluation infolatestEvaluation = InfoEnrolmentEvaluation.newInfoFromDomain(latestEvaluation);
+		if (latestEvaluation.hasPerson()) {
+			infolatestEvaluation.setInfoEmployee(InfoPerson.newInfoFromDomain(latestEvaluation.getPerson()));
+			if (latestEvaluation.hasPersonResponsibleForGrade()) {
+				infolatestEvaluation.setInfoPersonResponsibleForGrade(InfoPerson.newInfoFromDomain(latestEvaluation
+						.getPersonResponsibleForGrade()));
+			}
+		}
 
-	final InfoEnrolmentEvaluation infolatestEvaluation = InfoEnrolmentEvaluation.newInfoFromDomain(latestEvaluation);
-	if (latestEvaluation.hasPerson()) {
-	    infolatestEvaluation.setInfoEmployee(InfoPerson.newInfoFromDomain(latestEvaluation.getPerson()));
-	    if (latestEvaluation.hasPersonResponsibleForGrade()) {
-		infolatestEvaluation.setInfoPersonResponsibleForGrade(InfoPerson.newInfoFromDomain(latestEvaluation
-			.getPersonResponsibleForGrade()));
-	    }
+		return infolatestEvaluation;
 	}
-
-	return infolatestEvaluation;
-    }
 
 }

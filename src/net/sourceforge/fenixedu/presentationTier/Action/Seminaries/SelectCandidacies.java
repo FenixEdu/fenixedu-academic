@@ -35,95 +35,104 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
  */
 // TODO: this action IS NOT ready to handle multiple seminaries. It will need a
 // select box to select which seminary's candidacies to view
-@Mapping(module = "teacher", path = "/selectCandidacies", attribute = "selectCandidaciesForm", formBean = "selectCandidaciesForm", scope = "request", parameter = "method")
+@Mapping(
+		module = "teacher",
+		path = "/selectCandidacies",
+		attribute = "selectCandidaciesForm",
+		formBean = "selectCandidaciesForm",
+		scope = "request",
+		parameter = "method")
 @Forwards(value = {
-	@Forward(name = "prepareForm", path = "/selectCandidacies.do?method=prepare"),
-	@Forward(name = "showSelectCandidacies", path = "/teacher/showSelectCandidacies.jsp", tileProperties = @Tile(navLocal = "/teacher/showSeminariesIndex_bd.jsp", title = "private.seminars.selectcandidate")) })
+		@Forward(name = "prepareForm", path = "/selectCandidacies.do?method=prepare"),
+		@Forward(name = "showSelectCandidacies", path = "/teacher/showSelectCandidacies.jsp", tileProperties = @Tile(
+				navLocal = "/teacher/showSeminariesIndex_bd.jsp",
+				title = "private.seminars.selectcandidate")) })
 public class SelectCandidacies extends FenixDispatchAction {
-    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-	    throws FenixActionException, FenixFilterException {
-	IUserView userView = UserView.getUser();
-	ActionForward destiny = null;
-	String seminaryIDString = request.getParameter("seminaryID");
-	Integer seminaryID = null;
-	Integer wildcard = new Integer(-1);
-	try {
-	    seminaryID = new Integer(seminaryIDString);
-	} catch (NumberFormatException ex) {
-	    seminaryID = wildcard;
-	}
-
-	Object[] args = { new Boolean(false), seminaryID };
-	try {
-	    SelectCandidaciesDTO serviceResult = (SelectCandidaciesDTO) ServiceUtils.executeService("SelectCandidaciesService",
-		    args);
-	    request.setAttribute("seminaries", serviceResult.getSeminaries());
-	    request.setAttribute("candidacies", serviceResult.getCandidacies());
-	} catch (FenixServiceException e) {
-	    throw new FenixActionException(e);
-	}
-
-	destiny = mapping.findForward("showSelectCandidacies");
-	return destiny;
-    }
-
-    public List getNewSelectedStudents(Integer[] selectedStudents, Integer[] previousUnselected) {
-	List newSelectedStudents = new LinkedList();
-	for (int i = 0; i < selectedStudents.length; i++) {
-	    for (int j = 0; j < previousUnselected.length; j++) {
-		if (selectedStudents[i].equals(previousUnselected[j])) {
-		    newSelectedStudents.add(selectedStudents[i]);
-		    break;
+	public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+			throws FenixActionException, FenixFilterException {
+		IUserView userView = UserView.getUser();
+		ActionForward destiny = null;
+		String seminaryIDString = request.getParameter("seminaryID");
+		Integer seminaryID = null;
+		Integer wildcard = new Integer(-1);
+		try {
+			seminaryID = new Integer(seminaryIDString);
+		} catch (NumberFormatException ex) {
+			seminaryID = wildcard;
 		}
-	    }
-	}
-	return newSelectedStudents;
-    }
 
-    public List getNewUnselectedStudents(Integer[] selectedStudents, Integer[] previousSelected) {
-	List newUnselectedStudents = new LinkedList();
-	for (int i = 0; i < previousSelected.length; i++)
-	    newUnselectedStudents.add(previousSelected[i]);
-	//
-	//
-	for (int i = 0; i < previousSelected.length; i++) {
-	    for (int j = 0; j < selectedStudents.length; j++) {
-		if (previousSelected[i].equals(selectedStudents[j])) {
-		    newUnselectedStudents.remove(previousSelected[i]);
-		    break;
+		Object[] args = { new Boolean(false), seminaryID };
+		try {
+			SelectCandidaciesDTO serviceResult =
+					(SelectCandidaciesDTO) ServiceUtils.executeService("SelectCandidaciesService", args);
+			request.setAttribute("seminaries", serviceResult.getSeminaries());
+			request.setAttribute("candidacies", serviceResult.getCandidacies());
+		} catch (FenixServiceException e) {
+			throw new FenixActionException(e);
 		}
-	    }
-	}
-	return newUnselectedStudents;
-    }
 
-    public ActionForward changeSelection(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixActionException, FenixFilterException {
-	IUserView userView = getUserView(request);
-	DynaActionForm selectCases = (DynaActionForm) form;
-	Integer[] selectedStudents = null;
-	Integer[] previousSelected = null;
-	Integer[] previousUnselected = null;
-	try {
-	    selectedStudents = (Integer[]) selectCases.get("selectedStudents");
-	    previousSelected = (Integer[]) selectCases.get("previousSelected");
-	    previousUnselected = (Integer[]) selectCases.get("previousUnselected");
-	} catch (Exception ex) {
-	    ex.printStackTrace();
-	    throw new FenixActionException();
+		destiny = mapping.findForward("showSelectCandidacies");
+		return destiny;
 	}
-	if (selectedStudents == null || previousSelected == null || previousUnselected == null) {
-	    throw new FenixActionException();
+
+	public List getNewSelectedStudents(Integer[] selectedStudents, Integer[] previousUnselected) {
+		List newSelectedStudents = new LinkedList();
+		for (Integer selectedStudent : selectedStudents) {
+			for (Integer element : previousUnselected) {
+				if (selectedStudent.equals(element)) {
+					newSelectedStudents.add(selectedStudent);
+					break;
+				}
+			}
+		}
+		return newSelectedStudents;
 	}
-	List changedStatusCandidaciesIds = new LinkedList();
-	changedStatusCandidaciesIds.addAll(this.getNewSelectedStudents(selectedStudents, previousUnselected));
-	changedStatusCandidaciesIds.addAll(this.getNewUnselectedStudents(selectedStudents, previousSelected));
 
-	ChangeCandidacyApprovanceStatus.run(changedStatusCandidaciesIds);
+	public List getNewUnselectedStudents(Integer[] selectedStudents, Integer[] previousSelected) {
+		List newUnselectedStudents = new LinkedList();
+		for (Integer element : previousSelected) {
+			newUnselectedStudents.add(element);
+		}
+		//
+		//
+		for (Integer element : previousSelected) {
+			for (Integer selectedStudent : selectedStudents) {
+				if (element.equals(selectedStudent)) {
+					newUnselectedStudents.remove(element);
+					break;
+				}
+			}
+		}
+		return newUnselectedStudents;
+	}
 
-	// modified by Fernanda Quitério
-	// destiny = mapping.findForward("prepareForm");
-	// return destiny;
-	return prepare(mapping, form, request, response);
-    }
+	public ActionForward changeSelection(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws FenixActionException, FenixFilterException {
+		IUserView userView = getUserView(request);
+		DynaActionForm selectCases = (DynaActionForm) form;
+		Integer[] selectedStudents = null;
+		Integer[] previousSelected = null;
+		Integer[] previousUnselected = null;
+		try {
+			selectedStudents = (Integer[]) selectCases.get("selectedStudents");
+			previousSelected = (Integer[]) selectCases.get("previousSelected");
+			previousUnselected = (Integer[]) selectCases.get("previousUnselected");
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			throw new FenixActionException();
+		}
+		if (selectedStudents == null || previousSelected == null || previousUnselected == null) {
+			throw new FenixActionException();
+		}
+		List changedStatusCandidaciesIds = new LinkedList();
+		changedStatusCandidaciesIds.addAll(this.getNewSelectedStudents(selectedStudents, previousUnselected));
+		changedStatusCandidaciesIds.addAll(this.getNewUnselectedStudents(selectedStudents, previousSelected));
+
+		ChangeCandidacyApprovanceStatus.run(changedStatusCandidaciesIds);
+
+		// modified by Fernanda Quitério
+		// destiny = mapping.findForward("prepareForm");
+		// return destiny;
+		return prepare(mapping, form, request, response);
+	}
 }

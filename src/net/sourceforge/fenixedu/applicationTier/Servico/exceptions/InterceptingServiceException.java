@@ -13,15 +13,15 @@ package net.sourceforge.fenixedu.applicationTier.Servico.exceptions;
 
 public class InterceptingServiceException extends FenixServiceException {
 
-    public InterceptingServiceException() {
-    }
+	public InterceptingServiceException() {
+	}
 
-    public InterceptingServiceException(Throwable cause) {
-	super(cause);
-    }
+	public InterceptingServiceException(Throwable cause) {
+		super(cause);
+	}
 
-    public InterceptingServiceException(String message, Throwable cause) {
-	super(message, cause);
-    }
+	public InterceptingServiceException(String message, Throwable cause) {
+		super(message, cause);
+	}
 
 }

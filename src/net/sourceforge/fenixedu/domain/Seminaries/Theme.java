@@ -18,14 +18,14 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
  */
 public class Theme extends Theme_Base {
 
-    public Theme() {
-	super();
+	public Theme() {
+		super();
 
-	setRootDomainObject(RootDomainObject.getInstance());
-    }
+		setRootDomainObject(RootDomainObject.getInstance());
+	}
 
-    public static List<Theme> getAllThemes() {
-	return RootDomainObject.getInstance().getThemes();
-    }
+	public static List<Theme> getAllThemes() {
+		return RootDomainObject.getInstance().getThemes();
+	}
 
 }

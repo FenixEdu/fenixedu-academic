@@ -10,34 +10,34 @@ import net.sourceforge.fenixedu.domain.precedences.Precedence;
 
 public class InfoPrecedence extends InfoObject {
 
-    protected InfoCurricularCourse infoCurricularCourse;
+	protected InfoCurricularCourse infoCurricularCourse;
 
-    public InfoPrecedence() {
-    }
-
-    public InfoCurricularCourse getInfoCurricularCourse() {
-	return infoCurricularCourse;
-    }
-
-    public void setInfoCurricularCourse(InfoCurricularCourse infoCurricularCourse) {
-	this.infoCurricularCourse = infoCurricularCourse;
-    }
-
-    public void copyFromDomain(Precedence precedence) {
-	super.copyFromDomain(precedence);
-	this.setInfoCurricularCourse(InfoCurricularCourse.newInfoFromDomain(precedence.getCurricularCourse()));
-    }
-
-    public static InfoPrecedence newInfoFromDomain(Precedence precedence) {
-
-	InfoPrecedence infoPrecedence = null;
-
-	if (precedence != null) {
-	    infoPrecedence = new InfoPrecedence();
-	    infoPrecedence.copyFromDomain(precedence);
+	public InfoPrecedence() {
 	}
 
-	return infoPrecedence;
-    }
+	public InfoCurricularCourse getInfoCurricularCourse() {
+		return infoCurricularCourse;
+	}
+
+	public void setInfoCurricularCourse(InfoCurricularCourse infoCurricularCourse) {
+		this.infoCurricularCourse = infoCurricularCourse;
+	}
+
+	public void copyFromDomain(Precedence precedence) {
+		super.copyFromDomain(precedence);
+		this.setInfoCurricularCourse(InfoCurricularCourse.newInfoFromDomain(precedence.getCurricularCourse()));
+	}
+
+	public static InfoPrecedence newInfoFromDomain(Precedence precedence) {
+
+		InfoPrecedence infoPrecedence = null;
+
+		if (precedence != null) {
+			infoPrecedence = new InfoPrecedence();
+			infoPrecedence.copyFromDomain(precedence);
+		}
+
+		return infoPrecedence;
+	}
 
 }

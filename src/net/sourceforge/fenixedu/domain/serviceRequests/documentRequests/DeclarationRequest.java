@@ -8,122 +8,122 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 abstract public class DeclarationRequest extends DeclarationRequest_Base {
 
-    protected DeclarationRequest() {
-	super();
-	super.setNumberOfPages(0);
-    }
-
-    final protected void init(final DocumentRequestCreateBean bean) {
-	super.init(bean);
-
-	super.checkParameters(bean);
-	super.setDocumentPurposeType(bean.getChosenDocumentPurposeType());
-	super.setOtherDocumentPurposeTypeDescription(bean.getOtherPurpose());
-    }
-
-    static final public DeclarationRequest create(final DocumentRequestCreateBean bean) {
-	switch (bean.getChosenDocumentRequestType()) {
-	case SCHOOL_REGISTRATION_DECLARATION:
-	    return new SchoolRegistrationDeclarationRequest(bean);
-	case ENROLMENT_DECLARATION:
-	    return new EnrolmentDeclarationRequest(bean);
-	case IRS_DECLARATION:
-	    return new IRSDeclarationRequest(bean);
-	case GENERIC_DECLARATION:
-	    return new GenericDeclarationRequest(bean);
+	protected DeclarationRequest() {
+		super();
+		super.setNumberOfPages(0);
 	}
 
-	return null;
-    }
+	final protected void init(final DocumentRequestCreateBean bean) {
+		super.init(bean);
 
-    @Override
-    final public void setDocumentPurposeType(DocumentPurposeType documentPurposeType) {
-	throw new DomainException("error.serviceRequests.documentRequests.DeclarationRequest.cannot.modify.documentPurposeType");
-    }
-
-    @Override
-    final public void setOtherDocumentPurposeTypeDescription(String otherDocumentTypeDescription) {
-	throw new DomainException(
-		"error.serviceRequests.documentRequests.DeclarationRequest.cannot.modify.otherDocumentTypeDescription");
-    }
-
-    @Override
-    final public Boolean getUrgentRequest() {
-	return Boolean.FALSE;
-    }
-
-    final public void edit(final DocumentRequestBean documentRequestBean) {
-
-	if (isPayable() && isPayed() && !getNumberOfPages().equals(documentRequestBean.getNumberOfPages())) {
-	    throw new DomainException("error.serviceRequests.documentRequests.cannot.change.numberOfPages.on.payed.documents");
+		super.checkParameters(bean);
+		super.setDocumentPurposeType(bean.getChosenDocumentPurposeType());
+		super.setOtherDocumentPurposeTypeDescription(bean.getOtherPurpose());
 	}
 
-	super.edit(documentRequestBean);
-	super.setNumberOfPages(documentRequestBean.getNumberOfPages());
-    }
+	static final public DeclarationRequest create(final DocumentRequestCreateBean bean) {
+		switch (bean.getChosenDocumentRequestType()) {
+		case SCHOOL_REGISTRATION_DECLARATION:
+			return new SchoolRegistrationDeclarationRequest(bean);
+		case ENROLMENT_DECLARATION:
+			return new EnrolmentDeclarationRequest(bean);
+		case IRS_DECLARATION:
+			return new IRSDeclarationRequest(bean);
+		case GENERIC_DECLARATION:
+			return new GenericDeclarationRequest(bean);
+		}
 
-    @Override
-    protected void internalChangeState(AcademicServiceRequestBean academicServiceRequestBean) {
-	super.internalChangeState(academicServiceRequestBean);
-
-	if (academicServiceRequestBean.isToConclude()) {
-	    if (getNumberOfPages() == null || getNumberOfPages().intValue() == 0) {
-		throw new DomainException("error.serviceRequests.documentRequests.numberOfPages.must.be.set");
-	    }
-
-	    if (!isFree()) {
-		new DeclarationRequestEvent(getAdministrativeOffice(), getEventType(), getRegistration().getPerson(), this);
-	    }
+		return null;
 	}
-    }
 
-    /**
-     * Important: Notice that this method's return value may not be the same
-     * before and after conclusion of the academic service request.
-     */
-    @Override
-    final public boolean isFree() {
-	if (getDocumentPurposeType() == DocumentPurposeType.PPRE) {
-	    return false;
+	@Override
+	final public void setDocumentPurposeType(DocumentPurposeType documentPurposeType) {
+		throw new DomainException("error.serviceRequests.documentRequests.DeclarationRequest.cannot.modify.documentPurposeType");
 	}
-	return super.isFree() || hasFreeDeclarationRequests();
-    }
 
-    abstract protected boolean hasFreeDeclarationRequests();
+	@Override
+	final public void setOtherDocumentPurposeTypeDescription(String otherDocumentTypeDescription) {
+		throw new DomainException(
+				"error.serviceRequests.documentRequests.DeclarationRequest.cannot.modify.otherDocumentTypeDescription");
+	}
 
-    @Override
-    public boolean isPayedUponCreation() {
-	return false;
-    }
+	@Override
+	final public Boolean getUrgentRequest() {
+		return Boolean.FALSE;
+	}
 
-    @Override
-    public boolean isPagedDocument() {
-	return true;
-    }
+	final public void edit(final DocumentRequestBean documentRequestBean) {
 
-    @Override
-    public boolean isToPrint() {
-	return true;
-    }
+		if (isPayable() && isPayed() && !getNumberOfPages().equals(documentRequestBean.getNumberOfPages())) {
+			throw new DomainException("error.serviceRequests.documentRequests.cannot.change.numberOfPages.on.payed.documents");
+		}
 
-    @Override
-    public boolean isPossibleToSendToOtherEntity() {
-	return false;
-    }
-    
-    @Override
-    public boolean isManagedWithRectorateSubmissionBatch() {
-        return false;
-    }
+		super.edit(documentRequestBean);
+		super.setNumberOfPages(documentRequestBean.getNumberOfPages());
+	}
 
-    @Override
-    public boolean isAvailableForTransitedRegistrations() {
-	return false;
-    }
+	@Override
+	protected void internalChangeState(AcademicServiceRequestBean academicServiceRequestBean) {
+		super.internalChangeState(academicServiceRequestBean);
 
-    @Override
-    public boolean hasPersonalInfo() {
-	return false;
-    }
+		if (academicServiceRequestBean.isToConclude()) {
+			if (getNumberOfPages() == null || getNumberOfPages().intValue() == 0) {
+				throw new DomainException("error.serviceRequests.documentRequests.numberOfPages.must.be.set");
+			}
+
+			if (!isFree()) {
+				new DeclarationRequestEvent(getAdministrativeOffice(), getEventType(), getRegistration().getPerson(), this);
+			}
+		}
+	}
+
+	/**
+	 * Important: Notice that this method's return value may not be the same
+	 * before and after conclusion of the academic service request.
+	 */
+	@Override
+	final public boolean isFree() {
+		if (getDocumentPurposeType() == DocumentPurposeType.PPRE) {
+			return false;
+		}
+		return super.isFree() || hasFreeDeclarationRequests();
+	}
+
+	abstract protected boolean hasFreeDeclarationRequests();
+
+	@Override
+	public boolean isPayedUponCreation() {
+		return false;
+	}
+
+	@Override
+	public boolean isPagedDocument() {
+		return true;
+	}
+
+	@Override
+	public boolean isToPrint() {
+		return true;
+	}
+
+	@Override
+	public boolean isPossibleToSendToOtherEntity() {
+		return false;
+	}
+
+	@Override
+	public boolean isManagedWithRectorateSubmissionBatch() {
+		return false;
+	}
+
+	@Override
+	public boolean isAvailableForTransitedRegistrations() {
+		return false;
+	}
+
+	@Override
+	public boolean hasPersonalInfo() {
+		return false;
+	}
 
 }

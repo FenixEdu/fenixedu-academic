@@ -16,21 +16,21 @@ import net.sourceforge.fenixedu.domain.Teacher;
  */
 public class ReadDepartmentTeachersByDepartmentIDAndExecutionYearID extends FenixService {
 
-    public List<Teacher> run(Integer departmentID, Integer executionYearID) throws FenixServiceException {
-	Department department = rootDomainObject.readDepartmentByOID(departmentID);
+	public List<Teacher> run(Integer departmentID, Integer executionYearID) throws FenixServiceException {
+		Department department = rootDomainObject.readDepartmentByOID(departmentID);
 
-	List<Teacher> teachersFromDepartment = new ArrayList<Teacher>();
+		List<Teacher> teachersFromDepartment = new ArrayList<Teacher>();
 
-	if (executionYearID != null) {
-	    ExecutionYear executionYear = rootDomainObject.readExecutionYearByOID(executionYearID);
+		if (executionYearID != null) {
+			ExecutionYear executionYear = rootDomainObject.readExecutionYearByOID(executionYearID);
 
-	    teachersFromDepartment = department.getAllTeachers(executionYear.getBeginDateYearMonthDay(), executionYear
-		    .getEndDateYearMonthDay());
+			teachersFromDepartment =
+					department.getAllTeachers(executionYear.getBeginDateYearMonthDay(), executionYear.getEndDateYearMonthDay());
 
-	} else {
-	    teachersFromDepartment = department.getAllTeachers();
+		} else {
+			teachersFromDepartment = department.getAllTeachers();
+		}
+
+		return teachersFromDepartment;
 	}
-
-	return teachersFromDepartment;
-    }
 }

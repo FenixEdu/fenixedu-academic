@@ -27,105 +27,105 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 abstract public class AbstractCurriculumLinesLocationManagementDA extends FenixDispatchAction {
 
-    private ActionForward prepare(final ActionMapping mapping, final HttpServletRequest request, final boolean isWithRules) {
-	request.setAttribute("studentCurricularPlan", getStudentCurricularPlan(request));
-	request.setAttribute("withRules", isWithRules);
-	return mapping.findForward("showCurriculum");
-    }
-
-    public ActionForward prepareWithoutRules(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
-	return prepare(mapping, request, false);
-    }
-
-    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
-	return prepare(mapping, request, true);
-    }
-
-    public ActionForward chooseNewDestination(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
-
-	final List<CurriculumLine> selectedCurriculumLines = getSelectedCurriculumLines(request);
-
-	if (selectedCurriculumLines.isEmpty()) {
-	    addActionMessage(request, "label.student.moveCurriculumLines.curriculumLines.selection.required");
-	    return prepare(mapping, request, isWithRules(request));
+	private ActionForward prepare(final ActionMapping mapping, final HttpServletRequest request, final boolean isWithRules) {
+		request.setAttribute("studentCurricularPlan", getStudentCurricularPlan(request));
+		request.setAttribute("withRules", isWithRules);
+		return mapping.findForward("showCurriculum");
 	}
 
-	final boolean withRules = isWithRules(request);
-	final MoveCurriculumLinesBean bean = MoveCurriculumLinesBean.buildFrom(selectedCurriculumLines, withRules);
-	bean.setStudentCurricularPlan(getStudentCurricularPlan(request));
-	bean.withRules(withRules);
-	request.setAttribute("moveCurriculumLinesBean", bean);
-
-	return mapping.findForward("chooseNewLocation");
-    }
-
-    protected boolean isWithRules(final HttpServletRequest request) {
-	return Boolean.valueOf((String) getFromRequest(request, "withRules")).booleanValue();
-    }
-
-    public ActionForward moveCurriculumLines(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
-
-	final MoveCurriculumLinesBean moveCurriculumLinesBean = getRenderedObject("move-curriculum-lines-bean");
-
-	if (!RenderUtils.getViewState("move-curriculum-lines-bean-entries").isValid()) {
-	    request.setAttribute("moveCurriculumLinesBean", moveCurriculumLinesBean);
-	    return mapping.findForward("chooseNewLocation");
+	public ActionForward prepareWithoutRules(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) {
+		return prepare(mapping, request, false);
 	}
 
-	try {
-	    MoveCurriculumLines.run(moveCurriculumLinesBean);
-	} catch (final EnrollmentDomainException e) {
-	    addRuleResultMessagesToActionMessages(request, e.getFalseResult());
-	    request.setAttribute("moveCurriculumLinesBean", moveCurriculumLinesBean);
-	    return mapping.findForward("chooseNewLocation");
-
-	} catch (final IllegalDataAccessException e) {
-	    addActionMessage(request, "error.NotAuthorized");
-	    request.setAttribute("moveCurriculumLinesBean", moveCurriculumLinesBean);
-	    return mapping.findForward("chooseNewLocation");
-
-	} catch (final DomainException e) {
-	    addActionMessage(request, e.getMessage(), e.getArgs());
-	    request.setAttribute("moveCurriculumLinesBean", moveCurriculumLinesBean);
-	    return mapping.findForward("chooseNewLocation");
+	public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+		return prepare(mapping, request, true);
 	}
 
-	request.setAttribute("studentCurricularPlan", moveCurriculumLinesBean.getStudentCurricularPlan());
-	request.setAttribute("withRules", moveCurriculumLinesBean.isWithRules());
-	return mapping.findForward("showCurriculum");
-    }
+	public ActionForward chooseNewDestination(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) {
 
-    private void addRuleResultMessagesToActionMessages(HttpServletRequest request, RuleResult... falseRuleResults) {
-	for (final RuleResult ruleResult : falseRuleResults) {
-	    for (final RuleResultMessage message : ruleResult.getMessages()) {
-		if (message.isToTranslate()) {
-		    addActionMessage(request, message.getMessage(), message.getArgs());
-		} else {
-		    addActionMessageLiteral(request, message.getMessage());
+		final List<CurriculumLine> selectedCurriculumLines = getSelectedCurriculumLines(request);
+
+		if (selectedCurriculumLines.isEmpty()) {
+			addActionMessage(request, "label.student.moveCurriculumLines.curriculumLines.selection.required");
+			return prepare(mapping, request, isWithRules(request));
 		}
-	    }
-	}
-    }
 
-    private List<CurriculumLine> getSelectedCurriculumLines(HttpServletRequest request) {
-	final String[] selectedCurriculumLineIds = request.getParameterValues("selectedCurriculumLineIds");
-	if (selectedCurriculumLineIds == null) {
-	    return Collections.emptyList();
-	}
+		final boolean withRules = isWithRules(request);
+		final MoveCurriculumLinesBean bean = MoveCurriculumLinesBean.buildFrom(selectedCurriculumLines, withRules);
+		bean.setStudentCurricularPlan(getStudentCurricularPlan(request));
+		bean.withRules(withRules);
+		request.setAttribute("moveCurriculumLinesBean", bean);
 
-	final List<CurriculumLine> result = new ArrayList<CurriculumLine>();
-	for (final String curriculumLineIdString : selectedCurriculumLineIds) {
-	    result.add((CurriculumLine) DomainObject.fromExternalId(curriculumLineIdString));
+		return mapping.findForward("chooseNewLocation");
 	}
 
-	return result;
-    }
+	protected boolean isWithRules(final HttpServletRequest request) {
+		return Boolean.valueOf((String) getFromRequest(request, "withRules")).booleanValue();
+	}
 
-    protected StudentCurricularPlan getStudentCurricularPlan(HttpServletRequest request) {
-	return rootDomainObject.readStudentCurricularPlanByOID(getRequestParameterAsInteger(request, "scpID"));
-    }
+	public ActionForward moveCurriculumLines(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) {
+
+		final MoveCurriculumLinesBean moveCurriculumLinesBean = getRenderedObject("move-curriculum-lines-bean");
+
+		if (!RenderUtils.getViewState("move-curriculum-lines-bean-entries").isValid()) {
+			request.setAttribute("moveCurriculumLinesBean", moveCurriculumLinesBean);
+			return mapping.findForward("chooseNewLocation");
+		}
+
+		try {
+			MoveCurriculumLines.run(moveCurriculumLinesBean);
+		} catch (final EnrollmentDomainException e) {
+			addRuleResultMessagesToActionMessages(request, e.getFalseResult());
+			request.setAttribute("moveCurriculumLinesBean", moveCurriculumLinesBean);
+			return mapping.findForward("chooseNewLocation");
+
+		} catch (final IllegalDataAccessException e) {
+			addActionMessage(request, "error.NotAuthorized");
+			request.setAttribute("moveCurriculumLinesBean", moveCurriculumLinesBean);
+			return mapping.findForward("chooseNewLocation");
+
+		} catch (final DomainException e) {
+			addActionMessage(request, e.getMessage(), e.getArgs());
+			request.setAttribute("moveCurriculumLinesBean", moveCurriculumLinesBean);
+			return mapping.findForward("chooseNewLocation");
+		}
+
+		request.setAttribute("studentCurricularPlan", moveCurriculumLinesBean.getStudentCurricularPlan());
+		request.setAttribute("withRules", moveCurriculumLinesBean.isWithRules());
+		return mapping.findForward("showCurriculum");
+	}
+
+	private void addRuleResultMessagesToActionMessages(HttpServletRequest request, RuleResult... falseRuleResults) {
+		for (final RuleResult ruleResult : falseRuleResults) {
+			for (final RuleResultMessage message : ruleResult.getMessages()) {
+				if (message.isToTranslate()) {
+					addActionMessage(request, message.getMessage(), message.getArgs());
+				} else {
+					addActionMessageLiteral(request, message.getMessage());
+				}
+			}
+		}
+	}
+
+	private List<CurriculumLine> getSelectedCurriculumLines(HttpServletRequest request) {
+		final String[] selectedCurriculumLineIds = request.getParameterValues("selectedCurriculumLineIds");
+		if (selectedCurriculumLineIds == null) {
+			return Collections.emptyList();
+		}
+
+		final List<CurriculumLine> result = new ArrayList<CurriculumLine>();
+		for (final String curriculumLineIdString : selectedCurriculumLineIds) {
+			result.add((CurriculumLine) DomainObject.fromExternalId(curriculumLineIdString));
+		}
+
+		return result;
+	}
+
+	protected StudentCurricularPlan getStudentCurricularPlan(HttpServletRequest request) {
+		return rootDomainObject.readStudentCurricularPlanByOID(getRequestParameterAsInteger(request, "scpID"));
+	}
 
 }

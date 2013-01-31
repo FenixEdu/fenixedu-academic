@@ -14,25 +14,29 @@ import pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyCon
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
-public class ExecutionYearsForDegreeCurricularPlanProvider implements DataProvider{
-    
-    public Object provide(Object source, Object currentValue) {
-	HasDegreeCurricularPlan bean = (HasDegreeCurricularPlan) source;
-	return getExecutionYears(bean);
-    }
+public class ExecutionYearsForDegreeCurricularPlanProvider implements DataProvider {
 
-    public static List<ExecutionYear> getExecutionYears(HasDegreeCurricularPlan bean) {
-	List<ExecutionYear> executionYears = new ArrayList<ExecutionYear>();
-	for (ExecutionYear year : RootDomainObject.getInstance().getExecutionYears()) {
-	    if (year.isInclusivelyBetween(bean.getDegreeCurricularPlan().getInauguralExecutionYear(), bean.getDegreeCurricularPlan().getLastExecutionYear()))
-		executionYears.add(year);
+	@Override
+	public Object provide(Object source, Object currentValue) {
+		HasDegreeCurricularPlan bean = (HasDegreeCurricularPlan) source;
+		return getExecutionYears(bean);
 	}
-	Collections.sort(executionYears, new ReverseComparator());
-	return executionYears;
-    }
 
-    public Converter getConverter() {
-	return new DomainObjectKeyConverter();
-    }
+	public static List<ExecutionYear> getExecutionYears(HasDegreeCurricularPlan bean) {
+		List<ExecutionYear> executionYears = new ArrayList<ExecutionYear>();
+		for (ExecutionYear year : RootDomainObject.getInstance().getExecutionYears()) {
+			if (year.isInclusivelyBetween(bean.getDegreeCurricularPlan().getInauguralExecutionYear(), bean
+					.getDegreeCurricularPlan().getLastExecutionYear())) {
+				executionYears.add(year);
+			}
+		}
+		Collections.sort(executionYears, new ReverseComparator());
+		return executionYears;
+	}
+
+	@Override
+	public Converter getConverter() {
+		return new DomainObjectKeyConverter();
+	}
 
 }

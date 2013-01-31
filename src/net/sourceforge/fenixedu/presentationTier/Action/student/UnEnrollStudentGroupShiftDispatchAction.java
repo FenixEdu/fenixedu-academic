@@ -34,73 +34,79 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
  * @author joaosa and rmalo
  * 
  */
-@Mapping(module = "student", path = "/unEnrollStudentGroupShift", attribute = "groupEnrolmentForm", formBean = "groupEnrolmentForm", scope = "request", parameter = "method")
+@Mapping(
+		module = "student",
+		path = "/unEnrollStudentGroupShift",
+		attribute = "groupEnrolmentForm",
+		formBean = "groupEnrolmentForm",
+		scope = "request",
+		parameter = "method")
 @Forwards(value = { @Forward(name = "insucess", path = "/viewEnroledExecutionCourses.do?method=prepare"),
-	@Forward(name = "viewStudentGroupInformation", path = "/viewStudentGroupInformation.do"),
-	@Forward(name = "viewShiftsAndGroups", path = "/viewShiftsAndGroups.do"),
-	@Forward(name = "viewExecutionCourseProjects", path = "/viewExecutionCourseProjects.do") })
+		@Forward(name = "viewStudentGroupInformation", path = "/viewStudentGroupInformation.do"),
+		@Forward(name = "viewShiftsAndGroups", path = "/viewShiftsAndGroups.do"),
+		@Forward(name = "viewExecutionCourseProjects", path = "/viewExecutionCourseProjects.do") })
 public class UnEnrollStudentGroupShiftDispatchAction extends FenixDispatchAction {
 
-    public ActionForward unEnrollStudentGroupShift(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixActionException, FenixFilterException {
+	public ActionForward unEnrollStudentGroupShift(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
-	IUserView userView = getUserView(request);
-	String studentGroupCodeString = request.getParameter("studentGroupCode");
-	String groupPropertiesCodeString = request.getParameter("groupPropertiesCode");
-	Integer groupPropertiesCode = new Integer(groupPropertiesCodeString);
-	Integer studentGroupCode = new Integer(studentGroupCodeString);
+		IUserView userView = getUserView(request);
+		String studentGroupCodeString = request.getParameter("studentGroupCode");
+		String groupPropertiesCodeString = request.getParameter("groupPropertiesCode");
+		Integer groupPropertiesCode = new Integer(groupPropertiesCodeString);
+		Integer studentGroupCode = new Integer(studentGroupCodeString);
 
-	try {
-	    UnEnrollGroupShift.run(studentGroupCode, groupPropertiesCode, userView.getUtilizador());
-	} catch (NotAuthorizedException e) {
-	    ActionErrors actionErrors2 = new ActionErrors();
-	    ActionError error2 = null;
-	    error2 = new ActionError("errors.noStudentInAttendsSet");
-	    actionErrors2.add("errors.noStudentInAttendsSet", error2);
-	    saveErrors(request, actionErrors2);
-	    return mapping.findForward("insucess");
-	} catch (ExistingServiceException e) {
-	    ActionErrors actionErrors = new ActionErrors();
-	    ActionError error = null;
-	    error = new ActionError("error.noProject");
-	    actionErrors.add("error.noProject", error);
-	    saveErrors(request, actionErrors);
-	    return mapping.findForward("viewExecutionCourseProjects");
-	} catch (InvalidArgumentsServiceException e) {
-	    ActionErrors actionErrors = new ActionErrors();
-	    ActionError error = null;
-	    error = new ActionError("error.noGroup");
-	    actionErrors.add("error.noGroup", error);
-	    saveErrors(request, actionErrors);
-	    return mapping.findForward("viewShiftsAndGroups");
+		try {
+			UnEnrollGroupShift.run(studentGroupCode, groupPropertiesCode, userView.getUtilizador());
+		} catch (NotAuthorizedException e) {
+			ActionErrors actionErrors2 = new ActionErrors();
+			ActionError error2 = null;
+			error2 = new ActionError("errors.noStudentInAttendsSet");
+			actionErrors2.add("errors.noStudentInAttendsSet", error2);
+			saveErrors(request, actionErrors2);
+			return mapping.findForward("insucess");
+		} catch (ExistingServiceException e) {
+			ActionErrors actionErrors = new ActionErrors();
+			ActionError error = null;
+			error = new ActionError("error.noProject");
+			actionErrors.add("error.noProject", error);
+			saveErrors(request, actionErrors);
+			return mapping.findForward("viewExecutionCourseProjects");
+		} catch (InvalidArgumentsServiceException e) {
+			ActionErrors actionErrors = new ActionErrors();
+			ActionError error = null;
+			error = new ActionError("error.noGroup");
+			actionErrors.add("error.noGroup", error);
+			saveErrors(request, actionErrors);
+			return mapping.findForward("viewShiftsAndGroups");
 
-	} catch (InvalidSituationServiceException e) {
-	    ActionErrors actionErrors = new ActionErrors();
-	    ActionError error = null;
-	    error = new ActionError("errors.unEnrollStudentGroupShift.notEnroled");
-	    actionErrors.add("errors.unEnrollStudentGroupShift.notEnroled", error);
-	    saveErrors(request, actionErrors);
-	    return mapping.findForward("viewStudentGroupInformation");
+		} catch (InvalidSituationServiceException e) {
+			ActionErrors actionErrors = new ActionErrors();
+			ActionError error = null;
+			error = new ActionError("errors.unEnrollStudentGroupShift.notEnroled");
+			actionErrors.add("errors.unEnrollStudentGroupShift.notEnroled", error);
+			saveErrors(request, actionErrors);
+			return mapping.findForward("viewStudentGroupInformation");
 
-	} catch (InvalidChangeServiceException e) {
-	    ActionErrors actionErrors3 = new ActionErrors();
-	    ActionError error3 = null;
-	    error3 = new ActionError("errors.unEnrollStudentGroupShift.shiftFull");
-	    actionErrors3.add("errors.unEnrollStudentGroupShift.shiftFull", error3);
-	    saveErrors(request, actionErrors3);
-	    return mapping.findForward("viewStudentGroupInformation");
+		} catch (InvalidChangeServiceException e) {
+			ActionErrors actionErrors3 = new ActionErrors();
+			ActionError error3 = null;
+			error3 = new ActionError("errors.unEnrollStudentGroupShift.shiftFull");
+			actionErrors3.add("errors.unEnrollStudentGroupShift.shiftFull", error3);
+			saveErrors(request, actionErrors3);
+			return mapping.findForward("viewStudentGroupInformation");
 
-	} catch (InvalidStudentNumberServiceException e) {
-	    ActionErrors actionErrors3 = new ActionErrors();
-	    ActionError error3 = null;
-	    error3 = new ActionError("error.UnEnrollStudentGroupShift");
-	    actionErrors3.add("error.UnEnrollStudentGroupShift", error3);
-	    saveErrors(request, actionErrors3);
-	    return mapping.findForward("viewShiftsAndGroups");
+		} catch (InvalidStudentNumberServiceException e) {
+			ActionErrors actionErrors3 = new ActionErrors();
+			ActionError error3 = null;
+			error3 = new ActionError("error.UnEnrollStudentGroupShift");
+			actionErrors3.add("error.UnEnrollStudentGroupShift", error3);
+			saveErrors(request, actionErrors3);
+			return mapping.findForward("viewShiftsAndGroups");
 
-	} catch (FenixServiceException e) {
-	    throw new FenixActionException(e);
+		} catch (FenixServiceException e) {
+			throw new FenixActionException(e);
+		}
+		return mapping.findForward("viewShiftsAndGroups");
 	}
-	return mapping.findForward("viewShiftsAndGroups");
-    }
 }

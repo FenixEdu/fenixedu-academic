@@ -8,13 +8,15 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class EquivalencePlanRequestsForRegistrationAcademicServiceRequest implements DataProvider {
 
-    public Object provide(Object source, Object currentValue) {
-	final RegistrationSelectExecutionYearBean bean = ((RegistrationSelectExecutionYearBean) source);
-	return bean.getRegistration().getStudent().getAcademicServiceRequests(EquivalencePlanRequest.class);
-    }
+	@Override
+	public Object provide(Object source, Object currentValue) {
+		final RegistrationSelectExecutionYearBean bean = ((RegistrationSelectExecutionYearBean) source);
+		return bean.getRegistration().getStudent().getAcademicServiceRequests(EquivalencePlanRequest.class);
+	}
 
-    public Converter getConverter() {
-	return new DomainObjectKeyConverter();
-    }
+	@Override
+	public Converter getConverter() {
+		return new DomainObjectKeyConverter();
+	}
 
 }

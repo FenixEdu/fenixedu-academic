@@ -36,87 +36,102 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
  * @author Fernanda Quitério 27/10/2003
  * 
  */
-@Mapping(module = "manager", path = "/endCurricularCourseScope", input = "/endCurricularCourseScope.do?method=prepareEnd&page=0", attribute = "curricularCourseScopeForm", formBean = "curricularCourseScopeForm", scope = "request", parameter = "method")
+@Mapping(
+		module = "manager",
+		path = "/endCurricularCourseScope",
+		input = "/endCurricularCourseScope.do?method=prepareEnd&page=0",
+		attribute = "curricularCourseScopeForm",
+		formBean = "curricularCourseScopeForm",
+		scope = "request",
+		parameter = "method")
 @Forwards(value = {
 		@Forward(name = "readCurricularCourse", path = "/readCurricularCourse.do"),
-		@Forward(name = "endCurricularCourseScope", path = "/manager/endCurricularCourseScope_bd.jsp", tileProperties = @Tile(navLocal = "/manager/curricularCourseNavLocalManager.jsp")) })
+		@Forward(name = "endCurricularCourseScope", path = "/manager/endCurricularCourseScope_bd.jsp", tileProperties = @Tile(
+				navLocal = "/manager/curricularCourseNavLocalManager.jsp")) })
 @Exceptions(value = {
-		@ExceptionHandling(type = net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException.class, key = "resources.Action.exceptions.NonExistingActionException", handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class, scope = "request"),
-		@ExceptionHandling(type = net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidSituationActionException.class, key = "resources.Action.exceptions.InvalidSituationActionException", handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class, scope = "request"),
-		@ExceptionHandling(type = net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidArgumentsActionException.class, key = "resources.Action.exceptions.InvalidArgumentsActionException", handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class, scope = "request") })
+		@ExceptionHandling(
+				type = net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException.class,
+				key = "resources.Action.exceptions.NonExistingActionException",
+				handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class,
+				scope = "request"),
+		@ExceptionHandling(
+				type = net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidSituationActionException.class,
+				key = "resources.Action.exceptions.InvalidSituationActionException",
+				handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class,
+				scope = "request"),
+		@ExceptionHandling(
+				type = net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidArgumentsActionException.class,
+				key = "resources.Action.exceptions.InvalidArgumentsActionException",
+				handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class,
+				scope = "request") })
 public class EndCurricularCourseScopeDA extends FenixDispatchAction {
 
-    public ActionForward prepareEnd(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixActionException, FenixFilterException {
-	IUserView userView = UserView.getUser();
-	DynaActionForm dynaForm = (DynaActionForm) form;
+	public ActionForward prepareEnd(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws FenixActionException, FenixFilterException {
+		IUserView userView = UserView.getUser();
+		DynaActionForm dynaForm = (DynaActionForm) form;
 
-	Integer curricularCourseScopeId = new Integer(request.getParameter("curricularCourseScopeId"));
-	InfoCurricularCourseScope oldInfoCurricularCourseScope = null;
+		Integer curricularCourseScopeId = new Integer(request.getParameter("curricularCourseScopeId"));
+		InfoCurricularCourseScope oldInfoCurricularCourseScope = null;
 
-	try {
-	    oldInfoCurricularCourseScope = (InfoCurricularCourseScope) ReadCurricularCourseScope.run(curricularCourseScopeId);
-	} catch (NonExistingServiceException ex) {
-	    throw new NonExistingActionException("message.nonExistingCurricularCourseScope", mapping
-		    .findForward("readCurricularCourse"));
-	} catch (FenixServiceException fenixServiceException) {
-	    throw new FenixActionException(fenixServiceException.getMessage());
+		try {
+			oldInfoCurricularCourseScope = ReadCurricularCourseScope.run(curricularCourseScopeId);
+		} catch (NonExistingServiceException ex) {
+			throw new NonExistingActionException("message.nonExistingCurricularCourseScope",
+					mapping.findForward("readCurricularCourse"));
+		} catch (FenixServiceException fenixServiceException) {
+			throw new FenixActionException(fenixServiceException.getMessage());
+		}
+
+		if (oldInfoCurricularCourseScope.getBeginDate() != null) {
+			dynaForm.set("beginDate", Data.format2DayMonthYear(oldInfoCurricularCourseScope.getBeginDate().getTime(), "/"));
+		}
+
+		request.setAttribute("infoCurricularCourseScope", oldInfoCurricularCourseScope);
+		return mapping.findForward("endCurricularCourseScope");
 	}
 
-	if (oldInfoCurricularCourseScope.getBeginDate() != null)
-	    dynaForm.set("beginDate", Data.format2DayMonthYear(oldInfoCurricularCourseScope.getBeginDate().getTime(), "/"));
+	public ActionForward end(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+			throws FenixActionException, FenixFilterException {
 
-	request.setAttribute("infoCurricularCourseScope", oldInfoCurricularCourseScope);
-	return mapping.findForward("endCurricularCourseScope");
-    }
+		IUserView userView = UserView.getUser();
+		DynaActionForm dynaForm = (DynaValidatorForm) form;
 
-    public ActionForward end(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-	    throws FenixActionException, FenixFilterException {
+		Integer oldCurricularCourseScopeId = new Integer(request.getParameter("curricularCourseScopeId"));
 
-	IUserView userView = UserView.getUser();
-	DynaActionForm dynaForm = (DynaValidatorForm) form;
+		InfoCurricularCourseScopeEditor newInfoCurricularCourseScope = new InfoCurricularCourseScopeEditor();
+		newInfoCurricularCourseScope.setIdInternal(oldCurricularCourseScopeId);
 
-	Integer oldCurricularCourseScopeId = new Integer(request.getParameter("curricularCourseScopeId"));
+		String beginDateString = (String) dynaForm.get("beginDate");
+		String endDateString = (String) dynaForm.get("endDate");
 
-	InfoCurricularCourseScopeEditor newInfoCurricularCourseScope = new InfoCurricularCourseScopeEditor();
-	newInfoCurricularCourseScope.setIdInternal(oldCurricularCourseScopeId);
+		if (beginDateString.compareTo("") != 0) {
+			Calendar beginDateCalendar = Calendar.getInstance();
+			beginDateCalendar.setTime(Data.convertStringDate(beginDateString, "/"));
+			newInfoCurricularCourseScope.setBeginDate(beginDateCalendar);
+		}
 
-	String beginDateString = (String) dynaForm.get("beginDate");
-	String endDateString = (String) dynaForm.get("endDate");
+		if (endDateString.compareTo("") != 0) {
+			Calendar endDateCalendar = Calendar.getInstance();
+			endDateCalendar.setTime(Data.convertStringDate(endDateString, "/"));
+			newInfoCurricularCourseScope.setEndDate(endDateCalendar);
+		}
 
-	if (beginDateString.compareTo("") != 0) {
-	    Calendar beginDateCalendar = Calendar.getInstance();
-	    beginDateCalendar.setTime(Data.convertStringDate(beginDateString, "/"));
-	    newInfoCurricularCourseScope.setBeginDate(beginDateCalendar);
+		try {
+			EndCurricularCourseScope.run(newInfoCurricularCourseScope);
+		} catch (NonExistingServiceException ex) {
+			throw new NonExistingActionException(ex.getMessage(), mapping.findForward("readCurricularCourse"), ex);
+		} catch (InvalidArgumentsServiceException ex) {
+			throw new InvalidArgumentsActionException("error.manager.wrongDates", ex);
+		} catch (FenixServiceException fenixServiceException) {
+			throw new FenixActionException(fenixServiceException.getMessage(), fenixServiceException);
+		}
+
+		return mapping.findForward("readCurricularCourse");
 	}
-
-	if (endDateString.compareTo("") != 0) {
-	    Calendar endDateCalendar = Calendar.getInstance();
-	    endDateCalendar.setTime(Data.convertStringDate(endDateString, "/"));
-	    newInfoCurricularCourseScope.setEndDate(endDateCalendar);
-	}
-
-	try {
-	    EndCurricularCourseScope.run(newInfoCurricularCourseScope);
-	} catch (NonExistingServiceException ex) {
-	    throw new NonExistingActionException(ex.getMessage(), mapping.findForward("readCurricularCourse"), ex);
-	} catch (InvalidArgumentsServiceException ex) {
-	    throw new InvalidArgumentsActionException("error.manager.wrongDates", ex);
-	} catch (FenixServiceException fenixServiceException) {
-	    throw new FenixActionException(fenixServiceException.getMessage(), fenixServiceException);
-	}
-
-	return mapping.findForward("readCurricularCourse");
-    }
 }

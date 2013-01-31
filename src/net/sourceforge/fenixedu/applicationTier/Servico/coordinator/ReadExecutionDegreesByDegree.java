@@ -13,23 +13,23 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadExecutionDegreesByDegree extends FenixService {
 
-    @Service
-    public static List run(Integer idDegree) throws FenixServiceException {
+	@Service
+	public static List run(Integer idDegree) throws FenixServiceException {
 
-	Degree degree = rootDomainObject.readDegreeByOID(idDegree);
+		Degree degree = rootDomainObject.readDegreeByOID(idDegree);
 
-	List<ExecutionDegree> allExecutionDegrees = ExecutionDegree.getAllByDegreeAndCurricularStage(degree, CurricularStage.OLD);
-	if (allExecutionDegrees == null || allExecutionDegrees.isEmpty()) {
-	    throw new FenixServiceException();
+		List<ExecutionDegree> allExecutionDegrees = ExecutionDegree.getAllByDegreeAndCurricularStage(degree, CurricularStage.OLD);
+		if (allExecutionDegrees == null || allExecutionDegrees.isEmpty()) {
+			throw new FenixServiceException();
+		}
+
+		List<InfoExecutionDegree> allInfoExecutionDegrees = new ArrayList<InfoExecutionDegree>(allExecutionDegrees.size());
+		for (ExecutionDegree executionDegree : allExecutionDegrees) {
+			InfoExecutionDegree infoExecutionDegree = InfoExecutionDegree.newInfoFromDomain(executionDegree);
+			allInfoExecutionDegrees.add(infoExecutionDegree);
+		}
+
+		return allInfoExecutionDegrees;
 	}
-
-	List<InfoExecutionDegree> allInfoExecutionDegrees = new ArrayList<InfoExecutionDegree>(allExecutionDegrees.size());
-	for (ExecutionDegree executionDegree : allExecutionDegrees) {
-	    InfoExecutionDegree infoExecutionDegree = InfoExecutionDegree.newInfoFromDomain(executionDegree);
-	    allInfoExecutionDegrees.add(infoExecutionDegree);
-	}
-
-	return allInfoExecutionDegrees;
-    }
 
 }

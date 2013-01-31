@@ -19,12 +19,12 @@ import pt.utl.ist.berserk.ServiceRequest;
 abstract public class Filtro extends AccessControlFilter
 /* implements IFilter */
 {
-    protected IUserView getRemoteUser(ServiceRequest request) {
-	return (IUserView) request.getRequester();
-    }
+	protected IUserView getRemoteUser(ServiceRequest request) {
+		return (IUserView) request.getRequester();
+	}
 
-    protected Object[] getServiceCallArguments(ServiceRequest request) {
-	return request.getServiceParameters().parametersArray();
-    }
+	protected Object[] getServiceCallArguments(ServiceRequest request) {
+		return request.getServiceParameters().parametersArray();
+	}
 
 }

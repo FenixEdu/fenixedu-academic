@@ -20,253 +20,253 @@ import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 public class PersonalInformationForm extends Form {
 
-    /**
+	/**
      * 
      */
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    // Filiation
-    private String name; // read only
+	// Filiation
+	private String name; // read only
 
-    private String username; // read only
+	private String username; // read only
 
-    private Gender gender; // read only
+	private Gender gender; // read only
 
-    private String documentIdNumber; // read only
+	private String documentIdNumber; // read only
 
-    private IDDocumentType idDocumentType;
+	private IDDocumentType idDocumentType;
 
-    private String identificationDocumentExtraDigit;
+	private String identificationDocumentExtraDigit;
 
-    private String identificationDocumentSeriesNumber;
+	private String identificationDocumentSeriesNumber;
 
-    private String documentIdEmissionLocation;
+	private String documentIdEmissionLocation;
 
-    private YearMonthDay documentIdEmissionDate;
+	private YearMonthDay documentIdEmissionDate;
 
-    private YearMonthDay documentIdExpirationDate;
+	private YearMonthDay documentIdExpirationDate;
 
-    private String socialSecurityNumber;
+	private String socialSecurityNumber;
 
-    private ProfessionType professionType;
+	private ProfessionType professionType;
 
-    private ProfessionalSituationConditionType professionalCondition;
+	private ProfessionalSituationConditionType professionalCondition;
 
-    private String profession;
+	private String profession;
 
-    private MaritalStatus maritalStatus;
+	private MaritalStatus maritalStatus;
 
-    private GrantOwnerType grantOwnerType;
+	private GrantOwnerType grantOwnerType;
 
-    private Unit grantOwnerProvider;
+	private Unit grantOwnerProvider;
 
-    private String grantOwnerProviderName;
+	private String grantOwnerProviderName;
 
-    public PersonalInformationForm() {
-	super();
-    }
-
-    private PersonalInformationForm(YearMonthDay documentIdEmissionDate, String documentIdEmissionLocation,
-	    YearMonthDay documentIdExpirationDate, String documentIdNumber, IDDocumentType documentType, Gender gender,
-	    MaritalStatus maritalStatus, String name, String profession, String socialSecurityNumber, String username,
-	    String identificationDocumentExtraDigit, String identificationDocumentSeriesNumber) {
-	this();
-	this.documentIdEmissionDate = documentIdEmissionDate;
-	this.documentIdEmissionLocation = documentIdEmissionLocation;
-	this.documentIdExpirationDate = documentIdExpirationDate;
-	this.documentIdNumber = documentIdNumber;
-	this.idDocumentType = documentType;
-	this.gender = gender;
-	this.maritalStatus = maritalStatus;
-	this.name = name;
-	this.profession = profession;
-	this.socialSecurityNumber = socialSecurityNumber;
-	this.username = username;
-	this.professionalCondition = ProfessionalSituationConditionType.STUDENT;
-	this.grantOwnerType = GrantOwnerType.STUDENT_WITHOUT_SCHOLARSHIP;
-	this.identificationDocumentExtraDigit = identificationDocumentExtraDigit;
-	this.identificationDocumentSeriesNumber = identificationDocumentSeriesNumber;
-    }
-
-    public static PersonalInformationForm createFromPerson(final Person person) {
-	return new PersonalInformationForm(person.getEmissionDateOfDocumentIdYearMonthDay(), person
-		.getEmissionLocationOfDocumentId(), person.getExpirationDateOfDocumentIdYearMonthDay(), person
-		.getDocumentIdNumber(), person.getIdDocumentType(), person.getGender(), person.getMaritalStatus(), person
-		.getName(), person.getProfession(), person.getSocialSecurityNumber(), person.getUsername(), person
-		.getIdentificationDocumentExtraDigitValue(), person.getIdentificationDocumentSeriesNumberValue());
-    }
-
-    @Override
-    public List<LabelFormatter> validate() {
-	final List<LabelFormatter> result = new ArrayList<LabelFormatter>();
-
-	checkGrantOwnerType(result);
-	return result;
-    }
-
-    private void checkGrantOwnerType(final List<LabelFormatter> result) {
-	if (getGrantOwnerType().equals(GrantOwnerType.OTHER_INSTITUTION_GRANT_OWNER) && getGrantOwnerProvider() == null) {
-	    result.add(new LabelFormatter().appendLabel(
-		    "error.candidacy.workflow.PersonalInformationForm.grant.owner.must.choose.granting.institution",
-		    "application"));
+	public PersonalInformationForm() {
+		super();
 	}
-    }
 
-    public YearMonthDay getDocumentIdEmissionDate() {
-	return documentIdEmissionDate;
-    }
+	private PersonalInformationForm(YearMonthDay documentIdEmissionDate, String documentIdEmissionLocation,
+			YearMonthDay documentIdExpirationDate, String documentIdNumber, IDDocumentType documentType, Gender gender,
+			MaritalStatus maritalStatus, String name, String profession, String socialSecurityNumber, String username,
+			String identificationDocumentExtraDigit, String identificationDocumentSeriesNumber) {
+		this();
+		this.documentIdEmissionDate = documentIdEmissionDate;
+		this.documentIdEmissionLocation = documentIdEmissionLocation;
+		this.documentIdExpirationDate = documentIdExpirationDate;
+		this.documentIdNumber = documentIdNumber;
+		this.idDocumentType = documentType;
+		this.gender = gender;
+		this.maritalStatus = maritalStatus;
+		this.name = name;
+		this.profession = profession;
+		this.socialSecurityNumber = socialSecurityNumber;
+		this.username = username;
+		this.professionalCondition = ProfessionalSituationConditionType.STUDENT;
+		this.grantOwnerType = GrantOwnerType.STUDENT_WITHOUT_SCHOLARSHIP;
+		this.identificationDocumentExtraDigit = identificationDocumentExtraDigit;
+		this.identificationDocumentSeriesNumber = identificationDocumentSeriesNumber;
+	}
 
-    public void setDocumentIdEmissionDate(YearMonthDay documentIdEmissionDate) {
-	this.documentIdEmissionDate = documentIdEmissionDate;
-    }
+	public static PersonalInformationForm createFromPerson(final Person person) {
+		return new PersonalInformationForm(person.getEmissionDateOfDocumentIdYearMonthDay(),
+				person.getEmissionLocationOfDocumentId(), person.getExpirationDateOfDocumentIdYearMonthDay(),
+				person.getDocumentIdNumber(), person.getIdDocumentType(), person.getGender(), person.getMaritalStatus(),
+				person.getName(), person.getProfession(), person.getSocialSecurityNumber(), person.getUsername(),
+				person.getIdentificationDocumentExtraDigitValue(), person.getIdentificationDocumentSeriesNumberValue());
+	}
 
-    public String getDocumentIdEmissionLocation() {
-	return documentIdEmissionLocation;
-    }
+	@Override
+	public List<LabelFormatter> validate() {
+		final List<LabelFormatter> result = new ArrayList<LabelFormatter>();
 
-    public void setDocumentIdEmissionLocation(String documentIdEmissionLocation) {
-	this.documentIdEmissionLocation = documentIdEmissionLocation;
-    }
+		checkGrantOwnerType(result);
+		return result;
+	}
 
-    public YearMonthDay getDocumentIdExpirationDate() {
-	return documentIdExpirationDate;
-    }
+	private void checkGrantOwnerType(final List<LabelFormatter> result) {
+		if (getGrantOwnerType().equals(GrantOwnerType.OTHER_INSTITUTION_GRANT_OWNER) && getGrantOwnerProvider() == null) {
+			result.add(new LabelFormatter().appendLabel(
+					"error.candidacy.workflow.PersonalInformationForm.grant.owner.must.choose.granting.institution",
+					"application"));
+		}
+	}
 
-    public void setDocumentIdExpirationDate(YearMonthDay documentIdExpirationDate) {
-	this.documentIdExpirationDate = documentIdExpirationDate;
-    }
+	public YearMonthDay getDocumentIdEmissionDate() {
+		return documentIdEmissionDate;
+	}
 
-    public String getDocumentIdNumber() {
-	return documentIdNumber;
-    }
+	public void setDocumentIdEmissionDate(YearMonthDay documentIdEmissionDate) {
+		this.documentIdEmissionDate = documentIdEmissionDate;
+	}
 
-    public void setDocumentIdNumber(String documentIdNumber) {
-	this.documentIdNumber = documentIdNumber;
-    }
+	public String getDocumentIdEmissionLocation() {
+		return documentIdEmissionLocation;
+	}
 
-    public IDDocumentType getIdDocumentType() {
-	return idDocumentType;
-    }
+	public void setDocumentIdEmissionLocation(String documentIdEmissionLocation) {
+		this.documentIdEmissionLocation = documentIdEmissionLocation;
+	}
 
-    public void setIdDocumentType(IDDocumentType documentType) {
-	this.idDocumentType = documentType;
-    }
+	public YearMonthDay getDocumentIdExpirationDate() {
+		return documentIdExpirationDate;
+	}
 
-    public Gender getGender() {
-	return gender;
-    }
+	public void setDocumentIdExpirationDate(YearMonthDay documentIdExpirationDate) {
+		this.documentIdExpirationDate = documentIdExpirationDate;
+	}
 
-    public void setGender(Gender gender) {
-	this.gender = gender;
-    }
+	public String getDocumentIdNumber() {
+		return documentIdNumber;
+	}
 
-    public MaritalStatus getMaritalStatus() {
-	return maritalStatus;
-    }
+	public void setDocumentIdNumber(String documentIdNumber) {
+		this.documentIdNumber = documentIdNumber;
+	}
 
-    public void setMaritalStatus(MaritalStatus maritalStatus) {
-	this.maritalStatus = maritalStatus;
-    }
+	public IDDocumentType getIdDocumentType() {
+		return idDocumentType;
+	}
 
-    public String getName() {
-	return name;
-    }
+	public void setIdDocumentType(IDDocumentType documentType) {
+		this.idDocumentType = documentType;
+	}
 
-    public void setName(String name) {
-	this.name = name;
-    }
+	public Gender getGender() {
+		return gender;
+	}
 
-    public String getProfession() {
-	return profession;
-    }
+	public void setGender(Gender gender) {
+		this.gender = gender;
+	}
 
-    public void setProfession(String profession) {
-	this.profession = profession;
-    }
+	public MaritalStatus getMaritalStatus() {
+		return maritalStatus;
+	}
 
-    public ProfessionType getProfessionType() {
-	return professionType;
-    }
+	public void setMaritalStatus(MaritalStatus maritalStatus) {
+		this.maritalStatus = maritalStatus;
+	}
 
-    public void setProfessionType(ProfessionType professionType) {
-	this.professionType = professionType;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public ProfessionalSituationConditionType getProfessionalCondition() {
-	return professionalCondition;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    public void setProfessionalCondition(ProfessionalSituationConditionType professionalCondition) {
-	this.professionalCondition = professionalCondition;
-    }
+	public String getProfession() {
+		return profession;
+	}
 
-    public String getSocialSecurityNumber() {
-	return socialSecurityNumber;
-    }
+	public void setProfession(String profession) {
+		this.profession = profession;
+	}
 
-    public void setSocialSecurityNumber(String socialSecurityNumber) {
-	this.socialSecurityNumber = socialSecurityNumber;
-    }
+	public ProfessionType getProfessionType() {
+		return professionType;
+	}
 
-    public String getUsername() {
-	return username;
-    }
+	public void setProfessionType(ProfessionType professionType) {
+		this.professionType = professionType;
+	}
 
-    public void setUsername(String username) {
-	this.username = username;
-    }
+	public ProfessionalSituationConditionType getProfessionalCondition() {
+		return professionalCondition;
+	}
 
-    public GrantOwnerType getGrantOwnerType() {
-	return grantOwnerType;
-    }
+	public void setProfessionalCondition(ProfessionalSituationConditionType professionalCondition) {
+		this.professionalCondition = professionalCondition;
+	}
 
-    public void setGrantOwnerType(GrantOwnerType grantOwnerType) {
-	this.grantOwnerType = grantOwnerType;
-    }
+	public String getSocialSecurityNumber() {
+		return socialSecurityNumber;
+	}
 
-    public Unit getGrantOwnerProvider() {
-	return this.grantOwnerProvider;
-    }
+	public void setSocialSecurityNumber(String socialSecurityNumber) {
+		this.socialSecurityNumber = socialSecurityNumber;
+	}
 
-    public void setGrantOwnerProvider(Unit grantOwnerProvider) {
-	this.grantOwnerProvider = grantOwnerProvider;
-    }
+	public String getUsername() {
+		return username;
+	}
 
-    public String getGrantOwnerProviderName() {
-	return grantOwnerProviderName;
-    }
+	public void setUsername(String username) {
+		this.username = username;
+	}
 
-    public void setGrantOwnerProviderName(String grantOwnerProviderName) {
-	this.grantOwnerProviderName = grantOwnerProviderName;
-    }
+	public GrantOwnerType getGrantOwnerType() {
+		return grantOwnerType;
+	}
 
-    public UnitName getGrantOwnerProviderUnitName() {
-	return (grantOwnerProvider == null) ? null : grantOwnerProvider.getUnitName();
-    }
+	public void setGrantOwnerType(GrantOwnerType grantOwnerType) {
+		this.grantOwnerType = grantOwnerType;
+	}
 
-    public void setGrantOwnerProviderUnitName(UnitName grantOwnerProviderUnitName) {
-	this.grantOwnerProvider = (grantOwnerProviderUnitName == null) ? null : grantOwnerProviderUnitName.getUnit();
-    }
+	public Unit getGrantOwnerProvider() {
+		return this.grantOwnerProvider;
+	}
 
-    @Override
-    public String getFormName() {
-	return "label.candidacy.workflow.personalInformationForm";
-    }
+	public void setGrantOwnerProvider(Unit grantOwnerProvider) {
+		this.grantOwnerProvider = grantOwnerProvider;
+	}
 
-    public String getIdentificationDocumentExtraDigit() {
-	return identificationDocumentExtraDigit;
-    }
+	public String getGrantOwnerProviderName() {
+		return grantOwnerProviderName;
+	}
 
-    public void setIdentificationDocumentExtraDigit(String identificationDocumentExtraDigit) {
-	this.identificationDocumentExtraDigit = identificationDocumentExtraDigit;
-    }
+	public void setGrantOwnerProviderName(String grantOwnerProviderName) {
+		this.grantOwnerProviderName = grantOwnerProviderName;
+	}
 
-    public String getIdentificationDocumentSeriesNumber() {
-	return identificationDocumentSeriesNumber;
-    }
+	public UnitName getGrantOwnerProviderUnitName() {
+		return (grantOwnerProvider == null) ? null : grantOwnerProvider.getUnitName();
+	}
 
-    public void setIdentificationDocumentSeriesNumber(String identificationDocumentSeriesNumber) {
-	this.identificationDocumentSeriesNumber = identificationDocumentSeriesNumber;
-    }
+	public void setGrantOwnerProviderUnitName(UnitName grantOwnerProviderUnitName) {
+		this.grantOwnerProvider = (grantOwnerProviderUnitName == null) ? null : grantOwnerProviderUnitName.getUnit();
+	}
+
+	@Override
+	public String getFormName() {
+		return "label.candidacy.workflow.personalInformationForm";
+	}
+
+	public String getIdentificationDocumentExtraDigit() {
+		return identificationDocumentExtraDigit;
+	}
+
+	public void setIdentificationDocumentExtraDigit(String identificationDocumentExtraDigit) {
+		this.identificationDocumentExtraDigit = identificationDocumentExtraDigit;
+	}
+
+	public String getIdentificationDocumentSeriesNumber() {
+		return identificationDocumentSeriesNumber;
+	}
+
+	public void setIdentificationDocumentSeriesNumber(String identificationDocumentSeriesNumber) {
+		this.identificationDocumentSeriesNumber = identificationDocumentSeriesNumber;
+	}
 
 }

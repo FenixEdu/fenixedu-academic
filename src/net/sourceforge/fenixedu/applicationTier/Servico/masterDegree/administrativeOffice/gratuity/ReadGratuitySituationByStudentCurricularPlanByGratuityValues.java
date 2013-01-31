@@ -20,22 +20,22 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class ReadGratuitySituationByStudentCurricularPlanByGratuityValues extends FenixService {
 
-    @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
-    @Service
-    public static Object run(Integer studentCurricularPlanID, Integer gratuityValuesID) throws FenixServiceException {
+	@Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
+	@Service
+	public static Object run(Integer studentCurricularPlanID, Integer gratuityValuesID) throws FenixServiceException {
 
-	GratuitySituation gratuitySituation = null;
+		GratuitySituation gratuitySituation = null;
 
-	StudentCurricularPlan studentCurricularPlan = rootDomainObject.readStudentCurricularPlanByOID(studentCurricularPlanID);
-	GratuityValues gratuityValues = rootDomainObject.readGratuityValuesByOID(gratuityValuesID);
-	gratuitySituation = studentCurricularPlan.getGratuitySituationByGratuityValues(gratuityValues);
+		StudentCurricularPlan studentCurricularPlan = rootDomainObject.readStudentCurricularPlanByOID(studentCurricularPlanID);
+		GratuityValues gratuityValues = rootDomainObject.readGratuityValuesByOID(gratuityValuesID);
+		gratuitySituation = studentCurricularPlan.getGratuitySituationByGratuityValues(gratuityValues);
 
-	InfoGratuitySituation infoGratuitySituation = null;
-	if (gratuitySituation != null) {
-	    infoGratuitySituation = InfoGratuitySituationWithInfoPersonAndInfoExecutionDegree
-		    .newInfoFromDomain(gratuitySituation);
+		InfoGratuitySituation infoGratuitySituation = null;
+		if (gratuitySituation != null) {
+			infoGratuitySituation =
+					InfoGratuitySituationWithInfoPersonAndInfoExecutionDegree.newInfoFromDomain(gratuitySituation);
+		}
+
+		return infoGratuitySituation;
 	}
-
-	return infoGratuitySituation;
-    }
 }

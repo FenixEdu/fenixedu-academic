@@ -20,107 +20,107 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class CoordinatorInquiryBean implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    private Set<InquiryBlockDTO> coordinatorInquiryBlocks;
-    private InquiryCoordinatorAnswer inquiryCoordinatorAnswer;
-    private Coordinator coordinator;
-    private ExecutionSemester executionSemester;
-    private ExecutionDegree executionDegree;
+	private Set<InquiryBlockDTO> coordinatorInquiryBlocks;
+	private InquiryCoordinatorAnswer inquiryCoordinatorAnswer;
+	private Coordinator coordinator;
+	private ExecutionSemester executionSemester;
+	private ExecutionDegree executionDegree;
 
-    public CoordinatorInquiryBean(CoordinatorInquiryTemplate coordinatorInquiryTemplate, Coordinator coordinator,
-	    InquiryCoordinatorAnswer inquiryCoordinatorAnswer, ExecutionSemester executionSemester,
-	    ExecutionDegree executionDegree) {
-	setCoordinator(coordinator);
-	setExecutionSemester(executionSemester);
-	setExecutionDegree(executionDegree);
-	initCoordinatorInquiryBlocks(coordinatorInquiryTemplate, inquiryCoordinatorAnswer);
-    }
-
-    private void initCoordinatorInquiryBlocks(CoordinatorInquiryTemplate coordinatorInquiryTemplate,
-	    InquiryCoordinatorAnswer inquiryCoordinatorAnswer) {
-	setCoordinatorInquiryBlocks(new TreeSet<InquiryBlockDTO>(new BeanComparator("inquiryBlock.blockOrder")));
-	setInquiryCoordinatorAnswer(inquiryCoordinatorAnswer);
-	for (InquiryBlock inquiryBlock : coordinatorInquiryTemplate.getInquiryBlocks()) {
-	    getCoordinatorInquiryBlocks().add(new InquiryBlockDTO(inquiryCoordinatorAnswer, inquiryBlock));
+	public CoordinatorInquiryBean(CoordinatorInquiryTemplate coordinatorInquiryTemplate, Coordinator coordinator,
+			InquiryCoordinatorAnswer inquiryCoordinatorAnswer, ExecutionSemester executionSemester,
+			ExecutionDegree executionDegree) {
+		setCoordinator(coordinator);
+		setExecutionSemester(executionSemester);
+		setExecutionDegree(executionDegree);
+		initCoordinatorInquiryBlocks(coordinatorInquiryTemplate, inquiryCoordinatorAnswer);
 	}
-    }
 
-    public String validateInquiry() {
-	String validationResult = null;
-	for (InquiryBlockDTO inquiryBlockDTO : getCoordinatorInquiryBlocks()) {
-	    validationResult = inquiryBlockDTO.validateMandatoryConditions(getCoordinatorInquiryBlocks());
-	    if (!Boolean.valueOf(validationResult)) {
-		return validationResult;
-	    }
-	}
-	return Boolean.toString(true);
-    }
-
-    @Service
-    public void saveInquiry() {
-	for (InquiryBlockDTO blockDTO : getCoordinatorInquiryBlocks()) {
-	    for (InquiryGroupQuestionBean groupQuestionBean : blockDTO.getInquiryGroups()) {
-		for (InquiryQuestionDTO questionDTO : groupQuestionBean.getInquiryQuestions()) {
-		    if (!StringUtils.isEmpty(questionDTO.getResponseValue()) || questionDTO.getQuestionAnswer() != null) {
-			if (questionDTO.getQuestionAnswer() != null) {
-			    questionDTO.getQuestionAnswer().setAnswer(questionDTO.getResponseValue());
-			    questionDTO.getQuestionAnswer().getInquiryAnswer().setResponseDateTime(new DateTime());
-			    getInquiryCoordinatorAnswer().setLastUpdatedBy(getCoordinator().getPerson());
-			} else {
-			    if (getInquiryCoordinatorAnswer() == null) {
-				setInquiryCoordinatorAnswer(new InquiryCoordinatorAnswer(getExecutionDegree(),
-					getExecutionSemester()));
-			    }
-			    new QuestionAnswer(getInquiryCoordinatorAnswer(), questionDTO.getInquiryQuestion(), questionDTO
-				    .getFinalValue());
-			    getInquiryCoordinatorAnswer().setResponseDateTime(new DateTime());
-			    getInquiryCoordinatorAnswer().setLastUpdatedBy(getCoordinator().getPerson());
-			}
-		    }
+	private void initCoordinatorInquiryBlocks(CoordinatorInquiryTemplate coordinatorInquiryTemplate,
+			InquiryCoordinatorAnswer inquiryCoordinatorAnswer) {
+		setCoordinatorInquiryBlocks(new TreeSet<InquiryBlockDTO>(new BeanComparator("inquiryBlock.blockOrder")));
+		setInquiryCoordinatorAnswer(inquiryCoordinatorAnswer);
+		for (InquiryBlock inquiryBlock : coordinatorInquiryTemplate.getInquiryBlocks()) {
+			getCoordinatorInquiryBlocks().add(new InquiryBlockDTO(inquiryCoordinatorAnswer, inquiryBlock));
 		}
-	    }
 	}
-    }
 
-    public void setCoordinatorInquiryBlocks(Set<InquiryBlockDTO> coordinatorInquiryBlocks) {
-	this.coordinatorInquiryBlocks = coordinatorInquiryBlocks;
-    }
+	public String validateInquiry() {
+		String validationResult = null;
+		for (InquiryBlockDTO inquiryBlockDTO : getCoordinatorInquiryBlocks()) {
+			validationResult = inquiryBlockDTO.validateMandatoryConditions(getCoordinatorInquiryBlocks());
+			if (!Boolean.valueOf(validationResult)) {
+				return validationResult;
+			}
+		}
+		return Boolean.toString(true);
+	}
 
-    public Set<InquiryBlockDTO> getCoordinatorInquiryBlocks() {
-	return coordinatorInquiryBlocks;
-    }
+	@Service
+	public void saveInquiry() {
+		for (InquiryBlockDTO blockDTO : getCoordinatorInquiryBlocks()) {
+			for (InquiryGroupQuestionBean groupQuestionBean : blockDTO.getInquiryGroups()) {
+				for (InquiryQuestionDTO questionDTO : groupQuestionBean.getInquiryQuestions()) {
+					if (!StringUtils.isEmpty(questionDTO.getResponseValue()) || questionDTO.getQuestionAnswer() != null) {
+						if (questionDTO.getQuestionAnswer() != null) {
+							questionDTO.getQuestionAnswer().setAnswer(questionDTO.getResponseValue());
+							questionDTO.getQuestionAnswer().getInquiryAnswer().setResponseDateTime(new DateTime());
+							getInquiryCoordinatorAnswer().setLastUpdatedBy(getCoordinator().getPerson());
+						} else {
+							if (getInquiryCoordinatorAnswer() == null) {
+								setInquiryCoordinatorAnswer(new InquiryCoordinatorAnswer(getExecutionDegree(),
+										getExecutionSemester()));
+							}
+							new QuestionAnswer(getInquiryCoordinatorAnswer(), questionDTO.getInquiryQuestion(),
+									questionDTO.getFinalValue());
+							getInquiryCoordinatorAnswer().setResponseDateTime(new DateTime());
+							getInquiryCoordinatorAnswer().setLastUpdatedBy(getCoordinator().getPerson());
+						}
+					}
+				}
+			}
+		}
+	}
 
-    public void setInquiryCoordinatorAnswer(InquiryCoordinatorAnswer inquiryCoordinatorAnswer) {
-	this.inquiryCoordinatorAnswer = inquiryCoordinatorAnswer;
-    }
+	public void setCoordinatorInquiryBlocks(Set<InquiryBlockDTO> coordinatorInquiryBlocks) {
+		this.coordinatorInquiryBlocks = coordinatorInquiryBlocks;
+	}
 
-    public InquiryCoordinatorAnswer getInquiryCoordinatorAnswer() {
-	return inquiryCoordinatorAnswer;
-    }
+	public Set<InquiryBlockDTO> getCoordinatorInquiryBlocks() {
+		return coordinatorInquiryBlocks;
+	}
 
-    public void setCoordinator(Coordinator coordinator) {
-	this.coordinator = coordinator;
-    }
+	public void setInquiryCoordinatorAnswer(InquiryCoordinatorAnswer inquiryCoordinatorAnswer) {
+		this.inquiryCoordinatorAnswer = inquiryCoordinatorAnswer;
+	}
 
-    public Coordinator getCoordinator() {
-	return coordinator;
-    }
+	public InquiryCoordinatorAnswer getInquiryCoordinatorAnswer() {
+		return inquiryCoordinatorAnswer;
+	}
 
-    public void setExecutionSemester(ExecutionSemester executionSemester) {
-	this.executionSemester = executionSemester;
-    }
+	public void setCoordinator(Coordinator coordinator) {
+		this.coordinator = coordinator;
+	}
 
-    public ExecutionSemester getExecutionSemester() {
-	return executionSemester;
-    }
+	public Coordinator getCoordinator() {
+		return coordinator;
+	}
 
-    public void setExecutionDegree(ExecutionDegree executionDegree) {
-	this.executionDegree = executionDegree;
-    }
+	public void setExecutionSemester(ExecutionSemester executionSemester) {
+		this.executionSemester = executionSemester;
+	}
 
-    public ExecutionDegree getExecutionDegree() {
-	return executionDegree;
-    }
+	public ExecutionSemester getExecutionSemester() {
+		return executionSemester;
+	}
+
+	public void setExecutionDegree(ExecutionDegree executionDegree) {
+		this.executionDegree = executionDegree;
+	}
+
+	public ExecutionDegree getExecutionDegree() {
+		return executionDegree;
+	}
 
 }

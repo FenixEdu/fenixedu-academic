@@ -20,38 +20,38 @@ import org.apache.struts.action.ActionMapping;
 
 public class SendEmailToDepartmentGroups extends UnitMailSenderAction {
 
-    @Override
-    public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-	final Unit unit = getUnit(request);
+	@Override
+	public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		final Unit unit = getUnit(request);
 
-	final Sender unitSender = getSomeSender(unit);
+		final Sender unitSender = getSomeSender(unit);
 
-	if (userOfficialSender(unit, unitSender)) {
-	    return EmailsDA.sendEmail(request, unitSender);
-	} else {
-	    final Person person = AccessControl.getPerson();
-	    final PersonSender sender = person.getSender();
+		if (userOfficialSender(unit, unitSender)) {
+			return EmailsDA.sendEmail(request, unitSender);
+		} else {
+			final Person person = AccessControl.getPerson();
+			final PersonSender sender = person.getSender();
 
-	    return unitSender == null ? EmailsDA.sendEmail(request, sender) :
-		EmailsDA.sendEmail(request, sender, unitSender.getRecipientsSet().toArray(new Recipient[0]));
+			return unitSender == null ? EmailsDA.sendEmail(request, sender) : EmailsDA.sendEmail(request, sender, unitSender
+					.getRecipientsSet().toArray(new Recipient[0]));
+		}
 	}
-    }
 
-    private boolean userOfficialSender(final Unit unit, final Sender unitSender) {
-	if (unit instanceof DepartmentUnit) {
-	    final DepartmentUnit departmentUnit = (DepartmentUnit) unit;
-	    final Department department = departmentUnit.getDepartment();
-	    return department.isCurrentUserCurrentDepartmentPresident() && unitSender != null;
+	private boolean userOfficialSender(final Unit unit, final Sender unitSender) {
+		if (unit instanceof DepartmentUnit) {
+			final DepartmentUnit departmentUnit = (DepartmentUnit) unit;
+			final Department department = departmentUnit.getDepartment();
+			return department.isCurrentUserCurrentDepartmentPresident() && unitSender != null;
+		}
+		return false;
 	}
-	return false;
-    }
 
-    private Sender getSomeSender(final Unit unit) {
-	for (final Sender sender : unit.getUnitBasedSenderSet()) {
-	    return sender;
+	private Sender getSomeSender(final Unit unit) {
+		for (final Sender sender : unit.getUnitBasedSenderSet()) {
+			return sender;
+		}
+		return null;
 	}
-	return null;
-    }
 
 }

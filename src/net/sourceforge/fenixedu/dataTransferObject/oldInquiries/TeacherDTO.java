@@ -13,12 +13,12 @@ import net.sourceforge.fenixedu.domain.DomainObject;
  */
 public abstract class TeacherDTO implements Serializable {
 
-    public abstract String getName();
+	public abstract String getName();
 
-    public abstract DomainObject getTeacher();
+	public abstract DomainObject getTeacher();
 
-    public Integer getPersonID() {
-	return null;
-    }
+	public Integer getPersonID() {
+		return null;
+	}
 
 }

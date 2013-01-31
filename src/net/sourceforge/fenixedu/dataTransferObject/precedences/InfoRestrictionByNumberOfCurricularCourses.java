@@ -8,34 +8,35 @@ import net.sourceforge.fenixedu.domain.precedences.RestrictionByNumberOfCurricul
 
 public class InfoRestrictionByNumberOfCurricularCourses extends InfoRestriction {
 
-    protected Integer numberOfCurricularCourses;
+	protected Integer numberOfCurricularCourses;
 
-    public Integer getNumberOfCurricularCourses() {
-	return numberOfCurricularCourses;
-    }
-
-    public void setNumberOfCurricularCourses(Integer numberOfCurricularCourses) {
-	this.numberOfCurricularCourses = numberOfCurricularCourses;
-    }
-
-    public void copyFromDomain(RestrictionByNumberOfCurricularCourses restriction) {
-	super.copyFromDomain(restriction);
-	this.setNumberOfCurricularCourses(restriction.getNumberOfCurricularCourses());
-    }
-
-    public static InfoRestrictionByNumberOfCurricularCourses newInfoFromDomain(RestrictionByNumberOfCurricularCourses restriction) {
-
-	InfoRestrictionByNumberOfCurricularCourses infoRestriction = null;
-
-	if (restriction != null) {
-	    infoRestriction = new InfoRestrictionByNumberOfCurricularCourses();
-	    infoRestriction.copyFromDomain(restriction);
+	public Integer getNumberOfCurricularCourses() {
+		return numberOfCurricularCourses;
 	}
 
-	return infoRestriction;
-    }
+	public void setNumberOfCurricularCourses(Integer numberOfCurricularCourses) {
+		this.numberOfCurricularCourses = numberOfCurricularCourses;
+	}
 
-    public String getArg() {
-	return numberOfCurricularCourses.toString();
-    }
+	public void copyFromDomain(RestrictionByNumberOfCurricularCourses restriction) {
+		super.copyFromDomain(restriction);
+		this.setNumberOfCurricularCourses(restriction.getNumberOfCurricularCourses());
+	}
+
+	public static InfoRestrictionByNumberOfCurricularCourses newInfoFromDomain(RestrictionByNumberOfCurricularCourses restriction) {
+
+		InfoRestrictionByNumberOfCurricularCourses infoRestriction = null;
+
+		if (restriction != null) {
+			infoRestriction = new InfoRestrictionByNumberOfCurricularCourses();
+			infoRestriction.copyFromDomain(restriction);
+		}
+
+		return infoRestriction;
+	}
+
+	@Override
+	public String getArg() {
+		return numberOfCurricularCourses.toString();
+	}
 }

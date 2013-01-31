@@ -16,19 +16,19 @@ import net.sourceforge.fenixedu.domain.DomainObject;
  */
 public abstract class ReadDomainObjectService extends FenixService {
 
-    public InfoObject run(Integer objectId) throws FenixServiceException {
-	DomainObject domainObject = readDomainObject(objectId);
-	InfoObject infoObject = null;
+	public InfoObject run(Integer objectId) throws FenixServiceException {
+		DomainObject domainObject = readDomainObject(objectId);
+		InfoObject infoObject = null;
 
-	if (domainObject != null) {
-	    infoObject = newInfoFromDomain(domainObject);
+		if (domainObject != null) {
+			infoObject = newInfoFromDomain(domainObject);
+		}
+
+		return infoObject;
 	}
 
-	return infoObject;
-    }
+	protected abstract DomainObject readDomainObject(final Integer idInternal);
 
-    protected abstract DomainObject readDomainObject(final Integer idInternal);
-
-    protected abstract InfoObject newInfoFromDomain(DomainObject domainObject);
+	protected abstract InfoObject newInfoFromDomain(DomainObject domainObject);
 
 }

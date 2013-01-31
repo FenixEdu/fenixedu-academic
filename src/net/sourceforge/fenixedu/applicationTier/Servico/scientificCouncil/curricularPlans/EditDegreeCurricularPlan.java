@@ -13,25 +13,25 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class EditDegreeCurricularPlan extends FenixService {
 
-    @Checked("RolePredicates.SCIENTIFIC_COUNCIL_PREDICATE")
-    @Service
-    public static void run(Integer dcpId, String name, CurricularStage curricularStage,
-	    DegreeCurricularPlanState degreeCurricularPlanState, GradeScale gradeScale, Integer executionYearID)
-	    throws FenixServiceException {
+	@Checked("RolePredicates.SCIENTIFIC_COUNCIL_PREDICATE")
+	@Service
+	public static void run(Integer dcpId, String name, CurricularStage curricularStage,
+			DegreeCurricularPlanState degreeCurricularPlanState, GradeScale gradeScale, Integer executionYearID)
+			throws FenixServiceException {
 
-	if (dcpId == null || name == null || curricularStage == null) {
-	    throw new InvalidArgumentsServiceException();
+		if (dcpId == null || name == null || curricularStage == null) {
+			throw new InvalidArgumentsServiceException();
+		}
+
+		final DegreeCurricularPlan dcpToEdit = rootDomainObject.readDegreeCurricularPlanByOID(dcpId);
+		if (dcpToEdit == null) {
+			throw new FenixServiceException("error.degreeCurricularPlan.no.existing.degreeCurricularPlan");
+		}
+
+		final ExecutionYear executionYear =
+				(executionYearID == null) ? null : rootDomainObject.readExecutionYearByOID(executionYearID);
+
+		dcpToEdit.edit(name, curricularStage, degreeCurricularPlanState, gradeScale, executionYear);
 	}
-
-	final DegreeCurricularPlan dcpToEdit = rootDomainObject.readDegreeCurricularPlanByOID(dcpId);
-	if (dcpToEdit == null) {
-	    throw new FenixServiceException("error.degreeCurricularPlan.no.existing.degreeCurricularPlan");
-	}
-
-	final ExecutionYear executionYear = (executionYearID == null) ? null : rootDomainObject
-		.readExecutionYearByOID(executionYearID);
-
-	dcpToEdit.edit(name, curricularStage, degreeCurricularPlanState, gradeScale, executionYear);
-    }
 
 }

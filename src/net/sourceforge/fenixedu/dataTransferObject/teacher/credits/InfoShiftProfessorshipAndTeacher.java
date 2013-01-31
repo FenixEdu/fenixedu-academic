@@ -12,19 +12,20 @@ import net.sourceforge.fenixedu.domain.ShiftProfessorship;
  */
 public class InfoShiftProfessorshipAndTeacher extends InfoShiftProfessorship {
 
-    public void copyFromDomain(ShiftProfessorship shifProfessorship) {
-	super.copyFromDomain(shifProfessorship);
-	if (shifProfessorship != null) {
-	    setInfoProfessorship(InfoProfessorship.newInfoFromDomain(shifProfessorship.getProfessorship()));
+	@Override
+	public void copyFromDomain(ShiftProfessorship shifProfessorship) {
+		super.copyFromDomain(shifProfessorship);
+		if (shifProfessorship != null) {
+			setInfoProfessorship(InfoProfessorship.newInfoFromDomain(shifProfessorship.getProfessorship()));
+		}
 	}
-    }
 
-    public static InfoShiftProfessorshipAndTeacher newInfoFromDomain(ShiftProfessorship shifProfessorship) {
-	InfoShiftProfessorshipAndTeacher infoShiftProfessorship = null;
-	if (shifProfessorship != null) {
-	    infoShiftProfessorship = new InfoShiftProfessorshipAndTeacher();
-	    infoShiftProfessorship.copyFromDomain(shifProfessorship);
+	public static InfoShiftProfessorshipAndTeacher newInfoFromDomain(ShiftProfessorship shifProfessorship) {
+		InfoShiftProfessorshipAndTeacher infoShiftProfessorship = null;
+		if (shifProfessorship != null) {
+			infoShiftProfessorship = new InfoShiftProfessorshipAndTeacher();
+			infoShiftProfessorship.copyFromDomain(shifProfessorship);
+		}
+		return infoShiftProfessorship;
 	}
-	return infoShiftProfessorship;
-    }
 }

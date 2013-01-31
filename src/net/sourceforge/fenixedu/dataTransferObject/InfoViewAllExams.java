@@ -14,71 +14,72 @@ import java.util.List;
  */
 
 public class InfoViewAllExams extends InfoObject {
-    protected InfoExecutionDegree infoExecutionDegree;
+	protected InfoExecutionDegree infoExecutionDegree;
 
-    protected Integer curricularYear;
+	protected Integer curricularYear;
 
-    protected List infoExecutionCourseAndExamsList;
+	protected List infoExecutionCourseAndExamsList;
 
-    public InfoViewAllExams() {
-    }
-
-    public InfoViewAllExams(InfoExecutionDegree infoExecutionDegree, Integer curricularYear, List infoExecutionCourseAndExamsList) {
-	this.setInfoExecutionDegree(infoExecutionDegree);
-	this.setCurricularYear(curricularYear);
-	this.setInfoExecutionCourseAndExamsList(infoExecutionCourseAndExamsList);
-    }
-
-    public boolean equals(Object obj) {
-	if (obj instanceof InfoViewAllExams) {
-	    InfoViewAllExams infoViewAllExams = (InfoViewAllExams) obj;
-	    return this.getInfoExecutionDegree().equals(infoViewAllExams.getInfoExecutionDegree())
-		    && this.getCurricularYear().equals(infoViewAllExams.getCurricularYear())
-		    && this.getInfoExecutionCourseAndExamsList().size() == infoExecutionCourseAndExamsList.size();
+	public InfoViewAllExams() {
 	}
-	return false;
-    }
 
-    /**
-     * @return
-     */
-    public Integer getCurricularYear() {
-	return curricularYear;
-    }
+	public InfoViewAllExams(InfoExecutionDegree infoExecutionDegree, Integer curricularYear, List infoExecutionCourseAndExamsList) {
+		this.setInfoExecutionDegree(infoExecutionDegree);
+		this.setCurricularYear(curricularYear);
+		this.setInfoExecutionCourseAndExamsList(infoExecutionCourseAndExamsList);
+	}
 
-    /**
-     * @return
-     */
-    public InfoExecutionDegree getInfoExecutionDegree() {
-	return infoExecutionDegree;
-    }
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof InfoViewAllExams) {
+			InfoViewAllExams infoViewAllExams = (InfoViewAllExams) obj;
+			return this.getInfoExecutionDegree().equals(infoViewAllExams.getInfoExecutionDegree())
+					&& this.getCurricularYear().equals(infoViewAllExams.getCurricularYear())
+					&& this.getInfoExecutionCourseAndExamsList().size() == infoExecutionCourseAndExamsList.size();
+		}
+		return false;
+	}
 
-    /**
-     * @param integer
-     */
-    public void setCurricularYear(Integer integer) {
-	curricularYear = integer;
-    }
+	/**
+	 * @return
+	 */
+	public Integer getCurricularYear() {
+		return curricularYear;
+	}
 
-    /**
-     * @param degree
-     */
-    public void setInfoExecutionDegree(InfoExecutionDegree degree) {
-	infoExecutionDegree = degree;
-    }
+	/**
+	 * @return
+	 */
+	public InfoExecutionDegree getInfoExecutionDegree() {
+		return infoExecutionDegree;
+	}
 
-    /**
-     * @return
-     */
-    public List getInfoExecutionCourseAndExamsList() {
-	return infoExecutionCourseAndExamsList;
-    }
+	/**
+	 * @param integer
+	 */
+	public void setCurricularYear(Integer integer) {
+		curricularYear = integer;
+	}
 
-    /**
-     * @param list
-     */
-    public void setInfoExecutionCourseAndExamsList(List list) {
-	infoExecutionCourseAndExamsList = list;
-    }
+	/**
+	 * @param degree
+	 */
+	public void setInfoExecutionDegree(InfoExecutionDegree degree) {
+		infoExecutionDegree = degree;
+	}
+
+	/**
+	 * @return
+	 */
+	public List getInfoExecutionCourseAndExamsList() {
+		return infoExecutionCourseAndExamsList;
+	}
+
+	/**
+	 * @param list
+	 */
+	public void setInfoExecutionCourseAndExamsList(List list) {
+		infoExecutionCourseAndExamsList = list;
+	}
 
 }

@@ -15,12 +15,12 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class CreateGlossaryEntry extends FenixService {
 
-    @Checked("RolePredicates.MANAGER_PREDICATE")
-    @Service
-    public static void run(InfoGlossaryEntry infoGlossaryEntry) {
-	GlossaryEntry glossaryEntry = new GlossaryEntry();
-	glossaryEntry.setTerm(infoGlossaryEntry.getTerm());
-	glossaryEntry.setDefinition(infoGlossaryEntry.getDefinition());
-    }
+	@Checked("RolePredicates.MANAGER_PREDICATE")
+	@Service
+	public static void run(InfoGlossaryEntry infoGlossaryEntry) {
+		GlossaryEntry glossaryEntry = new GlossaryEntry();
+		glossaryEntry.setTerm(infoGlossaryEntry.getTerm());
+		glossaryEntry.setDefinition(infoGlossaryEntry.getDefinition());
+	}
 
 }

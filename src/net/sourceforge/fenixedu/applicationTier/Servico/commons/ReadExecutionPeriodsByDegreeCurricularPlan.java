@@ -18,19 +18,19 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadExecutionPeriodsByDegreeCurricularPlan extends FenixService {
 
-    @Service
-    public static List run(Integer degreeCurricularPlanID) {
+	@Service
+	public static List run(Integer degreeCurricularPlanID) {
 
-	// Start date of the DegreeCurricularPlan
-	final Date startDate = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanID).getInitialDate();
+		// Start date of the DegreeCurricularPlan
+		final Date startDate = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanID).getInitialDate();
 
-	// End date of the current year
-	final Date endDate = ExecutionYear.readCurrentExecutionYear().getEndDate();
+		// End date of the current year
+		final Date endDate = ExecutionYear.readCurrentExecutionYear().getEndDate();
 
-	final List<InfoExecutionPeriod> infoExecutionPeriods = new ArrayList<InfoExecutionPeriod>();
-	for (final ExecutionSemester executionSemester : ExecutionSemester.readExecutionPeriodsInTimePeriod(startDate, endDate)) {
-	    infoExecutionPeriods.add(InfoExecutionPeriod.newInfoFromDomain(executionSemester));
+		final List<InfoExecutionPeriod> infoExecutionPeriods = new ArrayList<InfoExecutionPeriod>();
+		for (final ExecutionSemester executionSemester : ExecutionSemester.readExecutionPeriodsInTimePeriod(startDate, endDate)) {
+			infoExecutionPeriods.add(InfoExecutionPeriod.newInfoFromDomain(executionSemester));
+		}
+		return infoExecutionPeriods;
 	}
-	return infoExecutionPeriods;
-    }
 }

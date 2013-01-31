@@ -19,219 +19,219 @@ import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 public class OriginInformationForm extends Form {
 
-    /**
+	/**
      * 
      */
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    private SchoolLevelType schoolLevel;
+	private SchoolLevelType schoolLevel;
 
-    private String otherSchoolLevel;
+	private String otherSchoolLevel;
 
-    private String conclusionGrade;
+	private String conclusionGrade;
 
-    private String degreeDesignation;
+	private String degreeDesignation;
 
-    private Integer conclusionYear;
+	private Integer conclusionYear;
 
-    private Integer birthYear;
+	private Integer birthYear;
 
-    private Unit institution;
+	private Unit institution;
 
-    private String institutionName;
+	private String institutionName;
 
-    private DegreeDesignation raidesDegreeDesignation;
+	private DegreeDesignation raidesDegreeDesignation;
 
-    private Country countryWhereFinishedPreviousCompleteDegree;
+	private Country countryWhereFinishedPreviousCompleteDegree;
 
-    private AcademicalInstitutionType highSchoolType;
+	private AcademicalInstitutionType highSchoolType;
 
-    private OriginInformationForm() {
-	super();
-	setCountryWhereFinishedPreviousCompleteDegree(Country.readDefault());
-    }
-
-    public SchoolLevelType getSchoolLevel() {
-	return schoolLevel;
-    }
-
-    public void setSchoolLevel(SchoolLevelType schoolLevel) {
-	this.schoolLevel = schoolLevel;
-    }
-
-    public String getOtherSchoolLevel() {
-	return otherSchoolLevel;
-    }
-
-    public void setOtherSchoolLevel(String otherSchoolLevel) {
-	this.otherSchoolLevel = otherSchoolLevel;
-    }
-
-    public String getConclusionGrade() {
-	return conclusionGrade;
-    }
-
-    public void setConclusionGrade(String conclusionGrade) {
-	this.conclusionGrade = conclusionGrade;
-    }
-
-    public Integer getConclusionYear() {
-	return conclusionYear;
-    }
-
-    public void setConclusionYear(Integer conclusionYear) {
-	this.conclusionYear = conclusionYear;
-    }
-
-    public Integer getBirthYear() {
-	return birthYear;
-    }
-
-    public void setBirthYear(Integer birthYear) {
-	this.birthYear = birthYear;
-    }
-
-    public String getDegreeDesignation() {
-	if (getSchoolLevel() != null) {
-	    return getSchoolLevel().isHigherEducation() && getRaidesDegreeDesignation() != null ? getRaidesDegreeDesignation()
-		    .getDescription() : degreeDesignation;
-	}
-	return degreeDesignation;
-    }
-
-    public void setDegreeDesignation(String degreeDesignation) {
-	this.degreeDesignation = degreeDesignation;
-    }
-
-    public String getInstitutionName() {
-	return institutionName;
-    }
-
-    public void setInstitutionName(String institutionName) {
-	this.institutionName = institutionName;
-    }
-
-    public UnitName getInstitutionUnitName() {
-	return (institution == null) ? null : institution.getUnitName();
-    }
-
-    public void setInstitutionUnitName(UnitName institutionUnitName) {
-	this.institution = (institutionUnitName == null) ? null : institutionUnitName.getUnit();
-    }
-
-    public Country getCountryWhereFinishedPreviousCompleteDegree() {
-	return this.countryWhereFinishedPreviousCompleteDegree;
-    }
-
-    public void setCountryWhereFinishedPreviousCompleteDegree(Country countryWhereFinishedPreviousCompleteDegree) {
-	this.countryWhereFinishedPreviousCompleteDegree = countryWhereFinishedPreviousCompleteDegree;
-    }
-
-    public Unit getInstitution() {
-	return this.institution;
-    }
-
-    public void setInstitution(Unit unit) {
-	this.institution = unit;
-    }
-
-    public AcademicalInstitutionType getHighSchoolType() {
-	if ((getSchoolLevel() != null) && (getSchoolLevel().isHighSchoolOrEquivalent())) {
-	    return highSchoolType;
-	}
-	return null;
-    }
-
-    public void setHighSchoolType(AcademicalInstitutionType highSchoolType) {
-	this.highSchoolType = highSchoolType;
-    }
-
-    public void setRaidesDegreeDesignation(DegreeDesignation raidesDegreeDesignation) {
-	this.raidesDegreeDesignation = raidesDegreeDesignation;
-    }
-
-    public DegreeDesignation getRaidesDegreeDesignation() {
-	return raidesDegreeDesignation;
-    }
-
-    private static String roundUpGrade(String grade) {
-	return String.valueOf(Math.round(Float.valueOf(grade)));
-    }
-
-    @Override
-    public List<LabelFormatter> validate() {
-	if (schoolLevel == SchoolLevelType.OTHER && StringUtils.isEmpty(otherSchoolLevel)) {
-	    return Collections.singletonList(new LabelFormatter().appendLabel(
-		    "error.candidacy.workflow.OriginInformationForm.otherSchoolLevel.must.be.filled", "candidate"));
+	private OriginInformationForm() {
+		super();
+		setCountryWhereFinishedPreviousCompleteDegree(Country.readDefault());
 	}
 
-	LocalDate now = new LocalDate();
-	if (now.getYear() < conclusionYear) {
-	    return Collections.singletonList(new LabelFormatter().appendLabel("error.personalInformation.year.after.current",
-		    "candidate"));
+	public SchoolLevelType getSchoolLevel() {
+		return schoolLevel;
 	}
 
-	if (conclusionYear < getBirthYear()) {
-	    return Collections.singletonList(new LabelFormatter().appendLabel("error.personalInformation.year.before.birthday",
-		    "candidate"));
+	public void setSchoolLevel(SchoolLevelType schoolLevel) {
+		this.schoolLevel = schoolLevel;
 	}
 
-	return Collections.emptyList();
+	public String getOtherSchoolLevel() {
+		return otherSchoolLevel;
+	}
 
-    }
+	public void setOtherSchoolLevel(String otherSchoolLevel) {
+		this.otherSchoolLevel = otherSchoolLevel;
+	}
 
-    @Override
-    public String getSchemaName() {
-	if (getSchoolLevel() != null) {
-	    if (getInstitution() != null) {
-		if (getSchoolLevel().isHigherEducation() && StringUtils.isEmpty(getInstitution().getCode())) {
-		    setInstitution(null);
-		    setInstitutionName(null);
-		    setInstitutionUnitName(null);
-		    setRaidesDegreeDesignation(null);
+	public String getConclusionGrade() {
+		return conclusionGrade;
+	}
+
+	public void setConclusionGrade(String conclusionGrade) {
+		this.conclusionGrade = conclusionGrade;
+	}
+
+	public Integer getConclusionYear() {
+		return conclusionYear;
+	}
+
+	public void setConclusionYear(Integer conclusionYear) {
+		this.conclusionYear = conclusionYear;
+	}
+
+	public Integer getBirthYear() {
+		return birthYear;
+	}
+
+	public void setBirthYear(Integer birthYear) {
+		this.birthYear = birthYear;
+	}
+
+	public String getDegreeDesignation() {
+		if (getSchoolLevel() != null) {
+			return getSchoolLevel().isHigherEducation() && getRaidesDegreeDesignation() != null ? getRaidesDegreeDesignation()
+					.getDescription() : degreeDesignation;
 		}
-		if (getSchoolLevel().isHighSchoolOrEquivalent() && !StringUtils.isEmpty(getInstitution().getCode())) {
-		    setInstitution(null);
-		    setInstitutionName(null);
-		    setInstitutionUnitName(null);
-		    setRaidesDegreeDesignation(null);
+		return degreeDesignation;
+	}
+
+	public void setDegreeDesignation(String degreeDesignation) {
+		this.degreeDesignation = degreeDesignation;
+	}
+
+	public String getInstitutionName() {
+		return institutionName;
+	}
+
+	public void setInstitutionName(String institutionName) {
+		this.institutionName = institutionName;
+	}
+
+	public UnitName getInstitutionUnitName() {
+		return (institution == null) ? null : institution.getUnitName();
+	}
+
+	public void setInstitutionUnitName(UnitName institutionUnitName) {
+		this.institution = (institutionUnitName == null) ? null : institutionUnitName.getUnit();
+	}
+
+	public Country getCountryWhereFinishedPreviousCompleteDegree() {
+		return this.countryWhereFinishedPreviousCompleteDegree;
+	}
+
+	public void setCountryWhereFinishedPreviousCompleteDegree(Country countryWhereFinishedPreviousCompleteDegree) {
+		this.countryWhereFinishedPreviousCompleteDegree = countryWhereFinishedPreviousCompleteDegree;
+	}
+
+	public Unit getInstitution() {
+		return this.institution;
+	}
+
+	public void setInstitution(Unit unit) {
+		this.institution = unit;
+	}
+
+	public AcademicalInstitutionType getHighSchoolType() {
+		if ((getSchoolLevel() != null) && (getSchoolLevel().isHighSchoolOrEquivalent())) {
+			return highSchoolType;
 		}
-	    } else {
-		setInstitution(null);
-		setInstitutionName(null);
-		setInstitutionUnitName(null);
-	    }
-
-	    if (getSchoolLevel().isHigherEducation() && getInstitution() != null) {
-		return super.getSchemaName() + ".higherEducation";
-	    }
-	    if (getSchoolLevel().isHigherEducation() && getInstitution() == null) {
-		return super.getSchemaName() + ".higherEducationNoInstitution";
-	    }
-	    if (getSchoolLevel().isHighSchoolOrEquivalent()) {
-		return super.getSchemaName() + ".highSchoolOrEquivalent";
-	    }
-	}
-	return super.getSchemaName();
-    }
-
-    @Override
-    public String getFormName() {
-	return "label.candidacy.workflow.originInformationForm";
-    }
-
-    public static OriginInformationForm createFrom(final StudentCandidacy studentCandidacy) {
-
-	final OriginInformationForm form = new OriginInformationForm();
-	form.setBirthYear(studentCandidacy.getPerson().getDateOfBirthYearMonthDay().getYear());
-	form.setHighSchoolType(studentCandidacy.getHighSchoolType());
-	if (studentCandidacy.hasPrecedentDegreeInformation()) {
-	    form.setConclusionGrade(roundUpGrade(studentCandidacy.getPrecedentDegreeInformation().getConclusionGrade()));
-	    form.setDegreeDesignation(studentCandidacy.getPrecedentDegreeInformation().getDegreeDesignation());
-	    form.setInstitution(studentCandidacy.getPrecedentDegreeInformation().getInstitution());
+		return null;
 	}
 
-	return form;
+	public void setHighSchoolType(AcademicalInstitutionType highSchoolType) {
+		this.highSchoolType = highSchoolType;
+	}
 
-    }
+	public void setRaidesDegreeDesignation(DegreeDesignation raidesDegreeDesignation) {
+		this.raidesDegreeDesignation = raidesDegreeDesignation;
+	}
+
+	public DegreeDesignation getRaidesDegreeDesignation() {
+		return raidesDegreeDesignation;
+	}
+
+	private static String roundUpGrade(String grade) {
+		return String.valueOf(Math.round(Float.valueOf(grade)));
+	}
+
+	@Override
+	public List<LabelFormatter> validate() {
+		if (schoolLevel == SchoolLevelType.OTHER && StringUtils.isEmpty(otherSchoolLevel)) {
+			return Collections.singletonList(new LabelFormatter().appendLabel(
+					"error.candidacy.workflow.OriginInformationForm.otherSchoolLevel.must.be.filled", "candidate"));
+		}
+
+		LocalDate now = new LocalDate();
+		if (now.getYear() < conclusionYear) {
+			return Collections.singletonList(new LabelFormatter().appendLabel("error.personalInformation.year.after.current",
+					"candidate"));
+		}
+
+		if (conclusionYear < getBirthYear()) {
+			return Collections.singletonList(new LabelFormatter().appendLabel("error.personalInformation.year.before.birthday",
+					"candidate"));
+		}
+
+		return Collections.emptyList();
+
+	}
+
+	@Override
+	public String getSchemaName() {
+		if (getSchoolLevel() != null) {
+			if (getInstitution() != null) {
+				if (getSchoolLevel().isHigherEducation() && StringUtils.isEmpty(getInstitution().getCode())) {
+					setInstitution(null);
+					setInstitutionName(null);
+					setInstitutionUnitName(null);
+					setRaidesDegreeDesignation(null);
+				}
+				if (getSchoolLevel().isHighSchoolOrEquivalent() && !StringUtils.isEmpty(getInstitution().getCode())) {
+					setInstitution(null);
+					setInstitutionName(null);
+					setInstitutionUnitName(null);
+					setRaidesDegreeDesignation(null);
+				}
+			} else {
+				setInstitution(null);
+				setInstitutionName(null);
+				setInstitutionUnitName(null);
+			}
+
+			if (getSchoolLevel().isHigherEducation() && getInstitution() != null) {
+				return super.getSchemaName() + ".higherEducation";
+			}
+			if (getSchoolLevel().isHigherEducation() && getInstitution() == null) {
+				return super.getSchemaName() + ".higherEducationNoInstitution";
+			}
+			if (getSchoolLevel().isHighSchoolOrEquivalent()) {
+				return super.getSchemaName() + ".highSchoolOrEquivalent";
+			}
+		}
+		return super.getSchemaName();
+	}
+
+	@Override
+	public String getFormName() {
+		return "label.candidacy.workflow.originInformationForm";
+	}
+
+	public static OriginInformationForm createFrom(final StudentCandidacy studentCandidacy) {
+
+		final OriginInformationForm form = new OriginInformationForm();
+		form.setBirthYear(studentCandidacy.getPerson().getDateOfBirthYearMonthDay().getYear());
+		form.setHighSchoolType(studentCandidacy.getHighSchoolType());
+		if (studentCandidacy.hasPrecedentDegreeInformation()) {
+			form.setConclusionGrade(roundUpGrade(studentCandidacy.getPrecedentDegreeInformation().getConclusionGrade()));
+			form.setDegreeDesignation(studentCandidacy.getPrecedentDegreeInformation().getDegreeDesignation());
+			form.setInstitution(studentCandidacy.getPrecedentDegreeInformation().getInstitution());
+		}
+
+		return form;
+
+	}
 }

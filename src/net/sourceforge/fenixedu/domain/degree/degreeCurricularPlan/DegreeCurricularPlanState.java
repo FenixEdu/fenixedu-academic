@@ -8,17 +8,17 @@ package net.sourceforge.fenixedu.domain.degree.degreeCurricularPlan;
 
 public enum DegreeCurricularPlanState {
 
-    ACTIVE,
+	ACTIVE,
 
-    NOT_ACTIVE,
+	NOT_ACTIVE,
 
-    CONCLUDED,
+	CONCLUDED,
 
-    // // For use in migration process only
-    PAST;
+	// // For use in migration process only
+	PAST;
 
-    public String getName() {
-	return name();
-    }
+	public String getName() {
+		return name();
+	}
 
 }

@@ -35,50 +35,51 @@ import pt.utl.ist.fenix.tools.file.VirtualPathNode;
  */
 public class SaveCandidacyDocumentFiles extends FenixService {
 
-    @Service
-    public static void run(List<CandidacyDocumentUploadBean> candidacyDocuments) {
+	@Service
+	public static void run(List<CandidacyDocumentUploadBean> candidacyDocuments) {
 
-	Group masterDegreeOfficeEmployeesGroup = new RoleGroup(Role
-		.getRoleByRoleType(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE));
-	Group coordinatorsGroup = new RoleGroup(Role.getRoleByRoleType(RoleType.COORDINATOR));
-	Group permittedGroup = new GroupUnion(masterDegreeOfficeEmployeesGroup, coordinatorsGroup);
+		Group masterDegreeOfficeEmployeesGroup =
+				new RoleGroup(Role.getRoleByRoleType(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE));
+		Group coordinatorsGroup = new RoleGroup(Role.getRoleByRoleType(RoleType.COORDINATOR));
+		Group permittedGroup = new GroupUnion(masterDegreeOfficeEmployeesGroup, coordinatorsGroup);
 
-	for (CandidacyDocumentUploadBean candidacyDocumentUploadBean : candidacyDocuments) {
-	    if (candidacyDocumentUploadBean.getTemporaryFile() != null) {
+		for (CandidacyDocumentUploadBean candidacyDocumentUploadBean : candidacyDocuments) {
+			if (candidacyDocumentUploadBean.getTemporaryFile() != null) {
 
-		String filename = candidacyDocumentUploadBean.getFilename();
-		CandidacyDocument candidacyDocument = candidacyDocumentUploadBean.getCandidacyDocument();
-		Candidacy candidacy = candidacyDocument.getCandidacy();
-		Person person = candidacy.getPerson();
+				String filename = candidacyDocumentUploadBean.getFilename();
+				CandidacyDocument candidacyDocument = candidacyDocumentUploadBean.getCandidacyDocument();
+				Candidacy candidacy = candidacyDocument.getCandidacy();
+				Person person = candidacy.getPerson();
 
-		final Collection<FileSetMetaData> metadata = Collections.emptySet();
-		final byte[] content = read(candidacyDocumentUploadBean.getTemporaryFile());
+				final Collection<FileSetMetaData> metadata = Collections.emptySet();
+				final byte[] content = read(candidacyDocumentUploadBean.getTemporaryFile());
 
-		if (candidacyDocument.getFile() != null) {
-		    candidacyDocument.getFile().delete();
+				if (candidacyDocument.getFile() != null) {
+					candidacyDocument.getFile().delete();
+				}
+
+				final CandidacyDocumentFile candidacyDocumentFile =
+						new CandidacyDocumentFile(getVirtualPath(candidacy), filename, filename, metadata, content,
+								new GroupUnion(permittedGroup, new PersonGroup(person)));
+				candidacyDocument.setFile(candidacyDocumentFile);
+			}
 		}
 
-		final CandidacyDocumentFile candidacyDocumentFile = new CandidacyDocumentFile(getVirtualPath(candidacy), filename, 
-			filename, metadata, content, new GroupUnion(permittedGroup, new PersonGroup(person)));
-		candidacyDocument.setFile(candidacyDocumentFile);
-	    }
 	}
 
-    }
-
-    private static byte[] read(final File file) {
-	try {
-	    return FileUtils.readFileToByteArray(file);
-	} catch (IOException e) {
-	    throw new Error(e);
+	private static byte[] read(final File file) {
+		try {
+			return FileUtils.readFileToByteArray(file);
+		} catch (IOException e) {
+			throw new Error(e);
+		}
 	}
-    }
 
-    private static VirtualPath getVirtualPath(Candidacy candidacy) {
-	final VirtualPath filePath = new VirtualPath();
-	filePath.addNode(new VirtualPathNode("Candidacies", "Candidacies"));
-	filePath.addNode(new VirtualPathNode("CANDIDACY" + candidacy.getNumber(), candidacy.getNumber().toString()));
-	return filePath;
-    }
+	private static VirtualPath getVirtualPath(Candidacy candidacy) {
+		final VirtualPath filePath = new VirtualPath();
+		filePath.addNode(new VirtualPathNode("Candidacies", "Candidacies"));
+		filePath.addNode(new VirtualPathNode("CANDIDACY" + candidacy.getNumber(), candidacy.getNumber().toString()));
+		return filePath;
+	}
 
 }

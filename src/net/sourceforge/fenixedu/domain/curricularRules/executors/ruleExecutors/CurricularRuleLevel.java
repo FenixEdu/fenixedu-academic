@@ -2,44 +2,44 @@ package net.sourceforge.fenixedu.domain.curricularRules.executors.ruleExecutors;
 
 public enum CurricularRuleLevel {
 
-    ENROLMENT_WITH_RULES(true),
+	ENROLMENT_WITH_RULES(true),
 
-    ENROLMENT_WITH_RULES_AND_TEMPORARY_ENROLMENT(true),
+	ENROLMENT_WITH_RULES_AND_TEMPORARY_ENROLMENT(true),
 
-    ENROLMENT_NO_RULES(true),
+	ENROLMENT_NO_RULES(true),
 
-    ENROLMENT_VERIFICATION_WITH_RULES(true),
+	ENROLMENT_VERIFICATION_WITH_RULES(true),
 
-    IMPROVEMENT_ENROLMENT(false),
+	IMPROVEMENT_ENROLMENT(false),
 
-    SPECIAL_SEASON_ENROLMENT(false),
+	SPECIAL_SEASON_ENROLMENT(false),
 
-    EXTRA_ENROLMENT(false),
+	EXTRA_ENROLMENT(false),
 
-    PROPAEUDEUTICS_ENROLMENT(false),
+	PROPAEUDEUTICS_ENROLMENT(false),
 
-    STANDALONE_ENROLMENT(false),
-    
-    STANDALONE_ENROLMENT_NO_RULES(false),
-    
-    NULL_LEVEL(false);
+	STANDALONE_ENROLMENT(false),
 
-    private boolean isNormal;
+	STANDALONE_ENROLMENT_NO_RULES(false),
 
-    private CurricularRuleLevel(boolean isNormal) {
-	this.isNormal = isNormal;
-    }
+	NULL_LEVEL(false);
 
-    public String getName() {
-	return name();
-    }
+	private boolean isNormal;
 
-    static public CurricularRuleLevel defaultLevel() {
-	return ENROLMENT_WITH_RULES_AND_TEMPORARY_ENROLMENT;
-    }
+	private CurricularRuleLevel(boolean isNormal) {
+		this.isNormal = isNormal;
+	}
 
-    public boolean isNormal() {
-	return isNormal;
-    }
+	public String getName() {
+		return name();
+	}
+
+	static public CurricularRuleLevel defaultLevel() {
+		return ENROLMENT_WITH_RULES_AND_TEMPORARY_ENROLMENT;
+	}
+
+	public boolean isNormal() {
+		return isNormal;
+	}
 
 }

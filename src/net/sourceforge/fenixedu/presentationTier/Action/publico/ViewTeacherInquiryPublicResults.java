@@ -30,61 +30,62 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 @Mapping(path = "/viewTeacherResults", module = "publico")
 public class ViewTeacherInquiryPublicResults extends ViewInquiryPublicResults {
 
-    public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
+	@Override
+	public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
 
-	return getTeacherResultsActionForward(mapping, actionForm, request, response);
-    }
-
-    public static ActionForward getTeacherResultsActionForward(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) {
-	Professorship professorship = AbstractDomainObject.fromExternalId(request.getParameter("professorshipOID"));
-	ShiftType shiftType = ShiftType.valueOf(request.getParameter("shiftType"));
-
-	List<InquiryResult> inquiryResults = professorship.getInquiryResults(shiftType);
-
-	ExecutionSemester executionPeriod = professorship.getExecutionCourse().getExecutionPeriod();
-	ResultsInquiryTemplate resultsInquiryTemplate = ResultsInquiryTemplate.getTemplateByExecutionPeriod(executionPeriod);
-	List<InquiryBlock> resultBlocks = resultsInquiryTemplate.getInquiryBlocks();
-
-	GroupResultsSummaryBean teacherGroupResultsSummaryBean = getGeneralResults(inquiryResults, resultBlocks,
-		GroupResultType.TEACHER_RESULTS);
-	request.setAttribute("teacherGroupResultsSummaryBean", teacherGroupResultsSummaryBean);
-
-	InquiryResult teacherEvaluation = getTeacherEvaluation(inquiryResults);
-	request.setAttribute("teacherEvaluation", teacherEvaluation);
-
-	StudentTeacherInquiryTemplate teacherInquiryTemplate = StudentTeacherInquiryTemplate
-		.getTemplateByExecutionPeriod(executionPeriod);
-	List<BlockResultsSummaryBean> blockResultsSummaryBeans = new ArrayList<BlockResultsSummaryBean>();
-	for (InquiryBlock inquiryBlock : teacherInquiryTemplate.getInquiryBlocks()) {
-	    blockResultsSummaryBeans.add(new BlockResultsSummaryBean(inquiryBlock, inquiryResults, null, null));
+		return getTeacherResultsActionForward(mapping, actionForm, request, response);
 	}
-	Collections.sort(blockResultsSummaryBeans, new BeanComparator("inquiryBlock.blockOrder"));
-	request.setAttribute("executionCourse", professorship.getExecutionCourse());
-	request.setAttribute("shiftType", shiftType);
-	request.setAttribute("professorship", professorship);
-	request.setAttribute("executionPeriod", executionPeriod);
-	request.setAttribute("blockResultsSummaryBeans", blockResultsSummaryBeans);
-	request.setAttribute("resultsDate", inquiryResults.get(0).getResultDate());
 
-	setTeacherScaleColorException(executionPeriod, request);
-	request.setAttribute("publicContext", true);
-	return new ActionForward(null, "/inquiries/showTeacherInquiryResult_v3.jsp", false, "/teacher");
-    }
+	public static ActionForward getTeacherResultsActionForward(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) {
+		Professorship professorship = AbstractDomainObject.fromExternalId(request.getParameter("professorshipOID"));
+		ShiftType shiftType = ShiftType.valueOf(request.getParameter("shiftType"));
 
-    private static InquiryResult getTeacherEvaluation(List<InquiryResult> inquiryResults) {
-	for (InquiryResult inquiryResult : inquiryResults) {
-	    if (InquiryResultType.TEACHER_EVALUATION.equals(inquiryResult.getResultType())) {
-		return inquiryResult;
-	    }
+		List<InquiryResult> inquiryResults = professorship.getInquiryResults(shiftType);
+
+		ExecutionSemester executionPeriod = professorship.getExecutionCourse().getExecutionPeriod();
+		ResultsInquiryTemplate resultsInquiryTemplate = ResultsInquiryTemplate.getTemplateByExecutionPeriod(executionPeriod);
+		List<InquiryBlock> resultBlocks = resultsInquiryTemplate.getInquiryBlocks();
+
+		GroupResultsSummaryBean teacherGroupResultsSummaryBean =
+				getGeneralResults(inquiryResults, resultBlocks, GroupResultType.TEACHER_RESULTS);
+		request.setAttribute("teacherGroupResultsSummaryBean", teacherGroupResultsSummaryBean);
+
+		InquiryResult teacherEvaluation = getTeacherEvaluation(inquiryResults);
+		request.setAttribute("teacherEvaluation", teacherEvaluation);
+
+		StudentTeacherInquiryTemplate teacherInquiryTemplate =
+				StudentTeacherInquiryTemplate.getTemplateByExecutionPeriod(executionPeriod);
+		List<BlockResultsSummaryBean> blockResultsSummaryBeans = new ArrayList<BlockResultsSummaryBean>();
+		for (InquiryBlock inquiryBlock : teacherInquiryTemplate.getInquiryBlocks()) {
+			blockResultsSummaryBeans.add(new BlockResultsSummaryBean(inquiryBlock, inquiryResults, null, null));
+		}
+		Collections.sort(blockResultsSummaryBeans, new BeanComparator("inquiryBlock.blockOrder"));
+		request.setAttribute("executionCourse", professorship.getExecutionCourse());
+		request.setAttribute("shiftType", shiftType);
+		request.setAttribute("professorship", professorship);
+		request.setAttribute("executionPeriod", executionPeriod);
+		request.setAttribute("blockResultsSummaryBeans", blockResultsSummaryBeans);
+		request.setAttribute("resultsDate", inquiryResults.get(0).getResultDate());
+
+		setTeacherScaleColorException(executionPeriod, request);
+		request.setAttribute("publicContext", true);
+		return new ActionForward(null, "/inquiries/showTeacherInquiryResult_v3.jsp", false, "/teacher");
 	}
-	return null;
-    }
 
-    public static void setTeacherScaleColorException(ExecutionSemester executionSemester, HttpServletRequest request) {
-	if (executionSemester.getSemester() == 1 && executionSemester.getYear().equals("2010/2011")) {
-	    request.setAttribute("first-sem-2010", "first-sem-2010");
+	private static InquiryResult getTeacherEvaluation(List<InquiryResult> inquiryResults) {
+		for (InquiryResult inquiryResult : inquiryResults) {
+			if (InquiryResultType.TEACHER_EVALUATION.equals(inquiryResult.getResultType())) {
+				return inquiryResult;
+			}
+		}
+		return null;
 	}
-    }
+
+	public static void setTeacherScaleColorException(ExecutionSemester executionSemester, HttpServletRequest request) {
+		if (executionSemester.getSemester() == 1 && executionSemester.getYear().equals("2010/2011")) {
+			request.setAttribute("first-sem-2010", "first-sem-2010");
+		}
+	}
 }

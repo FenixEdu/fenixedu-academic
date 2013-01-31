@@ -15,91 +15,92 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class InfoBranch extends InfoObject {
 
-    private final Branch branch;
+	private final Branch branch;
 
-    public Branch getBranch() {
-	return branch;
-    }
-
-    private boolean showEnVersion = (Language.getUserLanguage() == Language.en);
-
-    public InfoBranch(final Branch branch) {
-	this.branch = branch;
-    }
-
-    public String toString() {
-	return getBranch().toString();
-    }
-
-    public Boolean representsCommonBranch() {
-	return Boolean.valueOf(getName() != null && getName().equals("") && getCode() != null && getCode().equals(""));
-    }
-
-    /**
-     * returns an empty string if there is no branch or branch initials in case
-     * it exists
-     */
-    public String getPrettyCode() {
-	if (representsCommonBranch().booleanValue()) {
-	    return "";
+	public Branch getBranch() {
+		return branch;
 	}
-	StringBuilder prettyCode = new StringBuilder();
-	String namePart = null;
-	StringTokenizer stringTokenizer = new StringTokenizer(getName(), " ");
-	while (stringTokenizer.hasMoreTokens()) {
-	    namePart = stringTokenizer.nextToken();
-	    if (!namePart.equalsIgnoreCase("RAMO") && namePart.length() > 2) {
-		prettyCode = prettyCode.append(namePart.substring(0, 1));
-	    }
+
+	private boolean showEnVersion = (Language.getUserLanguage() == Language.en);
+
+	public InfoBranch(final Branch branch) {
+		this.branch = branch;
 	}
-	return prettyCode.toString();
-    }
 
-    public String getCode() {
-	return getBranch().getCode();
-    }
+	@Override
+	public String toString() {
+		return getBranch().toString();
+	}
 
-    public String getName() {
-	return showEnVersion && getBranch().getNameEn() != null && getBranch().getNameEn().length() > 0 ? getBranch().getNameEn()
-		: getBranch().getName();
-    }
+	public Boolean representsCommonBranch() {
+		return Boolean.valueOf(getName() != null && getName().equals("") && getCode() != null && getCode().equals(""));
+	}
 
-    public InfoDegreeCurricularPlan getInfoDegreeCurricularPlan() {
-	return InfoDegreeCurricularPlan.newInfoFromDomain(getBranch().getDegreeCurricularPlan());
-    }
+	/**
+	 * returns an empty string if there is no branch or branch initials in case
+	 * it exists
+	 */
+	public String getPrettyCode() {
+		if (representsCommonBranch().booleanValue()) {
+			return "";
+		}
+		StringBuilder prettyCode = new StringBuilder();
+		String namePart = null;
+		StringTokenizer stringTokenizer = new StringTokenizer(getName(), " ");
+		while (stringTokenizer.hasMoreTokens()) {
+			namePart = stringTokenizer.nextToken();
+			if (!namePart.equalsIgnoreCase("RAMO") && namePart.length() > 2) {
+				prettyCode = prettyCode.append(namePart.substring(0, 1));
+			}
+		}
+		return prettyCode.toString();
+	}
 
-    public String getAcronym() {
-	return getBranch().getAcronym();
-    }
+	public String getCode() {
+		return getBranch().getCode();
+	}
 
-    public Integer getSecondaryCredits() {
-	return getBranch().getSecondaryCredits();
-    }
+	public String getName() {
+		return showEnVersion && getBranch().getNameEn() != null && getBranch().getNameEn().length() > 0 ? getBranch().getNameEn() : getBranch()
+				.getName();
+	}
 
-    public Integer getSpecializationCredits() {
-	return getBranch().getSpecializationCredits();
-    }
+	public InfoDegreeCurricularPlan getInfoDegreeCurricularPlan() {
+		return InfoDegreeCurricularPlan.newInfoFromDomain(getBranch().getDegreeCurricularPlan());
+	}
 
-    public BranchType getBranchType() {
-	return getBranch().getBranchType();
-    }
+	public String getAcronym() {
+		return getBranch().getAcronym();
+	}
 
-    public static InfoBranch newInfoFromDomain(Branch branch) {
-	return branch == null ? null : new InfoBranch(branch);
-    }
+	public Integer getSecondaryCredits() {
+		return getBranch().getSecondaryCredits();
+	}
 
-    public String getNameEn() {
-	return getBranch().getNameEn();
-    }
+	public Integer getSpecializationCredits() {
+		return getBranch().getSpecializationCredits();
+	}
 
-    @Override
-    public Integer getIdInternal() {
-	return getBranch().getIdInternal();
-    }
+	public BranchType getBranchType() {
+		return getBranch().getBranchType();
+	}
 
-    @Override
-    public void setIdInternal(Integer integer) {
-	throw new Error("Method should not be called!");
-    }
+	public static InfoBranch newInfoFromDomain(Branch branch) {
+		return branch == null ? null : new InfoBranch(branch);
+	}
+
+	public String getNameEn() {
+		return getBranch().getNameEn();
+	}
+
+	@Override
+	public Integer getIdInternal() {
+		return getBranch().getIdInternal();
+	}
+
+	@Override
+	public void setIdInternal(Integer integer) {
+		throw new Error("Method should not be called!");
+	}
 
 }

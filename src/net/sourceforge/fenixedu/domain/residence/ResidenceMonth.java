@@ -14,69 +14,70 @@ import org.joda.time.LocalDate;
 
 public class ResidenceMonth extends ResidenceMonth_Base {
 
-    protected ResidenceMonth() {
-	super();
-	setRootDomainObject(RootDomainObject.getInstance());
-    }
-
-    public ResidenceMonth(Month month, ResidenceYear residenceYear) {
-	this();
-	setMonth(month);
-	setYear(residenceYear);
-    }
-
-    public ResidenceManagementUnit getManagementUnit() {
-	return getYear().getUnit();
-    }
-
-    public boolean isEventPresent(Person person) {
-	for (ResidenceEvent event : getEvents()) {
-	    if (event.getPerson() == person && (event.isOpen() || event.isPayed())) {
-		return true;
-	    }
+	protected ResidenceMonth() {
+		super();
+		setRootDomainObject(RootDomainObject.getInstance());
 	}
-	return false;
-    }
 
-    public DateTime getPaymentStartDate() {
-	LocalDate date = new LocalDate(getYear().getYear(), getMonth().getNumberOfMonth(), 1);
-	return date.toDateTimeAtStartOfDay();
-    }
-
-    public DateTime getPaymentLimitDateTime() {
-	ResidenceYear residenceYear = getYear();
-	LocalDate date = new LocalDate(residenceYear.getYear(), getMonth().getNumberOfMonth(), getManagementUnit()
-		.getCurrentPaymentLimitDay());
-	return date.toDateTimeAtStartOfDay();
-    }
-
-    public boolean isAbleToEditPaymentLimitDate() {
-	return getEventsCount() == 0;
-    }
-
-    public Set<ResidenceEvent> getEventsWithPaymentCodes() {
-	Set<ResidenceEvent> eventsWithCodes = new HashSet<ResidenceEvent>();
-
-	for (ResidenceEvent event : getEvents()) {
-	    if (event.getPaymentCodesCount() > 0 && !event.isCancelled()) {
-		eventsWithCodes.add(event);
-	    }
+	public ResidenceMonth(Month month, ResidenceYear residenceYear) {
+		this();
+		setMonth(month);
+		setYear(residenceYear);
 	}
-	return eventsWithCodes;
-    }
 
-    public Set<ResidenceEvent> getEventsWithoutPaymentCodes() {
-	Set<ResidenceEvent> eventsWithoutCodes = new HashSet<ResidenceEvent>();
-
-	for (ResidenceEvent event : getEvents()) {
-	    if (event.getPaymentCodesCount() == 0 && !event.isCancelled()) {
-		eventsWithoutCodes.add(event);
-	    }
+	public ResidenceManagementUnit getManagementUnit() {
+		return getYear().getUnit();
 	}
-	return eventsWithoutCodes;
-    }
 
-    public boolean isFor(int year) {
-	return getYear().isFor(year);
-    }
+	public boolean isEventPresent(Person person) {
+		for (ResidenceEvent event : getEvents()) {
+			if (event.getPerson() == person && (event.isOpen() || event.isPayed())) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public DateTime getPaymentStartDate() {
+		LocalDate date = new LocalDate(getYear().getYear(), getMonth().getNumberOfMonth(), 1);
+		return date.toDateTimeAtStartOfDay();
+	}
+
+	public DateTime getPaymentLimitDateTime() {
+		ResidenceYear residenceYear = getYear();
+		LocalDate date =
+				new LocalDate(residenceYear.getYear(), getMonth().getNumberOfMonth(), getManagementUnit()
+						.getCurrentPaymentLimitDay());
+		return date.toDateTimeAtStartOfDay();
+	}
+
+	public boolean isAbleToEditPaymentLimitDate() {
+		return getEventsCount() == 0;
+	}
+
+	public Set<ResidenceEvent> getEventsWithPaymentCodes() {
+		Set<ResidenceEvent> eventsWithCodes = new HashSet<ResidenceEvent>();
+
+		for (ResidenceEvent event : getEvents()) {
+			if (event.getPaymentCodesCount() > 0 && !event.isCancelled()) {
+				eventsWithCodes.add(event);
+			}
+		}
+		return eventsWithCodes;
+	}
+
+	public Set<ResidenceEvent> getEventsWithoutPaymentCodes() {
+		Set<ResidenceEvent> eventsWithoutCodes = new HashSet<ResidenceEvent>();
+
+		for (ResidenceEvent event : getEvents()) {
+			if (event.getPaymentCodesCount() == 0 && !event.isCancelled()) {
+				eventsWithoutCodes.add(event);
+			}
+		}
+		return eventsWithoutCodes;
+	}
+
+	public boolean isFor(int year) {
+		return getYear().isFor(year);
+	}
 }

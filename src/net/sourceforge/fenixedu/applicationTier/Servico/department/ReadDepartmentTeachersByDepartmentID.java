@@ -14,20 +14,20 @@ import net.sourceforge.fenixedu.domain.Teacher;
  */
 public class ReadDepartmentTeachersByDepartmentID extends FenixService {
 
-    public List<InfoTeacher> run(Integer departmentID) throws FenixServiceException {
+	public List<InfoTeacher> run(Integer departmentID) throws FenixServiceException {
 
-	List<InfoTeacher> result = new ArrayList<InfoTeacher>();
-	Department department = rootDomainObject.readDepartmentByOID(departmentID);
+		List<InfoTeacher> result = new ArrayList<InfoTeacher>();
+		Department department = rootDomainObject.readDepartmentByOID(departmentID);
 
-	List teachers = department.getAllCurrentTeachers();
+		List teachers = department.getAllCurrentTeachers();
 
-	for (int i = 0; i < teachers.size(); i++) {
+		for (int i = 0; i < teachers.size(); i++) {
 
-	    Teacher teacher = (Teacher) teachers.get(i);
-	    result.add(InfoTeacher.newInfoFromDomain(teacher));
+			Teacher teacher = (Teacher) teachers.get(i);
+			result.add(InfoTeacher.newInfoFromDomain(teacher));
+		}
+
+		return result;
+
 	}
-
-	return result;
-
-    }
 }

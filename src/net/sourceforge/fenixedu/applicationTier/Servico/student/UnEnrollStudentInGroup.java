@@ -35,72 +35,73 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class UnEnrollStudentInGroup extends FenixService {
 
-    public static String mailServer() {
-	final String server = PropertiesManager.getProperty("mail.smtp.host");
-	return (server != null) ? server : "mail.adm";
-    }
-
-    private static final MessageResources messages = MessageResources.getMessageResources("resources/GlobalResources");
-
-    @Checked("RolePredicates.STUDENT_PREDICATE")
-    @Service
-    public static Boolean run(String userName, Integer studentGroupCode) throws FenixServiceException {
-
-	StudentGroup studentGroup = rootDomainObject.readStudentGroupByOID(studentGroupCode);
-	if (studentGroup == null) {
-	    throw new InvalidSituationServiceException();
+	public static String mailServer() {
+		final String server = PropertiesManager.getProperty("mail.smtp.host");
+		return (server != null) ? server : "mail.adm";
 	}
 
-	final List<String> emails = new ArrayList<String>();
-	final Collection<Person> people = new ArrayList<Person>();
-	for (final Attends attends : studentGroup.getAttends()) {
-	    final Person person = attends.getRegistration().getPerson();
-	    people.add(person);
+	private static final MessageResources messages = MessageResources.getMessageResources("resources/GlobalResources");
+
+	@Checked("RolePredicates.STUDENT_PREDICATE")
+	@Service
+	public static Boolean run(String userName, Integer studentGroupCode) throws FenixServiceException {
+
+		StudentGroup studentGroup = rootDomainObject.readStudentGroupByOID(studentGroupCode);
+		if (studentGroup == null) {
+			throw new InvalidSituationServiceException();
+		}
+
+		final List<String> emails = new ArrayList<String>();
+		final Collection<Person> people = new ArrayList<Person>();
+		for (final Attends attends : studentGroup.getAttends()) {
+			final Person person = attends.getRegistration().getPerson();
+			people.add(person);
+		}
+		final FixedSetGroup fixedSetGroup = new FixedSetGroup(people);
+		final Recipient recipient = new Recipient("", fixedSetGroup);
+		final Collection<Recipient> recipients = new ArrayList<Recipient>();
+		recipients.add(recipient);
+
+		Registration registration = Registration.readByUsername(userName);
+
+		Grouping groupProperties = studentGroup.getGrouping();
+
+		Attends attend = groupProperties.getStudentAttend(registration);
+
+		if (attend == null) {
+			throw new NotAuthorizedException();
+		}
+
+		IGroupEnrolmentStrategyFactory enrolmentGroupPolicyStrategyFactory = GroupEnrolmentStrategyFactory.getInstance();
+
+		IGroupEnrolmentStrategy strategy = enrolmentGroupPolicyStrategyFactory.getGroupEnrolmentStrategyInstance(groupProperties);
+
+		boolean resultEmpty = strategy.checkIfStudentGroupIsEmpty(attend, studentGroup);
+
+		studentGroup.removeAttends(attend);
+
+		if (resultEmpty) {
+			studentGroup.delete();
+			return Boolean.FALSE;
+		}
+
+		final StringBuilder executionCourseNames = new StringBuilder();
+		for (final ExecutionCourse executionCourse : groupProperties.getExecutionCourses()) {
+			if (executionCourseNames.length() > 0) {
+				executionCourseNames.append(", ");
+			}
+			executionCourseNames.append(executionCourse.getNome());
+		}
+
+		final String message =
+				messages.getMessage("message.body.grouping.change.unenrolment", registration.getNumber().toString(), studentGroup
+						.getGroupNumber().toString(), attend.getExecutionCourse().getNome());
+
+		SystemSender systemSender = rootDomainObject.getSystemSender();
+		new Message(systemSender, systemSender.getConcreteReplyTos(), recipients,
+				messages.getMessage("message.subject.grouping.change"), message, "");
+
+		return Boolean.TRUE;
 	}
-	final FixedSetGroup fixedSetGroup = new FixedSetGroup(people);
-	final Recipient recipient = new Recipient("", fixedSetGroup);
-	final Collection<Recipient> recipients = new ArrayList<Recipient>();
-	recipients.add(recipient);
-
-	Registration registration = Registration.readByUsername(userName);
-
-	Grouping groupProperties = studentGroup.getGrouping();
-
-	Attends attend = groupProperties.getStudentAttend(registration);
-
-	if (attend == null) {
-	    throw new NotAuthorizedException();
-	}
-
-	IGroupEnrolmentStrategyFactory enrolmentGroupPolicyStrategyFactory = GroupEnrolmentStrategyFactory.getInstance();
-
-	IGroupEnrolmentStrategy strategy = enrolmentGroupPolicyStrategyFactory.getGroupEnrolmentStrategyInstance(groupProperties);
-
-	boolean resultEmpty = strategy.checkIfStudentGroupIsEmpty(attend, studentGroup);
-
-	studentGroup.removeAttends(attend);
-
-	if (resultEmpty) {
-	    studentGroup.delete();
-	    return Boolean.FALSE;
-	}
-
-	final StringBuilder executionCourseNames = new StringBuilder();
-	for (final ExecutionCourse executionCourse : groupProperties.getExecutionCourses()) {
-	    if (executionCourseNames.length() > 0) {
-		executionCourseNames.append(", ");
-	    }
-	    executionCourseNames.append(executionCourse.getNome());
-	}
-
-	final String message = messages.getMessage("message.body.grouping.change.unenrolment", registration.getNumber()
-		.toString(), studentGroup.getGroupNumber().toString(), attend.getExecutionCourse().getNome());
-
-	SystemSender systemSender = rootDomainObject.getSystemSender();
-	new Message(systemSender, systemSender.getConcreteReplyTos(), recipients, messages
-		.getMessage("message.subject.grouping.change"), message, "");
-
-	return Boolean.TRUE;
-    }
 
 }

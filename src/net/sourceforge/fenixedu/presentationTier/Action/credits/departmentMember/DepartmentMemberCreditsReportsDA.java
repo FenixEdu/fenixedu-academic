@@ -23,15 +23,15 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 @Mapping(module = "departmentMember", path = "/exportCredits", scope = "request", parameter = "method")
 public class DepartmentMemberCreditsReportsDA extends CreditsReportsDA {
 
-    @Override
-    public ActionForward prepareExportDepartmentCourses(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws NumberFormatException, FenixFilterException, FenixServiceException {
-	IUserView userView = UserView.getUser();
-	DepartmentCreditsBean departmentCreditsBean = new DepartmentCreditsBean();
-	List<Department> availableDepartments = new ArrayList<Department>();
-	availableDepartments.add(userView.getPerson().getTeacher().getCurrentWorkingDepartment());
-	departmentCreditsBean.setAvailableDepartments(availableDepartments);
-	request.setAttribute("departmentCreditsBean", departmentCreditsBean);
-	return mapping.findForward("exportDepartmentCourses");
-    }
+	@Override
+	public ActionForward prepareExportDepartmentCourses(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws NumberFormatException, FenixFilterException, FenixServiceException {
+		IUserView userView = UserView.getUser();
+		DepartmentCreditsBean departmentCreditsBean = new DepartmentCreditsBean();
+		List<Department> availableDepartments = new ArrayList<Department>();
+		availableDepartments.add(userView.getPerson().getTeacher().getCurrentWorkingDepartment());
+		departmentCreditsBean.setAvailableDepartments(availableDepartments);
+		request.setAttribute("departmentCreditsBean", departmentCreditsBean);
+		return mapping.findForward("exportDepartmentCourses");
+	}
 }

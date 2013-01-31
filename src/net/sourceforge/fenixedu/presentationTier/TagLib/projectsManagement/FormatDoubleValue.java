@@ -19,59 +19,61 @@ import org.apache.commons.beanutils.PropertyUtils;
 
 public class FormatDoubleValue extends TagSupport {
 
-    private String name;
+	private String name;
 
-    private String property;
+	private String property;
 
-    public String getName() {
-	return name;
-    }
-
-    public void setName(String name) {
-	this.name = name;
-    }
-
-    public String getProperty() {
-	return this.property;
-    }
-
-    public Double getPropertyValue() {
-	Object obj = pageContext.findAttribute(this.getName());
-	if (property != null) {
-	    try {
-		obj = PropertyUtils.getNestedProperty(obj, property);
-	    } catch (Exception e) {
-		e.printStackTrace();
-		throw new RuntimeException(e);
-	    }
+	public String getName() {
+		return name;
 	}
-	if (obj instanceof Double)
-	    return (Double) obj;
-	return new Double((String) obj);
-    }
 
-    public void setProperty(String property) {
-	this.property = property;
-    }
-
-    public int doStartTag() {
-
-	double doubleValue = getPropertyValue().doubleValue();
-
-	StringBuilder value = new StringBuilder();
-	String color = "";
-	if (doubleValue < 0) {
-	    color = "color:red;";
+	public void setName(String name) {
+		this.name = name;
 	}
-	String stringValue = FormatDouble.convertDoubleToString(doubleValue);
 
-	value.append("<div style='").append(color).append("'>").append(stringValue).append("</div>");
-
-	try {
-	    pageContext.getOut().print(value.toString());
-	} catch (IOException e) {
-	    e.printStackTrace(System.out);
+	public String getProperty() {
+		return this.property;
 	}
-	return SKIP_BODY;
-    }
+
+	public Double getPropertyValue() {
+		Object obj = pageContext.findAttribute(this.getName());
+		if (property != null) {
+			try {
+				obj = PropertyUtils.getNestedProperty(obj, property);
+			} catch (Exception e) {
+				e.printStackTrace();
+				throw new RuntimeException(e);
+			}
+		}
+		if (obj instanceof Double) {
+			return (Double) obj;
+		}
+		return new Double((String) obj);
+	}
+
+	public void setProperty(String property) {
+		this.property = property;
+	}
+
+	@Override
+	public int doStartTag() {
+
+		double doubleValue = getPropertyValue().doubleValue();
+
+		StringBuilder value = new StringBuilder();
+		String color = "";
+		if (doubleValue < 0) {
+			color = "color:red;";
+		}
+		String stringValue = FormatDouble.convertDoubleToString(doubleValue);
+
+		value.append("<div style='").append(color).append("'>").append(stringValue).append("</div>");
+
+		try {
+			pageContext.getOut().print(value.toString());
+		} catch (IOException e) {
+			e.printStackTrace(System.out);
+		}
+		return SKIP_BODY;
+	}
 }

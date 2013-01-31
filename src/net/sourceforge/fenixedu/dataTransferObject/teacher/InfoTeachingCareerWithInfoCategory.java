@@ -14,38 +14,38 @@ import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
  */
 public class InfoTeachingCareerWithInfoCategory extends InfoTeachingCareer {
 
-    private MultiLanguageString categoryName;
+	private MultiLanguageString categoryName;
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see
-     * net.sourceforge.fenixedu.dataTransferObject.teacher.InfoTeachingCareer
-     * #copyFromDomain(Dominio.teacher.TeachingCareer)
-     */
-    @Override
-    public void copyFromDomain(TeachingCareer teachingCareer) {
-	super.copyFromDomain(teachingCareer);
-	if (teachingCareer != null) {
-	    setCategoryName(teachingCareer.getCategoryName());
-	    setInfoTeacher(InfoTeacher.newInfoFromDomain(teachingCareer.getTeacher()));
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * net.sourceforge.fenixedu.dataTransferObject.teacher.InfoTeachingCareer
+	 * #copyFromDomain(Dominio.teacher.TeachingCareer)
+	 */
+	@Override
+	public void copyFromDomain(TeachingCareer teachingCareer) {
+		super.copyFromDomain(teachingCareer);
+		if (teachingCareer != null) {
+			setCategoryName(teachingCareer.getCategoryName());
+			setInfoTeacher(InfoTeacher.newInfoFromDomain(teachingCareer.getTeacher()));
+		}
 	}
-    }
 
-    public static InfoTeachingCareer newInfoFromDomain(TeachingCareer teachingCareer) {
-	InfoTeachingCareerWithInfoCategory infoTeachingCareer = null;
-	if (teachingCareer != null) {
-	    infoTeachingCareer = new InfoTeachingCareerWithInfoCategory();
-	    infoTeachingCareer.copyFromDomain(teachingCareer);
+	public static InfoTeachingCareer newInfoFromDomain(TeachingCareer teachingCareer) {
+		InfoTeachingCareerWithInfoCategory infoTeachingCareer = null;
+		if (teachingCareer != null) {
+			infoTeachingCareer = new InfoTeachingCareerWithInfoCategory();
+			infoTeachingCareer.copyFromDomain(teachingCareer);
+		}
+		return infoTeachingCareer;
 	}
-	return infoTeachingCareer;
-    }
 
-    public MultiLanguageString getCategoryName() {
-	return categoryName;
-    }
+	public MultiLanguageString getCategoryName() {
+		return categoryName;
+	}
 
-    public void setCategoryName(MultiLanguageString categoryName) {
-	this.categoryName = categoryName;
-    }
+	public void setCategoryName(MultiLanguageString categoryName) {
+		this.categoryName = categoryName;
+	}
 }

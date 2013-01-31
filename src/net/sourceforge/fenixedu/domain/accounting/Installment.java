@@ -17,150 +17,150 @@ import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 
 public class Installment extends Installment_Base {
 
-    public static Comparator<Installment> COMPARATOR_BY_END_DATE = new Comparator<Installment>() {
-	public int compare(Installment leftInstallment, Installment rightInstallment) {
-	    int comparationResult = leftInstallment.getEndDate().compareTo(rightInstallment.getEndDate());
-	    return (comparationResult == 0) ? leftInstallment.getIdInternal().compareTo(rightInstallment.getIdInternal())
-		    : comparationResult;
-	}
-    };
+	public static Comparator<Installment> COMPARATOR_BY_END_DATE = new Comparator<Installment>() {
+		@Override
+		public int compare(Installment leftInstallment, Installment rightInstallment) {
+			int comparationResult = leftInstallment.getEndDate().compareTo(rightInstallment.getEndDate());
+			return (comparationResult == 0) ? leftInstallment.getIdInternal().compareTo(rightInstallment.getIdInternal()) : comparationResult;
+		}
+	};
 
-    public static Comparator<Installment> COMPARATOR_BY_ORDER = new Comparator<Installment>() {
-	public int compare(Installment leftInstallment, Installment rightInstallment) {
-	    int comparationResult = leftInstallment.getInstallmentOrder().compareTo(rightInstallment.getInstallmentOrder());
-	    return (comparationResult == 0) ? leftInstallment.getIdInternal().compareTo(rightInstallment.getIdInternal())
-		    : comparationResult;
-	}
-    };
+	public static Comparator<Installment> COMPARATOR_BY_ORDER = new Comparator<Installment>() {
+		@Override
+		public int compare(Installment leftInstallment, Installment rightInstallment) {
+			int comparationResult = leftInstallment.getInstallmentOrder().compareTo(rightInstallment.getInstallmentOrder());
+			return (comparationResult == 0) ? leftInstallment.getIdInternal().compareTo(rightInstallment.getIdInternal()) : comparationResult;
+		}
+	};
 
-    protected Installment() {
-	super();
-	super.setRootDomainObject(RootDomainObject.getInstance());
-	super.setWhenCreated(new DateTime());
-    }
-
-    public Installment(final PaymentPlan paymentPlan, final Money amount, YearMonthDay startDate, YearMonthDay endDate) {
-	this();
-	init(paymentPlan, amount, startDate, endDate);
-    }
-
-    protected void init(final PaymentPlan paymentPlan, final Money amount, YearMonthDay startDate, YearMonthDay endDate) {
-
-	checkParameters(paymentPlan, amount, startDate, endDate);
-
-	super.setInstallmentOrder(paymentPlan.getLastInstallmentOrder() + 1);
-	super.setPaymentPlan(paymentPlan);
-	super.setAmount(amount);
-	super.setStartDate(startDate);
-	super.setEndDate(endDate);
-    }
-
-    protected void checkParameters(PaymentPlan paymentPlan, Money amount, YearMonthDay startDate, YearMonthDay endDate) {
-
-	if (paymentPlan == null) {
-	    throw new DomainException("error.accounting.Installment.paymentCondition.cannot.be.null");
+	protected Installment() {
+		super();
+		super.setRootDomainObject(RootDomainObject.getInstance());
+		super.setWhenCreated(new DateTime());
 	}
 
-	checkParameters(amount, startDate, endDate);
-    }
-
-    private void checkParameters(Money amount, YearMonthDay startDate, YearMonthDay endDate) {
-	if (amount == null) {
-	    throw new DomainException("error.accounting.Installment.amount.cannot.be.null");
+	public Installment(final PaymentPlan paymentPlan, final Money amount, YearMonthDay startDate, YearMonthDay endDate) {
+		this();
+		init(paymentPlan, amount, startDate, endDate);
 	}
 
-	if (startDate == null) {
-	    throw new DomainException("error.accounting.enclosing_type.startDate.cannot.be.null");
+	protected void init(final PaymentPlan paymentPlan, final Money amount, YearMonthDay startDate, YearMonthDay endDate) {
+
+		checkParameters(paymentPlan, amount, startDate, endDate);
+
+		super.setInstallmentOrder(paymentPlan.getLastInstallmentOrder() + 1);
+		super.setPaymentPlan(paymentPlan);
+		super.setAmount(amount);
+		super.setStartDate(startDate);
+		super.setEndDate(endDate);
 	}
 
-	if (endDate == null) {
-	    throw new DomainException("error.accounting.Installment.endDate.cannot.be.null");
+	protected void checkParameters(PaymentPlan paymentPlan, Money amount, YearMonthDay startDate, YearMonthDay endDate) {
+
+		if (paymentPlan == null) {
+			throw new DomainException("error.accounting.Installment.paymentCondition.cannot.be.null");
+		}
+
+		checkParameters(amount, startDate, endDate);
 	}
-    }
 
-    @Override
-    public void setPaymentPlan(PaymentPlan paymentPlan) {
-	throw new DomainException("error.accounting.Installment.cannot.modify.paymentPlan");
-    }
+	private void checkParameters(Money amount, YearMonthDay startDate, YearMonthDay endDate) {
+		if (amount == null) {
+			throw new DomainException("error.accounting.Installment.amount.cannot.be.null");
+		}
 
-    @Override
-    public void setAmount(Money amount) {
-	throw new DomainException("error.accounting.Installment.cannot.modify.amount");
-    }
+		if (startDate == null) {
+			throw new DomainException("error.accounting.enclosing_type.startDate.cannot.be.null");
+		}
 
-    @Override
-    public void setStartDate(YearMonthDay startDate) {
-	throw new DomainException("error.accounting.Installment.cannot.modify.startDate");
-    }
+		if (endDate == null) {
+			throw new DomainException("error.accounting.Installment.endDate.cannot.be.null");
+		}
+	}
 
-    @Override
-    public void setEndDate(YearMonthDay endDate) {
-	throw new DomainException("error.accounting.Installment.cannot.modify.endDate");
-    }
+	@Override
+	public void setPaymentPlan(PaymentPlan paymentPlan) {
+		throw new DomainException("error.accounting.Installment.cannot.modify.paymentPlan");
+	}
 
-    @Override
-    public void setWhenCreated(DateTime whenCreated) {
-	throw new DomainException("error.accounting.installments.InstallmentWithMonthlyPenalty.cannot.modify.whenCreated");
-    }
+	@Override
+	public void setAmount(Money amount) {
+		throw new DomainException("error.accounting.Installment.cannot.modify.amount");
+	}
 
-    @Override
-    public void setInstallmentOrder(Integer order) {
-	throw new DomainException("error.accounting.Installment.cannot.modify.installmentOrder");
-    }
+	@Override
+	public void setStartDate(YearMonthDay startDate) {
+		throw new DomainException("error.accounting.Installment.cannot.modify.startDate");
+	}
 
-    public Money calculateAmount(Event event, DateTime when, BigDecimal discountPercentage, boolean applyPenalty) {
-	return calculateAmountWithDiscount(event, discountPercentage);
-    }
+	@Override
+	public void setEndDate(YearMonthDay endDate) {
+		throw new DomainException("error.accounting.Installment.cannot.modify.endDate");
+	}
 
-    protected Money calculateAmountWithDiscount(Event event, BigDecimal discountPercentage) {
-	return calculateBaseAmount(event).multiply(BigDecimal.ONE.subtract(discountPercentage));
-    }
+	@Override
+	public void setWhenCreated(DateTime whenCreated) {
+		throw new DomainException("error.accounting.installments.InstallmentWithMonthlyPenalty.cannot.modify.whenCreated");
+	}
 
-    protected Money calculateBaseAmount(Event event) {
-	return getAmount();
-    }
+	@Override
+	public void setInstallmentOrder(Integer order) {
+		throw new DomainException("error.accounting.Installment.cannot.modify.installmentOrder");
+	}
 
-    public int getOrder() {
-	return getInstallmentOrder().intValue();
-    }
+	public Money calculateAmount(Event event, DateTime when, BigDecimal discountPercentage, boolean applyPenalty) {
+		return calculateAmountWithDiscount(event, discountPercentage);
+	}
 
-    public LabelFormatter getDescription() {
-	final LabelFormatter labelFormatter = new LabelFormatter();
-	labelFormatter.appendLabel("application", "label.Installment.description", getInstallmentOrder().toString(),
-		getStartDate().toString(DateFormatUtil.DEFAULT_DATE_FORMAT), getEndDate().toString(
-			DateFormatUtil.DEFAULT_DATE_FORMAT));
+	protected Money calculateAmountWithDiscount(Event event, BigDecimal discountPercentage) {
+		return calculateBaseAmount(event).multiply(BigDecimal.ONE.subtract(discountPercentage));
+	}
 
-	return labelFormatter;
+	protected Money calculateBaseAmount(Event event) {
+		return getAmount();
+	}
 
-    }
+	public int getOrder() {
+		return getInstallmentOrder().intValue();
+	}
 
-    public boolean isWithMonthlyPenalty() {
-	return false;
-    }
+	public LabelFormatter getDescription() {
+		final LabelFormatter labelFormatter = new LabelFormatter();
+		labelFormatter.appendLabel("application", "label.Installment.description", getInstallmentOrder().toString(),
+				getStartDate().toString(DateFormatUtil.DEFAULT_DATE_FORMAT),
+				getEndDate().toString(DateFormatUtil.DEFAULT_DATE_FORMAT));
 
-    public boolean isForFirstTimeStudents() {
-	return false;
-    }
+		return labelFormatter;
 
-    public void delete() {
-	super.setPaymentPlan(null);
-	removeRootDomainObject();
-	super.deleteDomainObject();
-    }
+	}
 
-    public LocalDate getEndDate(final Event event) {
-	return super.getEndDate().toLocalDate();
-    }
+	public boolean isWithMonthlyPenalty() {
+		return false;
+	}
 
-    public void edit(final InstallmentBean bean) {
-	Money amount = bean.getAmount();
-	YearMonthDay startDate = bean.getStartDate();
-	YearMonthDay endDate = bean.getEndDate();
+	public boolean isForFirstTimeStudents() {
+		return false;
+	}
 
-	checkParameters(amount, startDate, endDate);
+	public void delete() {
+		super.setPaymentPlan(null);
+		removeRootDomainObject();
+		super.deleteDomainObject();
+	}
 
-	super.setStartDate(startDate);
-	super.setEndDate(endDate);
-    }
+	public LocalDate getEndDate(final Event event) {
+		return super.getEndDate().toLocalDate();
+	}
+
+	public void edit(final InstallmentBean bean) {
+		Money amount = bean.getAmount();
+		YearMonthDay startDate = bean.getStartDate();
+		YearMonthDay endDate = bean.getEndDate();
+
+		checkParameters(amount, startDate, endDate);
+
+		super.setStartDate(startDate);
+		super.setEndDate(endDate);
+	}
 
 }

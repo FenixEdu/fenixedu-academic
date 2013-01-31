@@ -4,15 +4,9 @@ import net.sourceforge.fenixedu.presentationTier.Action.phd.candidacy.CommonPhdC
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(path = "/phdProgramCandidacyProcess", module = "student")
-@Forwards( {
+@Forwards({
 
 @Forward(name = "manageCandidacyDocuments", path = "/phd/candidacy/student/manageCandidacyDocuments.jsp")
 

@@ -12,65 +12,65 @@ import net.sourceforge.fenixedu.domain.InsuranceValue;
  */
 public class InfoInsuranceValue extends InfoObject {
 
-    private Double annualValue;
+	private Double annualValue;
 
-    private InfoExecutionYear infoExecutionYear;
+	private InfoExecutionYear infoExecutionYear;
 
-    private Date endDate;
+	private Date endDate;
 
-    protected void copyFromDomain(InsuranceValue insuranceValue) {
-	super.copyFromDomain(insuranceValue);
-	this.annualValue = insuranceValue.getAnnualValue();
-	this.endDate = insuranceValue.getEndDate();
-	this.infoExecutionYear = InfoExecutionYear.newInfoFromDomain(insuranceValue.getExecutionYear());
+	protected void copyFromDomain(InsuranceValue insuranceValue) {
+		super.copyFromDomain(insuranceValue);
+		this.annualValue = insuranceValue.getAnnualValue();
+		this.endDate = insuranceValue.getEndDate();
+		this.infoExecutionYear = InfoExecutionYear.newInfoFromDomain(insuranceValue.getExecutionYear());
 
-    }
-
-    public static InfoInsuranceValue newInfoFromDomain(InsuranceValue insuranceValue) {
-
-	InfoInsuranceValue infoInsuranceValue = null;
-	if (insuranceValue != null) {
-	    infoInsuranceValue = new InfoInsuranceValue();
-	    infoInsuranceValue.copyFromDomain(insuranceValue);
 	}
-	return infoInsuranceValue;
-    }
 
-    /**
-     * @return Returns the annualValue.
-     */
-    public Double getAnnualValue() {
-	return annualValue;
-    }
+	public static InfoInsuranceValue newInfoFromDomain(InsuranceValue insuranceValue) {
 
-    /**
-     * @param annualValue
-     *            The annualValue to set.
-     */
-    public void setAnnualValue(Double annualValue) {
-	this.annualValue = annualValue;
-    }
+		InfoInsuranceValue infoInsuranceValue = null;
+		if (insuranceValue != null) {
+			infoInsuranceValue = new InfoInsuranceValue();
+			infoInsuranceValue.copyFromDomain(insuranceValue);
+		}
+		return infoInsuranceValue;
+	}
 
-    /**
-     * @return Returns the infoExecutionYear.
-     */
-    public InfoExecutionYear getInfoExecutionYear() {
-	return infoExecutionYear;
-    }
+	/**
+	 * @return Returns the annualValue.
+	 */
+	public Double getAnnualValue() {
+		return annualValue;
+	}
 
-    /**
-     * @param infoExecutionYear
-     *            The infoExecutionYear to set.
-     */
-    public void setInfoExecutionYear(InfoExecutionYear infoExecutionYear) {
-	this.infoExecutionYear = infoExecutionYear;
-    }
+	/**
+	 * @param annualValue
+	 *            The annualValue to set.
+	 */
+	public void setAnnualValue(Double annualValue) {
+		this.annualValue = annualValue;
+	}
 
-    public Date getEndDate() {
-	return endDate;
-    }
+	/**
+	 * @return Returns the infoExecutionYear.
+	 */
+	public InfoExecutionYear getInfoExecutionYear() {
+		return infoExecutionYear;
+	}
 
-    public void setEndDate(Date endDate) {
-	this.endDate = endDate;
-    }
+	/**
+	 * @param infoExecutionYear
+	 *            The infoExecutionYear to set.
+	 */
+	public void setInfoExecutionYear(InfoExecutionYear infoExecutionYear) {
+		this.infoExecutionYear = infoExecutionYear;
+	}
+
+	public Date getEndDate() {
+		return endDate;
+	}
+
+	public void setEndDate(Date endDate) {
+		this.endDate = endDate;
+	}
 }

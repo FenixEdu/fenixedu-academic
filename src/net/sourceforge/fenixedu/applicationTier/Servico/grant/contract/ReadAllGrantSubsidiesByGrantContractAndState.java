@@ -28,21 +28,23 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class ReadAllGrantSubsidiesByGrantContractAndState extends FenixService {
 
-    @Checked("RolePredicates.GRANT_OWNER_MANAGER_PREDICATE")
-    @Service
-    public static List run(Integer idContract, Integer state) throws FenixServiceException {
-	final GrantContract grantContract = rootDomainObject.readGrantContractByOID(idContract);
-	final Set<GrantSubsidy> subsidies = grantContract.findGrantSubsidiesByState(state);
-	if (subsidies == null)
-	    return new ArrayList();
+	@Checked("RolePredicates.GRANT_OWNER_MANAGER_PREDICATE")
+	@Service
+	public static List run(Integer idContract, Integer state) throws FenixServiceException {
+		final GrantContract grantContract = rootDomainObject.readGrantContractByOID(idContract);
+		final Set<GrantSubsidy> subsidies = grantContract.findGrantSubsidiesByState(state);
+		if (subsidies == null) {
+			return new ArrayList();
+		}
 
-	List infoSubsidyList = (List) CollectionUtils.collect(subsidies, new Transformer() {
-	    public Object transform(Object input) {
-		GrantSubsidy grantSubsidy = (GrantSubsidy) input;
-		InfoGrantSubsidy infoGrantSubsidy = InfoGrantSubsidyWithContract.newInfoFromDomain(grantSubsidy);
-		return infoGrantSubsidy;
-	    }
-	});
-	return infoSubsidyList;
-    }
+		List infoSubsidyList = (List) CollectionUtils.collect(subsidies, new Transformer() {
+			@Override
+			public Object transform(Object input) {
+				GrantSubsidy grantSubsidy = (GrantSubsidy) input;
+				InfoGrantSubsidy infoGrantSubsidy = InfoGrantSubsidyWithContract.newInfoFromDomain(grantSubsidy);
+				return infoGrantSubsidy;
+			}
+		});
+		return infoSubsidyList;
+	}
 }

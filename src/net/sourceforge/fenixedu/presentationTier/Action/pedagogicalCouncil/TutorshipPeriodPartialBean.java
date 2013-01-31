@@ -9,30 +9,30 @@ import org.joda.time.Partial;
 
 public class TutorshipPeriodPartialBean extends TeacherTutorshipCreationBean implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    private Partial endDate;
-    private Tutorship tutorship;
+	private Partial endDate;
+	private Tutorship tutorship;
 
-    public TutorshipPeriodPartialBean(Tutorship tutorship, ExecutionDegree executionDegree) {
-	super(executionDegree);
-	this.tutorship = tutorship;
-    }
+	public TutorshipPeriodPartialBean(Tutorship tutorship, ExecutionDegree executionDegree) {
+		super(executionDegree);
+		this.tutorship = tutorship;
+	}
 
-    public Partial getEndDate() {
-	return endDate;
-    }
+	public Partial getEndDate() {
+		return endDate;
+	}
 
-    public void setEndDate(Partial endDate) {
-	this.endDate = endDate;
-    }
+	public void setEndDate(Partial endDate) {
+		this.endDate = endDate;
+	}
 
-    public Tutorship getTutorship() {
-	return tutorship;
-    }
+	public Tutorship getTutorship() {
+		return tutorship;
+	}
 
-    public void setTutorship(Tutorship tutorship) {
-	this.tutorship = tutorship;
-    }
+	public void setTutorship(Tutorship tutorship) {
+		this.tutorship = tutorship;
+	}
 
 }

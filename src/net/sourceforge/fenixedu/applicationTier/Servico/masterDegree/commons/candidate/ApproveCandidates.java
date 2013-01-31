@@ -13,31 +13,31 @@ import net.sourceforge.fenixedu.util.State;
  */
 public class ApproveCandidates extends FenixService {
 
-    public void run(String[] situations, String[] ids, String[] remarks, String[] substitutes) {
+	public void run(String[] situations, String[] ids, String[] remarks, String[] substitutes) {
 
-	for (int i = 0; i < situations.length; i++) {
+		for (int i = 0; i < situations.length; i++) {
 
-	    MasterDegreeCandidate masterDegreeCandidate = rootDomainObject.readMasterDegreeCandidateByOID(new Integer(ids[i]));
-	    CandidateSituation candidateSituationOldFromBD = masterDegreeCandidate.getActiveCandidateSituation();
+			MasterDegreeCandidate masterDegreeCandidate = rootDomainObject.readMasterDegreeCandidateByOID(new Integer(ids[i]));
+			CandidateSituation candidateSituationOldFromBD = masterDegreeCandidate.getActiveCandidateSituation();
 
-	    candidateSituationOldFromBD.setValidation(new State(State.INACTIVE));
+			candidateSituationOldFromBD.setValidation(new State(State.INACTIVE));
 
-	    if ((substitutes[i] != null) && (substitutes[i].length() > 0)) {
-		masterDegreeCandidate.setSubstituteOrder(new Integer(substitutes[i]));
-	    }
+			if ((substitutes[i] != null) && (substitutes[i].length() > 0)) {
+				masterDegreeCandidate.setSubstituteOrder(new Integer(substitutes[i]));
+			}
 
-	    // Create the new Candidate Situation
+			// Create the new Candidate Situation
 
-	    CandidateSituation candidateSituation = new CandidateSituation();
-	    candidateSituation.setDate(Calendar.getInstance().getTime());
-	    candidateSituation.setMasterDegreeCandidate(masterDegreeCandidate);
-	    candidateSituation.setRemarks(remarks[i]);
-	    candidateSituation.setSituation(new SituationName(situations[i]));
-	    candidateSituation.setValidation(new State(State.ACTIVE));
+			CandidateSituation candidateSituation = new CandidateSituation();
+			candidateSituation.setDate(Calendar.getInstance().getTime());
+			candidateSituation.setMasterDegreeCandidate(masterDegreeCandidate);
+			candidateSituation.setRemarks(remarks[i]);
+			candidateSituation.setSituation(new SituationName(situations[i]));
+			candidateSituation.setValidation(new State(State.ACTIVE));
 
-	    // masterDegreeCandidate.getSituations().add(candidateSituation);
+			// masterDegreeCandidate.getSituations().add(candidateSituation);
+
+		}
 
 	}
-
-    }
 }

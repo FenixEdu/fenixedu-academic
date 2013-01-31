@@ -52,434 +52,445 @@ import pt.utl.ist.fenix.tools.util.CollectionPager;
  * @author T�nia Pous�o
  * 
  */
-@Mapping(module = "personnelSection", path = "/findPerson", input = "findPerson", attribute = "findPersonForm", formBean = "findPersonForm", scope = "request", parameter = "method")
+@Mapping(
+		module = "personnelSection",
+		path = "/findPerson",
+		input = "findPerson",
+		attribute = "findPersonForm",
+		formBean = "findPersonForm",
+		scope = "request",
+		parameter = "method")
 @Forwards(value = {
-	@Forward(name = "viewPerson", path = "/personnelSection/people/viewPerson.jsp"),
-	@Forward(name = "displayPerson", path = "/manager/personManagement/displayPerson.jsp"),
-	@Forward(name = "findPerson", path = "/manager/personManagement/findPerson.jsp", tileProperties = @Tile(title = "private.staffarea.interfacegiaf.interfacegiaf.searchpeople")) })
+		@Forward(name = "viewPerson", path = "/personnelSection/people/viewPerson.jsp"),
+		@Forward(name = "displayPerson", path = "/manager/personManagement/displayPerson.jsp"),
+		@Forward(name = "findPerson", path = "/manager/personManagement/findPerson.jsp", tileProperties = @Tile(
+				title = "private.staffarea.interfacegiaf.interfacegiaf.searchpeople")) })
 public class PersonManagementAction extends FenixDispatchAction {
 
-    public ActionForward firstPage(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-	return mapping.findForward("firstPage");
-    }
-
-    public ActionForward viewPerson(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) {
-	String externalId = request.getParameter("personID");
-	Person person = (Person) rootDomainObject.fromExternalId(externalId);
-	request.setAttribute("person", person);
-	return mapping.findForward("viewPerson");
-    }
-
-    private String getModulePrefix(final ActionMapping mapping, final HttpServletRequest request) {
-	final String uri = request.getRequestURI();
-	final int contextPathLength = request.getContextPath().length() + 1;
-	final String mappingPath = mapping.getPath();
-	final int i = uri.indexOf(mappingPath);
-	return uri.substring(contextPathLength, i);
-    }
-
-    public ActionForward prepareFindPerson(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-	final String modulePrefix = getModulePrefix(mapping, request);
-	request.setAttribute("modulePrefix", modulePrefix);
-	return mapping.findForward("findPerson");
-    }
-
-    public ActionForward findPerson(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-	ActionErrors errors = new ActionErrors();
-
-	IUserView userView = UserView.getUser();
-
-	DynaActionForm findPersonForm = (DynaActionForm) actionForm;
-	String name = null;
-	if (findPersonForm.get("name") != null) {
-	    name = (String) findPersonForm.get("name");
-	    request.setAttribute("name", name);
+	public ActionForward firstPage(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		return mapping.findForward("firstPage");
 	}
 
-	String email = null;
-	if (findPersonForm.get("email") != null) {
-	    email = (String) findPersonForm.get("email");
-	    request.setAttribute("email", email);
+	public ActionForward viewPerson(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) {
+		String externalId = request.getParameter("personID");
+		Person person = (Person) rootDomainObject.fromExternalId(externalId);
+		request.setAttribute("person", person);
+		return mapping.findForward("viewPerson");
 	}
 
-	String username = null;
-	if (findPersonForm.get("username") != null) {
-	    username = (String) findPersonForm.get("username");
-	    request.setAttribute("username", username);
+	private String getModulePrefix(final ActionMapping mapping, final HttpServletRequest request) {
+		final String uri = request.getRequestURI();
+		final int contextPathLength = request.getContextPath().length() + 1;
+		final String mappingPath = mapping.getPath();
+		final int i = uri.indexOf(mappingPath);
+		return uri.substring(contextPathLength, i);
 	}
 
-	String documentIdNumber = null;
-	if (findPersonForm.get("documentIdNumber") != null) {
-	    documentIdNumber = (String) findPersonForm.get("documentIdNumber");
-	    request.setAttribute("documentIdNumber", documentIdNumber);
+	public ActionForward prepareFindPerson(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		final String modulePrefix = getModulePrefix(mapping, request);
+		request.setAttribute("modulePrefix", modulePrefix);
+		return mapping.findForward("findPerson");
 	}
 
-	String mechanoGraphicalNumber = null;
-	if (findPersonForm.get("mechanoGraphicalNumber") != null) {
-	    mechanoGraphicalNumber = (String) findPersonForm.get("mechanoGraphicalNumber");
-	    request.setAttribute("mechanoGraphicalNumber", mechanoGraphicalNumber);
+	public ActionForward findPerson(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		ActionErrors errors = new ActionErrors();
+
+		IUserView userView = UserView.getUser();
+
+		DynaActionForm findPersonForm = (DynaActionForm) actionForm;
+		String name = null;
+		if (findPersonForm.get("name") != null) {
+			name = (String) findPersonForm.get("name");
+			request.setAttribute("name", name);
+		}
+
+		String email = null;
+		if (findPersonForm.get("email") != null) {
+			email = (String) findPersonForm.get("email");
+			request.setAttribute("email", email);
+		}
+
+		String username = null;
+		if (findPersonForm.get("username") != null) {
+			username = (String) findPersonForm.get("username");
+			request.setAttribute("username", username);
+		}
+
+		String documentIdNumber = null;
+		if (findPersonForm.get("documentIdNumber") != null) {
+			documentIdNumber = (String) findPersonForm.get("documentIdNumber");
+			request.setAttribute("documentIdNumber", documentIdNumber);
+		}
+
+		String mechanoGraphicalNumber = null;
+		if (findPersonForm.get("mechanoGraphicalNumber") != null) {
+			mechanoGraphicalNumber = (String) findPersonForm.get("mechanoGraphicalNumber");
+			request.setAttribute("mechanoGraphicalNumber", mechanoGraphicalNumber);
+		}
+
+		SearchParameters searchParameters =
+				new SearchPerson.SearchParameters(name, email, username, documentIdNumber, null, null, null, null, null, null,
+						null, null, (String) null);
+
+		if ((mechanoGraphicalNumber != null) && (mechanoGraphicalNumber.length() > 0)) {
+			searchParameters.setMechanoGraphicalNumber(Integer.parseInt(mechanoGraphicalNumber));
+		}
+
+		SearchPersonPredicate predicate = new SearchPerson.SearchPersonPredicate(searchParameters);
+
+		Object[] args = { searchParameters, predicate };
+
+		CollectionPager<Person> result = null;
+		try {
+			result = (CollectionPager<Person>) ServiceManagerServiceFactory.executeService("SearchPerson", args);
+
+		} catch (FenixServiceException e) {
+			e.printStackTrace();
+			errors.add("impossibleFindPerson", new ActionError("error.manager.implossible.findPerson"));
+		}
+		if (result == null) {
+			errors.add("impossibleFindPerson", new ActionError("error.manager.implossible.findPerson"));
+		}
+		if (!errors.isEmpty()) {
+			saveErrors(request, errors);
+			return mapping.getInputForward();
+		}
+
+		final String pageNumberString = request.getParameter("pageNumber");
+		final Integer pageNumber =
+				!StringUtils.isEmpty(pageNumberString) ? Integer.valueOf(pageNumberString) : Integer.valueOf(1);
+		request.setAttribute("pageNumber", pageNumber);
+		request.setAttribute("numberOfPages", Integer.valueOf(result.getNumberOfPages()));
+		request.setAttribute("personListFinded", result.getPage(pageNumber.intValue()));
+		request.setAttribute("totalFindedPersons", result.getCollection().size());
+
+		final String modulePrefix = getModulePrefix(mapping, request);
+		request.setAttribute("modulePrefix", modulePrefix);
+
+		return mapping.findForward("displayPerson");
 	}
 
-	SearchParameters searchParameters = new SearchPerson.SearchParameters(name, email, username, documentIdNumber, null,
-		null, null, null, null, null, null, null, (String) null);
-
-	if ((mechanoGraphicalNumber != null) && (mechanoGraphicalNumber.length() > 0)) {
-	    searchParameters.setMechanoGraphicalNumber(Integer.parseInt(mechanoGraphicalNumber));
+	public ActionForward findEmployee(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		return mapping.findForward("displayEmployee");
 	}
 
-	SearchPersonPredicate predicate = new SearchPerson.SearchPersonPredicate(searchParameters);
+	public ActionForward prepareSearchExistentPersonBeforeCreateNewInvitedPerson(ActionMapping mapping, ActionForm actionForm,
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-	Object[] args = { searchParameters, predicate };
-
-	CollectionPager<Person> result = null;
-	try {
-	    result = (CollectionPager<Person>) ServiceManagerServiceFactory.executeService("SearchPerson", args);
-
-	} catch (FenixServiceException e) {
-	    e.printStackTrace();
-	    errors.add("impossibleFindPerson", new ActionError("error.manager.implossible.findPerson"));
-	}
-	if (result == null) {
-	    errors.add("impossibleFindPerson", new ActionError("error.manager.implossible.findPerson"));
-	}
-	if (!errors.isEmpty()) {
-	    saveErrors(request, errors);
-	    return mapping.getInputForward();
+		AnyPersonSearchBean anyPersonSearchBean = new AnyPersonSearchBean();
+		request.setAttribute("anyPersonSearchBean", anyPersonSearchBean);
+		return mapping.findForward("showExistentPersonsBeforeCreateInvitedPerson");
 	}
 
-	final String pageNumberString = request.getParameter("pageNumber");
-	final Integer pageNumber = !StringUtils.isEmpty(pageNumberString) ? Integer.valueOf(pageNumberString) : Integer
-		.valueOf(1);
-	request.setAttribute("pageNumber", pageNumber);
-	request.setAttribute("numberOfPages", Integer.valueOf(result.getNumberOfPages()));
-	request.setAttribute("personListFinded", result.getPage(pageNumber.intValue()));
-	request.setAttribute("totalFindedPersons", result.getCollection().size());
+	public ActionForward showExistentPersonsWithSameMandatoryDetails(ActionMapping mapping, ActionForm actionForm,
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-	final String modulePrefix = getModulePrefix(mapping, request);
-	request.setAttribute("modulePrefix", modulePrefix);
+		final IViewState viewState = RenderUtils.getViewState("anyPersonSearchBeanId");
+		AnyPersonSearchBean bean = (AnyPersonSearchBean) viewState.getMetaObject().getObject();
 
-	return mapping.findForward("displayPerson");
-    }
+		SearchParameters searchParameters =
+				new SearchPerson.SearchParameters(bean.getName(), null, null, bean.getDocumentIdNumber(),
+						bean.getIdDocumentType() != null ? bean.getIdDocumentType().getName() : null, null, null, null, null,
+						null, null, null, (String) null);
 
-    public ActionForward findEmployee(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-	return mapping.findForward("displayEmployee");
-    }
+		SearchPersonPredicate predicate = new SearchPerson.SearchPersonPredicate(searchParameters);
 
-    public ActionForward prepareSearchExistentPersonBeforeCreateNewInvitedPerson(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+		IUserView userView = UserView.getUser();
+		CollectionPager<Person> result = null;
+		Object[] args = { searchParameters, predicate };
 
-	AnyPersonSearchBean anyPersonSearchBean = new AnyPersonSearchBean();
-	request.setAttribute("anyPersonSearchBean", anyPersonSearchBean);
-	return mapping.findForward("showExistentPersonsBeforeCreateInvitedPerson");
-    }
+		try {
+			result = (CollectionPager<Person>) ServiceManagerServiceFactory.executeService("SearchPerson", args);
 
-    public ActionForward showExistentPersonsWithSameMandatoryDetails(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+		} catch (FenixServiceException e) {
+			request.setAttribute("anyPersonSearchBean", bean);
+			return mapping.findForward("showExistentPersonsBeforeCreateInvitedPerson");
+		}
 
-	final IViewState viewState = RenderUtils.getViewState("anyPersonSearchBeanId");
-	AnyPersonSearchBean bean = (AnyPersonSearchBean) viewState.getMetaObject().getObject();
-
-	SearchParameters searchParameters = new SearchPerson.SearchParameters(bean.getName(), null, null,
-		bean.getDocumentIdNumber(), bean.getIdDocumentType() != null ? bean.getIdDocumentType().getName() : null, null,
-		null, null, null, null, null, null, (String) null);
-
-	SearchPersonPredicate predicate = new SearchPerson.SearchPersonPredicate(searchParameters);
-
-	IUserView userView = UserView.getUser();
-	CollectionPager<Person> result = null;
-	Object[] args = { searchParameters, predicate };
-
-	try {
-	    result = (CollectionPager<Person>) ServiceManagerServiceFactory.executeService("SearchPerson", args);
-
-	} catch (FenixServiceException e) {
-	    request.setAttribute("anyPersonSearchBean", bean);
-	    return mapping.findForward("showExistentPersonsBeforeCreateInvitedPerson");
+		request.setAttribute("resultPersons", result.getCollection());
+		request.setAttribute("anyPersonSearchBean", bean);
+		return mapping.findForward("showExistentPersonsBeforeCreateInvitedPerson");
 	}
 
-	request.setAttribute("resultPersons", result.getCollection());
-	request.setAttribute("anyPersonSearchBean", bean);
-	return mapping.findForward("showExistentPersonsBeforeCreateInvitedPerson");
-    }
+	public ActionForward prepareCreateInvitedPerson(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
 
-    public ActionForward prepareCreateInvitedPerson(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-
-	setRequestParametersToCreateInvitedPerson(request, new InvitedPersonBean());
-	request.setAttribute("initialUnit", UnitUtils.readInstitutionUnit());
-	return mapping.findForward("prepareCreateInvitedPerson");
-    }
-
-    public ActionForward associateResponsibilityParty(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-
-	final IViewState viewState = RenderUtils.getViewState("invitedPersonBeanWithResponsibilityParty");
-	InvitedPersonBean invitedPersonBean = (InvitedPersonBean) viewState.getMetaObject().getObject();
-	request.setAttribute("invitedPersonBean", invitedPersonBean);
-	return mapping.findForward("prepareCreateInvitedPerson");
-    }
-
-    public ActionForward invalid(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-
-	final IViewState viewState = RenderUtils.getViewState("invitedPersonBeanWithLoginInfo");
-	InvitedPersonBean invitedPersonBean = (InvitedPersonBean) viewState.getMetaObject().getObject();
-	request.setAttribute("invitedPersonBean", invitedPersonBean);
-	return mapping.findForward("prepareCreateInvitedPerson");
-    }
-
-    public ActionForward createNewInvitedPerson(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-
-	final IViewState viewState = RenderUtils.getViewState("invitedPersonBeanWithLoginInfo");
-	InvitedPersonBean invitedPersonBean = (InvitedPersonBean) viewState.getMetaObject().getObject();
-
-	Invitation invitation = null;
-	try {
-	    invitation = CreateNewInvitedPerson.run(invitedPersonBean);
-
-	} catch (DomainException e) {
-	    addActionMessage(request, e.getMessage());
-	    request.setAttribute("invitedPersonBean", invitedPersonBean);
-	    return mapping.findForward("prepareCreateInvitedPerson");
+		setRequestParametersToCreateInvitedPerson(request, new InvitedPersonBean());
+		request.setAttribute("initialUnit", UnitUtils.readInstitutionUnit());
+		return mapping.findForward("prepareCreateInvitedPerson");
 	}
 
-	request.setAttribute("createdPerson", invitation != null ? invitation.getInvitedPerson() : null);
-	return prepareSearchExistentPersonBeforeCreateNewInvitedPerson(mapping, actionForm, request, response);
-    }
+	public ActionForward associateResponsibilityParty(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
 
-    public ActionForward prepareSearchPersonToEdit(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-
-	PersonBean personBean = new PersonBean();
-	request.setAttribute("personBean", personBean);
-	return mapping.findForward("searchPersonToEdit");
-    }
-
-    public ActionForward searchPersonToEdit(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-
-	readAndSetValidPersons(request);
-	return mapping.findForward("searchPersonToEdit");
-    }
-
-    public ActionForward prepareEditPerson(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-
-	Person person = getPersonFromParameter(request);
-	request.setAttribute("person", person);
-	return mapping.findForward("prepareEditPerson");
-    }
-
-    public ActionForward prepareSearchPersonForManageInvitations(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
-
-	PersonBean personBean = new PersonBean();
-	request.setAttribute("personBean", personBean);
-	return mapping.findForward("searhPersonBeforeInvitationsManagement");
-    }
-
-    public ActionForward searchPersonForManageInvitations(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
-
-	readAndSetValidPersons(request);
-	return mapping.findForward("searhPersonBeforeInvitationsManagement");
-    }
-
-    public ActionForward managePersonInvitations(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-
-	Person person = getPersonFromParameter(request);
-	request.setAttribute("person", person);
-	return mapping.findForward("managePersonInvitations");
-    }
-
-    public ActionForward prepareEditPersonInvitation(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-
-	Invitation invitation = getInvitationFromParameter(request);
-	request.setAttribute("invitation", invitation);
-	return mapping.findForward("prepareEditInvitation");
-    }
-
-    public ActionForward prepareEditPersonInvitationHostUnit(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
-	return goToChangeInvitationDetailsPage("hostUnit", mapping, request);
-    }
-
-    public ActionForward prepareEditPersonInvitationResponsible(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
-	return goToChangeInvitationDetailsPage("responsibleParty", mapping, request);
-    }
-
-    public ActionForward prepareEditPersonInvitationTimeInterval(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
-	return goToChangeInvitationDetailsPage("timeInterval", mapping, request);
-    }
-
-    public ActionForward editPersonInvitationHostUnit(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-	Invitation invitation = getInvitationFromParameter(request);
-	Unit hostUnit = getHostUnitFromParameter(request);
-	try {
-	    EditInvitationHostUnit.run(invitation, hostUnit);
-	} catch (DomainException e) {
-	    addActionMessage(request, e.getMessage());
-	}
-	request.setAttribute("invitation", invitation);
-	return mapping.findForward("prepareEditInvitation");
-    }
-
-    public ActionForward prepareCreateNewPersonInvitation(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
-
-	InvitedPersonBean bean = null;
-	final IViewState viewState = RenderUtils.getViewState("invitedPersonBeanWithResponsibilityParty");
-	if (viewState != null) {
-	    bean = (InvitedPersonBean) viewState.getMetaObject().getObject();
-	} else {
-	    bean = new InvitedPersonBean();
-	    bean.setUnit(getHostUnitFromParameter(request));
-	    bean.setInvitedPerson(getPersonFromParameter(request));
-	    bean.setResponsible(getResponsibleUnitFromParameter(request));
-	}
-	return goToPrepareCreateNewPersonInvitationPage(mapping, request, bean);
-    }
-
-    public ActionForward createNewPersonInvitation(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-
-	final IViewState viewState = RenderUtils.getViewState("invitedPersonBeanWithTimeInterval");
-	InvitedPersonBean bean = (InvitedPersonBean) viewState.getMetaObject().getObject();
-
-	try {
-	    CreateNewPersonInvitation.run(bean);
-
-	} catch (DomainException e) {
-	    addActionMessage(request, e.getMessage());
-	    return goToPrepareCreateNewPersonInvitationPage(mapping, request, bean);
+		final IViewState viewState = RenderUtils.getViewState("invitedPersonBeanWithResponsibilityParty");
+		InvitedPersonBean invitedPersonBean = (InvitedPersonBean) viewState.getMetaObject().getObject();
+		request.setAttribute("invitedPersonBean", invitedPersonBean);
+		return mapping.findForward("prepareCreateInvitedPerson");
 	}
 
-	request.setAttribute("person", bean.getInvitedPerson());
-	return mapping.findForward("managePersonInvitations");
-    }
+	public ActionForward invalid(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
 
-    public ActionForward editPersonInvitationResponsible(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
-	Invitation invitation = getInvitationFromParameter(request);
-	Unit hostUnit = getHostUnitFromParameter(request);
-	try {
-	    EditInvitationResponsible.run(invitation, hostUnit);
-	} catch (DomainException e) {
-	    addActionMessage(request, e.getMessage());
+		final IViewState viewState = RenderUtils.getViewState("invitedPersonBeanWithLoginInfo");
+		InvitedPersonBean invitedPersonBean = (InvitedPersonBean) viewState.getMetaObject().getObject();
+		request.setAttribute("invitedPersonBean", invitedPersonBean);
+		return mapping.findForward("prepareCreateInvitedPerson");
 	}
-	request.setAttribute("invitation", invitation);
-	return mapping.findForward("prepareEditInvitation");
-    }
 
-    public ActionForward deletePersonInvitation(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
+	public ActionForward createNewInvitedPerson(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
 
-	Invitation invitation = getInvitationFromParameter(request);
+		final IViewState viewState = RenderUtils.getViewState("invitedPersonBeanWithLoginInfo");
+		InvitedPersonBean invitedPersonBean = (InvitedPersonBean) viewState.getMetaObject().getObject();
 
-	try {
-	    DeleteInvitation.run(invitation);
+		Invitation invitation = null;
+		try {
+			invitation = CreateNewInvitedPerson.run(invitedPersonBean);
 
-	} catch (DomainException e) {
-	    addActionMessage(request, e.getMessage());
+		} catch (DomainException e) {
+			addActionMessage(request, e.getMessage());
+			request.setAttribute("invitedPersonBean", invitedPersonBean);
+			return mapping.findForward("prepareCreateInvitedPerson");
+		}
+
+		request.setAttribute("createdPerson", invitation != null ? invitation.getInvitedPerson() : null);
+		return prepareSearchExistentPersonBeforeCreateNewInvitedPerson(mapping, actionForm, request, response);
 	}
-	return managePersonInvitations(mapping, actionForm, request, response);
-    }
 
-    public ActionForward editPartyAddress(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-	request.setAttribute("partyContact", getPartyContact(request));
-	return mapping.findForward("editPartyAddress");
-    }
+	public ActionForward prepareSearchPersonToEdit(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
 
-    protected PartyContact getPartyContact(final HttpServletRequest request) {
-	return rootDomainObject.readPartyContactByOID(getIntegerFromRequest(request, "addressID"));
-    }
-
-    private ActionForward goToPrepareCreateNewPersonInvitationPage(ActionMapping mapping, HttpServletRequest request,
-	    InvitedPersonBean bean) {
-	request.setAttribute("initialUnit", UnitUtils.readInstitutionUnit());
-	request.setAttribute("invitedPersonBean", bean);
-	return mapping.findForward("prepareCreateNewPersonInvitation");
-    }
-
-    private ActionForward goToChangeInvitationDetailsPage(String infoToEdit, ActionMapping mapping, HttpServletRequest request) {
-	Invitation invitation = getInvitationFromParameter(request);
-	request.setAttribute("initialUnit", UnitUtils.readInstitutionUnit());
-	request.setAttribute("invitation", invitation);
-	request.setAttribute("infoToEdit", infoToEdit);
-	return mapping.findForward("prepareEditInvitationDetails");
-    }
-
-    private void setRequestParametersToCreateInvitedPerson(final HttpServletRequest request,
-	    final InvitedPersonBean invitedPersonBean) {
-
-	final String name = request.getParameter("name");
-	if (isSpecified(name)) {
-	    invitedPersonBean.setName(name);
+		PersonBean personBean = new PersonBean();
+		request.setAttribute("personBean", personBean);
+		return mapping.findForward("searchPersonToEdit");
 	}
-	final String idDocumentType = request.getParameter("idDocumentType");
-	if (isSpecified(idDocumentType)) {
-	    invitedPersonBean.setIdDocumentType(IDDocumentType.valueOf(idDocumentType));
+
+	public ActionForward searchPersonToEdit(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+
+		readAndSetValidPersons(request);
+		return mapping.findForward("searchPersonToEdit");
 	}
-	final String documentIdNumber = request.getParameter("documentIdNumber");
-	if (isSpecified(documentIdNumber)) {
-	    invitedPersonBean.setDocumentIdNumber(documentIdNumber);
+
+	public ActionForward prepareEditPerson(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+
+		Person person = getPersonFromParameter(request);
+		request.setAttribute("person", person);
+		return mapping.findForward("prepareEditPerson");
 	}
-	invitedPersonBean.setUnit(getHostUnitFromParameter(request));
-	invitedPersonBean.setResponsible(getResponsibleUnitFromParameter(request));
-	request.setAttribute("invitedPersonBean", invitedPersonBean);
-    }
 
-    private void readAndSetValidPersons(HttpServletRequest request) throws FenixFilterException, FenixServiceException {
-	final IViewState viewState = RenderUtils.getViewState("personBeanID");
-	PersonBean personBean = (PersonBean) viewState.getMetaObject().getObject();
+	public ActionForward prepareSearchPersonForManageInvitations(ActionMapping mapping, ActionForm actionForm,
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-	SearchPerson.SearchParameters parameters = new SearchParameters(personBean.getName(), null, personBean.getUsername(),
-		personBean.getDocumentIdNumber(), null, null, null, null, null, null, null, null, (String) null);
-	SearchPersonPredicate predicate = new SearchPerson.SearchPersonPredicate(parameters);
+		PersonBean personBean = new PersonBean();
+		request.setAttribute("personBean", personBean);
+		return mapping.findForward("searhPersonBeforeInvitationsManagement");
+	}
 
-	CollectionPager<Person> persons = (CollectionPager<Person>) executeService("SearchPerson", new Object[] { parameters,
-		predicate });
-	request.setAttribute("resultPersons", persons.getCollection());
-	request.setAttribute("personBean", personBean);
-    }
+	public ActionForward searchPersonForManageInvitations(ActionMapping mapping, ActionForm actionForm,
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-    private Unit getHostUnitFromParameter(HttpServletRequest request) {
-	String unitIDString = request.getParameter("unitID");
-	return (Unit) ((StringUtils.isEmpty(unitIDString)) ? null : rootDomainObject
-		.readPartyByOID(Integer.valueOf(unitIDString)));
-    }
+		readAndSetValidPersons(request);
+		return mapping.findForward("searhPersonBeforeInvitationsManagement");
+	}
 
-    private Person getPersonFromParameter(HttpServletRequest request) {
-	String personIDString = request.getParameter("personID");
-	return (Person) ((StringUtils.isEmpty(personIDString)) ? null : rootDomainObject.fromExternalId(personIDString));
-    }
+	public ActionForward managePersonInvitations(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
 
-    private Invitation getInvitationFromParameter(HttpServletRequest request) {
-	String invitationIDString = request.getParameter("invitationID");
-	return (Invitation) ((StringUtils.isEmpty(invitationIDString)) ? null : rootDomainObject.readAccountabilityByOID(Integer
-		.valueOf(invitationIDString)));
-    }
+		Person person = getPersonFromParameter(request);
+		request.setAttribute("person", person);
+		return mapping.findForward("managePersonInvitations");
+	}
 
-    private Unit getResponsibleUnitFromParameter(HttpServletRequest request) {
-	String unitIDString = request.getParameter("responsibilityUnitID");
-	return (Unit) ((StringUtils.isEmpty(unitIDString)) ? null : rootDomainObject
-		.readPartyByOID(Integer.valueOf(unitIDString)));
-    }
+	public ActionForward prepareEditPersonInvitation(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
 
-    private boolean isSpecified(final String string) {
-	return !StringUtils.isEmpty(string);
-    }
+		Invitation invitation = getInvitationFromParameter(request);
+		request.setAttribute("invitation", invitation);
+		return mapping.findForward("prepareEditInvitation");
+	}
+
+	public ActionForward prepareEditPersonInvitationHostUnit(ActionMapping mapping, ActionForm actionForm,
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
+		return goToChangeInvitationDetailsPage("hostUnit", mapping, request);
+	}
+
+	public ActionForward prepareEditPersonInvitationResponsible(ActionMapping mapping, ActionForm actionForm,
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
+		return goToChangeInvitationDetailsPage("responsibleParty", mapping, request);
+	}
+
+	public ActionForward prepareEditPersonInvitationTimeInterval(ActionMapping mapping, ActionForm actionForm,
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
+		return goToChangeInvitationDetailsPage("timeInterval", mapping, request);
+	}
+
+	public ActionForward editPersonInvitationHostUnit(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		Invitation invitation = getInvitationFromParameter(request);
+		Unit hostUnit = getHostUnitFromParameter(request);
+		try {
+			EditInvitationHostUnit.run(invitation, hostUnit);
+		} catch (DomainException e) {
+			addActionMessage(request, e.getMessage());
+		}
+		request.setAttribute("invitation", invitation);
+		return mapping.findForward("prepareEditInvitation");
+	}
+
+	public ActionForward prepareCreateNewPersonInvitation(ActionMapping mapping, ActionForm actionForm,
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+		InvitedPersonBean bean = null;
+		final IViewState viewState = RenderUtils.getViewState("invitedPersonBeanWithResponsibilityParty");
+		if (viewState != null) {
+			bean = (InvitedPersonBean) viewState.getMetaObject().getObject();
+		} else {
+			bean = new InvitedPersonBean();
+			bean.setUnit(getHostUnitFromParameter(request));
+			bean.setInvitedPerson(getPersonFromParameter(request));
+			bean.setResponsible(getResponsibleUnitFromParameter(request));
+		}
+		return goToPrepareCreateNewPersonInvitationPage(mapping, request, bean);
+	}
+
+	public ActionForward createNewPersonInvitation(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+
+		final IViewState viewState = RenderUtils.getViewState("invitedPersonBeanWithTimeInterval");
+		InvitedPersonBean bean = (InvitedPersonBean) viewState.getMetaObject().getObject();
+
+		try {
+			CreateNewPersonInvitation.run(bean);
+
+		} catch (DomainException e) {
+			addActionMessage(request, e.getMessage());
+			return goToPrepareCreateNewPersonInvitationPage(mapping, request, bean);
+		}
+
+		request.setAttribute("person", bean.getInvitedPerson());
+		return mapping.findForward("managePersonInvitations");
+	}
+
+	public ActionForward editPersonInvitationResponsible(ActionMapping mapping, ActionForm actionForm,
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
+		Invitation invitation = getInvitationFromParameter(request);
+		Unit hostUnit = getHostUnitFromParameter(request);
+		try {
+			EditInvitationResponsible.run(invitation, hostUnit);
+		} catch (DomainException e) {
+			addActionMessage(request, e.getMessage());
+		}
+		request.setAttribute("invitation", invitation);
+		return mapping.findForward("prepareEditInvitation");
+	}
+
+	public ActionForward deletePersonInvitation(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+
+		Invitation invitation = getInvitationFromParameter(request);
+
+		try {
+			DeleteInvitation.run(invitation);
+
+		} catch (DomainException e) {
+			addActionMessage(request, e.getMessage());
+		}
+		return managePersonInvitations(mapping, actionForm, request, response);
+	}
+
+	public ActionForward editPartyAddress(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		request.setAttribute("partyContact", getPartyContact(request));
+		return mapping.findForward("editPartyAddress");
+	}
+
+	protected PartyContact getPartyContact(final HttpServletRequest request) {
+		return rootDomainObject.readPartyContactByOID(getIntegerFromRequest(request, "addressID"));
+	}
+
+	private ActionForward goToPrepareCreateNewPersonInvitationPage(ActionMapping mapping, HttpServletRequest request,
+			InvitedPersonBean bean) {
+		request.setAttribute("initialUnit", UnitUtils.readInstitutionUnit());
+		request.setAttribute("invitedPersonBean", bean);
+		return mapping.findForward("prepareCreateNewPersonInvitation");
+	}
+
+	private ActionForward goToChangeInvitationDetailsPage(String infoToEdit, ActionMapping mapping, HttpServletRequest request) {
+		Invitation invitation = getInvitationFromParameter(request);
+		request.setAttribute("initialUnit", UnitUtils.readInstitutionUnit());
+		request.setAttribute("invitation", invitation);
+		request.setAttribute("infoToEdit", infoToEdit);
+		return mapping.findForward("prepareEditInvitationDetails");
+	}
+
+	private void setRequestParametersToCreateInvitedPerson(final HttpServletRequest request,
+			final InvitedPersonBean invitedPersonBean) {
+
+		final String name = request.getParameter("name");
+		if (isSpecified(name)) {
+			invitedPersonBean.setName(name);
+		}
+		final String idDocumentType = request.getParameter("idDocumentType");
+		if (isSpecified(idDocumentType)) {
+			invitedPersonBean.setIdDocumentType(IDDocumentType.valueOf(idDocumentType));
+		}
+		final String documentIdNumber = request.getParameter("documentIdNumber");
+		if (isSpecified(documentIdNumber)) {
+			invitedPersonBean.setDocumentIdNumber(documentIdNumber);
+		}
+		invitedPersonBean.setUnit(getHostUnitFromParameter(request));
+		invitedPersonBean.setResponsible(getResponsibleUnitFromParameter(request));
+		request.setAttribute("invitedPersonBean", invitedPersonBean);
+	}
+
+	private void readAndSetValidPersons(HttpServletRequest request) throws FenixFilterException, FenixServiceException {
+		final IViewState viewState = RenderUtils.getViewState("personBeanID");
+		PersonBean personBean = (PersonBean) viewState.getMetaObject().getObject();
+
+		SearchPerson.SearchParameters parameters =
+				new SearchParameters(personBean.getName(), null, personBean.getUsername(), personBean.getDocumentIdNumber(),
+						null, null, null, null, null, null, null, null, (String) null);
+		SearchPersonPredicate predicate = new SearchPerson.SearchPersonPredicate(parameters);
+
+		CollectionPager<Person> persons =
+				(CollectionPager<Person>) executeService("SearchPerson", new Object[] { parameters, predicate });
+		request.setAttribute("resultPersons", persons.getCollection());
+		request.setAttribute("personBean", personBean);
+	}
+
+	private Unit getHostUnitFromParameter(HttpServletRequest request) {
+		String unitIDString = request.getParameter("unitID");
+		return (Unit) ((StringUtils.isEmpty(unitIDString)) ? null : rootDomainObject
+				.readPartyByOID(Integer.valueOf(unitIDString)));
+	}
+
+	private Person getPersonFromParameter(HttpServletRequest request) {
+		String personIDString = request.getParameter("personID");
+		return (Person) ((StringUtils.isEmpty(personIDString)) ? null : rootDomainObject.fromExternalId(personIDString));
+	}
+
+	private Invitation getInvitationFromParameter(HttpServletRequest request) {
+		String invitationIDString = request.getParameter("invitationID");
+		return (Invitation) ((StringUtils.isEmpty(invitationIDString)) ? null : rootDomainObject.readAccountabilityByOID(Integer
+				.valueOf(invitationIDString)));
+	}
+
+	private Unit getResponsibleUnitFromParameter(HttpServletRequest request) {
+		String unitIDString = request.getParameter("responsibilityUnitID");
+		return (Unit) ((StringUtils.isEmpty(unitIDString)) ? null : rootDomainObject
+				.readPartyByOID(Integer.valueOf(unitIDString)));
+	}
+
+	private boolean isSpecified(final String string) {
+		return !StringUtils.isEmpty(string);
+	}
 
 }

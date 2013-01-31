@@ -17,102 +17,103 @@ import org.joda.time.DateTime;
 
 public class PhdStudentReingressionRequest extends PhdStudentReingressionRequest_Base {
 
-    private PhdStudentReingressionRequest() {
-	super();
-    }
-
-    private PhdStudentReingressionRequest(final PhdAcademicServiceRequestCreateBean academicServiceRequestCreateBean) {
-	super();
-
-	init(academicServiceRequestCreateBean);
-    }
-
-    @Override
-    protected void init(PhdAcademicServiceRequestCreateBean bean) {
-	if (!bean.getRequestType().equals(getAcademicServiceRequestType())) {
-	    throw new DomainException("error.PhdStudentReingressionRequest.type.not.supported");
+	private PhdStudentReingressionRequest() {
+		super();
 	}
 
-	if (!isValidRequest(bean)) {
-	    throw new PhdDomainOperationException(
-		    "error.PhdStudentReingressionRequest.phd.individual.program.process.must.be.flunked.or.suspended");
+	private PhdStudentReingressionRequest(final PhdAcademicServiceRequestCreateBean academicServiceRequestCreateBean) {
+		super();
+
+		init(academicServiceRequestCreateBean);
 	}
 
-	super.init(bean);
-    }
+	@Override
+	protected void init(PhdAcademicServiceRequestCreateBean bean) {
+		if (!bean.getRequestType().equals(getAcademicServiceRequestType())) {
+			throw new DomainException("error.PhdStudentReingressionRequest.type.not.supported");
+		}
 
-    private static boolean isValidRequest(final PhdAcademicServiceRequestCreateBean bean) {
-	return bean.getPhdIndividualProgramProcess().isFlunked() || bean.getPhdIndividualProgramProcess().isSuspended();
-    }
+		if (!isValidRequest(bean)) {
+			throw new PhdDomainOperationException(
+					"error.PhdStudentReingressionRequest.phd.individual.program.process.must.be.flunked.or.suspended");
+		}
 
-    @Override
-    public AcademicServiceRequestType getAcademicServiceRequestType() {
-	return AcademicServiceRequestType.PHD_STUDENT_REINGRESSION;
-    }
-
-    @Override
-    public EventType getEventType() {
-	return null;
-    }
-
-    @Override
-    public boolean hasPersonalInfo() {
-	return false;
-    }
-
-    @Override
-    public boolean isPayedUponCreation() {
-	return false;
-    }
-
-    @Override
-    public boolean isPossibleToSendToOtherEntity() {
-	return false;
-    }
-
-    @Override
-    public boolean isManagedWithRectorateSubmissionBatch() {
-	return false;
-    }
-
-    @Override
-    public boolean isToPrint() {
-	return false;
-    }
-
-    @Override
-    public Boolean getFreeProcessed() {
-	return true;
-    }
-
-    public static PhdAcademicServiceRequest createRequest(
-	    final PhdAcademicServiceRequestCreateBean academicServiceRequestCreateBean) {
-	return new PhdStudentReingressionRequest(academicServiceRequestCreateBean);
-    }
-
-    @Override
-    protected void internalChangeState(AcademicServiceRequestBean academicServiceRequestBean) {
-	super.internalChangeState(academicServiceRequestBean);
-
-	ResourceBundle phdBundle = ResourceBundle.getBundle("resources.PhdResources");
-
-	if (academicServiceRequestBean.isToConclude()) {
-	    PhdIndividualProgramProcess process = getPhdIndividualProgramProcess();
-	    PhdProgramProcessState lastActiveState = process.getLastActiveState();
-	    String remarks = String
-		    .format(phdBundle
-			    .getString("message.net.sourceforge.fenixedu.domain.phd.serviceRequests.PhdStudentReingressionRequest.conclusion.remark"),
-			    getServiceRequestNumberYear());
-
-	    process.createState(lastActiveState.getType(), AccessControl.getPerson(), remarks);
-
-	    if (process.hasRegistration() && !process.getRegistration().isActive()) {
-		RegistrationState registrationLastActiveState = process.getRegistration().getLastActiveState();
-
-		RegistrationStateCreator.createState(process.getRegistration(), AccessControl.getPerson(), new DateTime(),
-			registrationLastActiveState.getStateType());
-	    }
-
+		super.init(bean);
 	}
-    }
+
+	private static boolean isValidRequest(final PhdAcademicServiceRequestCreateBean bean) {
+		return bean.getPhdIndividualProgramProcess().isFlunked() || bean.getPhdIndividualProgramProcess().isSuspended();
+	}
+
+	@Override
+	public AcademicServiceRequestType getAcademicServiceRequestType() {
+		return AcademicServiceRequestType.PHD_STUDENT_REINGRESSION;
+	}
+
+	@Override
+	public EventType getEventType() {
+		return null;
+	}
+
+	@Override
+	public boolean hasPersonalInfo() {
+		return false;
+	}
+
+	@Override
+	public boolean isPayedUponCreation() {
+		return false;
+	}
+
+	@Override
+	public boolean isPossibleToSendToOtherEntity() {
+		return false;
+	}
+
+	@Override
+	public boolean isManagedWithRectorateSubmissionBatch() {
+		return false;
+	}
+
+	@Override
+	public boolean isToPrint() {
+		return false;
+	}
+
+	@Override
+	public Boolean getFreeProcessed() {
+		return true;
+	}
+
+	public static PhdAcademicServiceRequest createRequest(
+			final PhdAcademicServiceRequestCreateBean academicServiceRequestCreateBean) {
+		return new PhdStudentReingressionRequest(academicServiceRequestCreateBean);
+	}
+
+	@Override
+	protected void internalChangeState(AcademicServiceRequestBean academicServiceRequestBean) {
+		super.internalChangeState(academicServiceRequestBean);
+
+		ResourceBundle phdBundle = ResourceBundle.getBundle("resources.PhdResources");
+
+		if (academicServiceRequestBean.isToConclude()) {
+			PhdIndividualProgramProcess process = getPhdIndividualProgramProcess();
+			PhdProgramProcessState lastActiveState = process.getLastActiveState();
+			String remarks =
+					String.format(
+							phdBundle
+									.getString("message.net.sourceforge.fenixedu.domain.phd.serviceRequests.PhdStudentReingressionRequest.conclusion.remark"),
+							getServiceRequestNumberYear());
+
+			process.createState(lastActiveState.getType(), AccessControl.getPerson(), remarks);
+
+			if (process.hasRegistration() && !process.getRegistration().isActive()) {
+				RegistrationState registrationLastActiveState = process.getRegistration().getLastActiveState();
+
+				RegistrationStateCreator.createState(process.getRegistration(), AccessControl.getPerson(), new DateTime(),
+						registrationLastActiveState.getStateType());
+			}
+
+		}
+	}
 }

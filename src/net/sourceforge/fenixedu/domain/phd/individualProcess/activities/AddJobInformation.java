@@ -6,13 +6,13 @@ import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 
 public class AddJobInformation extends PhdIndividualProgramProcessActivity {
 
-    @Override
-    protected void activityPreConditions(PhdIndividualProgramProcess arg0, IUserView arg1) {
-	// no precondition to check
-    }
+	@Override
+	protected void activityPreConditions(PhdIndividualProgramProcess arg0, IUserView arg1) {
+		// no precondition to check
+	}
 
-    @Override
-    protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView, Object object) {
-	return process.addJobInformation(userView.getPerson(), (JobBean) object);
-    }
+	@Override
+	protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView, Object object) {
+		return process.addJobInformation(userView.getPerson(), (JobBean) object);
+	}
 }

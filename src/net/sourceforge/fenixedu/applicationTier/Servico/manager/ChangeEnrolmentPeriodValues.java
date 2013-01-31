@@ -14,34 +14,34 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class ChangeEnrolmentPeriodValues extends FenixService {
 
-    @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
-    @Service
-    public static void run(final EnrolmentPeriodManagementBean periodManagementBean) {
-	final Date startDate = periodManagementBean.getBegin().toDate();
-	final Date endDate = periodManagementBean.getEnd().toDate();
+	@Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
+	@Service
+	public static void run(final EnrolmentPeriodManagementBean periodManagementBean) {
+		final Date startDate = periodManagementBean.getBegin().toDate();
+		final Date endDate = periodManagementBean.getEnd().toDate();
 
-	EnrolmentPeriodType enrolmentPeriodType = periodManagementBean.getType();
-	ExecutionSemester executionSemester = periodManagementBean.getExecutionSemester();
+		EnrolmentPeriodType enrolmentPeriodType = periodManagementBean.getType();
+		ExecutionSemester executionSemester = periodManagementBean.getExecutionSemester();
 
-	List<DegreeCurricularPlan> degreeCurricularPlanList = periodManagementBean.getDegreeCurricularPlanList();
+		List<DegreeCurricularPlan> degreeCurricularPlanList = periodManagementBean.getDegreeCurricularPlanList();
 
-	for (DegreeCurricularPlan degreeCurricularPlan : degreeCurricularPlanList) {
-	    List<EnrolmentPeriod> enrolmentPeriods = degreeCurricularPlan.getEnrolmentPeriods();
+		for (DegreeCurricularPlan degreeCurricularPlan : degreeCurricularPlanList) {
+			List<EnrolmentPeriod> enrolmentPeriods = degreeCurricularPlan.getEnrolmentPeriods();
 
-	    for (EnrolmentPeriod enrolmentPeriod : enrolmentPeriods) {
-		if (enrolmentPeriod.getExecutionPeriod() != executionSemester) {
-		    continue;
+			for (EnrolmentPeriod enrolmentPeriod : enrolmentPeriods) {
+				if (enrolmentPeriod.getExecutionPeriod() != executionSemester) {
+					continue;
+				}
+
+				if (!enrolmentPeriodType.is(enrolmentPeriod)) {
+					continue;
+				}
+
+				enrolmentPeriod.setStartDate(startDate);
+				enrolmentPeriod.setEndDate(endDate);
+			}
 		}
 
-		if (!enrolmentPeriodType.is(enrolmentPeriod)) {
-		    continue;
-		}
-
-		enrolmentPeriod.setStartDate(startDate);
-		enrolmentPeriod.setEndDate(endDate);
-	    }
 	}
-
-    }
 
 }

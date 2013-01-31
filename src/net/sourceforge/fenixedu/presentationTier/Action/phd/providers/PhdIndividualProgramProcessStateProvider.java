@@ -9,16 +9,16 @@ import pt.ist.fenixWebFramework.renderers.converters.EnumConverter;
 
 public class PhdIndividualProgramProcessStateProvider implements DataProvider {
 
-    @Override
-    public Converter getConverter() {
-	return new EnumConverter();
-    }
+	@Override
+	public Converter getConverter() {
+		return new EnumConverter();
+	}
 
-    @Override
-    public Object provide(Object source, Object currentValue) {
-	PhdIndividualProgramProcessBean processBean = (PhdIndividualProgramProcessBean) source;
-	PhdIndividualProgramProcess process = processBean.getIndividualProgramProcess();
+	@Override
+	public Object provide(Object source, Object currentValue) {
+		PhdIndividualProgramProcessBean processBean = (PhdIndividualProgramProcessBean) source;
+		PhdIndividualProgramProcess process = processBean.getIndividualProgramProcess();
 
-	return PhdIndividualProgramProcessState.getPossibleNextStates(process);
-    }
+		return PhdIndividualProgramProcessState.getPossibleNextStates(process);
+	}
 }

@@ -6,8 +6,8 @@ import net.sourceforge.fenixedu.domain.tests.Positionable;
 import pt.ist.fenixWebFramework.services.Service;
 
 public class SwitchPosition extends FenixService {
-    @Service
-    public static void run(Positionable positionable, Integer relativePosition) throws FenixServiceException {
-	positionable.switchPosition(relativePosition);
-    }
+	@Service
+	public static void run(Positionable positionable, Integer relativePosition) throws FenixServiceException {
+		positionable.switchPosition(relativePosition);
+	}
 }

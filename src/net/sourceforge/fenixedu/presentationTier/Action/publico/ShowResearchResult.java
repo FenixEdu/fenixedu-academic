@@ -14,31 +14,32 @@ import org.apache.struts.action.ActionMapping;
 
 public abstract class ShowResearchResult extends FenixDispatchAction {
 
-    public ActionForward showPatent(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
+	public ActionForward showPatent(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) {
 
-	String resultOID = request.getParameter("resultId");
-	ResearchResult result = (ResearchResult) RootDomainObject.readDomainObjectByOID(ResearchResult.class, Integer
-		.valueOf(resultOID));
-	request.setAttribute("result", result);
-	putSiteOnRequest(request);
-	return mapping.findForward("showResult");
-    }
-
-    public ActionForward showPublication(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
-
-	String resultOID = request.getParameter("resultId");
-	ResearchResultPublication result = (ResearchResultPublication) RootDomainObject.readDomainObjectByOID(
-		ResearchResult.class, Integer.valueOf(resultOID));
-	if (result != null) {
-	    request.setAttribute("result", result);
-	    request.setAttribute("resultPublicationType", result.getClass().getSimpleName());
-	    putSiteOnRequest(request);
+		String resultOID = request.getParameter("resultId");
+		ResearchResult result =
+				(ResearchResult) RootDomainObject.readDomainObjectByOID(ResearchResult.class, Integer.valueOf(resultOID));
+		request.setAttribute("result", result);
+		putSiteOnRequest(request);
+		return mapping.findForward("showResult");
 	}
-	return mapping.findForward("showResult");
-    }
 
-    abstract protected void putSiteOnRequest(HttpServletRequest request);
+	public ActionForward showPublication(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) {
+
+		String resultOID = request.getParameter("resultId");
+		ResearchResultPublication result =
+				(ResearchResultPublication) RootDomainObject.readDomainObjectByOID(ResearchResult.class,
+						Integer.valueOf(resultOID));
+		if (result != null) {
+			request.setAttribute("result", result);
+			request.setAttribute("resultPublicationType", result.getClass().getSimpleName());
+			putSiteOnRequest(request);
+		}
+		return mapping.findForward("showResult");
+	}
+
+	abstract protected void putSiteOnRequest(HttpServletRequest request);
 
 }

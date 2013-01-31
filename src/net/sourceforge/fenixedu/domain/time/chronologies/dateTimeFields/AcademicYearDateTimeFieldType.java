@@ -10,38 +10,38 @@ import org.joda.time.DurationFieldType;
 
 public class AcademicYearDateTimeFieldType extends DateTimeFieldType {
 
-    private static final AcademicYearDateTimeFieldType ACADEMIC_YEAR_TYPE;
-    static {
-	ACADEMIC_YEAR_TYPE = new AcademicYearDateTimeFieldType("academicYear");
-    }
-
-    private AcademicYearDateTimeFieldType(String name) {
-	super(name);
-    }
-
-    public static DateTimeFieldType academicYear() {
-	return ACADEMIC_YEAR_TYPE;
-    }
-
-    @Override
-    public DateTimeField getField(Chronology chronology) {
-	if (chronology instanceof AcademicChronology) {
-	    return ((AcademicChronology) chronology).academicYear();
+	private static final AcademicYearDateTimeFieldType ACADEMIC_YEAR_TYPE;
+	static {
+		ACADEMIC_YEAR_TYPE = new AcademicYearDateTimeFieldType("academicYear");
 	}
-	throw unsupported();
-    }
 
-    @Override
-    public DurationFieldType getDurationType() {
-	return AcademicYearsDurationFieldType.academicYears();
-    }
+	private AcademicYearDateTimeFieldType(String name) {
+		super(name);
+	}
 
-    @Override
-    public DurationFieldType getRangeDurationType() {
-	return null;
-    }
+	public static DateTimeFieldType academicYear() {
+		return ACADEMIC_YEAR_TYPE;
+	}
 
-    private UnsupportedOperationException unsupported() {
-	return new UnsupportedOperationException(ACADEMIC_YEAR_TYPE.getName() + " field is unsupported");
-    }
+	@Override
+	public DateTimeField getField(Chronology chronology) {
+		if (chronology instanceof AcademicChronology) {
+			return ((AcademicChronology) chronology).academicYear();
+		}
+		throw unsupported();
+	}
+
+	@Override
+	public DurationFieldType getDurationType() {
+		return AcademicYearsDurationFieldType.academicYears();
+	}
+
+	@Override
+	public DurationFieldType getRangeDurationType() {
+		return null;
+	}
+
+	private UnsupportedOperationException unsupported() {
+		return new UnsupportedOperationException(ACADEMIC_YEAR_TYPE.getName() + " field is unsupported");
+	}
 }

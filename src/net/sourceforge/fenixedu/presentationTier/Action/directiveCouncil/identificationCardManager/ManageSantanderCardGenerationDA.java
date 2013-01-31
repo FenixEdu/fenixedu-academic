@@ -29,139 +29,145 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 @Mapping(module = "identificationCardManager", path = "/manageSantander", scope = "session", parameter = "method")
 @Forwards(value = {
-	@Forward(name = "entryPoint", path = "/identificationCardManager/santander/showSantanderBatches.jsp", tileProperties = @Tile(title = "private.identificationcards.santander")),
-	@Forward(name = "uploadCardInfo", path = "/identificationCardManager/cardGeneration/uploadCardInfo.jsp", tileProperties = @Tile(title = "private.identificationcards.santander")) })
+		@Forward(
+				name = "entryPoint",
+				path = "/identificationCardManager/santander/showSantanderBatches.jsp",
+				tileProperties = @Tile(title = "private.identificationcards.santander")),
+		@Forward(
+				name = "uploadCardInfo",
+				path = "/identificationCardManager/cardGeneration/uploadCardInfo.jsp",
+				tileProperties = @Tile(title = "private.identificationcards.santander")) })
 public class ManageSantanderCardGenerationDA extends FenixDispatchAction {
 
-    public ActionForward intro(final ActionMapping mapping, final ActionForm actionForm, final HttpServletRequest request,
-	    final HttpServletResponse response) throws Exception {
-	request.setAttribute("santanderBean", new ManageSantanderCardGenerationBean());
-	return mapping.findForward("entryPoint");
-    }
-
-    public ActionForward selectExecutionYearPostback(final ActionMapping mapping, final ActionForm actionForm,
-	    final HttpServletRequest request, final HttpServletResponse response) throws Exception {
-	ManageSantanderCardGenerationBean santanderBean = getRenderedObject("santanderBean");
-	ExecutionYear year = santanderBean.getExecutionYear();
-	if (year != null) {
-	    refreshBeanState(santanderBean);
-	}
-	request.setAttribute("santanderBean", santanderBean);
-	return mapping.findForward("entryPoint");
-    }
-
-    public ActionForward createBatch(final ActionMapping mapping, final ActionForm actionForm, final HttpServletRequest request,
-	    final HttpServletResponse response) throws Exception {
-	ExecutionYear executionYear = AbstractDomainObject.fromExternalId(request.getParameter("executionYearEid"));
-	ManageSantanderCardGenerationBean santanderBean;
-
-	if (executionYear == null) {
-	    addErrorMessage(request, "errors", "error.cantCreateNewBatchForExecutionYearNull");
-	    santanderBean = new ManageSantanderCardGenerationBean();
-	} else {
-	    santanderBean = new ManageSantanderCardGenerationBean(executionYear);
-	    Person requester = getUserView(request).getPerson();
-	    createNewBatch(requester, santanderBean.getExecutionYear());
-	    refreshBeanState(santanderBean);
+	public ActionForward intro(final ActionMapping mapping, final ActionForm actionForm, final HttpServletRequest request,
+			final HttpServletResponse response) throws Exception {
+		request.setAttribute("santanderBean", new ManageSantanderCardGenerationBean());
+		return mapping.findForward("entryPoint");
 	}
 
-	request.setAttribute("santanderBean", santanderBean);
-	return mapping.findForward("entryPoint");
-    }
-
-    /*
-     * Download | Send | Delete
-     */
-
-    public ActionForward downloadBatch(final ActionMapping mapping, final ActionForm actionForm,
-	    final HttpServletRequest request, final HttpServletResponse response) throws Exception {
-	SantanderBatch santanderBatch = AbstractDomainObject.fromExternalId(request.getParameter("santanderBatchEid"));
-	ExecutionYear executionYear = AbstractDomainObject.fromExternalId(request.getParameter("executionYearEid"));
-	ManageSantanderCardGenerationBean santanderBean;
-
-	try {
-	    String fileString = santanderBatch.generateTUI();
-	    response.setContentType("text/plain");
-	    response.setHeader("Content-disposition",
-		    "attachment; filename=SantanderTecnico_TUI_" + (new DateTime()).toString("yyyyMMddHHmm") + ".txt");
-	    final ServletOutputStream writer = response.getOutputStream();
-	    writer.write(fileString.getBytes("Cp1252"));
-	    writer.flush();
-	    response.flushBuffer();
-	} catch (Exception e) {
-	    addErrorMessage(request, "errors", "error.generatingTUIFailed " + e.getMessage());
-	    santanderBean = new ManageSantanderCardGenerationBean(executionYear);
-	    refreshBeanState(santanderBean);
-	    request.setAttribute("santanderBean", santanderBean);
-	    return mapping.findForward("entryPoint");
+	public ActionForward selectExecutionYearPostback(final ActionMapping mapping, final ActionForm actionForm,
+			final HttpServletRequest request, final HttpServletResponse response) throws Exception {
+		ManageSantanderCardGenerationBean santanderBean = getRenderedObject("santanderBean");
+		ExecutionYear year = santanderBean.getExecutionYear();
+		if (year != null) {
+			refreshBeanState(santanderBean);
+		}
+		request.setAttribute("santanderBean", santanderBean);
+		return mapping.findForward("entryPoint");
 	}
 
-	return null;
-    }
+	public ActionForward createBatch(final ActionMapping mapping, final ActionForm actionForm, final HttpServletRequest request,
+			final HttpServletResponse response) throws Exception {
+		ExecutionYear executionYear = AbstractDomainObject.fromExternalId(request.getParameter("executionYearEid"));
+		ManageSantanderCardGenerationBean santanderBean;
 
-    public ActionForward sendBatch(final ActionMapping mapping, final ActionForm actionForm, final HttpServletRequest request,
-	    final HttpServletResponse response) throws Exception {
-	SantanderBatch santanderBatch = AbstractDomainObject.fromExternalId(request.getParameter("santanderBatchEid"));
-	Person requester = getUserView(request).getPerson();
-	sealBatch(santanderBatch, requester);
-	return downloadBatch(mapping, actionForm, request, response);
-    }
+		if (executionYear == null) {
+			addErrorMessage(request, "errors", "error.cantCreateNewBatchForExecutionYearNull");
+			santanderBean = new ManageSantanderCardGenerationBean();
+		} else {
+			santanderBean = new ManageSantanderCardGenerationBean(executionYear);
+			Person requester = getUserView(request).getPerson();
+			createNewBatch(requester, santanderBean.getExecutionYear());
+			refreshBeanState(santanderBean);
+		}
 
-    public ActionForward deleteBatch(final ActionMapping mapping, final ActionForm actionForm, final HttpServletRequest request,
-	    final HttpServletResponse response) throws Exception {
-	SantanderBatch santanderBatch = AbstractDomainObject.fromExternalId(request.getParameter("santanderBatchEid"));
-	ExecutionYear executionYear = AbstractDomainObject.fromExternalId(request.getParameter("executionYearEid"));
-	ManageSantanderCardGenerationBean santanderBean;
-
-	destroyBatch(santanderBatch);
-
-	if (executionYear == null) {
-	    addErrorMessage(request, "errors", "error.lostTrackOfExecutionYear");
-	    santanderBean = new ManageSantanderCardGenerationBean();
-	} else {
-	    santanderBean = new ManageSantanderCardGenerationBean(executionYear);
-	    refreshBeanState(santanderBean);
+		request.setAttribute("santanderBean", santanderBean);
+		return mapping.findForward("entryPoint");
 	}
 
-	request.setAttribute("santanderBean", santanderBean);
-	return mapping.findForward("entryPoint");
-    }
+	/*
+	 * Download | Send | Delete
+	 */
 
-    private List<SantanderBatch> retrieveBatches(ExecutionYear year) {
-	List<SantanderBatch> batches = new ArrayList<SantanderBatch>(year.getSantanderBatches());
-	Collections.sort(batches, SantanderBatch.COMPARATOR_BY_MOST_RECENTLY_CREATED);
-	return batches;
-    }
+	public ActionForward downloadBatch(final ActionMapping mapping, final ActionForm actionForm,
+			final HttpServletRequest request, final HttpServletResponse response) throws Exception {
+		SantanderBatch santanderBatch = AbstractDomainObject.fromExternalId(request.getParameter("santanderBatchEid"));
+		ExecutionYear executionYear = AbstractDomainObject.fromExternalId(request.getParameter("executionYearEid"));
+		ManageSantanderCardGenerationBean santanderBean;
 
-    private boolean canCreateNewBatch(ExecutionYear year) {
-	List<SantanderBatch> batches = retrieveBatches(year);
-	if (batches.isEmpty()) {
-	    return true;
+		try {
+			String fileString = santanderBatch.generateTUI();
+			response.setContentType("text/plain");
+			response.setHeader("Content-disposition",
+					"attachment; filename=SantanderTecnico_TUI_" + (new DateTime()).toString("yyyyMMddHHmm") + ".txt");
+			final ServletOutputStream writer = response.getOutputStream();
+			writer.write(fileString.getBytes("Cp1252"));
+			writer.flush();
+			response.flushBuffer();
+		} catch (Exception e) {
+			addErrorMessage(request, "errors", "error.generatingTUIFailed " + e.getMessage());
+			santanderBean = new ManageSantanderCardGenerationBean(executionYear);
+			refreshBeanState(santanderBean);
+			request.setAttribute("santanderBean", santanderBean);
+			return mapping.findForward("entryPoint");
+		}
+
+		return null;
 	}
-	SantanderBatch lastCreatedBatch = batches.get(0);
-	return (lastCreatedBatch != null && lastCreatedBatch.getSent() != null);
-    }
 
-    @Service
-    private void createNewBatch(Person requester, ExecutionYear executionYear) {
-	new SantanderBatch(requester, executionYear);
-    }
+	public ActionForward sendBatch(final ActionMapping mapping, final ActionForm actionForm, final HttpServletRequest request,
+			final HttpServletResponse response) throws Exception {
+		SantanderBatch santanderBatch = AbstractDomainObject.fromExternalId(request.getParameter("santanderBatchEid"));
+		Person requester = getUserView(request).getPerson();
+		sealBatch(santanderBatch, requester);
+		return downloadBatch(mapping, actionForm, request, response);
+	}
 
-    @Service
-    private void destroyBatch(SantanderBatch batch) {
-	batch.delete();
-    }
+	public ActionForward deleteBatch(final ActionMapping mapping, final ActionForm actionForm, final HttpServletRequest request,
+			final HttpServletResponse response) throws Exception {
+		SantanderBatch santanderBatch = AbstractDomainObject.fromExternalId(request.getParameter("santanderBatchEid"));
+		ExecutionYear executionYear = AbstractDomainObject.fromExternalId(request.getParameter("executionYearEid"));
+		ManageSantanderCardGenerationBean santanderBean;
 
-    private void refreshBeanState(ManageSantanderCardGenerationBean santanderBean) {
-	santanderBean.setSantanderBatches(retrieveBatches(santanderBean.getExecutionYear()));
-	santanderBean.setAllowNewCreation(canCreateNewBatch(santanderBean.getExecutionYear()));
-    }
+		destroyBatch(santanderBatch);
 
-    @Service
-    private void sealBatch(SantanderBatch santanderBatch, Person requester) {
-	santanderBatch.setSequenceNumber(SantanderSequenceNumberGenerator.getNewSequenceNumber());
-	santanderBatch.setSent(new DateTime());
-	santanderBatch.setSantanderBatchSender(new SantanderBatchSender(requester));
-    }
+		if (executionYear == null) {
+			addErrorMessage(request, "errors", "error.lostTrackOfExecutionYear");
+			santanderBean = new ManageSantanderCardGenerationBean();
+		} else {
+			santanderBean = new ManageSantanderCardGenerationBean(executionYear);
+			refreshBeanState(santanderBean);
+		}
+
+		request.setAttribute("santanderBean", santanderBean);
+		return mapping.findForward("entryPoint");
+	}
+
+	private List<SantanderBatch> retrieveBatches(ExecutionYear year) {
+		List<SantanderBatch> batches = new ArrayList<SantanderBatch>(year.getSantanderBatches());
+		Collections.sort(batches, SantanderBatch.COMPARATOR_BY_MOST_RECENTLY_CREATED);
+		return batches;
+	}
+
+	private boolean canCreateNewBatch(ExecutionYear year) {
+		List<SantanderBatch> batches = retrieveBatches(year);
+		if (batches.isEmpty()) {
+			return true;
+		}
+		SantanderBatch lastCreatedBatch = batches.get(0);
+		return (lastCreatedBatch != null && lastCreatedBatch.getSent() != null);
+	}
+
+	@Service
+	private void createNewBatch(Person requester, ExecutionYear executionYear) {
+		new SantanderBatch(requester, executionYear);
+	}
+
+	@Service
+	private void destroyBatch(SantanderBatch batch) {
+		batch.delete();
+	}
+
+	private void refreshBeanState(ManageSantanderCardGenerationBean santanderBean) {
+		santanderBean.setSantanderBatches(retrieveBatches(santanderBean.getExecutionYear()));
+		santanderBean.setAllowNewCreation(canCreateNewBatch(santanderBean.getExecutionYear()));
+	}
+
+	@Service
+	private void sealBatch(SantanderBatch santanderBatch, Person requester) {
+		santanderBatch.setSequenceNumber(SantanderSequenceNumberGenerator.getNewSequenceNumber());
+		santanderBatch.setSent(new DateTime());
+		santanderBatch.setSantanderBatchSender(new SantanderBatchSender(requester));
+	}
 
 }

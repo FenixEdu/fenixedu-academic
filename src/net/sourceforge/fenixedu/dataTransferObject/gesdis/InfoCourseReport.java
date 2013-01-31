@@ -17,61 +17,61 @@ import net.sourceforge.fenixedu.domain.gesdis.CourseReport;
  */
 public class InfoCourseReport extends InfoObject {
 
-    private String report;
+	private String report;
 
-    private Date lastModificationDate;
+	private Date lastModificationDate;
 
-    private InfoExecutionCourse infoExecutionCourse;
+	private InfoExecutionCourse infoExecutionCourse;
 
-    public InfoCourseReport() {
-    }
-
-    public String getReport() {
-	return report;
-    }
-
-    public InfoExecutionCourse getInfoExecutionCourse() {
-	return infoExecutionCourse;
-    }
-
-    public void setReport(String report) {
-	this.report = report;
-    }
-
-    public void setInfoExecutionCourse(InfoExecutionCourse infoExecutionCourse) {
-	this.infoExecutionCourse = infoExecutionCourse;
-    }
-
-    /**
-     * @return Returns the lastModificationDate.
-     */
-    public Date getLastModificationDate() {
-	return lastModificationDate;
-    }
-
-    /**
-     * @param lastModificationDate
-     *            The lastModificationDate to set.
-     */
-    public void setLastModificationDate(Date lastModificationDate) {
-	this.lastModificationDate = lastModificationDate;
-    }
-
-    public void copyFromDomain(CourseReport courseReport) {
-	super.copyFromDomain(courseReport);
-	if (courseReport != null) {
-	    setLastModificationDate(courseReport.getLastModificationDate());
-	    setReport(courseReport.getReport());
-	    setInfoExecutionCourse(InfoExecutionCourse.newInfoFromDomain(courseReport.getExecutionCourse()));
+	public InfoCourseReport() {
 	}
-    }
 
-    public static InfoCourseReport newInfoFromDomain(CourseReport courseReport) {
-	InfoCourseReport infoCourseReport = null;
-	if (courseReport != null) {
-	    infoCourseReport = new InfoCourseReport();
-	    infoCourseReport.copyFromDomain(courseReport);
+	public String getReport() {
+		return report;
 	}
-	return infoCourseReport;
-    }
+
+	public InfoExecutionCourse getInfoExecutionCourse() {
+		return infoExecutionCourse;
+	}
+
+	public void setReport(String report) {
+		this.report = report;
+	}
+
+	public void setInfoExecutionCourse(InfoExecutionCourse infoExecutionCourse) {
+		this.infoExecutionCourse = infoExecutionCourse;
+	}
+
+	/**
+	 * @return Returns the lastModificationDate.
+	 */
+	public Date getLastModificationDate() {
+		return lastModificationDate;
+	}
+
+	/**
+	 * @param lastModificationDate
+	 *            The lastModificationDate to set.
+	 */
+	public void setLastModificationDate(Date lastModificationDate) {
+		this.lastModificationDate = lastModificationDate;
+	}
+
+	public void copyFromDomain(CourseReport courseReport) {
+		super.copyFromDomain(courseReport);
+		if (courseReport != null) {
+			setLastModificationDate(courseReport.getLastModificationDate());
+			setReport(courseReport.getReport());
+			setInfoExecutionCourse(InfoExecutionCourse.newInfoFromDomain(courseReport.getExecutionCourse()));
+		}
+	}
+
+	public static InfoCourseReport newInfoFromDomain(CourseReport courseReport) {
+		InfoCourseReport infoCourseReport = null;
+		if (courseReport != null) {
+			infoCourseReport = new InfoCourseReport();
+			infoCourseReport.copyFromDomain(courseReport);
+		}
+		return infoCourseReport;
+	}
 }

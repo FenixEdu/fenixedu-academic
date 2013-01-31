@@ -7,204 +7,204 @@ import net.sourceforge.fenixedu.domain.person.PersonName;
 
 public class PhdParticipantBean implements Serializable {
 
-    static private final long serialVersionUID = -5481393284887457872L;
+	static private final long serialVersionUID = -5481393284887457872L;
 
-    private PhdIndividualProgramProcess individualProgramProcess;
+	private PhdIndividualProgramProcess individualProgramProcess;
 
-    private PhdParticipant participant;
-    private PhdParticipantSelectType participantSelectType = null;
-    private PhdParticipantType participantType = null;
-    private PersonName personName;
+	private PhdParticipant participant;
+	private PhdParticipantSelectType participantSelectType = null;
+	private PhdParticipantType participantType = null;
+	private PersonName personName;
 
-    private String name;
-    private String title;
-    private String qualification;
-    private String category;
-    private String workLocation;
-    private String institution;
-    private String address;
-    private String email;
-    private String phone;
+	private String name;
+	private String title;
+	private String qualification;
+	private String category;
+	private String workLocation;
+	private String institution;
+	private String address;
+	private String email;
+	private String phone;
 
-    private PhdProgramDocumentUploadBean guidingAcceptanceLetter;
+	private PhdProgramDocumentUploadBean guidingAcceptanceLetter;
 
-    public PhdParticipantBean() {
-    }
+	public PhdParticipantBean() {
+	}
 
-    public PhdParticipantBean(final PhdIndividualProgramProcess individualProgramProcess) {
-	setIndividualProgramProcess(individualProgramProcess);
-    }
+	public PhdParticipantBean(final PhdIndividualProgramProcess individualProgramProcess) {
+		setIndividualProgramProcess(individualProgramProcess);
+	}
 
-    public PhdParticipantBean(final PhdParticipant phdParticipant) {
-	setParticipant(phdParticipant);
+	public PhdParticipantBean(final PhdParticipant phdParticipant) {
+		setParticipant(phdParticipant);
 
-	setName(phdParticipant.getName());
-	setTitle(phdParticipant.getTitle());
-	setQualification(phdParticipant.getQualification());
-	setCategory(phdParticipant.getCategory());
-	setWorkLocation(phdParticipant.getWorkLocation());
-	setInstitution(phdParticipant.getInstitution());
-	setAddress(phdParticipant.getAddress());
-	setEmail(phdParticipant.getEmail());
-	setPhone(phdParticipant.getPhone());
-    }
+		setName(phdParticipant.getName());
+		setTitle(phdParticipant.getTitle());
+		setQualification(phdParticipant.getQualification());
+		setCategory(phdParticipant.getCategory());
+		setWorkLocation(phdParticipant.getWorkLocation());
+		setInstitution(phdParticipant.getInstitution());
+		setAddress(phdParticipant.getAddress());
+		setEmail(phdParticipant.getEmail());
+		setPhone(phdParticipant.getPhone());
+	}
 
-    public PhdIndividualProgramProcess getIndividualProgramProcess() {
-	return individualProgramProcess;
-    }
+	public PhdIndividualProgramProcess getIndividualProgramProcess() {
+		return individualProgramProcess;
+	}
 
-    public void setIndividualProgramProcess(PhdIndividualProgramProcess individualProgramProcess) {
-	this.individualProgramProcess = individualProgramProcess;
-    }
+	public void setIndividualProgramProcess(PhdIndividualProgramProcess individualProgramProcess) {
+		this.individualProgramProcess = individualProgramProcess;
+	}
 
-    public PhdParticipant getParticipant() {
-	return participant;
-    }
+	public PhdParticipant getParticipant() {
+		return participant;
+	}
 
-    public void setParticipant(PhdParticipant participant) {
-	this.participant = participant;
-    }
+	public void setParticipant(PhdParticipant participant) {
+		this.participant = participant;
+	}
 
-    public boolean hasParticipant() {
-	return getParticipant() != null;
-    }
+	public boolean hasParticipant() {
+		return getParticipant() != null;
+	}
 
-    public PhdParticipantSelectType getParticipantSelectType() {
-	return participantSelectType;
-    }
+	public PhdParticipantSelectType getParticipantSelectType() {
+		return participantSelectType;
+	}
 
-    public void setParticipantSelectType(PhdParticipantSelectType participantSelectType) {
-	this.participantSelectType = participantSelectType;
-    }
+	public void setParticipantSelectType(PhdParticipantSelectType participantSelectType) {
+		this.participantSelectType = participantSelectType;
+	}
 
-    public PhdParticipantType getParticipantType() {
-	return participantType;
-    }
+	public PhdParticipantType getParticipantType() {
+		return participantType;
+	}
 
-    public void setParticipantType(PhdParticipantType participantType) {
-	this.participantType = participantType;
-    }
+	public void setParticipantType(PhdParticipantType participantType) {
+		this.participantType = participantType;
+	}
 
-    public PersonName getPersonName() {
-	return personName;
-    }
+	public PersonName getPersonName() {
+		return personName;
+	}
 
-    public void setPersonName(PersonName personName) {
-	this.personName = personName;
-    }
-
-    public String getName() {
-	return name;
-    }
-
-    public void setName(String name) {
-	this.name = name;
-    }
-
-    public String getTitle() {
-	return title;
-    }
-
-    public void setTitle(String title) {
-	this.title = title;
-    }
-
-    public String getQualification() {
-	return qualification;
-    }
-
-    public void setQualification(String qualification) {
-	this.qualification = qualification;
-    }
-
-    public String getCategory() {
-	return category;
-    }
-
-    public void setCategory(String category) {
-	this.category = category;
-    }
-
-    public String getWorkLocation() {
-	return workLocation;
-    }
-
-    public void setWorkLocation(String workLocation) {
-	this.workLocation = workLocation;
-    }
-
-    public String getInstitution() {
-	return institution;
-    }
-
-    public void setInstitution(String institution) {
-	this.institution = institution;
-    }
-
-    public String getAddress() {
-	return address;
-    }
-
-    public void setAddress(String address) {
-	this.address = address;
-    }
-
-    public String getEmail() {
-	return email;
-    }
-
-    public void setEmail(String email) {
-	this.email = email;
-    }
-
-    public String getPhone() {
-	return phone;
-    }
-
-    public void setPhone(String phone) {
-	this.phone = phone;
-    }
-
-    public boolean isInternal() {
-	return getParticipantType() == PhdParticipantType.INTERNAL;
-    }
-
-    public Person getPerson() {
-	return getPersonName().getPerson();
-    }
-
-    public boolean isExistingElement() {
-	return getParticipantSelectType() == PhdParticipantSelectType.EXISTING;
-    }
-
-    public PhdParticipantBean setInternalParticipant(final Person person) {
-	setParticipantType(PhdParticipantType.INTERNAL);
-	setPersonName(person.getPersonName());
-	return this;
-    }
-
-    public PhdProgramDocumentUploadBean getGuidingAcceptanceLetter() {
-	return guidingAcceptanceLetter;
-    }
-
-    public void setGuidingAcceptanceLetter(PhdProgramDocumentUploadBean guidingAcceptanceLetter) {
-	this.guidingAcceptanceLetter = guidingAcceptanceLetter;
-    }
-
-    static public enum PhdParticipantSelectType {
-	NEW, EXISTING;
+	public void setPersonName(PersonName personName) {
+		this.personName = personName;
+	}
 
 	public String getName() {
-	    return name();
+		return name;
 	}
-    }
 
-    static public enum PhdParticipantType {
-	INTERNAL, EXTERNAL;
-
-	public String getName() {
-	    return name();
+	public void setName(String name) {
+		this.name = name;
 	}
-    }
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public String getQualification() {
+		return qualification;
+	}
+
+	public void setQualification(String qualification) {
+		this.qualification = qualification;
+	}
+
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
+	}
+
+	public String getWorkLocation() {
+		return workLocation;
+	}
+
+	public void setWorkLocation(String workLocation) {
+		this.workLocation = workLocation;
+	}
+
+	public String getInstitution() {
+		return institution;
+	}
+
+	public void setInstitution(String institution) {
+		this.institution = institution;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+	public boolean isInternal() {
+		return getParticipantType() == PhdParticipantType.INTERNAL;
+	}
+
+	public Person getPerson() {
+		return getPersonName().getPerson();
+	}
+
+	public boolean isExistingElement() {
+		return getParticipantSelectType() == PhdParticipantSelectType.EXISTING;
+	}
+
+	public PhdParticipantBean setInternalParticipant(final Person person) {
+		setParticipantType(PhdParticipantType.INTERNAL);
+		setPersonName(person.getPersonName());
+		return this;
+	}
+
+	public PhdProgramDocumentUploadBean getGuidingAcceptanceLetter() {
+		return guidingAcceptanceLetter;
+	}
+
+	public void setGuidingAcceptanceLetter(PhdProgramDocumentUploadBean guidingAcceptanceLetter) {
+		this.guidingAcceptanceLetter = guidingAcceptanceLetter;
+	}
+
+	static public enum PhdParticipantSelectType {
+		NEW, EXISTING;
+
+		public String getName() {
+			return name();
+		}
+	}
+
+	static public enum PhdParticipantType {
+		INTERNAL, EXTERNAL;
+
+		public String getName() {
+			return name();
+		}
+	}
 
 }

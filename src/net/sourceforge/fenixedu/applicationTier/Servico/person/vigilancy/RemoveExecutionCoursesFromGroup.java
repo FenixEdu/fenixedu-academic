@@ -9,12 +9,12 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class RemoveExecutionCoursesFromGroup extends FenixService {
 
-    @Service
-    public static void run(VigilantGroup group, List<ExecutionCourse> executionCourses) {
+	@Service
+	public static void run(VigilantGroup group, List<ExecutionCourse> executionCourses) {
 
-	for (ExecutionCourse course : executionCourses) {
-	    group.removeExecutionCourses(course);
+		for (ExecutionCourse course : executionCourses) {
+			group.removeExecutionCourses(course);
+		}
 	}
-    }
 
 }

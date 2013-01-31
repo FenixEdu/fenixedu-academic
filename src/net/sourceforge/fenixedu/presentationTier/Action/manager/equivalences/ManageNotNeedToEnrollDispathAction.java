@@ -29,139 +29,141 @@ import org.apache.struts.action.DynaActionForm;
 
 public class ManageNotNeedToEnrollDispathAction extends FenixDispatchAction {
 
-    private static final ComparatorChain curricularCourseComparator = new ComparatorChain();
-    static {
-	curricularCourseComparator.addComparator(new BeanComparator("name", Collator.getInstance()));
-	curricularCourseComparator.addComparator(new BeanComparator("code", Collator.getInstance()));
-    }
-
-    private static final ComparatorChain enrolmentCurricularCourseComparator = new ComparatorChain();
-    static {
-	enrolmentCurricularCourseComparator
-		.addComparator(new BeanComparator("infoCurricularCourse.name", Collator.getInstance()));
-	enrolmentCurricularCourseComparator
-		.addComparator(new BeanComparator("infoCurricularCourse.code", Collator.getInstance()));
-    }
-
-    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-	    throws Exception {
-
-	ChooseStudentCurricularPlanBean bean = getRenderedObject();
-	request.setAttribute("chooseSCPBean", bean == null ? new ChooseStudentCurricularPlanBean() : bean);
-
-	if (bean != null && bean.getStudentCurricularPlan() != null) {
-	    if (bean.getStudentCurricularPlan().isBoxStructure()) {
-		addActionMessage(request, "error.ManageNotNeedToEnrollDispathAction.cannot.manage.studentCurricularPlan");
-	    } else {
-		return showNotNeedToEnroll(mapping, form, request, response);
-	    }
+	private static final ComparatorChain curricularCourseComparator = new ComparatorChain();
+	static {
+		curricularCourseComparator.addComparator(new BeanComparator("name", Collator.getInstance()));
+		curricularCourseComparator.addComparator(new BeanComparator("code", Collator.getInstance()));
 	}
 
-	return mapping.findForward("showNotNeedToEnroll");
-    }
-
-    public ActionForward showNotNeedToEnroll(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-
-	ChooseStudentCurricularPlanBean bean = getRenderedObject();
-
-	InfoStudentCurricularPlan infoSCP = readStudentCurricularPlan(bean.getStudentCurricularPlan());
-
-	final List<InfoNotNeedToEnrollInCurricularCourse> infoNotNeedToEnrollCurricularCourses = infoSCP
-		.getInfoNotNeedToEnrollCurricularCourses();
-	Collections.sort(infoNotNeedToEnrollCurricularCourses, enrolmentCurricularCourseComparator);
-
-	final List<InfoCurricularCourse> curricularCourses = infoSCP.getInfoDegreeCurricularPlan().getCurricularCourses();
-	Collections.sort(curricularCourses, curricularCourseComparator);
-
-	request.setAttribute("infoStudentCurricularPlan", infoSCP);
-	request.setAttribute("infoNotNeedToEnrollCurricularCourses", infoNotNeedToEnrollCurricularCourses);
-	request.setAttribute("infoDegreeCurricularPlanCurricularCourses", curricularCourses);
-
-	request.setAttribute("chooseSCPBean", bean);
-
-	return mapping.findForward("showNotNeedToEnroll");
-    }
-
-    public ActionForward prepareNotNeedToEnroll(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-
-	final String insert = (String) request.getParameter("insert");
-	if (insert != null) {
-	    request.setAttribute("insert", insert);
+	private static final ComparatorChain enrolmentCurricularCourseComparator = new ComparatorChain();
+	static {
+		enrolmentCurricularCourseComparator
+				.addComparator(new BeanComparator("infoCurricularCourse.name", Collator.getInstance()));
+		enrolmentCurricularCourseComparator
+				.addComparator(new BeanComparator("infoCurricularCourse.code", Collator.getInstance()));
 	}
 
-	Integer studentNumber = null;
-	DynaActionForm notNeedToEnrollForm = (DynaActionForm) form;
+	public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
 
-	Integer scpID = getIntegerFromRequest(request, "scpID");
-	if (scpID == null) {
-	    scpID = (Integer) notNeedToEnrollForm.get("studentCurricularPlanID");
+		ChooseStudentCurricularPlanBean bean = getRenderedObject();
+		request.setAttribute("chooseSCPBean", bean == null ? new ChooseStudentCurricularPlanBean() : bean);
+
+		if (bean != null && bean.getStudentCurricularPlan() != null) {
+			if (bean.getStudentCurricularPlan().isBoxStructure()) {
+				addActionMessage(request, "error.ManageNotNeedToEnrollDispathAction.cannot.manage.studentCurricularPlan");
+			} else {
+				return showNotNeedToEnroll(mapping, form, request, response);
+			}
+		}
+
+		return mapping.findForward("showNotNeedToEnroll");
 	}
 
-	StudentCurricularPlan studentCurricularPlan = rootDomainObject.readStudentCurricularPlanByOID(scpID);
-	InfoStudentCurricularPlan infoSCP = InfoStudentCurricularPlan.newInfoFromDomain(studentCurricularPlan);
+	public ActionForward showNotNeedToEnroll(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
 
-	final List<InfoNotNeedToEnrollInCurricularCourse> infoNotNeedToEnrollCurricularCourses = infoSCP
-		.getInfoNotNeedToEnrollCurricularCourses();
-	Collections.sort(infoNotNeedToEnrollCurricularCourses, enrolmentCurricularCourseComparator);
+		ChooseStudentCurricularPlanBean bean = getRenderedObject();
 
-	final List<InfoCurricularCourse> curricularCourses = infoSCP.getInfoDegreeCurricularPlan().getCurricularCourses();
-	Collections.sort(curricularCourses, curricularCourseComparator);
+		InfoStudentCurricularPlan infoSCP = readStudentCurricularPlan(bean.getStudentCurricularPlan());
 
-	request.setAttribute("infoStudentCurricularPlan", infoSCP);
-	request.setAttribute("infoNotNeedToEnrollCurricularCourses", infoNotNeedToEnrollCurricularCourses);
-	request.setAttribute("infoDegreeCurricularPlanCurricularCourses", curricularCourses);
-	notNeedToEnrollForm.set("studentCurricularPlanID", scpID);
+		final List<InfoNotNeedToEnrollInCurricularCourse> infoNotNeedToEnrollCurricularCourses =
+				infoSCP.getInfoNotNeedToEnrollCurricularCourses();
+		Collections.sort(infoNotNeedToEnrollCurricularCourses, enrolmentCurricularCourseComparator);
 
-	ChooseStudentCurricularPlanBean bean = getRenderedObject();
-	request.setAttribute("chooseSCPBean", bean == null ? new ChooseStudentCurricularPlanBean(studentCurricularPlan) : bean);
+		final List<InfoCurricularCourse> curricularCourses = infoSCP.getInfoDegreeCurricularPlan().getCurricularCourses();
+		Collections.sort(curricularCourses, curricularCourseComparator);
 
-	return mapping.findForward("showNotNeedToEnroll");
-    }
+		request.setAttribute("infoStudentCurricularPlan", infoSCP);
+		request.setAttribute("infoNotNeedToEnrollCurricularCourses", infoNotNeedToEnrollCurricularCourses);
+		request.setAttribute("infoDegreeCurricularPlanCurricularCourses", curricularCourses);
 
-    private InfoStudentCurricularPlan readStudentCurricularPlan(StudentCurricularPlan studentCurricularPlan)
-	    throws FenixServiceException, FenixFilterException {
+		request.setAttribute("chooseSCPBean", bean);
 
-	InfoStudentCurricularPlan infoSCP = InfoStudentCurricularPlan.newInfoFromDomain(studentCurricularPlan);
+		return mapping.findForward("showNotNeedToEnroll");
+	}
 
-	final List infoCurricularCourses = infoSCP.getInfoDegreeCurricularPlan().getCurricularCourses();
-	final List infoCurricularCourseToRemove = (List) CollectionUtils.collect(infoSCP
-		.getInfoNotNeedToEnrollCurricularCourses(), new Transformer() {
-	    public Object transform(Object arg0) {
-		InfoNotNeedToEnrollInCurricularCourse infoNotNeedToEnrollInCurricularCourse = (InfoNotNeedToEnrollInCurricularCourse) arg0;
-		return infoNotNeedToEnrollInCurricularCourse.getInfoCurricularCourse();
-	    }
-	});
+	public ActionForward prepareNotNeedToEnroll(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
 
-	infoCurricularCourses.removeAll(infoCurricularCourseToRemove);
-	return infoSCP;
-    }
+		final String insert = request.getParameter("insert");
+		if (insert != null) {
+			request.setAttribute("insert", insert);
+		}
 
-    public ActionForward insertNotNeedToEnroll(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
+		Integer studentNumber = null;
+		DynaActionForm notNeedToEnrollForm = (DynaActionForm) form;
 
-	DynaActionForm notNeedToEnrollForm = (DynaActionForm) form;
-	Integer[] curricularCoursesID = (Integer[]) notNeedToEnrollForm.get("curricularCoursesID");
-	Integer studentCurricularPlanID = (Integer) notNeedToEnrollForm.get("studentCurricularPlanID");
+		Integer scpID = getIntegerFromRequest(request, "scpID");
+		if (scpID == null) {
+			scpID = (Integer) notNeedToEnrollForm.get("studentCurricularPlanID");
+		}
 
-	Object[] args = { studentCurricularPlanID, curricularCoursesID };
-	ServiceManagerServiceFactory.executeService("InsertNotNeedToEnrollInCurricularCourses", args);
+		StudentCurricularPlan studentCurricularPlan = rootDomainObject.readStudentCurricularPlanByOID(scpID);
+		InfoStudentCurricularPlan infoSCP = InfoStudentCurricularPlan.newInfoFromDomain(studentCurricularPlan);
 
-	request.setAttribute("insert", "insert");
-	request.setAttribute("scpID", studentCurricularPlanID);
+		final List<InfoNotNeedToEnrollInCurricularCourse> infoNotNeedToEnrollCurricularCourses =
+				infoSCP.getInfoNotNeedToEnrollCurricularCourses();
+		Collections.sort(infoNotNeedToEnrollCurricularCourses, enrolmentCurricularCourseComparator);
 
-	return mapping.findForward("insertNotNeedToEnroll");
-    }
+		final List<InfoCurricularCourse> curricularCourses = infoSCP.getInfoDegreeCurricularPlan().getCurricularCourses();
+		Collections.sort(curricularCourses, curricularCourseComparator);
 
-    public ActionForward deleteNotNeedToEnroll(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
+		request.setAttribute("infoStudentCurricularPlan", infoSCP);
+		request.setAttribute("infoNotNeedToEnrollCurricularCourses", infoNotNeedToEnrollCurricularCourses);
+		request.setAttribute("infoDegreeCurricularPlanCurricularCourses", curricularCourses);
+		notNeedToEnrollForm.set("studentCurricularPlanID", scpID);
 
-	final IUserView userView = getUserView(request);
+		ChooseStudentCurricularPlanBean bean = getRenderedObject();
+		request.setAttribute("chooseSCPBean", bean == null ? new ChooseStudentCurricularPlanBean(studentCurricularPlan) : bean);
 
-	final Object[] args = { Integer.valueOf((String) request.getParameter("notNeedToEnrollID")) };
-	ServiceManagerServiceFactory.executeService("DeleteNotNeedToEnrollInCurricularCourse", args);
+		return mapping.findForward("showNotNeedToEnroll");
+	}
 
-	return prepareNotNeedToEnroll(mapping, form, request, response);
-    }
+	private InfoStudentCurricularPlan readStudentCurricularPlan(StudentCurricularPlan studentCurricularPlan)
+			throws FenixServiceException, FenixFilterException {
+
+		InfoStudentCurricularPlan infoSCP = InfoStudentCurricularPlan.newInfoFromDomain(studentCurricularPlan);
+
+		final List infoCurricularCourses = infoSCP.getInfoDegreeCurricularPlan().getCurricularCourses();
+		final List infoCurricularCourseToRemove =
+				(List) CollectionUtils.collect(infoSCP.getInfoNotNeedToEnrollCurricularCourses(), new Transformer() {
+					@Override
+					public Object transform(Object arg0) {
+						InfoNotNeedToEnrollInCurricularCourse infoNotNeedToEnrollInCurricularCourse =
+								(InfoNotNeedToEnrollInCurricularCourse) arg0;
+						return infoNotNeedToEnrollInCurricularCourse.getInfoCurricularCourse();
+					}
+				});
+
+		infoCurricularCourses.removeAll(infoCurricularCourseToRemove);
+		return infoSCP;
+	}
+
+	public ActionForward insertNotNeedToEnroll(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+
+		DynaActionForm notNeedToEnrollForm = (DynaActionForm) form;
+		Integer[] curricularCoursesID = (Integer[]) notNeedToEnrollForm.get("curricularCoursesID");
+		Integer studentCurricularPlanID = (Integer) notNeedToEnrollForm.get("studentCurricularPlanID");
+
+		Object[] args = { studentCurricularPlanID, curricularCoursesID };
+		ServiceManagerServiceFactory.executeService("InsertNotNeedToEnrollInCurricularCourses", args);
+
+		request.setAttribute("insert", "insert");
+		request.setAttribute("scpID", studentCurricularPlanID);
+
+		return mapping.findForward("insertNotNeedToEnroll");
+	}
+
+	public ActionForward deleteNotNeedToEnroll(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+
+		final IUserView userView = getUserView(request);
+
+		final Object[] args = { Integer.valueOf(request.getParameter("notNeedToEnrollID")) };
+		ServiceManagerServiceFactory.executeService("DeleteNotNeedToEnrollInCurricularCourse", args);
+
+		return prepareNotNeedToEnroll(mapping, form, request, response);
+	}
 }

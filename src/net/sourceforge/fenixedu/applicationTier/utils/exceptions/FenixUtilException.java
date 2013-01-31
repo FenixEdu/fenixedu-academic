@@ -10,54 +10,55 @@ package net.sourceforge.fenixedu.applicationTier.utils.exceptions;
  * 
  */
 public class FenixUtilException extends Exception {
-    private int errorType;
+	private int errorType;
 
-    /**
+	/**
      *  
      */
-    public FenixUtilException() {
-	super();
-    }
+	public FenixUtilException() {
+		super();
+	}
 
-    /**
-     * @param arg0
-     */
-    public FenixUtilException(String arg0) {
-	super(arg0);
-    }
+	/**
+	 * @param arg0
+	 */
+	public FenixUtilException(String arg0) {
+		super(arg0);
+	}
 
-    /**
-     * @param arg0
-     */
-    public FenixUtilException(int errorType) {
-	this.errorType = errorType;
-    }
+	/**
+	 * @param arg0
+	 */
+	public FenixUtilException(int errorType) {
+		this.errorType = errorType;
+	}
 
-    /**
-     * @param arg0
-     */
-    public FenixUtilException(Throwable cause) {
-	super(cause);
-    }
+	/**
+	 * @param arg0
+	 */
+	public FenixUtilException(Throwable cause) {
+		super(cause);
+	}
 
-    /**
-     * @param arg0
-     * @param arg1
-     */
-    public FenixUtilException(String message, Throwable cause) {
-	super(message, cause);
-    }
+	/**
+	 * @param arg0
+	 * @param arg1
+	 */
+	public FenixUtilException(String message, Throwable cause) {
+		super(message, cause);
+	}
 
-    public int getErrorType() {
-	return this.errorType;
-    }
+	public int getErrorType() {
+		return this.errorType;
+	}
 
-    public String toString() {
-	String result = "[" + this.getClass().getName() + "\n";
-	result += "message " + this.getMessage() + "\n";
-	result += "cause " + this.getCause() + "\n";
-	result += "]";
-	return result;
-    }
+	@Override
+	public String toString() {
+		String result = "[" + this.getClass().getName() + "\n";
+		result += "message " + this.getMessage() + "\n";
+		result += "cause " + this.getCause() + "\n";
+		result += "]";
+		return result;
+	}
 
 }

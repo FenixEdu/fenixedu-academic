@@ -9,14 +9,14 @@ import org.joda.time.DateTime;
 import pt.ist.fenixWebFramework.services.Service;
 
 public class LogFirstTimeCandidacyTimestamp {
-    @Service
-    public static void logTimestamp(StudentCandidacy candidacy, FirstTimeCandidacyStage stage) {
-	FirstTimeCandidacyLog log = candidacy.getFirstTimeCandidacyLog();
-	if (log == null) {
-	    log = new FirstTimeCandidacyLog(candidacy);
-	    candidacy.setFirstTimeCandidacyLog(log);
-	}
+	@Service
+	public static void logTimestamp(StudentCandidacy candidacy, FirstTimeCandidacyStage stage) {
+		FirstTimeCandidacyLog log = candidacy.getFirstTimeCandidacyLog();
+		if (log == null) {
+			log = new FirstTimeCandidacyLog(candidacy);
+			candidacy.setFirstTimeCandidacyLog(log);
+		}
 
-	log.addEntry(stage, new DateTime());
-    }
+		log.addEntry(stage, new DateTime());
+	}
 }

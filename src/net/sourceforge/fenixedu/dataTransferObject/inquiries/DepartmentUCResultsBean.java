@@ -15,24 +15,24 @@ import org.apache.commons.beanutils.BeanComparator;
 
 public class DepartmentUCResultsBean extends CoordinatorResultsBean {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    public DepartmentUCResultsBean(ExecutionCourse executionCourse, ExecutionDegree executionDegree, Person president,
-	    boolean backToResume) {
-	super(executionCourse, executionDegree, president, backToResume);
-    }
-
-    public List<InquiryResultComment> getAllCourseComments() {
-	List<InquiryResultComment> commentsMade = new ArrayList<InquiryResultComment>();
-	for (InquiryGlobalComment globalComment : getExecutionCourse().getInquiryGlobalComments()) {
-	    commentsMade.addAll(globalComment.getInquiryResultCommentsSet());
+	public DepartmentUCResultsBean(ExecutionCourse executionCourse, ExecutionDegree executionDegree, Person president,
+			boolean backToResume) {
+		super(executionCourse, executionDegree, president, backToResume);
 	}
-	Collections.sort(commentsMade, new BeanComparator("person.name"));
-	return commentsMade;
-    }
 
-    @Override
-    protected ResultPersonCategory getPersonCategory() {
-	return ResultPersonCategory.DEPARTMENT_PRESIDENT;
-    }
+	public List<InquiryResultComment> getAllCourseComments() {
+		List<InquiryResultComment> commentsMade = new ArrayList<InquiryResultComment>();
+		for (InquiryGlobalComment globalComment : getExecutionCourse().getInquiryGlobalComments()) {
+			commentsMade.addAll(globalComment.getInquiryResultCommentsSet());
+		}
+		Collections.sort(commentsMade, new BeanComparator("person.name"));
+		return commentsMade;
+	}
+
+	@Override
+	protected ResultPersonCategory getPersonCategory() {
+		return ResultPersonCategory.DEPARTMENT_PRESIDENT;
+	}
 }

@@ -13,18 +13,18 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadCategories extends FenixService {
 
-    @Checked("RolePredicates.TEACHER_PREDICATE")
-    @Service
-    public static List run() throws FenixServiceException {
-	List<InfoCategory> result = new ArrayList<InfoCategory>();
+	@Checked("RolePredicates.TEACHER_PREDICATE")
+	@Service
+	public static List run() throws FenixServiceException {
+		List<InfoCategory> result = new ArrayList<InfoCategory>();
 
-	for (ProfessionalCategory category : rootDomainObject.getProfessionalCategories()) {
-	    if (category.getCategoryType().equals(CategoryType.TEACHER)) {
-		result.add(InfoCategory.newInfoFromDomain(category));
-	    }
+		for (ProfessionalCategory category : rootDomainObject.getProfessionalCategories()) {
+			if (category.getCategoryType().equals(CategoryType.TEACHER)) {
+				result.add(InfoCategory.newInfoFromDomain(category));
+			}
+		}
+
+		return result;
 	}
-
-	return result;
-    }
 
 }

@@ -35,383 +35,398 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class Professorship extends Professorship_Base implements ICreditsEventOriginator {
 
-    public static final Comparator<Professorship> COMPARATOR_BY_PERSON_NAME = new BeanComparator("person.name",
-	    Collator.getInstance());
+	public static final Comparator<Professorship> COMPARATOR_BY_PERSON_NAME = new BeanComparator("person.name",
+			Collator.getInstance());
 
-    public Professorship() {
-	super();
-	setRootDomainObject(RootDomainObject.getInstance());
-	new ProfessorshipPermissions(this);
-    }
-
-    public boolean belongsToExecutionPeriod(ExecutionSemester executionSemester) {
-	return this.getExecutionCourse().getExecutionPeriod().equals(executionSemester);
-    }
-
-    public static Professorship create(Boolean responsibleFor, ExecutionCourse executionCourse, Teacher teacher, Double hours)
-	    throws MaxResponsibleForExceed, InvalidCategory {
-
-	for (final Professorship otherProfessorship : executionCourse.getProfessorshipsSet()) {
-	    if (teacher == otherProfessorship.getTeacher()) {
-		throw new DomainException("error.teacher.already.associated.to.professorship");
-	    }
+	public Professorship() {
+		super();
+		setRootDomainObject(RootDomainObject.getInstance());
+		new ProfessorshipPermissions(this);
 	}
 
-	if (responsibleFor == null || executionCourse == null || teacher == null)
-	    throw new NullPointerException();
-
-	Professorship professorShip = new Professorship();
-	professorShip.setHours((hours == null) ? new Double(0.0) : hours);
-	professorShip.setExecutionCourse(executionCourse);
-	professorShip.setPerson(teacher.getPerson());
-	professorShip.setCreator(AccessControl.getPerson());
-
-	professorShip.setResponsibleFor(responsibleFor);
-	executionCourse.moveSummariesFromTeacherToProfessorship(teacher, professorShip);
-
-	return professorShip;
-    }
-
-    @Service
-    public static Professorship create(Boolean responsibleFor, ExecutionCourse executionCourse, Person person, Double hours)
-	    throws MaxResponsibleForExceed, InvalidCategory {
-
-	for (final Professorship otherProfessorship : executionCourse.getProfessorshipsSet()) {
-	    if (person == otherProfessorship.getPerson()) {
-		throw new DomainException("error.teacher.already.associated.to.professorship");
-	    }
+	@Override
+	public boolean belongsToExecutionPeriod(ExecutionSemester executionSemester) {
+		return this.getExecutionCourse().getExecutionPeriod().equals(executionSemester);
 	}
 
-	if (responsibleFor == null || executionCourse == null || person == null)
-	    throw new NullPointerException();
+	public static Professorship create(Boolean responsibleFor, ExecutionCourse executionCourse, Teacher teacher, Double hours)
+			throws MaxResponsibleForExceed, InvalidCategory {
 
-	Professorship professorShip = new Professorship();
-	professorShip.setHours((hours == null) ? new Double(0.0) : hours);
-	professorShip.setExecutionCourse(executionCourse);
-	professorShip.setPerson(person);
-	professorShip.setCreator(AccessControl.getPerson());
-
-	if (responsibleFor.booleanValue() && professorShip.getPerson().getTeacher() != null) {
-	    ResponsibleForValidator.getInstance().validateResponsibleForList(professorShip.getPerson().getTeacher(),
-		    professorShip.getExecutionCourse(), professorShip);
-	    professorShip.setResponsibleFor(Boolean.TRUE);
-	} else {
-	    professorShip.setResponsibleFor(Boolean.FALSE);
-	}
-	if (person.getTeacher() != null) {
-	    executionCourse.moveSummariesFromTeacherToProfessorship(person.getTeacher(), professorShip);
-	}
-
-	ProfessorshipManagementLog.createLog(professorShip.getExecutionCourse(), "resources.MessagingResources",
-		"log.executionCourse.professorship.added", professorShip.getPerson().getPresentationName(), professorShip
-			.getExecutionCourse().getNome(), professorShip.getExecutionCourse().getDegreePresentationString());
-	return professorShip;
-    }
-
-    public void delete() {
-	if (canBeDeleted()) {
-	    ProfessorshipManagementLog.createLog(getExecutionCourse(), "resources.MessagingResources",
-		    "log.executionCourse.professorship.removed", getPerson().getPresentationName(), getExecutionCourse()
-			    .getNome(), getExecutionCourse().getDegreePresentationString());
-	    removeExecutionCourse();
-	    removePerson();
-	    if (super.getPermissions() != null) {
-		getPermissions().delete();
-	    }
-	    removeRootDomainObject();
-	    removeCreator();
-	    deleteDomainObject();
-	}
-    }
-
-    public boolean canBeDeleted() {
-	if (hasAnyAssociatedSummaries())
-	    throw new DomainException("error.remove.professorship");
-	if (hasAnyAssociatedShiftProfessorship())
-	    throw new DomainException("error.remove.professorship");
-	if (hasAnySupportLessons())
-	    throw new DomainException("error.remove.professorship");
-	if (hasAnyDegreeTeachingServices())
-	    throw new DomainException("error.remove.professorship");
-	if (hasAnyTeacherMasterDegreeServices())
-	    throw new DomainException("error.remove.professorship");
-	if (hasTeachingInquiry())
-	    throw new DomainException("error.remove.professorship");
-	if (hasAnyStudentInquiriesTeachingResults())
-	    throw new DomainException("error.remove.professorship");
-	if (hasAnyInquiryResults())
-	    throw new DomainException("error.remove.professorship");
-	if (hasAnyAssociatedShiftProfessorship())
-	    throw new DomainException("error.remove.professorship");
-	if (hasInquiryTeacherAnswer())
-	    throw new DomainException("error.remove.professorship");
-	if (hasInquiryRegentAnswer())
-	    throw new DomainException("error.remove.professorship");
-	if (hasAnyDegreeProjectTutorialServices())
-	    throw new DomainException("error.remove.professorship");
-	return true;
-    }
-
-    public boolean isResponsibleFor() {
-	return getResponsibleFor().booleanValue();
-    }
-
-    public static List<Professorship> readByDegreeCurricularPlanAndExecutionYear(DegreeCurricularPlan degreeCurricularPlan,
-	    ExecutionYear executionYear) {
-
-	Set<Professorship> professorships = new HashSet<Professorship>();
-	for (CurricularCourse curricularCourse : degreeCurricularPlan.getCurricularCourses()) {
-	    for (ExecutionCourse executionCourse : curricularCourse.getExecutionCoursesByExecutionYear(executionYear)) {
-		professorships.addAll(executionCourse.getProfessorships());
-	    }
-	}
-	return new ArrayList<Professorship>(professorships);
-    }
-
-    public static List<Professorship> readByDegreeCurricularPlanAndExecutionYearAndBasic(
-	    DegreeCurricularPlan degreeCurricularPlan, ExecutionYear executionYear, Boolean basic) {
-
-	Set<Professorship> professorships = new HashSet<Professorship>();
-	for (CurricularCourse curricularCourse : degreeCurricularPlan.getCurricularCourses()) {
-	    if (curricularCourse.getBasic().equals(basic)) {
-		for (ExecutionCourse executionCourse : curricularCourse.getExecutionCoursesByExecutionYear(executionYear)) {
-		    professorships.addAll(executionCourse.getProfessorships());
-		}
-	    }
-	}
-	return new ArrayList<Professorship>(professorships);
-    }
-
-    public static List<Professorship> readByDegreeCurricularPlanAndExecutionPeriod(DegreeCurricularPlan degreeCurricularPlan,
-	    ExecutionSemester executionSemester) {
-
-	Set<Professorship> professorships = new HashSet<Professorship>();
-	for (CurricularCourse curricularCourse : degreeCurricularPlan.getCurricularCourses()) {
-	    for (ExecutionCourse executionCourse : curricularCourse.getExecutionCoursesByExecutionPeriod(executionSemester)) {
-		professorships.addAll(executionCourse.getProfessorships());
-	    }
-	}
-	return new ArrayList<Professorship>(professorships);
-    }
-
-    public static List<Professorship> readByDegreeCurricularPlansAndExecutionYearAndBasic(
-	    List<DegreeCurricularPlan> degreeCurricularPlans, ExecutionYear executionYear, Boolean basic) {
-
-	Set<Professorship> professorships = new HashSet<Professorship>();
-	for (DegreeCurricularPlan degreeCurricularPlan : degreeCurricularPlans) {
-	    for (CurricularCourse curricularCourse : degreeCurricularPlan.getCurricularCourses()) {
-		if (curricularCourse.getBasic() == null || curricularCourse.getBasic().equals(basic)) {
-		    if (executionYear != null) {
-			for (ExecutionCourse executionCourse : curricularCourse.getExecutionCoursesByExecutionYear(executionYear)) {
-			    professorships.addAll(executionCourse.getProfessorships());
+		for (final Professorship otherProfessorship : executionCourse.getProfessorshipsSet()) {
+			if (teacher == otherProfessorship.getTeacher()) {
+				throw new DomainException("error.teacher.already.associated.to.professorship");
 			}
-		    } else {
-			for (ExecutionCourse executionCourse : curricularCourse.getAssociatedExecutionCourses()) {
-			    professorships.addAll(executionCourse.getProfessorships());
-			}
-		    }
 		}
-	    }
+
+		if (responsibleFor == null || executionCourse == null || teacher == null) {
+			throw new NullPointerException();
+		}
+
+		Professorship professorShip = new Professorship();
+		professorShip.setHours((hours == null) ? new Double(0.0) : hours);
+		professorShip.setExecutionCourse(executionCourse);
+		professorShip.setPerson(teacher.getPerson());
+		professorShip.setCreator(AccessControl.getPerson());
+
+		professorShip.setResponsibleFor(responsibleFor);
+		executionCourse.moveSummariesFromTeacherToProfessorship(teacher, professorShip);
+
+		return professorShip;
 	}
-	return new ArrayList<Professorship>(professorships);
-    }
 
-    public static List<Professorship> readByDegreeCurricularPlansAndExecutionYear(
-	    List<DegreeCurricularPlan> degreeCurricularPlans, ExecutionYear executionYear) {
+	@Service
+	public static Professorship create(Boolean responsibleFor, ExecutionCourse executionCourse, Person person, Double hours)
+			throws MaxResponsibleForExceed, InvalidCategory {
 
-	Set<Professorship> professorships = new HashSet<Professorship>();
-	for (DegreeCurricularPlan degreeCurricularPlan : degreeCurricularPlans) {
-	    for (CurricularCourse curricularCourse : degreeCurricularPlan.getCurricularCourses()) {
-		if (executionYear != null) {
-		    for (ExecutionCourse executionCourse : curricularCourse.getExecutionCoursesByExecutionYear(executionYear)) {
-			professorships.addAll(executionCourse.getProfessorships());
-		    }
+		for (final Professorship otherProfessorship : executionCourse.getProfessorshipsSet()) {
+			if (person == otherProfessorship.getPerson()) {
+				throw new DomainException("error.teacher.already.associated.to.professorship");
+			}
+		}
+
+		if (responsibleFor == null || executionCourse == null || person == null) {
+			throw new NullPointerException();
+		}
+
+		Professorship professorShip = new Professorship();
+		professorShip.setHours((hours == null) ? new Double(0.0) : hours);
+		professorShip.setExecutionCourse(executionCourse);
+		professorShip.setPerson(person);
+		professorShip.setCreator(AccessControl.getPerson());
+
+		if (responsibleFor.booleanValue() && professorShip.getPerson().getTeacher() != null) {
+			ResponsibleForValidator.getInstance().validateResponsibleForList(professorShip.getPerson().getTeacher(),
+					professorShip.getExecutionCourse(), professorShip);
+			professorShip.setResponsibleFor(Boolean.TRUE);
 		} else {
-		    for (ExecutionCourse executionCourse : curricularCourse.getAssociatedExecutionCourses()) {
-			professorships.addAll(executionCourse.getProfessorships());
-		    }
+			professorShip.setResponsibleFor(Boolean.FALSE);
 		}
-	    }
-	}
-	return new ArrayList<Professorship>(professorships);
-    }
-
-    public SortedSet<DegreeTeachingService> getDegreeTeachingServicesOrderedByShift() {
-	final SortedSet<DegreeTeachingService> degreeTeachingServices = new TreeSet<DegreeTeachingService>(
-		DegreeTeachingService.DEGREE_TEACHING_SERVICE_COMPARATOR_BY_SHIFT);
-	degreeTeachingServices.addAll(getDegreeTeachingServicesSet());
-	return degreeTeachingServices;
-    }
-
-    public DegreeTeachingService getDegreeTeachingServiceByShift(Shift shift) {
-	for (DegreeTeachingService degreeTeachingService : getDegreeTeachingServicesSet()) {
-	    if (degreeTeachingService.getShift() == shift) {
-		return degreeTeachingService;
-	    }
-	}
-	return null;
-    }
-
-    public SortedSet<SupportLesson> getSupportLessonsOrderedByStartTimeAndWeekDay() {
-	final SortedSet<SupportLesson> supportLessons = new TreeSet<SupportLesson>(
-		SupportLesson.SUPPORT_LESSON_COMPARATOR_BY_HOURS_AND_WEEK_DAY);
-	supportLessons.addAll(getSupportLessonsSet());
-	return supportLessons;
-    }
-
-    public boolean isTeachingInquiriesToAnswer() {
-	final ExecutionCourse executionCourse = this.getExecutionCourse();
-	final InquiryResponsePeriod responsePeriod = executionCourse.getExecutionPeriod().getInquiryResponsePeriod(
-		InquiryResponsePeriodType.TEACHING);
-	if (responsePeriod == null || !responsePeriod.isOpen() || !executionCourse.isAvailableForInquiry()
-		|| executionCourse.getStudentInquiriesCourseResults().isEmpty()
-		|| (!isResponsibleFor() && !hasAssociatedLessonsInTeachingServices())) {
-	    return false;
-	}
-
-	return true;
-    }
-
-    public StudentInquiriesTeachingResult getStudentInquiriesTeachingResult(final ExecutionDegree executionDegree,
-	    final ShiftType shiftType) {
-	for (StudentInquiriesTeachingResult result : getStudentInquiriesTeachingResults()) {
-	    if (result.getExecutionDegree() == executionDegree && result.getShiftType() == shiftType) {
-		return result;
-	    }
-	}
-	return null;
-    }
-
-    public boolean hasAssociatedLessonsInTeachingServices() {
-	for (final DegreeTeachingService degreeTeachingService : getDegreeTeachingServicesSet()) {
-	    if (!degreeTeachingService.getShift().getAssociatedLessons().isEmpty()) {
-		return true;
-	    }
-	}
-	return false;
-    }
-
-    public Teacher getTeacher() {
-	return getPerson().getTeacher();
-    }
-
-    public void setTeacher(Teacher teacher) {
-	setPerson(teacher.getPerson());
-    }
-
-    public boolean hasTeacher() {
-	return hasPerson() && getPerson().hasTeacher();
-    }
-
-    public void removeTeacher() {
-	removePerson();
-    }
-
-    public String getDegreeSiglas() {
-	Set<String> degreeSiglas = new HashSet<String>();
-	for (CurricularCourse curricularCourse : getExecutionCourse().getAssociatedCurricularCourses()) {
-	    degreeSiglas.add(curricularCourse.getDegreeCurricularPlan().getDegree().getSigla());
-	}
-	return StringUtils.join(degreeSiglas, ", ");
-    }
-
-    public String getDegreePlanNames() {
-	Set<String> degreeSiglas = new HashSet<String>();
-	for (CurricularCourse curricularCourse : getExecutionCourse().getAssociatedCurricularCourses()) {
-	    degreeSiglas.add(curricularCourse.getDegreeCurricularPlan().getName());
-	}
-	return StringUtils.join(degreeSiglas, ", ");
-    }
-
-    public List<InquiryResult> getInquiryResults(ShiftType shiftType) {
-	List<InquiryResult> inquiryResults = new ArrayList<InquiryResult>();
-	for (InquiryResult inquiryResult : getInquiryResultsSet()) {
-	    if (inquiryResult.getShiftType().equals(shiftType)) {
-		inquiryResults.add(inquiryResult);
-	    }
-	}
-	return inquiryResults;
-    }
-
-    public boolean hasMandatoryCommentsToMake() {
-	List<InquiryResult> inquiryResults = getInquiryResults();
-	for (InquiryResult inquiryResult : inquiryResults) {
-	    if (inquiryResult.getResultClassification() != null) {
-		if (inquiryResult.getResultClassification().isMandatoryComment()
-			&& !inquiryResult.getInquiryQuestion().isResultQuestion(inquiryResult.getExecutionPeriod())) {
-		    InquiryResultComment inquiryResultComment = inquiryResult.getInquiryResultComment(getPerson(),
-			    ResultPersonCategory.TEACHER);
-		    if (inquiryResultComment == null || StringUtils.isEmpty(inquiryResultComment.getComment())) {
-			return true;
-		    }
+		if (person.getTeacher() != null) {
+			executionCourse.moveSummariesFromTeacherToProfessorship(person.getTeacher(), professorShip);
 		}
-	    }
-	}
-	return false;
-    }
 
-    public boolean hasMandatoryCommentsToMakeAsResponsible() {
-	for (Professorship professorship : getExecutionCourse().getProfessorships()) {
-	    List<InquiryResult> inquiryResults = professorship.getInquiryResults();
-	    for (InquiryResult inquiryResult : inquiryResults) {
-		if (inquiryResult.getResultClassification() != null) {
-		    if (inquiryResult.getResultClassification().isMandatoryComment()
-			    && !inquiryResult.getInquiryQuestion().isResultQuestion(inquiryResult.getExecutionPeriod())) {
-			InquiryResultComment inquiryResultComment = inquiryResult.getInquiryResultComment(getPerson(),
-				ResultPersonCategory.REGENT);
-			if (inquiryResultComment == null || StringUtils.isEmpty(inquiryResultComment.getComment())) {
-			    inquiryResultComment = inquiryResult.getInquiryResultComment(getPerson(),
-				    ResultPersonCategory.TEACHER);
-			    if (inquiryResultComment == null || StringUtils.isEmpty(inquiryResultComment.getComment())) {
-				return true;
-			    }
+		ProfessorshipManagementLog.createLog(professorShip.getExecutionCourse(), "resources.MessagingResources",
+				"log.executionCourse.professorship.added", professorShip.getPerson().getPresentationName(), professorShip
+						.getExecutionCourse().getNome(), professorShip.getExecutionCourse().getDegreePresentationString());
+		return professorShip;
+	}
+
+	public void delete() {
+		if (canBeDeleted()) {
+			ProfessorshipManagementLog.createLog(getExecutionCourse(), "resources.MessagingResources",
+					"log.executionCourse.professorship.removed", getPerson().getPresentationName(), getExecutionCourse()
+							.getNome(), getExecutionCourse().getDegreePresentationString());
+			removeExecutionCourse();
+			removePerson();
+			if (super.getPermissions() != null) {
+				getPermissions().delete();
 			}
-		    }
+			removeRootDomainObject();
+			removeCreator();
+			deleteDomainObject();
 		}
-	    }
 	}
-	return false;
-    }
 
-    public boolean hasResultsToImprove() {
-	for (InquiryResult inquiryResult : getInquiryResults()) {
-	    if (InquiryResultType.TEACHER_SHIFT_TYPE.equals(inquiryResult.getResultType())
-		    && inquiryResult.getResultClassification().isMandatoryComment()) {
+	public boolean canBeDeleted() {
+		if (hasAnyAssociatedSummaries()) {
+			throw new DomainException("error.remove.professorship");
+		}
+		if (hasAnyAssociatedShiftProfessorship()) {
+			throw new DomainException("error.remove.professorship");
+		}
+		if (hasAnySupportLessons()) {
+			throw new DomainException("error.remove.professorship");
+		}
+		if (hasAnyDegreeTeachingServices()) {
+			throw new DomainException("error.remove.professorship");
+		}
+		if (hasAnyTeacherMasterDegreeServices()) {
+			throw new DomainException("error.remove.professorship");
+		}
+		if (hasTeachingInquiry()) {
+			throw new DomainException("error.remove.professorship");
+		}
+		if (hasAnyStudentInquiriesTeachingResults()) {
+			throw new DomainException("error.remove.professorship");
+		}
+		if (hasAnyInquiryResults()) {
+			throw new DomainException("error.remove.professorship");
+		}
+		if (hasAnyAssociatedShiftProfessorship()) {
+			throw new DomainException("error.remove.professorship");
+		}
+		if (hasInquiryTeacherAnswer()) {
+			throw new DomainException("error.remove.professorship");
+		}
+		if (hasInquiryRegentAnswer()) {
+			throw new DomainException("error.remove.professorship");
+		}
+		if (hasAnyDegreeProjectTutorialServices()) {
+			throw new DomainException("error.remove.professorship");
+		}
 		return true;
-	    }
 	}
-	return false;
-    }
 
-    @Service
-    public Boolean deleteInquiryResults() {
-	boolean deletedResults = false;
-	for (InquiryResult inquiryResult : getInquiryResultsSet()) {
-	    inquiryResult.delete();
-	    deletedResults = true;
+	public boolean isResponsibleFor() {
+		return getResponsibleFor().booleanValue();
 	}
-	return deletedResults;
-    }
 
-    @Service
-    public Boolean deleteInquiryResults(ShiftType shiftType, InquiryQuestion inquiryQuestion) {
-	boolean deletedResults = false;
-	for (InquiryResult inquiryResult : getInquiryResults(shiftType)) {
-	    if (inquiryQuestion == null || inquiryResult.getInquiryQuestion() == inquiryQuestion) {
-		inquiryResult.delete();
-		deletedResults = true;
-	    }
-	}
-	return deletedResults;
-    }
+	public static List<Professorship> readByDegreeCurricularPlanAndExecutionYear(DegreeCurricularPlan degreeCurricularPlan,
+			ExecutionYear executionYear) {
 
-    public int getAllLessonsNumber() {
-	int lessonNumber = 0;
-	for (DegreeTeachingService degreeTeachingService : getDegreeTeachingServicesSet()) {
-	    lessonNumber += degreeTeachingService.getShift().getAssociatedLessonsCount();
+		Set<Professorship> professorships = new HashSet<Professorship>();
+		for (CurricularCourse curricularCourse : degreeCurricularPlan.getCurricularCourses()) {
+			for (ExecutionCourse executionCourse : curricularCourse.getExecutionCoursesByExecutionYear(executionYear)) {
+				professorships.addAll(executionCourse.getProfessorships());
+			}
+		}
+		return new ArrayList<Professorship>(professorships);
 	}
-	lessonNumber += getSupportLessonsCount();
-	return lessonNumber;
-    }
+
+	public static List<Professorship> readByDegreeCurricularPlanAndExecutionYearAndBasic(
+			DegreeCurricularPlan degreeCurricularPlan, ExecutionYear executionYear, Boolean basic) {
+
+		Set<Professorship> professorships = new HashSet<Professorship>();
+		for (CurricularCourse curricularCourse : degreeCurricularPlan.getCurricularCourses()) {
+			if (curricularCourse.getBasic().equals(basic)) {
+				for (ExecutionCourse executionCourse : curricularCourse.getExecutionCoursesByExecutionYear(executionYear)) {
+					professorships.addAll(executionCourse.getProfessorships());
+				}
+			}
+		}
+		return new ArrayList<Professorship>(professorships);
+	}
+
+	public static List<Professorship> readByDegreeCurricularPlanAndExecutionPeriod(DegreeCurricularPlan degreeCurricularPlan,
+			ExecutionSemester executionSemester) {
+
+		Set<Professorship> professorships = new HashSet<Professorship>();
+		for (CurricularCourse curricularCourse : degreeCurricularPlan.getCurricularCourses()) {
+			for (ExecutionCourse executionCourse : curricularCourse.getExecutionCoursesByExecutionPeriod(executionSemester)) {
+				professorships.addAll(executionCourse.getProfessorships());
+			}
+		}
+		return new ArrayList<Professorship>(professorships);
+	}
+
+	public static List<Professorship> readByDegreeCurricularPlansAndExecutionYearAndBasic(
+			List<DegreeCurricularPlan> degreeCurricularPlans, ExecutionYear executionYear, Boolean basic) {
+
+		Set<Professorship> professorships = new HashSet<Professorship>();
+		for (DegreeCurricularPlan degreeCurricularPlan : degreeCurricularPlans) {
+			for (CurricularCourse curricularCourse : degreeCurricularPlan.getCurricularCourses()) {
+				if (curricularCourse.getBasic() == null || curricularCourse.getBasic().equals(basic)) {
+					if (executionYear != null) {
+						for (ExecutionCourse executionCourse : curricularCourse.getExecutionCoursesByExecutionYear(executionYear)) {
+							professorships.addAll(executionCourse.getProfessorships());
+						}
+					} else {
+						for (ExecutionCourse executionCourse : curricularCourse.getAssociatedExecutionCourses()) {
+							professorships.addAll(executionCourse.getProfessorships());
+						}
+					}
+				}
+			}
+		}
+		return new ArrayList<Professorship>(professorships);
+	}
+
+	public static List<Professorship> readByDegreeCurricularPlansAndExecutionYear(
+			List<DegreeCurricularPlan> degreeCurricularPlans, ExecutionYear executionYear) {
+
+		Set<Professorship> professorships = new HashSet<Professorship>();
+		for (DegreeCurricularPlan degreeCurricularPlan : degreeCurricularPlans) {
+			for (CurricularCourse curricularCourse : degreeCurricularPlan.getCurricularCourses()) {
+				if (executionYear != null) {
+					for (ExecutionCourse executionCourse : curricularCourse.getExecutionCoursesByExecutionYear(executionYear)) {
+						professorships.addAll(executionCourse.getProfessorships());
+					}
+				} else {
+					for (ExecutionCourse executionCourse : curricularCourse.getAssociatedExecutionCourses()) {
+						professorships.addAll(executionCourse.getProfessorships());
+					}
+				}
+			}
+		}
+		return new ArrayList<Professorship>(professorships);
+	}
+
+	public SortedSet<DegreeTeachingService> getDegreeTeachingServicesOrderedByShift() {
+		final SortedSet<DegreeTeachingService> degreeTeachingServices =
+				new TreeSet<DegreeTeachingService>(DegreeTeachingService.DEGREE_TEACHING_SERVICE_COMPARATOR_BY_SHIFT);
+		degreeTeachingServices.addAll(getDegreeTeachingServicesSet());
+		return degreeTeachingServices;
+	}
+
+	public DegreeTeachingService getDegreeTeachingServiceByShift(Shift shift) {
+		for (DegreeTeachingService degreeTeachingService : getDegreeTeachingServicesSet()) {
+			if (degreeTeachingService.getShift() == shift) {
+				return degreeTeachingService;
+			}
+		}
+		return null;
+	}
+
+	public SortedSet<SupportLesson> getSupportLessonsOrderedByStartTimeAndWeekDay() {
+		final SortedSet<SupportLesson> supportLessons =
+				new TreeSet<SupportLesson>(SupportLesson.SUPPORT_LESSON_COMPARATOR_BY_HOURS_AND_WEEK_DAY);
+		supportLessons.addAll(getSupportLessonsSet());
+		return supportLessons;
+	}
+
+	public boolean isTeachingInquiriesToAnswer() {
+		final ExecutionCourse executionCourse = this.getExecutionCourse();
+		final InquiryResponsePeriod responsePeriod =
+				executionCourse.getExecutionPeriod().getInquiryResponsePeriod(InquiryResponsePeriodType.TEACHING);
+		if (responsePeriod == null || !responsePeriod.isOpen() || !executionCourse.isAvailableForInquiry()
+				|| executionCourse.getStudentInquiriesCourseResults().isEmpty()
+				|| (!isResponsibleFor() && !hasAssociatedLessonsInTeachingServices())) {
+			return false;
+		}
+
+		return true;
+	}
+
+	public StudentInquiriesTeachingResult getStudentInquiriesTeachingResult(final ExecutionDegree executionDegree,
+			final ShiftType shiftType) {
+		for (StudentInquiriesTeachingResult result : getStudentInquiriesTeachingResults()) {
+			if (result.getExecutionDegree() == executionDegree && result.getShiftType() == shiftType) {
+				return result;
+			}
+		}
+		return null;
+	}
+
+	public boolean hasAssociatedLessonsInTeachingServices() {
+		for (final DegreeTeachingService degreeTeachingService : getDegreeTeachingServicesSet()) {
+			if (!degreeTeachingService.getShift().getAssociatedLessons().isEmpty()) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public Teacher getTeacher() {
+		return getPerson().getTeacher();
+	}
+
+	public void setTeacher(Teacher teacher) {
+		setPerson(teacher.getPerson());
+	}
+
+	public boolean hasTeacher() {
+		return hasPerson() && getPerson().hasTeacher();
+	}
+
+	public void removeTeacher() {
+		removePerson();
+	}
+
+	public String getDegreeSiglas() {
+		Set<String> degreeSiglas = new HashSet<String>();
+		for (CurricularCourse curricularCourse : getExecutionCourse().getAssociatedCurricularCourses()) {
+			degreeSiglas.add(curricularCourse.getDegreeCurricularPlan().getDegree().getSigla());
+		}
+		return StringUtils.join(degreeSiglas, ", ");
+	}
+
+	public String getDegreePlanNames() {
+		Set<String> degreeSiglas = new HashSet<String>();
+		for (CurricularCourse curricularCourse : getExecutionCourse().getAssociatedCurricularCourses()) {
+			degreeSiglas.add(curricularCourse.getDegreeCurricularPlan().getName());
+		}
+		return StringUtils.join(degreeSiglas, ", ");
+	}
+
+	public List<InquiryResult> getInquiryResults(ShiftType shiftType) {
+		List<InquiryResult> inquiryResults = new ArrayList<InquiryResult>();
+		for (InquiryResult inquiryResult : getInquiryResultsSet()) {
+			if (inquiryResult.getShiftType().equals(shiftType)) {
+				inquiryResults.add(inquiryResult);
+			}
+		}
+		return inquiryResults;
+	}
+
+	public boolean hasMandatoryCommentsToMake() {
+		List<InquiryResult> inquiryResults = getInquiryResults();
+		for (InquiryResult inquiryResult : inquiryResults) {
+			if (inquiryResult.getResultClassification() != null) {
+				if (inquiryResult.getResultClassification().isMandatoryComment()
+						&& !inquiryResult.getInquiryQuestion().isResultQuestion(inquiryResult.getExecutionPeriod())) {
+					InquiryResultComment inquiryResultComment =
+							inquiryResult.getInquiryResultComment(getPerson(), ResultPersonCategory.TEACHER);
+					if (inquiryResultComment == null || StringUtils.isEmpty(inquiryResultComment.getComment())) {
+						return true;
+					}
+				}
+			}
+		}
+		return false;
+	}
+
+	public boolean hasMandatoryCommentsToMakeAsResponsible() {
+		for (Professorship professorship : getExecutionCourse().getProfessorships()) {
+			List<InquiryResult> inquiryResults = professorship.getInquiryResults();
+			for (InquiryResult inquiryResult : inquiryResults) {
+				if (inquiryResult.getResultClassification() != null) {
+					if (inquiryResult.getResultClassification().isMandatoryComment()
+							&& !inquiryResult.getInquiryQuestion().isResultQuestion(inquiryResult.getExecutionPeriod())) {
+						InquiryResultComment inquiryResultComment =
+								inquiryResult.getInquiryResultComment(getPerson(), ResultPersonCategory.REGENT);
+						if (inquiryResultComment == null || StringUtils.isEmpty(inquiryResultComment.getComment())) {
+							inquiryResultComment =
+									inquiryResult.getInquiryResultComment(getPerson(), ResultPersonCategory.TEACHER);
+							if (inquiryResultComment == null || StringUtils.isEmpty(inquiryResultComment.getComment())) {
+								return true;
+							}
+						}
+					}
+				}
+			}
+		}
+		return false;
+	}
+
+	public boolean hasResultsToImprove() {
+		for (InquiryResult inquiryResult : getInquiryResults()) {
+			if (InquiryResultType.TEACHER_SHIFT_TYPE.equals(inquiryResult.getResultType())
+					&& inquiryResult.getResultClassification().isMandatoryComment()) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	@Service
+	public Boolean deleteInquiryResults() {
+		boolean deletedResults = false;
+		for (InquiryResult inquiryResult : getInquiryResultsSet()) {
+			inquiryResult.delete();
+			deletedResults = true;
+		}
+		return deletedResults;
+	}
+
+	@Service
+	public Boolean deleteInquiryResults(ShiftType shiftType, InquiryQuestion inquiryQuestion) {
+		boolean deletedResults = false;
+		for (InquiryResult inquiryResult : getInquiryResults(shiftType)) {
+			if (inquiryQuestion == null || inquiryResult.getInquiryQuestion() == inquiryQuestion) {
+				inquiryResult.delete();
+				deletedResults = true;
+			}
+		}
+		return deletedResults;
+	}
+
+	public int getAllLessonsNumber() {
+		int lessonNumber = 0;
+		for (DegreeTeachingService degreeTeachingService : getDegreeTeachingServicesSet()) {
+			lessonNumber += degreeTeachingService.getShift().getAssociatedLessonsCount();
+		}
+		lessonNumber += getSupportLessonsCount();
+		return lessonNumber;
+	}
 
 }

@@ -13,10 +13,10 @@ import java.io.Serializable;
 
 public abstract class DataTranferObject implements Serializable {
 
-    /**
+	/**
      *  
      */
-    public DataTranferObject() {
-    }
+	public DataTranferObject() {
+	}
 
 }

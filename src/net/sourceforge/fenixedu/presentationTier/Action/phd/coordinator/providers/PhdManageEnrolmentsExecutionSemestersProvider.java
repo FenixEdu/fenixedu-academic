@@ -12,20 +12,20 @@ import org.apache.commons.collections.comparators.ReverseComparator;
 
 public class PhdManageEnrolmentsExecutionSemestersProvider extends AbstractDomainObjectProvider {
 
-    @Override
-    public Object provide(Object source, Object obj) {
-	final ManageEnrolmentsBean bean = (ManageEnrolmentsBean) source;
+	@Override
+	public Object provide(Object source, Object obj) {
+		final ManageEnrolmentsBean bean = (ManageEnrolmentsBean) source;
 
-	final List<ExecutionSemester> result = new ArrayList<ExecutionSemester>();
+		final List<ExecutionSemester> result = new ArrayList<ExecutionSemester>();
 
-	ExecutionSemester each = bean.getProcess().getExecutionYear().getFirstExecutionPeriod();
-	while (each != null) {
-	    result.add(each);
-	    each = each.getNextExecutionPeriod();
+		ExecutionSemester each = bean.getProcess().getExecutionYear().getFirstExecutionPeriod();
+		while (each != null) {
+			result.add(each);
+			each = each.getNextExecutionPeriod();
+		}
+
+		Collections.sort(result, new ReverseComparator(ExecutionSemester.COMPARATOR_BY_SEMESTER_AND_YEAR));
+
+		return result;
 	}
-
-	Collections.sort(result, new ReverseComparator(ExecutionSemester.COMPARATOR_BY_SEMESTER_AND_YEAR));
-
-	return result;
-    }
 }

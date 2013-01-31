@@ -9,73 +9,73 @@ import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
 
 public class AssertUniqueApprovalInCurricularCourseContextsExecutor extends CurricularRuleExecutor {
 
-    @Override
-    protected RuleResult executeEnrolmentVerificationWithRules(ICurricularRule curricularRule,
-	    IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, EnrolmentContext enrolmentContext) {
-	
-	final CurricularCourse curricularCourse = (CurricularCourse) curricularRule.getDegreeModuleToApplyRule();
-	final ExecutionSemester executionSemester = enrolmentContext.getExecutionPeriod();
+	@Override
+	protected RuleResult executeEnrolmentVerificationWithRules(ICurricularRule curricularRule,
+			IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, EnrolmentContext enrolmentContext) {
 
-	if (!curricularCourse.hasAnyActiveContext(enrolmentContext.getExecutionPeriod())) {
-	    return RuleResult.createNA(sourceDegreeModuleToEvaluate.getDegreeModule());
+		final CurricularCourse curricularCourse = (CurricularCourse) curricularRule.getDegreeModuleToApplyRule();
+		final ExecutionSemester executionSemester = enrolmentContext.getExecutionPeriod();
+
+		if (!curricularCourse.hasAnyActiveContext(enrolmentContext.getExecutionPeriod())) {
+			return RuleResult.createNA(sourceDegreeModuleToEvaluate.getDegreeModule());
+		}
+
+		if (isApproved(enrolmentContext, curricularCourse, executionSemester.getPreviousExecutionPeriod())) {
+			if (sourceDegreeModuleToEvaluate.isEnroled()) {
+				return RuleResult.createImpossible(sourceDegreeModuleToEvaluate.getDegreeModule(),
+						"curricularRules.ruleExecutors.AssertUniqueApprovalInCurricularCourseContextsExecutor.already.approved",
+						curricularCourse.getName());
+			} else {
+				return RuleResult.createFalse(sourceDegreeModuleToEvaluate.getDegreeModule(),
+						"curricularRules.ruleExecutors.AssertUniqueApprovalInCurricularCourseContextsExecutor.already.approved",
+						curricularCourse.getName());
+			}
+
+		} else {
+			return RuleResult.createTrue(sourceDegreeModuleToEvaluate.getDegreeModule());
+		}
 	}
 
-	if (isApproved(enrolmentContext, curricularCourse, executionSemester.getPreviousExecutionPeriod())) {
-	    if (sourceDegreeModuleToEvaluate.isEnroled()) {
-		return RuleResult.createImpossible(sourceDegreeModuleToEvaluate.getDegreeModule(),
-			"curricularRules.ruleExecutors.AssertUniqueApprovalInCurricularCourseContextsExecutor.already.approved",
-			curricularCourse.getName());
-	    } else {
-		return RuleResult.createFalse(sourceDegreeModuleToEvaluate.getDegreeModule(),
-			"curricularRules.ruleExecutors.AssertUniqueApprovalInCurricularCourseContextsExecutor.already.approved",
-			curricularCourse.getName());
-	    }
+	@Override
+	protected RuleResult executeEnrolmentWithRulesAndTemporaryEnrolment(final ICurricularRule curricularRule,
+			final IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, final EnrolmentContext enrolmentContext) {
+		final CurricularCourse curricularCourse = (CurricularCourse) curricularRule.getDegreeModuleToApplyRule();
+		final ExecutionSemester executionSemester = enrolmentContext.getExecutionPeriod();
 
-	} else {
-	    return RuleResult.createTrue(sourceDegreeModuleToEvaluate.getDegreeModule());
+		if (!curricularCourse.hasAnyActiveContext(enrolmentContext.getExecutionPeriod())) {
+			return RuleResult.createNA(sourceDegreeModuleToEvaluate.getDegreeModule());
+		}
+
+		if (isApproved(enrolmentContext, curricularCourse, executionSemester.getPreviousExecutionPeriod())) {
+			if (sourceDegreeModuleToEvaluate.isEnroled()) {
+				return RuleResult.createImpossible(sourceDegreeModuleToEvaluate.getDegreeModule(),
+						"curricularRules.ruleExecutors.AssertUniqueApprovalInCurricularCourseContextsExecutor.already.approved",
+						curricularCourse.getName());
+			} else {
+				return RuleResult.createFalse(sourceDegreeModuleToEvaluate.getDegreeModule(),
+						"curricularRules.ruleExecutors.AssertUniqueApprovalInCurricularCourseContextsExecutor.already.approved",
+						curricularCourse.getName());
+			}
+
+		} else if (hasEnrolmentWithEnroledState(enrolmentContext, curricularCourse,
+				executionSemester.getPreviousExecutionPeriod())) {
+			return RuleResult.createTrue(EnrolmentResultType.TEMPORARY, sourceDegreeModuleToEvaluate.getDegreeModule());
+
+		} else {
+			return RuleResult.createTrue(sourceDegreeModuleToEvaluate.getDegreeModule());
+		}
 	}
-    }
 
-    @Override
-    protected RuleResult executeEnrolmentWithRulesAndTemporaryEnrolment(final ICurricularRule curricularRule,
-	    final IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, final EnrolmentContext enrolmentContext) {
-	final CurricularCourse curricularCourse = (CurricularCourse) curricularRule.getDegreeModuleToApplyRule();
-	final ExecutionSemester executionSemester = enrolmentContext.getExecutionPeriod();
-
-	if (!curricularCourse.hasAnyActiveContext(enrolmentContext.getExecutionPeriod())) {
-	    return RuleResult.createNA(sourceDegreeModuleToEvaluate.getDegreeModule());
+	@Override
+	protected RuleResult executeEnrolmentInEnrolmentEvaluation(final ICurricularRule curricularRule,
+			final IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, final EnrolmentContext enrolmentContext) {
+		return RuleResult.createNA(sourceDegreeModuleToEvaluate.getDegreeModule());
 	}
 
-	if (isApproved(enrolmentContext, curricularCourse, executionSemester.getPreviousExecutionPeriod())) {
-	    if (sourceDegreeModuleToEvaluate.isEnroled()) {
-		return RuleResult.createImpossible(sourceDegreeModuleToEvaluate.getDegreeModule(),
-			"curricularRules.ruleExecutors.AssertUniqueApprovalInCurricularCourseContextsExecutor.already.approved",
-			curricularCourse.getName());
-	    } else {
-		return RuleResult.createFalse(sourceDegreeModuleToEvaluate.getDegreeModule(),
-			"curricularRules.ruleExecutors.AssertUniqueApprovalInCurricularCourseContextsExecutor.already.approved",
-			curricularCourse.getName());
-	    }
-
-	} else if (hasEnrolmentWithEnroledState(enrolmentContext, curricularCourse, executionSemester
-		.getPreviousExecutionPeriod())) {
-	    return RuleResult.createTrue(EnrolmentResultType.TEMPORARY, sourceDegreeModuleToEvaluate.getDegreeModule());
-
-	} else {
-	    return RuleResult.createTrue(sourceDegreeModuleToEvaluate.getDegreeModule());
+	@Override
+	protected boolean canBeEvaluated(ICurricularRule curricularRule, IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate,
+			EnrolmentContext enrolmentContext) {
+		return true;
 	}
-    }
-
-    @Override
-    protected RuleResult executeEnrolmentInEnrolmentEvaluation(final ICurricularRule curricularRule,
-	    final IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate, final EnrolmentContext enrolmentContext) {
-	return RuleResult.createNA(sourceDegreeModuleToEvaluate.getDegreeModule());
-    }
-
-    @Override
-    protected boolean canBeEvaluated(ICurricularRule curricularRule, IDegreeModuleToEvaluate sourceDegreeModuleToEvaluate,
-	    EnrolmentContext enrolmentContext) {
-	return true;
-    }
 
 }

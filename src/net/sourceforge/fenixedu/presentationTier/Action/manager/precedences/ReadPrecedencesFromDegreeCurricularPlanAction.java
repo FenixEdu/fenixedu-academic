@@ -17,14 +17,6 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.security.UserView;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
@@ -35,27 +27,31 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
  */
 
 @Mapping(module = "manager", path = "/managePrecedences", input = "df.page.manage.precedences", scope = "request")
-@Forwards(value = { @Forward(name = "showPrecedences", path = "/manager/precedences/managePrecedences.jsp", tileProperties = @Tile(navLocal = "/manager/degreeCurricularPlanNavLocalManager.jsp")) })
+@Forwards(value = { @Forward(
+		name = "showPrecedences",
+		path = "/manager/precedences/managePrecedences.jsp",
+		tileProperties = @Tile(navLocal = "/manager/degreeCurricularPlanNavLocalManager.jsp")) })
 public class ReadPrecedencesFromDegreeCurricularPlanAction extends FenixAction {
 
-    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-	    throws FenixActionException, FenixFilterException {
+	@Override
+	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+			throws FenixActionException, FenixFilterException {
 
-	IUserView userView = UserView.getUser();
+		IUserView userView = UserView.getUser();
 
-	Integer degreeID = new Integer(request.getParameter("degreeId"));
-	Integer degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanId"));
+		Integer degreeID = new Integer(request.getParameter("degreeId"));
+		Integer degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanId"));
 
-	try {
-	    Map result = (Map) ReadPrecedencesFromDegreeCurricularPlan.run(degreeCurricularPlanID);
-	    request.setAttribute("precedences", result);
-	} catch (FenixServiceException e) {
-	    throw new FenixActionException(e);
+		try {
+			Map result = ReadPrecedencesFromDegreeCurricularPlan.run(degreeCurricularPlanID);
+			request.setAttribute("precedences", result);
+		} catch (FenixServiceException e) {
+			throw new FenixActionException(e);
+		}
+
+		request.setAttribute("degreeId", degreeID);
+		request.setAttribute("degreeCurricularPlanId", degreeCurricularPlanID);
+
+		return mapping.findForward("showPrecedences");
 	}
-
-	request.setAttribute("degreeId", degreeID);
-	request.setAttribute("degreeCurricularPlanId", degreeCurricularPlanID);
-
-	return mapping.findForward("showPrecedences");
-    }
 }

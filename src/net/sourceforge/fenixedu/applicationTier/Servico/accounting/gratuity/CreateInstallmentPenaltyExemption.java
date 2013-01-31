@@ -9,14 +9,14 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class CreateInstallmentPenaltyExemption {
 
-    @Checked("AcademicPredicates.MANAGE_STUDENT_PAYMENTS")
-    @Service
-    public static void run(final Person responsible, final CreateInstallmentPenaltyExemptionBean penaltyExemptionBean) {
-	for (final Installment installment : penaltyExemptionBean.getInstallments()) {
-	    new InstallmentPenaltyExemption(penaltyExemptionBean.getJustificationType(),
-		    penaltyExemptionBean.getGratuityEventWithPaymentPlan(), responsible, installment,
-		    penaltyExemptionBean.getReason(), penaltyExemptionBean.getDispatchDate());
+	@Checked("AcademicPredicates.MANAGE_STUDENT_PAYMENTS")
+	@Service
+	public static void run(final Person responsible, final CreateInstallmentPenaltyExemptionBean penaltyExemptionBean) {
+		for (final Installment installment : penaltyExemptionBean.getInstallments()) {
+			new InstallmentPenaltyExemption(penaltyExemptionBean.getJustificationType(),
+					penaltyExemptionBean.getGratuityEventWithPaymentPlan(), responsible, installment,
+					penaltyExemptionBean.getReason(), penaltyExemptionBean.getDispatchDate());
+		}
 	}
-    }
 
 }

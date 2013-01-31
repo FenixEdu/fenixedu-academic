@@ -12,51 +12,59 @@ package net.sourceforge.fenixedu.domain.accessControl;
  * @version $Id$
  */
 public enum GroupTypes {
-    UNION_GROUP {
-	public Class getImplementationClass() {
-	    return GroupUnion.class;
-	}
-    },
-    INTERSECTION_GROUP {
-	public Class getImplementationClass() {
-	    return GroupIntersection.class;
-	}
-    },
-    DIFFERENCE_GROUP {
-	public Class getImplementationClass() {
-	    return GroupDifference.class;
-	}
-    },
-    EXECUTION_COURSE_STUDENTS_GROUP {
-	public Class getImplementationClass() {
-	    return ExecutionCourseStudentsGroup.class;
-	}
-    },
-    EXECUTION_COURSE_TEACHERS_GROUP {
-	public Class getImplementationClass() {
-	    return ExecutionCourseTeachersGroup.class;
-	}
-    },
-    PERSON_GROUP {
-	public Class getImplementationClass() {
-	    return PersonGroup.class;
-	}
-    },
-    ROLE_GROUP {
-	public Class getImplementationClass() {
-	    return RoleGroup.class;
-	}
-    };
-    abstract public Class getImplementationClass();
+	UNION_GROUP {
+		@Override
+		public Class getImplementationClass() {
+			return GroupUnion.class;
+		}
+	},
+	INTERSECTION_GROUP {
+		@Override
+		public Class getImplementationClass() {
+			return GroupIntersection.class;
+		}
+	},
+	DIFFERENCE_GROUP {
+		@Override
+		public Class getImplementationClass() {
+			return GroupDifference.class;
+		}
+	},
+	EXECUTION_COURSE_STUDENTS_GROUP {
+		@Override
+		public Class getImplementationClass() {
+			return ExecutionCourseStudentsGroup.class;
+		}
+	},
+	EXECUTION_COURSE_TEACHERS_GROUP {
+		@Override
+		public Class getImplementationClass() {
+			return ExecutionCourseTeachersGroup.class;
+		}
+	},
+	PERSON_GROUP {
+		@Override
+		public Class getImplementationClass() {
+			return PersonGroup.class;
+		}
+	},
+	ROLE_GROUP {
+		@Override
+		public Class getImplementationClass() {
+			return RoleGroup.class;
+		}
+	};
+	abstract public Class getImplementationClass();
 
-    public static GroupTypes userGroupTypeByClass(Class clazz) throws InvalidUserGroupTypeException {
-	GroupTypes result = null;
-	GroupTypes[] types = GroupTypes.values();
-	for (int i = 0; i < types.length; i++) {
-	    if (types[i].getImplementationClass().equals(clazz))
-		result = types[i];
-	}
+	public static GroupTypes userGroupTypeByClass(Class clazz) throws InvalidUserGroupTypeException {
+		GroupTypes result = null;
+		GroupTypes[] types = GroupTypes.values();
+		for (GroupTypes type : types) {
+			if (type.getImplementationClass().equals(clazz)) {
+				result = type;
+			}
+		}
 
-	return result;
-    }
+		return result;
+	}
 }

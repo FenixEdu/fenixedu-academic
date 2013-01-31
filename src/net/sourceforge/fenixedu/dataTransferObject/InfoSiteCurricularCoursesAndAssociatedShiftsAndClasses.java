@@ -9,100 +9,101 @@ import java.util.ListIterator;
  */
 public class InfoSiteCurricularCoursesAndAssociatedShiftsAndClasses extends DataTranferObject implements ISiteComponent {
 
-    private InfoExecutionCourse infoExecutionCourse;
+	private InfoExecutionCourse infoExecutionCourse;
 
-    private List associatedCurricularCourses;
+	private List associatedCurricularCourses;
 
-    private List infoShiftsWithAssociatedClassesList;
+	private List infoShiftsWithAssociatedClassesList;
 
-    /**
-     * Constructor for InfoShiftWithAssociatedInfoClassesAndInfoLessons.
-     */
-    public InfoSiteCurricularCoursesAndAssociatedShiftsAndClasses() {
-	super();
-    }
-
-    /**
-     * Constructor for InfoShiftWithAssociatedInfoClassesAndInfoLessons.
-     */
-    public InfoSiteCurricularCoursesAndAssociatedShiftsAndClasses(InfoExecutionCourse infoExecutionCourse,
-	    List associatedCurricularCourses, List infoShiftsWithAssociatedClassesList) {
-	super();
-	setInfoExecutionCourse(infoExecutionCourse);
-	setAssociatedCurricularCourses(associatedCurricularCourses);
-	setInfoShiftsWithAssociatedClassesList(infoShiftsWithAssociatedClassesList);
-    }
-
-    public boolean equals(Object objectToCompare) {
-	boolean result = false;
-	if (objectToCompare instanceof InfoSiteAssociatedCurricularCourses) {
-	    result = true;
+	/**
+	 * Constructor for InfoShiftWithAssociatedInfoClassesAndInfoLessons.
+	 */
+	public InfoSiteCurricularCoursesAndAssociatedShiftsAndClasses() {
+		super();
 	}
 
-	if (((InfoSiteAssociatedCurricularCourses) objectToCompare).getAssociatedCurricularCourses() == null
-		&& this.getAssociatedCurricularCourses() == null) {
-	    return true;
-	}
-	if (((InfoSiteAssociatedCurricularCourses) objectToCompare).getAssociatedCurricularCourses() == null
-		|| this.getAssociatedCurricularCourses() == null
-		|| ((InfoSiteAssociatedCurricularCourses) objectToCompare).getAssociatedCurricularCourses().size() != this
-			.getAssociatedCurricularCourses().size()) {
-	    return false;
-	}
-	ListIterator iter1 = ((InfoSiteAssociatedCurricularCourses) objectToCompare).getAssociatedCurricularCourses()
-		.listIterator();
-	ListIterator iter2 = this.getAssociatedCurricularCourses().listIterator();
-	while (result && iter1.hasNext()) {
-	    InfoCurricularCourse infoCurricularCourse1 = (InfoCurricularCourse) iter1.next();
-	    InfoCurricularCourse infoCurricularCourse2 = (InfoCurricularCourse) iter2.next();
-	    if (!infoCurricularCourse1.equals(infoCurricularCourse2)) {
-		result = false;
-	    }
+	/**
+	 * Constructor for InfoShiftWithAssociatedInfoClassesAndInfoLessons.
+	 */
+	public InfoSiteCurricularCoursesAndAssociatedShiftsAndClasses(InfoExecutionCourse infoExecutionCourse,
+			List associatedCurricularCourses, List infoShiftsWithAssociatedClassesList) {
+		super();
+		setInfoExecutionCourse(infoExecutionCourse);
+		setAssociatedCurricularCourses(associatedCurricularCourses);
+		setInfoShiftsWithAssociatedClassesList(infoShiftsWithAssociatedClassesList);
 	}
 
-	return result;
-    }
+	@Override
+	public boolean equals(Object objectToCompare) {
+		boolean result = false;
+		if (objectToCompare instanceof InfoSiteAssociatedCurricularCourses) {
+			result = true;
+		}
 
-    /**
-     * @return
-     */
-    public List getAssociatedCurricularCourses() {
-	return associatedCurricularCourses;
-    }
+		if (((InfoSiteAssociatedCurricularCourses) objectToCompare).getAssociatedCurricularCourses() == null
+				&& this.getAssociatedCurricularCourses() == null) {
+			return true;
+		}
+		if (((InfoSiteAssociatedCurricularCourses) objectToCompare).getAssociatedCurricularCourses() == null
+				|| this.getAssociatedCurricularCourses() == null
+				|| ((InfoSiteAssociatedCurricularCourses) objectToCompare).getAssociatedCurricularCourses().size() != this
+						.getAssociatedCurricularCourses().size()) {
+			return false;
+		}
+		ListIterator iter1 =
+				((InfoSiteAssociatedCurricularCourses) objectToCompare).getAssociatedCurricularCourses().listIterator();
+		ListIterator iter2 = this.getAssociatedCurricularCourses().listIterator();
+		while (result && iter1.hasNext()) {
+			InfoCurricularCourse infoCurricularCourse1 = (InfoCurricularCourse) iter1.next();
+			InfoCurricularCourse infoCurricularCourse2 = (InfoCurricularCourse) iter2.next();
+			if (!infoCurricularCourse1.equals(infoCurricularCourse2)) {
+				result = false;
+			}
+		}
 
-    /**
-     * @param list
-     */
-    public void setAssociatedCurricularCourses(List list) {
-	associatedCurricularCourses = list;
-    }
+		return result;
+	}
 
-    /**
-     * @return
-     */
-    public List getInfoShiftsWithAssociatedClassesList() {
-	return infoShiftsWithAssociatedClassesList;
-    }
+	/**
+	 * @return
+	 */
+	public List getAssociatedCurricularCourses() {
+		return associatedCurricularCourses;
+	}
 
-    /**
-     * @param list
-     */
-    public void setInfoShiftsWithAssociatedClassesList(List list) {
-	infoShiftsWithAssociatedClassesList = list;
-    }
+	/**
+	 * @param list
+	 */
+	public void setAssociatedCurricularCourses(List list) {
+		associatedCurricularCourses = list;
+	}
 
-    /**
-     * @return
-     */
-    public InfoExecutionCourse getInfoExecutionCourse() {
-	return infoExecutionCourse;
-    }
+	/**
+	 * @return
+	 */
+	public List getInfoShiftsWithAssociatedClassesList() {
+		return infoShiftsWithAssociatedClassesList;
+	}
 
-    /**
-     * @param course
-     */
-    public void setInfoExecutionCourse(InfoExecutionCourse course) {
-	infoExecutionCourse = course;
-    }
+	/**
+	 * @param list
+	 */
+	public void setInfoShiftsWithAssociatedClassesList(List list) {
+		infoShiftsWithAssociatedClassesList = list;
+	}
+
+	/**
+	 * @return
+	 */
+	public InfoExecutionCourse getInfoExecutionCourse() {
+		return infoExecutionCourse;
+	}
+
+	/**
+	 * @param course
+	 */
+	public void setInfoExecutionCourse(InfoExecutionCourse course) {
+		infoExecutionCourse = course;
+	}
 
 }

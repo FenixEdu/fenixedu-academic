@@ -15,34 +15,35 @@ import net.sourceforge.fenixedu.domain.onlineTests.TestScope;
  * 
  */
 public class InfoTestScope extends InfoObject {
-    private InfoObject infoObject;
+	private InfoObject infoObject;
 
-    public InfoTestScope() {
-    }
-
-    public InfoObject getInfoObject() {
-	return infoObject;
-    }
-
-    public void setInfoObject(InfoObject object) {
-	infoObject = object;
-    }
-
-    public void copyFromDomain(TestScope testScope) {
-	super.copyFromDomain(testScope);
-	if (testScope != null) {
-	    if (testScope.getClassName().equals(ExecutionCourse.class.getName()))
-		setInfoObject(InfoExecutionCourse.newInfoFromDomain((ExecutionCourse) testScope.getDomainObject()));
+	public InfoTestScope() {
 	}
-    }
 
-    public static InfoTestScope newInfoFromDomain(TestScope testScope) {
-	InfoTestScope infoTestScope = null;
-	if (testScope != null) {
-	    infoTestScope = new InfoTestScope();
-	    infoTestScope.copyFromDomain(testScope);
+	public InfoObject getInfoObject() {
+		return infoObject;
 	}
-	return infoTestScope;
-    }
+
+	public void setInfoObject(InfoObject object) {
+		infoObject = object;
+	}
+
+	public void copyFromDomain(TestScope testScope) {
+		super.copyFromDomain(testScope);
+		if (testScope != null) {
+			if (testScope.getClassName().equals(ExecutionCourse.class.getName())) {
+				setInfoObject(InfoExecutionCourse.newInfoFromDomain((ExecutionCourse) testScope.getDomainObject()));
+			}
+		}
+	}
+
+	public static InfoTestScope newInfoFromDomain(TestScope testScope) {
+		InfoTestScope infoTestScope = null;
+		if (testScope != null) {
+			infoTestScope = new InfoTestScope();
+			infoTestScope.copyFromDomain(testScope);
+		}
+		return infoTestScope;
+	}
 
 }

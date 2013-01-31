@@ -9,9 +9,10 @@ import javax.servlet.jsp.tagext.VariableInfo;
 
 public class CollectionTagExtraInfo extends TagExtraInfo {
 
-    public VariableInfo[] getVariableInfo(TagData arg0) {
-	return new VariableInfo[] { new VariableInfo("id", "java.util.Collection", true, VariableInfo.AT_END) };
+	@Override
+	public VariableInfo[] getVariableInfo(TagData arg0) {
+		return new VariableInfo[] { new VariableInfo("id", "java.util.Collection", true, VariableInfo.AT_END) };
 
-    }
+	}
 
 }

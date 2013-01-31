@@ -36,52 +36,59 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
  * @author asnr and scpo
  * 
  */
-@Mapping(module = "student", path = "/viewShiftsAndGroups", attribute = "enroledExecutionCoursesForm", formBean = "enroledExecutionCoursesForm", scope = "request")
+@Mapping(
+		module = "student",
+		path = "/viewShiftsAndGroups",
+		attribute = "enroledExecutionCoursesForm",
+		formBean = "enroledExecutionCoursesForm",
+		scope = "request")
 @Forwards(value = {
-	@Forward(name = "sucess", path = "/student/viewShiftsAndGroups_bd.jsp", tileProperties = @Tile(  title = "private.student.subscribe.groups")),
-	@Forward(name = "insucess", path = "/viewEnroledExecutionCourses.do?method=prepare", tileProperties = @Tile(  title = "private.student.subscribe.groups")) })
+		@Forward(name = "sucess", path = "/student/viewShiftsAndGroups_bd.jsp", tileProperties = @Tile(
+				title = "private.student.subscribe.groups")),
+		@Forward(name = "insucess", path = "/viewEnroledExecutionCourses.do?method=prepare", tileProperties = @Tile(
+				title = "private.student.subscribe.groups")) })
 public class ViewShiftsAndGroupsAction extends FenixContextAction {
 
-    @Override
-    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-	    throws FenixActionException, FenixFilterException, FenixServiceException {
+	@Override
+	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+			throws FenixActionException, FenixFilterException, FenixServiceException {
 
-	IUserView userView = getUserView(request);
+		IUserView userView = getUserView(request);
 
-	String groupPropertiesCodeString = request.getParameter("groupPropertiesCode");
+		String groupPropertiesCodeString = request.getParameter("groupPropertiesCode");
 
-	Integer groupPropertiesCode = Integer.valueOf(groupPropertiesCodeString);
+		Integer groupPropertiesCode = Integer.valueOf(groupPropertiesCodeString);
 
-	String username = userView.getUtilizador();
+		String username = userView.getUtilizador();
 
-	List<InfoExportGrouping> infoExportGroupings = ReadExportGroupingsByGrouping.run(groupPropertiesCode);
-	request.setAttribute("infoExportGroupings", infoExportGroupings);
+		List<InfoExportGrouping> infoExportGroupings = ReadExportGroupingsByGrouping.run(groupPropertiesCode);
+		request.setAttribute("infoExportGroupings", infoExportGroupings);
 
-	InfoSiteShiftsAndGroups infoSiteShiftsAndGroups;
+		InfoSiteShiftsAndGroups infoSiteShiftsAndGroups;
 
-	try {
-	    infoSiteShiftsAndGroups = (InfoSiteShiftsAndGroups) ReadShiftsAndGroups.run(groupPropertiesCode, username);
+		try {
+			infoSiteShiftsAndGroups = (InfoSiteShiftsAndGroups) ReadShiftsAndGroups.run(groupPropertiesCode, username);
 
-	} catch (InvalidSituationServiceException e) {
-	    ActionErrors actionErrors2 = new ActionErrors();
-	    ActionError error2 = null;
-	    error2 = new ActionError("error.noProject");
-	    actionErrors2.add("error.noProject", error2);
-	    saveErrors(request, actionErrors2);
-	    return mapping.findForward("viewExecutionCourseProjects");
-	} catch (NotAuthorizedException e) {
-	    ActionErrors actionErrors2 = new ActionErrors();
-	    ActionError error2 = null;
-	    error2 = new ActionError("errors.noStudentInAttendsSet");
-	    actionErrors2.add("errors.noStudentInAttendsSet", error2);
-	    saveErrors(request, actionErrors2);
-	    return mapping.findForward("insucess");
-	} catch (FenixServiceException e) {
-	    throw new FenixActionException(e);
+		} catch (InvalidSituationServiceException e) {
+			ActionErrors actionErrors2 = new ActionErrors();
+			ActionError error2 = null;
+			error2 = new ActionError("error.noProject");
+			actionErrors2.add("error.noProject", error2);
+			saveErrors(request, actionErrors2);
+			return mapping.findForward("viewExecutionCourseProjects");
+		} catch (NotAuthorizedException e) {
+			ActionErrors actionErrors2 = new ActionErrors();
+			ActionError error2 = null;
+			error2 = new ActionError("errors.noStudentInAttendsSet");
+			actionErrors2.add("errors.noStudentInAttendsSet", error2);
+			saveErrors(request, actionErrors2);
+			return mapping.findForward("insucess");
+		} catch (FenixServiceException e) {
+			throw new FenixActionException(e);
+		}
+
+		request.setAttribute("infoSiteShiftsAndGroups", infoSiteShiftsAndGroups);
+
+		return mapping.findForward("sucess");
 	}
-
-	request.setAttribute("infoSiteShiftsAndGroups", infoSiteShiftsAndGroups);
-
-	return mapping.findForward("sucess");
-    }
 }

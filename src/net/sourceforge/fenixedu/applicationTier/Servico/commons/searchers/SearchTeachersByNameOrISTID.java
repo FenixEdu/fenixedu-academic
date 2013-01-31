@@ -16,30 +16,31 @@ import com.google.common.base.Predicate;
 
 public class SearchTeachersByNameOrISTID extends FenixService implements AutoCompleteSearchService {
 
-    protected Collection search(final String value, final int size) {
-	final Predicate<Person> predicate = new Predicate<Person>() {
-	    @Override
-	    public boolean apply(final Person person) {
-		return person.hasTeacher();
-	    }
-	};
-	final Collection<Person> people = Person.findPerson(value, size, predicate);
-	final Set<Teacher> teachers = new HashSet<Teacher>();
-	for (final Person person : people) {
-	    teachers.add(person.getTeacher());
+	protected Collection search(final String value, final int size) {
+		final Predicate<Person> predicate = new Predicate<Person>() {
+			@Override
+			public boolean apply(final Person person) {
+				return person.hasTeacher();
+			}
+		};
+		final Collection<Person> people = Person.findPerson(value, size, predicate);
+		final Set<Teacher> teachers = new HashSet<Teacher>();
+		for (final Person person : people) {
+			teachers.add(person.getTeacher());
+		}
+
+		for (Teacher teacher : RootDomainObject.getInstance().getTeachers()) {
+			if (teacher.getTeacherId() != null && teacher.getTeacherId().indexOf(value) >= 0) {
+				teachers.add(teacher);
+			}
+		}
+		return teachers;
 	}
 
-	for (Teacher teacher : RootDomainObject.getInstance().getTeachers()) {
-	    if (teacher.getTeacherId() != null && teacher.getTeacherId().indexOf(value) >= 0) {
-		teachers.add(teacher);
-	    }
+	@Override
+	@Service
+	public Collection run(Class type, String value, int limit, Map<String, String> arguments) {
+		return search(value, limit);
 	}
-	return teachers;
-    }
-
-    @Service
-    public Collection run(Class type, String value, int limit, Map<String, String> arguments) {
-	return search(value, limit);
-    }
 
 }

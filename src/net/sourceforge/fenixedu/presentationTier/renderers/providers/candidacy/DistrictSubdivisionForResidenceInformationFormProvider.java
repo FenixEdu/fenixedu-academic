@@ -15,21 +15,23 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class DistrictSubdivisionForResidenceInformationFormProvider implements DataProvider {
 
-    public Converter getConverter() {
-	return new DomainObjectKeyConverter();
-    }
-
-    @Override
-    public Object provide(Object source, Object currentValue) {
-	final ResidenceInformationForm residenceInformationForm = (ResidenceInformationForm) source;
-	if (residenceInformationForm.getDistrictOfResidence() != null) {
-	    List<DistrictSubdivision> result = new ArrayList<DistrictSubdivision>(residenceInformationForm
-		    .getDistrictOfResidence().getDistrictSubdivisions());
-	    Collections.sort(result, new BeanComparator("name"));
-	    return result;
+	@Override
+	public Converter getConverter() {
+		return new DomainObjectKeyConverter();
 	}
 
-	return Collections.emptyList();
-    }
+	@Override
+	public Object provide(Object source, Object currentValue) {
+		final ResidenceInformationForm residenceInformationForm = (ResidenceInformationForm) source;
+		if (residenceInformationForm.getDistrictOfResidence() != null) {
+			List<DistrictSubdivision> result =
+					new ArrayList<DistrictSubdivision>(residenceInformationForm.getDistrictOfResidence()
+							.getDistrictSubdivisions());
+			Collections.sort(result, new BeanComparator("name"));
+			return result;
+		}
+
+		return Collections.emptyList();
+	}
 
 }

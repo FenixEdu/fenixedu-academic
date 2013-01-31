@@ -13,11 +13,11 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class InsertInstitution extends FenixService {
 
-    @Service
-    public static Unit run(String institutionName) throws FenixServiceException {
-	if (UnitUtils.readExternalInstitutionUnitByName(institutionName) != null) {
-	    throw new ExistingServiceException("error.exception.commons.institution.institutionAlreadyExists");
+	@Service
+	public static Unit run(String institutionName) throws FenixServiceException {
+		if (UnitUtils.readExternalInstitutionUnitByName(institutionName) != null) {
+			throw new ExistingServiceException("error.exception.commons.institution.institutionAlreadyExists");
+		}
+		return Unit.createNewNoOfficialExternalInstitution(institutionName);
 	}
-	return Unit.createNewNoOfficialExternalInstitution(institutionName);
-    }
 }

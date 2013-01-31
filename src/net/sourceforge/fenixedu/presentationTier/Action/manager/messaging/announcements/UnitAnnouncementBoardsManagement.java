@@ -11,9 +11,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.messaging.announcements.CreateUnitAnnouncementBoard;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.messaging.announcements.CreateUnitAnnouncementBoard.UnitAnnouncementBoardParameters;
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.messaging.announcements.DeleteAnnouncementBoard;
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.messaging.announcements.EditUnitAnnouncementBoardApprovers;
-import net.sourceforge.fenixedu.applicationTier.Servico.manager.messaging.announcements.CreateUnitAnnouncementBoard.UnitAnnouncementBoardParameters;
 import net.sourceforge.fenixedu.dataTransferObject.messaging.AnnouncementBoardApproversBean;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.UnitBoardPermittedGroupType;
@@ -42,299 +42,303 @@ import org.apache.struts.action.ActionMessages;
  */
 public class UnitAnnouncementBoardsManagement extends AnnouncementManagement {
 
-    public ActionForward showTree(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
+	public ActionForward showTree(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
 
-	request.setAttribute("initialUnit", UnitUtils.readInstitutionUnit());
-	return mapping.findForward("chooseUnit");
+		request.setAttribute("initialUnit", UnitUtils.readInstitutionUnit());
+		return mapping.findForward("chooseUnit");
 
-    }
-
-    public ActionForward start(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-
-	ActionForward destination = null;
-	if (this.getRequestedUnit(request) != null) {
-	    destination = this.prepareCreateBoard(mapping, actionForm, request, response);
-	} else {
-	    destination = super.start(mapping, actionForm, request, response);
 	}
-	return destination;
 
-    }
+	@Override
+	public ActionForward start(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
 
-    @Override
-    public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-	Unit unit = this.getRequestedUnit(request);
-	request.setAttribute("unit", unit);
-	return super.execute(mapping, actionForm, request, response);
-    }
+		ActionForward destination = null;
+		if (this.getRequestedUnit(request) != null) {
+			destination = this.prepareCreateBoard(mapping, actionForm, request, response);
+		} else {
+			destination = super.start(mapping, actionForm, request, response);
+		}
+		return destination;
 
-    @Override
-    public ActionForward deleteAnnouncement(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
+	}
 
-	super.deleteAnnouncement(request);
-	return this.prepareEditAnnouncementBoard(mapping, form, request, response);
-    }
+	@Override
+	public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		Unit unit = this.getRequestedUnit(request);
+		request.setAttribute("unit", unit);
+		return super.execute(mapping, actionForm, request, response);
+	}
 
-    public ActionForward deleteAnnouncementBoard(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
+	@Override
+	public ActionForward deleteAnnouncement(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
 
-	if (!getLoggedPerson(request).hasRole(RoleType.MANAGER)) {
-	    ActionMessages actionMessages = new ActionMessages();
-	    actionMessages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("error.not.allowed.to.delete.board"));
-	    saveErrors(request, actionMessages);
-	} else {
+		super.deleteAnnouncement(request);
+		return this.prepareEditAnnouncementBoard(mapping, form, request, response);
+	}
 
-	    try {
-		DeleteAnnouncementBoard.run(this.getRequestedAnnouncementBoard(request));
-	    } catch (DomainException e) {
-		addActionMessage(request, e.getKey());
+	public ActionForward deleteAnnouncementBoard(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+
+		if (!getLoggedPerson(request).hasRole(RoleType.MANAGER)) {
+			ActionMessages actionMessages = new ActionMessages();
+			actionMessages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("error.not.allowed.to.delete.board"));
+			saveErrors(request, actionMessages);
+		} else {
+
+			try {
+				DeleteAnnouncementBoard.run(this.getRequestedAnnouncementBoard(request));
+			} catch (DomainException e) {
+				addActionMessage(request, e.getKey());
+				return prepareCreateBoard(mapping, actionForm, request, response);
+			}
+
+			if (request.getParameter("returnAction") != null && !request.getParameter("returnAction").equals("")
+					&& !request.getParameter("returnAction").equals("null")) {
+				ActionForward destination = new ActionForward();
+				String returnUrl = request.getParameter("returnAction");
+				if (request.getParameter("returnMethod") != null && !request.getParameter("returnMethod").equals("")
+						&& !request.getParameter("returnMethod").equals("null")) {
+					returnUrl += "?method=" + request.getParameter("returnMethod");
+				}
+				destination.setPath(returnUrl);
+				return destination;
+
+			}
+		}
+
 		return prepareCreateBoard(mapping, actionForm, request, response);
-	    }
+	}
 
-	    if (request.getParameter("returnAction") != null && !request.getParameter("returnAction").equals("")
-		    && !request.getParameter("returnAction").equals("null")) {
-		ActionForward destination = new ActionForward();
-		String returnUrl = request.getParameter("returnAction");
-		if (request.getParameter("returnMethod") != null && !request.getParameter("returnMethod").equals("")
-			&& !request.getParameter("returnMethod").equals("null")) {
-		    returnUrl += "?method=" + request.getParameter("returnMethod");
+	public ActionForward createBoard(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+
+		if (!getLoggedPerson(request).hasRole(RoleType.MANAGER)) {
+			ActionMessages actionMessages = new ActionMessages();
+			actionMessages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("error.not.allowed.to.create.board"));
+			saveErrors(request, actionMessages);
+		} else {
+			UnitAnnouncementBoardsManagementForm form = (UnitAnnouncementBoardsManagementForm) actionForm;
+			UnitAnnouncementBoardParameters params = new UnitAnnouncementBoardParameters();
+			params.name = form.getName();
+			params.mandatory = form.getMandatory();
+			params.readersGroupType = UnitBoardPermittedGroupType.valueOf(form.getUnitBoardReadPermittedGroupType());
+			params.writersGroupType = UnitBoardPermittedGroupType.valueOf(form.getUnitBoardWritePermittedGroupType());
+			params.managementGroupType = UnitBoardPermittedGroupType.valueOf(form.getUnitBoardManagementPermittedGroupType());
+			params.unitId = form.getKeyUnit();
+
+			CreateUnitAnnouncementBoard.run(params);
 		}
-		destination.setPath(returnUrl);
-		return destination;
-
-	    }
+		return this.prepareCreateBoard(mapping, actionForm, request, response);
 	}
 
-	return prepareCreateBoard(mapping, actionForm, request, response);
-    }
+	public ActionForward prepareEditAnnouncementBoard(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
 
-    public ActionForward createBoard(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
+		UnitAnnouncementBoard board = (UnitAnnouncementBoard) this.getRequestedAnnouncementBoard(request);
 
-	if (!getLoggedPerson(request).hasRole(RoleType.MANAGER)) {
-	    ActionMessages actionMessages = new ActionMessages();
-	    actionMessages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("error.not.allowed.to.create.board"));
-	    saveErrors(request, actionMessages);
-	} else {
-	    UnitAnnouncementBoardsManagementForm form = (UnitAnnouncementBoardsManagementForm) actionForm;
-	    UnitAnnouncementBoardParameters params = new UnitAnnouncementBoardParameters();
-	    params.name = form.getName();
-	    params.mandatory = form.getMandatory();
-	    params.readersGroupType = UnitBoardPermittedGroupType.valueOf(form.getUnitBoardReadPermittedGroupType());
-	    params.writersGroupType = UnitBoardPermittedGroupType.valueOf(form.getUnitBoardWritePermittedGroupType());
-	    params.managementGroupType = UnitBoardPermittedGroupType.valueOf(form.getUnitBoardManagementPermittedGroupType());
-	    params.unitId = form.getKeyUnit();
-
-	    CreateUnitAnnouncementBoard.run(params);
-	}
-	return this.prepareCreateBoard(mapping, actionForm, request, response);
-    }
-
-    public ActionForward prepareEditAnnouncementBoard(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-
-	UnitAnnouncementBoard board = (UnitAnnouncementBoard) this.getRequestedAnnouncementBoard(request);
-
-	if (board.getManagers() != null && !board.getManagers().allows(getUserView(request))) {
-	    ActionMessages actionMessages = new ActionMessages();
-	    actionMessages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("error.not.allowed.to.edit.board"));
-	    saveErrors(request, actionMessages);
-	    return this.showTree(mapping, actionForm, request, response);
-	}
-
-	UnitAnnouncementBoardsManagementForm form = (UnitAnnouncementBoardsManagementForm) actionForm;
-	form.setReturnAction(request.getParameter("returnAction"));
-	form.setReturnMethod(request.getParameter("returnMethod"));
-	form.setName(board.getName().getContent());
-	form.setMandatory(board.getMandatory());
-	form.setKeyUnit(board.getParty().getIdInternal());
-	form.setUnitBoardManagementPermittedGroupType(board.getUnitPermittedManagementGroupType() == null ? null : board
-		.getUnitPermittedManagementGroupType().name());
-	form.setUnitBoardWritePermittedGroupType(board.getUnitPermittedWriteGroupType() == null ? null : board
-		.getUnitPermittedWriteGroupType().name());
-	form.setUnitBoardReadPermittedGroupType(board.getUnitPermittedReadGroupType() == null ? null : board
-		.getUnitPermittedReadGroupType().name());
-
-	if (request.getParameter("sortBy") == null) {
-	    request.setAttribute("sortBy", "creationDate=descending");
-	} else {
-	    request.setAttribute("sortBy", request.getParameter("sortBy"));
-	}
-
-	request.setAttribute("unit", board.getParty());
-	request.setAttribute("announcementBoard", board);
-	request.setAttribute("announcements", board.getAnnouncements());
-	return mapping.findForward("editAnnouncementBoard");
-    }
-
-    public ActionForward prepareEditAnnouncementBoardApprovers(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
-
-	UnitAnnouncementBoard board = (UnitAnnouncementBoard) this.getRequestedAnnouncementBoard(request);
-
-	if (board.getWriters() != null && !board.getWriters().allows(getUserView(request))) {
-	    ActionMessages actionMessages = new ActionMessages();
-	    actionMessages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("error.not.allowed.to.edit.board."));
-	    saveErrors(request, actionMessages);
-	    return this.showTree(mapping, actionForm, request, response);
-	}
-
-	UnitAnnouncementBoardsManagementForm form = (UnitAnnouncementBoardsManagementForm) actionForm;
-	form.setReturnAction(request.getParameter("returnAction"));
-	form.setReturnMethod(request.getParameter("returnMethod"));
-	form.setName(board.getName().getContent());
-	form.setKeyUnit(board.getParty().getIdInternal());
-
-	Collection<AnnouncementBoardApproversBean> approvers = new ArrayList<AnnouncementBoardApproversBean>();
-	for (Person person : board.getUnit().getSite().getManagers()) {
-	    approvers.add(new AnnouncementBoardApproversBean(person, board.getApprovers() != null ? board.getApprovers()
-		    .isMember(person) : false));
-	}
-
-	request.setAttribute("approvers", approvers);
-	request.setAttribute("unit", board.getParty());
-	request.setAttribute("announcementBoard", board);
-
-	return mapping.findForward("editAnnouncementBoardApprovers");
-    }
-
-    public ActionForward editAnnouncementBoardApprovers(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-
-	AnnouncementBoard board = this.getRequestedAnnouncementBoard(request);
-
-	if (board.getWriters() != null && !board.getWriters().allows(getUserView(request))) {
-	    ActionMessages actionMessages = new ActionMessages();
-	    actionMessages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("error.not.allowed.to.edit.board"));
-	    saveErrors(request, actionMessages);
-	} else {
-
-	    Collection<AnnouncementBoardApproversBean> announcementApprovers = getRenderedObject();
-
-	    EditUnitAnnouncementBoardApprovers.run(board, announcementApprovers);
-
-	    UnitAnnouncementBoardsManagementForm form = (UnitAnnouncementBoardsManagementForm) actionForm;
-	    if (form.getReturnAction() != null && !form.getReturnAction().equals("") && !form.getReturnAction().equals("null")) {
-		ActionForward destination = new ActionForward();
-		String returnUrl = form.getReturnAction();
-		if (form.getReturnMethod() != null && !form.getReturnMethod().equals("")
-			&& !form.getReturnMethod().equals("null")) {
-		    returnUrl += "?method=" + form.getReturnMethod();
+		if (board.getManagers() != null && !board.getManagers().allows(getUserView(request))) {
+			ActionMessages actionMessages = new ActionMessages();
+			actionMessages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("error.not.allowed.to.edit.board"));
+			saveErrors(request, actionMessages);
+			return this.showTree(mapping, actionForm, request, response);
 		}
-		destination.setPath(returnUrl);
-		return destination;
-	    }
 
-	}
-	return prepareEditAnnouncementBoardApprovers(mapping, actionForm, request, response);
-    }
+		UnitAnnouncementBoardsManagementForm form = (UnitAnnouncementBoardsManagementForm) actionForm;
+		form.setReturnAction(request.getParameter("returnAction"));
+		form.setReturnMethod(request.getParameter("returnMethod"));
+		form.setName(board.getName().getContent());
+		form.setMandatory(board.getMandatory());
+		form.setKeyUnit(board.getParty().getIdInternal());
+		form.setUnitBoardManagementPermittedGroupType(board.getUnitPermittedManagementGroupType() == null ? null : board
+				.getUnitPermittedManagementGroupType().name());
+		form.setUnitBoardWritePermittedGroupType(board.getUnitPermittedWriteGroupType() == null ? null : board
+				.getUnitPermittedWriteGroupType().name());
+		form.setUnitBoardReadPermittedGroupType(board.getUnitPermittedReadGroupType() == null ? null : board
+				.getUnitPermittedReadGroupType().name());
 
-    public ActionForward editAnnouncementBoard(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-
-	UnitAnnouncementBoardsManagementForm form = (UnitAnnouncementBoardsManagementForm) actionForm;
-	UnitAnnouncementBoardParameters params = new UnitAnnouncementBoardParameters();
-	AnnouncementBoard board = this.getRequestedAnnouncementBoard(request);
-
-	if (board.getManagers() != null && !board.getManagers().allows(getUserView(request))) {
-	    ActionMessages actionMessages = new ActionMessages();
-	    actionMessages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("error.not.allowed.to.edit.board"));
-	    saveErrors(request, actionMessages);
-	} else {
-
-	    params.name = form.getName();
-	    params.mandatory = form.getMandatory();
-	    params.readersGroupType = UnitBoardPermittedGroupType.valueOf(form.getUnitBoardReadPermittedGroupType());
-	    params.writersGroupType = UnitBoardPermittedGroupType.valueOf(form.getUnitBoardWritePermittedGroupType());
-	    params.managementGroupType = UnitBoardPermittedGroupType.valueOf(form.getUnitBoardManagementPermittedGroupType());
-	    params.unitId = form.getKeyUnit();
-
-	    ServiceUtils.executeService("EditUnitAnnouncementBoard", new Object[] { board, params });
-
-	    if (form.getReturnAction() != null && !form.getReturnAction().equals("") && !form.getReturnAction().equals("null")) {
-		ActionForward destination = new ActionForward();
-		String returnUrl = form.getReturnAction();
-		if (form.getReturnMethod() != null && !form.getReturnMethod().equals("")
-			&& !form.getReturnMethod().equals("null")) {
-		    returnUrl += "?method=" + form.getReturnMethod();
+		if (request.getParameter("sortBy") == null) {
+			request.setAttribute("sortBy", "creationDate=descending");
+		} else {
+			request.setAttribute("sortBy", request.getParameter("sortBy"));
 		}
-		destination.setPath(returnUrl);
-		return destination;
-	    }
+
+		request.setAttribute("unit", board.getParty());
+		request.setAttribute("announcementBoard", board);
+		request.setAttribute("announcements", board.getAnnouncements());
+		return mapping.findForward("editAnnouncementBoard");
 	}
-	return prepareEditAnnouncementBoard(mapping, actionForm, request, response);
-    }
 
-    public ActionForward prepareCreateBoard(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
+	public ActionForward prepareEditAnnouncementBoardApprovers(ActionMapping mapping, ActionForm actionForm,
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-	Unit unit = this.getRequestedUnit(request);
-	UnitAnnouncementBoardsManagementForm form = (UnitAnnouncementBoardsManagementForm) actionForm;
-	form.setName(unit.getName());
-	form.setKeyUnit(unit.getIdInternal());
-	form.setMandatory(false);
+		UnitAnnouncementBoard board = (UnitAnnouncementBoard) this.getRequestedAnnouncementBoard(request);
 
-	super.viewAllBoards(mapping, form, request, response);
-	return mapping.findForward("createBoard");
-    }
+		if (board.getWriters() != null && !board.getWriters().allows(getUserView(request))) {
+			ActionMessages actionMessages = new ActionMessages();
+			actionMessages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("error.not.allowed.to.edit.board."));
+			saveErrors(request, actionMessages);
+			return this.showTree(mapping, actionForm, request, response);
+		}
 
-    public ActionForward addBookmark(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-	super.addBookmark(mapping, form, request, response);
-	return this.start(mapping, form, request, response);
-    }
+		UnitAnnouncementBoardsManagementForm form = (UnitAnnouncementBoardsManagementForm) actionForm;
+		form.setReturnAction(request.getParameter("returnAction"));
+		form.setReturnMethod(request.getParameter("returnMethod"));
+		form.setName(board.getName().getContent());
+		form.setKeyUnit(board.getParty().getIdInternal());
 
-    public ActionForward removeBookmark(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-	super.removeBookmark(mapping, form, request, response);
-	return this.start(mapping, form, request, response);
-    }
+		Collection<AnnouncementBoardApproversBean> approvers = new ArrayList<AnnouncementBoardApproversBean>();
+		for (Person person : board.getUnit().getSite().getManagers()) {
+			approvers.add(new AnnouncementBoardApproversBean(person, board.getApprovers() != null ? board.getApprovers()
+					.isMember(person) : false));
+		}
 
-    private Unit getRequestedUnit(HttpServletRequest request) {
-	return getRequestedUnitOID(request) == null ? null : (Unit) rootDomainObject.readPartyByOID(this
-		.getRequestedUnitOID(request));
-    }
+		request.setAttribute("approvers", approvers);
+		request.setAttribute("unit", board.getParty());
+		request.setAttribute("announcementBoard", board);
 
-    private Integer getRequestedUnitOID(HttpServletRequest request) {
-	return request.getParameter("keyUnit") == null || request.getParameter("keyUnit").equals("null") ? null : Integer
-		.valueOf(request.getParameter("keyUnit"));
-    }
-
-    @Override
-    protected String getExtraRequestParameters(HttpServletRequest request) {
-	StringBuilder result = new StringBuilder();
-	if (getRequestedUnitOID(request) != null) {
-	    result.append("keyUnit=").append(getRequestedUnitOID(request));
+		return mapping.findForward("editAnnouncementBoardApprovers");
 	}
-	if (!StringUtils.isEmpty(request.getParameter("tabularVersion"))) {
-	    result.append("&amp;tabularVersion=").append(request.getParameter("tabularVersion"));
+
+	public ActionForward editAnnouncementBoardApprovers(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+
+		AnnouncementBoard board = this.getRequestedAnnouncementBoard(request);
+
+		if (board.getWriters() != null && !board.getWriters().allows(getUserView(request))) {
+			ActionMessages actionMessages = new ActionMessages();
+			actionMessages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("error.not.allowed.to.edit.board"));
+			saveErrors(request, actionMessages);
+		} else {
+
+			Collection<AnnouncementBoardApproversBean> announcementApprovers = getRenderedObject();
+
+			EditUnitAnnouncementBoardApprovers.run(board, announcementApprovers);
+
+			UnitAnnouncementBoardsManagementForm form = (UnitAnnouncementBoardsManagementForm) actionForm;
+			if (form.getReturnAction() != null && !form.getReturnAction().equals("") && !form.getReturnAction().equals("null")) {
+				ActionForward destination = new ActionForward();
+				String returnUrl = form.getReturnAction();
+				if (form.getReturnMethod() != null && !form.getReturnMethod().equals("")
+						&& !form.getReturnMethod().equals("null")) {
+					returnUrl += "?method=" + form.getReturnMethod();
+				}
+				destination.setPath(returnUrl);
+				return destination;
+			}
+
+		}
+		return prepareEditAnnouncementBoardApprovers(mapping, actionForm, request, response);
 	}
-	return result.toString();
-    }
 
-    @Override
-    protected String getContextInformation(ActionMapping mapping, HttpServletRequest request) {
-	return "/announcements/manageUnitAnnouncementBoard.do";
-    }
+	public ActionForward editAnnouncementBoard(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
 
-    @Override
-    protected Collection<AnnouncementBoard> boardsToView(HttpServletRequest request) throws Exception {
-	Collection<AnnouncementBoard> boards = new ArrayList<AnnouncementBoard>();
-	Unit unit = this.getRequestedUnit(request);
-	if (unit != null) {
-	    for (AnnouncementBoard board : unit.getBoards()) {
-		if (board.getWriters() == null || board.getReaders() == null || board.getManagers() == null
-			|| board.getWriters().allows(getUserView(request)) || board.getReaders().allows(getUserView(request))
-			|| board.getManagers().allows(getUserView(request)))
-		    boards.add(board);
-	    }
+		UnitAnnouncementBoardsManagementForm form = (UnitAnnouncementBoardsManagementForm) actionForm;
+		UnitAnnouncementBoardParameters params = new UnitAnnouncementBoardParameters();
+		AnnouncementBoard board = this.getRequestedAnnouncementBoard(request);
 
+		if (board.getManagers() != null && !board.getManagers().allows(getUserView(request))) {
+			ActionMessages actionMessages = new ActionMessages();
+			actionMessages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("error.not.allowed.to.edit.board"));
+			saveErrors(request, actionMessages);
+		} else {
+
+			params.name = form.getName();
+			params.mandatory = form.getMandatory();
+			params.readersGroupType = UnitBoardPermittedGroupType.valueOf(form.getUnitBoardReadPermittedGroupType());
+			params.writersGroupType = UnitBoardPermittedGroupType.valueOf(form.getUnitBoardWritePermittedGroupType());
+			params.managementGroupType = UnitBoardPermittedGroupType.valueOf(form.getUnitBoardManagementPermittedGroupType());
+			params.unitId = form.getKeyUnit();
+
+			ServiceUtils.executeService("EditUnitAnnouncementBoard", new Object[] { board, params });
+
+			if (form.getReturnAction() != null && !form.getReturnAction().equals("") && !form.getReturnAction().equals("null")) {
+				ActionForward destination = new ActionForward();
+				String returnUrl = form.getReturnAction();
+				if (form.getReturnMethod() != null && !form.getReturnMethod().equals("")
+						&& !form.getReturnMethod().equals("null")) {
+					returnUrl += "?method=" + form.getReturnMethod();
+				}
+				destination.setPath(returnUrl);
+				return destination;
+			}
+		}
+		return prepareEditAnnouncementBoard(mapping, actionForm, request, response);
 	}
-	return boards;
-    }
+
+	public ActionForward prepareCreateBoard(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+
+		Unit unit = this.getRequestedUnit(request);
+		UnitAnnouncementBoardsManagementForm form = (UnitAnnouncementBoardsManagementForm) actionForm;
+		form.setName(unit.getName());
+		form.setKeyUnit(unit.getIdInternal());
+		form.setMandatory(false);
+
+		super.viewAllBoards(mapping, form, request, response);
+		return mapping.findForward("createBoard");
+	}
+
+	@Override
+	public ActionForward addBookmark(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		super.addBookmark(mapping, form, request, response);
+		return this.start(mapping, form, request, response);
+	}
+
+	@Override
+	public ActionForward removeBookmark(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		super.removeBookmark(mapping, form, request, response);
+		return this.start(mapping, form, request, response);
+	}
+
+	private Unit getRequestedUnit(HttpServletRequest request) {
+		return getRequestedUnitOID(request) == null ? null : (Unit) rootDomainObject.readPartyByOID(this
+				.getRequestedUnitOID(request));
+	}
+
+	private Integer getRequestedUnitOID(HttpServletRequest request) {
+		return request.getParameter("keyUnit") == null || request.getParameter("keyUnit").equals("null") ? null : Integer
+				.valueOf(request.getParameter("keyUnit"));
+	}
+
+	@Override
+	protected String getExtraRequestParameters(HttpServletRequest request) {
+		StringBuilder result = new StringBuilder();
+		if (getRequestedUnitOID(request) != null) {
+			result.append("keyUnit=").append(getRequestedUnitOID(request));
+		}
+		if (!StringUtils.isEmpty(request.getParameter("tabularVersion"))) {
+			result.append("&amp;tabularVersion=").append(request.getParameter("tabularVersion"));
+		}
+		return result.toString();
+	}
+
+	@Override
+	protected String getContextInformation(ActionMapping mapping, HttpServletRequest request) {
+		return "/announcements/manageUnitAnnouncementBoard.do";
+	}
+
+	@Override
+	protected Collection<AnnouncementBoard> boardsToView(HttpServletRequest request) throws Exception {
+		Collection<AnnouncementBoard> boards = new ArrayList<AnnouncementBoard>();
+		Unit unit = this.getRequestedUnit(request);
+		if (unit != null) {
+			for (AnnouncementBoard board : unit.getBoards()) {
+				if (board.getWriters() == null || board.getReaders() == null || board.getManagers() == null
+						|| board.getWriters().allows(getUserView(request)) || board.getReaders().allows(getUserView(request))
+						|| board.getManagers().allows(getUserView(request))) {
+					boards.add(board);
+				}
+			}
+
+		}
+		return boards;
+	}
 
 }

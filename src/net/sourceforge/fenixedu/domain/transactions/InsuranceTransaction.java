@@ -20,62 +20,62 @@ import org.joda.time.DateTime;
  */
 public class InsuranceTransaction extends InsuranceTransaction_Base {
 
-    public InsuranceTransaction() {
-	super();
-    }
-
-    public InsuranceTransaction(Double value, Timestamp transactionDate, String remarks, PaymentType paymentType,
-	    TransactionType transactionType, Boolean wasInternalBalance, Person responsiblePerson, PersonAccount personAccount,
-	    GuideEntry guideEntry, ExecutionYear executionYear, Registration registration) {
-	this();
-	setValue(value);
-	setTransactionDate(transactionDate);
-	setRemarks(remarks);
-	setPaymentType(paymentType);
-	setTransactionType(transactionType);
-	setWasInternalBalance(wasInternalBalance);
-	setResponsiblePerson(responsiblePerson);
-	setPersonAccount(personAccount);
-	setExecutionYear(executionYear);
-	setGuideEntry(guideEntry);
-	setStudent(registration);
-    }
-
-    public InsuranceTransaction(final BigDecimal value, final DateTime whenRegistered, final PaymentType paymentType,
-	    final Person responsiblePerson, final PersonAccount personAccount, final ExecutionYear executionYear,
-	    final Registration registration) {
-	this();
-	setValueBigDecimal(value);
-	setTransactionDateDateTime(whenRegistered);
-	setPaymentType(paymentType);
-	setTransactionType(TransactionType.INSURANCE_PAYMENT);
-	setWasInternalBalance(false);
-	setResponsiblePerson(responsiblePerson);
-	setPersonAccount(personAccount);
-	setExecutionYear(executionYear);
-	setStudent(registration);
-    }
-
-    public boolean isReimbursed() {
-	if (!hasGuideEntry() || getGuideEntry().getReimbursementGuideEntriesCount() == 0) {
-	    return false;
-	} else {
-	    for (final ReimbursementGuideEntry reimbursementGuideEntry : getGuideEntry().getReimbursementGuideEntries()) {
-		if (reimbursementGuideEntry.getReimbursementGuide().getActiveReimbursementGuideSituation()
-			.getReimbursementGuideState().equals(ReimbursementGuideState.PAYED)) {
-		    return true;
-		}
-	    }
-
-	    return false;
+	public InsuranceTransaction() {
+		super();
 	}
-    }
 
-    @Override
-    public void delete() {
-	removeExecutionYear();
-	removeStudent();
-	super.delete();
-    }
+	public InsuranceTransaction(Double value, Timestamp transactionDate, String remarks, PaymentType paymentType,
+			TransactionType transactionType, Boolean wasInternalBalance, Person responsiblePerson, PersonAccount personAccount,
+			GuideEntry guideEntry, ExecutionYear executionYear, Registration registration) {
+		this();
+		setValue(value);
+		setTransactionDate(transactionDate);
+		setRemarks(remarks);
+		setPaymentType(paymentType);
+		setTransactionType(transactionType);
+		setWasInternalBalance(wasInternalBalance);
+		setResponsiblePerson(responsiblePerson);
+		setPersonAccount(personAccount);
+		setExecutionYear(executionYear);
+		setGuideEntry(guideEntry);
+		setStudent(registration);
+	}
+
+	public InsuranceTransaction(final BigDecimal value, final DateTime whenRegistered, final PaymentType paymentType,
+			final Person responsiblePerson, final PersonAccount personAccount, final ExecutionYear executionYear,
+			final Registration registration) {
+		this();
+		setValueBigDecimal(value);
+		setTransactionDateDateTime(whenRegistered);
+		setPaymentType(paymentType);
+		setTransactionType(TransactionType.INSURANCE_PAYMENT);
+		setWasInternalBalance(false);
+		setResponsiblePerson(responsiblePerson);
+		setPersonAccount(personAccount);
+		setExecutionYear(executionYear);
+		setStudent(registration);
+	}
+
+	public boolean isReimbursed() {
+		if (!hasGuideEntry() || getGuideEntry().getReimbursementGuideEntriesCount() == 0) {
+			return false;
+		} else {
+			for (final ReimbursementGuideEntry reimbursementGuideEntry : getGuideEntry().getReimbursementGuideEntries()) {
+				if (reimbursementGuideEntry.getReimbursementGuide().getActiveReimbursementGuideSituation()
+						.getReimbursementGuideState().equals(ReimbursementGuideState.PAYED)) {
+					return true;
+				}
+			}
+
+			return false;
+		}
+	}
+
+	@Override
+	public void delete() {
+		removeExecutionYear();
+		removeStudent();
+		super.delete();
+	}
 
 }

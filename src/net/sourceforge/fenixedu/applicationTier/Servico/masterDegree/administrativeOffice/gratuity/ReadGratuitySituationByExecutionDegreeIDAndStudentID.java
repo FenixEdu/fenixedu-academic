@@ -17,24 +17,24 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class ReadGratuitySituationByExecutionDegreeIDAndStudentID extends FenixService {
 
-    @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
-    @Service
-    public static InfoGratuitySituation run(Integer executionDegreeID, Integer studentID) throws FenixServiceException {
+	@Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
+	@Service
+	public static InfoGratuitySituation run(Integer executionDegreeID, Integer studentID) throws FenixServiceException {
 
-	InfoGratuitySituation infoGratuitySituation = null;
+		InfoGratuitySituation infoGratuitySituation = null;
 
-	ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeID);
-	Registration registration = rootDomainObject.readRegistrationByOID(studentID);
+		ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeID);
+		Registration registration = rootDomainObject.readRegistrationByOID(studentID);
 
-	if ((executionDegree == null) || (registration == null)) {
-	    return null;
+		if ((executionDegree == null) || (registration == null)) {
+			return null;
+		}
+
+		GratuitySituation gratuitySituation = registration.readGratuitySituationByExecutionDegree(executionDegree);
+
+		infoGratuitySituation = InfoGratuitySituation.newInfoFromDomain(gratuitySituation);
+
+		return infoGratuitySituation;
 	}
-
-	GratuitySituation gratuitySituation = registration.readGratuitySituationByExecutionDegree(executionDegree);
-
-	infoGratuitySituation = InfoGratuitySituation.newInfoFromDomain(gratuitySituation);
-
-	return infoGratuitySituation;
-    }
 
 }

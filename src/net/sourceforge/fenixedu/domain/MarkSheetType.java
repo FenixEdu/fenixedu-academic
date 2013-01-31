@@ -7,25 +7,25 @@ import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
 
 public enum MarkSheetType {
 
-    NORMAL(EnrolmentEvaluationType.NORMAL),
+	NORMAL(EnrolmentEvaluationType.NORMAL),
 
-    IMPROVEMENT(EnrolmentEvaluationType.IMPROVEMENT),
+	IMPROVEMENT(EnrolmentEvaluationType.IMPROVEMENT),
 
-    SPECIAL_SEASON(EnrolmentEvaluationType.SPECIAL_SEASON),
+	SPECIAL_SEASON(EnrolmentEvaluationType.SPECIAL_SEASON),
 
-    SPECIAL_AUTHORIZATION(EnrolmentEvaluationType.NORMAL);
+	SPECIAL_AUTHORIZATION(EnrolmentEvaluationType.NORMAL);
 
-    private EnrolmentEvaluationType enrolmentEvaluationType;
+	private EnrolmentEvaluationType enrolmentEvaluationType;
 
-    private MarkSheetType(EnrolmentEvaluationType enrolmentEvaluationType) {
-	this.enrolmentEvaluationType = enrolmentEvaluationType;
-    }
+	private MarkSheetType(EnrolmentEvaluationType enrolmentEvaluationType) {
+		this.enrolmentEvaluationType = enrolmentEvaluationType;
+	}
 
-    public String getName() {
-	return name();
-    }
+	public String getName() {
+		return name();
+	}
 
-    public EnrolmentEvaluationType getEnrolmentEvaluationType() {
-	return this.enrolmentEvaluationType;
-    }
+	public EnrolmentEvaluationType getEnrolmentEvaluationType() {
+		return this.enrolmentEvaluationType;
+	}
 }

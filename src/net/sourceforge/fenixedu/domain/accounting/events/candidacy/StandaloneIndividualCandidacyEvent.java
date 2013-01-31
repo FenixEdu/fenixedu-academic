@@ -9,28 +9,28 @@ import net.sourceforge.fenixedu.domain.candidacyProcess.standalone.StandaloneInd
 
 public class StandaloneIndividualCandidacyEvent extends StandaloneIndividualCandidacyEvent_Base {
 
-    private StandaloneIndividualCandidacyEvent() {
-	super();
-    }
+	private StandaloneIndividualCandidacyEvent() {
+		super();
+	}
 
-    public StandaloneIndividualCandidacyEvent(final StandaloneIndividualCandidacy candidacy, final Person person) {
-	this();
-	super.init(candidacy, EventType.STANDALONE_INDIVIDUAL_CANDIDACY, person);
-    }
+	public StandaloneIndividualCandidacyEvent(final StandaloneIndividualCandidacy candidacy, final Person person) {
+		this();
+		super.init(candidacy, EventType.STANDALONE_INDIVIDUAL_CANDIDACY, person);
+	}
 
-    @Override
-    protected AdministrativeOffice readAdministrativeOffice() {
-	return AdministrativeOffice.readByAdministrativeOfficeType(AdministrativeOfficeType.DEGREE);
-    }
+	@Override
+	protected AdministrativeOffice readAdministrativeOffice() {
+		return AdministrativeOffice.readByAdministrativeOfficeType(AdministrativeOfficeType.DEGREE);
+	}
 
-    @Override
-    protected EntryType getEntryType() {
-	return EntryType.STANDALONE_INDIVIDUAL_CANDIDACY_FEE;
-    }
+	@Override
+	protected EntryType getEntryType() {
+		return EntryType.STANDALONE_INDIVIDUAL_CANDIDACY_FEE;
+	}
 
-    @Override
-    public boolean isExemptionAppliable() {
-	return true;
-    }
+	@Override
+	public boolean isExemptionAppliable() {
+		return true;
+	}
 
 }

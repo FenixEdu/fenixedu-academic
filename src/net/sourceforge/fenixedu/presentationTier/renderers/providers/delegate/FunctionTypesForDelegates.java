@@ -6,18 +6,20 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class FunctionTypesForDelegates implements DataProvider {
 
-    public Object provide(Object source, Object currentValue) {
-	return FunctionType.getAllDelegateFunctionTypes();
-    }
+	@Override
+	public Object provide(Object source, Object currentValue) {
+		return FunctionType.getAllDelegateFunctionTypes();
+	}
 
-    public Converter getConverter() {
-	return new Converter() {
+	@Override
+	public Converter getConverter() {
+		return new Converter() {
 
-	    @Override
-	    public Object convert(Class type, Object value) {
-		return FunctionType.valueOf((String) value);
-	    }
+			@Override
+			public Object convert(Class type, Object value) {
+				return FunctionType.valueOf((String) value);
+			}
 
-	};
-    }
+		};
+	}
 }

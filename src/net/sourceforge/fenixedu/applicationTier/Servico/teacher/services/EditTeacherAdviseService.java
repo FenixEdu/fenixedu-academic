@@ -26,40 +26,41 @@ import org.apache.commons.collections.Predicate;
 
 public class EditTeacherAdviseService extends FenixService {
 
-    public void run(Teacher teacher, Integer executionPeriodID, final Integer studentNumber, Double percentage,
-	    AdviseType adviseType, RoleType roleType) throws FenixServiceException {
+	public void run(Teacher teacher, Integer executionPeriodID, final Integer studentNumber, Double percentage,
+			AdviseType adviseType, RoleType roleType) throws FenixServiceException {
 
-	ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(executionPeriodID);
+		ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(executionPeriodID);
 
-	List<Registration> students = rootDomainObject.getRegistrations();
-	Registration registration = (Registration) CollectionUtils.find(students, new Predicate() {
-	    public boolean evaluate(Object arg0) {
-		Registration tempStudent = (Registration) arg0;
-		return tempStudent.getNumber().equals(studentNumber);
-	    }
-	});
+		List<Registration> students = rootDomainObject.getRegistrations();
+		Registration registration = (Registration) CollectionUtils.find(students, new Predicate() {
+			@Override
+			public boolean evaluate(Object arg0) {
+				Registration tempStudent = (Registration) arg0;
+				return tempStudent.getNumber().equals(studentNumber);
+			}
+		});
 
-	if (registration == null) {
-	    throw new FenixServiceException("errors.invalid.student-number");
+		if (registration == null) {
+			throw new FenixServiceException("errors.invalid.student-number");
+		}
+
+		TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionSemester);
+		if (teacherService == null) {
+			teacherService = new TeacherService(teacher, executionSemester);
+		}
+		List<Advise> advises = registration.getAdvisesByTeacher(teacher);
+		Advise advise = null;
+		if (advises == null || advises.isEmpty()) {
+			advise = new Advise(teacher, registration, adviseType, executionSemester, executionSemester);
+		} else {
+			advise = advises.iterator().next();
+		}
+
+		TeacherAdviseService teacherAdviseService = advise.getTeacherAdviseServiceByExecutionPeriod(executionSemester);
+		if (teacherAdviseService == null) {
+			teacherAdviseService = new TeacherAdviseService(teacherService, advise, percentage, roleType);
+		} else {
+			teacherAdviseService.updatePercentage(percentage, roleType);
+		}
 	}
-
-	TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionSemester);
-	if (teacherService == null) {
-	    teacherService = new TeacherService(teacher, executionSemester);
-	}
-	List<Advise> advises = registration.getAdvisesByTeacher(teacher);
-	Advise advise = null;
-	if (advises == null || advises.isEmpty()) {
-	    advise = new Advise(teacher, registration, adviseType, executionSemester, executionSemester);
-	} else {
-	    advise = advises.iterator().next();
-	}
-
-	TeacherAdviseService teacherAdviseService = advise.getTeacherAdviseServiceByExecutionPeriod(executionSemester);
-	if (teacherAdviseService == null) {
-	    teacherAdviseService = new TeacherAdviseService(teacherService, advise, percentage, roleType);
-	} else {
-	    teacherAdviseService.updatePercentage(percentage, roleType);
-	}
-    }
 }

@@ -6,8 +6,8 @@ import net.sourceforge.fenixedu.domain.tests.NewModelRestriction;
 import pt.ist.fenixWebFramework.services.Service;
 
 public class DeleteModelRestriction extends FenixService {
-    @Service
-    public static void run(NewModelRestriction modelRestriction) throws FenixServiceException {
-	modelRestriction.delete();
-    }
+	@Service
+	public static void run(NewModelRestriction modelRestriction) throws FenixServiceException {
+		modelRestriction.delete();
+	}
 }

@@ -16,123 +16,123 @@ import org.apache.commons.beanutils.BeanComparator;
 
 public class GroupResultsSummaryBean implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-    private InquiryGroupQuestion inquiryGroupQuestion;
-    private ResultClassification groupResultClassification;
-    private InquiryResult groupTotalResult;
-    private List<QuestionResultsSummaryBean> questionsResults = new ArrayList<QuestionResultsSummaryBean>();
-    private boolean left;
+	private static final long serialVersionUID = 1L;
+	private InquiryGroupQuestion inquiryGroupQuestion;
+	private ResultClassification groupResultClassification;
+	private InquiryResult groupTotalResult;
+	private List<QuestionResultsSummaryBean> questionsResults = new ArrayList<QuestionResultsSummaryBean>();
+	private boolean left;
 
-    public GroupResultsSummaryBean(InquiryGroupQuestion inquiryGroupQuestion, List<InquiryResult> inquiryResults, Person person,
-	    ResultPersonCategory personCategory) {
-	setInquiryGroupQuestion(inquiryGroupQuestion);
-	setLeft(true);
-	for (InquiryQuestion inquiryQuestion : inquiryGroupQuestion.getInquiryQuestions()) {
-	    List<InquiryResult> questionResults = getResultsForQuestion(inquiryResults, inquiryQuestion);
-	    QuestionResultsSummaryBean resultsSummaryBean = null;
-	    if (inquiryQuestion.isScaleQuestion()) {
-		resultsSummaryBean = new QuestionResultsSummaryBean(inquiryQuestion, questionResults, person, personCategory);
-	    } else {
-		InquiryResult inquiryResult = null;
-		if (questionResults.size() > 0) {
-		    inquiryResult = questionResults.get(0);
+	public GroupResultsSummaryBean(InquiryGroupQuestion inquiryGroupQuestion, List<InquiryResult> inquiryResults, Person person,
+			ResultPersonCategory personCategory) {
+		setInquiryGroupQuestion(inquiryGroupQuestion);
+		setLeft(true);
+		for (InquiryQuestion inquiryQuestion : inquiryGroupQuestion.getInquiryQuestions()) {
+			List<InquiryResult> questionResults = getResultsForQuestion(inquiryResults, inquiryQuestion);
+			QuestionResultsSummaryBean resultsSummaryBean = null;
+			if (inquiryQuestion.isScaleQuestion()) {
+				resultsSummaryBean = new QuestionResultsSummaryBean(inquiryQuestion, questionResults, person, personCategory);
+			} else {
+				InquiryResult inquiryResult = null;
+				if (questionResults.size() > 0) {
+					inquiryResult = questionResults.get(0);
+				}
+				resultsSummaryBean = new QuestionResultsSummaryBean(inquiryQuestion, inquiryResult);
+			}
+			getQuestionsResults().add(resultsSummaryBean);
 		}
-		resultsSummaryBean = new QuestionResultsSummaryBean(inquiryQuestion, inquiryResult);
-	    }
-	    getQuestionsResults().add(resultsSummaryBean);
+		initGroupResultClassification(inquiryResults);
+		Collections.sort(getQuestionsResults(), new BeanComparator("inquiryQuestion.questionOrder"));
 	}
-	initGroupResultClassification(inquiryResults);
-	Collections.sort(getQuestionsResults(), new BeanComparator("inquiryQuestion.questionOrder"));
-    }
 
-    private void initGroupResultClassification(List<InquiryResult> inquiryResults) {
-	for (InquiryResult inquiryResult : inquiryResults) {
-	    if (inquiryResult.getInquiryQuestion() != null
-		    && inquiryResult.getInquiryQuestion().isResultQuestion(inquiryResult.getExecutionPeriod())
-		    && inquiryResult.getInquiryQuestion().getCheckboxGroupQuestion() != null
-		    && inquiryResult.getInquiryQuestion().getCheckboxGroupQuestion() == getInquiryGroupQuestion()) {
-		setGroupTotalResult(inquiryResult);
-		break;
-	    }
-	}
-    }
-
-    private List<InquiryResult> getResultsForQuestion(List<InquiryResult> results, InquiryQuestion inquiryQuestion) {
-	List<InquiryResult> questionResults = new ArrayList<InquiryResult>();
-	for (InquiryResult inquiryResult : results) {
-	    if (inquiryResult.getInquiryQuestion() == inquiryQuestion) {
-		questionResults.add(inquiryResult);
-	    }
-	}
-	return questionResults;
-    }
-
-    public int getAbsoluteScaleValuesSize() {
-	if (getInquiryGroupQuestion().isScaleGroup()) {
-	    for (QuestionResultsSummaryBean questionResultsSummaryBean : getQuestionsResults()) {
-		if (questionResultsSummaryBean.getAbsoluteScaleValues().size() > 0) {
-		    return questionResultsSummaryBean.getAbsoluteScaleValues().size();
+	private void initGroupResultClassification(List<InquiryResult> inquiryResults) {
+		for (InquiryResult inquiryResult : inquiryResults) {
+			if (inquiryResult.getInquiryQuestion() != null
+					&& inquiryResult.getInquiryQuestion().isResultQuestion(inquiryResult.getExecutionPeriod())
+					&& inquiryResult.getInquiryQuestion().getCheckboxGroupQuestion() != null
+					&& inquiryResult.getInquiryQuestion().getCheckboxGroupQuestion() == getInquiryGroupQuestion()) {
+				setGroupTotalResult(inquiryResult);
+				break;
+			}
 		}
-	    }
 	}
-	return 0;
-    }
 
-    public boolean hasClassification() {
-	for (QuestionResultsSummaryBean questionResultsSummaryBean : getQuestionsResults()) {
-	    if (questionResultsSummaryBean.getInquiryQuestion().getHasClassification()) {
-		return true;
-	    }
+	private List<InquiryResult> getResultsForQuestion(List<InquiryResult> results, InquiryQuestion inquiryQuestion) {
+		List<InquiryResult> questionResults = new ArrayList<InquiryResult>();
+		for (InquiryResult inquiryResult : results) {
+			if (inquiryResult.getInquiryQuestion() == inquiryQuestion) {
+				questionResults.add(inquiryResult);
+			}
+		}
+		return questionResults;
 	}
-	return false;
-    }
 
-    public QuestionResultsSummaryBean getValidQuestionResult() {
-	for (QuestionResultsSummaryBean questionResultsSummaryBean : getQuestionsResults()) {
-	    if (!ResultClassification.GREY.equals(questionResultsSummaryBean.getResultClassification() != null)) {
-		return questionResultsSummaryBean;
-	    }
+	public int getAbsoluteScaleValuesSize() {
+		if (getInquiryGroupQuestion().isScaleGroup()) {
+			for (QuestionResultsSummaryBean questionResultsSummaryBean : getQuestionsResults()) {
+				if (questionResultsSummaryBean.getAbsoluteScaleValues().size() > 0) {
+					return questionResultsSummaryBean.getAbsoluteScaleValues().size();
+				}
+			}
+		}
+		return 0;
 	}
-	return null;
-    }
 
-    public InquiryGroupQuestion getInquiryGroupQuestion() {
-	return inquiryGroupQuestion;
-    }
+	public boolean hasClassification() {
+		for (QuestionResultsSummaryBean questionResultsSummaryBean : getQuestionsResults()) {
+			if (questionResultsSummaryBean.getInquiryQuestion().getHasClassification()) {
+				return true;
+			}
+		}
+		return false;
+	}
 
-    public void setInquiryGroupQuestion(InquiryGroupQuestion inquiryGroupQuestion) {
-	this.inquiryGroupQuestion = inquiryGroupQuestion;
-    }
+	public QuestionResultsSummaryBean getValidQuestionResult() {
+		for (QuestionResultsSummaryBean questionResultsSummaryBean : getQuestionsResults()) {
+			if (!ResultClassification.GREY.equals(questionResultsSummaryBean.getResultClassification() != null)) {
+				return questionResultsSummaryBean;
+			}
+		}
+		return null;
+	}
 
-    public List<QuestionResultsSummaryBean> getQuestionsResults() {
-	return questionsResults;
-    }
+	public InquiryGroupQuestion getInquiryGroupQuestion() {
+		return inquiryGroupQuestion;
+	}
 
-    public void setQuestionsResults(List<QuestionResultsSummaryBean> questionsResults) {
-	this.questionsResults = questionsResults;
-    }
+	public void setInquiryGroupQuestion(InquiryGroupQuestion inquiryGroupQuestion) {
+		this.inquiryGroupQuestion = inquiryGroupQuestion;
+	}
 
-    public void setGroupResultClassification(ResultClassification groupResultClassification) {
-	this.groupResultClassification = groupResultClassification;
-    }
+	public List<QuestionResultsSummaryBean> getQuestionsResults() {
+		return questionsResults;
+	}
 
-    public ResultClassification getGroupResultClassification() {
-	return groupResultClassification;
-    }
+	public void setQuestionsResults(List<QuestionResultsSummaryBean> questionsResults) {
+		this.questionsResults = questionsResults;
+	}
 
-    public void setLeft(boolean left) {
-	this.left = left;
-    }
+	public void setGroupResultClassification(ResultClassification groupResultClassification) {
+		this.groupResultClassification = groupResultClassification;
+	}
 
-    public boolean isLeft() {
-	return left;
-    }
+	public ResultClassification getGroupResultClassification() {
+		return groupResultClassification;
+	}
 
-    public void setGroupTotalResult(InquiryResult groupTotalResult) {
-	this.groupTotalResult = groupTotalResult;
-    }
+	public void setLeft(boolean left) {
+		this.left = left;
+	}
 
-    public InquiryResult getGroupTotalResult() {
-	return groupTotalResult;
-    }
+	public boolean isLeft() {
+		return left;
+	}
+
+	public void setGroupTotalResult(InquiryResult groupTotalResult) {
+		this.groupTotalResult = groupTotalResult;
+	}
+
+	public InquiryResult getGroupTotalResult() {
+		return groupTotalResult;
+	}
 }

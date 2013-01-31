@@ -17,10 +17,10 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class ReadLessonByOID extends FenixService {
 
-    @Service
-    public static InfoLesson run(Integer oid) {
-	final Lesson lesson = rootDomainObject.readLessonByOID(oid);
-	return (lesson != null) ? InfoLesson.newInfoFromDomain(lesson) : null;
+	@Service
+	public static InfoLesson run(Integer oid) {
+		final Lesson lesson = rootDomainObject.readLessonByOID(oid);
+		return (lesson != null) ? InfoLesson.newInfoFromDomain(lesson) : null;
 
-    }
+	}
 }

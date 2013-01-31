@@ -11,45 +11,46 @@ import java.util.Date;
  */
 public class InsuranceValue extends InsuranceValue_Base {
 
-    public InsuranceValue() {
-	super();
-	setRootDomainObject(RootDomainObject.getInstance());
-    }
-
-    @Deprecated
-    public InsuranceValue(ExecutionYear executionYear, Double annualValue, Date endDate) {
-	this(executionYear, BigDecimal.valueOf(annualValue), endDate);
-    }
-
-    public InsuranceValue(ExecutionYear executionYear, BigDecimal annualValue, Date endDate) {
-	this();
-	this.setExecutionYear(executionYear);
-	this.setAnnualValueBigDecimal(annualValue);
-	this.setEndDate(endDate);
-    }
-
-    @Deprecated
-    public Double getAnnualValue() {
-	return getAnnualValueBigDecimal().doubleValue();
-    }
-
-    @Deprecated
-    public void setAnnualValue(Double annualValue) {
-	setAnnualValueBigDecimal(BigDecimal.valueOf(annualValue));
-    }
-
+	public InsuranceValue() {
+		super();
+		setRootDomainObject(RootDomainObject.getInstance());
+	}
 
 	@Deprecated
-	public java.util.Date getEndDate(){
+	public InsuranceValue(ExecutionYear executionYear, Double annualValue, Date endDate) {
+		this(executionYear, BigDecimal.valueOf(annualValue), endDate);
+	}
+
+	public InsuranceValue(ExecutionYear executionYear, BigDecimal annualValue, Date endDate) {
+		this();
+		this.setExecutionYear(executionYear);
+		this.setAnnualValueBigDecimal(annualValue);
+		this.setEndDate(endDate);
+	}
+
+	@Deprecated
+	public Double getAnnualValue() {
+		return getAnnualValueBigDecimal().doubleValue();
+	}
+
+	@Deprecated
+	public void setAnnualValue(Double annualValue) {
+		setAnnualValueBigDecimal(BigDecimal.valueOf(annualValue));
+	}
+
+	@Deprecated
+	public java.util.Date getEndDate() {
 		org.joda.time.YearMonthDay ymd = getEndDateYearMonthDay();
 		return (ymd == null) ? null : new java.util.Date(ymd.getYear() - 1900, ymd.getMonthOfYear() - 1, ymd.getDayOfMonth());
 	}
 
 	@Deprecated
-	public void setEndDate(java.util.Date date){
-		if(date == null) setEndDateYearMonthDay(null);
-		else setEndDateYearMonthDay(org.joda.time.YearMonthDay.fromDateFields(date));
+	public void setEndDate(java.util.Date date) {
+		if (date == null) {
+			setEndDateYearMonthDay(null);
+		} else {
+			setEndDateYearMonthDay(org.joda.time.YearMonthDay.fromDateFields(date));
+		}
 	}
-
 
 }

@@ -12,57 +12,57 @@ import pt.utl.ist.fenix.tools.file.VirtualPath;
 
 public class FileLocalContent extends FileLocalContent_Base {
 
-    public FileLocalContent(File file, VirtualPath path, Collection<FileSetMetaData> metadata, byte[] content) {
-	super();
-	setFile(file);
-	setPath(path);
-	if (metadata != null) {
-	    for (FileSetMetaData entry : metadata) {
-		new FileLocalContentMetadata(this, entry);
-	    }
+	public FileLocalContent(File file, VirtualPath path, Collection<FileSetMetaData> metadata, byte[] content) {
+		super();
+		setFile(file);
+		setPath(path);
+		if (metadata != null) {
+			for (FileSetMetaData entry : metadata) {
+				new FileLocalContentMetadata(this, entry);
+			}
+		}
+		setContent(new ByteArray(content));
+		setRootDomainObject(RootDomainObject.getInstance());
 	}
-	setContent(new ByteArray(content));
-	setRootDomainObject(RootDomainObject.getInstance());
-    }
 
-    public Collection<FileSetMetaData> createMetadata() {
-	Set<FileSetMetaData> metadata = new HashSet<FileSetMetaData>();
-	for (FileLocalContentMetadata entry : super.getMetadata()) {
-	    metadata.add(entry.getEntry());
+	public Collection<FileSetMetaData> createMetadata() {
+		Set<FileSetMetaData> metadata = new HashSet<FileSetMetaData>();
+		for (FileLocalContentMetadata entry : super.getMetadata()) {
+			metadata.add(entry.getEntry());
+		}
+		return metadata;
 	}
-	return metadata;
-    }
 
-    /**
-     * @use {@link #createMetadata()})
-     */
-    @Override
-    public List<FileLocalContentMetadata> getMetadata() {
-	throw new UnsupportedOperationException();
-    }
-
-    /**
-     * @use {@link #createMetadata()})
-     */
-    @Override
-    public Set<FileLocalContentMetadata> getMetadataSet() {
-	throw new UnsupportedOperationException();
-    }
-
-    /**
-     * @use {@link #createMetadata()})
-     */
-    @Override
-    public Iterator<FileLocalContentMetadata> getMetadataIterator() {
-	throw new UnsupportedOperationException();
-    }
-
-    public void delete() {
-	removeFile();
-	for (FileLocalContentMetadata metadata : super.getMetadataSet()) {
-	    metadata.delete();
+	/**
+	 * @use {@link #createMetadata()})
+	 */
+	@Override
+	public List<FileLocalContentMetadata> getMetadata() {
+		throw new UnsupportedOperationException();
 	}
-	removeRootDomainObject();
-	deleteDomainObject();
-    }
+
+	/**
+	 * @use {@link #createMetadata()})
+	 */
+	@Override
+	public Set<FileLocalContentMetadata> getMetadataSet() {
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * @use {@link #createMetadata()})
+	 */
+	@Override
+	public Iterator<FileLocalContentMetadata> getMetadataIterator() {
+		throw new UnsupportedOperationException();
+	}
+
+	public void delete() {
+		removeFile();
+		for (FileLocalContentMetadata metadata : super.getMetadataSet()) {
+			metadata.delete();
+		}
+		removeRootDomainObject();
+		deleteDomainObject();
+	}
 }

@@ -15,16 +15,15 @@ import net.sourceforge.fenixedu.domain.degree.enrollment.NotNeedToEnrollInCurric
 
 public class InsertNotNeedToEnrollInCurricularCourses extends FenixService {
 
-    public void run(Integer studentCurricularPlanID, Integer[] curricularCoursesID) {
-	StudentCurricularPlan scp = rootDomainObject.readStudentCurricularPlanByOID(studentCurricularPlanID);
+	public void run(Integer studentCurricularPlanID, Integer[] curricularCoursesID) {
+		StudentCurricularPlan scp = rootDomainObject.readStudentCurricularPlanByOID(studentCurricularPlanID);
 
-	for (int iter = 0; iter < curricularCoursesID.length; iter++) {
-	    Integer curricularCourseID = curricularCoursesID[iter];
-	    CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(curricularCourseID);
-	    NotNeedToEnrollInCurricularCourse notNeedToEnrollInCurricularCourse = new NotNeedToEnrollInCurricularCourse();
-	    notNeedToEnrollInCurricularCourse.setCurricularCourse(curricularCourse);
-	    notNeedToEnrollInCurricularCourse.setStudentCurricularPlan(scp);
+		for (Integer curricularCourseID : curricularCoursesID) {
+			CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(curricularCourseID);
+			NotNeedToEnrollInCurricularCourse notNeedToEnrollInCurricularCourse = new NotNeedToEnrollInCurricularCourse();
+			notNeedToEnrollInCurricularCourse.setCurricularCourse(curricularCourse);
+			notNeedToEnrollInCurricularCourse.setStudentCurricularPlan(scp);
+		}
 	}
-    }
 
 }

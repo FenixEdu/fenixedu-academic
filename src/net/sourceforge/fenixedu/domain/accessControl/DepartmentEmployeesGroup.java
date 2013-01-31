@@ -12,44 +12,47 @@ import net.sourceforge.fenixedu.domain.accessControl.groups.language.operators.I
 
 public class DepartmentEmployeesGroup extends DomainBackedGroup<Department> {
 
-    /**
-     * Serial version id.
-     */
-    private static final long serialVersionUID = 1L;
+	/**
+	 * Serial version id.
+	 */
+	private static final long serialVersionUID = 1L;
 
-    public DepartmentEmployeesGroup(Department department) {
-	super(department);
-    }
-
-    @Override
-    public Set<Person> getElements() {
-	Set<Person> result = new HashSet<Person>();
-
-	for (Employee employee : getObject().getAllCurrentActiveWorkingEmployees()) {
-	    result.add(employee.getPerson());
+	public DepartmentEmployeesGroup(Department department) {
+		super(department);
 	}
 
-	return result;
-    }
+	@Override
+	public Set<Person> getElements() {
+		Set<Person> result = new HashSet<Person>();
 
-    @Override
-    protected Argument[] getExpressionArguments() {
-	return new Argument[] { new IdOperator(getObject()) };
-    }
+		for (Employee employee : getObject().getAllCurrentActiveWorkingEmployees()) {
+			result.add(employee.getPerson());
+		}
 
-    public static class Builder implements GroupBuilder {
-
-	public Group build(Object[] arguments) {
-	    return new DepartmentEmployeesGroup((Department) arguments[0]);
+		return result;
 	}
 
-	public int getMinArguments() {
-	    return 1;
+	@Override
+	protected Argument[] getExpressionArguments() {
+		return new Argument[] { new IdOperator(getObject()) };
 	}
 
-	public int getMaxArguments() {
-	    return 1;
-	}
+	public static class Builder implements GroupBuilder {
 
-    }
+		@Override
+		public Group build(Object[] arguments) {
+			return new DepartmentEmployeesGroup((Department) arguments[0]);
+		}
+
+		@Override
+		public int getMinArguments() {
+			return 1;
+		}
+
+		@Override
+		public int getMaxArguments() {
+			return 1;
+		}
+
+	}
 }

@@ -13,38 +13,38 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoProfessorship;
  * @author jpvl
  */
 public class ProfessorshipSupportLessonsDTO extends DataTranferObject {
-    InfoProfessorship infoProfessorship;
+	InfoProfessorship infoProfessorship;
 
-    List infoSupportLessonList;
+	List infoSupportLessonList;
 
-    /**
-     * @return Returns the infoProfessorShip.
-     */
-    public InfoProfessorship getInfoProfessorship() {
-	return this.infoProfessorship;
-    }
+	/**
+	 * @return Returns the infoProfessorShip.
+	 */
+	public InfoProfessorship getInfoProfessorship() {
+		return this.infoProfessorship;
+	}
 
-    /**
-     * @return Returns the infoSupportLessonList.
-     */
-    public List getInfoSupportLessonList() {
-	return this.infoSupportLessonList;
-    }
+	/**
+	 * @return Returns the infoSupportLessonList.
+	 */
+	public List getInfoSupportLessonList() {
+		return this.infoSupportLessonList;
+	}
 
-    /**
-     * @param infoProfessorShip
-     *            The infoProfessorShip to set.
-     */
-    public void setInfoProfessorship(InfoProfessorship infoProfessorShip) {
-	this.infoProfessorship = infoProfessorShip;
-    }
+	/**
+	 * @param infoProfessorShip
+	 *            The infoProfessorShip to set.
+	 */
+	public void setInfoProfessorship(InfoProfessorship infoProfessorShip) {
+		this.infoProfessorship = infoProfessorShip;
+	}
 
-    /**
-     * @param infoSupportLessonList
-     *            The infoSupportLessonList to set.
-     */
-    public void setInfoSupportLessonList(List infoSupportLessonList) {
-	this.infoSupportLessonList = infoSupportLessonList;
-    }
+	/**
+	 * @param infoSupportLessonList
+	 *            The infoSupportLessonList to set.
+	 */
+	public void setInfoSupportLessonList(List infoSupportLessonList) {
+		this.infoSupportLessonList = infoSupportLessonList;
+	}
 
 }

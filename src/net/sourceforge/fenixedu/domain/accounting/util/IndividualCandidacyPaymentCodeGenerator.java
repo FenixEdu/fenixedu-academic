@@ -23,79 +23,79 @@ import org.apache.commons.lang.StringUtils;
  */
 public class IndividualCandidacyPaymentCodeGenerator extends PaymentCodeGenerator {
 
-    public static Comparator<PaymentCode> COMPARATOR_BY_PAYMENT_SEQUENTIAL_DIGITS = new Comparator<PaymentCode>() {
+	public static Comparator<PaymentCode> COMPARATOR_BY_PAYMENT_SEQUENTIAL_DIGITS = new Comparator<PaymentCode>() {
+		@Override
+		public int compare(PaymentCode leftPaymentCode, PaymentCode rightPaymentCode) {
+			final String leftSequentialNumber = getSequentialNumber(leftPaymentCode);
+			final String rightSequentialNumber = getSequentialNumber(rightPaymentCode);
+
+			int comparationResult = leftSequentialNumber.compareTo(rightSequentialNumber);
+
+			return (comparationResult == 0) ? leftPaymentCode.getIdInternal().compareTo(rightPaymentCode.getIdInternal()) : comparationResult;
+		}
+	};
+
+	private static final String CODE_FILLER = "0";
+	private static final int NUM_TYPE_DIGITS = 2;
+	private static final int NUM_CONTROL_DIGITS = 2;
+	private static final int NUM_SEQUENTIAL_NUMBERS = 4;
+	private static final String START = "8";
+
 	@Override
-	public int compare(PaymentCode leftPaymentCode, PaymentCode rightPaymentCode) {
-	    final String leftSequentialNumber = getSequentialNumber(leftPaymentCode);
-	    final String rightSequentialNumber = getSequentialNumber(rightPaymentCode);
-
-	    int comparationResult = leftSequentialNumber.compareTo(rightSequentialNumber);
-
-	    return (comparationResult == 0) ? leftPaymentCode.getIdInternal().compareTo(rightPaymentCode.getIdInternal())
-		    : comparationResult;
+	public boolean canGenerateNewCode(PaymentCodeType paymentCodeType, Person person) {
+		final PaymentCode lastPaymentCode = findLastPaymentCode(paymentCodeType);
+		return lastPaymentCode == null ? true : Integer.valueOf(getSequentialNumber(lastPaymentCode)) < 9999;
 	}
-    };
 
-    private static final String CODE_FILLER = "0";
-    private static final int NUM_TYPE_DIGITS = 2;
-    private static final int NUM_CONTROL_DIGITS = 2;
-    private static final int NUM_SEQUENTIAL_NUMBERS = 4;
-    private static final String START = "8";
+	private PaymentCode findLastPaymentCode(PaymentCodeType paymentCodeType) {
+		final List<IndividualCandidacyPaymentCode> individualCandidacyPaymentCodes =
+				getAllIndividualCandidacyPaymentCodesForType(paymentCodeType);
+		return individualCandidacyPaymentCodes.isEmpty() ? null : Collections.max(individualCandidacyPaymentCodes,
+				COMPARATOR_BY_PAYMENT_SEQUENTIAL_DIGITS);
+	}
 
-    @Override
-    public boolean canGenerateNewCode(PaymentCodeType paymentCodeType, Person person) {
-	final PaymentCode lastPaymentCode = findLastPaymentCode(paymentCodeType);
-	return lastPaymentCode == null ? true : Integer.valueOf(getSequentialNumber(lastPaymentCode)) < 9999;
-    }
+	private List<IndividualCandidacyPaymentCode> getAllIndividualCandidacyPaymentCodesForType(
+			final PaymentCodeType paymentCodeType) {
+		Set<PaymentCode> allPaymentCodes = RootDomainObject.getInstance().getPaymentCodesSet();
 
-    private PaymentCode findLastPaymentCode(PaymentCodeType paymentCodeType) {
-	final List<IndividualCandidacyPaymentCode> individualCandidacyPaymentCodes = getAllIndividualCandidacyPaymentCodesForType(paymentCodeType);
-	return individualCandidacyPaymentCodes.isEmpty() ? null : Collections.max(individualCandidacyPaymentCodes,
-		COMPARATOR_BY_PAYMENT_SEQUENTIAL_DIGITS);
-    }
+		List<IndividualCandidacyPaymentCode> outputList = new ArrayList<IndividualCandidacyPaymentCode>();
+		CollectionUtils.select(allPaymentCodes, new Predicate() {
 
-    private List<IndividualCandidacyPaymentCode> getAllIndividualCandidacyPaymentCodesForType(
-	    final PaymentCodeType paymentCodeType) {
-	Set<PaymentCode> allPaymentCodes = RootDomainObject.getInstance().getPaymentCodesSet();
+			@Override
+			public boolean evaluate(Object arg0) {
+				PaymentCode paymentCode = (PaymentCode) arg0;
+				return paymentCodeType.equals(paymentCode.getType());
+			}
 
-	List<IndividualCandidacyPaymentCode> outputList = new ArrayList<IndividualCandidacyPaymentCode>();
-	CollectionUtils.select(allPaymentCodes, new Predicate() {
+		}, outputList);
 
-	    @Override
-	    public boolean evaluate(Object arg0) {
-		PaymentCode paymentCode = (PaymentCode) arg0;
-		return paymentCodeType.equals(paymentCode.getType());
-	    }
+		return outputList;
+	}
 
-	}, outputList);
+	@Override
+	public String generateNewCodeFor(PaymentCodeType paymentCodeType, Person person) {
+		final PaymentCode lastPaymentCode = findLastPaymentCode(paymentCodeType);
+		int nextSequentialNumber = lastPaymentCode == null ? 0 : Integer.valueOf(getSequentialNumber(lastPaymentCode)) + 1;
 
-	return outputList;
-    }
+		String sequentialNumberPadded =
+				StringUtils.leftPad(String.valueOf(nextSequentialNumber), NUM_SEQUENTIAL_NUMBERS, CODE_FILLER);
+		String typeDigitsPadded =
+				StringUtils.leftPad(String.valueOf(paymentCodeType.getTypeDigit()), NUM_TYPE_DIGITS, CODE_FILLER);
+		String controDigitsPadded =
+				StringUtils.leftPad(String.valueOf((new Random()).nextInt(99)), NUM_CONTROL_DIGITS, CODE_FILLER);
 
-    @Override
-    public String generateNewCodeFor(PaymentCodeType paymentCodeType, Person person) {
-	final PaymentCode lastPaymentCode = findLastPaymentCode(paymentCodeType);
-	int nextSequentialNumber = lastPaymentCode == null ? 0 : Integer.valueOf(getSequentialNumber(lastPaymentCode)) + 1;
+		return START + sequentialNumberPadded + typeDigitsPadded + controDigitsPadded;
+	}
 
-	String sequentialNumberPadded = StringUtils.leftPad(String.valueOf(nextSequentialNumber), NUM_SEQUENTIAL_NUMBERS,
-		CODE_FILLER);
-	String typeDigitsPadded = StringUtils.leftPad(String.valueOf(paymentCodeType.getTypeDigit()), NUM_TYPE_DIGITS,
-		CODE_FILLER);
-	String controDigitsPadded = StringUtils.leftPad(String.valueOf((new Random()).nextInt(99)), NUM_CONTROL_DIGITS,
-		CODE_FILLER);
+	private static String getSequentialNumber(PaymentCode paymentCode) {
+		String sequentialNumber =
+				paymentCode.getCode().substring(1, paymentCode.getCode().length() - NUM_CONTROL_DIGITS - NUM_TYPE_DIGITS);
 
-	return START + sequentialNumberPadded + typeDigitsPadded + controDigitsPadded;
-    }
+		return sequentialNumber;
+	}
 
-    private static String getSequentialNumber(PaymentCode paymentCode) {
-	String sequentialNumber = paymentCode.getCode().substring(1,
-		paymentCode.getCode().length() - NUM_CONTROL_DIGITS - NUM_TYPE_DIGITS);
-
-	return sequentialNumber;
-    }
-
-    @Override
-    public boolean isCodeMadeByThisFactory(PaymentCode paymentCode) {
-	return paymentCode.getCode().startsWith(START);
-    }
+	@Override
+	public boolean isCodeMadeByThisFactory(PaymentCode paymentCode) {
+		return paymentCode.getCode().startsWith(START);
+	}
 }

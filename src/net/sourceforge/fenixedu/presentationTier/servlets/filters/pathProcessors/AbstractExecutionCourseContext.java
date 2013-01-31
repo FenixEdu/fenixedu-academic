@@ -7,30 +7,33 @@ import net.sourceforge.fenixedu.domain.Site;
 
 public abstract class AbstractExecutionCourseContext extends ProcessingContext implements ExecutionCourseContext {
 
-    private String contexURI;
+	private String contexURI;
 
-    public AbstractExecutionCourseContext(ProcessingContext parent, String contextURI) {
-	super(parent);
+	public AbstractExecutionCourseContext(ProcessingContext parent, String contextURI) {
+		super(parent);
 
-	this.contexURI = contextURI;
-    }
-
-    public ExecutionCourse getExecutionCourse() {
-	List<ExecutionCourse> executionCourses = getExecutionCourses();
-
-	if (executionCourses.isEmpty()) {
-	    return null;
-	} else {
-	    return executionCourses.get(executionCourses.size() - 1);
+		this.contexURI = contextURI;
 	}
-    }
 
-    public Site getSite() {
-	return getExecutionCourse().getSite();
-    }
+	@Override
+	public ExecutionCourse getExecutionCourse() {
+		List<ExecutionCourse> executionCourses = getExecutionCourses();
 
-    public String getSiteBasePath() {
-	return String.format(this.contexURI, "%s", getExecutionCourse().getIdInternal());
-    }
+		if (executionCourses.isEmpty()) {
+			return null;
+		} else {
+			return executionCourses.get(executionCourses.size() - 1);
+		}
+	}
+
+	@Override
+	public Site getSite() {
+		return getExecutionCourse().getSite();
+	}
+
+	@Override
+	public String getSiteBasePath() {
+		return String.format(this.contexURI, "%s", getExecutionCourse().getIdInternal());
+	}
 
 }

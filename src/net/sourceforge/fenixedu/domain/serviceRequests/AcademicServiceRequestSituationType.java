@@ -7,40 +7,40 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public enum AcademicServiceRequestSituationType {
 
-    NEW,
+	NEW,
 
-    PROCESSING,
+	PROCESSING,
 
-    SENT_TO_EXTERNAL_ENTITY,
+	SENT_TO_EXTERNAL_ENTITY,
 
-    RECEIVED_FROM_EXTERNAL_ENTITY,
+	RECEIVED_FROM_EXTERNAL_ENTITY,
 
-    CONCLUDED,
+	CONCLUDED,
 
-    DELIVERED,
+	DELIVERED,
 
-    REJECTED,
+	REJECTED,
 
-    CANCELLED;
+	CANCELLED;
 
-    public String getName() {
-	return name();
-    }
+	public String getName() {
+		return name();
+	}
 
-    public String getQualifiedName() {
-	return AcademicServiceRequestSituationType.class.getSimpleName() + "." + name();
-    }
+	public String getQualifiedName() {
+		return AcademicServiceRequestSituationType.class.getSimpleName() + "." + name();
+	}
 
-    public String getFullyQualifiedName() {
-	return AcademicServiceRequestSituationType.class.getName() + "." + name();
-    }
+	public String getFullyQualifiedName() {
+		return AcademicServiceRequestSituationType.class.getName() + "." + name();
+	}
 
-    public String getLocalizedName() {
-	return getLocalizedName(Language.getLocale());
-    }
+	public String getLocalizedName() {
+		return getLocalizedName(Language.getLocale());
+	}
 
-    public String getLocalizedName(final Locale locale) {
-	return ResourceBundle.getBundle("resources.EnumerationResources", locale).getString(getQualifiedName());
-    }
+	public String getLocalizedName(final Locale locale) {
+		return ResourceBundle.getBundle("resources.EnumerationResources", locale).getString(getQualifiedName());
+	}
 
 }

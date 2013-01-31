@@ -14,37 +14,39 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
 
 public class DegreeCurricularPlanStrategyFactory implements IDegreeCurricularPlanStrategyFactory {
 
-    private static DegreeCurricularPlanStrategyFactory instance = null;
+	private static DegreeCurricularPlanStrategyFactory instance = null;
 
-    private DegreeCurricularPlanStrategyFactory() {
-    }
-
-    public static synchronized DegreeCurricularPlanStrategyFactory getInstance() {
-	if (instance == null) {
-	    instance = new DegreeCurricularPlanStrategyFactory();
+	private DegreeCurricularPlanStrategyFactory() {
 	}
-	return instance;
-    }
 
-    public static synchronized void resetInstance() {
-	if (instance != null) {
-	    instance = null;
+	public static synchronized DegreeCurricularPlanStrategyFactory getInstance() {
+		if (instance == null) {
+			instance = new DegreeCurricularPlanStrategyFactory();
+		}
+		return instance;
 	}
-    }
 
-    public IDegreeCurricularPlanStrategy getDegreeCurricularPlanStrategy(DegreeCurricularPlan degreeCurricularPlan) {
-
-	IDegreeCurricularPlanStrategy strategyInstance = null;
-
-	if (degreeCurricularPlan == null)
-	    throw new IllegalArgumentException("Must initialize Degree Curricular Plan!");
-
-	if (degreeCurricularPlan.getDegree().getDegreeType().equals(DegreeType.DEGREE)) {
-	    strategyInstance = new DegreeCurricularPlanStrategy(degreeCurricularPlan);
-	} else if (degreeCurricularPlan.getDegree().getDegreeType().equals(DegreeType.MASTER_DEGREE)) {
-	    strategyInstance = new MasterDegreeCurricularPlanStrategy(degreeCurricularPlan);
+	public static synchronized void resetInstance() {
+		if (instance != null) {
+			instance = null;
+		}
 	}
-	return strategyInstance;
-    }
+
+	@Override
+	public IDegreeCurricularPlanStrategy getDegreeCurricularPlanStrategy(DegreeCurricularPlan degreeCurricularPlan) {
+
+		IDegreeCurricularPlanStrategy strategyInstance = null;
+
+		if (degreeCurricularPlan == null) {
+			throw new IllegalArgumentException("Must initialize Degree Curricular Plan!");
+		}
+
+		if (degreeCurricularPlan.getDegree().getDegreeType().equals(DegreeType.DEGREE)) {
+			strategyInstance = new DegreeCurricularPlanStrategy(degreeCurricularPlan);
+		} else if (degreeCurricularPlan.getDegree().getDegreeType().equals(DegreeType.MASTER_DEGREE)) {
+			strategyInstance = new MasterDegreeCurricularPlanStrategy(degreeCurricularPlan);
+		}
+		return strategyInstance;
+	}
 
 }

@@ -5,65 +5,65 @@ import java.io.Serializable;
 import net.sourceforge.fenixedu.domain.Teacher;
 
 public class TutorBean implements Serializable {
-    private Teacher teacher;
+	private Teacher teacher;
 
-    private String teacherId;
+	private String teacherId;
 
-    private String teacherName;
+	private String teacherName;
 
-    private Integer executionDegreeID;
+	private Integer executionDegreeID;
 
-    private Integer degreeCurricularPlanID;
+	private Integer degreeCurricularPlanID;
 
-    private TutorBean() {
-    }
+	private TutorBean() {
+	}
 
-    public TutorBean(Integer executionDegreeID, Integer degreeCurricularPlanID, Teacher teacher) {
-	this();
-	setExecutionDegreeID(executionDegreeID);
-	setDegreeCurricularPlanID(degreeCurricularPlanID);
-	setTeacher(teacher);
-	setTeacherId(teacher.getPerson().getIstUsername());
-	setTeacherName(teacher.getPerson().getName());
-    }
+	public TutorBean(Integer executionDegreeID, Integer degreeCurricularPlanID, Teacher teacher) {
+		this();
+		setExecutionDegreeID(executionDegreeID);
+		setDegreeCurricularPlanID(degreeCurricularPlanID);
+		setTeacher(teacher);
+		setTeacherId(teacher.getPerson().getIstUsername());
+		setTeacherName(teacher.getPerson().getName());
+	}
 
-    public Integer getDegreeCurricularPlanID() {
-	return degreeCurricularPlanID;
-    }
+	public Integer getDegreeCurricularPlanID() {
+		return degreeCurricularPlanID;
+	}
 
-    public void setDegreeCurricularPlanID(Integer degreeCurricularPlanID) {
-	this.degreeCurricularPlanID = degreeCurricularPlanID;
-    }
+	public void setDegreeCurricularPlanID(Integer degreeCurricularPlanID) {
+		this.degreeCurricularPlanID = degreeCurricularPlanID;
+	}
 
-    public Integer getExecutionDegreeID() {
-	return executionDegreeID;
-    }
+	public Integer getExecutionDegreeID() {
+		return executionDegreeID;
+	}
 
-    public void setExecutionDegreeID(Integer executionDegreeID) {
-	this.executionDegreeID = executionDegreeID;
-    }
+	public void setExecutionDegreeID(Integer executionDegreeID) {
+		this.executionDegreeID = executionDegreeID;
+	}
 
-    public Teacher getTeacher() {
-	return (teacher);
-    }
+	public Teacher getTeacher() {
+		return (teacher);
+	}
 
-    public void setTeacher(Teacher teacher) {
-	this.teacher = teacher;
-    }
+	public void setTeacher(Teacher teacher) {
+		this.teacher = teacher;
+	}
 
-    public String getTeacherId() {
-	return teacherId;
-    }
+	public String getTeacherId() {
+		return teacherId;
+	}
 
-    public void setTeacherId(String string) {
-	this.teacherId = string;
-    }
+	public void setTeacherId(String string) {
+		this.teacherId = string;
+	}
 
-    public String getTeacherName() {
-	return teacherName;
-    }
+	public String getTeacherName() {
+		return teacherName;
+	}
 
-    public void setTeacherName(String teacherName) {
-	this.teacherName = teacherName;
-    }
+	public void setTeacherName(String teacherName) {
+		this.teacherName = teacherName;
+	}
 }

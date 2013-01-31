@@ -23,20 +23,28 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
  * @author Barbosa
  * @author Pica
  */
-@Mapping(module = "facultyAdmOffice", path = "/editGrantType", input = "/editGrantType.do?page=0&method=prepareEditGrantTypeForm", attribute = "editGrantTypeForm", formBean = "editGrantTypeForm", scope = "request", parameter = "method")
+@Mapping(
+		module = "facultyAdmOffice",
+		path = "/editGrantType",
+		input = "/editGrantType.do?page=0&method=prepareEditGrantTypeForm",
+		attribute = "editGrantTypeForm",
+		formBean = "editGrantTypeForm",
+		scope = "request",
+		parameter = "method")
 @Forwards(value = {
-	@Forward(name = "manage-grant-type", path = "/manageGrantType.do?method=prepareManageGrantTypeForm"),
-	@Forward(name = "edit-grant-type", path = "/facultyAdmOffice/grant/contract/editGrantType.jsp", tileProperties = @Tile(title = "private.teachingstaffandresearcher.miscellaneousmanagement.typesofscholarship")) })
+		@Forward(name = "manage-grant-type", path = "/manageGrantType.do?method=prepareManageGrantTypeForm"),
+		@Forward(name = "edit-grant-type", path = "/facultyAdmOffice/grant/contract/editGrantType.jsp", tileProperties = @Tile(
+				title = "private.teachingstaffandresearcher.miscellaneousmanagement.typesofscholarship")) })
 public class EditGrantTypeAction extends FenixDispatchAction {
 
-    public ActionForward prepareEditGrantTypeForm(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-	Integer idGrantType = getIntegerFromRequest(request, "idGrantType");
-	if (idGrantType != null) {
-	    GrantType grantType = rootDomainObject.readGrantTypeByOID(idGrantType);
-	    request.setAttribute("grantType", grantType);
+	public ActionForward prepareEditGrantTypeForm(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		Integer idGrantType = getIntegerFromRequest(request, "idGrantType");
+		if (idGrantType != null) {
+			GrantType grantType = rootDomainObject.readGrantTypeByOID(idGrantType);
+			request.setAttribute("grantType", grantType);
+		}
+		return mapping.findForward("edit-grant-type");
 	}
-	return mapping.findForward("edit-grant-type");
-    }
 
 }

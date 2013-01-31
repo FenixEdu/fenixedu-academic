@@ -22,21 +22,21 @@ import pt.ist.fenixWebFramework.security.UserView;
  */
 public class VisualizeCandidateAction extends FenixAction {
 
-    @Override
-    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-	    throws Exception {
+	@Override
+	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
 
-	IUserView userView = UserView.getUser();
+		IUserView userView = UserView.getUser();
 
-	Integer candidateID = Integer.valueOf(request.getParameter("candidateID"));
-	request.setAttribute("candidateID", candidateID);
+		Integer candidateID = Integer.valueOf(request.getParameter("candidateID"));
+		request.setAttribute("candidateID", candidateID);
 
-	InfoMasterDegreeCandidate masterDegreeCandidate = ReadMasterDegreeCandidateByID.run(candidateID);
+		InfoMasterDegreeCandidate masterDegreeCandidate = ReadMasterDegreeCandidateByID.run(candidateID);
 
-	request.setAttribute(PresentationConstants.MASTER_DEGREE_CANDIDATE, masterDegreeCandidate);
+		request.setAttribute(PresentationConstants.MASTER_DEGREE_CANDIDATE, masterDegreeCandidate);
 
-	return mapping.findForward("Success");
+		return mapping.findForward("Success");
 
-    }
+	}
 
 }

@@ -8,15 +8,15 @@ import pt.ist.fenixWebFramework.renderers.converters.EnumConverter;
 
 public class ResearchContractResearchContractTypeProvider implements DataProvider {
 
-    @Override
-    public Object provide(Object source, Object currentValue) {
-	return Arrays.asList(net.sourceforge.fenixedu.domain.organizationalStructure.ResearchContract.ResearchContractType
-		.values());
-    }
+	@Override
+	public Object provide(Object source, Object currentValue) {
+		return Arrays.asList(net.sourceforge.fenixedu.domain.organizationalStructure.ResearchContract.ResearchContractType
+				.values());
+	}
 
-    @Override
-    public Converter getConverter() {
-	return new EnumConverter();
-    }
+	@Override
+	public Converter getConverter() {
+		return new EnumConverter();
+	}
 
 }

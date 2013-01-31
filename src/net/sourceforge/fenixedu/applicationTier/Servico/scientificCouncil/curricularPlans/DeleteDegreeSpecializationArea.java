@@ -10,23 +10,23 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class DeleteDegreeSpecializationArea extends FenixService {
 
-    /**
-     * Must ensure "REQUIRED" slots are filled
-     * 
-     * @param degree
-     * @param date
-     * @throws FenixServiceException
-     */
-    @Checked("RolePredicates.SCIENTIFIC_COUNCIL_PREDICATE")
-    @Service
-    public static void run(DegreeOfficialPublication degreeOfficialPublication, DegreeSpecializationArea degreeSpecializationArea)
-	    throws FenixServiceException {
+	/**
+	 * Must ensure "REQUIRED" slots are filled
+	 * 
+	 * @param degree
+	 * @param date
+	 * @throws FenixServiceException
+	 */
+	@Checked("RolePredicates.SCIENTIFIC_COUNCIL_PREDICATE")
+	@Service
+	public static void run(DegreeOfficialPublication degreeOfficialPublication, DegreeSpecializationArea degreeSpecializationArea)
+			throws FenixServiceException {
 
-	if (degreeOfficialPublication == null || degreeSpecializationArea == null) {
-	    throw new InvalidArgumentsServiceException();
+		if (degreeOfficialPublication == null || degreeSpecializationArea == null) {
+			throw new InvalidArgumentsServiceException();
+		}
+
+		degreeSpecializationArea.delete();
 	}
-
-	degreeSpecializationArea.delete();
-    }
 
 }

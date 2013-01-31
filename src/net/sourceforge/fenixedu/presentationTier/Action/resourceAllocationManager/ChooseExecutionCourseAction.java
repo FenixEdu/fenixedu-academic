@@ -33,36 +33,37 @@ import org.apache.struts.validator.DynaValidatorForm;
  */
 public class ChooseExecutionCourseAction extends FenixDateAndTimeAndClassAndExecutionDegreeAndCurricularYearContextAction {
 
-    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-	    throws Exception {
+	@Override
+	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
 
-	super.execute(mapping, form, request, response);
+		super.execute(mapping, form, request, response);
 
-	DynaValidatorForm chooseCourseForm = (DynaValidatorForm) form;
+		DynaValidatorForm chooseCourseForm = (DynaValidatorForm) form;
 
-	final InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request
-		.getAttribute(PresentationConstants.EXECUTION_PERIOD);
+		final InfoExecutionPeriod infoExecutionPeriod =
+				(InfoExecutionPeriod) request.getAttribute(PresentationConstants.EXECUTION_PERIOD);
 
-	final String courseInitials = (String) chooseCourseForm.get("courseInitials");
-	Integer page = (Integer) chooseCourseForm.get("page");
+		final String courseInitials = (String) chooseCourseForm.get("courseInitials");
+		Integer page = (Integer) chooseCourseForm.get("page");
 
-	if (courseInitials != null && !courseInitials.equals("")) {
-	    final ExecutionSemester executionSemester = RootDomainObject.getInstance().readExecutionSemesterByOID(
-		    infoExecutionPeriod.getIdInternal());
-	    final ExecutionCourse executionCourse = executionSemester.getExecutionCourseByInitials(courseInitials);
-	    final InfoExecutionCourse infoCourse = InfoExecutionCourse.newInfoFromDomain(executionCourse);
+		if (courseInitials != null && !courseInitials.equals("")) {
+			final ExecutionSemester executionSemester =
+					RootDomainObject.getInstance().readExecutionSemesterByOID(infoExecutionPeriod.getIdInternal());
+			final ExecutionCourse executionCourse = executionSemester.getExecutionCourseByInitials(courseInitials);
+			final InfoExecutionCourse infoCourse = InfoExecutionCourse.newInfoFromDomain(executionCourse);
 
-	    request.setAttribute(PresentationConstants.EXECUTION_COURSE, infoCourse);
-	    return mapping.findForward("forwardChoose");
+			request.setAttribute(PresentationConstants.EXECUTION_COURSE, infoCourse);
+			return mapping.findForward("forwardChoose");
+		}
+		if (page != null && page.intValue() > 1) {
+			request.removeAttribute(PresentationConstants.EXECUTION_COURSE);
+			ActionErrors actionErrors = new ActionErrors();
+			actionErrors.add("label.choose.executionCourse", new ActionError("label.choose.executionCourse"));
+			saveErrors(request, actionErrors);
+		}
+		return mapping.findForward("showForm");
+
 	}
-	if (page != null && page.intValue() > 1) {
-	    request.removeAttribute(PresentationConstants.EXECUTION_COURSE);
-	    ActionErrors actionErrors = new ActionErrors();
-	    actionErrors.add("label.choose.executionCourse", new ActionError("label.choose.executionCourse"));
-	    saveErrors(request, actionErrors);
-	}
-	return mapping.findForward("showForm");
-
-    }
 
 }

@@ -15,76 +15,77 @@ import dml.runtime.RelationAdapter;
 
 public class UnitSiteLink extends UnitSiteLink_Base {
 
-    private static final class CheckLinkAuthorization extends RelationAdapter<UnitSiteLink, UnitSite> {
-	@Override
-	public void beforeAdd(UnitSiteLink link, UnitSite site) {
-	    super.beforeAdd(link, site);
+	private static final class CheckLinkAuthorization extends RelationAdapter<UnitSiteLink, UnitSite> {
+		@Override
+		public void beforeAdd(UnitSiteLink link, UnitSite site) {
+			super.beforeAdd(link, site);
 
-	    if (link != null && site != null) {
-		if (!UnitSitePredicates.managers.evaluate(site)) {
-		    throw new DomainException("unitSite.link.notAuthorized");
+			if (link != null && site != null) {
+				if (!UnitSitePredicates.managers.evaluate(site)) {
+					throw new DomainException("unitSite.link.notAuthorized");
+				}
+			}
 		}
-	    }
-	}
-    }
-
-    static {
-	UnitSiteTopLinks.addListener(new CheckLinkAuthorization());
-	UnitSiteFooterLinks.addListener(new CheckLinkAuthorization());
-    }
-
-    public static Comparator<UnitSiteLink> COMPARATOR_BY_ORDER = new Comparator<UnitSiteLink>() {
-	private ComparatorChain chain = null;
-
-	public int compare(UnitSiteLink o1, UnitSiteLink o2) {
-	    if (this.chain == null) {
-		chain = new ComparatorChain();
-
-		chain.addComparator(new BeanComparator("linkOrder"));
-		chain.addComparator(new BeanComparator("label.content"));
-		chain.addComparator(DomainObject.COMPARATOR_BY_ID);
-	    }
-
-	    return chain.compare(o1, o2);
 	}
 
-    };
+	static {
+		UnitSiteTopLinks.addListener(new CheckLinkAuthorization());
+		UnitSiteFooterLinks.addListener(new CheckLinkAuthorization());
+	}
 
-    public static InverseOrderedRelationAdapter<UnitSiteLink, UnitSite> TOP_ORDER_ADAPTER;
-    public static InverseOrderedRelationAdapter<UnitSiteLink, UnitSite> FOOTER_ORDER_ADAPTER;
+	public static Comparator<UnitSiteLink> COMPARATOR_BY_ORDER = new Comparator<UnitSiteLink>() {
+		private ComparatorChain chain = null;
 
-    static {
-	TOP_ORDER_ADAPTER = new InverseOrderedRelationAdapter<UnitSiteLink, UnitSite>("linkOrder", "topLinks");
-	FOOTER_ORDER_ADAPTER = new InverseOrderedRelationAdapter<UnitSiteLink, UnitSite>("linkOrder", "footerLinks");
+		@Override
+		public int compare(UnitSiteLink o1, UnitSiteLink o2) {
+			if (this.chain == null) {
+				chain = new ComparatorChain();
 
-	UnitSiteTopLinks.addListener(TOP_ORDER_ADAPTER);
-	UnitSiteFooterLinks.addListener(FOOTER_ORDER_ADAPTER);
-    }
+				chain.addComparator(new BeanComparator("linkOrder"));
+				chain.addComparator(new BeanComparator("label.content"));
+				chain.addComparator(DomainObject.COMPARATOR_BY_ID);
+			}
 
-    public UnitSiteLink() {
-	super();
+			return chain.compare(o1, o2);
+		}
 
-	setRootDomainObject(RootDomainObject.getInstance());
-    }
+	};
 
-    @Override
-    @Checked("UnitSitePredicates.linkSiteManagers")
-    public void setUrl(String url) {
-	super.setUrl(url);
-    }
+	public static InverseOrderedRelationAdapter<UnitSiteLink, UnitSite> TOP_ORDER_ADAPTER;
+	public static InverseOrderedRelationAdapter<UnitSiteLink, UnitSite> FOOTER_ORDER_ADAPTER;
 
-    @Override
-    @Checked("UnitSitePredicates.linkSiteManagers")
-    public void setLabel(MultiLanguageString label) {
-	super.setLabel(label);
-    }
+	static {
+		TOP_ORDER_ADAPTER = new InverseOrderedRelationAdapter<UnitSiteLink, UnitSite>("linkOrder", "topLinks");
+		FOOTER_ORDER_ADAPTER = new InverseOrderedRelationAdapter<UnitSiteLink, UnitSite>("linkOrder", "footerLinks");
 
-    public void delete() {
-	removeRootDomainObject();
-	removeTopUnitSite();
-	removeFooterUnitSite();
+		UnitSiteTopLinks.addListener(TOP_ORDER_ADAPTER);
+		UnitSiteFooterLinks.addListener(FOOTER_ORDER_ADAPTER);
+	}
 
-	deleteDomainObject();
-    }
+	public UnitSiteLink() {
+		super();
+
+		setRootDomainObject(RootDomainObject.getInstance());
+	}
+
+	@Override
+	@Checked("UnitSitePredicates.linkSiteManagers")
+	public void setUrl(String url) {
+		super.setUrl(url);
+	}
+
+	@Override
+	@Checked("UnitSitePredicates.linkSiteManagers")
+	public void setLabel(MultiLanguageString label) {
+		super.setLabel(label);
+	}
+
+	public void delete() {
+		removeRootDomainObject();
+		removeTopUnitSite();
+		removeFooterUnitSite();
+
+		deleteDomainObject();
+	}
 
 }

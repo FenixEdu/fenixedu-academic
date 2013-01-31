@@ -4,17 +4,17 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 public class HashCodeForEmailAndProcessAlreadyBounded extends DomainException {
 
-    /**
+	/**
      * 
      */
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    public HashCodeForEmailAndProcessAlreadyBounded() {
+	public HashCodeForEmailAndProcessAlreadyBounded() {
 
-    }
+	}
 
-    public HashCodeForEmailAndProcessAlreadyBounded(String key, String... args) {
-	super(key, args);
-    }
+	public HashCodeForEmailAndProcessAlreadyBounded(String key, String... args) {
+		super(key, args);
+	}
 
 }

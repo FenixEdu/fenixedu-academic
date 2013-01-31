@@ -28,125 +28,117 @@ import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(module = "teacher", path = "/evaluation/vigilancy/vigilantsForEvaluation", scope = "request", parameter = "method")
-@Forwards(value = {
-		@Forward(name = "listVigilantsForEvaluation", path = "list-vigilants-for-evaluation"),
+@Forwards(value = { @Forward(name = "listVigilantsForEvaluation", path = "list-vigilants-for-evaluation"),
 		@Forward(name = "editReportForEvaluation", path = "edit-report-for-evaluation") })
 public class ListVigilanciesForEvaluationDispatchAction extends FenixDispatchAction {
 
-    private void setState(HttpServletRequest request) {
-	String executionCourseID = request.getParameter("executionCourseID");
-	request.setAttribute("executionCourseID", executionCourseID);
-	String writtenEvaluationID = request.getParameter("evaluationOID");
-	WrittenEvaluation evaluation = (WrittenEvaluation) RootDomainObject.readDomainObjectByOID(WrittenEvaluation.class,
-		Integer.valueOf(writtenEvaluationID));
+	private void setState(HttpServletRequest request) {
+		String executionCourseID = request.getParameter("executionCourseID");
+		request.setAttribute("executionCourseID", executionCourseID);
+		String writtenEvaluationID = request.getParameter("evaluationOID");
+		WrittenEvaluation evaluation =
+				(WrittenEvaluation) RootDomainObject.readDomainObjectByOID(WrittenEvaluation.class,
+						Integer.valueOf(writtenEvaluationID));
 
-	ComparatorChain comparator = new ComparatorChain();
-	comparator.addComparator(Vigilancy.COMPARATOR_BY_VIGILANT_CATEGORY);
-	comparator.addComparator(Vigilancy.COMPARATOR_BY_VIGILANT_USERNAME);
+		ComparatorChain comparator = new ComparatorChain();
+		comparator.addComparator(Vigilancy.COMPARATOR_BY_VIGILANT_CATEGORY);
+		comparator.addComparator(Vigilancy.COMPARATOR_BY_VIGILANT_USERNAME);
 
-	List<Vigilancy> vigilancies = new ArrayList<Vigilancy>(evaluation.getOthersVigilancies());
-	Collections.sort(vigilancies, comparator);
-	List<Vigilancy> ownVigilancies = new ArrayList<Vigilancy>(evaluation.getTeachersVigilancies());
-	Collections.sort(ownVigilancies, comparator);
+		List<Vigilancy> vigilancies = new ArrayList<Vigilancy>(evaluation.getOthersVigilancies());
+		Collections.sort(vigilancies, comparator);
+		List<Vigilancy> ownVigilancies = new ArrayList<Vigilancy>(evaluation.getTeachersVigilancies());
+		Collections.sort(ownVigilancies, comparator);
 
-	request.setAttribute("evaluation", evaluation);
-	request.setAttribute("ownVigilancies", ownVigilancies);
-	request.setAttribute("vigilancies", vigilancies);
-    }
-
-    public ActionForward viewVigilants(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
-	setState(request);
-	request.setAttribute("unconvokeRequest", new VariantBean());
-	return mapping.findForward("listVigilantsForEvaluation");
-
-    }
-
-    public ActionForward editReport(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
-	setState(request);
-	return mapping.findForward("editReportForEvaluation");
-    }
-
-    public ActionForward changeConvokeStatus(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-
-	String vigilancyID = request.getParameter("oid");
-	Vigilancy vigilancy = (Vigilancy) RootDomainObject.readDomainObjectByOID(Vigilancy.class, Integer.valueOf(vigilancyID));
-	String participationType = request.getParameter("participationType");
-	AttendingStatus status = AttendingStatus.valueOf(participationType);
-	try {
-
-	    ChangeConvokeStatus.run(vigilancy, status);
-	} catch (DomainException e) {
-	    addActionMessage(request, e.getMessage());
+		request.setAttribute("evaluation", evaluation);
+		request.setAttribute("ownVigilancies", ownVigilancies);
+		request.setAttribute("vigilancies", vigilancies);
 	}
 
-	return editReport(mapping, form, request, response);
-    }
+	public ActionForward viewVigilants(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) {
+		setState(request);
+		request.setAttribute("unconvokeRequest", new VariantBean());
+		return mapping.findForward("listVigilantsForEvaluation");
 
-    public ActionForward changeActiveConvoke(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-
-	String vigilancyID = request.getParameter("oid");
-	Vigilancy vigilancy = (Vigilancy) RootDomainObject.readDomainObjectByOID(Vigilancy.class, Integer.valueOf(vigilancyID));
-	if (vigilancy instanceof OwnCourseVigilancy) {
-	    String bool = request.getParameter("bool");
-	    Boolean active = Boolean.valueOf(bool);
-	    try {
-
-		ChangeConvokeActive.run(vigilancy, active, getLoggedPerson(request));
-	    } catch (DomainException e) {
-		addActionMessage(request, e.getMessage());
-	    }
 	}
-	return viewVigilants(mapping, form, request, response);
-    }
 
-    public ActionForward requestUnconvokes(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+	public ActionForward editReport(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) {
+		setState(request);
+		return mapping.findForward("editReportForEvaluation");
+	}
 
-	IViewState viewState = RenderUtils.getViewState("variantBean");
-	WrittenEvaluation evaluation = (WrittenEvaluation) RootDomainObject.readDomainObjectByOID(WrittenEvaluation.class,
-		Integer.valueOf(request.getParameter("evaluationOID")));
-	if (viewState != null) {
-	    List<Vigilancy> vigilancies = evaluation.getActiveOtherVigilancies();
-	    VariantBean bean = (VariantBean) viewState.getMetaObject().getObject();
-	    Integer numberOfVigilantsToUnconvoke = bean.getInteger();
-	    if (numberOfVigilantsToUnconvoke > vigilancies.size()) {
-		addActionMessage(request, "error.there.are.not.so.many.vigilants");
-		return viewVigilants(mapping, form, request, response);
-	    }
+	public ActionForward changeConvokeStatus(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
-	    Collections.sort(vigilancies, new ReverseComparator(Vigilancy.COMPARATOR_BY_VIGILANT_SORT_CRITERIA));
-
-	    for (Vigilancy vigilancy : vigilancies.subList(0, numberOfVigilantsToUnconvoke)) {
+		String vigilancyID = request.getParameter("oid");
+		Vigilancy vigilancy = (Vigilancy) RootDomainObject.readDomainObjectByOID(Vigilancy.class, Integer.valueOf(vigilancyID));
+		String participationType = request.getParameter("participationType");
+		AttendingStatus status = AttendingStatus.valueOf(participationType);
 		try {
 
-		    ChangeConvokeActive.run(vigilancy, Boolean.FALSE, getLoggedPerson(request));
+			ChangeConvokeStatus.run(vigilancy, status);
 		} catch (DomainException e) {
-		    addActionMessage(request, e.getMessage());
+			addActionMessage(request, e.getMessage());
 		}
 
-	    }
+		return editReport(mapping, form, request, response);
 	}
 
-	RenderUtils.invalidateViewState("variantBean");
-	return viewVigilants(mapping, form, request, response);
-    }
+	public ActionForward changeActiveConvoke(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+
+		String vigilancyID = request.getParameter("oid");
+		Vigilancy vigilancy = (Vigilancy) RootDomainObject.readDomainObjectByOID(Vigilancy.class, Integer.valueOf(vigilancyID));
+		if (vigilancy instanceof OwnCourseVigilancy) {
+			String bool = request.getParameter("bool");
+			Boolean active = Boolean.valueOf(bool);
+			try {
+
+				ChangeConvokeActive.run(vigilancy, active, getLoggedPerson(request));
+			} catch (DomainException e) {
+				addActionMessage(request, e.getMessage());
+			}
+		}
+		return viewVigilants(mapping, form, request, response);
+	}
+
+	public ActionForward requestUnconvokes(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+
+		IViewState viewState = RenderUtils.getViewState("variantBean");
+		WrittenEvaluation evaluation =
+				(WrittenEvaluation) RootDomainObject.readDomainObjectByOID(WrittenEvaluation.class,
+						Integer.valueOf(request.getParameter("evaluationOID")));
+		if (viewState != null) {
+			List<Vigilancy> vigilancies = evaluation.getActiveOtherVigilancies();
+			VariantBean bean = (VariantBean) viewState.getMetaObject().getObject();
+			Integer numberOfVigilantsToUnconvoke = bean.getInteger();
+			if (numberOfVigilantsToUnconvoke > vigilancies.size()) {
+				addActionMessage(request, "error.there.are.not.so.many.vigilants");
+				return viewVigilants(mapping, form, request, response);
+			}
+
+			Collections.sort(vigilancies, new ReverseComparator(Vigilancy.COMPARATOR_BY_VIGILANT_SORT_CRITERIA));
+
+			for (Vigilancy vigilancy : vigilancies.subList(0, numberOfVigilantsToUnconvoke)) {
+				try {
+
+					ChangeConvokeActive.run(vigilancy, Boolean.FALSE, getLoggedPerson(request));
+				} catch (DomainException e) {
+					addActionMessage(request, e.getMessage());
+				}
+
+			}
+		}
+
+		RenderUtils.invalidateViewState("variantBean");
+		return viewVigilants(mapping, form, request, response);
+	}
 
 }

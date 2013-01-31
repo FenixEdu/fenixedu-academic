@@ -8,22 +8,22 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class AttributeFinalDegreeWork extends FenixService {
 
-    @Service
-    public static void run(GroupProposal groupProposal) {
-	if (groupProposal != null) {
-	    Proposal proposal = groupProposal.getFinalDegreeWorkProposal();
-	    proposal.setGroupAttributed(groupProposal.getFinalDegreeDegreeWorkGroup());
+	@Service
+	public static void run(GroupProposal groupProposal) {
+		if (groupProposal != null) {
+			Proposal proposal = groupProposal.getFinalDegreeWorkProposal();
+			proposal.setGroupAttributed(groupProposal.getFinalDegreeDegreeWorkGroup());
 
-	    FinalDegreeWorkGroup group = groupProposal.getFinalDegreeDegreeWorkGroup();
-	    for (GroupProposal otherGroupProposal : group.getGroupProposals()) {
-		if (!(otherGroupProposal == groupProposal)
-			&& otherGroupProposal.getFinalDegreeWorkProposal().getGroupAttributed() != null
-			&& (otherGroupProposal.getFinalDegreeWorkProposal().getGroupAttributed() == group)) {
-		    Proposal otherProposal = otherGroupProposal.getFinalDegreeWorkProposal();
-		    otherProposal.removeGroupAttributed();
+			FinalDegreeWorkGroup group = groupProposal.getFinalDegreeDegreeWorkGroup();
+			for (GroupProposal otherGroupProposal : group.getGroupProposals()) {
+				if (!(otherGroupProposal == groupProposal)
+						&& otherGroupProposal.getFinalDegreeWorkProposal().getGroupAttributed() != null
+						&& (otherGroupProposal.getFinalDegreeWorkProposal().getGroupAttributed() == group)) {
+					Proposal otherProposal = otherGroupProposal.getFinalDegreeWorkProposal();
+					otherProposal.removeGroupAttributed();
+				}
+			}
 		}
-	    }
 	}
-    }
 
 }

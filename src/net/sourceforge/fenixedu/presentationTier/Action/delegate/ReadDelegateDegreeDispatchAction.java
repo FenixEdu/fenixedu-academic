@@ -15,36 +15,28 @@ import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManage
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(module = "delegate", path = "/index", scope = "session")
 @Forwards(value = { @Forward(name = "success", path = "/delegate/index.jsp") })
 public class ReadDelegateDegreeDispatchAction extends FenixAction {
 
-    @Override
-    public ActionForward execute(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request,
-	    final HttpServletResponse response) throws FenixActionException {
-	final Person person = getLoggedPerson(request);
-	if (person.hasStudent()) {
-	    final Registration lastActiveRegistration = person.getStudent().getLastActiveRegistration();
-	    if (lastActiveRegistration != null) {
-		final Degree degree = lastActiveRegistration.getDegree();
-		final ExecutionDegree executionDegree = degree.getMostRecentDegreeCurricularPlan().getMostRecentExecutionDegree();
-		final InfoExecutionDegree infoExecutionDegree = InfoExecutionDegree.newInfoFromDomain(executionDegree);
-		request.setAttribute(PresentationConstants.MASTER_DEGREE, infoExecutionDegree);
-	    }
+	@Override
+	public ActionForward execute(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request,
+			final HttpServletResponse response) throws FenixActionException {
+		final Person person = getLoggedPerson(request);
+		if (person.hasStudent()) {
+			final Registration lastActiveRegistration = person.getStudent().getLastActiveRegistration();
+			if (lastActiveRegistration != null) {
+				final Degree degree = lastActiveRegistration.getDegree();
+				final ExecutionDegree executionDegree = degree.getMostRecentDegreeCurricularPlan().getMostRecentExecutionDegree();
+				final InfoExecutionDegree infoExecutionDegree = InfoExecutionDegree.newInfoFromDomain(executionDegree);
+				request.setAttribute(PresentationConstants.MASTER_DEGREE, infoExecutionDegree);
+			}
+		}
+		return mapping.findForward("success");
 	}
-	return mapping.findForward("success");
-    }
 }

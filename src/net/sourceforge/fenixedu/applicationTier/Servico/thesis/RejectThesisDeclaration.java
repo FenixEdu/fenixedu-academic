@@ -5,8 +5,8 @@ import net.sourceforge.fenixedu.domain.thesis.Thesis;
 
 public class RejectThesisDeclaration extends FenixService {
 
-    public void run(Thesis thesis) {
-	thesis.rejectDeclaration();
-    }
+	public void run(Thesis thesis) {
+		thesis.rejectDeclaration();
+	}
 
 }

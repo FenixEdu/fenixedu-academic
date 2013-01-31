@@ -10,10 +10,11 @@ import org.apache.struts.actions.SwitchAction;
 
 public class FenixSwitchAction extends SwitchAction {
 
-    public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
+	@Override
+	public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
 
-	return super.execute(mapping, actionForm, request, response);
-    }
+		return super.execute(mapping, actionForm, request, response);
+	}
 
 }

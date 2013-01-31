@@ -8,37 +8,37 @@ import org.apache.commons.beanutils.BeanComparator;
 
 public class GroupProposal extends GroupProposal_Base {
 
-    public static final Comparator<GroupProposal> COMPARATOR_BY_PREFERENCE_ORDER = new BeanComparator("orderOfPreference");
+	public static final Comparator<GroupProposal> COMPARATOR_BY_PREFERENCE_ORDER = new BeanComparator("orderOfPreference");
 
-    public GroupProposal() {
-	super();
-	setRootDomainObject(RootDomainObject.getInstance());
-    }
-
-    public void delete() {
-	deleteAttributions();
-	removeFinalDegreeDegreeWorkGroup();
-	removeFinalDegreeWorkProposal();
-	removeRootDomainObject();
-	super.deleteDomainObject();
-    }
-
-    public void deleteAttributions() {
-	final Proposal proposal = getFinalDegreeWorkProposal();
-	if (proposal != null && proposal.getGroupAttributed() == getFinalDegreeDegreeWorkGroup()) {
-	    proposal.removeGroupAttributed();
+	public GroupProposal() {
+		super();
+		setRootDomainObject(RootDomainObject.getInstance());
 	}
-	if (proposal != null && proposal.getGroupAttributedByTeacher() == getFinalDegreeDegreeWorkGroup()) {
-	    proposal.removeGroupAttributedByTeacher();
+
+	public void delete() {
+		deleteAttributions();
+		removeFinalDegreeDegreeWorkGroup();
+		removeFinalDegreeWorkProposal();
+		removeRootDomainObject();
+		super.deleteDomainObject();
 	}
-	final FinalDegreeWorkGroup finalDegreeWorkGroup = getFinalDegreeDegreeWorkGroup();
-	if (finalDegreeWorkGroup != null) {
-	    for (final GroupStudent groupStudent : finalDegreeWorkGroup.getGroupStudentsSet()) {
-		if (groupStudent.getFinalDegreeWorkProposalConfirmation() == proposal) {
-		    groupStudent.removeFinalDegreeWorkProposalConfirmation();
+
+	public void deleteAttributions() {
+		final Proposal proposal = getFinalDegreeWorkProposal();
+		if (proposal != null && proposal.getGroupAttributed() == getFinalDegreeDegreeWorkGroup()) {
+			proposal.removeGroupAttributed();
 		}
-	    }
+		if (proposal != null && proposal.getGroupAttributedByTeacher() == getFinalDegreeDegreeWorkGroup()) {
+			proposal.removeGroupAttributedByTeacher();
+		}
+		final FinalDegreeWorkGroup finalDegreeWorkGroup = getFinalDegreeDegreeWorkGroup();
+		if (finalDegreeWorkGroup != null) {
+			for (final GroupStudent groupStudent : finalDegreeWorkGroup.getGroupStudentsSet()) {
+				if (groupStudent.getFinalDegreeWorkProposalConfirmation() == proposal) {
+					groupStudent.removeFinalDegreeWorkProposalConfirmation();
+				}
+			}
+		}
 	}
-    }
 
 }

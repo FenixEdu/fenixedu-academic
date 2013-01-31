@@ -14,25 +14,27 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class ExecutionPeriodsFrom1Sem0607 implements DataProvider {
 
-    public Object provide(Object source, Object currentValue) {
+	@Override
+	public Object provide(Object source, Object currentValue) {
 
-	/*
-	 * get executionPeriods after '1 Semestre 2006/2007'
-	 */
-	final ExecutionSemester currentExecutionPeriod = ExecutionSemester.readBySemesterAndExecutionYear(1, "2006/2007");
+		/*
+		 * get executionPeriods after '1 Semestre 2006/2007'
+		 */
+		final ExecutionSemester currentExecutionPeriod = ExecutionSemester.readBySemesterAndExecutionYear(1, "2006/2007");
 
-	final List<ExecutionSemester> result = new ArrayList<ExecutionSemester>();
-	for (final ExecutionSemester executionSemester : ExecutionSemester.readNotClosedPublicExecutionPeriods()) {
-	    if (executionSemester.isAfterOrEquals(currentExecutionPeriod)) {
-		result.add(executionSemester);
-	    }
+		final List<ExecutionSemester> result = new ArrayList<ExecutionSemester>();
+		for (final ExecutionSemester executionSemester : ExecutionSemester.readNotClosedPublicExecutionPeriods()) {
+			if (executionSemester.isAfterOrEquals(currentExecutionPeriod)) {
+				result.add(executionSemester);
+			}
+		}
+		Collections.sort(result, new ReverseComparator());
+		return result;
 	}
-	Collections.sort(result, new ReverseComparator());
-	return result;
-    }
 
-    public Converter getConverter() {
-	return new DomainObjectKeyConverter();
-    }
+	@Override
+	public Converter getConverter() {
+		return new DomainObjectKeyConverter();
+	}
 
 }

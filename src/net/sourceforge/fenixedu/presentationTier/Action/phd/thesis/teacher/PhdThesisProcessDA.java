@@ -36,54 +36,53 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
 })
 public class PhdThesisProcessDA extends CommonPhdThesisProcessDA {
 
-    private static final List<PhdIndividualProgramDocumentType> AVAILABLE_DOCUMENTS_TO_TEACHER = Arrays
-    .asList(new PhdIndividualProgramDocumentType[] {
-	    PhdIndividualProgramDocumentType.DISSERTATION_OR_FINAL_WORK_DOCUMENT,
-	    PhdIndividualProgramDocumentType.FINAL_THESIS,
-	    PhdIndividualProgramDocumentType.JURY_PRESIDENT_ELEMENT,
-	    PhdIndividualProgramDocumentType.JURY_REPORT_FEEDBACK,
-	    PhdIndividualProgramDocumentType.MAXIMUM_GRADE_GUIDER_PROPOSAL,
-	    PhdIndividualProgramDocumentType.PROVISIONAL_THESIS,
-	    PhdIndividualProgramDocumentType.PUBLIC_PRESENTATION_SEMINAR_REPORT,
-	    PhdIndividualProgramDocumentType.THESIS_ABSTRACT });
+	private static final List<PhdIndividualProgramDocumentType> AVAILABLE_DOCUMENTS_TO_TEACHER = Arrays
+			.asList(new PhdIndividualProgramDocumentType[] {
+					PhdIndividualProgramDocumentType.DISSERTATION_OR_FINAL_WORK_DOCUMENT,
+					PhdIndividualProgramDocumentType.FINAL_THESIS, PhdIndividualProgramDocumentType.JURY_PRESIDENT_ELEMENT,
+					PhdIndividualProgramDocumentType.JURY_REPORT_FEEDBACK,
+					PhdIndividualProgramDocumentType.MAXIMUM_GRADE_GUIDER_PROPOSAL,
+					PhdIndividualProgramDocumentType.PROVISIONAL_THESIS,
+					PhdIndividualProgramDocumentType.PUBLIC_PRESENTATION_SEMINAR_REPORT,
+					PhdIndividualProgramDocumentType.THESIS_ABSTRACT });
 
-    @Override
-    public ActionForward manageThesisDocuments(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) {
-	List<PhdProgramProcessDocument> sharedDocuments = new ArrayList<PhdProgramProcessDocument>();
+	@Override
+	public ActionForward manageThesisDocuments(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) {
+		List<PhdProgramProcessDocument> sharedDocuments = new ArrayList<PhdProgramProcessDocument>();
 
-	PhdThesisProcess thesisProcess = getProcess(request);
-	Set<PhdProgramProcessDocument> latestDocumentVersions = thesisProcess.getLatestDocumentVersions();
-	for (PhdProgramProcessDocument phdProgramProcessDocument : latestDocumentVersions) {
-	    if (AVAILABLE_DOCUMENTS_TO_TEACHER.contains(phdProgramProcessDocument.getDocumentType())) {
-		sharedDocuments.add(phdProgramProcessDocument);
-	    }
+		PhdThesisProcess thesisProcess = getProcess(request);
+		Set<PhdProgramProcessDocument> latestDocumentVersions = thesisProcess.getLatestDocumentVersions();
+		for (PhdProgramProcessDocument phdProgramProcessDocument : latestDocumentVersions) {
+			if (AVAILABLE_DOCUMENTS_TO_TEACHER.contains(phdProgramProcessDocument.getDocumentType())) {
+				sharedDocuments.add(phdProgramProcessDocument);
+			}
+		}
+
+		request.setAttribute("sharedDocuments", sharedDocuments);
+
+		return super.manageThesisDocuments(mapping, actionForm, request, response);
 	}
 
-	request.setAttribute("sharedDocuments", sharedDocuments);
+	@Override
+	public ActionForward downloadThesisDocuments(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) throws IOException {
 
-	return super.manageThesisDocuments(mapping, actionForm, request, response);
-    }
-
-    @Override
-    public ActionForward downloadThesisDocuments(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws IOException {
-
-	writeFile(response, getThesisDocumentsFilename(request), PhdDocumentsZip.ZIP_MIME_TYPE, createThesisZip(request));
-	return null;
-    }
-
-    protected byte[] createThesisZip(HttpServletRequest request) throws IOException {
-	PhdThesisProcess thesisProcess = getProcess(request);
-	List<PhdProgramProcessDocument> sharedDocuments = new ArrayList<PhdProgramProcessDocument>();
-	Set<PhdProgramProcessDocument> latestDocumentVersions = thesisProcess.getLatestDocumentVersions();
-
-	for (PhdProgramProcessDocument phdProgramProcessDocument : latestDocumentVersions) {
-	    if (AVAILABLE_DOCUMENTS_TO_TEACHER.contains(phdProgramProcessDocument.getDocumentType())) {
-		sharedDocuments.add(phdProgramProcessDocument);
-	    }
+		writeFile(response, getThesisDocumentsFilename(request), PhdDocumentsZip.ZIP_MIME_TYPE, createThesisZip(request));
+		return null;
 	}
 
-	return PhdDocumentsZip.zip(sharedDocuments);
-    }
+	protected byte[] createThesisZip(HttpServletRequest request) throws IOException {
+		PhdThesisProcess thesisProcess = getProcess(request);
+		List<PhdProgramProcessDocument> sharedDocuments = new ArrayList<PhdProgramProcessDocument>();
+		Set<PhdProgramProcessDocument> latestDocumentVersions = thesisProcess.getLatestDocumentVersions();
+
+		for (PhdProgramProcessDocument phdProgramProcessDocument : latestDocumentVersions) {
+			if (AVAILABLE_DOCUMENTS_TO_TEACHER.contains(phdProgramProcessDocument.getDocumentType())) {
+				sharedDocuments.add(phdProgramProcessDocument);
+			}
+		}
+
+		return PhdDocumentsZip.zip(sharedDocuments);
+	}
 }

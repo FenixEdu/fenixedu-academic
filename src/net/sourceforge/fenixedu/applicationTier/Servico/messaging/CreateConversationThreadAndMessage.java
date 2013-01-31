@@ -6,21 +6,22 @@ import net.sourceforge.fenixedu.domain.messaging.ConversationMessage;
 import net.sourceforge.fenixedu.domain.messaging.ConversationThread;
 
 public class CreateConversationThreadAndMessage extends ForumService {
-    public CreateConversationThreadAndMessage() {
-	super();
-    }
+	public CreateConversationThreadAndMessage() {
+		super();
+	}
 
-    public void run(CreateConversationThreadAndMessageBean createConversationThreadAndMessageBean) {
+	public void run(CreateConversationThreadAndMessageBean createConversationThreadAndMessageBean) {
 
-	Person creator = createConversationThreadAndMessageBean.getCreator();
+		Person creator = createConversationThreadAndMessageBean.getCreator();
 
-	ConversationThread conversationThread = createConversationThreadAndMessageBean.getForum().createConversationThread(
-		creator, createConversationThreadAndMessageBean.getSubject());
+		ConversationThread conversationThread =
+				createConversationThreadAndMessageBean.getForum().createConversationThread(creator,
+						createConversationThreadAndMessageBean.getSubject());
 
-	ConversationMessage conversationMessage = conversationThread.createConversationMessage(creator,
-		createConversationThreadAndMessageBean.getBody());
-	super.sendNotifications(conversationMessage);
+		ConversationMessage conversationMessage =
+				conversationThread.createConversationMessage(creator, createConversationThreadAndMessageBean.getBody());
+		super.sendNotifications(conversationMessage);
 
-    }
+	}
 
 }

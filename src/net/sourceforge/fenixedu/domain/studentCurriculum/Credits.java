@@ -28,264 +28,267 @@ import pt.ist.fenixWebFramework.security.accessControl.Checked;
 
 public class Credits extends Credits_Base {
 
-    public Credits() {
-	super();
-	setRootDomainObject(RootDomainObject.getInstance());
-    }
-
-    public Credits(StudentCurricularPlan studentCurricularPlan, Collection<SelectedCurricularCourse> dismissals,
-	    Collection<IEnrolment> enrolments, ExecutionSemester executionSemester) {
-	this();
-	init(studentCurricularPlan, dismissals, enrolments, executionSemester);
-    }
-
-    public Credits(StudentCurricularPlan studentCurricularPlan, CourseGroup courseGroup, Collection<IEnrolment> enrolments,
-	    Collection<CurricularCourse> noEnrolCurricularCourses, Double credits, ExecutionSemester executionSemester) {
-	this();
-	init(studentCurricularPlan, courseGroup, enrolments, noEnrolCurricularCourses, credits, executionSemester);
-    }
-
-    public Credits(StudentCurricularPlan studentCurricularPlan, CurriculumGroup curriculumGroup,
-	    Collection<IEnrolment> enrolments, Double credits, ExecutionSemester executionSemester) {
-	this();
-	init(studentCurricularPlan, curriculumGroup, enrolments, new HashSet<CurricularCourse>(0), credits, executionSemester);
-    }
-
-    final protected void initExecutionPeriod(ExecutionSemester executionSemester) {
-	if (executionSemester == null) {
-	    throw new DomainException("error.credits.wrong.arguments");
-	}
-	setExecutionPeriod(executionSemester);
-    }
-
-    protected void init(StudentCurricularPlan studentCurricularPlan, CourseGroup courseGroup, Collection<IEnrolment> enrolments,
-	    Collection<CurricularCourse> noEnrolCurricularCourses, Double credits, ExecutionSemester executionSemester) {
-	if (studentCurricularPlan == null || courseGroup == null || credits == null) {
-	    throw new DomainException("error.credits.wrong.arguments");
+	public Credits() {
+		super();
+		setRootDomainObject(RootDomainObject.getInstance());
 	}
 
-	checkGivenCredits(studentCurricularPlan, courseGroup, credits, executionSemester);
-	initExecutionPeriod(executionSemester);
-
-	setStudentCurricularPlan(studentCurricularPlan);
-	setGivenCredits(credits);
-	addEnrolments(enrolments);
-
-	Dismissal.createNewDismissal(this, studentCurricularPlan, courseGroup, noEnrolCurricularCourses);
-    }
-
-    protected void init(StudentCurricularPlan studentCurricularPlan, CurriculumGroup curriculumGroup,
-	    Collection<IEnrolment> enrolments, Collection<CurricularCourse> noEnrolCurricularCourses, Double credits,
-	    ExecutionSemester executionSemester) {
-	if (studentCurricularPlan == null || curriculumGroup == null || credits == null) {
-	    throw new DomainException("error.credits.wrong.arguments");
+	public Credits(StudentCurricularPlan studentCurricularPlan, Collection<SelectedCurricularCourse> dismissals,
+			Collection<IEnrolment> enrolments, ExecutionSemester executionSemester) {
+		this();
+		init(studentCurricularPlan, dismissals, enrolments, executionSemester);
 	}
 
-	initExecutionPeriod(executionSemester);
-
-	setStudentCurricularPlan(studentCurricularPlan);
-	setGivenCredits(credits);
-	addEnrolments(enrolments);
-
-	Dismissal.createNewDismissal(this, studentCurricularPlan, curriculumGroup, noEnrolCurricularCourses);
-    }
-
-    private void checkGivenCredits(final StudentCurricularPlan studentCurricularPlan, final CourseGroup courseGroup,
-	    final Double credits, final ExecutionSemester executionSemester) {
-	if (courseGroup.isBolonhaDegree()
-		&& !allowsEctsCredits(studentCurricularPlan, courseGroup, executionSemester, credits.doubleValue())) {
-	    throw new DomainException("error.credits.invalid.credits", credits.toString());
+	public Credits(StudentCurricularPlan studentCurricularPlan, CourseGroup courseGroup, Collection<IEnrolment> enrolments,
+			Collection<CurricularCourse> noEnrolCurricularCourses, Double credits, ExecutionSemester executionSemester) {
+		this();
+		init(studentCurricularPlan, courseGroup, enrolments, noEnrolCurricularCourses, credits, executionSemester);
 	}
-    }
 
-    private boolean allowsEctsCredits(final StudentCurricularPlan studentCurricularPlan, final CourseGroup courseGroup,
-	    final ExecutionSemester executionSemester, final double ectsCredits) {
-	final double ectsCreditsForCourseGroup = studentCurricularPlan.getCreditsConcludedForCourseGroup(courseGroup)
-		.doubleValue();
-	if (ectsCredits + ectsCreditsForCourseGroup > courseGroup.getMaxEctsCredits(executionSemester).doubleValue()) {
-	    return false;
+	public Credits(StudentCurricularPlan studentCurricularPlan, CurriculumGroup curriculumGroup,
+			Collection<IEnrolment> enrolments, Double credits, ExecutionSemester executionSemester) {
+		this();
+		init(studentCurricularPlan, curriculumGroup, enrolments, new HashSet<CurricularCourse>(0), credits, executionSemester);
 	}
-	if (courseGroup.isCycleCourseGroup() || courseGroup.isRoot()) {
-	    return true;
-	}
-	for (final Context context : courseGroup.getParentContexts()) {
-	    if (context.isOpen(executionSemester)) {
-		if (allowsEctsCredits(studentCurricularPlan, context.getParentCourseGroup(), executionSemester, ectsCredits)) {
-		    return true;
+
+	final protected void initExecutionPeriod(ExecutionSemester executionSemester) {
+		if (executionSemester == null) {
+			throw new DomainException("error.credits.wrong.arguments");
 		}
-	    }
-	}
-	return false;
-    }
-
-    protected void init(StudentCurricularPlan studentCurricularPlan, Collection<SelectedCurricularCourse> dismissals,
-	    Collection<IEnrolment> enrolments, ExecutionSemester executionSemester) {
-	if (studentCurricularPlan == null || dismissals == null || dismissals.isEmpty()) {
-	    throw new DomainException("error.credits.wrong.arguments");
+		setExecutionPeriod(executionSemester);
 	}
 
-	initExecutionPeriod(executionSemester);
-	setStudentCurricularPlan(studentCurricularPlan);
-	addEnrolments(enrolments);
+	protected void init(StudentCurricularPlan studentCurricularPlan, CourseGroup courseGroup, Collection<IEnrolment> enrolments,
+			Collection<CurricularCourse> noEnrolCurricularCourses, Double credits, ExecutionSemester executionSemester) {
+		if (studentCurricularPlan == null || courseGroup == null || credits == null) {
+			throw new DomainException("error.credits.wrong.arguments");
+		}
 
-	for (final SelectedCurricularCourse selectedCurricularCourse : dismissals) {
-	    if (selectedCurricularCourse.isOptional()) {
-		final SelectedOptionalCurricularCourse selectedOptionalCurricularCourse = (SelectedOptionalCurricularCourse) selectedCurricularCourse;
-		Dismissal.createNewOptionalDismissal(this, studentCurricularPlan, selectedOptionalCurricularCourse
-			.getCurriculumGroup(), selectedOptionalCurricularCourse.getCurricularCourse(),
-			selectedOptionalCurricularCourse.getCredits());
-	    } else {
-		Dismissal.createNewDismissal(this, studentCurricularPlan, selectedCurricularCourse.getCurriculumGroup(),
-			selectedCurricularCourse.getCurricularCourse());
-	    }
-	}
-    }
+		checkGivenCredits(studentCurricularPlan, courseGroup, credits, executionSemester);
+		initExecutionPeriod(executionSemester);
 
-    private void addEnrolments(final Collection<IEnrolment> enrolments) {
-	if (enrolments != null) {
-	    for (final IEnrolment enrolment : enrolments) {
-		EnrolmentWrapper.create(this, enrolment);
-	    }
-	}
-    }
+		setStudentCurricularPlan(studentCurricularPlan);
+		setGivenCredits(credits);
+		addEnrolments(enrolments);
 
-    final public Collection<IEnrolment> getIEnrolments() {
-	final Set<IEnrolment> result = new HashSet<IEnrolment>();
-	for (final EnrolmentWrapper enrolmentWrapper : this.getEnrolmentsSet()) {
-	    IEnrolment enrolment = enrolmentWrapper.getIEnrolment();
-	    if (enrolment != null) {
-		result.add(enrolmentWrapper.getIEnrolment());
-	    }
-	}
-	return result;
-    }
-
-    final public boolean hasIEnrolments(final IEnrolment iEnrolment) {
-	for (final EnrolmentWrapper enrolmentWrapper : this.getEnrolmentsSet()) {
-	    if (enrolmentWrapper.getIEnrolment() == iEnrolment) {
-		return true;
-	    }
+		Dismissal.createNewDismissal(this, studentCurricularPlan, courseGroup, noEnrolCurricularCourses);
 	}
 
-	return false;
-    }
+	protected void init(StudentCurricularPlan studentCurricularPlan, CurriculumGroup curriculumGroup,
+			Collection<IEnrolment> enrolments, Collection<CurricularCourse> noEnrolCurricularCourses, Double credits,
+			ExecutionSemester executionSemester) {
+		if (studentCurricularPlan == null || curriculumGroup == null || credits == null) {
+			throw new DomainException("error.credits.wrong.arguments");
+		}
 
-    final public boolean hasAnyIEnrolments() {
-	return hasAnyEnrolments();
-    }
+		initExecutionPeriod(executionSemester);
 
-    @Override
-    final public Double getGivenCredits() {
-	if (super.getGivenCredits() == null) {
-	    BigDecimal bigDecimal = BigDecimal.ZERO;
-	    for (Dismissal dismissal : getDismissalsSet()) {
-		bigDecimal = bigDecimal.add(new BigDecimal(dismissal.getEctsCredits()));
-	    }
-	    return Double.valueOf(bigDecimal.doubleValue());
-	}
-	return super.getGivenCredits();
-    }
+		setStudentCurricularPlan(studentCurricularPlan);
+		setGivenCredits(credits);
+		addEnrolments(enrolments);
 
-    public String getGivenGrade() {
-	return null;
-    }
-
-    public Grade getGrade() {
-	return null;
-    }
-
-    @Checked("CreditsPredicates.DELETE")
-    final public void delete() {
-	disconnect();
-	super.deleteDomainObject();
-    }
-
-    protected void disconnect() {
-	for (; hasAnyDismissals(); getDismissals().get(0).delete())
-	    ;
-
-	for (; hasAnyEnrolments(); getEnrolments().get(0).delete())
-	    ;
-
-	removeStudentCurricularPlan();
-	removeRootDomainObject();
-	removeExecutionPeriod();
-    }
-
-    final public Double getEnrolmentsEcts() {
-	Double result = 0d;
-	for (final IEnrolment enrolment : getIEnrolments()) {
-	    result = result + enrolment.getEctsCredits();
-	}
-	return result;
-    }
-
-    final public boolean hasGivenCredits() {
-	return getGivenCredits() != null;
-    }
-
-    final public boolean hasGivenCredits(final Double ectsCredits) {
-	return hasGivenCredits() && getGivenCredits().equals(ectsCredits);
-    }
-
-    public boolean isTemporary() {
-	return false;
-    }
-
-    public boolean isCredits() {
-	return true;
-    }
-
-    public boolean isSubstitution() {
-	return false;
-    }
-
-    public boolean isInternalSubstitution() {
-	return false;
-    }
-
-    public boolean isEquivalence() {
-	return false;
-    }
-
-    public Collection<ICurriculumEntry> getAverageEntries(final ExecutionYear executionYear) {
-	return Collections.emptyList();
-    }
-
-    public boolean hasAnyDismissalInCurriculum() {
-	for (final Dismissal dismissal : getDismissalsSet()) {
-	    if (!dismissal.parentCurriculumGroupIsNoCourseGroupCurriculumGroup()) {
-		return true;
-	    }
-	}
-	return false;
-    }
-
-    public boolean hasAnyDismissalInCycle(final CycleType cycleType) {
-	for (final Dismissal dismissal : getDismissalsSet()) {
-	    final CycleCurriculumGroup cycle = dismissal.getParentCycleCurriculumGroup();
-	    if (cycle != null && cycle.getCycleType().equals(cycleType)) {
-		return true;
-	    }
-	}
-	return false;
-    }
-
-    public Curriculum getCurriculum(final Dismissal dismissal, final DateTime when, final ExecutionYear year) {
-	throw new DomainException("error.Credits.unsupported.operation");
-    }
-
-    public boolean isAllEnrolmentsAreExternal() {
-	if (getEnrolments().isEmpty()) {
-	    return false;
+		Dismissal.createNewDismissal(this, studentCurricularPlan, curriculumGroup, noEnrolCurricularCourses);
 	}
 
-	for (EnrolmentWrapper wrapper : getEnrolments()) {
-	    if (!wrapper.getIEnrolment().isExternalEnrolment()) {
+	private void checkGivenCredits(final StudentCurricularPlan studentCurricularPlan, final CourseGroup courseGroup,
+			final Double credits, final ExecutionSemester executionSemester) {
+		if (courseGroup.isBolonhaDegree()
+				&& !allowsEctsCredits(studentCurricularPlan, courseGroup, executionSemester, credits.doubleValue())) {
+			throw new DomainException("error.credits.invalid.credits", credits.toString());
+		}
+	}
+
+	private boolean allowsEctsCredits(final StudentCurricularPlan studentCurricularPlan, final CourseGroup courseGroup,
+			final ExecutionSemester executionSemester, final double ectsCredits) {
+		final double ectsCreditsForCourseGroup =
+				studentCurricularPlan.getCreditsConcludedForCourseGroup(courseGroup).doubleValue();
+		if (ectsCredits + ectsCreditsForCourseGroup > courseGroup.getMaxEctsCredits(executionSemester).doubleValue()) {
+			return false;
+		}
+		if (courseGroup.isCycleCourseGroup() || courseGroup.isRoot()) {
+			return true;
+		}
+		for (final Context context : courseGroup.getParentContexts()) {
+			if (context.isOpen(executionSemester)) {
+				if (allowsEctsCredits(studentCurricularPlan, context.getParentCourseGroup(), executionSemester, ectsCredits)) {
+					return true;
+				}
+			}
+		}
 		return false;
-	    }
 	}
 
-	return true;
-    }
+	protected void init(StudentCurricularPlan studentCurricularPlan, Collection<SelectedCurricularCourse> dismissals,
+			Collection<IEnrolment> enrolments, ExecutionSemester executionSemester) {
+		if (studentCurricularPlan == null || dismissals == null || dismissals.isEmpty()) {
+			throw new DomainException("error.credits.wrong.arguments");
+		}
+
+		initExecutionPeriod(executionSemester);
+		setStudentCurricularPlan(studentCurricularPlan);
+		addEnrolments(enrolments);
+
+		for (final SelectedCurricularCourse selectedCurricularCourse : dismissals) {
+			if (selectedCurricularCourse.isOptional()) {
+				final SelectedOptionalCurricularCourse selectedOptionalCurricularCourse =
+						(SelectedOptionalCurricularCourse) selectedCurricularCourse;
+				Dismissal.createNewOptionalDismissal(this, studentCurricularPlan,
+						selectedOptionalCurricularCourse.getCurriculumGroup(),
+						selectedOptionalCurricularCourse.getCurricularCourse(), selectedOptionalCurricularCourse.getCredits());
+			} else {
+				Dismissal.createNewDismissal(this, studentCurricularPlan, selectedCurricularCourse.getCurriculumGroup(),
+						selectedCurricularCourse.getCurricularCourse());
+			}
+		}
+	}
+
+	private void addEnrolments(final Collection<IEnrolment> enrolments) {
+		if (enrolments != null) {
+			for (final IEnrolment enrolment : enrolments) {
+				EnrolmentWrapper.create(this, enrolment);
+			}
+		}
+	}
+
+	final public Collection<IEnrolment> getIEnrolments() {
+		final Set<IEnrolment> result = new HashSet<IEnrolment>();
+		for (final EnrolmentWrapper enrolmentWrapper : this.getEnrolmentsSet()) {
+			IEnrolment enrolment = enrolmentWrapper.getIEnrolment();
+			if (enrolment != null) {
+				result.add(enrolmentWrapper.getIEnrolment());
+			}
+		}
+		return result;
+	}
+
+	final public boolean hasIEnrolments(final IEnrolment iEnrolment) {
+		for (final EnrolmentWrapper enrolmentWrapper : this.getEnrolmentsSet()) {
+			if (enrolmentWrapper.getIEnrolment() == iEnrolment) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	final public boolean hasAnyIEnrolments() {
+		return hasAnyEnrolments();
+	}
+
+	@Override
+	final public Double getGivenCredits() {
+		if (super.getGivenCredits() == null) {
+			BigDecimal bigDecimal = BigDecimal.ZERO;
+			for (Dismissal dismissal : getDismissalsSet()) {
+				bigDecimal = bigDecimal.add(new BigDecimal(dismissal.getEctsCredits()));
+			}
+			return Double.valueOf(bigDecimal.doubleValue());
+		}
+		return super.getGivenCredits();
+	}
+
+	public String getGivenGrade() {
+		return null;
+	}
+
+	public Grade getGrade() {
+		return null;
+	}
+
+	@Checked("CreditsPredicates.DELETE")
+	final public void delete() {
+		disconnect();
+		super.deleteDomainObject();
+	}
+
+	protected void disconnect() {
+		for (; hasAnyDismissals(); getDismissals().get(0).delete()) {
+			;
+		}
+
+		for (; hasAnyEnrolments(); getEnrolments().get(0).delete()) {
+			;
+		}
+
+		removeStudentCurricularPlan();
+		removeRootDomainObject();
+		removeExecutionPeriod();
+	}
+
+	final public Double getEnrolmentsEcts() {
+		Double result = 0d;
+		for (final IEnrolment enrolment : getIEnrolments()) {
+			result = result + enrolment.getEctsCredits();
+		}
+		return result;
+	}
+
+	final public boolean hasGivenCredits() {
+		return getGivenCredits() != null;
+	}
+
+	final public boolean hasGivenCredits(final Double ectsCredits) {
+		return hasGivenCredits() && getGivenCredits().equals(ectsCredits);
+	}
+
+	public boolean isTemporary() {
+		return false;
+	}
+
+	public boolean isCredits() {
+		return true;
+	}
+
+	public boolean isSubstitution() {
+		return false;
+	}
+
+	public boolean isInternalSubstitution() {
+		return false;
+	}
+
+	public boolean isEquivalence() {
+		return false;
+	}
+
+	public Collection<ICurriculumEntry> getAverageEntries(final ExecutionYear executionYear) {
+		return Collections.emptyList();
+	}
+
+	public boolean hasAnyDismissalInCurriculum() {
+		for (final Dismissal dismissal : getDismissalsSet()) {
+			if (!dismissal.parentCurriculumGroupIsNoCourseGroupCurriculumGroup()) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public boolean hasAnyDismissalInCycle(final CycleType cycleType) {
+		for (final Dismissal dismissal : getDismissalsSet()) {
+			final CycleCurriculumGroup cycle = dismissal.getParentCycleCurriculumGroup();
+			if (cycle != null && cycle.getCycleType().equals(cycleType)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public Curriculum getCurriculum(final Dismissal dismissal, final DateTime when, final ExecutionYear year) {
+		throw new DomainException("error.Credits.unsupported.operation");
+	}
+
+	public boolean isAllEnrolmentsAreExternal() {
+		if (getEnrolments().isEmpty()) {
+			return false;
+		}
+
+		for (EnrolmentWrapper wrapper : getEnrolments()) {
+			if (!wrapper.getIEnrolment().isExternalEnrolment()) {
+				return false;
+			}
+		}
+
+		return true;
+	}
 }

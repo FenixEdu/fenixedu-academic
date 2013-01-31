@@ -20,67 +20,71 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(path = "/studentLowPerformance", module = "pedagogicalCouncil")
-@Forwards({ @Forward(name = "viewStudentsState", path = "/pedagogicalCouncil/tutorship/viewStudentsState.jsp", tileProperties = @Tile(title = "private.pedagogiccouncil.tutoring.studentswithlowperformance")) })
+@Forwards({ @Forward(
+		name = "viewStudentsState",
+		path = "/pedagogicalCouncil/tutorship/viewStudentsState.jsp",
+		tileProperties = @Tile(title = "private.pedagogiccouncil.tutoring.studentswithlowperformance")) })
 public class StudentLowPerformanceDA extends FenixDispatchAction {
 
-    protected final String PRESCRIPTION_BEAN = "prescriptionBean";
+	protected final String PRESCRIPTION_BEAN = "prescriptionBean";
 
-    public ActionForward viewStudentsState(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
+	public ActionForward viewStudentsState(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
 
-	PrescriptionBean prescriptionBean = getContextBean(request);
-	if (prescriptionBean.getSelectedPrescriptionEnum() == null) {
-	    return viewJobs(mapping, actionForm, request, response, null);
+		PrescriptionBean prescriptionBean = getContextBean(request);
+		if (prescriptionBean.getSelectedPrescriptionEnum() == null) {
+			return viewJobs(mapping, actionForm, request, response, null);
+		}
+		TutorshipStudentLowPerformanceQueueJob job =
+				TutorshipStudentLowPerformanceQueueJob.createTutorshipStudentLowPerformanceQueueJob(prescriptionBean
+						.getSelectedPrescriptionEnum());
+		return viewJobs(mapping, actionForm, request, response, job);
+
 	}
-	TutorshipStudentLowPerformanceQueueJob job = TutorshipStudentLowPerformanceQueueJob
-		.createTutorshipStudentLowPerformanceQueueJob(prescriptionBean.getSelectedPrescriptionEnum());
-	return viewJobs(mapping, actionForm, request, response, job);
 
-    }
-
-    private PrescriptionBean getContextBean(HttpServletRequest request) {
-	PrescriptionBean bean = getRenderedObject(PRESCRIPTION_BEAN);
-	RenderUtils.invalidateViewState(PRESCRIPTION_BEAN);
-	if (bean == null) {
-	    return new PrescriptionBean(null);
+	private PrescriptionBean getContextBean(HttpServletRequest request) {
+		PrescriptionBean bean = getRenderedObject(PRESCRIPTION_BEAN);
+		RenderUtils.invalidateViewState(PRESCRIPTION_BEAN);
+		if (bean == null) {
+			return new PrescriptionBean(null);
+		}
+		return bean;
 	}
-	return bean;
-    }
 
-    public ActionForward cancelQueuedJob(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-	cancelQueuedJob(request);
-	return viewJobs(mapping, actionForm, request, response, null);
-    }
+	public ActionForward cancelQueuedJob(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		cancelQueuedJob(request);
+		return viewJobs(mapping, actionForm, request, response, null);
+	}
 
-    public ActionForward resendJob(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-	resendJob(request);
-	return viewJobs(mapping, actionForm, request, response, null);
-    }
+	public ActionForward resendJob(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		resendJob(request);
+		return viewJobs(mapping, actionForm, request, response, null);
+	}
 
-    private void cancelQueuedJob(HttpServletRequest request) {
-	QueueJob job = getDomainObject(request, "id");
-	job.cancel();
-    }
+	private void cancelQueuedJob(HttpServletRequest request) {
+		QueueJob job = getDomainObject(request, "id");
+		job.cancel();
+	}
 
-    private void resendJob(HttpServletRequest request) {
-	QueueJob job = getDomainObject(request, "id");
-	job.resend();
-    }
+	private void resendJob(HttpServletRequest request) {
+		QueueJob job = getDomainObject(request, "id");
+		job.resend();
+	}
 
-    public List<QueueJob> getLatestJobs() {
-	return (QueueJob.getAllJobsForClassOrSubClass(TutorshipStudentLowPerformanceQueueJob.class, 5));
-    }
+	public List<QueueJob> getLatestJobs() {
+		return (QueueJob.getAllJobsForClassOrSubClass(TutorshipStudentLowPerformanceQueueJob.class, 5));
+	}
 
-    private ActionForward viewJobs(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response, TutorshipStudentLowPerformanceQueueJob job) throws Exception {
+	private ActionForward viewJobs(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response, TutorshipStudentLowPerformanceQueueJob job) throws Exception {
 
-	PrescriptionBean prescriptionBean = getContextBean(request);
-	request.setAttribute("job", job);
-	request.setAttribute("queueJobList", getLatestJobs());
-	request.setAttribute(PRESCRIPTION_BEAN, prescriptionBean);
-	return mapping.findForward("viewStudentsState");
-    }
+		PrescriptionBean prescriptionBean = getContextBean(request);
+		request.setAttribute("job", job);
+		request.setAttribute("queueJobList", getLatestJobs());
+		request.setAttribute(PRESCRIPTION_BEAN, prescriptionBean);
+		return mapping.findForward("viewStudentsState");
+	}
 
 }

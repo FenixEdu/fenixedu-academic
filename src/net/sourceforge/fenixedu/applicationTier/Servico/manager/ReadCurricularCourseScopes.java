@@ -12,21 +12,21 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadCurricularCourseScopes extends FenixService {
 
-    @Service
-    public static List<InfoCurricularCourseScope> run(Integer curricularCourseId) throws FenixServiceException {
-	CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(curricularCourseId);
+	@Service
+	public static List<InfoCurricularCourseScope> run(Integer curricularCourseId) throws FenixServiceException {
+		CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(curricularCourseId);
 
-	List<CurricularCourseScope> curricularCourseScopes = curricularCourse.getScopes();
-	if (curricularCourseScopes == null || curricularCourseScopes.isEmpty()) {
-	    return new ArrayList<InfoCurricularCourseScope>();
+		List<CurricularCourseScope> curricularCourseScopes = curricularCourse.getScopes();
+		if (curricularCourseScopes == null || curricularCourseScopes.isEmpty()) {
+			return new ArrayList<InfoCurricularCourseScope>();
+		}
+
+		List<InfoCurricularCourseScope> result = new ArrayList<InfoCurricularCourseScope>(curricularCourseScopes.size());
+		for (CurricularCourseScope curricularCourseScope : curricularCourseScopes) {
+			result.add(InfoCurricularCourseScope.newInfoFromDomain(curricularCourseScope));
+		}
+
+		return result;
 	}
-
-	List<InfoCurricularCourseScope> result = new ArrayList<InfoCurricularCourseScope>(curricularCourseScopes.size());
-	for (CurricularCourseScope curricularCourseScope : curricularCourseScopes) {
-	    result.add(InfoCurricularCourseScope.newInfoFromDomain(curricularCourseScope));
-	}
-
-	return result;
-    }
 
 }

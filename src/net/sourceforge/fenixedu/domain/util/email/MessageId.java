@@ -6,22 +6,22 @@ import org.joda.time.DateTime;
 
 public class MessageId extends MessageId_Base {
 
-    public MessageId() {
-	super();
-	setRootDomainObject(RootDomainObject.getInstance());
-	setSendTime(new DateTime());
-    }
+	public MessageId() {
+		super();
+		setRootDomainObject(RootDomainObject.getInstance());
+		setSendTime(new DateTime());
+	}
 
-    public MessageId(final Message message, final String messageID) {
-	this();
-	setMessage(message);
-	setId(messageID);
-    }
+	public MessageId(final Message message, final String messageID) {
+		this();
+		setMessage(message);
+		setId(messageID);
+	}
 
-    public void delete() {
-	removeMessage();
-	removeRootDomainObject();
-	deleteDomainObject();
-    }
+	public void delete() {
+		removeMessage();
+		removeRootDomainObject();
+		deleteDomainObject();
+	}
 
 }

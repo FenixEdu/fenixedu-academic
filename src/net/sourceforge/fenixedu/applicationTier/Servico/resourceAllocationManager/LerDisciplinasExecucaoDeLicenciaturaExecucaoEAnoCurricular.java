@@ -18,59 +18,59 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class LerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular extends FenixService {
 
-    @Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
-    @Service
-    public static List run(InfoExecutionDegree infoExecutionDegree, InfoExecutionPeriod infoExecutionPeriod,
-	    Integer curricularYearID) {
+	@Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
+	@Service
+	public static List run(InfoExecutionDegree infoExecutionDegree, InfoExecutionPeriod infoExecutionPeriod,
+			Integer curricularYearID) {
 
-	List listInfoDE = new ArrayList();
+		List listInfoDE = new ArrayList();
 
-	CurricularYear curricularYear = rootDomainObject.readCurricularYearByOID(curricularYearID);
-	ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(infoExecutionPeriod.getIdInternal());
-	DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(infoExecutionDegree
-		.getInfoDegreeCurricularPlan().getIdInternal());
+		CurricularYear curricularYear = rootDomainObject.readCurricularYearByOID(curricularYearID);
+		ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(infoExecutionPeriod.getIdInternal());
+		DegreeCurricularPlan degreeCurricularPlan =
+				rootDomainObject.readDegreeCurricularPlanByOID(infoExecutionDegree.getInfoDegreeCurricularPlan().getIdInternal());
 
-	if (executionSemester != null) {
-	    List<ExecutionCourse> listDCDE = executionSemester
-		    .getExecutionCoursesByDegreeCurricularPlanAndSemesterAndCurricularYearAndName(degreeCurricularPlan,
-			    curricularYear, "%");
+		if (executionSemester != null) {
+			List<ExecutionCourse> listDCDE =
+					executionSemester.getExecutionCoursesByDegreeCurricularPlanAndSemesterAndCurricularYearAndName(
+							degreeCurricularPlan, curricularYear, "%");
 
-	    Iterator iterator = listDCDE.iterator();
-	    listInfoDE = new ArrayList();
-	    while (iterator.hasNext()) {
-		ExecutionCourse elem = (ExecutionCourse) iterator.next();
+			Iterator iterator = listDCDE.iterator();
+			listInfoDE = new ArrayList();
+			while (iterator.hasNext()) {
+				ExecutionCourse elem = (ExecutionCourse) iterator.next();
 
-		listInfoDE.add(InfoExecutionCourse.newInfoFromDomain(elem));
+				listInfoDE.add(InfoExecutionCourse.newInfoFromDomain(elem));
 
-	    }
+			}
+		}
+		return listInfoDE;
 	}
-	return listInfoDE;
-    }
 
-    @Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
-    @Service
-    public static List run(InfoExecutionDegree infoExecutionDegree, AcademicInterval academicInterval, Integer curricularYearID) {
+	@Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
+	@Service
+	public static List run(InfoExecutionDegree infoExecutionDegree, AcademicInterval academicInterval, Integer curricularYearID) {
 
-	List listInfoDE = new ArrayList();
+		List listInfoDE = new ArrayList();
 
-	CurricularYear curricularYear = rootDomainObject.readCurricularYearByOID(curricularYearID);
-	DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(infoExecutionDegree
-		.getInfoDegreeCurricularPlan().getIdInternal());
+		CurricularYear curricularYear = rootDomainObject.readCurricularYearByOID(curricularYearID);
+		DegreeCurricularPlan degreeCurricularPlan =
+				rootDomainObject.readDegreeCurricularPlanByOID(infoExecutionDegree.getInfoDegreeCurricularPlan().getIdInternal());
 
-	if (academicInterval != null) {
-	    List<ExecutionCourse> listDCDE = ExecutionCourse
-		    .filterByAcademicIntervalAndDegreeCurricularPlanAndCurricularYearAndName(academicInterval,
-			    degreeCurricularPlan, curricularYear, "%");
+		if (academicInterval != null) {
+			List<ExecutionCourse> listDCDE =
+					ExecutionCourse.filterByAcademicIntervalAndDegreeCurricularPlanAndCurricularYearAndName(academicInterval,
+							degreeCurricularPlan, curricularYear, "%");
 
-	    Iterator iterator = listDCDE.iterator();
-	    listInfoDE = new ArrayList();
-	    while (iterator.hasNext()) {
-		ExecutionCourse elem = (ExecutionCourse) iterator.next();
+			Iterator iterator = listDCDE.iterator();
+			listInfoDE = new ArrayList();
+			while (iterator.hasNext()) {
+				ExecutionCourse elem = (ExecutionCourse) iterator.next();
 
-		listInfoDE.add(InfoExecutionCourse.newInfoFromDomain(elem));
+				listInfoDE.add(InfoExecutionCourse.newInfoFromDomain(elem));
 
-	    }
+			}
+		}
+		return listInfoDE;
 	}
-	return listInfoDE;
-    }
 }

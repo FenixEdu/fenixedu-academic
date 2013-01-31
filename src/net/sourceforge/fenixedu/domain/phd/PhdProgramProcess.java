@@ -19,207 +19,207 @@ import com.google.common.base.Predicate;
 
 abstract public class PhdProgramProcess extends PhdProgramProcess_Base {
 
-    protected PhdProgramProcess() {
-	super();
-    }
-
-    public PhdProgramProcessDocument addDocument(PhdProgramDocumentUploadBean each, Person responsible) {
-	return new PhdProgramProcessDocument(this, each.getType(), each.getRemarks(), each.getFileContent(), each.getFilename(),
-		responsible);
-    }
-
-    protected void addDocuments(List<PhdProgramDocumentUploadBean> documents, Person responsible) {
-	for (final PhdProgramDocumentUploadBean each : documents) {
-	    addDocument(each, responsible);
-	}
-    }
-
-    private Set<PhdProgramProcessDocument> getDocumentsByType(PhdIndividualProgramDocumentType type) {
-	final Set<PhdProgramProcessDocument> result = new HashSet<PhdProgramProcessDocument>();
-
-	for (final PhdProgramProcessDocument document : getDocumentsSet()) {
-	    if (document.getDocumentType() == type) {
-		result.add(document);
-	    }
+	protected PhdProgramProcess() {
+		super();
 	}
 
-	return result;
-    }
-
-    protected Set<PhdProgramProcessDocument> filterLatestDocumentVersions(Collection<PhdProgramProcessDocument> documentsToFilter) {
-	final Set<PhdProgramProcessDocument> result = new HashSet<PhdProgramProcessDocument>();
-
-	for (final PhdProgramProcessDocument document : documentsToFilter) {
-	    if (!document.getDocumentAccepted()) {
-		continue;
-	    }
-
-	    result.add(document.getLastVersion());
+	public PhdProgramProcessDocument addDocument(PhdProgramDocumentUploadBean each, Person responsible) {
+		return new PhdProgramProcessDocument(this, each.getType(), each.getRemarks(), each.getFileContent(), each.getFilename(),
+				responsible);
 	}
 
-	return result;
-    }
-
-    public Set<PhdProgramProcessDocument> getLatestDocumentsByType(PhdIndividualProgramDocumentType type) {
-	final Collection<PhdProgramProcessDocument> documents = new HashSet<PhdProgramProcessDocument>();
-	for (final PhdProgramProcessDocument document : getDocumentsSet()) {
-	    if (document.getDocumentType() == type) {
-		documents.add(document);
-	    }
+	protected void addDocuments(List<PhdProgramDocumentUploadBean> documents, Person responsible) {
+		for (final PhdProgramDocumentUploadBean each : documents) {
+			addDocument(each, responsible);
+		}
 	}
 
-	return filterLatestDocumentVersions(documents);
-    }
+	private Set<PhdProgramProcessDocument> getDocumentsByType(PhdIndividualProgramDocumentType type) {
+		final Set<PhdProgramProcessDocument> result = new HashSet<PhdProgramProcessDocument>();
 
-    public Integer getLastVersionNumber(PhdIndividualProgramDocumentType type) {
-	Set<PhdProgramProcessDocument> documentsByType = getDocumentsByType(type);
+		for (final PhdProgramProcessDocument document : getDocumentsSet()) {
+			if (document.getDocumentType() == type) {
+				result.add(document);
+			}
+		}
 
-	return documentsByType.isEmpty() ? 0 : documentsByType.size();
-    }
-
-    public Set<PhdProgramProcessDocument> getAllDocumentVersionsOfType(PhdIndividualProgramDocumentType type) {
-	return getDocumentsByType(type);
-    }
-
-    public PhdProgramProcessDocument getLatestDocumentVersionFor(PhdIndividualProgramDocumentType type) {
-	if (!type.isVersioned()) {
-	    throw new DomainException("error.PhdProgramProcess.latest.document.version.method.only.for.versioned.types");
+		return result;
 	}
 
-	final SortedSet<PhdProgramProcessDocument> documents = new TreeSet<PhdProgramProcessDocument>(
-		PhdProgramProcessDocument.COMPARATOR_BY_VERSION);
+	protected Set<PhdProgramProcessDocument> filterLatestDocumentVersions(Collection<PhdProgramProcessDocument> documentsToFilter) {
+		final Set<PhdProgramProcessDocument> result = new HashSet<PhdProgramProcessDocument>();
 
-	for (PhdProgramProcessDocument document : getDocumentsByType(type)) {
-	    if (document.getDocumentAccepted()) {
-		documents.add(document);
-	    }
+		for (final PhdProgramProcessDocument document : documentsToFilter) {
+			if (!document.getDocumentAccepted()) {
+				continue;
+			}
+
+			result.add(document.getLastVersion());
+		}
+
+		return result;
 	}
 
-	return documents.isEmpty() ? null : documents.iterator().next();
-    }
+	public Set<PhdProgramProcessDocument> getLatestDocumentsByType(PhdIndividualProgramDocumentType type) {
+		final Collection<PhdProgramProcessDocument> documents = new HashSet<PhdProgramProcessDocument>();
+		for (final PhdProgramProcessDocument document : getDocumentsSet()) {
+			if (document.getDocumentType() == type) {
+				documents.add(document);
+			}
+		}
 
-    public Set<PhdProgramProcessDocument> getLatestDocumentVersions() {
-	return filterLatestDocumentVersions(getDocumentsSet());
-    }
-
-    public Set<PhdProgramProcessDocument> getLatestDocumentVersionsAvailableToStudent() {
-
-	final Collection<PhdIndividualProgramDocumentType> documentTypesVisibleToStudent = PhdIndividualProgramDocumentType
-		.getDocumentTypesVisibleToStudent();
-
-	final Collection<PhdProgramProcessDocument> documents = new HashSet<PhdProgramProcessDocument>();
-	for (final PhdProgramProcessDocument document : getDocumentsSet()) {
-	    if (documentTypesVisibleToStudent.contains(document.getDocumentType())) {
-		documents.add(document);
-	    }
+		return filterLatestDocumentVersions(documents);
 	}
 
-	return filterLatestDocumentVersions(documents);
-    }
+	public Integer getLastVersionNumber(PhdIndividualProgramDocumentType type) {
+		Set<PhdProgramProcessDocument> documentsByType = getDocumentsByType(type);
 
-    static public boolean isParticipant(PhdProgramProcess process, IUserView userView) {
-	return process.isAllowedToManageProcess(userView)
-		|| process.getIndividualProgramProcess().isCoordinatorForPhdProgram(userView.getPerson())
-		|| process.getIndividualProgramProcess().isGuiderOrAssistentGuider(userView.getPerson())
-		|| process.getIndividualProgramProcess().getPerson() == userView.getPerson()
-		|| process.getIndividualProgramProcess().isParticipant(userView.getPerson());
-    }
-
-    public PhdProcessState getMostRecentState() {
-	return hasAnyStates() ? Collections.max(getStates(), PhdProcessState.COMPARATOR_BY_DATE) : null;
-    }
-
-    abstract public boolean hasAnyStates();
-
-    abstract public Collection<? extends PhdProcessState> getStates();
-
-    public Collection<? extends PhdProcessState> getOrderedStates() {
-	List<? extends PhdProcessState> states = new ArrayList<PhdProcessState>(getStates());
-	Collections.sort(states, PhdProcessState.COMPARATOR_BY_DATE);
-
-	return states;
-    }
-
-    public List<PhdProcessState> getOrderedStatesByType(final PhdProcessStateType type) {
-	List<PhdProcessState> result = new ArrayList<PhdProcessState>();
-
-	Collection<? extends PhdProcessState> orderedStates = getOrderedStates();
-
-	for (PhdProcessState phdProcessState : orderedStates) {
-	    if (type.equals(phdProcessState.getType())) {
-		result.add(phdProcessState);
-	    }
+		return documentsByType.isEmpty() ? 0 : documentsByType.size();
 	}
 
-	return result;
-    }
-
-    public PhdProcessState getMostRecentStateByType(final PhdProcessStateType type) {
-	List<PhdProcessState> orderedStatesByType = getOrderedStatesByType(type);
-	Collections.reverse(orderedStatesByType);
-
-	if (orderedStatesByType.isEmpty()) {
-	    return null;
+	public Set<PhdProgramProcessDocument> getAllDocumentVersionsOfType(PhdIndividualProgramDocumentType type) {
+		return getDocumentsByType(type);
 	}
 
-	return orderedStatesByType.iterator().next();
-    }
+	public PhdProgramProcessDocument getLatestDocumentVersionFor(PhdIndividualProgramDocumentType type) {
+		if (!type.isVersioned()) {
+			throw new DomainException("error.PhdProgramProcess.latest.document.version.method.only.for.versioned.types");
+		}
 
-    public PhdProcessStateType getActiveState() {
-	final PhdProcessState state = getMostRecentState();
-	return state != null ? state.getType() : null;
-    }
+		final SortedSet<PhdProgramProcessDocument> documents =
+				new TreeSet<PhdProgramProcessDocument>(PhdProgramProcessDocument.COMPARATOR_BY_VERSION);
 
-    public String getActiveStateRemarks() {
-	return getMostRecentState().getRemarks();
-    }
+		for (PhdProgramProcessDocument document : getDocumentsByType(type)) {
+			if (document.getDocumentAccepted()) {
+				documents.add(document);
+			}
+		}
 
-    public boolean hasState(PhdProcessStateType type) {
-	final List<PhdProcessState> states = new ArrayList<PhdProcessState>(getStates());
-	Collections.sort(states, PhdCandidacyProcessState.COMPARATOR_BY_DATE);
-
-	for (final PhdProcessState state : states) {
-	    if (state.getType().equals(type)) {
-		return true;
-	    }
+		return documents.isEmpty() ? null : documents.iterator().next();
 	}
 
-	return false;
-    }
-
-    abstract protected PhdIndividualProgramProcess getIndividualProgramProcess();
-
-    abstract protected Person getPerson();
-
-    /**
-     * Used to determine whether the specified person is allowed to manage the
-     * Process, according to the Rule system.
-     * 
-     * @see AcademicOperationType
-     */
-    abstract protected boolean isAllowedToManageProcess(IUserView userView);
-
-    public static final Predicate<PhdProgramProcess> IS_ALLOWED_TO_MANAGE_PROCESS_PREDICATE = new Predicate<PhdProgramProcess>() {
-	@Override
-	public boolean apply(PhdProgramProcess process) {
-	    return process.isAllowedToManageProcess(AccessControl.getUserView());
+	public Set<PhdProgramProcessDocument> getLatestDocumentVersions() {
+		return filterLatestDocumentVersions(getDocumentsSet());
 	}
-    };
 
-    public boolean isProcessCandidacy() {
-	return false;
-    }
+	public Set<PhdProgramProcessDocument> getLatestDocumentVersionsAvailableToStudent() {
 
-    public boolean isProcessIndividualProgram() {
-	return false;
-    }
+		final Collection<PhdIndividualProgramDocumentType> documentTypesVisibleToStudent =
+				PhdIndividualProgramDocumentType.getDocumentTypesVisibleToStudent();
 
-    public boolean isProcessThesis() {
-	return false;
-    }
+		final Collection<PhdProgramProcessDocument> documents = new HashSet<PhdProgramProcessDocument>();
+		for (final PhdProgramProcessDocument document : getDocumentsSet()) {
+			if (documentTypesVisibleToStudent.contains(document.getDocumentType())) {
+				documents.add(document);
+			}
+		}
 
-    public boolean isProcessPublicPresentationSeminar() {
-	return false;
-    }
+		return filterLatestDocumentVersions(documents);
+	}
+
+	static public boolean isParticipant(PhdProgramProcess process, IUserView userView) {
+		return process.isAllowedToManageProcess(userView)
+				|| process.getIndividualProgramProcess().isCoordinatorForPhdProgram(userView.getPerson())
+				|| process.getIndividualProgramProcess().isGuiderOrAssistentGuider(userView.getPerson())
+				|| process.getIndividualProgramProcess().getPerson() == userView.getPerson()
+				|| process.getIndividualProgramProcess().isParticipant(userView.getPerson());
+	}
+
+	public PhdProcessState getMostRecentState() {
+		return hasAnyStates() ? Collections.max(getStates(), PhdProcessState.COMPARATOR_BY_DATE) : null;
+	}
+
+	abstract public boolean hasAnyStates();
+
+	abstract public Collection<? extends PhdProcessState> getStates();
+
+	public Collection<? extends PhdProcessState> getOrderedStates() {
+		List<? extends PhdProcessState> states = new ArrayList<PhdProcessState>(getStates());
+		Collections.sort(states, PhdProcessState.COMPARATOR_BY_DATE);
+
+		return states;
+	}
+
+	public List<PhdProcessState> getOrderedStatesByType(final PhdProcessStateType type) {
+		List<PhdProcessState> result = new ArrayList<PhdProcessState>();
+
+		Collection<? extends PhdProcessState> orderedStates = getOrderedStates();
+
+		for (PhdProcessState phdProcessState : orderedStates) {
+			if (type.equals(phdProcessState.getType())) {
+				result.add(phdProcessState);
+			}
+		}
+
+		return result;
+	}
+
+	public PhdProcessState getMostRecentStateByType(final PhdProcessStateType type) {
+		List<PhdProcessState> orderedStatesByType = getOrderedStatesByType(type);
+		Collections.reverse(orderedStatesByType);
+
+		if (orderedStatesByType.isEmpty()) {
+			return null;
+		}
+
+		return orderedStatesByType.iterator().next();
+	}
+
+	public PhdProcessStateType getActiveState() {
+		final PhdProcessState state = getMostRecentState();
+		return state != null ? state.getType() : null;
+	}
+
+	public String getActiveStateRemarks() {
+		return getMostRecentState().getRemarks();
+	}
+
+	public boolean hasState(PhdProcessStateType type) {
+		final List<PhdProcessState> states = new ArrayList<PhdProcessState>(getStates());
+		Collections.sort(states, PhdCandidacyProcessState.COMPARATOR_BY_DATE);
+
+		for (final PhdProcessState state : states) {
+			if (state.getType().equals(type)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	abstract protected PhdIndividualProgramProcess getIndividualProgramProcess();
+
+	abstract protected Person getPerson();
+
+	/**
+	 * Used to determine whether the specified person is allowed to manage the
+	 * Process, according to the Rule system.
+	 * 
+	 * @see AcademicOperationType
+	 */
+	abstract protected boolean isAllowedToManageProcess(IUserView userView);
+
+	public static final Predicate<PhdProgramProcess> IS_ALLOWED_TO_MANAGE_PROCESS_PREDICATE = new Predicate<PhdProgramProcess>() {
+		@Override
+		public boolean apply(PhdProgramProcess process) {
+			return process.isAllowedToManageProcess(AccessControl.getUserView());
+		}
+	};
+
+	public boolean isProcessCandidacy() {
+		return false;
+	}
+
+	public boolean isProcessIndividualProgram() {
+		return false;
+	}
+
+	public boolean isProcessThesis() {
+		return false;
+	}
+
+	public boolean isProcessPublicPresentationSeminar() {
+		return false;
+	}
 
 }

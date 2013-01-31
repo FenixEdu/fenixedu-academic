@@ -10,61 +10,63 @@ import org.joda.time.DateTime;
 
 abstract public class CurriculumLineLog extends CurriculumLineLog_Base {
 
-    protected CurriculumLineLog() {
-	super();
-	setRootDomainObject(RootDomainObject.getInstance());
-	setDateDateTime(new DateTime());
-    }
+	protected CurriculumLineLog() {
+		super();
+		setRootDomainObject(RootDomainObject.getInstance());
+		setDateDateTime(new DateTime());
+	}
 
-    protected void init(final EnrolmentAction action, final Registration registration, final DegreeModule degreeModule,
-	    final ExecutionSemester executionSemester, final String who) {
+	protected void init(final EnrolmentAction action, final Registration registration, final DegreeModule degreeModule,
+			final ExecutionSemester executionSemester, final String who) {
 
-	checkParameters(action, registration, degreeModule, executionSemester);
+		checkParameters(action, registration, degreeModule, executionSemester);
 
-	setAction(action);
-	setStudent(registration);
-	setDegreeModule(degreeModule);
-	setExecutionPeriod(executionSemester);
-	setWho(who);
-    }
+		setAction(action);
+		setStudent(registration);
+		setDegreeModule(degreeModule);
+		setExecutionPeriod(executionSemester);
+		setWho(who);
+	}
 
-    private void checkParameters(final EnrolmentAction action, final Registration registration, final DegreeModule degreeModule,
-	    final ExecutionSemester executionSemester) {
-	check(action, "error.log.EnrolmentLog.invalid.action");
-	check(registration, "error.log.EnrolmentLog.invalid.registration");
-	check(degreeModule, "error.log.DismissalLog.invalid.degreeModule");
-	check(executionSemester, "error.log.EnrolmentLog.invalid.executionSemester");
-    }
+	private void checkParameters(final EnrolmentAction action, final Registration registration, final DegreeModule degreeModule,
+			final ExecutionSemester executionSemester) {
+		check(action, "error.log.EnrolmentLog.invalid.action");
+		check(registration, "error.log.EnrolmentLog.invalid.registration");
+		check(degreeModule, "error.log.DismissalLog.invalid.degreeModule");
+		check(executionSemester, "error.log.EnrolmentLog.invalid.executionSemester");
+	}
 
-    public void delete() {
-	disconnect();
-	super.deleteDomainObject();
-    }
+	public void delete() {
+		disconnect();
+		super.deleteDomainObject();
+	}
 
-    protected void disconnect() {
-	removeRootDomainObject();
-	removeStudent();
-	removeDegreeModule();
-	removeExecutionPeriod();
-    }
+	protected void disconnect() {
+		removeRootDomainObject();
+		removeStudent();
+		removeDegreeModule();
+		removeExecutionPeriod();
+	}
 
-    abstract public String getDescription();
+	abstract public String getDescription();
 
-    public boolean isFor(final ExecutionSemester executionSemester) {
-	return getExecutionPeriod() == executionSemester;
-    }
+	public boolean isFor(final ExecutionSemester executionSemester) {
+		return getExecutionPeriod() == executionSemester;
+	}
 
 	@Deprecated
-	public java.util.Date getDate(){
+	public java.util.Date getDate() {
 		org.joda.time.DateTime dt = getDateDateTime();
 		return (dt == null) ? null : new java.util.Date(dt.getMillis());
 	}
 
 	@Deprecated
-	public void setDate(java.util.Date date){
-		if(date == null) setDateDateTime(null);
-		else setDateDateTime(new org.joda.time.DateTime(date.getTime()));
+	public void setDate(java.util.Date date) {
+		if (date == null) {
+			setDateDateTime(null);
+		} else {
+			setDateDateTime(new org.joda.time.DateTime(date.getTime()));
+		}
 	}
-
 
 }

@@ -23,15 +23,15 @@ import net.sourceforge.fenixedu.presentationTier.Action.Seminaries.Exceptions.BD
  */
 public class GetCaseStudiesByThemeID extends FenixService {
 
-    public List run(Integer themeID) throws BDException {
-	List cases = rootDomainObject.readThemeByOID(themeID).getCaseStudies();
+	public List run(Integer themeID) throws BDException {
+		List cases = rootDomainObject.readThemeByOID(themeID).getCaseStudies();
 
-	List infoCases = new LinkedList();
-	for (Iterator iterator = cases.iterator(); iterator.hasNext();) {
-	    CaseStudy caseStudy = (CaseStudy) iterator.next();
-	    infoCases.add(InfoCaseStudy.newInfoFromDomain(caseStudy));
+		List infoCases = new LinkedList();
+		for (Iterator iterator = cases.iterator(); iterator.hasNext();) {
+			CaseStudy caseStudy = (CaseStudy) iterator.next();
+			infoCases.add(InfoCaseStudy.newInfoFromDomain(caseStudy));
+		}
+
+		return infoCases;
 	}
-
-	return infoCases;
-    }
 }

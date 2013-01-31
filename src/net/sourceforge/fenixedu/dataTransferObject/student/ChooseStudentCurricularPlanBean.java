@@ -16,61 +16,61 @@ import net.sourceforge.fenixedu.domain.student.Student;
  */
 public class ChooseStudentCurricularPlanBean implements Serializable {
 
-    private Integer number;
+	private Integer number;
 
-    private Student student;
+	private Student student;
 
-    private Registration registration;
+	private Registration registration;
 
-    private StudentCurricularPlan studentCurricularPlan;
+	private StudentCurricularPlan studentCurricularPlan;
 
-    public ChooseStudentCurricularPlanBean(StudentCurricularPlan studentCurricularPlan) {
-	setStudentCurricularPlan(studentCurricularPlan);
-	setRegistration(studentCurricularPlan.getRegistration());
-	setStudent(studentCurricularPlan.getRegistration().getStudent());
-    }
-
-    public ChooseStudentCurricularPlanBean() {
-    }
-
-    public Student getStudent() {
-	return student;
-    }
-
-    public void setStudent(Student student) {
-	this.student = student;
-    }
-
-    public Registration getRegistration() {
-	return registration;
-    }
-
-    public void setRegistration(Registration registration) {
-	if (registration == null) {
-	    this.registration = null;
-	    this.studentCurricularPlan = null;
-	} else {
-	    this.registration = registration;
+	public ChooseStudentCurricularPlanBean(StudentCurricularPlan studentCurricularPlan) {
+		setStudentCurricularPlan(studentCurricularPlan);
+		setRegistration(studentCurricularPlan.getRegistration());
+		setStudent(studentCurricularPlan.getRegistration().getStudent());
 	}
-    }
 
-    public StudentCurricularPlan getStudentCurricularPlan() {
-	return this.studentCurricularPlan == null ? null : studentCurricularPlan;
-    }
-
-    public void setStudentCurricularPlan(StudentCurricularPlan studentCurricularPlan) {
-	this.studentCurricularPlan = studentCurricularPlan;
-    }
-
-    public Integer getNumber() {
-	return number;
-    }
-
-    public void setNumber(Integer number) {
-	this.number = number;
-	if (number != null) {
-	    setStudent(Registration.readRegistrationByNumberAndDegreeTypes(getNumber(), DegreeType.DEGREE).getStudent());
+	public ChooseStudentCurricularPlanBean() {
 	}
-    }
+
+	public Student getStudent() {
+		return student;
+	}
+
+	public void setStudent(Student student) {
+		this.student = student;
+	}
+
+	public Registration getRegistration() {
+		return registration;
+	}
+
+	public void setRegistration(Registration registration) {
+		if (registration == null) {
+			this.registration = null;
+			this.studentCurricularPlan = null;
+		} else {
+			this.registration = registration;
+		}
+	}
+
+	public StudentCurricularPlan getStudentCurricularPlan() {
+		return this.studentCurricularPlan == null ? null : studentCurricularPlan;
+	}
+
+	public void setStudentCurricularPlan(StudentCurricularPlan studentCurricularPlan) {
+		this.studentCurricularPlan = studentCurricularPlan;
+	}
+
+	public Integer getNumber() {
+		return number;
+	}
+
+	public void setNumber(Integer number) {
+		this.number = number;
+		if (number != null) {
+			setStudent(Registration.readRegistrationByNumberAndDegreeTypes(getNumber(), DegreeType.DEGREE).getStudent());
+		}
+	}
 
 }

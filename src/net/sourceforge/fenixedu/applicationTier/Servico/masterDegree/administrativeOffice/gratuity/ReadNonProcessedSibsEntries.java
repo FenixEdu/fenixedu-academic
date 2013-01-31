@@ -17,13 +17,13 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class ReadNonProcessedSibsEntries extends FenixService {
 
-    @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
-    @Service
-    public static List run() throws FenixServiceException {
-	final List<InfoSibsPaymentFileEntry> result = new ArrayList<InfoSibsPaymentFileEntry>();
-	for (final SibsPaymentFileEntry sibsPaymentFileEntry : SibsPaymentFileEntry.readNonProcessed()) {
-	    result.add(InfoSibsPaymentFileEntry.newInfoFromDomain(sibsPaymentFileEntry));
+	@Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
+	@Service
+	public static List run() throws FenixServiceException {
+		final List<InfoSibsPaymentFileEntry> result = new ArrayList<InfoSibsPaymentFileEntry>();
+		for (final SibsPaymentFileEntry sibsPaymentFileEntry : SibsPaymentFileEntry.readNonProcessed()) {
+			result.add(InfoSibsPaymentFileEntry.newInfoFromDomain(sibsPaymentFileEntry));
+		}
+		return result;
 	}
-	return result;
-    }
 }

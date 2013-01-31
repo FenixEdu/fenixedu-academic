@@ -18,55 +18,56 @@ import net.sourceforge.fenixedu.domain.gesdis.CourseHistoric;
 
 public class ReadCourseHistoric extends FenixService {
 
-    public List run(Integer executionCourseId) throws FenixServiceException {
-	ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);
-	Integer semester = executionCourse.getExecutionPeriod().getSemester();
-	List<CurricularCourse> curricularCourses = executionCourse.getAssociatedCurricularCourses();
-	return getInfoSiteCoursesHistoric(executionCourse, curricularCourses, semester);
-    }
-
-    private List<InfoSiteCourseHistoric> getInfoSiteCoursesHistoric(ExecutionCourse executionCourse,
-	    List<CurricularCourse> curricularCourses, Integer semester) {
-	List<InfoSiteCourseHistoric> result = new ArrayList<InfoSiteCourseHistoric>();
-
-	for (CurricularCourse curricularCourse : curricularCourses) {
-	    result.add(getInfoSiteCourseHistoric(executionCourse.getExecutionPeriod().getExecutionYear(), curricularCourse,
-		    semester));
+	public List run(Integer executionCourseId) throws FenixServiceException {
+		ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);
+		Integer semester = executionCourse.getExecutionPeriod().getSemester();
+		List<CurricularCourse> curricularCourses = executionCourse.getAssociatedCurricularCourses();
+		return getInfoSiteCoursesHistoric(executionCourse, curricularCourses, semester);
 	}
 
-	return result;
-    }
+	private List<InfoSiteCourseHistoric> getInfoSiteCoursesHistoric(ExecutionCourse executionCourse,
+			List<CurricularCourse> curricularCourses, Integer semester) {
+		List<InfoSiteCourseHistoric> result = new ArrayList<InfoSiteCourseHistoric>();
 
-    private InfoSiteCourseHistoric getInfoSiteCourseHistoric(final ExecutionYear executionYear,
-	    CurricularCourse curricularCourse, Integer semester) {
-	InfoSiteCourseHistoric infoSiteCourseHistoric = new InfoSiteCourseHistoric();
+		for (CurricularCourse curricularCourse : curricularCourses) {
+			result.add(getInfoSiteCourseHistoric(executionCourse.getExecutionPeriod().getExecutionYear(), curricularCourse,
+					semester));
+		}
 
-	InfoCurricularCourse infoCurricularCourse = InfoCurricularCourse.newInfoFromDomain(curricularCourse);
-	infoSiteCourseHistoric.setInfoCurricularCourse(infoCurricularCourse);
-
-	final List<CourseHistoric> courseHistorics = curricularCourse.getAssociatedCourseHistorics();
-
-	// the historic must only show info regarding the years previous to the
-	// year chosen by the user
-	List<InfoCourseHistoric> infoCourseHistorics = new ArrayList<InfoCourseHistoric>();
-	for (CourseHistoric courseHistoric : courseHistorics) {
-	    ExecutionYear courseHistoricExecutionYear = ExecutionYear.readExecutionYearByName(courseHistoric.getCurricularYear());
-	    if (courseHistoric.getSemester().equals(semester)
-		    && courseHistoricExecutionYear.getBeginDate().before(executionYear.getBeginDate())) {
-		infoCourseHistorics.add(InfoCourseHistoricWithInfoCurricularCourse.newInfoFromDomain(courseHistoric));
-	    }
+		return result;
 	}
 
-	Collections.sort(infoCourseHistorics, new Comparator() {
-	    public int compare(Object o1, Object o2) {
-		InfoCourseHistoric infoCourseHistoric1 = (InfoCourseHistoric) o1;
-		InfoCourseHistoric infoCourseHistoric2 = (InfoCourseHistoric) o2;
-		return infoCourseHistoric2.getCurricularYear().compareTo(infoCourseHistoric1.getCurricularYear());
-	    }
-	});
+	private InfoSiteCourseHistoric getInfoSiteCourseHistoric(final ExecutionYear executionYear,
+			CurricularCourse curricularCourse, Integer semester) {
+		InfoSiteCourseHistoric infoSiteCourseHistoric = new InfoSiteCourseHistoric();
 
-	infoSiteCourseHistoric.setInfoCourseHistorics(infoCourseHistorics);
-	return infoSiteCourseHistoric;
-    }
+		InfoCurricularCourse infoCurricularCourse = InfoCurricularCourse.newInfoFromDomain(curricularCourse);
+		infoSiteCourseHistoric.setInfoCurricularCourse(infoCurricularCourse);
+
+		final List<CourseHistoric> courseHistorics = curricularCourse.getAssociatedCourseHistorics();
+
+		// the historic must only show info regarding the years previous to the
+		// year chosen by the user
+		List<InfoCourseHistoric> infoCourseHistorics = new ArrayList<InfoCourseHistoric>();
+		for (CourseHistoric courseHistoric : courseHistorics) {
+			ExecutionYear courseHistoricExecutionYear = ExecutionYear.readExecutionYearByName(courseHistoric.getCurricularYear());
+			if (courseHistoric.getSemester().equals(semester)
+					&& courseHistoricExecutionYear.getBeginDate().before(executionYear.getBeginDate())) {
+				infoCourseHistorics.add(InfoCourseHistoricWithInfoCurricularCourse.newInfoFromDomain(courseHistoric));
+			}
+		}
+
+		Collections.sort(infoCourseHistorics, new Comparator() {
+			@Override
+			public int compare(Object o1, Object o2) {
+				InfoCourseHistoric infoCourseHistoric1 = (InfoCourseHistoric) o1;
+				InfoCourseHistoric infoCourseHistoric2 = (InfoCourseHistoric) o2;
+				return infoCourseHistoric2.getCurricularYear().compareTo(infoCourseHistoric1.getCurricularYear());
+			}
+		});
+
+		infoSiteCourseHistoric.setInfoCourseHistorics(infoCourseHistorics);
+		return infoSiteCourseHistoric;
+	}
 
 }

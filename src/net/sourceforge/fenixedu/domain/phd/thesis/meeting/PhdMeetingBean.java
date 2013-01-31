@@ -8,61 +8,61 @@ import org.joda.time.DateTime;
 
 public class PhdMeetingBean implements Serializable {
 
-    private static final long serialVersionUID = 6530997068171520705L;
+	private static final long serialVersionUID = 6530997068171520705L;
 
-    private PhdMeetingSchedulingProcess meetingProcess;
+	private PhdMeetingSchedulingProcess meetingProcess;
 
-    private PhdMeeting meeting;
+	private PhdMeeting meeting;
 
-    private PhdProgramDocumentUploadBean document;
+	private PhdProgramDocumentUploadBean document;
 
-    private boolean toNotify = true;
+	private boolean toNotify = true;
 
-    public PhdMeetingBean() {
+	public PhdMeetingBean() {
 
-    }
+	}
 
-    public PhdMeetingBean(final PhdMeetingSchedulingProcess meetingProcess) {
-	setMeetingProcess(meetingProcess);
-    }
+	public PhdMeetingBean(final PhdMeetingSchedulingProcess meetingProcess) {
+		setMeetingProcess(meetingProcess);
+	}
 
-    public PhdMeetingSchedulingProcess getMeetingProcess() {
-	return meetingProcess;
-    }
+	public PhdMeetingSchedulingProcess getMeetingProcess() {
+		return meetingProcess;
+	}
 
-    public void setMeetingProcess(PhdMeetingSchedulingProcess meetingProcess) {
-	this.meetingProcess = meetingProcess;
-    }
+	public void setMeetingProcess(PhdMeetingSchedulingProcess meetingProcess) {
+		this.meetingProcess = meetingProcess;
+	}
 
-    public PhdMeeting getMeeting() {
-	return meeting;
-    }
+	public PhdMeeting getMeeting() {
+		return meeting;
+	}
 
-    public void setMeeting(PhdMeeting meeting) {
-	this.meeting = meeting;
-    }
+	public void setMeeting(PhdMeeting meeting) {
+		this.meeting = meeting;
+	}
 
-    public DateTime getMeetingDate() {
-	return this.meeting.getMeetingDate();
-    }
+	public DateTime getMeetingDate() {
+		return this.meeting.getMeetingDate();
+	}
 
-    public String getMeetingPlace() {
-	return this.meeting.getMeetingPlace();
-    }
+	public String getMeetingPlace() {
+		return this.meeting.getMeetingPlace();
+	}
 
-    public void setDocument(PhdProgramDocumentUploadBean document) {
-	this.document = document;
-    }
+	public void setDocument(PhdProgramDocumentUploadBean document) {
+		this.document = document;
+	}
 
-    public PhdProgramDocumentUploadBean getDocument() {
-	return this.document;
-    }
+	public PhdProgramDocumentUploadBean getDocument() {
+		return this.document;
+	}
 
-    public boolean isToNotify() {
-	return toNotify;
-    }
+	public boolean isToNotify() {
+		return toNotify;
+	}
 
-    public void setToNotify(boolean toNotify) {
-	this.toNotify = toNotify;
-    }
+	public void setToNotify(boolean toNotify) {
+		this.toNotify = toNotify;
+	}
 }

@@ -12,37 +12,37 @@ import pt.utl.ist.fenix.tools.file.VirtualPathNode;
 
 public class ExecutionCourseAuditFile extends ExecutionCourseAuditFile_Base {
 
-    private static final String ROOT_DIR_DESCRIPTION = "QUC Auxiliar Audit File";
-    private static final String ROOT_DIR = "QUCAuditFile";
+	private static final String ROOT_DIR_DESCRIPTION = "QUC Auxiliar Audit File";
+	private static final String ROOT_DIR = "QUCAuditFile";
 
-    public ExecutionCourseAuditFile(ExecutionCourseAudit executionCourseAudit, String filename, byte[] file) {
-	super();
-	setRootDomainObject(RootDomainObject.getInstance());
-	setExecutionCourseAudit(executionCourseAudit);
-	super.init(getVirtualPath(), filename, filename, null, file, getPermissionGroup());
-    }
+	public ExecutionCourseAuditFile(ExecutionCourseAudit executionCourseAudit, String filename, byte[] file) {
+		super();
+		setRootDomainObject(RootDomainObject.getInstance());
+		setExecutionCourseAudit(executionCourseAudit);
+		super.init(getVirtualPath(), filename, filename, null, file, getPermissionGroup());
+	}
 
-    private Group getPermissionGroup() {
-	PersonGroup teacherGroup = new PersonGroup(getExecutionCourseAudit().getTeacherAuditor().getPerson());
-	PersonGroup studentGroup = new PersonGroup(getExecutionCourseAudit().getStudentAuditor().getPerson());
-	RoleGroup pedagogicalCouncil = new RoleGroup(RoleType.PEDAGOGICAL_COUNCIL);
-	return new GroupUnion(teacherGroup, studentGroup, pedagogicalCouncil);
-    }
+	private Group getPermissionGroup() {
+		PersonGroup teacherGroup = new PersonGroup(getExecutionCourseAudit().getTeacherAuditor().getPerson());
+		PersonGroup studentGroup = new PersonGroup(getExecutionCourseAudit().getStudentAuditor().getPerson());
+		RoleGroup pedagogicalCouncil = new RoleGroup(RoleType.PEDAGOGICAL_COUNCIL);
+		return new GroupUnion(teacherGroup, studentGroup, pedagogicalCouncil);
+	}
 
-    private VirtualPath getVirtualPath() {
-	final VirtualPath filePath = new VirtualPath();
-	filePath.addNode(new VirtualPathNode(ROOT_DIR, ROOT_DIR_DESCRIPTION));
-	ExecutionSemester executionPeriod = getExecutionCourseAudit().getExecutionCourse().getExecutionPeriod();
-	String nodeName = executionPeriod.getName() + "-" + executionPeriod.getExecutionYear().getName();
-	filePath.addNode(new VirtualPathNode(nodeName, nodeName));
-	filePath.addNode(new VirtualPathNode(getExecutionCourseAudit().getExecutionCourse().getExternalId(),
-		getExecutionCourseAudit().getExecutionCourse().getName()));
-	return filePath;
-    }
+	private VirtualPath getVirtualPath() {
+		final VirtualPath filePath = new VirtualPath();
+		filePath.addNode(new VirtualPathNode(ROOT_DIR, ROOT_DIR_DESCRIPTION));
+		ExecutionSemester executionPeriod = getExecutionCourseAudit().getExecutionCourse().getExecutionPeriod();
+		String nodeName = executionPeriod.getName() + "-" + executionPeriod.getExecutionYear().getName();
+		filePath.addNode(new VirtualPathNode(nodeName, nodeName));
+		filePath.addNode(new VirtualPathNode(getExecutionCourseAudit().getExecutionCourse().getExternalId(),
+				getExecutionCourseAudit().getExecutionCourse().getName()));
+		return filePath;
+	}
 
-    @Override
-    public void delete() {
-	removeExecutionCourseAudit();
-	super.delete();
-    }
+	@Override
+	public void delete() {
+		removeExecutionCourseAudit();
+		super.delete();
+	}
 }

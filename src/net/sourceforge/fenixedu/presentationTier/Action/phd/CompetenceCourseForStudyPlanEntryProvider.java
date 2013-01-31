@@ -9,17 +9,16 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class CompetenceCourseForStudyPlanEntryProvider implements DataProvider {
 
-    @Override
-    public Object provide(Object source, Object current) {
-	final PhdStudyPlanEntryBean bean = (PhdStudyPlanEntryBean) source;
+	@Override
+	public Object provide(Object source, Object current) {
+		final PhdStudyPlanEntryBean bean = (PhdStudyPlanEntryBean) source;
 
-	return bean.getDegree() != null ? bean.getDegree().getLastActiveDegreeCurricularPlan().getCompetenceCourses()
-		: Collections.EMPTY_LIST;
+		return bean.getDegree() != null ? bean.getDegree().getLastActiveDegreeCurricularPlan().getCompetenceCourses() : Collections.EMPTY_LIST;
 
-    }
+	}
 
-    @Override
-    public Converter getConverter() {
-	return new DomainObjectKeyArrayConverter();
-    }
+	@Override
+	public Converter getConverter() {
+		return new DomainObjectKeyArrayConverter();
+	}
 }

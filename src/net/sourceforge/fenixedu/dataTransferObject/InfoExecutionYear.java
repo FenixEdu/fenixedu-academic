@@ -10,74 +10,76 @@ import net.sourceforge.fenixedu.util.PeriodState;
  */
 public class InfoExecutionYear extends InfoObject {
 
-    private final ExecutionYear executionYearDomainReference;
+	private final ExecutionYear executionYearDomainReference;
 
-    public InfoExecutionYear(final ExecutionYear executionYear) {
-	executionYearDomainReference = executionYear;
-    }
-
-    public ExecutionYear getExecutionYear() {
-	return executionYearDomainReference;
-    }
-
-    public String getYear() {
-	return getExecutionYear().getYear();
-    }
-
-    public boolean equals(Object obj) {
-	if (obj instanceof InfoExecutionYear) {
-	    InfoExecutionYear infoExecutionYear = (InfoExecutionYear) obj;
-	    return getYear().equals(infoExecutionYear.getYear());
+	public InfoExecutionYear(final ExecutionYear executionYear) {
+		executionYearDomainReference = executionYear;
 	}
-	return false;
-    }
 
-    public String toString() {
-	return getExecutionYear().getYear();
-    }
+	public ExecutionYear getExecutionYear() {
+		return executionYearDomainReference;
+	}
 
-    public PeriodState getState() {
-	return getExecutionYear().getState();
-    }
+	public String getYear() {
+		return getExecutionYear().getYear();
+	}
 
-    public int compareTo(Object arg0) {
-	InfoExecutionYear infoExecutionYear = (InfoExecutionYear) arg0;
-	return this.getYear().compareTo(infoExecutionYear.getYear());
-    }
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof InfoExecutionYear) {
+			InfoExecutionYear infoExecutionYear = (InfoExecutionYear) obj;
+			return getYear().equals(infoExecutionYear.getYear());
+		}
+		return false;
+	}
 
-    public Date getBeginDate() {
-	return getExecutionYear().getBeginDate();
-    }
+	@Override
+	public String toString() {
+		return getExecutionYear().getYear();
+	}
 
-    public Date getEndDate() {
-	return getExecutionYear().getEndDate();
-    }
+	public PeriodState getState() {
+		return getExecutionYear().getState();
+	}
 
-    public static InfoExecutionYear newInfoFromDomain(final ExecutionYear executionYear) {
-	return executionYear == null ? null : new InfoExecutionYear(executionYear);
-    }
+	public int compareTo(Object arg0) {
+		InfoExecutionYear infoExecutionYear = (InfoExecutionYear) arg0;
+		return this.getYear().compareTo(infoExecutionYear.getYear());
+	}
 
-    public String getNextExecutionYearYear() {
-	return getExecutionYear().getNextYearsYearString();
-    }
+	public Date getBeginDate() {
+		return getExecutionYear().getBeginDate();
+	}
 
-    public boolean after(InfoExecutionYear infoExecutionYear) {
-	return getBeginDate().after(infoExecutionYear.getEndDate());
-    }
+	public Date getEndDate() {
+		return getExecutionYear().getEndDate();
+	}
 
-    public InfoExecutionYear getNextInfoExecutionYear() {
-	final ExecutionYear nextExecutionYear = getExecutionYear().getNextExecutionYear();
-	return nextExecutionYear == null ? null : InfoExecutionYear.newInfoFromDomain(nextExecutionYear);
-    }
+	public static InfoExecutionYear newInfoFromDomain(final ExecutionYear executionYear) {
+		return executionYear == null ? null : new InfoExecutionYear(executionYear);
+	}
 
-    @Override
-    public Integer getIdInternal() {
-	return getExecutionYear().getIdInternal();
-    }
+	public String getNextExecutionYearYear() {
+		return getExecutionYear().getNextYearsYearString();
+	}
 
-    @Override
-    public void setIdInternal(Integer integer) {
-	throw new Error("Method should not be called!");
-    }
+	public boolean after(InfoExecutionYear infoExecutionYear) {
+		return getBeginDate().after(infoExecutionYear.getEndDate());
+	}
+
+	public InfoExecutionYear getNextInfoExecutionYear() {
+		final ExecutionYear nextExecutionYear = getExecutionYear().getNextExecutionYear();
+		return nextExecutionYear == null ? null : InfoExecutionYear.newInfoFromDomain(nextExecutionYear);
+	}
+
+	@Override
+	public Integer getIdInternal() {
+		return getExecutionYear().getIdInternal();
+	}
+
+	@Override
+	public void setIdInternal(Integer integer) {
+		throw new Error("Method should not be called!");
+	}
 
 }

@@ -10,14 +10,14 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadGrantInsuranceByGrantContract extends FenixService {
 
-    @Checked("RolePredicates.GRANT_OWNER_MANAGER_PREDICATE")
-    @Service
-    public static InfoGrantInsurance run(Integer idContract) throws FenixServiceException {
-	GrantContract grantContract = rootDomainObject.readGrantContractByOID(idContract);
-	if (grantContract.getGrantInsurance() != null) {
-	    return InfoGrantInsuranceWithContractAndPaymentEntity.newInfoFromDomain(grantContract.getGrantInsurance());
+	@Checked("RolePredicates.GRANT_OWNER_MANAGER_PREDICATE")
+	@Service
+	public static InfoGrantInsurance run(Integer idContract) throws FenixServiceException {
+		GrantContract grantContract = rootDomainObject.readGrantContractByOID(idContract);
+		if (grantContract.getGrantInsurance() != null) {
+			return InfoGrantInsuranceWithContractAndPaymentEntity.newInfoFromDomain(grantContract.getGrantInsurance());
+		}
+		return null;
 	}
-	return null;
-    }
 
 }

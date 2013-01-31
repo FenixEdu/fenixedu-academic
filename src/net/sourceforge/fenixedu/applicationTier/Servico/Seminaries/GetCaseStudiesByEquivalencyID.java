@@ -25,24 +25,24 @@ import net.sourceforge.fenixedu.presentationTier.Action.Seminaries.Exceptions.BD
  */
 public class GetCaseStudiesByEquivalencyID extends FenixService {
 
-    public List run(Integer equivalencyID) throws BDException {
-	List<InfoCaseStudy> infoCases = new LinkedList<InfoCaseStudy>();
+	public List run(Integer equivalencyID) throws BDException {
+		List<InfoCaseStudy> infoCases = new LinkedList<InfoCaseStudy>();
 
-	CourseEquivalency equivalency = rootDomainObject.readCourseEquivalencyByOID(equivalencyID);
-	List<CaseStudy> cases = new LinkedList<CaseStudy>();
-	List themes = equivalency.getThemes();
+		CourseEquivalency equivalency = rootDomainObject.readCourseEquivalencyByOID(equivalencyID);
+		List<CaseStudy> cases = new LinkedList<CaseStudy>();
+		List themes = equivalency.getThemes();
 
-	for (Iterator iterator = themes.iterator(); iterator.hasNext();) {
-	    Theme theme = (Theme) iterator.next();
-	    cases.addAll(theme.getCaseStudies());
+		for (Iterator iterator = themes.iterator(); iterator.hasNext();) {
+			Theme theme = (Theme) iterator.next();
+			cases.addAll(theme.getCaseStudies());
+		}
+
+		for (Object element : cases) {
+			CaseStudy caseStudy = (CaseStudy) element;
+			infoCases.add(InfoCaseStudy.newInfoFromDomain(caseStudy));
+		}
+
+		return infoCases;
 	}
-
-	for (Iterator iterator = cases.iterator(); iterator.hasNext();) {
-	    CaseStudy caseStudy = (CaseStudy) iterator.next();
-	    infoCases.add(InfoCaseStudy.newInfoFromDomain(caseStudy));
-	}
-
-	return infoCases;
-    }
 
 }

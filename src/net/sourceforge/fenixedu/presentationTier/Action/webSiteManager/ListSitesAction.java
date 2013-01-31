@@ -23,24 +23,24 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 @Forwards(value = { @Forward(name = "list", path = "website-index") })
 public class ListSitesAction extends FenixAction {
 
-    @Override
-    public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-	Person person = getLoggedPerson(request);
+	@Override
+	public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		Person person = getLoggedPerson(request);
 
-	SortedSet<UnitSite> sites = new TreeSet<UnitSite>(new Comparator<UnitSite>() {
+		SortedSet<UnitSite> sites = new TreeSet<UnitSite>(new Comparator<UnitSite>() {
 
-	    @Override
-	    public int compare(UnitSite o1, UnitSite o2) {
-		return o1.getUnit().getName().compareTo(o2.getUnit().getName());
-	    }
+			@Override
+			public int compare(UnitSite o1, UnitSite o2) {
+				return o1.getUnit().getName().compareTo(o2.getUnit().getName());
+			}
 
-	});
+		});
 
-	sites.addAll(person.getUnitSites());
-	request.setAttribute("sites", sites);
+		sites.addAll(person.getUnitSites());
+		request.setAttribute("sites", sites);
 
-	return mapping.findForward("list");
-    }
+		return mapping.findForward("list");
+	}
 
 }

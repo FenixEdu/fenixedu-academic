@@ -12,54 +12,64 @@ import java.io.Serializable;
  */
 public class ProjectBudgetaryBalanceReportLine implements Serializable, IProjectBudgetaryBalanceReportLine {
 
-    private Integer rubric;
+	private Integer rubric;
 
-    private String rubricDescription;
+	private String rubricDescription;
 
-    private Double budget;
+	private Double budget;
 
-    private Double executed;
+	private Double executed;
 
-    private Double balance;
+	private Double balance;
 
-    public Double getBalance() {
-	return balance;
-    }
+	@Override
+	public Double getBalance() {
+		return balance;
+	}
 
-    public void setBalance(Double balance) {
-	this.balance = balance;
-    }
+	@Override
+	public void setBalance(Double balance) {
+		this.balance = balance;
+	}
 
-    public Double getBudget() {
-	return budget;
-    }
+	@Override
+	public Double getBudget() {
+		return budget;
+	}
 
-    public void setBudget(Double budget) {
-	this.budget = budget;
-    }
+	@Override
+	public void setBudget(Double budget) {
+		this.budget = budget;
+	}
 
-    public Double getExecuted() {
-	return executed;
-    }
+	@Override
+	public Double getExecuted() {
+		return executed;
+	}
 
-    public void setExecuted(Double executed) {
-	this.executed = executed;
-    }
+	@Override
+	public void setExecuted(Double executed) {
+		this.executed = executed;
+	}
 
-    public Integer getRubric() {
-	return rubric;
-    }
+	@Override
+	public Integer getRubric() {
+		return rubric;
+	}
 
-    public void setRubric(Integer rubric) {
-	this.rubric = rubric;
-    }
+	@Override
+	public void setRubric(Integer rubric) {
+		this.rubric = rubric;
+	}
 
-    public String getRubricDescription() {
-	return rubricDescription;
-    }
+	@Override
+	public String getRubricDescription() {
+		return rubricDescription;
+	}
 
-    public void setRubricDescription(String rubricDescription) {
-	this.rubricDescription = rubricDescription;
-    }
+	@Override
+	public void setRubricDescription(String rubricDescription) {
+		this.rubricDescription = rubricDescription;
+	}
 
 }

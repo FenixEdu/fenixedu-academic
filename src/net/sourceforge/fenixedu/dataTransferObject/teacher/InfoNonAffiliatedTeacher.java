@@ -15,66 +15,66 @@ import net.sourceforge.fenixedu.domain.NonAffiliatedTeacher;
 
 public class InfoNonAffiliatedTeacher extends InfoObject {
 
-    protected String name;
+	protected String name;
 
-    protected Integer keyInstitution;
+	protected Integer keyInstitution;
 
-    protected InfoInstitution infoInstitution;
+	protected InfoInstitution infoInstitution;
 
-    public InfoNonAffiliatedTeacher() {
-    }
-
-    public void copyFromDomain(NonAffiliatedTeacher nonAffiliatedTeacher) {
-	super.copyFromDomain(nonAffiliatedTeacher);
-	if (nonAffiliatedTeacher != null) {
-	    if (nonAffiliatedTeacher.getInstitutionUnit() != null) {
-		InfoInstitution infoInstitution = new InfoInstitution();
-		infoInstitution.copyFromDomain(nonAffiliatedTeacher.getInstitutionUnit());
-		setInfoInstitution(infoInstitution);
-	    }
-	    setName(nonAffiliatedTeacher.getName());
+	public InfoNonAffiliatedTeacher() {
 	}
-    }
 
-    public static InfoNonAffiliatedTeacher newInfoFromDomain(NonAffiliatedTeacher naTeacher) {
-	InfoNonAffiliatedTeacher infoNaTeacher = null;
-	if (naTeacher != null) {
-	    infoNaTeacher = new InfoNonAffiliatedTeacher();
-	    infoNaTeacher.copyFromDomain(naTeacher);
+	public void copyFromDomain(NonAffiliatedTeacher nonAffiliatedTeacher) {
+		super.copyFromDomain(nonAffiliatedTeacher);
+		if (nonAffiliatedTeacher != null) {
+			if (nonAffiliatedTeacher.getInstitutionUnit() != null) {
+				InfoInstitution infoInstitution = new InfoInstitution();
+				infoInstitution.copyFromDomain(nonAffiliatedTeacher.getInstitutionUnit());
+				setInfoInstitution(infoInstitution);
+			}
+			setName(nonAffiliatedTeacher.getName());
+		}
 	}
-	return infoNaTeacher;
-    }
 
-    public InfoInstitution getInfoInstitution() {
-	return infoInstitution;
-    }
+	public static InfoNonAffiliatedTeacher newInfoFromDomain(NonAffiliatedTeacher naTeacher) {
+		InfoNonAffiliatedTeacher infoNaTeacher = null;
+		if (naTeacher != null) {
+			infoNaTeacher = new InfoNonAffiliatedTeacher();
+			infoNaTeacher.copyFromDomain(naTeacher);
+		}
+		return infoNaTeacher;
+	}
 
-    public void setInfoInstitution(InfoInstitution infoInstitution) {
-	this.infoInstitution = infoInstitution;
-    }
+	public InfoInstitution getInfoInstitution() {
+		return infoInstitution;
+	}
 
-    public Integer getKeyInstitution() {
-	return keyInstitution;
-    }
+	public void setInfoInstitution(InfoInstitution infoInstitution) {
+		this.infoInstitution = infoInstitution;
+	}
 
-    public void setKeyInstitution(Integer keyInstitution) {
-	this.keyInstitution = keyInstitution;
-    }
+	public Integer getKeyInstitution() {
+		return keyInstitution;
+	}
 
-    public String getName() {
-	return name;
-    }
+	public void setKeyInstitution(Integer keyInstitution) {
+		this.keyInstitution = keyInstitution;
+	}
 
-    public void setName(String name) {
-	this.name = name;
-    }
+	public String getName() {
+		return name;
+	}
 
-    @Override
-    public String toString() {
-	String result = "[INFONONAFFILIATEDTEACHER";
-	result += ", nome=" + this.getName();
-	result += "]";
-	return result;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	@Override
+	public String toString() {
+		String result = "[INFONONAFFILIATEDTEACHER";
+		result += ", nome=" + this.getName();
+		result += "]";
+		return result;
+	}
 
 }

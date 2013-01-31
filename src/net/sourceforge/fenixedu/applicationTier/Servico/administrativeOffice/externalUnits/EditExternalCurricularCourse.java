@@ -7,9 +7,9 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class EditExternalCurricularCourse extends FenixService {
 
-    @Service
-    public static void run(final EditExternalCurricularCourseBean bean) {
-	final ExternalCurricularCourse externalCurricularCourse = bean.getExternalCurricularCourse();
-	externalCurricularCourse.edit(bean.getName(), bean.getCode());
-    }
+	@Service
+	public static void run(final EditExternalCurricularCourseBean bean) {
+		final ExternalCurricularCourse externalCurricularCourse = bean.getExternalCurricularCourse();
+		externalCurricularCourse.edit(bean.getName(), bean.getCode());
+	}
 }

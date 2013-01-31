@@ -22,54 +22,59 @@ import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManage
  */
 public class FenixFacesServlet implements Servlet {
 
-    public static ServletConfig servletConfig = null;
+	public static ServletConfig servletConfig = null;
 
-    final FacesServlet facesServlet;
+	final FacesServlet facesServlet;
 
-    public FenixFacesServlet() {
-	super();
-	facesServlet = new FacesServlet();
-    }
-
-    public void init(ServletConfig config) throws ServletException {
-	facesServlet.init(config);
-	this.servletConfig = config;
-    }
-
-    public ServletConfig getServletConfig() {
-	return facesServlet.getServletConfig();
-    }
-
-    public void service(ServletRequest request, ServletResponse response) throws ServletException, IOException {
-	try {
-	    facesServlet.service(request, response);
-	} catch (IOException e) {
-	    e.printStackTrace();
-	    handleException(request, response, e);
-	    throw e;
-	} catch (ServletException e) {
-	    e.printStackTrace();
-	    int index = e.getMessage().indexOf("IllegalDataAccessException");
-	    if (index > -1) {
-		String message = e.getMessage().substring(index);
-		throw new IllegalDataAccessException(message);
-	    }
-	    handleException(request, response, e);
-	    throw e;
+	public FenixFacesServlet() {
+		super();
+		facesServlet = new FacesServlet();
 	}
-    }
 
-    private void handleException(ServletRequest request, ServletResponse response, Exception e) {
-	HttpServletRequest httpServletRequest = (HttpServletRequest) request;
-	httpServletRequest.setAttribute(PresentationConstants.EXCEPTION_STACK_TRACE, e.getStackTrace());
-    }
+	@Override
+	public void init(ServletConfig config) throws ServletException {
+		facesServlet.init(config);
+		this.servletConfig = config;
+	}
 
-    public String getServletInfo() {
-	return facesServlet.getServletInfo();
-    }
+	@Override
+	public ServletConfig getServletConfig() {
+		return facesServlet.getServletConfig();
+	}
 
-    public void destroy() {
-	facesServlet.destroy();
-    }
+	@Override
+	public void service(ServletRequest request, ServletResponse response) throws ServletException, IOException {
+		try {
+			facesServlet.service(request, response);
+		} catch (IOException e) {
+			e.printStackTrace();
+			handleException(request, response, e);
+			throw e;
+		} catch (ServletException e) {
+			e.printStackTrace();
+			int index = e.getMessage().indexOf("IllegalDataAccessException");
+			if (index > -1) {
+				String message = e.getMessage().substring(index);
+				throw new IllegalDataAccessException(message);
+			}
+			handleException(request, response, e);
+			throw e;
+		}
+	}
+
+	private void handleException(ServletRequest request, ServletResponse response, Exception e) {
+		HttpServletRequest httpServletRequest = (HttpServletRequest) request;
+		httpServletRequest.setAttribute(PresentationConstants.EXCEPTION_STACK_TRACE, e.getStackTrace());
+	}
+
+	@Override
+	public String getServletInfo() {
+		return facesServlet.getServletInfo();
+	}
+
+	@Override
+	public void destroy() {
+		facesServlet.destroy();
+	}
 
 }

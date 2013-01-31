@@ -12,94 +12,94 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class MobilityQuota extends MobilityQuota_Base {
 
-    public MobilityQuota() {
-	super();
-	setRootDomainObject(RootDomainObject.getInstance());
-    }
-
-    public MobilityQuota(MobilityApplicationPeriod period, Degree degree, MobilityAgreement mobilityAgreement,
-	    Integer numberOfOpenings) {
-	this();
-	setApplicationPeriod(period);
-	setDegree(degree);
-	setMobilityAgreement(mobilityAgreement);
-	setNumberOfOpenings(numberOfOpenings);
-	check();
-    }
-
-    public MobilityQuota(final MobilityApplicationPeriod period, Degree degree, MobilityProgram mobilityProgram,
-	    UniversityUnit unit, Integer numberOfOpenings) {
-	this();
-
-	setApplicationPeriod(period);
-	setDegree(degree);
-
-	MobilityAgreement agreement = MobilityAgreement.getOrCreateAgreement(mobilityProgram, unit);
-
-	setMobilityAgreement(agreement);
-
-	setNumberOfOpenings(numberOfOpenings);
-
-	check();
-    }
-
-    private void check() {
-	if (getApplicationPeriod() == null) {
-	    throw new DomainException("error.erasmus.vacancy.candidacy.period.must.not.be.null");
+	public MobilityQuota() {
+		super();
+		setRootDomainObject(RootDomainObject.getInstance());
 	}
 
-	if (getDegree() == null) {
-	    throw new DomainException("error.erasmus.vacancy.degree.must.not.be.null");
+	public MobilityQuota(MobilityApplicationPeriod period, Degree degree, MobilityAgreement mobilityAgreement,
+			Integer numberOfOpenings) {
+		this();
+		setApplicationPeriod(period);
+		setDegree(degree);
+		setMobilityAgreement(mobilityAgreement);
+		setNumberOfOpenings(numberOfOpenings);
+		check();
 	}
 
-	if (getMobilityAgreement().getUniversityUnit() == null) {
-	    throw new DomainException("error.erasmus.vacancy.university.unit.must.not.be.null");
+	public MobilityQuota(final MobilityApplicationPeriod period, Degree degree, MobilityProgram mobilityProgram,
+			UniversityUnit unit, Integer numberOfOpenings) {
+		this();
+
+		setApplicationPeriod(period);
+		setDegree(degree);
+
+		MobilityAgreement agreement = MobilityAgreement.getOrCreateAgreement(mobilityProgram, unit);
+
+		setMobilityAgreement(agreement);
+
+		setNumberOfOpenings(numberOfOpenings);
+
+		check();
 	}
 
-	if (getNumberOfOpenings() == null) {
-	    throw new DomainException("error.erasmus.vacancy.number.of.vacancies.must.not.be.null");
-	}
-    }
+	private void check() {
+		if (getApplicationPeriod() == null) {
+			throw new DomainException("error.erasmus.vacancy.candidacy.period.must.not.be.null");
+		}
 
-    @Service
-    public static MobilityQuota createVacancy(final MobilityApplicationPeriod period, final Degree degree,
-	    final MobilityProgram mobilityProgram, final UniversityUnit unit, final Integer numberOfOpenings) {
-	return new MobilityQuota(period, degree, mobilityProgram, unit, numberOfOpenings);
-    }
+		if (getDegree() == null) {
+			throw new DomainException("error.erasmus.vacancy.degree.must.not.be.null");
+		}
 
-    public List<MobilityIndividualApplicationProcess> getStudentApplicationProcesses() {
-	List<MobilityIndividualApplicationProcess> processList = new ArrayList<MobilityIndividualApplicationProcess>();
+		if (getMobilityAgreement().getUniversityUnit() == null) {
+			throw new DomainException("error.erasmus.vacancy.university.unit.must.not.be.null");
+		}
 
-	for (MobilityStudentData data : getApplications()) {
-	    processList.add(data.getMobilityIndividualApplication().getCandidacyProcess());
-	}
-
-	return processList;
-    }
-
-    public boolean isQuotaAssociatedWithAnyApplication() {
-	return hasAnyApplications();
-    }
-
-    public void delete() {
-	if (isQuotaAssociatedWithAnyApplication()) {
-	    throw new DomainException("error.mobility.quota.is.associated.with.applications");
+		if (getNumberOfOpenings() == null) {
+			throw new DomainException("error.erasmus.vacancy.number.of.vacancies.must.not.be.null");
+		}
 	}
 
-	removeMobilityAgreement();
-	removeDegree();
-	removeApplicationPeriod();
-	removeRootDomainObject();
+	@Service
+	public static MobilityQuota createVacancy(final MobilityApplicationPeriod period, final Degree degree,
+			final MobilityProgram mobilityProgram, final UniversityUnit unit, final Integer numberOfOpenings) {
+		return new MobilityQuota(period, degree, mobilityProgram, unit, numberOfOpenings);
+	}
 
-	deleteDomainObject();
-    }
+	public List<MobilityIndividualApplicationProcess> getStudentApplicationProcesses() {
+		List<MobilityIndividualApplicationProcess> processList = new ArrayList<MobilityIndividualApplicationProcess>();
 
-    public boolean isFor(final MobilityProgram mobilityProgram) {
-	return getMobilityAgreement().getMobilityProgram() == mobilityProgram;
-    }
+		for (MobilityStudentData data : getApplications()) {
+			processList.add(data.getMobilityIndividualApplication().getCandidacyProcess());
+		}
 
-    public boolean isAssociatedToApplications() {
-	return !getStudentApplicationProcesses().isEmpty();
-    }
+		return processList;
+	}
+
+	public boolean isQuotaAssociatedWithAnyApplication() {
+		return hasAnyApplications();
+	}
+
+	public void delete() {
+		if (isQuotaAssociatedWithAnyApplication()) {
+			throw new DomainException("error.mobility.quota.is.associated.with.applications");
+		}
+
+		removeMobilityAgreement();
+		removeDegree();
+		removeApplicationPeriod();
+		removeRootDomainObject();
+
+		deleteDomainObject();
+	}
+
+	public boolean isFor(final MobilityProgram mobilityProgram) {
+		return getMobilityAgreement().getMobilityProgram() == mobilityProgram;
+	}
+
+	public boolean isAssociatedToApplications() {
+		return !getStudentApplicationProcesses().isEmpty();
+	}
 
 }

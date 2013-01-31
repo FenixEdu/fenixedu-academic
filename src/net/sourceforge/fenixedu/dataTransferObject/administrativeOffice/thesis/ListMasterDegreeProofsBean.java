@@ -18,55 +18,55 @@ import org.joda.time.YearMonthDay;
  */
 public class ListMasterDegreeProofsBean implements Serializable {
 
-    private Degree degree;
+	private Degree degree;
 
-    private Integer year;
+	private Integer year;
 
-    private MasterDegreeThesisState thesisState;
+	private MasterDegreeThesisState thesisState;
 
-    private Boolean generateFile;
+	private Boolean generateFile;
 
-    public ListMasterDegreeProofsBean() {
-	year = new YearMonthDay().getYear();
-    }
-
-    public List<MasterDegreeProofVersion> getMasterDegreeProofs() {
-	if (this.degree != null) {
-	    return MasterDegreeProofVersion.getConcludedForDegreeAndSinceYear(getDegree(), year);
+	public ListMasterDegreeProofsBean() {
+		year = new YearMonthDay().getYear();
 	}
-	return null;
-    }
 
-    public Degree getDegree() {
-	return this.degree;
-    }
+	public List<MasterDegreeProofVersion> getMasterDegreeProofs() {
+		if (this.degree != null) {
+			return MasterDegreeProofVersion.getConcludedForDegreeAndSinceYear(getDegree(), year);
+		}
+		return null;
+	}
 
-    public void setDegree(Degree degree) {
-	this.degree = degree;
-    }
+	public Degree getDegree() {
+		return this.degree;
+	}
 
-    public Integer getYear() {
-	return year;
-    }
+	public void setDegree(Degree degree) {
+		this.degree = degree;
+	}
 
-    public void setYear(Integer year) {
-	this.year = year;
-    }
+	public Integer getYear() {
+		return year;
+	}
 
-    public Boolean getGenerateFile() {
-	return generateFile != null && generateFile;
-    }
+	public void setYear(Integer year) {
+		this.year = year;
+	}
 
-    public void setGenerateFile(Boolean generateFile) {
-	this.generateFile = generateFile;
-    }
+	public Boolean getGenerateFile() {
+		return generateFile != null && generateFile;
+	}
 
-    public MasterDegreeThesisState getThesisState() {
-	return thesisState;
-    }
+	public void setGenerateFile(Boolean generateFile) {
+		this.generateFile = generateFile;
+	}
 
-    public void setThesisState(MasterDegreeThesisState thesisState) {
-	this.thesisState = thesisState;
-    }
+	public MasterDegreeThesisState getThesisState() {
+		return thesisState;
+	}
+
+	public void setThesisState(MasterDegreeThesisState thesisState) {
+		this.thesisState = thesisState;
+	}
 
 }

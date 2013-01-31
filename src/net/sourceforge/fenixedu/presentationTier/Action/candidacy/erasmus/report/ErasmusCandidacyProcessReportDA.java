@@ -19,30 +19,30 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 @Forwards({ @Forward(name = "list", path = "/candidacy/erasmus/reports/list.jsp") })
 public class ErasmusCandidacyProcessReportDA extends FenixDispatchAction {
 
-    public ActionForward list(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
-	request.setAttribute("erasmusCandidacyProcess", readErasmusCandidacyProcess(request));
-	return mapping.findForward("list");
-    }
+	public ActionForward list(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+		request.setAttribute("erasmusCandidacyProcess", readErasmusCandidacyProcess(request));
+		return mapping.findForward("list");
+	}
 
-    public ActionForward createNewJob(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
-	ErasmusCandidacyProcessReport.create(readErasmusCandidacyProcess(request));
-	return list(mapping, form, request, response);
-    }
+	public ActionForward createNewJob(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) {
+		ErasmusCandidacyProcessReport.create(readErasmusCandidacyProcess(request));
+		return list(mapping, form, request, response);
+	}
 
-    public ActionForward cancelJob(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
-	ErasmusCandidacyProcessReport report = readErasmusCandidacyProcessReport(request);
+	public ActionForward cancelJob(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) {
+		ErasmusCandidacyProcessReport report = readErasmusCandidacyProcessReport(request);
 
-	report.cancel();
-	return list(mapping, form, request, response);
-    }
+		report.cancel();
+		return list(mapping, form, request, response);
+	}
 
-    private MobilityApplicationProcess readErasmusCandidacyProcess(final HttpServletRequest request) {
-	return getDomainObject(request, "erasmusCandidacyProcessId");
-    }
+	private MobilityApplicationProcess readErasmusCandidacyProcess(final HttpServletRequest request) {
+		return getDomainObject(request, "erasmusCandidacyProcessId");
+	}
 
-    private ErasmusCandidacyProcessReport readErasmusCandidacyProcessReport(final HttpServletRequest request) {
-	return getDomainObject(request, "erasmusCandidacyProcessReportId");
-    }
+	private ErasmusCandidacyProcessReport readErasmusCandidacyProcessReport(final HttpServletRequest request) {
+		return getDomainObject(request, "erasmusCandidacyProcessReportId");
+	}
 }

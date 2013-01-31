@@ -9,40 +9,41 @@ package net.sourceforge.fenixedu.domain.exceptions;
  * 
  */
 public class FenixDomainException extends Exception {
-    private int errorType;
+	private int errorType;
 
-    /**
-     * @return
-     */
-    public int getErrorType() {
-	return this.errorType;
-    }
+	/**
+	 * @return
+	 */
+	public int getErrorType() {
+		return this.errorType;
+	}
 
-    public FenixDomainException() {
-    }
+	public FenixDomainException() {
+	}
 
-    public FenixDomainException(int errorType) {
-	this.errorType = errorType;
-    }
+	public FenixDomainException(int errorType) {
+		this.errorType = errorType;
+	}
 
-    public FenixDomainException(String s) {
-	super(s);
-    }
+	public FenixDomainException(String s) {
+		super(s);
+	}
 
-    public FenixDomainException(Throwable cause) {
-	super(cause);
-    }
+	public FenixDomainException(Throwable cause) {
+		super(cause);
+	}
 
-    public FenixDomainException(String message, Throwable cause) {
-	super(message, cause);
-    }
+	public FenixDomainException(String message, Throwable cause) {
+		super(message, cause);
+	}
 
-    public String toString() {
-	String result = "[" + this.getClass().getName() + "\n";
-	result += "message " + this.getMessage() + "\n";
-	result += "cause " + this.getCause() + "\n";
-	result += "]";
-	return result;
-    }
+	@Override
+	public String toString() {
+		String result = "[" + this.getClass().getName() + "\n";
+		result += "message " + this.getMessage() + "\n";
+		result += "cause " + this.getCause() + "\n";
+		result += "]";
+		return result;
+	}
 
 }

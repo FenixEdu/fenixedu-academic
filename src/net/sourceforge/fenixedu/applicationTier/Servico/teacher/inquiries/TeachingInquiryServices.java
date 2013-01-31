@@ -6,17 +6,17 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class TeachingInquiryServices {
 
-    @Service
-    static public TeachingInquiry saveAnswers(final TeachingInquiryDTO inquiryDTO) {
+	@Service
+	static public TeachingInquiry saveAnswers(final TeachingInquiryDTO inquiryDTO) {
 
-	TeachingInquiry teachingInquiry = inquiryDTO.getProfessorship().hasTeachingInquiry() ? inquiryDTO.getProfessorship()
-		.getTeachingInquiry() : new TeachingInquiry();
-	teachingInquiry.setProfessorship(inquiryDTO.getProfessorship());
-	teachingInquiry.setAnswerDuration(inquiryDTO.getAnswerDuration());
+		TeachingInquiry teachingInquiry =
+				inquiryDTO.getProfessorship().hasTeachingInquiry() ? inquiryDTO.getProfessorship().getTeachingInquiry() : new TeachingInquiry();
+		teachingInquiry.setProfessorship(inquiryDTO.getProfessorship());
+		teachingInquiry.setAnswerDuration(inquiryDTO.getAnswerDuration());
 
-	teachingInquiry.setAnswers(inquiryDTO);
+		teachingInquiry.setAnswers(inquiryDTO);
 
-	return teachingInquiry;
-    }
+		return teachingInquiry;
+	}
 
 }

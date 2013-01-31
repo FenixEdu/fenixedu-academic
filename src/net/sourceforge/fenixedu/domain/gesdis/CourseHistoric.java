@@ -13,15 +13,15 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
  */
 public class CourseHistoric extends CourseHistoric_Base {
 
-    public CourseHistoric() {
-	super();
-	setRootDomainObject(RootDomainObject.getInstance());
-    }
+	public CourseHistoric() {
+		super();
+		setRootDomainObject(RootDomainObject.getInstance());
+	}
 
-    public void delete() {
-	removeCurricularCourse();
-	removeRootDomainObject();
-	super.deleteDomainObject();
-    }
+	public void delete() {
+		removeCurricularCourse();
+		removeRootDomainObject();
+		super.deleteDomainObject();
+	}
 
 }

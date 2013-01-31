@@ -20,24 +20,34 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
-@Mapping(module = "departmentAdmOffice", path = "/summariesControl", input = "/index.do", attribute = "summariesControlForm", formBean = "summariesControlForm", scope = "request", parameter = "method")
-@Forwards(value = { @Forward(name = "success", path = "/departmentAdmOffice/summariesControl/listTeacherSummariesControl.jsp", tileProperties = @Tile(title = "private.administrationofcreditsofdepartmentteachers.consultations.controlbrief")) })
+@Mapping(
+		module = "departmentAdmOffice",
+		path = "/summariesControl",
+		input = "/index.do",
+		attribute = "summariesControlForm",
+		formBean = "summariesControlForm",
+		scope = "request",
+		parameter = "method")
+@Forwards(value = { @Forward(
+		name = "success",
+		path = "/departmentAdmOffice/summariesControl/listTeacherSummariesControl.jsp",
+		tileProperties = @Tile(title = "private.administrationofcreditsofdepartmentteachers.consultations.controlbrief")) })
 public class DepartmentAdmOfficeSummariesControlAction extends SummariesControlAction {
 
-    @Override
-    protected void readAndSaveAllDepartments(HttpServletRequest request) throws FenixFilterException, FenixServiceException {
+	@Override
+	protected void readAndSaveAllDepartments(HttpServletRequest request) throws FenixFilterException, FenixServiceException {
 
-	List<LabelValueBean> departments = new ArrayList<LabelValueBean>();
-	final IUserView userView = UserView.getUser();
-	Person person = userView.getPerson();
-	List<Department> manageableDepartments = person.getManageableDepartmentCredits();
-	for (Department department : manageableDepartments) {
-	    LabelValueBean bean = new LabelValueBean();
-	    bean.setLabel(department.getRealName());
-	    bean.setValue(department.getIdInternal().toString());
-	    departments.add(bean);
+		List<LabelValueBean> departments = new ArrayList<LabelValueBean>();
+		final IUserView userView = UserView.getUser();
+		Person person = userView.getPerson();
+		List<Department> manageableDepartments = person.getManageableDepartmentCredits();
+		for (Department department : manageableDepartments) {
+			LabelValueBean bean = new LabelValueBean();
+			bean.setLabel(department.getRealName());
+			bean.setValue(department.getIdInternal().toString());
+			departments.add(bean);
+		}
+		request.setAttribute("departments", departments);
 	}
-	request.setAttribute("departments", departments);
-    }
 
 }

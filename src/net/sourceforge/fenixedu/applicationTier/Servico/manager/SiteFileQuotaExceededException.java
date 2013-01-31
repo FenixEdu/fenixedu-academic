@@ -13,16 +13,16 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
  */
 public class SiteFileQuotaExceededException extends DomainException {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    private static String MESSAGE = "site.quota.exceeded";
+	private static String MESSAGE = "site.quota.exceeded";
 
-    public SiteFileQuotaExceededException(Site site, int size) {
-	super(MESSAGE, getSizeValue(site.getQuota()));
-    }
+	public SiteFileQuotaExceededException(Site site, int size) {
+		super(MESSAGE, getSizeValue(site.getQuota()));
+	}
 
-    private static String getSizeValue(long quota) {
-	return String.format("%.2f MB", quota / 1024.0 / 1024.0);
-    }
+	private static String getSizeValue(long quota) {
+		return String.format("%.2f MB", quota / 1024.0 / 1024.0);
+	}
 
 }

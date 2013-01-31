@@ -15,10 +15,10 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class SetEnrolmentState extends FenixService {
 
-    @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
-    @Service
-    public static void run(Enrolment enrolment, EnrollmentState state) {
-	enrolment.setEnrollmentState(state);
-    }
+	@Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
+	@Service
+	public static void run(Enrolment enrolment, EnrollmentState state) {
+		enrolment.setEnrollmentState(state);
+	}
 
 }

@@ -9,18 +9,20 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class ThesisParticipationTypeProvider implements DataProvider {
 
-    public Object provide(Object source, Object currentValue) {
-	final List<ThesisParticipationType> thesisParticipationTypes = new ArrayList<ThesisParticipationType>();
-	thesisParticipationTypes.add(ThesisParticipationType.ORIENTATOR);
-	thesisParticipationTypes.add(ThesisParticipationType.COORIENTATOR);
-	thesisParticipationTypes.add(ThesisParticipationType.PRESIDENT);
-	thesisParticipationTypes.add(ThesisParticipationType.VOWEL);
+	@Override
+	public Object provide(Object source, Object currentValue) {
+		final List<ThesisParticipationType> thesisParticipationTypes = new ArrayList<ThesisParticipationType>();
+		thesisParticipationTypes.add(ThesisParticipationType.ORIENTATOR);
+		thesisParticipationTypes.add(ThesisParticipationType.COORIENTATOR);
+		thesisParticipationTypes.add(ThesisParticipationType.PRESIDENT);
+		thesisParticipationTypes.add(ThesisParticipationType.VOWEL);
 
-	return thesisParticipationTypes;
-    }
+		return thesisParticipationTypes;
+	}
 
-    public Converter getConverter() {
-	return null;
-    }
+	@Override
+	public Converter getConverter() {
+		return null;
+	}
 
 }

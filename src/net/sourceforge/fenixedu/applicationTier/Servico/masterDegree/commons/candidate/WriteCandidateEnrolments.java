@@ -19,74 +19,76 @@ import org.apache.commons.collections.Transformer;
 
 public class WriteCandidateEnrolments extends FenixService {
 
-    public void run(Set<Integer> selectedCurricularCoursesIDs, Integer candidateID, Double credits, String givenCreditsRemarks)
-	    throws FenixServiceException {
+	public void run(Set<Integer> selectedCurricularCoursesIDs, Integer candidateID, Double credits, String givenCreditsRemarks)
+			throws FenixServiceException {
 
-	MasterDegreeCandidate masterDegreeCandidate = rootDomainObject.readMasterDegreeCandidateByOID(candidateID);
-	if (masterDegreeCandidate == null) {
-	    throw new NonExistingServiceException();
+		MasterDegreeCandidate masterDegreeCandidate = rootDomainObject.readMasterDegreeCandidateByOID(candidateID);
+		if (masterDegreeCandidate == null) {
+			throw new NonExistingServiceException();
+		}
+
+		masterDegreeCandidate.setGivenCredits(credits);
+
+		if (credits.floatValue() != 0) {
+			masterDegreeCandidate.setGivenCreditsRemarks(givenCreditsRemarks);
+		}
+
+		List<CandidateEnrolment> candidateEnrolments = masterDegreeCandidate.getCandidateEnrolments();
+		List<Integer> candidateEnrolmentsCurricularCoursesIDs =
+				(List<Integer>) CollectionUtils.collect(candidateEnrolments, new Transformer() {
+					@Override
+					public Object transform(Object arg0) {
+						CandidateEnrolment candidateEnrolment = (CandidateEnrolment) arg0;
+						return candidateEnrolment.getCurricularCourse().getIdInternal();
+					}
+				});
+
+		Collection<Integer> curricularCoursesToEnroll =
+				CollectionUtils.subtract(selectedCurricularCoursesIDs, candidateEnrolmentsCurricularCoursesIDs);
+
+		final Collection<Integer> curricularCoursesToDelete =
+				CollectionUtils.subtract(candidateEnrolmentsCurricularCoursesIDs, selectedCurricularCoursesIDs);
+
+		Collection<CandidateEnrolment> candidateEnrollmentsToDelete =
+				CollectionUtils.select(candidateEnrolments, new Predicate() {
+					@Override
+					public boolean evaluate(Object arg0) {
+						CandidateEnrolment candidateEnrolment = (CandidateEnrolment) arg0;
+						return (curricularCoursesToDelete.contains(candidateEnrolment.getCurricularCourse().getIdInternal()));
+					}
+				});
+
+		writeFilteredEnrollments(masterDegreeCandidate, curricularCoursesToEnroll);
+
+		for (CandidateEnrolment candidateEnrolmentToDelete : candidateEnrollmentsToDelete) {
+			candidateEnrolmentToDelete.delete();
+		}
 	}
 
-	masterDegreeCandidate.setGivenCredits(credits);
+	/**
+	 * @param persistentSupport
+	 * @param masterDegreeCandidate
+	 * @param curricularCoursesToEnroll
+	 * @throws NonExistingServiceException
+	 * @throws ExcepcaoPersistencia
+	 */
+	private void writeFilteredEnrollments(MasterDegreeCandidate masterDegreeCandidate,
+			Collection<Integer> curricularCoursesToEnroll) throws NonExistingServiceException {
+		Iterator iterCurricularCourseIds = curricularCoursesToEnroll.iterator();
+		while (iterCurricularCourseIds.hasNext()) {
 
-	if (credits.floatValue() != 0) {
-	    masterDegreeCandidate.setGivenCreditsRemarks(givenCreditsRemarks);
+			CurricularCourse curricularCourse =
+					(CurricularCourse) rootDomainObject.readDegreeModuleByOID((Integer) iterCurricularCourseIds.next());
+
+			if (curricularCourse == null) {
+				throw new NonExistingServiceException();
+			}
+
+			CandidateEnrolment candidateEnrolment = new CandidateEnrolment();
+
+			masterDegreeCandidate.addCandidateEnrolments(candidateEnrolment);
+			candidateEnrolment.setCurricularCourse(curricularCourse);
+		}
 	}
-
-	List<CandidateEnrolment> candidateEnrolments = masterDegreeCandidate.getCandidateEnrolments();
-	List<Integer> candidateEnrolmentsCurricularCoursesIDs = (List<Integer>) CollectionUtils.collect(candidateEnrolments,
-		new Transformer() {
-		    public Object transform(Object arg0) {
-			CandidateEnrolment candidateEnrolment = (CandidateEnrolment) arg0;
-			return candidateEnrolment.getCurricularCourse().getIdInternal();
-		    }
-		});
-
-	Collection<Integer> curricularCoursesToEnroll = CollectionUtils.subtract(selectedCurricularCoursesIDs,
-		candidateEnrolmentsCurricularCoursesIDs);
-
-	final Collection<Integer> curricularCoursesToDelete = CollectionUtils.subtract(candidateEnrolmentsCurricularCoursesIDs,
-		selectedCurricularCoursesIDs);
-
-	Collection<CandidateEnrolment> candidateEnrollmentsToDelete = CollectionUtils.select(candidateEnrolments,
-		new Predicate() {
-		    public boolean evaluate(Object arg0) {
-			CandidateEnrolment candidateEnrolment = (CandidateEnrolment) arg0;
-			return (curricularCoursesToDelete.contains(candidateEnrolment.getCurricularCourse().getIdInternal()));
-		    }
-		});
-
-	writeFilteredEnrollments(masterDegreeCandidate, curricularCoursesToEnroll);
-
-	for (CandidateEnrolment candidateEnrolmentToDelete : candidateEnrollmentsToDelete) {
-	    candidateEnrolmentToDelete.delete();
-	}
-    }
-
-    /**
-     * @param persistentSupport
-     * @param masterDegreeCandidate
-     * @param curricularCoursesToEnroll
-     * @throws NonExistingServiceException
-     * @throws ExcepcaoPersistencia
-     */
-    private void writeFilteredEnrollments(MasterDegreeCandidate masterDegreeCandidate,
-	    Collection<Integer> curricularCoursesToEnroll) throws NonExistingServiceException {
-	Iterator iterCurricularCourseIds = curricularCoursesToEnroll.iterator();
-	while (iterCurricularCourseIds.hasNext()) {
-
-	    CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject
-		    .readDegreeModuleByOID((Integer) iterCurricularCourseIds.next());
-
-	    if (curricularCourse == null) {
-		throw new NonExistingServiceException();
-	    }
-
-	    CandidateEnrolment candidateEnrolment = new CandidateEnrolment();
-
-	    masterDegreeCandidate.addCandidateEnrolments(candidateEnrolment);
-	    candidateEnrolment.setCurricularCourse(curricularCourse);
-	}
-    }
 
 }

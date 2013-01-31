@@ -7,22 +7,22 @@ import net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy;
 import org.joda.time.DateTime;
 
 public class FirstTimeCandidacyLog extends FirstTimeCandidacyLog_Base {
-    
-    public  FirstTimeCandidacyLog() {
-        super();
-    }
 
-    public FirstTimeCandidacyLog(StudentCandidacy candidacy) {
-	super();
-	this.setStudentCandidacy(candidacy);
-    }
+	public FirstTimeCandidacyLog() {
+		super();
+	}
 
-    public void addEntry(FirstTimeCandidacyStage stage, DateTime timestamp) {
-	this.addFirstTimeCandidacyLogEntry(new FirstTimeCandidacyLogEntry(stage, timestamp, this));
-    }
+	public FirstTimeCandidacyLog(StudentCandidacy candidacy) {
+		super();
+		this.setStudentCandidacy(candidacy);
+	}
 
-    @Override
-    protected RootDomainObject getRootDomainObject() {
-	return RootDomainObject.getInstance();
-    }
+	public void addEntry(FirstTimeCandidacyStage stage, DateTime timestamp) {
+		this.addFirstTimeCandidacyLogEntry(new FirstTimeCandidacyLogEntry(stage, timestamp, this));
+	}
+
+	@Override
+	protected RootDomainObject getRootDomainObject() {
+		return RootDomainObject.getInstance();
+	}
 }

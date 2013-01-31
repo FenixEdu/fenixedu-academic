@@ -12,24 +12,26 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class FunctionProvider implements DataProvider {
 
-    public Object provide(Object source, Object currentValue) {
-	if (source instanceof ProtocolFactory) {
-	    ProtocolFactory protocolFactory = (ProtocolFactory) source;
-	    if (!protocolFactory.getFunctionByPerson()) {
-		return protocolFactory.getResponsibleFunctionUnit().getUnit().getFunctions();
-	    } else {
-		List<Function> functions = new ArrayList<Function>();
-		for (PersonFunction accountability : protocolFactory.getResponsible().getPerson().getActivePersonFunctions()) {
-		    functions.add(accountability.getFunction());
+	@Override
+	public Object provide(Object source, Object currentValue) {
+		if (source instanceof ProtocolFactory) {
+			ProtocolFactory protocolFactory = (ProtocolFactory) source;
+			if (!protocolFactory.getFunctionByPerson()) {
+				return protocolFactory.getResponsibleFunctionUnit().getUnit().getFunctions();
+			} else {
+				List<Function> functions = new ArrayList<Function>();
+				for (PersonFunction accountability : protocolFactory.getResponsible().getPerson().getActivePersonFunctions()) {
+					functions.add(accountability.getFunction());
+				}
+				return functions;
+			}
 		}
-		return functions;
-	    }
+		return null;
 	}
-	return null;
-    }
 
-    public Converter getConverter() {
-	return new DomainObjectKeyConverter();
-    }
+	@Override
+	public Converter getConverter() {
+		return new DomainObjectKeyConverter();
+	}
 
 }

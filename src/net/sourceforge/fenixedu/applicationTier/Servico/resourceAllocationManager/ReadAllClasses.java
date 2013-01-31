@@ -28,27 +28,27 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class ReadAllClasses extends FenixService {
 
-    @Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
-    @Service
-    public static SiteView run(Integer keyExecutionPeriod) throws FenixServiceException {
-	List<InfoClass> infoClasses = null;
+	@Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
+	@Service
+	public static SiteView run(Integer keyExecutionPeriod) throws FenixServiceException {
+		List<InfoClass> infoClasses = null;
 
-	ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(keyExecutionPeriod);
+		ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(keyExecutionPeriod);
 
-	List classes = executionSemester.getSchoolClasses();
+		List classes = executionSemester.getSchoolClasses();
 
-	infoClasses = new ArrayList<InfoClass>();
-	Iterator iter = classes.iterator();
-	while (iter.hasNext()) {
-	    SchoolClass dClass = (SchoolClass) iter.next();
-	    InfoClass infoClass = InfoClass.newInfoFromDomain(dClass);
-	    infoClasses.add(infoClass);
+		infoClasses = new ArrayList<InfoClass>();
+		Iterator iter = classes.iterator();
+		while (iter.hasNext()) {
+			SchoolClass dClass = (SchoolClass) iter.next();
+			InfoClass infoClass = InfoClass.newInfoFromDomain(dClass);
+			infoClasses.add(infoClass);
+		}
+
+		ISiteComponent classesComponent = new InfoSiteClassesComponent(infoClasses);
+		SiteView siteView = new SiteView(classesComponent);
+
+		return siteView;
 	}
-
-	ISiteComponent classesComponent = new InfoSiteClassesComponent(infoClasses);
-	SiteView siteView = new SiteView(classesComponent);
-
-	return siteView;
-    }
 
 }

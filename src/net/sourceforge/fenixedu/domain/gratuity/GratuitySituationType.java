@@ -2,14 +2,14 @@ package net.sourceforge.fenixedu.domain.gratuity;
 
 public enum GratuitySituationType {
 
-    DEBTOR,
+	DEBTOR,
 
-    CREDITOR,
+	CREDITOR,
 
-    REGULARIZED;
+	REGULARIZED;
 
-    public String getName() {
-	return name();
-    }
+	public String getName() {
+		return name();
+	}
 
 }

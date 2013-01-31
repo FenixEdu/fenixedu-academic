@@ -26,47 +26,49 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class ExecutionPeriodsForStudentCurricularPlanProvider implements DataProvider {
 
-    public Object provide(Object source, Object currentValue) {
-	// final List<ExecutionSemester> result = new
-	// ArrayList<ExecutionSemester>();
-	final StudentCurricularPlan studentCurricularPlan = ((IStudentCurricularPlanBean) source).getStudentCurricularPlan();
+	@Override
+	public Object provide(Object source, Object currentValue) {
+		// final List<ExecutionSemester> result = new
+		// ArrayList<ExecutionSemester>();
+		final StudentCurricularPlan studentCurricularPlan = ((IStudentCurricularPlanBean) source).getStudentCurricularPlan();
 
-	final List<ExecutionSemester> executionPeriodsInTimePeriod = ExecutionSemester.readExecutionPeriodsInTimePeriod(
-		studentCurricularPlan.getStartDate(), getEndDate());
+		final List<ExecutionSemester> executionPeriodsInTimePeriod =
+				ExecutionSemester.readExecutionPeriodsInTimePeriod(studentCurricularPlan.getStartDate(), getEndDate());
 
-	/*
-	 * 26/08/2009 - For curriculum validation we want execution semesters
-	 * since student curricular plan start date
-	 * 
-	 * Without the code below we'll get all execution semesters since the
-	 * start date
-	 */
-	// final ExecutionSemester first =
-	// studentCurricularPlan.getDegreeCurricularPlan().getFirstExecutionPeriodEnrolments();
-	// for (final ExecutionSemester executionSemester :
-	// executionPeriodsInTimePeriod) {
-	// if (first.isBeforeOrEquals(executionSemester) &&
-	// !executionSemester.isNotOpen()) {
-	// result.add(executionSemester);
-	// }
-	// }
+		/*
+		 * 26/08/2009 - For curriculum validation we want execution semesters
+		 * since student curricular plan start date
+		 * 
+		 * Without the code below we'll get all execution semesters since the
+		 * start date
+		 */
+		// final ExecutionSemester first =
+		// studentCurricularPlan.getDegreeCurricularPlan().getFirstExecutionPeriodEnrolments();
+		// for (final ExecutionSemester executionSemester :
+		// executionPeriodsInTimePeriod) {
+		// if (first.isBeforeOrEquals(executionSemester) &&
+		// !executionSemester.isNotOpen()) {
+		// result.add(executionSemester);
+		// }
+		// }
 
-	/*
-	 * 26/08/2009 - We sort and return executionPeriodsInTimePeriod instead
-	 * of result
-	 */
+		/*
+		 * 26/08/2009 - We sort and return executionPeriodsInTimePeriod instead
+		 * of result
+		 */
 
-	Collections.sort(executionPeriodsInTimePeriod, new ReverseComparator(ExecutionSemester.COMPARATOR_BY_SEMESTER_AND_YEAR));
+		Collections.sort(executionPeriodsInTimePeriod, new ReverseComparator(ExecutionSemester.COMPARATOR_BY_SEMESTER_AND_YEAR));
 
-	return executionPeriodsInTimePeriod;
-    }
+		return executionPeriodsInTimePeriod;
+	}
 
-    private Date getEndDate() {
-	return ExecutionYear.readCurrentExecutionYear().getLastExecutionPeriod().getEndDate();
-    }
+	private Date getEndDate() {
+		return ExecutionYear.readCurrentExecutionYear().getLastExecutionPeriod().getEndDate();
+	}
 
-    public Converter getConverter() {
-	return new DomainObjectKeyConverter();
-    }
+	@Override
+	public Converter getConverter() {
+		return new DomainObjectKeyConverter();
+	}
 
 }

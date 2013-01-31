@@ -11,47 +11,47 @@ import net.sourceforge.fenixedu.domain.accessControl.groups.language.operators.I
 
 public class WebSiteManagersGroup extends DomainBackedGroup<UnitSite> {
 
-    /**
-     * Default serial id.
-     */
-    private static final long serialVersionUID = 1L;
+	/**
+	 * Default serial id.
+	 */
+	private static final long serialVersionUID = 1L;
 
-    public WebSiteManagersGroup(UnitSite site) {
-	super(site);
-    }
-
-    @Override
-    public Set<Person> getElements() {
-	final UnitSite unitSite = getObject();
-	return unitSite == null ? Collections.EMPTY_SET : unitSite.getManagersSet();
-    }
-
-    @Override
-    protected Argument[] getExpressionArguments() {
-	return new Argument[] { new IdOperator(getObject()) };
-    }
-
-    @Override
-    public String[] getPresentationNameKeyArgs() {
-	return new String[] { getObject().getUnit().getName() };
-    }
-
-    public static class Builder implements GroupBuilder {
-
-	@Override
-	public Group build(Object[] arguments) {
-	    UnitSite site = (UnitSite) arguments[0];
-	    return new WebSiteManagersGroup(site);
+	public WebSiteManagersGroup(UnitSite site) {
+		super(site);
 	}
 
 	@Override
-	public int getMaxArguments() {
-	    return 1;
+	public Set<Person> getElements() {
+		final UnitSite unitSite = getObject();
+		return unitSite == null ? Collections.EMPTY_SET : unitSite.getManagersSet();
 	}
 
 	@Override
-	public int getMinArguments() {
-	    return 1;
+	protected Argument[] getExpressionArguments() {
+		return new Argument[] { new IdOperator(getObject()) };
 	}
-    }
+
+	@Override
+	public String[] getPresentationNameKeyArgs() {
+		return new String[] { getObject().getUnit().getName() };
+	}
+
+	public static class Builder implements GroupBuilder {
+
+		@Override
+		public Group build(Object[] arguments) {
+			UnitSite site = (UnitSite) arguments[0];
+			return new WebSiteManagersGroup(site);
+		}
+
+		@Override
+		public int getMaxArguments() {
+			return 1;
+		}
+
+		@Override
+		public int getMinArguments() {
+			return 1;
+		}
+	}
 }

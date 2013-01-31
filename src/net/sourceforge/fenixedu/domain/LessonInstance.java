@@ -18,229 +18,238 @@ import pt.ist.fenixWebFramework.security.accessControl.Checked;
 
 public class LessonInstance extends LessonInstance_Base {
 
-    public static final Comparator<LessonInstance> COMPARATOR_BY_BEGIN_DATE_TIME = new Comparator<LessonInstance>() {
+	public static final Comparator<LessonInstance> COMPARATOR_BY_BEGIN_DATE_TIME = new Comparator<LessonInstance>() {
+
+		@Override
+		public int compare(LessonInstance o1, LessonInstance o2) {
+			final int c = o1.getBeginDateTime().compareTo(o2.getBeginDateTime());
+			return c == 0 ? DomainObject.COMPARATOR_BY_ID.compare(o1, o2) : c;
+		}
+
+	};
+
+	@Checked("ResourceAllocationRolePredicates.checkPermissionsToManageLessonInstancesWithTeacherCheck")
+	public LessonInstance(Summary summary, Lesson lesson) {
+
+		super();
+
+		if (summary == null) {
+			throw new DomainException("error.LessonInstance.empty.summary");
+		}
+
+		if (lesson == null) {
+			throw new DomainException("error.LessonInstance.empty.lesson");
+		}
+
+		YearMonthDay day = summary.getSummaryDateYearMonthDay();
+
+		LessonInstance lessonInstance = lesson.getLessonInstanceFor(day);
+		if (lessonInstance != null) {
+			throw new DomainException("error.lessonInstance.already.exist");
+		}
+
+		AllocatableSpace room = lesson.getSala();
+
+		HourMinuteSecond beginTime = lesson.getBeginHourMinuteSecond();
+		HourMinuteSecond endTime = lesson.getEndHourMinuteSecond();
+		DateTime beginDateTime =
+				new DateTime(day.getYear(), day.getMonthOfYear(), day.getDayOfMonth(), beginTime.getHour(),
+						beginTime.getMinuteOfHour(), beginTime.getSecondOfMinute(), 0);
+		DateTime endDateTime =
+				new DateTime(day.getYear(), day.getMonthOfYear(), day.getDayOfMonth(), endTime.getHour(),
+						endTime.getMinuteOfHour(), endTime.getSecondOfMinute(), 0);
+
+		setRootDomainObject(RootDomainObject.getInstance());
+		setBeginDateTime(beginDateTime);
+		setEndDateTime(endDateTime);
+		setLesson(lesson);
+
+		summaryAndCourseLoadManagement(summary, lesson);
+		lesson.refreshPeriodAndInstancesInSummaryCreation(day.plusDays(1));
+		lessonInstanceSpaceOccupationManagement(room);
+	}
+
+	@Checked("ResourceAllocationRolePredicates.checkPermissionsToManageLessonInstancesWithTeacherCheck")
+	public LessonInstance(Lesson lesson, YearMonthDay day) {
+
+		super();
+
+		if (day == null) {
+			throw new DomainException("error.LessonInstance.empty.day");
+		}
+
+		if (lesson == null) {
+			throw new DomainException("error.LessonInstance.empty.Lesson");
+		}
+
+		LessonInstance lessonInstance = lesson.getLessonInstanceFor(day);
+		if (lessonInstance != null) {
+			throw new DomainException("error.lessonInstance.already.exist");
+		}
+
+		AllocatableSpace room = lesson.getSala();
+
+		HourMinuteSecond beginTime = lesson.getBeginHourMinuteSecond();
+		HourMinuteSecond endTime = lesson.getEndHourMinuteSecond();
+		DateTime beginDateTime =
+				new DateTime(day.getYear(), day.getMonthOfYear(), day.getDayOfMonth(), beginTime.getHour(),
+						beginTime.getMinuteOfHour(), beginTime.getSecondOfMinute(), 0);
+		DateTime endDateTime =
+				new DateTime(day.getYear(), day.getMonthOfYear(), day.getDayOfMonth(), endTime.getHour(),
+						endTime.getMinuteOfHour(), endTime.getSecondOfMinute(), 0);
+
+		setRootDomainObject(RootDomainObject.getInstance());
+		setBeginDateTime(beginDateTime);
+		setEndDateTime(endDateTime);
+		setLesson(lesson);
+
+		lessonInstanceSpaceOccupationManagement(room);
+	}
+
+	@Checked("ResourceAllocationRolePredicates.checkPermissionsToManageLessonInstances")
+	public void delete() {
+
+		if (!canBeDeleted()) {
+			throw new DomainException("error.LessonInstance.cannot.be.deleted");
+		}
+
+		LessonInstanceSpaceOccupation occupation = getLessonInstanceSpaceOccupation();
+		if (occupation != null) {
+			occupation.removeLessonInstances(this);
+			occupation.delete();
+		}
+
+		super.setCourseLoad(null);
+		super.setLesson(null);
+		removeRootDomainObject();
+		deleteDomainObject();
+	}
+
+	@Checked("ResourceAllocationRolePredicates.checkPermissionsToManageLessonInstancesWithTeacherCheck")
+	public void summaryAndCourseLoadManagement(Summary summary, Lesson lesson) {
+		CourseLoad courseLoad = null;
+		if (lesson != null && summary != null) {
+			courseLoad = lesson.getExecutionCourse().getCourseLoadByShiftType(summary.getSummaryType());
+		}
+		setSummary(summary);
+		setCourseLoad(courseLoad);
+	}
+
+	private int getUnitMinutes() {
+		return Minutes.minutesBetween(getStartTime(), getEndTime()).getMinutes();
+	}
+
+	public BigDecimal getInstanceDurationInHours() {
+		return BigDecimal.valueOf(getUnitMinutes()).divide(BigDecimal.valueOf(Lesson.NUMBER_OF_MINUTES_IN_HOUR), 2,
+				RoundingMode.HALF_UP);
+	}
+
+	private boolean canBeDeleted() {
+		return !hasSummary();
+	}
+
+	@jvstm.cps.ConsistencyPredicate
+	protected boolean checkDateTimeInterval() {
+		final DateTime start = getBeginDateTime();
+		final DateTime end = getEndDateTime();
+		return start != null && end != null && start.isBefore(end);
+	}
+
+	private void lessonInstanceSpaceOccupationManagement(AllocatableSpace space) {
+		if (space != null) {
+			LessonInstanceSpaceOccupation instanceSpaceOccupation =
+					(LessonInstanceSpaceOccupation) space
+							.getFirstOccurrenceOfResourceAllocationByClass(LessonInstanceSpaceOccupation.class);
+
+			instanceSpaceOccupation =
+					instanceSpaceOccupation == null ? new LessonInstanceSpaceOccupation(space) : instanceSpaceOccupation;
+			instanceSpaceOccupation.edit(this);
+		}
+	}
 
 	@Override
-	public int compare(LessonInstance o1, LessonInstance o2) {
-	    final int c = o1.getBeginDateTime().compareTo(o2.getBeginDateTime());
-	    return c == 0 ? DomainObject.COMPARATOR_BY_ID.compare(o1, o2) : c;
+	public void setSummary(Summary summary) {
+		if (summary == null) {
+			throw new DomainException("error.LessonInstance.empty.summary");
+		}
+		super.setSummary(summary);
 	}
 
-    };
-
-    @Checked("ResourceAllocationRolePredicates.checkPermissionsToManageLessonInstancesWithTeacherCheck")
-    public LessonInstance(Summary summary, Lesson lesson) {
-
-	super();
-
-	if (summary == null) {
-	    throw new DomainException("error.LessonInstance.empty.summary");
+	@Override
+	public void setCourseLoad(CourseLoad courseLoad) {
+		if (courseLoad == null) {
+			throw new DomainException("error.lessonInstance.empty.courseLoad");
+		}
+		super.setCourseLoad(courseLoad);
 	}
 
-	if (lesson == null) {
-	    throw new DomainException("error.LessonInstance.empty.lesson");
+	@Override
+	public void setLesson(Lesson lesson) {
+		if (lesson == null) {
+			throw new DomainException("error.lessonInstance.empty.lesson");
+		}
+		super.setLesson(lesson);
 	}
 
-	YearMonthDay day = summary.getSummaryDateYearMonthDay();
-
-	LessonInstance lessonInstance = lesson.getLessonInstanceFor(day);
-	if (lessonInstance != null) {
-	    throw new DomainException("error.lessonInstance.already.exist");
+	public YearMonthDay getDay() {
+		return getBeginDateTime().toYearMonthDay();
 	}
 
-	AllocatableSpace room = lesson.getSala();
-
-	HourMinuteSecond beginTime = lesson.getBeginHourMinuteSecond();
-	HourMinuteSecond endTime = lesson.getEndHourMinuteSecond();
-	DateTime beginDateTime = new DateTime(day.getYear(), day.getMonthOfYear(), day.getDayOfMonth(), beginTime.getHour(),
-		beginTime.getMinuteOfHour(), beginTime.getSecondOfMinute(), 0);
-	DateTime endDateTime = new DateTime(day.getYear(), day.getMonthOfYear(), day.getDayOfMonth(), endTime.getHour(), endTime
-		.getMinuteOfHour(), endTime.getSecondOfMinute(), 0);
-
-	setRootDomainObject(RootDomainObject.getInstance());
-	setBeginDateTime(beginDateTime);
-	setEndDateTime(endDateTime);
-	setLesson(lesson);
-
-	summaryAndCourseLoadManagement(summary, lesson);
-	lesson.refreshPeriodAndInstancesInSummaryCreation(day.plusDays(1));
-	lessonInstanceSpaceOccupationManagement(room);
-    }
-
-    @Checked("ResourceAllocationRolePredicates.checkPermissionsToManageLessonInstancesWithTeacherCheck")
-    public LessonInstance(Lesson lesson, YearMonthDay day) {
-
-	super();
-
-	if (day == null) {
-	    throw new DomainException("error.LessonInstance.empty.day");
+	public HourMinuteSecond getStartTime() {
+		return new HourMinuteSecond(getBeginDateTime().getHourOfDay(), getBeginDateTime().getMinuteOfHour(), getBeginDateTime()
+				.getSecondOfMinute());
 	}
 
-	if (lesson == null) {
-	    throw new DomainException("error.LessonInstance.empty.Lesson");
+	public HourMinuteSecond getEndTime() {
+		return new HourMinuteSecond(getEndDateTime().getHourOfDay(), getEndDateTime().getMinuteOfHour(), getEndDateTime()
+				.getSecondOfMinute());
 	}
 
-	LessonInstance lessonInstance = lesson.getLessonInstanceFor(day);
-	if (lessonInstance != null) {
-	    throw new DomainException("error.lessonInstance.already.exist");
+	public AllocatableSpace getRoom() {
+		return hasLessonInstanceSpaceOccupation() ? getLessonInstanceSpaceOccupation().getRoom() : null;
 	}
 
-	AllocatableSpace room = lesson.getSala();
-
-	HourMinuteSecond beginTime = lesson.getBeginHourMinuteSecond();
-	HourMinuteSecond endTime = lesson.getEndHourMinuteSecond();
-	DateTime beginDateTime = new DateTime(day.getYear(), day.getMonthOfYear(), day.getDayOfMonth(), beginTime.getHour(),
-		beginTime.getMinuteOfHour(), beginTime.getSecondOfMinute(), 0);
-	DateTime endDateTime = new DateTime(day.getYear(), day.getMonthOfYear(), day.getDayOfMonth(), endTime.getHour(), endTime
-		.getMinuteOfHour(), endTime.getSecondOfMinute(), 0);
-
-	setRootDomainObject(RootDomainObject.getInstance());
-	setBeginDateTime(beginDateTime);
-	setEndDateTime(endDateTime);
-	setLesson(lesson);
-
-	lessonInstanceSpaceOccupationManagement(room);
-    }
-
-    @Checked("ResourceAllocationRolePredicates.checkPermissionsToManageLessonInstances")
-    public void delete() {
-
-	if (!canBeDeleted()) {
-	    throw new DomainException("error.LessonInstance.cannot.be.deleted");
+	public DiaSemana getDayOfweek() {
+		return new DiaSemana(DiaSemana.getDiaSemana(getDay()));
 	}
 
-	LessonInstanceSpaceOccupation occupation = getLessonInstanceSpaceOccupation();
-	if (occupation != null) {
-	    occupation.removeLessonInstances(this);
-	    occupation.delete();
+	public String prettyPrint() {
+		final StringBuilder result = new StringBuilder();
+		result.append(getDayOfweek().getDiaSemanaString()).append(" (");
+		result.append(getStartTime().toString("HH:mm")).append(" - ");
+		result.append(getEndDateTime().toString("HH:mm")).append(") ");
+		result.append(getRoom() != null ? getRoom().getIdentification() : "");
+		return result.toString();
 	}
-
-	super.setCourseLoad(null);
-	super.setLesson(null);
-	removeRootDomainObject();
-	deleteDomainObject();
-    }
-
-    @Checked("ResourceAllocationRolePredicates.checkPermissionsToManageLessonInstancesWithTeacherCheck")
-    public void summaryAndCourseLoadManagement(Summary summary, Lesson lesson) {
-	CourseLoad courseLoad = null;
-	if (lesson != null && summary != null) {
-	    courseLoad = lesson.getExecutionCourse().getCourseLoadByShiftType(summary.getSummaryType());
-	}
-	setSummary(summary);
-	setCourseLoad(courseLoad);
-    }
-
-    private int getUnitMinutes() {
-	return Minutes.minutesBetween(getStartTime(), getEndTime()).getMinutes();
-    }
-
-    public BigDecimal getInstanceDurationInHours() {
-	return BigDecimal.valueOf(getUnitMinutes()).divide(BigDecimal.valueOf(Lesson.NUMBER_OF_MINUTES_IN_HOUR), 2,
-		RoundingMode.HALF_UP);
-    }
-
-    private boolean canBeDeleted() {
-	return !hasSummary();
-    }
-
-    @jvstm.cps.ConsistencyPredicate
-    protected boolean checkDateTimeInterval() {
-	final DateTime start = getBeginDateTime();
-	final DateTime end = getEndDateTime();
-	return start != null && end != null && start.isBefore(end);
-    }
-
-    private void lessonInstanceSpaceOccupationManagement(AllocatableSpace space) {
-	if (space != null) {
-	    LessonInstanceSpaceOccupation instanceSpaceOccupation = (LessonInstanceSpaceOccupation) space
-		    .getFirstOccurrenceOfResourceAllocationByClass(LessonInstanceSpaceOccupation.class);
-
-	    instanceSpaceOccupation = instanceSpaceOccupation == null ? new LessonInstanceSpaceOccupation(space)
-		    : instanceSpaceOccupation;
-	    instanceSpaceOccupation.edit(this);
-	}
-    }
-
-    @Override
-    public void setSummary(Summary summary) {
-	if (summary == null) {
-	    throw new DomainException("error.LessonInstance.empty.summary");
-	}
-	super.setSummary(summary);
-    }
-
-    @Override
-    public void setCourseLoad(CourseLoad courseLoad) {
-	if (courseLoad == null) {
-	    throw new DomainException("error.lessonInstance.empty.courseLoad");
-	}
-	super.setCourseLoad(courseLoad);
-    }
-
-    @Override
-    public void setLesson(Lesson lesson) {
-	if (lesson == null) {
-	    throw new DomainException("error.lessonInstance.empty.lesson");
-	}
-	super.setLesson(lesson);
-    }
-
-    public YearMonthDay getDay() {
-	return getBeginDateTime().toYearMonthDay();
-    }
-
-    public HourMinuteSecond getStartTime() {
-	return new HourMinuteSecond(getBeginDateTime().getHourOfDay(), getBeginDateTime().getMinuteOfHour(), getBeginDateTime()
-		.getSecondOfMinute());
-    }
-
-    public HourMinuteSecond getEndTime() {
-	return new HourMinuteSecond(getEndDateTime().getHourOfDay(), getEndDateTime().getMinuteOfHour(), getEndDateTime()
-		.getSecondOfMinute());
-    }
-
-    public AllocatableSpace getRoom() {
-	return hasLessonInstanceSpaceOccupation() ? getLessonInstanceSpaceOccupation().getRoom() : null;
-    }
-
-    public DiaSemana getDayOfweek() {
-	return new DiaSemana(DiaSemana.getDiaSemana(getDay()));
-    }
-
-    public String prettyPrint() {
-	final StringBuilder result = new StringBuilder();
-	result.append(getDayOfweek().getDiaSemanaString()).append(" (");
-	result.append(getStartTime().toString("HH:mm")).append(" - ");
-	result.append(getEndDateTime().toString("HH:mm")).append(") ");
-	result.append(getRoom() != null ? getRoom().getIdentification() : "");
-	return result.toString();
-    }
-
 
 	@Deprecated
-	public java.util.Date getBegin(){
+	public java.util.Date getBegin() {
 		org.joda.time.DateTime dt = getBeginDateTime();
 		return (dt == null) ? null : new java.util.Date(dt.getMillis());
 	}
 
 	@Deprecated
-	public void setBegin(java.util.Date date){
-		if(date == null) setBeginDateTime(null);
-		else setBeginDateTime(new org.joda.time.DateTime(date.getTime()));
+	public void setBegin(java.util.Date date) {
+		if (date == null) {
+			setBeginDateTime(null);
+		} else {
+			setBeginDateTime(new org.joda.time.DateTime(date.getTime()));
+		}
 	}
 
 	@Deprecated
-	public java.util.Date getEnd(){
+	public java.util.Date getEnd() {
 		org.joda.time.DateTime dt = getEndDateTime();
 		return (dt == null) ? null : new java.util.Date(dt.getMillis());
 	}
 
 	@Deprecated
-	public void setEnd(java.util.Date date){
-		if(date == null) setEndDateTime(null);
-		else setEndDateTime(new org.joda.time.DateTime(date.getTime()));
+	public void setEnd(java.util.Date date) {
+		if (date == null) {
+			setEndDateTime(null);
+		} else {
+			setEndDateTime(new org.joda.time.DateTime(date.getTime()));
+		}
 	}
-
 
 }

@@ -18,50 +18,50 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadPrecedencesFromDegreeCurricularPlan extends FenixService {
 
-    @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
-    @Service
-    public static Map run(Integer degreeCurricularPlanID) throws FenixServiceException {
+	@Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
+	@Service
+	public static Map run(Integer degreeCurricularPlanID) throws FenixServiceException {
 
-	Map finalListOfInfoPrecedences = new HashMap();
+		Map finalListOfInfoPrecedences = new HashMap();
 
-	DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanID);
+		DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanID);
 
-	List curricularCourses = degreeCurricularPlan.getCurricularCourses();
+		List curricularCourses = degreeCurricularPlan.getCurricularCourses();
 
-	int size = curricularCourses.size();
+		int size = curricularCourses.size();
 
-	for (int i = 0; i < size; i++) {
-	    CurricularCourse curricularCourse = (CurricularCourse) curricularCourses.get(i);
-	    List precedences = curricularCourse.getPrecedences();
-	    putInMap(finalListOfInfoPrecedences, curricularCourse, precedences);
+		for (int i = 0; i < size; i++) {
+			CurricularCourse curricularCourse = (CurricularCourse) curricularCourses.get(i);
+			List precedences = curricularCourse.getPrecedences();
+			putInMap(finalListOfInfoPrecedences, curricularCourse, precedences);
+		}
+
+		return finalListOfInfoPrecedences;
 	}
 
-	return finalListOfInfoPrecedences;
-    }
+	private static void putInMap(Map finalListOfInfoPrecedences, CurricularCourse curricularCourse, List precedences) {
 
-    private static void putInMap(Map finalListOfInfoPrecedences, CurricularCourse curricularCourse, List precedences) {
+		if (!precedences.isEmpty()) {
+			InfoCurricularCourse infoCurricularCourse = InfoCurricularCourse.newInfoFromDomain(curricularCourse);
 
-	if (!precedences.isEmpty()) {
-	    InfoCurricularCourse infoCurricularCourse = InfoCurricularCourse.newInfoFromDomain(curricularCourse);
+			List infoPrecedences = clone(precedences);
 
-	    List infoPrecedences = clone(precedences);
-
-	    finalListOfInfoPrecedences.put(infoCurricularCourse, infoPrecedences);
-	}
-    }
-
-    private static List clone(List precedences) {
-
-	List result = new ArrayList();
-
-	int size = precedences.size();
-
-	for (int i = 0; i < size; i++) {
-	    Precedence precedence = (Precedence) precedences.get(i);
-	    InfoPrecedence infoPrecedence = InfoPrecedenceWithRestrictions.newInfoFromDomain(precedence);
-	    result.add(infoPrecedence);
+			finalListOfInfoPrecedences.put(infoCurricularCourse, infoPrecedences);
+		}
 	}
 
-	return result;
-    }
+	private static List clone(List precedences) {
+
+		List result = new ArrayList();
+
+		int size = precedences.size();
+
+		for (int i = 0; i < size; i++) {
+			Precedence precedence = (Precedence) precedences.get(i);
+			InfoPrecedence infoPrecedence = InfoPrecedenceWithRestrictions.newInfoFromDomain(precedence);
+			result.add(infoPrecedence);
+		}
+
+		return result;
+	}
 }

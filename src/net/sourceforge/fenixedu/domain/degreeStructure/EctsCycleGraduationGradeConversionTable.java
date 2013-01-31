@@ -9,45 +9,45 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class EctsCycleGraduationGradeConversionTable extends EctsCycleGraduationGradeConversionTable_Base {
 
-    protected EctsCycleGraduationGradeConversionTable(Unit institution, AcademicInterval year, CycleType type,
-	    EctsComparabilityTable table, EctsComparabilityPercentages percentages) {
-	super();
-	init(year, type, table, percentages);
-	setSchool(institution);
-    }
-
-    @Override
-    protected RootDomainObject getRootDomainObject() {
-	return getSchool().getRootDomainObject();
-    }
-
-    @Override
-    public DomainObject getTargetEntity() {
-	return getSchool();
-    }
-
-    @Service
-    public static void createConversionTable(Unit institution, AcademicInterval year, CycleType type, String[] table,
-	    String[] percentages) {
-	EctsCycleGraduationGradeConversionTable conversion = EctsTableIndex.readOrCreateByYear(year).getGraduationTableBy(type);
-	EctsComparabilityTable ectsTable = EctsComparabilityTable.fromStringArray(table);
-	EctsComparabilityPercentages ectsPercentages = EctsComparabilityPercentages.fromStringArray(percentages);
-	if (conversion != null) {
-	    conversion.delete();
+	protected EctsCycleGraduationGradeConversionTable(Unit institution, AcademicInterval year, CycleType type,
+			EctsComparabilityTable table, EctsComparabilityPercentages percentages) {
+		super();
+		init(year, type, table, percentages);
+		setSchool(institution);
 	}
-	if (ectsTable != null && ectsPercentages != null) {
-	    new EctsCycleGraduationGradeConversionTable(institution, year, type, ectsTable, ectsPercentages);
+
+	@Override
+	protected RootDomainObject getRootDomainObject() {
+		return getSchool().getRootDomainObject();
 	}
-    }
 
-    @Override
-    public CurricularYear getCurricularYear() {
-	throw new UnsupportedOperationException();
-    }
+	@Override
+	public DomainObject getTargetEntity() {
+		return getSchool();
+	}
 
-    @Override
-    public void delete() {
-	removeSchool();
-	super.delete();
-    }
+	@Service
+	public static void createConversionTable(Unit institution, AcademicInterval year, CycleType type, String[] table,
+			String[] percentages) {
+		EctsCycleGraduationGradeConversionTable conversion = EctsTableIndex.readOrCreateByYear(year).getGraduationTableBy(type);
+		EctsComparabilityTable ectsTable = EctsComparabilityTable.fromStringArray(table);
+		EctsComparabilityPercentages ectsPercentages = EctsComparabilityPercentages.fromStringArray(percentages);
+		if (conversion != null) {
+			conversion.delete();
+		}
+		if (ectsTable != null && ectsPercentages != null) {
+			new EctsCycleGraduationGradeConversionTable(institution, year, type, ectsTable, ectsPercentages);
+		}
+	}
+
+	@Override
+	public CurricularYear getCurricularYear() {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public void delete() {
+		removeSchool();
+		super.delete();
+	}
 }

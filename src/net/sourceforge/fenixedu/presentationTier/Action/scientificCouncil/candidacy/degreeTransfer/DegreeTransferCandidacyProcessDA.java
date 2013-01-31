@@ -10,20 +10,24 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
-@Mapping(path = "/caseHandlingDegreeTransferCandidacyProcess", module = "scientificCouncil", formBeanClass = CandidacyProcessDA.CandidacyProcessForm.class)
-@Forwards({ @Forward(name = "intro", path = "/scientificCouncil/candidacy/mainCandidacyProcess.jsp", tileProperties = @Tile(  title = "private.scientificcouncil.applications")) })
+@Mapping(
+		path = "/caseHandlingDegreeTransferCandidacyProcess",
+		module = "scientificCouncil",
+		formBeanClass = CandidacyProcessDA.CandidacyProcessForm.class)
+@Forwards({ @Forward(name = "intro", path = "/scientificCouncil/candidacy/mainCandidacyProcess.jsp", tileProperties = @Tile(
+		title = "private.scientificcouncil.applications")) })
 public class DegreeTransferCandidacyProcessDA extends
-	net.sourceforge.fenixedu.presentationTier.Action.candidacy.degreeTransfer.DegreeTransferCandidacyProcessDA {
+		net.sourceforge.fenixedu.presentationTier.Action.candidacy.degreeTransfer.DegreeTransferCandidacyProcessDA {
 
-    public DegreeCurricularPlan getDegreeCurricularPlan(HttpServletRequest request) {
-	final Integer degreeCurricularPlanOID = CoordinatedDegreeInfo.findDegreeCurricularPlanID(request);
-	request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanOID);
+	public DegreeCurricularPlan getDegreeCurricularPlan(HttpServletRequest request) {
+		final Integer degreeCurricularPlanOID = CoordinatedDegreeInfo.findDegreeCurricularPlanID(request);
+		request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanOID);
 
-	if (degreeCurricularPlanOID != null) {
-	    return rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanOID);
+		if (degreeCurricularPlanOID != null) {
+			return rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanOID);
+		}
+
+		return null;
 	}
-
-	return null;
-    }
 
 }

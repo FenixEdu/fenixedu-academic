@@ -22,38 +22,38 @@ import pt.ist.fenixframework.pstm.IllegalWriteException;
  */
 public class TransferDomainObjectProperty extends FenixService {
 
-    @Checked("RolePredicates.MANAGER_PREDICATE")
-    @Service
-    public static void run(DomainObject srcObject, DomainObject dstObject, String slotName) throws FenixServiceException {
-	try {
-	    Object srcProperty = PropertyUtils.getSimpleProperty(srcObject, slotName);
+	@Checked("RolePredicates.MANAGER_PREDICATE")
+	@Service
+	public static void run(DomainObject srcObject, DomainObject dstObject, String slotName) throws FenixServiceException {
+		try {
+			Object srcProperty = PropertyUtils.getSimpleProperty(srcObject, slotName);
 
-	    if (srcProperty != null && srcProperty instanceof Collection) {
-		Collection srcCollection = (Collection) srcProperty;
+			if (srcProperty != null && srcProperty instanceof Collection) {
+				Collection srcCollection = (Collection) srcProperty;
 
-		Object dstProperty = PropertyUtils.getSimpleProperty(dstObject, slotName);
-		if (dstProperty instanceof Collection) {
-		    Collection dstCollection = (Collection) dstProperty;
-		    dstCollection.addAll(srcCollection);
+				Object dstProperty = PropertyUtils.getSimpleProperty(dstObject, slotName);
+				if (dstProperty instanceof Collection) {
+					Collection dstCollection = (Collection) dstProperty;
+					dstCollection.addAll(srcCollection);
+				}
+
+			} else {
+				PropertyUtils.setSimpleProperty(dstObject, slotName, srcProperty);
+			}
+		} catch (InvocationTargetException e) {
+			if (e.getTargetException() != null) {
+				if (e.getTargetException() instanceof IllegalWriteException) {
+					throw ((IllegalWriteException) e.getTargetException());
+				}
+				throw new FenixServiceException(e.getTargetException());
+			}
+			throw new FenixServiceException(e);
+		} catch (IllegalAccessException e) {
+			throw new FenixServiceException(e);
+		} catch (NoSuchMethodException e) {
+			throw new FenixServiceException(e);
 		}
 
-	    } else {
-		PropertyUtils.setSimpleProperty(dstObject, slotName, srcProperty);
-	    }
-	} catch (InvocationTargetException e) {
-	    if (e.getTargetException() != null) {
-		if (e.getTargetException() instanceof IllegalWriteException) {
-		    throw ((IllegalWriteException) e.getTargetException());
-		}
-		throw new FenixServiceException(e.getTargetException());
-	    }
-	    throw new FenixServiceException(e);
-	} catch (IllegalAccessException e) {
-	    throw new FenixServiceException(e);
-	} catch (NoSuchMethodException e) {
-	    throw new FenixServiceException(e);
 	}
-
-    }
 
 }

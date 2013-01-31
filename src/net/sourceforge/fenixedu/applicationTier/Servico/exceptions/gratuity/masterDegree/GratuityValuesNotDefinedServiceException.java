@@ -13,47 +13,48 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
  */
 public class GratuityValuesNotDefinedServiceException extends FenixServiceException {
 
-    /**
+	/**
      *  
      */
-    public GratuityValuesNotDefinedServiceException() {
-	super();
-    }
+	public GratuityValuesNotDefinedServiceException() {
+		super();
+	}
 
-    /**
-     * @param errorType
-     */
-    public GratuityValuesNotDefinedServiceException(int errorType) {
-	super(errorType);
-    }
+	/**
+	 * @param errorType
+	 */
+	public GratuityValuesNotDefinedServiceException(int errorType) {
+		super(errorType);
+	}
 
-    /**
-     * @param s
-     */
-    public GratuityValuesNotDefinedServiceException(String s) {
-	super(s);
-    }
+	/**
+	 * @param s
+	 */
+	public GratuityValuesNotDefinedServiceException(String s) {
+		super(s);
+	}
 
-    /**
-     * @param cause
-     */
-    public GratuityValuesNotDefinedServiceException(Throwable cause) {
-	super(cause);
-    }
+	/**
+	 * @param cause
+	 */
+	public GratuityValuesNotDefinedServiceException(Throwable cause) {
+		super(cause);
+	}
 
-    /**
-     * @param message
-     * @param cause
-     */
-    public GratuityValuesNotDefinedServiceException(String message, Throwable cause) {
-	super(message, cause);
-    }
+	/**
+	 * @param message
+	 * @param cause
+	 */
+	public GratuityValuesNotDefinedServiceException(String message, Throwable cause) {
+		super(message, cause);
+	}
 
-    public String toString() {
-	String result = "[GratuityValuesNotDefinedServiceException\n";
-	result += "message" + this.getMessage() + "\n";
-	result += "cause" + this.getCause() + "\n";
-	result += "]";
-	return result;
-    }
+	@Override
+	public String toString() {
+		String result = "[GratuityValuesNotDefinedServiceException\n";
+		result += "message" + this.getMessage() + "\n";
+		result += "cause" + this.getCause() + "\n";
+		result += "]";
+		return result;
+	}
 }

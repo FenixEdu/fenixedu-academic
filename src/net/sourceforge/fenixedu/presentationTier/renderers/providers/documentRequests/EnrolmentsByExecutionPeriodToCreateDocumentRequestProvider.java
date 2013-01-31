@@ -9,19 +9,21 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class EnrolmentsByExecutionPeriodToCreateDocumentRequestProvider implements DataProvider {
 
-    public Converter getConverter() {
-	return new DomainObjectKeyArrayConverter();
-    }
-
-    public Object provide(Object source, Object currentValue) {
-	final DocumentRequestCreateBean documentRequestCreateBean = (DocumentRequestCreateBean) source;
-
-	if (documentRequestCreateBean.getExecutionPeriod() != null) {
-	    return documentRequestCreateBean.getRegistration().getLastStudentCurricularPlan().getEnrolmentsByExecutionPeriod(
-		    documentRequestCreateBean.getExecutionPeriod());
+	@Override
+	public Converter getConverter() {
+		return new DomainObjectKeyArrayConverter();
 	}
 
-	return Collections.EMPTY_LIST;
+	@Override
+	public Object provide(Object source, Object currentValue) {
+		final DocumentRequestCreateBean documentRequestCreateBean = (DocumentRequestCreateBean) source;
 
-    }
+		if (documentRequestCreateBean.getExecutionPeriod() != null) {
+			return documentRequestCreateBean.getRegistration().getLastStudentCurricularPlan()
+					.getEnrolmentsByExecutionPeriod(documentRequestCreateBean.getExecutionPeriod());
+		}
+
+		return Collections.EMPTY_LIST;
+
+	}
 }

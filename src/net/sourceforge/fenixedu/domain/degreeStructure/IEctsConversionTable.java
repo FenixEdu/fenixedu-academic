@@ -4,13 +4,13 @@ import net.sourceforge.fenixedu.domain.CurricularYear;
 import net.sourceforge.fenixedu.domain.DomainObject;
 
 public interface IEctsConversionTable {
-    public DomainObject getTargetEntity();
+	public DomainObject getTargetEntity();
 
-    public EctsComparabilityTable getEctsTable();
+	public EctsComparabilityTable getEctsTable();
 
-    public EctsComparabilityPercentages getPercentages();
+	public EctsComparabilityPercentages getPercentages();
 
-    public CurricularYear getCurricularYear();
+	public CurricularYear getCurricularYear();
 
-    public CycleType getCycle();
+	public CycleType getCycle();
 }

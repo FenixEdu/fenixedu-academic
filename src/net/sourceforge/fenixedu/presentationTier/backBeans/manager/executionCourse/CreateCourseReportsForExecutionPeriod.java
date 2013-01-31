@@ -22,37 +22,38 @@ import org.apache.commons.collections.Transformer;
  */
 public class CreateCourseReportsForExecutionPeriod extends FenixBackingBean {
 
-    private Integer executionPeriodID;
+	private Integer executionPeriodID;
 
-    public List getExecutionPeriods() throws FenixFilterException, FenixServiceException {
+	public List getExecutionPeriods() throws FenixFilterException, FenixServiceException {
 
-	List executionPeriods = (List) ReadNotClosedExecutionPeriods.run();
+		List executionPeriods = ReadNotClosedExecutionPeriods.run();
 
-	CollectionUtils.transform(executionPeriods, new Transformer() {
+		CollectionUtils.transform(executionPeriods, new Transformer() {
 
-	    public Object transform(Object arg0) {
-		InfoExecutionPeriod executionPeriod = (InfoExecutionPeriod) arg0;
-		return new SelectItem(executionPeriod.getIdInternal(), executionPeriod.getDescription());
-	    }
+			@Override
+			public Object transform(Object arg0) {
+				InfoExecutionPeriod executionPeriod = (InfoExecutionPeriod) arg0;
+				return new SelectItem(executionPeriod.getIdInternal(), executionPeriod.getDescription());
+			}
 
-	});
+		});
 
-	return executionPeriods;
+		return executionPeriods;
 
-    }
+	}
 
-    public void create(ActionEvent evt) throws FenixFilterException, FenixServiceException {
+	public void create(ActionEvent evt) throws FenixFilterException, FenixServiceException {
 
-	CreateCourseReports.run(getExecutionPeriodID());
+		CreateCourseReports.run(getExecutionPeriodID());
 
-    }
+	}
 
-    public Integer getExecutionPeriodID() {
-	return executionPeriodID;
-    }
+	public Integer getExecutionPeriodID() {
+		return executionPeriodID;
+	}
 
-    public void setExecutionPeriodID(Integer executionPeriodID) {
-	this.executionPeriodID = executionPeriodID;
-    }
+	public void setExecutionPeriodID(Integer executionPeriodID) {
+		this.executionPeriodID = executionPeriodID;
+	}
 
 }

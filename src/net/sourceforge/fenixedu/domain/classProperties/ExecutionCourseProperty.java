@@ -8,15 +8,15 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 
 public class ExecutionCourseProperty extends ExecutionCourseProperty_Base {
 
-    public ExecutionCourseProperty() {
-	super();
-	setRootDomainObject(RootDomainObject.getInstance());
-    }
+	public ExecutionCourseProperty() {
+		super();
+		setRootDomainObject(RootDomainObject.getInstance());
+	}
 
-    public void delete() {
-	removeExecutionCourse();
-	removeRootDomainObject();
-	super.deleteDomainObject();
-    }
+	public void delete() {
+		removeExecutionCourse();
+		removeRootDomainObject();
+		super.deleteDomainObject();
+	}
 
 }

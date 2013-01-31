@@ -10,25 +10,25 @@ import net.sourceforge.fenixedu.domain.accounting.paymentPlanRules.PaymentPlanRu
 import net.sourceforge.fenixedu.domain.accounting.serviceAgreementTemplates.DegreeCurricularPlanServiceAgreementTemplate;
 
 public class FullGratuityPaymentPlanForFirstTimeInstitutionStudents extends
-	FullGratuityPaymentPlanForFirstTimeInstitutionStudents_Base {
+		FullGratuityPaymentPlanForFirstTimeInstitutionStudents_Base {
 
-    private FullGratuityPaymentPlanForFirstTimeInstitutionStudents() {
-	super();
-    }
+	private FullGratuityPaymentPlanForFirstTimeInstitutionStudents() {
+		super();
+	}
 
-    public FullGratuityPaymentPlanForFirstTimeInstitutionStudents(final ExecutionYear executionYear,
-	    final DegreeCurricularPlanServiceAgreementTemplate serviceAgreementTemplate, final Boolean defaultPlan) {
-	this();
-	super.init(executionYear, serviceAgreementTemplate, defaultPlan);
-    }
+	public FullGratuityPaymentPlanForFirstTimeInstitutionStudents(final ExecutionYear executionYear,
+			final DegreeCurricularPlanServiceAgreementTemplate serviceAgreementTemplate, final Boolean defaultPlan) {
+		this();
+		super.init(executionYear, serviceAgreementTemplate, defaultPlan);
+	}
 
-    @Override
-    protected Collection<PaymentPlanRule> getSpecificPaymentPlanRules() {
-	return Collections.singleton(PaymentPlanRuleFactory.create(FirstTimeInstitutionStudentsPaymentPlanRule.class));
-    }
+	@Override
+	protected Collection<PaymentPlanRule> getSpecificPaymentPlanRules() {
+		return Collections.singleton(PaymentPlanRuleFactory.create(FirstTimeInstitutionStudentsPaymentPlanRule.class));
+	}
 
-    @Override
-    final public boolean isForFirstTimeInstitutionStudents() {
-        return true;
-    }
+	@Override
+	final public boolean isForFirstTimeInstitutionStudents() {
+		return true;
+	}
 }

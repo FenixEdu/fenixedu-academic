@@ -18,64 +18,64 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class ConfirmAttributionOfFinalDegreeWork extends FenixService {
 
-    public ConfirmAttributionOfFinalDegreeWork() {
-	super();
-    }
+	public ConfirmAttributionOfFinalDegreeWork() {
+		super();
+	}
 
-    @Checked("RolePredicates.STUDENT_PREDICATE")
-    @Service
-    public static Boolean run(String username, Integer selectedGroupProposalOID) throws FenixServiceException {
-	GroupProposal groupProposal = rootDomainObject.readGroupProposalByOID(selectedGroupProposalOID);
+	@Checked("RolePredicates.STUDENT_PREDICATE")
+	@Service
+	public static Boolean run(String username, Integer selectedGroupProposalOID) throws FenixServiceException {
+		GroupProposal groupProposal = rootDomainObject.readGroupProposalByOID(selectedGroupProposalOID);
 
-	if (groupProposal != null) {
-	    FinalDegreeWorkGroup groupAttributed = groupProposal.getFinalDegreeWorkProposal().getGroupAttributedByTeacher();
+		if (groupProposal != null) {
+			FinalDegreeWorkGroup groupAttributed = groupProposal.getFinalDegreeWorkProposal().getGroupAttributedByTeacher();
 
-	    if (groupAttributed == null) {
-		throw new NoAttributionToConfirmException();
-	    }
-
-	    FinalDegreeWorkGroup group = groupProposal.getFinalDegreeDegreeWorkGroup();
-	    if (group != null) {
-		if (!group.getIdInternal().equals(groupAttributed.getIdInternal())) {
-		    throw new NoAttributionToConfirmException();
-		}
-
-		List groupStudents = group.getGroupStudents();
-		if (groupStudents != null && !groupStudents.isEmpty()) {
-		    for (int i = 0; i < groupStudents.size(); i++) {
-			GroupStudent groupStudent = (GroupStudent) groupStudents.get(i);
-			if (groupStudent != null && groupStudent.getRegistration().getPerson().hasUsername(username)) {
-			    groupStudent.setFinalDegreeWorkProposalConfirmation(groupProposal.getFinalDegreeWorkProposal());
+			if (groupAttributed == null) {
+				throw new NoAttributionToConfirmException();
 			}
-		    }
+
+			FinalDegreeWorkGroup group = groupProposal.getFinalDegreeDegreeWorkGroup();
+			if (group != null) {
+				if (!group.getIdInternal().equals(groupAttributed.getIdInternal())) {
+					throw new NoAttributionToConfirmException();
+				}
+
+				List groupStudents = group.getGroupStudents();
+				if (groupStudents != null && !groupStudents.isEmpty()) {
+					for (int i = 0; i < groupStudents.size(); i++) {
+						GroupStudent groupStudent = (GroupStudent) groupStudents.get(i);
+						if (groupStudent != null && groupStudent.getRegistration().getPerson().hasUsername(username)) {
+							groupStudent.setFinalDegreeWorkProposalConfirmation(groupProposal.getFinalDegreeWorkProposal());
+						}
+					}
+				}
+			}
 		}
-	    }
+
+		return true;
 	}
 
-	return true;
-    }
+	public static class NoAttributionToConfirmException extends FenixServiceException {
 
-    public static class NoAttributionToConfirmException extends FenixServiceException {
+		public NoAttributionToConfirmException() {
+			super();
+		}
 
-	public NoAttributionToConfirmException() {
-	    super();
+		public NoAttributionToConfirmException(int errorType) {
+			super(errorType);
+		}
+
+		public NoAttributionToConfirmException(String s) {
+			super(s);
+		}
+
+		public NoAttributionToConfirmException(Throwable cause) {
+			super(cause);
+		}
+
+		public NoAttributionToConfirmException(String message, Throwable cause) {
+			super(message, cause);
+		}
 	}
-
-	public NoAttributionToConfirmException(int errorType) {
-	    super(errorType);
-	}
-
-	public NoAttributionToConfirmException(String s) {
-	    super(s);
-	}
-
-	public NoAttributionToConfirmException(Throwable cause) {
-	    super(cause);
-	}
-
-	public NoAttributionToConfirmException(String message, Throwable cause) {
-	    super(message, cause);
-	}
-    }
 
 }

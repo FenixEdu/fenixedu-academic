@@ -28,18 +28,9 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(module = "researcher", path = "/projects/editProject", scope = "request", parameter = "method")
 @Forwards(value = {
@@ -49,296 +40,295 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
 		@Forward(name = "EditProjectEventAssociations", path = "/researcher/projects/editProjectEventAssociations.jsp") })
 public class EditProjectDispatchAction extends FenixDispatchAction {
 
-    // ***************************************
-    // DATA
-    // ***************************************
+	// ***************************************
+	// DATA
+	// ***************************************
 
-    public ActionForward prepareEditData(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
+	public ActionForward prepareEditData(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
 
-	setAttributeSelectedProject(request);
+		setAttributeSelectedProject(request);
 
-	request.setAttribute("party", getUserView(request).getPerson());
-	return mapping.findForward("EditProjectData");
-    }
+		request.setAttribute("party", getUserView(request).getPerson());
+		return mapping.findForward("EditProjectData");
+	}
 
-    // ***************************************
-    // PARTICIPANTS
-    // ***************************************
+	// ***************************************
+	// PARTICIPANTS
+	// ***************************************
 
-    public ActionForward prepareEditParticipants(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
+	public ActionForward prepareEditParticipants(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
 
-	final Integer oid = Integer.parseInt(request.getParameter("projectId"));
+		final Integer oid = Integer.parseInt(request.getParameter("projectId"));
 
-	for (Project project : rootDomainObject.getProjects()) {
-	    if (project.getIdInternal().equals(oid)) {
-		request.setAttribute("selectedProject", project);
-		List<ProjectParticipation> participations = new ArrayList<ProjectParticipation>();
-		for (ProjectParticipation participation : project.getProjectParticipations()) {
-		    if (participation.getParty() instanceof Person) {
-			participations.add(participation);
-		    }
+		for (Project project : rootDomainObject.getProjects()) {
+			if (project.getIdInternal().equals(oid)) {
+				request.setAttribute("selectedProject", project);
+				List<ProjectParticipation> participations = new ArrayList<ProjectParticipation>();
+				for (ProjectParticipation participation : project.getProjectParticipations()) {
+					if (participation.getParty() instanceof Person) {
+						participations.add(participation);
+					}
+				}
+				request.setAttribute("participations", participations);
+			}
 		}
-		request.setAttribute("participations", participations);
-	    }
+
+		return mapping.findForward("EditProjectParticipants");
 	}
 
-	return mapping.findForward("EditProjectParticipants");
-    }
+	public ActionForward prepareEditParticipantsWithSimpleBean(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-    public ActionForward prepareEditParticipantsWithSimpleBean(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+		ActionForward forward = prepareEditParticipants(mapping, form, request, response);
 
-	ActionForward forward = prepareEditParticipants(mapping, form, request, response);
+		ProjectParticipantSimpleCreationBean simpleBean = new ProjectParticipantSimpleCreationBean();
+		request.setAttribute("simpleBean", simpleBean);
 
-	ProjectParticipantSimpleCreationBean simpleBean = new ProjectParticipantSimpleCreationBean();
-	request.setAttribute("simpleBean", simpleBean);
+		mantainExternalStatus(request);
 
-	mantainExternalStatus(request);
-
-	return forward;
-    }
-
-    public ActionForward prepareEditParticipantsWithFullBean(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-
-	ActionForward forward = prepareEditParticipants(mapping, form, request, response);
-
-	ProjectParticipantFullCreationBean fullBean = new ProjectParticipantFullCreationBean();
-	request.setAttribute("fullBean", fullBean);
-
-	mantainExternalStatus(request);
-
-	return forward;
-    }
-
-    public ActionForward createParticipantInternalPerson(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-
-	final IUserView userView = getUserView(request);
-
-	ProjectParticipantSimpleCreationBean simpleBean = (ProjectParticipantSimpleCreationBean) RenderUtils.getViewState()
-		.getMetaObject().getObject();
-
-	if (simpleBean.getPerson() != null) {
-	    // Criar a participação efectivamente quando já existe a pessoa
-	    // escolhida
-	    Integer oid = Integer.parseInt(request.getParameter("projectId"));
-	    CreateProjectParticipant.run(simpleBean, oid);
-
-	    mantainExternalStatus(request);
-	    return prepareEditParticipants(mapping, form, request, response);
-	} else {
-	    // The application should never reach this point: the user may be
-	    // creating an external person not on pourpose
-	    throw new RuntimeException();
+		return forward;
 	}
-    }
 
-    public ActionForward createParticipantExternalPerson(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
+	public ActionForward prepareEditParticipantsWithFullBean(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
 
-	final IUserView userView = getUserView(request);
-	final Integer oid = Integer.parseInt(request.getParameter("projectId"));
+		ActionForward forward = prepareEditParticipants(mapping, form, request, response);
 
-	if (RenderUtils.getViewState().getMetaObject().getObject() instanceof ProjectParticipantSimpleCreationBean) {
-	    ProjectParticipantSimpleCreationBean simpleBean = (ProjectParticipantSimpleCreationBean) RenderUtils.getViewState()
-		    .getMetaObject().getObject();
-
-	    if (simpleBean.getPerson() != null) {
-		// Criação de uma participação com uma pessoa externa já
-		// existente
-		CreateProjectParticipant.run(simpleBean, oid);
-	    } else {
-		// Caso em que foi inserido o nome de uma pessoa externa não
-		// existente
-		// Passa-se ao modo de criação completa onde é também pedida a
-		// organização da pessoa
 		ProjectParticipantFullCreationBean fullBean = new ProjectParticipantFullCreationBean();
-		fullBean.setPersonName(simpleBean.getPersonName());
-		fullBean.setRole(simpleBean.getRole());
 		request.setAttribute("fullBean", fullBean);
 
 		mantainExternalStatus(request);
 
-		return prepareEditParticipants(mapping, form, request, response);
-	    }
-	} else if (RenderUtils.getViewState().getMetaObject().getObject() instanceof ProjectParticipantFullCreationBean) {
-	    // Criação de uma participação com o nome de uma pessoa não
-	    // existente ainda no sistema e a sua organização
-	    ProjectParticipantFullCreationBean fullBean = (ProjectParticipantFullCreationBean) RenderUtils.getViewState()
-		    .getMetaObject().getObject();
-	    CreateProjectParticipant.run(fullBean, oid);
-	}
-	return prepareEditParticipants(mapping, form, request, response);
-    }
-
-    public ActionForward removeParticipant(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-
-	final IUserView userView = getUserView(request);
-	Integer participantId = Integer.parseInt(request.getParameter("participantId"));
-
-	DeleteProjectParticipant.run(participantId);
-
-	return prepareEditParticipants(mapping, form, request, response);
-    }
-
-    // ***************************************
-    // EVENTS
-    // ***************************************
-
-    public ActionForward prepareEditEventAssociationsSimple(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-
-	final Integer oid = Integer.parseInt(request.getParameter("projectId"));
-
-	for (Project project : rootDomainObject.getProjects()) {
-	    if (project.getIdInternal().equals(oid)) {
-		request.setAttribute("selectedProject", project);
-		List<ProjectEventAssociation> associations = project.getAssociatedEvents();
-		request.setAttribute("eventAssociations", associations);
-	    }
+		return forward;
 	}
 
-	return mapping.findForward("EditProjectEventAssociations");
-    }
+	public ActionForward createParticipantInternalPerson(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
 
-    public ActionForward prepareEditEventAssociations(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
+		final IUserView userView = getUserView(request);
 
-	ActionForward forward = prepareEditEventAssociationsSimple(mapping, form, request, response);
+		ProjectParticipantSimpleCreationBean simpleBean =
+				(ProjectParticipantSimpleCreationBean) RenderUtils.getViewState().getMetaObject().getObject();
 
-	ProjectEventAssociationSimpleCreationBean simpleBean = new ProjectEventAssociationSimpleCreationBean();
-	request.setAttribute("simpleBean", simpleBean);
+		if (simpleBean.getPerson() != null) {
+			// Criar a participação efectivamente quando já existe a pessoa
+			// escolhida
+			Integer oid = Integer.parseInt(request.getParameter("projectId"));
+			CreateProjectParticipant.run(simpleBean, oid);
 
-	return forward;
-    }
-
-    public ActionForward createEventAssociationSimple(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-
-	final IUserView userView = getUserView(request);
-
-	if (RenderUtils.getViewState().getMetaObject().getObject() instanceof ProjectEventAssociationSimpleCreationBean) {
-	    ProjectEventAssociationSimpleCreationBean simpleBean = (ProjectEventAssociationSimpleCreationBean) RenderUtils
-		    .getViewState().getMetaObject().getObject();
-	    if (simpleBean.getEvent() != null) {
-		// Criar a associaï¿½ï¿½o efectivamente quando jï¿½ existe o
-		// evento escolhido
-		Integer oid = Integer.parseInt(request.getParameter("projectId"));
-		CreateProjectEventAssociation.run(simpleBean, oid);
-		return prepareEditEventAssociations(mapping, form, request, response);
-	    } else {
-		// Permitir a criaï¿½ï¿½o de um novo evento on-the-fly
-		ProjectEventAssociationFullCreationBean fullBean = new ProjectEventAssociationFullCreationBean();
-		fullBean.setEventName(simpleBean.getEventName());
-		fullBean.setRole(simpleBean.getRole());
-		request.setAttribute("fullBean", fullBean);
-		return prepareEditEventAssociationsSimple(mapping, form, request, response);
-	    }
-	} else {
-	    request.setAttribute("fullBean", (ProjectEventAssociationFullCreationBean) RenderUtils.getViewState().getMetaObject()
-		    .getObject());
-	    return prepareEditEventAssociationsSimple(mapping, form, request, response);
-	}
-    }
-
-    public ActionForward createEventAssociationFull(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-
-	ProjectEventAssociationFullCreationBean fullBean = (ProjectEventAssociationFullCreationBean) RenderUtils.getViewState()
-		.getMetaObject().getObject();
-	final IUserView userView = getUserView(request);
-	Integer oid = Integer.parseInt(request.getParameter("projectId"));
-
-	CreateProjectEventAssociation.run(fullBean, oid);
-
-	return prepareEditEventAssociations(mapping, form, request, response);
-    }
-
-    public ActionForward removeEventAssociation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-
-	final IUserView userView = getUserView(request);
-	Integer associationId = Integer.parseInt(request.getParameter("associationId"));
-
-	DeleteProjectEventAssociation.run(associationId);
-
-	return prepareEditEventAssociations(mapping, form, request, response);
-    }
-
-    // ***************************************
-    // UNITS
-    // ***************************************
-
-    public ActionForward prepareEditParticipantUnits(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-
-	final Integer oid = Integer.parseInt(request.getParameter("projectId"));
-
-	for (Project project : rootDomainObject.getProjects()) {
-	    if (project.getIdInternal().equals(oid)) {
-		request.setAttribute("selectedProject", project);
-		List<ProjectParticipation> unitParticipations = new ArrayList<ProjectParticipation>();
-		for (ProjectParticipation unitParticipation : project.getProjectParticipations()) {
-		    if (unitParticipation.getParty() instanceof Unit) {
-			unitParticipations.add(unitParticipation);
-		    }
+			mantainExternalStatus(request);
+			return prepareEditParticipants(mapping, form, request, response);
+		} else {
+			// The application should never reach this point: the user may be
+			// creating an external person not on pourpose
+			throw new RuntimeException();
 		}
-		request.setAttribute("unitParticipations", unitParticipations);
-	    }
 	}
 
-	ProjectParticipantUnitCreationBean bean = new ProjectParticipantUnitCreationBean();
-	request.setAttribute("bean", bean);
+	public ActionForward createParticipantExternalPerson(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
 
-	return mapping.findForward("EditProjectParticipantUnits");
-    }
+		final IUserView userView = getUserView(request);
+		final Integer oid = Integer.parseInt(request.getParameter("projectId"));
 
-    public ActionForward createParticipantUnit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
+		if (RenderUtils.getViewState().getMetaObject().getObject() instanceof ProjectParticipantSimpleCreationBean) {
+			ProjectParticipantSimpleCreationBean simpleBean =
+					(ProjectParticipantSimpleCreationBean) RenderUtils.getViewState().getMetaObject().getObject();
 
-	final IUserView userView = getUserView(request);
+			if (simpleBean.getPerson() != null) {
+				// Criação de uma participação com uma pessoa externa já
+				// existente
+				CreateProjectParticipant.run(simpleBean, oid);
+			} else {
+				// Caso em que foi inserido o nome de uma pessoa externa não
+				// existente
+				// Passa-se ao modo de criação completa onde é também pedida a
+				// organização da pessoa
+				ProjectParticipantFullCreationBean fullBean = new ProjectParticipantFullCreationBean();
+				fullBean.setPersonName(simpleBean.getPersonName());
+				fullBean.setRole(simpleBean.getRole());
+				request.setAttribute("fullBean", fullBean);
 
-	ProjectParticipantUnitCreationBean bean = (ProjectParticipantUnitCreationBean) RenderUtils.getViewState().getMetaObject()
-		.getObject();
+				mantainExternalStatus(request);
 
-	Integer oid = Integer.parseInt(request.getParameter("projectId"));
-	CreateProjectParticipant.run(bean, oid);
-	return prepareEditParticipantUnits(mapping, form, request, response);
-    }
-
-    public ActionForward removeParticipantUnit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-
-	final IUserView userView = getUserView(request);
-	Integer participantId = Integer.parseInt(request.getParameter("participantUnitId"));
-
-	DeleteProjectParticipant.run(participantId);
-
-	return prepareEditParticipants(mapping, form, request, response);
-    }
-
-    // ***************************************
-    // PRIVATE
-    // ***************************************
-
-    private void setAttributeSelectedProject(HttpServletRequest request) {
-	final Integer oid = Integer.parseInt(request.getParameter("projectId"));
-
-	for (Project project : rootDomainObject.getProjects()) {
-	    if (project.getIdInternal().equals(oid)) {
-		request.setAttribute("selectedProject", project);
-	    }
+				return prepareEditParticipants(mapping, form, request, response);
+			}
+		} else if (RenderUtils.getViewState().getMetaObject().getObject() instanceof ProjectParticipantFullCreationBean) {
+			// Criação de uma participação com o nome de uma pessoa não
+			// existente ainda no sistema e a sua organização
+			ProjectParticipantFullCreationBean fullBean =
+					(ProjectParticipantFullCreationBean) RenderUtils.getViewState().getMetaObject().getObject();
+			CreateProjectParticipant.run(fullBean, oid);
+		}
+		return prepareEditParticipants(mapping, form, request, response);
 	}
-    }
 
-    private void mantainExternalStatus(HttpServletRequest request) {
-	final String external = request.getParameter("external");
-	if (external != null) {
-	    request.setAttribute("external", external);
+	public ActionForward removeParticipant(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+
+		final IUserView userView = getUserView(request);
+		Integer participantId = Integer.parseInt(request.getParameter("participantId"));
+
+		DeleteProjectParticipant.run(participantId);
+
+		return prepareEditParticipants(mapping, form, request, response);
 	}
-    }
+
+	// ***************************************
+	// EVENTS
+	// ***************************************
+
+	public ActionForward prepareEditEventAssociationsSimple(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+
+		final Integer oid = Integer.parseInt(request.getParameter("projectId"));
+
+		for (Project project : rootDomainObject.getProjects()) {
+			if (project.getIdInternal().equals(oid)) {
+				request.setAttribute("selectedProject", project);
+				List<ProjectEventAssociation> associations = project.getAssociatedEvents();
+				request.setAttribute("eventAssociations", associations);
+			}
+		}
+
+		return mapping.findForward("EditProjectEventAssociations");
+	}
+
+	public ActionForward prepareEditEventAssociations(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+
+		ActionForward forward = prepareEditEventAssociationsSimple(mapping, form, request, response);
+
+		ProjectEventAssociationSimpleCreationBean simpleBean = new ProjectEventAssociationSimpleCreationBean();
+		request.setAttribute("simpleBean", simpleBean);
+
+		return forward;
+	}
+
+	public ActionForward createEventAssociationSimple(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+
+		final IUserView userView = getUserView(request);
+
+		if (RenderUtils.getViewState().getMetaObject().getObject() instanceof ProjectEventAssociationSimpleCreationBean) {
+			ProjectEventAssociationSimpleCreationBean simpleBean =
+					(ProjectEventAssociationSimpleCreationBean) RenderUtils.getViewState().getMetaObject().getObject();
+			if (simpleBean.getEvent() != null) {
+				// Criar a associaï¿½ï¿½o efectivamente quando jï¿½ existe o
+				// evento escolhido
+				Integer oid = Integer.parseInt(request.getParameter("projectId"));
+				CreateProjectEventAssociation.run(simpleBean, oid);
+				return prepareEditEventAssociations(mapping, form, request, response);
+			} else {
+				// Permitir a criaï¿½ï¿½o de um novo evento on-the-fly
+				ProjectEventAssociationFullCreationBean fullBean = new ProjectEventAssociationFullCreationBean();
+				fullBean.setEventName(simpleBean.getEventName());
+				fullBean.setRole(simpleBean.getRole());
+				request.setAttribute("fullBean", fullBean);
+				return prepareEditEventAssociationsSimple(mapping, form, request, response);
+			}
+		} else {
+			request.setAttribute("fullBean", RenderUtils.getViewState().getMetaObject().getObject());
+			return prepareEditEventAssociationsSimple(mapping, form, request, response);
+		}
+	}
+
+	public ActionForward createEventAssociationFull(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+
+		ProjectEventAssociationFullCreationBean fullBean =
+				(ProjectEventAssociationFullCreationBean) RenderUtils.getViewState().getMetaObject().getObject();
+		final IUserView userView = getUserView(request);
+		Integer oid = Integer.parseInt(request.getParameter("projectId"));
+
+		CreateProjectEventAssociation.run(fullBean, oid);
+
+		return prepareEditEventAssociations(mapping, form, request, response);
+	}
+
+	public ActionForward removeEventAssociation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+
+		final IUserView userView = getUserView(request);
+		Integer associationId = Integer.parseInt(request.getParameter("associationId"));
+
+		DeleteProjectEventAssociation.run(associationId);
+
+		return prepareEditEventAssociations(mapping, form, request, response);
+	}
+
+	// ***************************************
+	// UNITS
+	// ***************************************
+
+	public ActionForward prepareEditParticipantUnits(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+
+		final Integer oid = Integer.parseInt(request.getParameter("projectId"));
+
+		for (Project project : rootDomainObject.getProjects()) {
+			if (project.getIdInternal().equals(oid)) {
+				request.setAttribute("selectedProject", project);
+				List<ProjectParticipation> unitParticipations = new ArrayList<ProjectParticipation>();
+				for (ProjectParticipation unitParticipation : project.getProjectParticipations()) {
+					if (unitParticipation.getParty() instanceof Unit) {
+						unitParticipations.add(unitParticipation);
+					}
+				}
+				request.setAttribute("unitParticipations", unitParticipations);
+			}
+		}
+
+		ProjectParticipantUnitCreationBean bean = new ProjectParticipantUnitCreationBean();
+		request.setAttribute("bean", bean);
+
+		return mapping.findForward("EditProjectParticipantUnits");
+	}
+
+	public ActionForward createParticipantUnit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+
+		final IUserView userView = getUserView(request);
+
+		ProjectParticipantUnitCreationBean bean =
+				(ProjectParticipantUnitCreationBean) RenderUtils.getViewState().getMetaObject().getObject();
+
+		Integer oid = Integer.parseInt(request.getParameter("projectId"));
+		CreateProjectParticipant.run(bean, oid);
+		return prepareEditParticipantUnits(mapping, form, request, response);
+	}
+
+	public ActionForward removeParticipantUnit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+
+		final IUserView userView = getUserView(request);
+		Integer participantId = Integer.parseInt(request.getParameter("participantUnitId"));
+
+		DeleteProjectParticipant.run(participantId);
+
+		return prepareEditParticipants(mapping, form, request, response);
+	}
+
+	// ***************************************
+	// PRIVATE
+	// ***************************************
+
+	private void setAttributeSelectedProject(HttpServletRequest request) {
+		final Integer oid = Integer.parseInt(request.getParameter("projectId"));
+
+		for (Project project : rootDomainObject.getProjects()) {
+			if (project.getIdInternal().equals(oid)) {
+				request.setAttribute("selectedProject", project);
+			}
+		}
+	}
+
+	private void mantainExternalStatus(HttpServletRequest request) {
+		final String external = request.getParameter("external");
+		if (external != null) {
+			request.setAttribute("external", external);
+		}
+	}
 }

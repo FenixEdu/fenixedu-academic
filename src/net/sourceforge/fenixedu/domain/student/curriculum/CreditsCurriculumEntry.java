@@ -8,23 +8,24 @@ import org.joda.time.DateTime;
 
 public abstract class CreditsCurriculumEntry extends CurriculumEntry {
 
-    public BigDecimal getWeigthForCurriculum() {
-	return null;
-    }
+	@Override
+	public BigDecimal getWeigthForCurriculum() {
+		return null;
+	}
 
-    @Override
-    public BigDecimal getWeigthTimesGrade() {
-	return null;
-    }
+	@Override
+	public BigDecimal getWeigthTimesGrade() {
+		return null;
+	}
 
-    @Override
-    public Grade getGrade() {
-	return Grade.createEmptyGrade();
-    }
+	@Override
+	public Grade getGrade() {
+		return Grade.createEmptyGrade();
+	}
 
-    @Override
-    public DateTime getCreationDateDateTime() {
-	return null;
-    }
+	@Override
+	public DateTime getCreationDateDateTime() {
+		return null;
+	}
 
 }

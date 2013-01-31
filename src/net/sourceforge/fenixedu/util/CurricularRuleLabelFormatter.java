@@ -17,28 +17,28 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
  */
 public class CurricularRuleLabelFormatter {
 
-    public static String getLabel(ICurricularRule curricularRule) {
-	ResourceBundle bundle = ResourceBundle.getBundle("resources/BolonhaManagerResources", Language.getLocale());
-	return buildLabel(curricularRule, bundle);
-    }
-
-    public static String getLabel(ICurricularRule curricularRule, Locale locale) {
-	ResourceBundle bundle = ResourceBundle.getBundle("resources/BolonhaManagerResources", locale);
-	return buildLabel(curricularRule, bundle);
-    }
-
-    private static String buildLabel(ICurricularRule curricularRule, ResourceBundle bundle) {
-	List<GenericPair<Object, Boolean>> labelList = curricularRule.getLabel();
-	StringBuilder labelResult = new StringBuilder();
-	for (GenericPair<Object, Boolean> labelElement : labelList) {
-	    if (labelElement.getRight() == true) {
-		labelResult.append(bundle.getString(labelElement.getLeft().toString()));
-	    } else {
-		labelResult.append(labelElement.getLeft());
-	    }
+	public static String getLabel(ICurricularRule curricularRule) {
+		ResourceBundle bundle = ResourceBundle.getBundle("resources/BolonhaManagerResources", Language.getLocale());
+		return buildLabel(curricularRule, bundle);
 	}
 
-	return labelResult.toString();
-    }
+	public static String getLabel(ICurricularRule curricularRule, Locale locale) {
+		ResourceBundle bundle = ResourceBundle.getBundle("resources/BolonhaManagerResources", locale);
+		return buildLabel(curricularRule, bundle);
+	}
+
+	private static String buildLabel(ICurricularRule curricularRule, ResourceBundle bundle) {
+		List<GenericPair<Object, Boolean>> labelList = curricularRule.getLabel();
+		StringBuilder labelResult = new StringBuilder();
+		for (GenericPair<Object, Boolean> labelElement : labelList) {
+			if (labelElement.getRight() == true) {
+				labelResult.append(bundle.getString(labelElement.getLeft().toString()));
+			} else {
+				labelResult.append(labelElement.getLeft());
+			}
+		}
+
+		return labelResult.toString();
+	}
 
 }

@@ -28,184 +28,195 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.security.UserView;
 
 public abstract class AbstractContactRenderer extends OutputRenderer {
-    private boolean publicSpace = false;
+	private boolean publicSpace = false;
 
-    // If this is true and there is at least one contact being shown the
-    // defaultLabel will be suffixed to the mark the contact as default.
-    private boolean showDefaultSuffix = true;
+	// If this is true and there is at least one contact being shown the
+	// defaultLabel will be suffixed to the mark the contact as default.
+	private boolean showDefaultSuffix = true;
 
-    // If this is true and there is at least one contact being shown, and the
-    // types are more than one, a type label will be suffixed.
-    private boolean showTypeSuffix = true;
+	// If this is true and there is at least one contact being shown, and the
+	// types are more than one, a type label will be suffixed.
+	private boolean showTypeSuffix = true;
 
-    private String schema;
+	private String schema;
 
-    private String bundle;
+	private String bundle;
 
-    private String defaultLabel;
+	private String defaultLabel;
 
-    private String types = "PERSONAL, WORK, INSTITUTIONAL";
+	private String types = "PERSONAL, WORK, INSTITUTIONAL";
 
-    // locals
-    private boolean showDefault;
+	// locals
+	private boolean showDefault;
 
-    private boolean showType;
+	private boolean showType;
 
-    protected List<MetaObject> getFilteredContacts(Collection<PartyContact> unfiltered) {
-	String[] parts = getTypes().split(",");
-	ArrayList<PartyContactType> typeEnums = new ArrayList<PartyContactType>();
-	for (String part : parts)
-	    typeEnums.add(PartyContactType.valueOf(part.trim()));
+	protected List<MetaObject> getFilteredContacts(Collection<PartyContact> unfiltered) {
+		String[] parts = getTypes().split(",");
+		ArrayList<PartyContactType> typeEnums = new ArrayList<PartyContactType>();
+		for (String part : parts) {
+			typeEnums.add(PartyContactType.valueOf(part.trim()));
+		}
 
-	List<MetaObject> contacts = new ArrayList<MetaObject>();
-	for (PartyContact contact : unfiltered) {
-	    if (isVisible(contact, publicSpace) && typeEnums.contains(contact.getType())) {
-		contacts.add(MetaObjectFactory.createObject(contact, RenderKit.getInstance().findSchema(getSchema())));
-	    }
+		List<MetaObject> contacts = new ArrayList<MetaObject>();
+		for (PartyContact contact : unfiltered) {
+			if (isVisible(contact, publicSpace) && typeEnums.contains(contact.getType())) {
+				contacts.add(MetaObjectFactory.createObject(contact, RenderKit.getInstance().findSchema(getSchema())));
+			}
+		}
+		showType = isShowTypeSuffix() && contacts.size() > 1 && typeEnums.size() > 1;
+		showDefault = isShowDefaultSuffix() && contacts.size() > 1;
+		Collections.sort(contacts, new Comparator<MetaObject>() {
+			@Override
+			public int compare(MetaObject o1, MetaObject o2) {
+				PartyContact contact1 = (PartyContact) o1.getObject();
+				PartyContact contact2 = (PartyContact) o2.getObject();
+				if (contact1.getType().ordinal() > contact2.getType().ordinal()) {
+					return -1;
+				} else if (contact1.getType().ordinal() < contact2.getType().ordinal()) {
+					return 1;
+				} else if (contact1.getDefaultContact().booleanValue()) {
+					return -1;
+				} else if (contact2.getDefaultContact().booleanValue()) {
+					return 1;
+				} else {
+					return contact1.getPresentationValue().compareTo(contact2.getPresentationValue());
+				}
+			}
+		});
+		return contacts;
 	}
-	showType = isShowTypeSuffix() && contacts.size() > 1 && typeEnums.size() > 1;
-	showDefault = isShowDefaultSuffix() && contacts.size() > 1;
-	Collections.sort(contacts, new Comparator<MetaObject>() {
-	    @Override
-	    public int compare(MetaObject o1, MetaObject o2) {
-		PartyContact contact1 = (PartyContact) o1.getObject();
-		PartyContact contact2 = (PartyContact) o2.getObject();
-		if (contact1.getType().ordinal() > contact2.getType().ordinal())
-		    return -1;
-		else if (contact1.getType().ordinal() < contact2.getType().ordinal())
-		    return 1;
-		else if (contact1.getDefaultContact().booleanValue())
-		    return -1;
-		else if (contact2.getDefaultContact().booleanValue())
-		    return 1;
-		else
-		    return contact1.getPresentationValue().compareTo(contact2.getPresentationValue());
-	    }
-	});
-	return contacts;
-    }
 
-    private boolean isVisible(PartyContact contact, boolean publicSpace) {
-	if (!UserView.hasUser() && publicSpace && contact.getVisibleToPublic().booleanValue())
-	    return true;
-	if (UserView.hasUser()) {
-	    IUserView user = UserView.getUser();
-	    Person reader = user.getPerson();
-	    if (reader.hasRole(RoleType.CONTACT_ADMIN).booleanValue() || reader.hasRole(RoleType.MANAGER).booleanValue()
-		    || reader.hasRole(RoleType.DIRECTIVE_COUNCIL).booleanValue())
-		return true;
-	    if (reader.hasRole(RoleType.EMPLOYEE).booleanValue() && contact.getVisibleToEmployees().booleanValue())
-		return true;
-	    if (reader.hasRole(RoleType.TEACHER).booleanValue() && contact.getVisibleToTeachers().booleanValue())
-		return true;
-	    if (reader.hasRole(RoleType.STUDENT).booleanValue() && contact.getVisibleToStudents().booleanValue())
-		return true;
-	    if (reader.hasRole(RoleType.ALUMNI).booleanValue() && contact.getVisibleToAlumni().booleanValue())
-		return true;
-	    if (contact.getVisibleToPublic())
-		return true;
+	private boolean isVisible(PartyContact contact, boolean publicSpace) {
+		if (!UserView.hasUser() && publicSpace && contact.getVisibleToPublic().booleanValue()) {
+			return true;
+		}
+		if (UserView.hasUser()) {
+			IUserView user = UserView.getUser();
+			Person reader = user.getPerson();
+			if (reader.hasRole(RoleType.CONTACT_ADMIN).booleanValue() || reader.hasRole(RoleType.MANAGER).booleanValue()
+					|| reader.hasRole(RoleType.DIRECTIVE_COUNCIL).booleanValue()) {
+				return true;
+			}
+			if (reader.hasRole(RoleType.EMPLOYEE).booleanValue() && contact.getVisibleToEmployees().booleanValue()) {
+				return true;
+			}
+			if (reader.hasRole(RoleType.TEACHER).booleanValue() && contact.getVisibleToTeachers().booleanValue()) {
+				return true;
+			}
+			if (reader.hasRole(RoleType.STUDENT).booleanValue() && contact.getVisibleToStudents().booleanValue()) {
+				return true;
+			}
+			if (reader.hasRole(RoleType.ALUMNI).booleanValue() && contact.getVisibleToAlumni().booleanValue()) {
+				return true;
+			}
+			if (contact.getVisibleToPublic()) {
+				return true;
+			}
+		}
+		return false;
 	}
-	return false;
-    }
 
-    protected HtmlComponent getValue(PartyContact contact) {
-	HtmlInlineContainer span = new HtmlInlineContainer();
-	if (contact instanceof Phone)
-	    span.addChild(new HtmlText(((Phone) contact).getNumber()));
-	else if (contact instanceof MobilePhone)
-	    span.addChild(new HtmlText(((MobilePhone) contact).getNumber()));
-	else if (contact instanceof EmailAddress) {
-	    EmailAddress email = (EmailAddress) contact;
-	    if (isPublicSpace()) {
-		HtmlImage img = new HtmlImage();
-		img.setSource(RenderUtils.getContextRelativePath("") + "/publico/viewHomepage.do?method=emailPng&amp;email="
-			+ email.getIdInternal());
-		span.addChild(img);
-	    } else {
-		HtmlLink link = new HtmlLink();
-		link.setModuleRelative(false);
-		link.setContextRelative(false);
-		link.setUrl("mailto:" + email.getValue());
-		link.setBody(new HtmlText(email.getValue()));
-		span.addChild(link);
-	    }
-	} else if (contact instanceof WebAddress) {
-	    HtmlLink link = new HtmlLink();
-	    link.setModuleRelative(false);
-	    link.setContextRelative(false);
-	    link.setUrl(((WebAddress) contact).getPresentationValue());
-	    link.setBody(new HtmlText(((WebAddress) contact).getPresentationValue()));
-	    span.addChild(link);
+	protected HtmlComponent getValue(PartyContact contact) {
+		HtmlInlineContainer span = new HtmlInlineContainer();
+		if (contact instanceof Phone) {
+			span.addChild(new HtmlText(((Phone) contact).getNumber()));
+		} else if (contact instanceof MobilePhone) {
+			span.addChild(new HtmlText(((MobilePhone) contact).getNumber()));
+		} else if (contact instanceof EmailAddress) {
+			EmailAddress email = (EmailAddress) contact;
+			if (isPublicSpace()) {
+				HtmlImage img = new HtmlImage();
+				img.setSource(RenderUtils.getContextRelativePath("") + "/publico/viewHomepage.do?method=emailPng&amp;email="
+						+ email.getIdInternal());
+				span.addChild(img);
+			} else {
+				HtmlLink link = new HtmlLink();
+				link.setModuleRelative(false);
+				link.setContextRelative(false);
+				link.setUrl("mailto:" + email.getValue());
+				link.setBody(new HtmlText(email.getValue()));
+				span.addChild(link);
+			}
+		} else if (contact instanceof WebAddress) {
+			HtmlLink link = new HtmlLink();
+			link.setModuleRelative(false);
+			link.setContextRelative(false);
+			link.setUrl(((WebAddress) contact).getPresentationValue());
+			link.setBody(new HtmlText(((WebAddress) contact).getPresentationValue()));
+			span.addChild(link);
+		}
+		if (showType || (showDefault && contact.isDefault())) {
+			StringBuilder suffix = new StringBuilder();
+			suffix.append(" (");
+			if (showType) {
+				suffix.append(RenderUtils.getEnumString(contact.getType()));
+			}
+			if (showDefault && contact.isDefault()) {
+				if (showType) {
+					suffix.append(", ");
+				}
+				suffix.append(RenderUtils.getResourceString(getBundle(), getDefaultLabel()));
+			}
+			suffix.append(")");
+			span.addChild(new HtmlText(suffix.toString()));
+		}
+		return span;
 	}
-	if (showType || (showDefault && contact.isDefault())) {
-	    StringBuilder suffix = new StringBuilder();
-	    suffix.append(" (");
-	    if (showType)
-		suffix.append(RenderUtils.getEnumString(contact.getType()));
-	    if (showDefault && contact.isDefault()) {
-		if (showType)
-		    suffix.append(", ");
-		suffix.append(RenderUtils.getResourceString(getBundle(), getDefaultLabel()));
-	    }
-	    suffix.append(")");
-	    span.addChild(new HtmlText(suffix.toString()));
+
+	public String getSchema() {
+		return schema;
 	}
-	return span;
-    }
 
-    public String getSchema() {
-	return schema;
-    }
+	public void setSchema(String schema) {
+		this.schema = schema;
+	}
 
-    public void setSchema(String schema) {
-	this.schema = schema;
-    }
+	public String getBundle() {
+		return bundle;
+	}
 
-    public String getBundle() {
-	return bundle;
-    }
+	public void setBundle(String bundle) {
+		this.bundle = bundle;
+	}
 
-    public void setBundle(String bundle) {
-	this.bundle = bundle;
-    }
+	public boolean isPublicSpace() {
+		return publicSpace;
+	}
 
-    public boolean isPublicSpace() {
-	return publicSpace;
-    }
+	public void setPublicSpace(boolean publicSpace) {
+		this.publicSpace = publicSpace;
+	}
 
-    public void setPublicSpace(boolean publicSpace) {
-	this.publicSpace = publicSpace;
-    }
+	public String getTypes() {
+		return types;
+	}
 
-    public String getTypes() {
-	return types;
-    }
+	public void setTypes(String types) {
+		this.types = types;
+	}
 
-    public void setTypes(String types) {
-	this.types = types;
-    }
+	public boolean isShowDefaultSuffix() {
+		return showDefaultSuffix;
+	}
 
-    public boolean isShowDefaultSuffix() {
-	return showDefaultSuffix;
-    }
+	public void setShowDefaultSuffix(boolean showDefaultSuffix) {
+		this.showDefaultSuffix = showDefaultSuffix;
+	}
 
-    public void setShowDefaultSuffix(boolean showDefaultSuffix) {
-	this.showDefaultSuffix = showDefaultSuffix;
-    }
+	public boolean isShowTypeSuffix() {
+		return showTypeSuffix;
+	}
 
-    public boolean isShowTypeSuffix() {
-	return showTypeSuffix;
-    }
+	public void setShowTypeSuffix(boolean showTypeSuffix) {
+		this.showTypeSuffix = showTypeSuffix;
+	}
 
-    public void setShowTypeSuffix(boolean showTypeSuffix) {
-	this.showTypeSuffix = showTypeSuffix;
-    }
+	public String getDefaultLabel() {
+		return defaultLabel;
+	}
 
-    public String getDefaultLabel() {
-	return defaultLabel;
-    }
-
-    public void setDefaultLabel(String defaultLabel) {
-	this.defaultLabel = defaultLabel;
-    }
+	public void setDefaultLabel(String defaultLabel) {
+		this.defaultLabel = defaultLabel;
+	}
 }

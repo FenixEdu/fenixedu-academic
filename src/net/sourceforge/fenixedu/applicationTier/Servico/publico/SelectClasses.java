@@ -15,19 +15,20 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class SelectClasses extends FenixService {
 
-    @Service
-    public static Object run(InfoClass infoClass) {
-	final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(infoClass.getInfoExecutionDegree()
-		.getIdInternal());
-	final Set<SchoolClass> classes = executionDegree.findSchoolClassesByAcademicIntervalAndCurricularYear(infoClass
-		.getAcademicInterval(), infoClass.getAnoCurricular());
+	@Service
+	public static Object run(InfoClass infoClass) {
+		final ExecutionDegree executionDegree =
+				rootDomainObject.readExecutionDegreeByOID(infoClass.getInfoExecutionDegree().getIdInternal());
+		final Set<SchoolClass> classes =
+				executionDegree.findSchoolClassesByAcademicIntervalAndCurricularYear(infoClass.getAcademicInterval(),
+						infoClass.getAnoCurricular());
 
-	List<InfoClass> infoClasses = new ArrayList<InfoClass>();
-	for (SchoolClass taux : classes) {
-	    infoClasses.add(InfoClass.newInfoFromDomain(taux));
+		List<InfoClass> infoClasses = new ArrayList<InfoClass>();
+		for (SchoolClass taux : classes) {
+			infoClasses.add(InfoClass.newInfoFromDomain(taux));
+		}
+
+		return infoClasses;
 	}
-
-	return infoClasses;
-    }
 
 }

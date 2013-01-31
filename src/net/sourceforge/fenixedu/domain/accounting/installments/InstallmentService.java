@@ -6,10 +6,10 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class InstallmentService {
 
-    @Service
-    public static Installment edit(final Installment installment, final InstallmentBean bean) {
-	installment.edit(bean);
-	return installment;
-    }
+	@Service
+	public static Installment edit(final Installment installment, final InstallmentBean bean) {
+		installment.edit(bean);
+		return installment;
+	}
 
 }

@@ -36,41 +36,43 @@ import org.apache.struts.action.DynaActionForm;
  */
 public class GeneratePasswordsForCandidaciesAction extends FenixDispatchAction {
 
-    public ActionForward prepareChooseExecutionDegree(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-	final List<ExecutionDegree> executionDegrees = new ArrayList<ExecutionDegree>(ExecutionDegree
-		.getAllByExecutionYear(ExecutionYear.readCurrentExecutionYear()));
-	Collections.sort(executionDegrees, ExecutionDegree.EXECUTION_DEGREE_COMPARATORY_BY_DEGREE_TYPE_AND_NAME);
+	public ActionForward prepareChooseExecutionDegree(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		final List<ExecutionDegree> executionDegrees =
+				new ArrayList<ExecutionDegree>(ExecutionDegree.getAllByExecutionYear(ExecutionYear.readCurrentExecutionYear()));
+		Collections.sort(executionDegrees, ExecutionDegree.EXECUTION_DEGREE_COMPARATORY_BY_DEGREE_TYPE_AND_NAME);
 
-	request.setAttribute("executionDegrees", executionDegrees);
-	request.setAttribute("entryPhases", EntryPhase.values());
+		request.setAttribute("executionDegrees", executionDegrees);
+		request.setAttribute("entryPhases", EntryPhase.values());
 
-	return mapping.findForward("chooseExecutionDegree");
-    }
+		return mapping.findForward("chooseExecutionDegree");
+	}
 
-    public ActionForward showCandidacies(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-	final DynaActionForm actionForm = (DynaActionForm) form;
-	final Integer executionDegreeId = (Integer) actionForm.get("executionDegreeId");
-	final EntryPhase entryPhase = EntryPhase.valueOf(actionForm.getString("entryPhase"));
-	final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeId);
-	final Set<StudentCandidacy> studentCandidacies = new HashSet<StudentCandidacy>(StudentCandidacy.readNotConcludedBy(
-		executionDegree, ExecutionYear.readCurrentExecutionYear(), entryPhase));
+	public ActionForward showCandidacies(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		final DynaActionForm actionForm = (DynaActionForm) form;
+		final Integer executionDegreeId = (Integer) actionForm.get("executionDegreeId");
+		final EntryPhase entryPhase = EntryPhase.valueOf(actionForm.getString("entryPhase"));
+		final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeId);
+		final Set<StudentCandidacy> studentCandidacies =
+				new HashSet<StudentCandidacy>(StudentCandidacy.readNotConcludedBy(executionDegree,
+						ExecutionYear.readCurrentExecutionYear(), entryPhase));
 
-	request.setAttribute("studentCandidacies", studentCandidacies);
+		request.setAttribute("studentCandidacies", studentCandidacies);
 
-	return mapping.findForward("prepare");
-    }
+		return mapping.findForward("prepare");
+	}
 
-    public ActionForward generatePasswords(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-	final List<PasswordBean> passwordBeans = GeneratePasswordsForCandidacies.run(Arrays
-		.asList((Integer[]) ((DynaActionForm) form).get("candidacyIdsToProcess")));
+	public ActionForward generatePasswords(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		final List<PasswordBean> passwordBeans =
+				GeneratePasswordsForCandidacies.run(Arrays.asList((Integer[]) ((DynaActionForm) form)
+						.get("candidacyIdsToProcess")));
 
-	Collections.sort(passwordBeans, new BeanComparator("person.username"));
-	request.setAttribute("passwordBeans", passwordBeans);
+		Collections.sort(passwordBeans, new BeanComparator("person.username"));
+		request.setAttribute("passwordBeans", passwordBeans);
 
-	return mapping.findForward("success");
-    }
+		return mapping.findForward("success");
+	}
 
 }

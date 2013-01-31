@@ -9,65 +9,65 @@ import pt.ist.fenixWebFramework.security.accessControl.Checked;
 
 public class AccountingTransactionDetail extends AccountingTransactionDetail_Base {
 
-    protected AccountingTransactionDetail() {
-	super();
-	super.setRootDomainObject(RootDomainObject.getInstance());
-	super.setWhenProcessed(new DateTime());
-    }
-
-    public AccountingTransactionDetail(final DateTime whenRegistered, final PaymentMode paymentMode) {
-	this(whenRegistered, paymentMode, null);
-    }
-
-    public AccountingTransactionDetail(final DateTime whenRegistered, final PaymentMode paymentMode, final String comments) {
-	this();
-	init(whenRegistered, paymentMode, comments);
-    }
-
-    private void checkParameters(DateTime whenRegistered, PaymentMode paymentMode) {
-
-	if (whenRegistered == null) {
-	    throw new DomainException("error.accounting.AccountingTransactionDetail.whenRegistered.cannot.be.null");
+	protected AccountingTransactionDetail() {
+		super();
+		super.setRootDomainObject(RootDomainObject.getInstance());
+		super.setWhenProcessed(new DateTime());
 	}
 
-	if (paymentMode == null) {
-	    throw new DomainException("error.accounting.AccountingTransactionDetail.paymentMode.cannot.be.null");
+	public AccountingTransactionDetail(final DateTime whenRegistered, final PaymentMode paymentMode) {
+		this(whenRegistered, paymentMode, null);
 	}
-    }
 
-    protected void init(DateTime whenRegistered, PaymentMode paymentMode, final String comments) {
+	public AccountingTransactionDetail(final DateTime whenRegistered, final PaymentMode paymentMode, final String comments) {
+		this();
+		init(whenRegistered, paymentMode, comments);
+	}
 
-	checkParameters(whenRegistered, paymentMode);
+	private void checkParameters(DateTime whenRegistered, PaymentMode paymentMode) {
 
-	super.setWhenRegistered(whenRegistered);
-	super.setPaymentMode(paymentMode);
-	super.setComments(comments);
-    }
+		if (whenRegistered == null) {
+			throw new DomainException("error.accounting.AccountingTransactionDetail.whenRegistered.cannot.be.null");
+		}
 
-    @Override
-    public void setWhenRegistered(DateTime whenRegistered) {
-	throw new DomainException("error.accounting.AccountingTransactionDetail.cannot.modify.whenRegistered");
-    }
+		if (paymentMode == null) {
+			throw new DomainException("error.accounting.AccountingTransactionDetail.paymentMode.cannot.be.null");
+		}
+	}
 
-    @Override
-    public void setPaymentMode(PaymentMode paymentMode) {
-	throw new DomainException("error.accounting.AccountingTransactionDetail.cannot.modify.paymentMode");
-    }
+	protected void init(DateTime whenRegistered, PaymentMode paymentMode, final String comments) {
 
-    @Override
-    public void setTransaction(AccountingTransaction transaction) {
-	throw new DomainException("error.accounting.AccountingTransactionDetail.cannot.modify.transaction");
-    }
+		checkParameters(whenRegistered, paymentMode);
 
-    @Checked("RolePredicates.MANAGER_PREDICATE")
-    void delete() {
-	super.setTransaction(null);
-	removeRootDomainObject();
-	super.deleteDomainObject();
-    }
+		super.setWhenRegistered(whenRegistered);
+		super.setPaymentMode(paymentMode);
+		super.setComments(comments);
+	}
 
-    public Event getEvent() {
-	return getTransaction().getEvent();
-    }
+	@Override
+	public void setWhenRegistered(DateTime whenRegistered) {
+		throw new DomainException("error.accounting.AccountingTransactionDetail.cannot.modify.whenRegistered");
+	}
+
+	@Override
+	public void setPaymentMode(PaymentMode paymentMode) {
+		throw new DomainException("error.accounting.AccountingTransactionDetail.cannot.modify.paymentMode");
+	}
+
+	@Override
+	public void setTransaction(AccountingTransaction transaction) {
+		throw new DomainException("error.accounting.AccountingTransactionDetail.cannot.modify.transaction");
+	}
+
+	@Checked("RolePredicates.MANAGER_PREDICATE")
+	void delete() {
+		super.setTransaction(null);
+		removeRootDomainObject();
+		super.deleteDomainObject();
+	}
+
+	public Event getEvent() {
+		return getTransaction().getEvent();
+	}
 
 }

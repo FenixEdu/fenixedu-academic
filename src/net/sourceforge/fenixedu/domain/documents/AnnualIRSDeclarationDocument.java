@@ -12,53 +12,53 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class AnnualIRSDeclarationDocument extends AnnualIRSDeclarationDocument_Base {
 
-    public AnnualIRSDeclarationDocument(Person addressee, Person operator, String filename, byte[] content, Integer year) {
-	super();
-	checkParameters(year);
-	checkRulesToCreate(addressee, year);
-	setYear(year);
-	super.init(GeneratedDocumentType.ANNUAL_IRS_DECLARATION, addressee, operator, filename, content);
-    }
-
-    @Override
-    public Person getAddressee() {
-	return (Person) super.getAddressee();
-    }
-
-    @Override
-    protected Group computePermittedGroup() {
-	return new RoleGroup(RoleType.MANAGER);
-    }
-
-    private void checkRulesToCreate(Person addressee, Integer year) {
-	if (addressee.hasAnnualIRSDocumentFor(year)) {
-	    throw new DomainException("error.documents.AnnualIRSDeclarationDocument.annual.irs.document.alread.exists.for.year");
+	public AnnualIRSDeclarationDocument(Person addressee, Person operator, String filename, byte[] content, Integer year) {
+		super();
+		checkParameters(year);
+		checkRulesToCreate(addressee, year);
+		setYear(year);
+		super.init(GeneratedDocumentType.ANNUAL_IRS_DECLARATION, addressee, operator, filename, content);
 	}
-    }
 
-    private void checkParameters(Integer year) {
-	if (year == null) {
-	    throw new DomainException("error.documents.AnnualIRSDeclarationDocument.year.cannot.be.null");
+	@Override
+	public Person getAddressee() {
+		return (Person) super.getAddressee();
 	}
-    }
 
-    @Service
-    public AnnualIRSDeclarationDocument generateAnotherDeclaration(Person operator, byte[] content) {
+	@Override
+	protected Group computePermittedGroup() {
+		return new RoleGroup(RoleType.MANAGER);
+	}
 
-	final Person addressee = getAddressee();
-	final Integer year = getYear();
+	private void checkRulesToCreate(Person addressee, Integer year) {
+		if (addressee.hasAnnualIRSDocumentFor(year)) {
+			throw new DomainException("error.documents.AnnualIRSDeclarationDocument.annual.irs.document.alread.exists.for.year");
+		}
+	}
 
-	delete();
+	private void checkParameters(Integer year) {
+		if (year == null) {
+			throw new DomainException("error.documents.AnnualIRSDeclarationDocument.year.cannot.be.null");
+		}
+	}
 
-	return new AnnualIRSDeclarationDocument(addressee, operator, buildFilename(addressee, year), content, year);
-    }
+	@Service
+	public AnnualIRSDeclarationDocument generateAnotherDeclaration(Person operator, byte[] content) {
 
-    static private String buildFilename(Person person, Integer year) {
-	return String.format("IRS-%s-%s-%s.pdf", year, person.getDocumentIdNumber(), new LocalDate().toString("yyyyMMdd"));
-    }
+		final Person addressee = getAddressee();
+		final Integer year = getYear();
 
-    @Service
-    static public AnnualIRSDeclarationDocument create(Person addressee, Person operator, byte[] content, Integer year) {
-	return new AnnualIRSDeclarationDocument(addressee, operator, buildFilename(addressee, year), content, year);
-    }
+		delete();
+
+		return new AnnualIRSDeclarationDocument(addressee, operator, buildFilename(addressee, year), content, year);
+	}
+
+	static private String buildFilename(Person person, Integer year) {
+		return String.format("IRS-%s-%s-%s.pdf", year, person.getDocumentIdNumber(), new LocalDate().toString("yyyyMMdd"));
+	}
+
+	@Service
+	static public AnnualIRSDeclarationDocument create(Person addressee, Person operator, byte[] content, Integer year) {
+		return new AnnualIRSDeclarationDocument(addressee, operator, buildFilename(addressee, year), content, year);
+	}
 }

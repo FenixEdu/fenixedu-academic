@@ -17,104 +17,104 @@ import net.sourceforge.fenixedu.presentationTier.jsf.components.util.JsfRenderUt
 
 public class UICommandButton extends HtmlCommandButton {
 
-    private static final String INPUT_SUBMIT_TYPE = "submit";
+	private static final String INPUT_SUBMIT_TYPE = "submit";
 
-    private static final String INPUT_RESET_TYPE = "reset";
+	private static final String INPUT_RESET_TYPE = "reset";
 
-    private static final String INPUT_IMAGE_TYPE = "image";
+	private static final String INPUT_IMAGE_TYPE = "image";
 
-    public UICommandButton() {
-	super();
-    }
-
-    @Override
-    public boolean getRendersChildren() {
-	return true;
-    }
-
-    @Override
-    public void encodeBegin(FacesContext context) throws IOException {
-
-	ResponseWriter writer = context.getResponseWriter();
-
-	JsfRenderUtils.addEventHandlingHiddenFieldsIfNotExists(context, this);
-	List<UIParameter> uiParameters = getParametersWithNameAttribute();
-	JsfRenderUtils.addHiddenFieldsForParametersIfNotExists(context, this, uiParameters);
-
-	writer.startElement("input", this);
-	writer.writeAttribute("type", (this.getType() == null) ? INPUT_SUBMIT_TYPE : this.getType(), null);
-	writer.writeAttribute("id", getClientId(context), null);
-	writer.writeAttribute("name", getClientId(context), null);
-	writer.writeAttribute("style", (this.getStyle() != null) ? this.getStyle() : "", null);
-	writer.writeAttribute("class", (this.getStyleClass() != null) ? this.getStyleClass() : "", null);
-	writer.writeAttribute("alt", (this.getAlt() != null) ? this.getAlt() : "", null);
-	writer.writeAttribute("value", (this.getValue() != null) ? this.getValue() : "", null);
-	writer.writeAttribute("onclick", getOnClickEvent(context, uiParameters), null);
-
-	if (this.getType() != null && this.getType().equalsIgnoreCase(INPUT_IMAGE_TYPE)) {
-	    writer.writeAttribute("src", (this.getImage() != null) ? this.getImage() : "", null);
+	public UICommandButton() {
+		super();
 	}
 
-    }
-
-    private String getOnClickEvent(FacesContext context, List<UIParameter> uiParameters) {
-	StringBuilder onClickEvent = new StringBuilder();
-
-	if (this.getOnclick() != null) {
-	    onClickEvent.append(this.getOnclick()).append(";");
+	@Override
+	public boolean getRendersChildren() {
+		return true;
 	}
 
-	onClickEvent.append(JsfRenderUtils.getSubmitJavaScriptWithParameters(context, this, uiParameters));
+	@Override
+	public void encodeBegin(FacesContext context) throws IOException {
 
-	return onClickEvent.toString();
-    }
+		ResponseWriter writer = context.getResponseWriter();
 
-    @Override
-    public void encodeEnd(FacesContext context) throws IOException {
-	ResponseWriter writer = context.getResponseWriter();
+		JsfRenderUtils.addEventHandlingHiddenFieldsIfNotExists(context, this);
+		List<UIParameter> uiParameters = getParametersWithNameAttribute();
+		JsfRenderUtils.addHiddenFieldsForParametersIfNotExists(context, this, uiParameters);
 
-	writer.endElement("input");
-    }
+		writer.startElement("input", this);
+		writer.writeAttribute("type", (this.getType() == null) ? INPUT_SUBMIT_TYPE : this.getType(), null);
+		writer.writeAttribute("id", getClientId(context), null);
+		writer.writeAttribute("name", getClientId(context), null);
+		writer.writeAttribute("style", (this.getStyle() != null) ? this.getStyle() : "", null);
+		writer.writeAttribute("class", (this.getStyleClass() != null) ? this.getStyleClass() : "", null);
+		writer.writeAttribute("alt", (this.getAlt() != null) ? this.getAlt() : "", null);
+		writer.writeAttribute("value", (this.getValue() != null) ? this.getValue() : "", null);
+		writer.writeAttribute("onclick", getOnClickEvent(context, uiParameters), null);
 
-    @Override
-    public void decode(FacesContext context) {
-	Map paramMap = context.getExternalContext().getRequestParameterMap();
-
-	UIForm parentForm = JsfRenderUtils.findForm(this);
-	String parentFormClientId = parentForm.getClientId(context);
-	String eventSenderHiddenFieldId = JsfRenderUtils.getEventSenderHiddenFieldId(parentFormClientId);
-
-	String eventSenderId = (String) paramMap.get(eventSenderHiddenFieldId);
-	boolean isReset = false;
-
-	if (this.getType() != null && this.getType().equalsIgnoreCase(INPUT_RESET_TYPE)) {
-	    isReset = true;
-	}
-
-	if (!isReset && (eventSenderId != null) && eventSenderId.equals(this.getClientId(context))) {
-	    this.queueEvent(new ActionEvent(this));
-	}
-
-    }
-
-    private List<UIParameter> getParametersWithNameAttribute() {
-	List<UIParameter> result = new ArrayList<UIParameter>();
-
-	List children = this.getChildren();
-
-	for (int i = 0; i < children.size(); i++) {
-	    UIComponent child = (UIComponent) children.get(i);
-
-	    if (child instanceof UIParameter) {
-		UIParameter parameter = (UIParameter) child;
-
-		if (parameter.getName() != null) {
-		    result.add(parameter);
+		if (this.getType() != null && this.getType().equalsIgnoreCase(INPUT_IMAGE_TYPE)) {
+			writer.writeAttribute("src", (this.getImage() != null) ? this.getImage() : "", null);
 		}
-	    }
+
 	}
 
-	return result;
-    }
+	private String getOnClickEvent(FacesContext context, List<UIParameter> uiParameters) {
+		StringBuilder onClickEvent = new StringBuilder();
+
+		if (this.getOnclick() != null) {
+			onClickEvent.append(this.getOnclick()).append(";");
+		}
+
+		onClickEvent.append(JsfRenderUtils.getSubmitJavaScriptWithParameters(context, this, uiParameters));
+
+		return onClickEvent.toString();
+	}
+
+	@Override
+	public void encodeEnd(FacesContext context) throws IOException {
+		ResponseWriter writer = context.getResponseWriter();
+
+		writer.endElement("input");
+	}
+
+	@Override
+	public void decode(FacesContext context) {
+		Map paramMap = context.getExternalContext().getRequestParameterMap();
+
+		UIForm parentForm = JsfRenderUtils.findForm(this);
+		String parentFormClientId = parentForm.getClientId(context);
+		String eventSenderHiddenFieldId = JsfRenderUtils.getEventSenderHiddenFieldId(parentFormClientId);
+
+		String eventSenderId = (String) paramMap.get(eventSenderHiddenFieldId);
+		boolean isReset = false;
+
+		if (this.getType() != null && this.getType().equalsIgnoreCase(INPUT_RESET_TYPE)) {
+			isReset = true;
+		}
+
+		if (!isReset && (eventSenderId != null) && eventSenderId.equals(this.getClientId(context))) {
+			this.queueEvent(new ActionEvent(this));
+		}
+
+	}
+
+	private List<UIParameter> getParametersWithNameAttribute() {
+		List<UIParameter> result = new ArrayList<UIParameter>();
+
+		List children = this.getChildren();
+
+		for (int i = 0; i < children.size(); i++) {
+			UIComponent child = (UIComponent) children.get(i);
+
+			if (child instanceof UIParameter) {
+				UIParameter parameter = (UIParameter) child;
+
+				if (parameter.getName() != null) {
+					result.add(parameter);
+				}
+			}
+		}
+
+		return result;
+	}
 
 }

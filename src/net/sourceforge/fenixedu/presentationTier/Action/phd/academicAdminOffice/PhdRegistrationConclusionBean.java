@@ -9,33 +9,33 @@ import org.joda.time.YearMonthDay;
 
 public class PhdRegistrationConclusionBean extends RegistrationConclusionBean {
 
-    static private final long serialVersionUID = 1L;
+	static private final long serialVersionUID = 1L;
 
-    public PhdRegistrationConclusionBean(Registration registration) {
-	super(registration);
-	setCycleCurriculumGroup(registration.getLastStudentCurricularPlan().getCycle(CycleType.THIRD_CYCLE));
-    }
+	public PhdRegistrationConclusionBean(Registration registration) {
+		super(registration);
+		setCycleCurriculumGroup(registration.getLastStudentCurricularPlan().getCycle(CycleType.THIRD_CYCLE));
+	}
 
-    public RegistrationStateType getActiveStateType() {
-	return getRegistration().getActiveStateType();
-    }
+	public RegistrationStateType getActiveStateType() {
+		return getRegistration().getActiveStateType();
+	}
 
-    public YearMonthDay getStartDate() {
-	return getRegistration().getStartDate();
-    }
+	public YearMonthDay getStartDate() {
+		return getRegistration().getStartDate();
+	}
 
-    public String getDegreeNameWithDescription() {
-	return getRegistration().getDegreeNameWithDescription();
-    }
+	public String getDegreeNameWithDescription() {
+		return getRegistration().getDegreeNameWithDescription();
+	}
 
-    @Override
-    public YearMonthDay getConclusionDate() {
-	return isConclusionProcessed() ? getCycleCurriculumGroup().getConclusionDate() : null;
-    }
+	@Override
+	public YearMonthDay getConclusionDate() {
+		return isConclusionProcessed() ? getCycleCurriculumGroup().getConclusionDate() : null;
+	}
 
-    @Override
-    public Integer getFinalAverage() {
-	return isConclusionProcessed() ? getCycleCurriculumGroup().getFinalAverage() : null;
-    }
+	@Override
+	public Integer getFinalAverage() {
+		return isConclusionProcessed() ? getCycleCurriculumGroup().getFinalAverage() : null;
+	}
 
 }

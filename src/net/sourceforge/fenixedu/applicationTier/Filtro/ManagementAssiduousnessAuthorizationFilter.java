@@ -4,7 +4,8 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 
 public class ManagementAssiduousnessAuthorizationFilter extends AuthorizationByRoleFilter {
 
-    protected RoleType getRoleType() {
-	return RoleType.PERSONNEL_SECTION;
-    }
+	@Override
+	protected RoleType getRoleType() {
+		return RoleType.PERSONNEL_SECTION;
+	}
 }

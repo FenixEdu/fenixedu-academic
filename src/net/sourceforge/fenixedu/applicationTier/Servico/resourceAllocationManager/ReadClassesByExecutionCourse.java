@@ -14,16 +14,16 @@ import net.sourceforge.fenixedu.domain.SchoolClass;
  */
 public class ReadClassesByExecutionCourse extends FenixService {
 
-    public List<InfoClass> run(ExecutionCourse executionCourse) {
+	public List<InfoClass> run(ExecutionCourse executionCourse) {
 
-	final Set<SchoolClass> classes = executionCourse.findSchoolClasses();
-	final List<InfoClass> infoClasses = new ArrayList<InfoClass>(classes.size());
+		final Set<SchoolClass> classes = executionCourse.findSchoolClasses();
+		final List<InfoClass> infoClasses = new ArrayList<InfoClass>(classes.size());
 
-	for (final SchoolClass schoolClass : classes) {
-	    final InfoClass infoClass = InfoClass.newInfoFromDomain(schoolClass);
-	    infoClasses.add(infoClass);
+		for (final SchoolClass schoolClass : classes) {
+			final InfoClass infoClass = InfoClass.newInfoFromDomain(schoolClass);
+			infoClasses.add(infoClass);
+		}
+
+		return infoClasses;
 	}
-
-	return infoClasses;
-    }
 }

@@ -14,20 +14,20 @@ import pt.ist.fenixWebFramework.renderers.layouts.Layout;
  */
 public class InquiriesCheckBoxQuestionRenderer extends InputRenderer {
 
-    @Override
-    protected Layout getLayout(Object object, Class type) {
+	@Override
+	protected Layout getLayout(Object object, Class type) {
 
-	return new Layout() {
+		return new Layout() {
 
-	    @Override
-	    public HtmlComponent createComponent(Object object, Class type) {
-		final HtmlCheckBox htmlCheckBox = new HtmlCheckBox();
-		if (object != null && (Boolean.valueOf(object.toString()) || object.toString().equalsIgnoreCase("on"))) {
-		    htmlCheckBox.setChecked(true);
-		}
-		return htmlCheckBox;
-	    }
-	};
-    }
+			@Override
+			public HtmlComponent createComponent(Object object, Class type) {
+				final HtmlCheckBox htmlCheckBox = new HtmlCheckBox();
+				if (object != null && (Boolean.valueOf(object.toString()) || object.toString().equalsIgnoreCase("on"))) {
+					htmlCheckBox.setChecked(true);
+				}
+				return htmlCheckBox;
+			}
+		};
+	}
 
 }

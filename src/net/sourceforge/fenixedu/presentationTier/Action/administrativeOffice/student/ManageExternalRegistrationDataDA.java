@@ -25,35 +25,37 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
  * 
  */
 @Mapping(path = "/manageExternalRegistrationData", module = "academicAdministration")
-@Forwards({ @Forward(name = "manageExternalRegistrationData", path = "/academicAdminOffice/student/registration/manageExternalRegistrationData.jsp") })
+@Forwards({ @Forward(
+		name = "manageExternalRegistrationData",
+		path = "/academicAdminOffice/student/registration/manageExternalRegistrationData.jsp") })
 public class ManageExternalRegistrationDataDA extends FenixDispatchAction {
 
-    public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) {
+	public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) {
 
-	final ExternalRegistrationDataEditor bean;
-	if (getRenderedObject() != null) {
-	    bean = getRenderedObject();
-	    request.setAttribute("registration", bean.getExternalRegistrationData().getRegistration());
-	} else {
-	    bean = new ExternalRegistrationDataEditor(getAndTransportRegistration(request).getExternalRegistrationData());
+		final ExternalRegistrationDataEditor bean;
+		if (getRenderedObject() != null) {
+			bean = getRenderedObject();
+			request.setAttribute("registration", bean.getExternalRegistrationData().getRegistration());
+		} else {
+			bean = new ExternalRegistrationDataEditor(getAndTransportRegistration(request).getExternalRegistrationData());
+		}
+		request.setAttribute("externalRegistrationDataBean", bean);
+
+		return mapping.findForward("manageExternalRegistrationData");
 	}
-	request.setAttribute("externalRegistrationDataBean", bean);
 
-	return mapping.findForward("manageExternalRegistrationData");
-    }
+	public ActionForward edit(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+		executeFactoryMethod();
+		return prepare(mapping, actionForm, request, response);
+	}
 
-    public ActionForward edit(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-	executeFactoryMethod();
-	return prepare(mapping, actionForm, request, response);
-    }
-
-    private Registration getAndTransportRegistration(final HttpServletRequest request) {
-	final Registration registration = rootDomainObject
-		.readRegistrationByOID(getIntegerFromRequest(request, "registrationId"));
-	request.setAttribute("registration", registration);
-	return registration;
-    }
+	private Registration getAndTransportRegistration(final HttpServletRequest request) {
+		final Registration registration =
+				rootDomainObject.readRegistrationByOID(getIntegerFromRequest(request, "registrationId"));
+		request.setAttribute("registration", registration);
+		return registration;
+	}
 
 }

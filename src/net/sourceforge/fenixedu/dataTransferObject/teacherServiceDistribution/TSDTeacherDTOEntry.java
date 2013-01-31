@@ -19,192 +19,194 @@ import org.apache.commons.collections.Predicate;
 
 public class TSDTeacherDTOEntry extends DataTranferObject {
 
-    public static final Comparator<TSDTeacherDTOEntry> COMPARATOR_BY_NAME = new Comparator<TSDTeacherDTOEntry>() {
+	public static final Comparator<TSDTeacherDTOEntry> COMPARATOR_BY_NAME = new Comparator<TSDTeacherDTOEntry>() {
 
-	@Override
-	public int compare(TSDTeacherDTOEntry o1, TSDTeacherDTOEntry o2) {
-	    return o1.getName().compareTo(o2.getName());
+		@Override
+		public int compare(TSDTeacherDTOEntry o1, TSDTeacherDTOEntry o2) {
+			return o1.getName().compareTo(o2.getName());
+		}
+
+	};
+
+	private List<TSDTeacher> tsdTeacherList;
+	private List<ExecutionSemester> executionPeriodList = null;
+
+	public TSDTeacherDTOEntry(TSDTeacher tsdTeacher, List<ExecutionSemester> executionPeriodList) {
+		this.tsdTeacherList = new ArrayList<TSDTeacher>();
+		this.tsdTeacherList.add(tsdTeacher);
+
+		this.executionPeriodList = executionPeriodList;
 	}
 
-    };
+	public List<TSDProfessorshipDTOEntry> getTSDProfessorshipDTOEntries() {
+		List<TSDProfessorshipDTOEntry> tsdProfessorshipDTOEntryList = new ArrayList<TSDProfessorshipDTOEntry>();
 
-    private List<TSDTeacher> tsdTeacherList;
-    private List<ExecutionSemester> executionPeriodList = null;
+		for (TSDTeacher tsdTeacher : tsdTeacherList) {
+			for (TSDCourse course : tsdTeacher.getAssociatedTSDCourses()) {
+				if (executionPeriodList.contains(course.getExecutionPeriod())) {
+					tsdProfessorshipDTOEntryList.add(new TSDProfessorshipDTOEntry(
+							tsdTeacher.getTSDProfessorShipsByCourse(course), executionPeriodList));
+				}
+			}
+		}
 
-    public TSDTeacherDTOEntry(TSDTeacher tsdTeacher, List<ExecutionSemester> executionPeriodList) {
-	this.tsdTeacherList = new ArrayList<TSDTeacher>();
-	this.tsdTeacherList.add(tsdTeacher);
-
-	this.executionPeriodList = executionPeriodList;
-    }
-
-    public List<TSDProfessorshipDTOEntry> getTSDProfessorshipDTOEntries() {
-	List<TSDProfessorshipDTOEntry> tsdProfessorshipDTOEntryList = new ArrayList<TSDProfessorshipDTOEntry>();
-
-	for (TSDTeacher tsdTeacher : tsdTeacherList) {
-	    for (TSDCourse course : tsdTeacher.getAssociatedTSDCourses()) {
-		if (executionPeriodList.contains(course.getExecutionPeriod()))
-		    tsdProfessorshipDTOEntryList.add(new TSDProfessorshipDTOEntry(
-			    tsdTeacher.getTSDProfessorShipsByCourse(course), executionPeriodList));
-	    }
+		return tsdProfessorshipDTOEntryList;
 	}
 
-	return tsdProfessorshipDTOEntryList;
-    }
-
-    public Boolean getIsRealTeacher() {
-	return tsdTeacherList.get(0) instanceof TSDRealTeacher;
-    }
-
-    public ProfessionalCategory getCategory() {
-	return tsdTeacherList.get(0).getProfessionalCategory();
-    }
-
-    public String getName() {
-	return tsdTeacherList.get(0).getName();
-    }
-
-    public List<ExecutionSemester> getExecutionPeriodList() {
-	return executionPeriodList;
-    }
-
-    /*
-     * public Double getTotalTheoreticalHoursLectured() { Double
-     * totalTheoreticalHoursLectured = 0d;
-     * 
-     * for(TSDTeacher tsdTeacher : tsdTeacherList) {
-     * totalTheoreticalHoursLectured +=
-     * tsdTeacher.getTotalTheoreticalHoursLectured(executionPeriodList); }
-     * 
-     * return totalTheoreticalHoursLectured; }
-     * 
-     * public Double getTotalPraticalHoursLectured() { Double
-     * totalPraticalHoursLectured = 0d;
-     * 
-     * for(TSDTeacher tsdTeacher : tsdTeacherList) { totalPraticalHoursLectured
-     * += tsdTeacher.getTotalPraticalHoursLectured(executionPeriodList); }
-     * 
-     * return totalPraticalHoursLectured; }
-     * 
-     * public Double getTotalTheoPratHoursLectured() { Double
-     * totalTheoPratHoursLectured = 0d;
-     * 
-     * for(TSDTeacher tsdTeacher : tsdTeacherList) { totalTheoPratHoursLectured
-     * += tsdTeacher.getTotalTheoPratHoursLectured(executionPeriodList); }
-     * 
-     * return totalTheoPratHoursLectured; }
-     * 
-     * public Double getTotalLaboratorialHoursLectured() { Double
-     * totalLaboratorialHoursLectured = 0d;
-     * 
-     * for(TSDTeacher tsdTeacher : tsdTeacherList) {
-     * totalLaboratorialHoursLectured +=
-     * tsdTeacher.getTotalLaboratorialHoursLectured(executionPeriodList); }
-     * 
-     * return totalLaboratorialHoursLectured; }
-     */
-
-    public Double getTotalHoursLectured() {
-	Double totalHoursLectured = 0d;
-
-	for (TSDTeacher tsdTeacher : tsdTeacherList) {
-	    totalHoursLectured += tsdTeacher.getTotalHoursLectured(executionPeriodList);
+	public Boolean getIsRealTeacher() {
+		return tsdTeacherList.get(0) instanceof TSDRealTeacher;
 	}
 
-	return totalHoursLectured;
-    }
-
-    public Double getTotalHoursLecturedByShiftType(ShiftType type) {
-	Double totalHoursLectured = 0d;
-
-	for (TSDTeacher tsdTeacher : tsdTeacherList) {
-	    totalHoursLectured += tsdTeacher.getTotalHoursLecturedByShiftType(type, executionPeriodList);
+	public ProfessionalCategory getCategory() {
+		return tsdTeacherList.get(0).getProfessionalCategory();
 	}
 
-	return totalHoursLectured;
-    }
-
-    public Double getRequiredHours() {
-	return tsdTeacherList.get(0).getRequiredHours(executionPeriodList);
-    }
-
-    public Double getAvailability() {
-	return getRequiredHours() - getTotalHoursLecturedPlusExtraCredits();
-    }
-
-    public Double getServiceExemptionCredits() {
-	return tsdTeacherList.get(0).getServiceExemptionCredits(executionPeriodList);
-    }
-
-    public Double getManagementFunctionsCredits() {
-	return tsdTeacherList.get(0).getManagementFunctionsCredits(executionPeriodList);
-    }
-
-    public Double getRequiredTeachingHours() {
-	return getRequiredHours() - getExtraCreditsValue();
-    }
-
-    public void addExecutionPeriodList(List<ExecutionSemester> executionPeriodList) {
-	for (ExecutionSemester executionSemester : executionPeriodList) {
-	    if (!this.executionPeriodList.contains(executionSemester)) {
-		this.executionPeriodList.add(executionSemester);
-	    }
+	public String getName() {
+		return tsdTeacherList.get(0).getName();
 	}
-    }
 
-    public void addTSDTeacher(TSDTeacher tsdTeacher) {
-	this.tsdTeacherList.add(tsdTeacher);
-    }
+	public List<ExecutionSemester> getExecutionPeriodList() {
+		return executionPeriodList;
+	}
 
-    public List<TSDTeacher> getTSDTeachers() {
-	return tsdTeacherList;
-    }
+	/*
+	 * public Double getTotalTheoreticalHoursLectured() { Double
+	 * totalTheoreticalHoursLectured = 0d;
+	 * 
+	 * for(TSDTeacher tsdTeacher : tsdTeacherList) {
+	 * totalTheoreticalHoursLectured +=
+	 * tsdTeacher.getTotalTheoreticalHoursLectured(executionPeriodList); }
+	 * 
+	 * return totalTheoreticalHoursLectured; }
+	 * 
+	 * public Double getTotalPraticalHoursLectured() { Double
+	 * totalPraticalHoursLectured = 0d;
+	 * 
+	 * for(TSDTeacher tsdTeacher : tsdTeacherList) { totalPraticalHoursLectured
+	 * += tsdTeacher.getTotalPraticalHoursLectured(executionPeriodList); }
+	 * 
+	 * return totalPraticalHoursLectured; }
+	 * 
+	 * public Double getTotalTheoPratHoursLectured() { Double
+	 * totalTheoPratHoursLectured = 0d;
+	 * 
+	 * for(TSDTeacher tsdTeacher : tsdTeacherList) { totalTheoPratHoursLectured
+	 * += tsdTeacher.getTotalTheoPratHoursLectured(executionPeriodList); }
+	 * 
+	 * return totalTheoPratHoursLectured; }
+	 * 
+	 * public Double getTotalLaboratorialHoursLectured() { Double
+	 * totalLaboratorialHoursLectured = 0d;
+	 * 
+	 * for(TSDTeacher tsdTeacher : tsdTeacherList) {
+	 * totalLaboratorialHoursLectured +=
+	 * tsdTeacher.getTotalLaboratorialHoursLectured(executionPeriodList); }
+	 * 
+	 * return totalLaboratorialHoursLectured; }
+	 */
 
-    public List<PersonContractSituation> getServiceExemptions() {
-	return tsdTeacherList.get(0).getServiceExemptions(executionPeriodList);
-    }
+	public Double getTotalHoursLectured() {
+		Double totalHoursLectured = 0d;
 
-    public List<PersonFunction> getManagementFunctions() {
-	return tsdTeacherList.get(0).getManagementFunctions(executionPeriodList);
-    }
+		for (TSDTeacher tsdTeacher : tsdTeacherList) {
+			totalHoursLectured += tsdTeacher.getTotalHoursLectured(executionPeriodList);
+		}
 
-    public TSDProfessorshipDTOEntry getTSDProfessorshipDTOEntryByTSDCourseDTOEntry(final TSDCourseDTOEntry tsdCourseDTOEntry) {
-	return (TSDProfessorshipDTOEntry) CollectionUtils.find(getTSDProfessorshipDTOEntries(), new Predicate() {
+		return totalHoursLectured;
+	}
 
-	    public boolean evaluate(Object arg0) {
-		TSDProfessorshipDTOEntry tsdProfessorshipDTOEntry = (TSDProfessorshipDTOEntry) arg0;
-		return tsdProfessorshipDTOEntry.getTSDCourseDTOEntry().getTSDCourse() == tsdCourseDTOEntry.getTSDCourse();
-	    }
+	public Double getTotalHoursLecturedByShiftType(ShiftType type) {
+		Double totalHoursLectured = 0d;
 
-	});
-    }
+		for (TSDTeacher tsdTeacher : tsdTeacherList) {
+			totalHoursLectured += tsdTeacher.getTotalHoursLecturedByShiftType(type, executionPeriodList);
+		}
 
-    public String getAcronym() {
-	return tsdTeacherList.get(0).getAcronym();
-    }
+		return totalHoursLectured;
+	}
 
-    public Double getTotalHoursLecturedPlusExtraCredits() {
-	return tsdTeacherList.get(0).getTotalHoursLecturedPlusExtraCredits(executionPeriodList);
-    }
+	public Double getRequiredHours() {
+		return tsdTeacherList.get(0).getRequiredHours(executionPeriodList);
+	}
 
-    public Boolean getUsingExtraCredits() {
-	return tsdTeacherList.get(0).getUsingExtraCredits();
-    }
+	public Double getAvailability() {
+		return getRequiredHours() - getTotalHoursLecturedPlusExtraCredits();
+	}
 
-    public String getExtraCreditsName() {
-	return tsdTeacherList.get(0).getExtraCreditsName();
-    }
+	public Double getServiceExemptionCredits() {
+		return tsdTeacherList.get(0).getServiceExemptionCredits(executionPeriodList);
+	}
 
-    public Double getExtraCreditsValue() {
-	return tsdTeacherList.get(0).getExtraCreditsValue();
-    }
+	public Double getManagementFunctionsCredits() {
+		return tsdTeacherList.get(0).getManagementFunctionsCredits(executionPeriodList);
+	}
 
-    public String getEmailUserId() {
-	return tsdTeacherList.get(0).getEmailUserId();
-    }
+	public Double getRequiredTeachingHours() {
+		return getRequiredHours() - getExtraCreditsValue();
+	}
 
-    public String getShortName() {
-	return tsdTeacherList.get(0).getShortName();
-    }
+	public void addExecutionPeriodList(List<ExecutionSemester> executionPeriodList) {
+		for (ExecutionSemester executionSemester : executionPeriodList) {
+			if (!this.executionPeriodList.contains(executionSemester)) {
+				this.executionPeriodList.add(executionSemester);
+			}
+		}
+	}
+
+	public void addTSDTeacher(TSDTeacher tsdTeacher) {
+		this.tsdTeacherList.add(tsdTeacher);
+	}
+
+	public List<TSDTeacher> getTSDTeachers() {
+		return tsdTeacherList;
+	}
+
+	public List<PersonContractSituation> getServiceExemptions() {
+		return tsdTeacherList.get(0).getServiceExemptions(executionPeriodList);
+	}
+
+	public List<PersonFunction> getManagementFunctions() {
+		return tsdTeacherList.get(0).getManagementFunctions(executionPeriodList);
+	}
+
+	public TSDProfessorshipDTOEntry getTSDProfessorshipDTOEntryByTSDCourseDTOEntry(final TSDCourseDTOEntry tsdCourseDTOEntry) {
+		return (TSDProfessorshipDTOEntry) CollectionUtils.find(getTSDProfessorshipDTOEntries(), new Predicate() {
+
+			@Override
+			public boolean evaluate(Object arg0) {
+				TSDProfessorshipDTOEntry tsdProfessorshipDTOEntry = (TSDProfessorshipDTOEntry) arg0;
+				return tsdProfessorshipDTOEntry.getTSDCourseDTOEntry().getTSDCourse() == tsdCourseDTOEntry.getTSDCourse();
+			}
+
+		});
+	}
+
+	public String getAcronym() {
+		return tsdTeacherList.get(0).getAcronym();
+	}
+
+	public Double getTotalHoursLecturedPlusExtraCredits() {
+		return tsdTeacherList.get(0).getTotalHoursLecturedPlusExtraCredits(executionPeriodList);
+	}
+
+	public Boolean getUsingExtraCredits() {
+		return tsdTeacherList.get(0).getUsingExtraCredits();
+	}
+
+	public String getExtraCreditsName() {
+		return tsdTeacherList.get(0).getExtraCreditsName();
+	}
+
+	public Double getExtraCreditsValue() {
+		return tsdTeacherList.get(0).getExtraCreditsValue();
+	}
+
+	public String getEmailUserId() {
+		return tsdTeacherList.get(0).getEmailUserId();
+	}
+
+	public String getShortName() {
+		return tsdTeacherList.get(0).getShortName();
+	}
 
 }

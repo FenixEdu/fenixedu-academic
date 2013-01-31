@@ -43,262 +43,264 @@ import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
  * 
  */
 public class CourseStatistics extends FenixBackingBean {
-    private List<CompetenceCourseStatisticsDTO> competenceCourses;
+	private List<CompetenceCourseStatisticsDTO> competenceCourses;
 
-    private List<DegreeCourseStatisticsDTO> degreeCourses;
+	private List<DegreeCourseStatisticsDTO> degreeCourses;
 
-    private List<ExecutionCourseStatisticsDTO> executionCourses;
+	private List<ExecutionCourseStatisticsDTO> executionCourses;
 
-    private List<SelectItem> executionPeriods;
+	private List<SelectItem> executionPeriods;
 
-    private CompetenceCourse competenceCourse;
+	private CompetenceCourse competenceCourse;
 
-    public Department getDepartment() {
-	return getUserView().getPerson().getTeacher().getLastWorkingDepartment();
-    }
+	public Department getDepartment() {
+		return getUserView().getPerson().getTeacher().getLastWorkingDepartment();
+	}
 
-    public Integer getCompetenceCourseId() {
-	return (Integer) this.getViewState().getAttribute("competenceCourseId");
-    }
+	public Integer getCompetenceCourseId() {
+		return (Integer) this.getViewState().getAttribute("competenceCourseId");
+	}
 
-    public void setCompetenceCourseId(Integer competenceCourseId) {
-	this.getViewState().setAttribute("competenceCourseId", competenceCourseId);
-    }
+	public void setCompetenceCourseId(Integer competenceCourseId) {
+		this.getViewState().setAttribute("competenceCourseId", competenceCourseId);
+	}
 
-    public Integer getDegreeId() {
-	return (Integer) this.getViewState().getAttribute("degreeId");
-    }
+	public Integer getDegreeId() {
+		return (Integer) this.getViewState().getAttribute("degreeId");
+	}
 
-    public void setDegreeId(Integer degreeId) {
-	this.getViewState().setAttribute("degreeId", degreeId);
-    }
+	public void setDegreeId(Integer degreeId) {
+		this.getViewState().setAttribute("degreeId", degreeId);
+	}
 
-    public Integer getExecutionPeriodId() {
-	Integer executionPeriodId = (Integer) this.getViewState().getAttribute("executionYearPeriod");
+	public Integer getExecutionPeriodId() {
+		Integer executionPeriodId = (Integer) this.getViewState().getAttribute("executionYearPeriod");
 
-	if (executionPeriodId == null) {
-	    executionPeriodId = (Integer) getRequestAttribute("executionPeriodId");
+		if (executionPeriodId == null) {
+			executionPeriodId = (Integer) getRequestAttribute("executionPeriodId");
 
-	    if (executionPeriodId == null) {
-		InfoExecutionPeriod infoExecutionPeriod = ReadCurrentExecutionPeriod.run();
+			if (executionPeriodId == null) {
+				InfoExecutionPeriod infoExecutionPeriod = ReadCurrentExecutionPeriod.run();
 
-		if (infoExecutionPeriod == null) {
-		    executionPeriodId = (Integer) this.getExecutionPeriods().get(this.executionPeriods.size() - 1).getValue();
-		} else {
-		    executionPeriodId = infoExecutionPeriod.getIdInternal();
+				if (infoExecutionPeriod == null) {
+					executionPeriodId = (Integer) this.getExecutionPeriods().get(this.executionPeriods.size() - 1).getValue();
+				} else {
+					executionPeriodId = infoExecutionPeriod.getIdInternal();
+				}
+			}
+
+			this.getViewState().setAttribute("executionPeriodId", executionPeriodId);
 		}
-	    }
 
-	    this.getViewState().setAttribute("executionPeriodId", executionPeriodId);
+		return executionPeriodId;
 	}
 
-	return executionPeriodId;
-    }
+	public void setExecutionPeriodId(Integer executionPeriodId) {
+		this.getViewState().setAttribute("executionPeriodId", executionPeriodId);
+		setRequestAttribute("executionPeriodId", executionPeriodId);
+	}
 
-    public void setExecutionPeriodId(Integer executionPeriodId) {
-	this.getViewState().setAttribute("executionPeriodId", executionPeriodId);
-	setRequestAttribute("executionPeriodId", executionPeriodId);
-    }
+	public void onExecutionPeriodChangeForCompetenceCourses(ValueChangeEvent valueChangeEvent) throws FenixFilterException,
+			FenixServiceException {
+		setExecutionPeriodId((Integer) valueChangeEvent.getNewValue());
+		loadCompetenceCourses();
+	}
 
-    public void onExecutionPeriodChangeForCompetenceCourses(ValueChangeEvent valueChangeEvent) throws FenixFilterException,
-	    FenixServiceException {
-	setExecutionPeriodId((Integer) valueChangeEvent.getNewValue());
-	loadCompetenceCourses();
-    }
+	public void onExecutionPeriodChangeForDegreeCourses(ValueChangeEvent valueChangeEvent) throws FenixFilterException,
+			FenixServiceException {
+		setExecutionPeriodId((Integer) valueChangeEvent.getNewValue());
+		loadDegreeCourses();
+	}
 
-    public void onExecutionPeriodChangeForDegreeCourses(ValueChangeEvent valueChangeEvent) throws FenixFilterException,
-	    FenixServiceException {
-	setExecutionPeriodId((Integer) valueChangeEvent.getNewValue());
-	loadDegreeCourses();
-    }
+	public void onExecutionPeriodChangeForExecutionCourses(ValueChangeEvent valueChangeEvent) throws FenixFilterException,
+			FenixServiceException {
+		setExecutionPeriodId((Integer) valueChangeEvent.getNewValue());
+		loadExecutionCourses();
+	}
 
-    public void onExecutionPeriodChangeForExecutionCourses(ValueChangeEvent valueChangeEvent) throws FenixFilterException,
-	    FenixServiceException {
-	setExecutionPeriodId((Integer) valueChangeEvent.getNewValue());
-	loadExecutionCourses();
-    }
+	public List<SelectItem> getExecutionPeriods() {
+		if (this.executionPeriods == null) {
 
-    public List<SelectItem> getExecutionPeriods() {
-	if (this.executionPeriods == null) {
-
-	    List<InfoExecutionYear> executionYearsList = ReadNotClosedExecutionYears.run();
-	    List<SelectItem> result = new ArrayList<SelectItem>();
-	    for (InfoExecutionYear executionYear : executionYearsList) {
-		List<ExecutionSemester> executionSemesters = rootDomainObject.readExecutionYearByOID(
-			executionYear.getIdInternal()).getExecutionPeriods();
-		for (ExecutionSemester executionSemester : executionSemesters) {
-		    result.add(new SelectItem(executionSemester.getIdInternal(), executionSemester.getExecutionYear().getYear()
-			    + " - " + executionSemester.getName()));
+			List<InfoExecutionYear> executionYearsList = ReadNotClosedExecutionYears.run();
+			List<SelectItem> result = new ArrayList<SelectItem>();
+			for (InfoExecutionYear executionYear : executionYearsList) {
+				List<ExecutionSemester> executionSemesters =
+						rootDomainObject.readExecutionYearByOID(executionYear.getIdInternal()).getExecutionPeriods();
+				for (ExecutionSemester executionSemester : executionSemesters) {
+					result.add(new SelectItem(executionSemester.getIdInternal(), executionSemester.getExecutionYear().getYear()
+							+ " - " + executionSemester.getName()));
+				}
+			}
+			this.executionPeriods = result;
 		}
-	    }
-	    this.executionPeriods = result;
-	}
-	return this.executionPeriods;
-    }
-
-    private void loadCompetenceCourses() throws FenixFilterException, FenixServiceException {
-	Integer departmentID = getUserView().getPerson().getTeacher().getLastWorkingDepartment().getIdInternal();
-	Object args[] = { departmentID, this.getExecutionPeriodId() };
-	competenceCourses = (List<CompetenceCourseStatisticsDTO>) ServiceUtils.executeService(
-		"ComputeCompetenceCourseStatistics", args);
-    }
-
-    public List<CompetenceCourseStatisticsDTO> getCompetenceCourses() throws FenixFilterException, FenixServiceException {
-	if (competenceCourses == null) {
-	    loadCompetenceCourses();
+		return this.executionPeriods;
 	}
 
-	return competenceCourses;
-    }
-
-    private void loadDegreeCourses() throws FenixFilterException, FenixServiceException {
-	degreeCourses = (List<DegreeCourseStatisticsDTO>) ServiceUtils.executeService("ComputeDegreeCourseStatistics",
-		new Object[] { getCompetenceCourseId(), getExecutionPeriodId() });
-    }
-
-    public List<DegreeCourseStatisticsDTO> getDegreeCourses() throws FenixFilterException, FenixServiceException {
-	if (degreeCourses == null) {
-	    loadDegreeCourses();
+	private void loadCompetenceCourses() throws FenixFilterException, FenixServiceException {
+		Integer departmentID = getUserView().getPerson().getTeacher().getLastWorkingDepartment().getIdInternal();
+		Object args[] = { departmentID, this.getExecutionPeriodId() };
+		competenceCourses =
+				(List<CompetenceCourseStatisticsDTO>) ServiceUtils.executeService("ComputeCompetenceCourseStatistics", args);
 	}
 
-	return degreeCourses;
-    }
+	public List<CompetenceCourseStatisticsDTO> getCompetenceCourses() throws FenixFilterException, FenixServiceException {
+		if (competenceCourses == null) {
+			loadCompetenceCourses();
+		}
 
-    private void loadExecutionCourses() throws FenixFilterException, FenixServiceException {
-	executionCourses = (List<ExecutionCourseStatisticsDTO>) ServiceUtils.executeService("ComputeExecutionCourseStatistics",
-		new Object[] { this.getCompetenceCourseId(), this.getDegreeId(), getExecutionPeriodId() });
-    }
-
-    public List<ExecutionCourseStatisticsDTO> getExecutionCourses() throws FenixFilterException, FenixServiceException {
-	if (executionCourses == null) {
-	    loadExecutionCourses();
+		return competenceCourses;
 	}
 
-	return executionCourses;
-    }
-
-    public void onCompetenceCourseSelect(ActionEvent event) throws FenixFilterException, FenixServiceException {
-
-	int competenceCourseId = Integer.parseInt(getRequestParameter("competenceCourseId"));
-	setCompetenceCourseId(competenceCourseId);
-    }
-
-    public void onDegreeCourseSelect(ActionEvent event) throws FenixFilterException, FenixServiceException {
-	int degreeId = Integer.parseInt(getRequestParameter("degreeId"));
-	setDegreeId(degreeId);
-    }
-
-    public CompetenceCourse getCompetenceCourse() {
-	return competenceCourse == null ? rootDomainObject.readCompetenceCourseByOID(getCompetenceCourseId()) : competenceCourse;
-    }
-
-    private ResourceBundle getApplicationResources() {
-	return getResourceBundle("resources/ApplicationResources");
-    }
-
-    /*
-     * Export curricular course students
-     */
-    private CurricularCourse getCurricularCourseToExport() {
-
-	final CompetenceCourse cc = getCompetenceCourse();
-	final Degree degree = rootDomainObject.readDegreeByOID(getDegreeId());
-
-	for (final CurricularCourse curricularCourse : cc.getAssociatedCurricularCourses()) {
-	    if (curricularCourse.getDegree().equals(degree)) {
-		return curricularCourse;
-	    }
+	private void loadDegreeCourses() throws FenixFilterException, FenixServiceException {
+		degreeCourses =
+				(List<DegreeCourseStatisticsDTO>) ServiceUtils.executeService("ComputeDegreeCourseStatistics", new Object[] {
+						getCompetenceCourseId(), getExecutionPeriodId() });
 	}
 
-	return null;
-    }
+	public List<DegreeCourseStatisticsDTO> getDegreeCourses() throws FenixFilterException, FenixServiceException {
+		if (degreeCourses == null) {
+			loadDegreeCourses();
+		}
 
-    public void exportStudentsToExcel() throws FenixServiceException {
-	try {
-	    exportToXls(getFilename());
-	} catch (IOException e) {
-	    throw new FenixServiceException();
+		return degreeCourses;
 	}
-    }
 
-    private String getFilename() {
-	final ResourceBundle bundle = getApplicationResources();
-	return String.format("%s_%s_%s.xls", new DateTime().toString("dd-MM-yyyy_HH:mm"), bundle.getString("label.students"),
-		getCurricularCourseToExport().getName().replaceAll(" ", "_"));
-    }
-
-    private void exportToXls(String filename) throws IOException {
-	this.getResponse().setContentType("application/vnd.ms-excel");
-	this.getResponse().setHeader("Content-disposition", "attachment; filename=" + filename);
-	ServletOutputStream outputStream = this.getResponse().getOutputStream();
-
-	final Spreadsheet spreadsheet = createSpreadsheet();
-	reportInfo(spreadsheet);
-
-	spreadsheet.exportToXLSSheet(outputStream);
-	outputStream.flush();
-
-	this.getResponse().flushBuffer();
-	FacesContext.getCurrentInstance().responseComplete();
-    }
-
-    private Spreadsheet createSpreadsheet() {
-	return new Spreadsheet("-", getStudentsEnroledListHeaders());
-    }
-
-    private List<Object> getStudentsEnroledListHeaders() {
-	final ResourceBundle bundle = getApplicationResources();
-
-	final List<Object> headers = new ArrayList<Object>(8);
-	headers.add(bundle.getString("label.student.number"));
-	headers.add(bundle.getString("label.student.degree"));
-	headers.add(bundle.getString("label.student.curricularCourse"));
-	headers.add(bundle.getString("label.executionYear"));
-	headers.add(bundle.getString("label.student.main.branch"));
-	headers.add(bundle.getString("label.student.minor.branch"));
-	headers.add(bundle.getString("label.student.number.of.enrolments"));
-	return headers;
-    }
-
-    private void reportInfo(Spreadsheet spreadsheet) {
-	final ExecutionYear executionYear = getExecutionYear();
-	final CurricularCourse curricularCourse = getCurricularCourseToExport();
-
-	for (final Enrolment enrolment : curricularCourse.getEnrolments()) {
-
-	    if (!enrolment.isValid(executionYear)) {
-		continue;
-	    }
-
-	    final Row row = spreadsheet.addRow();
-
-	    row.setCell(enrolment.getStudent().getNumber());
-	    row.setCell(enrolment.getDegreeCurricularPlanOfStudent().getDegree().getPresentationName());
-	    row.setCell(enrolment.getName().getContent());
-	    row.setCell(enrolment.getExecutionYear().getName());
-
-	    final CycleCurriculumGroup cycle = enrolment.getParentCycleCurriculumGroup();
-
-	    final BranchCurriculumGroup major = cycle == null ? null : cycle.getMajorBranchCurriculumGroup();
-	    row.setCell(major != null ? major.getName().getContent() : "");
-
-	    final BranchCurriculumGroup minor = cycle == null ? null : cycle.getMinorBranchCurriculumGroup();
-	    row.setCell(minor != null ? minor.getName().getContent() : "");
-
-	    row.setCell(getNumberOfEnrolments(enrolment));
+	private void loadExecutionCourses() throws FenixFilterException, FenixServiceException {
+		executionCourses =
+				(List<ExecutionCourseStatisticsDTO>) ServiceUtils.executeService("ComputeExecutionCourseStatistics",
+						new Object[] { this.getCompetenceCourseId(), this.getDegreeId(), getExecutionPeriodId() });
 	}
-    }
 
-    private String getNumberOfEnrolments(final Enrolment enrolment) {
-	return String.valueOf(enrolment.getStudentCurricularPlan().getEnrolments(enrolment.getCurricularCourse()).size());
-    }
+	public List<ExecutionCourseStatisticsDTO> getExecutionCourses() throws FenixFilterException, FenixServiceException {
+		if (executionCourses == null) {
+			loadExecutionCourses();
+		}
 
-    private ExecutionYear getExecutionYear() {
-	return rootDomainObject.readExecutionSemesterByOID(getExecutionPeriodId()).getExecutionYear();
-    }
+		return executionCourses;
+	}
 
-    /*
-     * End of export curricular course students
-     */
+	public void onCompetenceCourseSelect(ActionEvent event) throws FenixFilterException, FenixServiceException {
+
+		int competenceCourseId = Integer.parseInt(getRequestParameter("competenceCourseId"));
+		setCompetenceCourseId(competenceCourseId);
+	}
+
+	public void onDegreeCourseSelect(ActionEvent event) throws FenixFilterException, FenixServiceException {
+		int degreeId = Integer.parseInt(getRequestParameter("degreeId"));
+		setDegreeId(degreeId);
+	}
+
+	public CompetenceCourse getCompetenceCourse() {
+		return competenceCourse == null ? rootDomainObject.readCompetenceCourseByOID(getCompetenceCourseId()) : competenceCourse;
+	}
+
+	private ResourceBundle getApplicationResources() {
+		return getResourceBundle("resources/ApplicationResources");
+	}
+
+	/*
+	 * Export curricular course students
+	 */
+	private CurricularCourse getCurricularCourseToExport() {
+
+		final CompetenceCourse cc = getCompetenceCourse();
+		final Degree degree = rootDomainObject.readDegreeByOID(getDegreeId());
+
+		for (final CurricularCourse curricularCourse : cc.getAssociatedCurricularCourses()) {
+			if (curricularCourse.getDegree().equals(degree)) {
+				return curricularCourse;
+			}
+		}
+
+		return null;
+	}
+
+	public void exportStudentsToExcel() throws FenixServiceException {
+		try {
+			exportToXls(getFilename());
+		} catch (IOException e) {
+			throw new FenixServiceException();
+		}
+	}
+
+	private String getFilename() {
+		final ResourceBundle bundle = getApplicationResources();
+		return String.format("%s_%s_%s.xls", new DateTime().toString("dd-MM-yyyy_HH:mm"), bundle.getString("label.students"),
+				getCurricularCourseToExport().getName().replaceAll(" ", "_"));
+	}
+
+	private void exportToXls(String filename) throws IOException {
+		this.getResponse().setContentType("application/vnd.ms-excel");
+		this.getResponse().setHeader("Content-disposition", "attachment; filename=" + filename);
+		ServletOutputStream outputStream = this.getResponse().getOutputStream();
+
+		final Spreadsheet spreadsheet = createSpreadsheet();
+		reportInfo(spreadsheet);
+
+		spreadsheet.exportToXLSSheet(outputStream);
+		outputStream.flush();
+
+		this.getResponse().flushBuffer();
+		FacesContext.getCurrentInstance().responseComplete();
+	}
+
+	private Spreadsheet createSpreadsheet() {
+		return new Spreadsheet("-", getStudentsEnroledListHeaders());
+	}
+
+	private List<Object> getStudentsEnroledListHeaders() {
+		final ResourceBundle bundle = getApplicationResources();
+
+		final List<Object> headers = new ArrayList<Object>(8);
+		headers.add(bundle.getString("label.student.number"));
+		headers.add(bundle.getString("label.student.degree"));
+		headers.add(bundle.getString("label.student.curricularCourse"));
+		headers.add(bundle.getString("label.executionYear"));
+		headers.add(bundle.getString("label.student.main.branch"));
+		headers.add(bundle.getString("label.student.minor.branch"));
+		headers.add(bundle.getString("label.student.number.of.enrolments"));
+		return headers;
+	}
+
+	private void reportInfo(Spreadsheet spreadsheet) {
+		final ExecutionYear executionYear = getExecutionYear();
+		final CurricularCourse curricularCourse = getCurricularCourseToExport();
+
+		for (final Enrolment enrolment : curricularCourse.getEnrolments()) {
+
+			if (!enrolment.isValid(executionYear)) {
+				continue;
+			}
+
+			final Row row = spreadsheet.addRow();
+
+			row.setCell(enrolment.getStudent().getNumber());
+			row.setCell(enrolment.getDegreeCurricularPlanOfStudent().getDegree().getPresentationName());
+			row.setCell(enrolment.getName().getContent());
+			row.setCell(enrolment.getExecutionYear().getName());
+
+			final CycleCurriculumGroup cycle = enrolment.getParentCycleCurriculumGroup();
+
+			final BranchCurriculumGroup major = cycle == null ? null : cycle.getMajorBranchCurriculumGroup();
+			row.setCell(major != null ? major.getName().getContent() : "");
+
+			final BranchCurriculumGroup minor = cycle == null ? null : cycle.getMinorBranchCurriculumGroup();
+			row.setCell(minor != null ? minor.getName().getContent() : "");
+
+			row.setCell(getNumberOfEnrolments(enrolment));
+		}
+	}
+
+	private String getNumberOfEnrolments(final Enrolment enrolment) {
+		return String.valueOf(enrolment.getStudentCurricularPlan().getEnrolments(enrolment.getCurricularCourse()).size());
+	}
+
+	private ExecutionYear getExecutionYear() {
+		return rootDomainObject.readExecutionSemesterByOID(getExecutionPeriodId()).getExecutionYear();
+	}
+
+	/*
+	 * End of export curricular course students
+	 */
 
 }

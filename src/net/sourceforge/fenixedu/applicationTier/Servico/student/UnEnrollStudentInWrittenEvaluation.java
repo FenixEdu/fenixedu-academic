@@ -5,9 +5,9 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 
 public class UnEnrollStudentInWrittenEvaluation extends EnrolStudentInWrittenEvaluation {
 
-    @Override
-    public void enrolmentAction(final WrittenEvaluation writtenEvaluation, final Registration registration) {
-	writtenEvaluation.unEnrolStudent(registration);
-    }
+	@Override
+	public void enrolmentAction(final WrittenEvaluation writtenEvaluation, final Registration registration) {
+		writtenEvaluation.unEnrolStudent(registration);
+	}
 
 }

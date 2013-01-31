@@ -17,81 +17,81 @@ import net.sourceforge.fenixedu.util.ProviderRegimeType;
  * 
  */
 public class InfoServiceProviderRegime extends InfoObject {
-    private ProviderRegimeType providerRegimeType;
+	private ProviderRegimeType providerRegimeType;
 
-    private InfoTeacher infoTeacher;
+	private InfoTeacher infoTeacher;
 
-    private Date lastModificationDate;
+	private Date lastModificationDate;
 
-    public InfoServiceProviderRegime() {
-    }
-
-    /**
-     * @return Returns the infoTeacher.
-     */
-    public InfoTeacher getInfoTeacher() {
-	return infoTeacher;
-    }
-
-    /**
-     * @param infoTeacher
-     *            The infoTeacher to set.
-     */
-    public void setInfoTeacher(InfoTeacher infoTeacher) {
-	this.infoTeacher = infoTeacher;
-    }
-
-    /**
-     * @return Returns the providerRegimeType.
-     */
-    public ProviderRegimeType getProviderRegimeType() {
-	return providerRegimeType;
-    }
-
-    /**
-     * @param providerRegimeType
-     *            The providerRegimeType to set.
-     */
-    public void setProviderRegimeType(ProviderRegimeType providerRegimeType) {
-	this.providerRegimeType = providerRegimeType;
-    }
-
-    /**
-     * @return Returns the lastModificationDate.
-     */
-    public Date getLastModificationDate() {
-	return lastModificationDate;
-    }
-
-    /**
-     * @param lastModificationDate
-     *            The lastModificationDate to set.
-     */
-    public void setLastModificationDate(Date lastModificationDate) {
-	this.lastModificationDate = lastModificationDate;
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see
-     * net.sourceforge.fenixedu.dataTransferObject.InfoObject#copyFromDomain
-     * (Dominio.DomainObject)
-     */
-    public void copyFromDomain(ServiceProviderRegime serviceProviderRegime) {
-	super.copyFromDomain(serviceProviderRegime);
-	if (serviceProviderRegime != null) {
-	    setLastModificationDate(serviceProviderRegime.getLastModificationDate());
-	    setProviderRegimeType(serviceProviderRegime.getProviderRegimeType());
+	public InfoServiceProviderRegime() {
 	}
-    }
 
-    public static InfoServiceProviderRegime newInfoFromDomain(ServiceProviderRegime serviceProviderRegime) {
-	InfoServiceProviderRegime infoServiceProviderRegime = null;
-	if (serviceProviderRegime != null) {
-	    infoServiceProviderRegime = new InfoServiceProviderRegime();
-	    infoServiceProviderRegime.copyFromDomain(serviceProviderRegime);
+	/**
+	 * @return Returns the infoTeacher.
+	 */
+	public InfoTeacher getInfoTeacher() {
+		return infoTeacher;
 	}
-	return infoServiceProviderRegime;
-    }
+
+	/**
+	 * @param infoTeacher
+	 *            The infoTeacher to set.
+	 */
+	public void setInfoTeacher(InfoTeacher infoTeacher) {
+		this.infoTeacher = infoTeacher;
+	}
+
+	/**
+	 * @return Returns the providerRegimeType.
+	 */
+	public ProviderRegimeType getProviderRegimeType() {
+		return providerRegimeType;
+	}
+
+	/**
+	 * @param providerRegimeType
+	 *            The providerRegimeType to set.
+	 */
+	public void setProviderRegimeType(ProviderRegimeType providerRegimeType) {
+		this.providerRegimeType = providerRegimeType;
+	}
+
+	/**
+	 * @return Returns the lastModificationDate.
+	 */
+	public Date getLastModificationDate() {
+		return lastModificationDate;
+	}
+
+	/**
+	 * @param lastModificationDate
+	 *            The lastModificationDate to set.
+	 */
+	public void setLastModificationDate(Date lastModificationDate) {
+		this.lastModificationDate = lastModificationDate;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * net.sourceforge.fenixedu.dataTransferObject.InfoObject#copyFromDomain
+	 * (Dominio.DomainObject)
+	 */
+	public void copyFromDomain(ServiceProviderRegime serviceProviderRegime) {
+		super.copyFromDomain(serviceProviderRegime);
+		if (serviceProviderRegime != null) {
+			setLastModificationDate(serviceProviderRegime.getLastModificationDate());
+			setProviderRegimeType(serviceProviderRegime.getProviderRegimeType());
+		}
+	}
+
+	public static InfoServiceProviderRegime newInfoFromDomain(ServiceProviderRegime serviceProviderRegime) {
+		InfoServiceProviderRegime infoServiceProviderRegime = null;
+		if (serviceProviderRegime != null) {
+			infoServiceProviderRegime = new InfoServiceProviderRegime();
+			infoServiceProviderRegime.copyFromDomain(serviceProviderRegime);
+		}
+		return infoServiceProviderRegime;
+	}
 }

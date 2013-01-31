@@ -13,24 +13,24 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class RemoveVigilantsFromGroup extends FenixService {
 
-    @Service
-    public static List<VigilantWrapper> run(Map<VigilantGroup, List<VigilantWrapper>> vigilantsToRemove) {
+	@Service
+	public static List<VigilantWrapper> run(Map<VigilantGroup, List<VigilantWrapper>> vigilantsToRemove) {
 
-	List<VigilantWrapper> unableToRemove = new ArrayList<VigilantWrapper>();
+		List<VigilantWrapper> unableToRemove = new ArrayList<VigilantWrapper>();
 
-	Set<VigilantGroup> groups = vigilantsToRemove.keySet();
+		Set<VigilantGroup> groups = vigilantsToRemove.keySet();
 
-	for (VigilantGroup group : groups) {
-	    List<VigilantWrapper> vigilantWrappers = vigilantsToRemove.get(group);
+		for (VigilantGroup group : groups) {
+			List<VigilantWrapper> vigilantWrappers = vigilantsToRemove.get(group);
 
-	    for (VigilantWrapper vigilantWrapper : vigilantWrappers) {
-		try {
-		    vigilantWrapper.delete();
-		} catch (DomainException e) {
-		    unableToRemove.add(vigilantWrapper);
+			for (VigilantWrapper vigilantWrapper : vigilantWrappers) {
+				try {
+					vigilantWrapper.delete();
+				} catch (DomainException e) {
+					unableToRemove.add(vigilantWrapper);
+				}
+			}
 		}
-	    }
+		return unableToRemove;
 	}
-	return unableToRemove;
-    }
 }

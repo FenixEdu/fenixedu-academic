@@ -16,43 +16,46 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
  */
 public class ExternalActivity extends ExternalActivity_Base {
 
-    public ExternalActivity() {
-	super();
-	setRootDomainObject(RootDomainObject.getInstance());
-    }
+	public ExternalActivity() {
+		super();
+		setRootDomainObject(RootDomainObject.getInstance());
+	}
 
-    public ExternalActivity(Teacher teacher, InfoExternalActivity infoExternalActivity) {
-	this();
-	if (teacher == null)
-	    throw new DomainException("The teacher should not be null!");
+	public ExternalActivity(Teacher teacher, InfoExternalActivity infoExternalActivity) {
+		this();
+		if (teacher == null) {
+			throw new DomainException("The teacher should not be null!");
+		}
 
-	setTeacher(teacher);
-	this.setActivity(infoExternalActivity.getActivity());
-    }
+		setTeacher(teacher);
+		this.setActivity(infoExternalActivity.getActivity());
+	}
 
-    public void delete() {
-	removeTeacher();
-	removeRootDomainObject();
-	super.deleteDomainObject();
-    }
+	public void delete() {
+		removeTeacher();
+		removeRootDomainObject();
+		super.deleteDomainObject();
+	}
 
-    public void edit(InfoExternalActivity infoExternalActivity) {
+	public void edit(InfoExternalActivity infoExternalActivity) {
 
-	this.setActivity(infoExternalActivity.getActivity());
+		this.setActivity(infoExternalActivity.getActivity());
 
-    }
+	}
 
 	@Deprecated
-	public java.util.Date getLastModificationDate(){
+	public java.util.Date getLastModificationDate() {
 		org.joda.time.DateTime dt = getLastModificationDateDateTime();
 		return (dt == null) ? null : new java.util.Date(dt.getMillis());
 	}
 
 	@Deprecated
-	public void setLastModificationDate(java.util.Date date){
-		if(date == null) setLastModificationDateDateTime(null);
-		else setLastModificationDateDateTime(new org.joda.time.DateTime(date.getTime()));
+	public void setLastModificationDate(java.util.Date date) {
+		if (date == null) {
+			setLastModificationDateDateTime(null);
+		} else {
+			setLastModificationDateDateTime(new org.joda.time.DateTime(date.getTime()));
+		}
 	}
-
 
 }

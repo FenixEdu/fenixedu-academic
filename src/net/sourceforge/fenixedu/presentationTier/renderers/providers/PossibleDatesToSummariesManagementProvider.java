@@ -17,34 +17,36 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class PossibleDatesToSummariesManagementProvider implements DataProvider {
 
-    public Object provide(Object source, Object currentValue) {
+	@Override
+	public Object provide(Object source, Object currentValue) {
 
-	SummariesManagementBean bean = (SummariesManagementBean) source;
-	Lesson lesson = bean.getLesson();
-	Shift shift = bean.getShift();
-	SummaryType summaryType = bean.getSummaryType();
-	Summary summary = bean.getSummary();
-	List<YearMonthDay> possibleSummaryDates = new ArrayList<YearMonthDay>();
+		SummariesManagementBean bean = (SummariesManagementBean) source;
+		Lesson lesson = bean.getLesson();
+		Shift shift = bean.getShift();
+		SummaryType summaryType = bean.getSummaryType();
+		Summary summary = bean.getSummary();
+		List<YearMonthDay> possibleSummaryDates = new ArrayList<YearMonthDay>();
 
-	if (summaryType != null && summaryType.equals(SummaryType.NORMAL_SUMMARY)) {
-	    if (lesson != null) {
-		possibleSummaryDates.addAll(lesson.getAllPossibleDatesToInsertSummary());
-	    }
+		if (summaryType != null && summaryType.equals(SummaryType.NORMAL_SUMMARY)) {
+			if (lesson != null) {
+				possibleSummaryDates.addAll(lesson.getAllPossibleDatesToInsertSummary());
+			}
 
-	    // Show SummaryDate when edit summary
-	    if (summary != null) {
-		Shift summaryShift = summary.getShift();
-		Lesson summaryLesson = summary.getLesson();
-		if (shift != null && lesson != null && summaryShift != null && summaryShift.equals(shift)
-			&& summaryLesson != null && summaryLesson.equals(lesson)) {
-		    possibleSummaryDates.add(0, summary.getSummaryDateYearMonthDay());
+			// Show SummaryDate when edit summary
+			if (summary != null) {
+				Shift summaryShift = summary.getShift();
+				Lesson summaryLesson = summary.getLesson();
+				if (shift != null && lesson != null && summaryShift != null && summaryShift.equals(shift)
+						&& summaryLesson != null && summaryLesson.equals(lesson)) {
+					possibleSummaryDates.add(0, summary.getSummaryDateYearMonthDay());
+				}
+			}
 		}
-	    }
+		return possibleSummaryDates;
 	}
-	return possibleSummaryDates;
-    }
 
-    public Converter getConverter() {
-	return new YearMonthDayConverter();
-    }
+	@Override
+	public Converter getConverter() {
+		return new YearMonthDayConverter();
+	}
 }

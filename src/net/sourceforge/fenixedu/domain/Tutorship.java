@@ -18,154 +18,159 @@ import org.joda.time.YearMonthDay;
 
 public class Tutorship extends Tutorship_Base {
 
-    public static final Comparator<Tutorship> TUTORSHIP_COMPARATOR_BY_STUDENT_NUMBER = new BeanComparator(
-	    "studentCurricularPlan.registration.number");
+	public static final Comparator<Tutorship> TUTORSHIP_COMPARATOR_BY_STUDENT_NUMBER = new BeanComparator(
+			"studentCurricularPlan.registration.number");
 
-    public static final Comparator<Tutorship> TUTORSHIP_COMPARATOR_BY_ENTRY_YEAR = new BeanComparator(
-	    "studentCurricularPlan.registration.startDate");
+	public static final Comparator<Tutorship> TUTORSHIP_COMPARATOR_BY_ENTRY_YEAR = new BeanComparator(
+			"studentCurricularPlan.registration.startDate");
 
-    public static Comparator<Tutorship> TUTORSHIP_END_DATE_COMPARATOR = new Comparator<Tutorship>() {
-	@Override
-	public int compare(Tutorship t1, Tutorship t2) {
-	    if (t1.getEndDate() == null) {
-		return -1;
-	    } else if (t2.getEndDate() == null) {
-		return 1;
-	    } else {
-		return (t1.getEndDate().isBefore(t2.getEndDate()) ? -1 : (t1.getEndDate().isAfter(t2.getEndDate()) ? 1 : (t1
-			.getIdInternal() <= t2.getIdInternal()) ? -1 : 1));
-	    }
-	}
-    };
+	public static Comparator<Tutorship> TUTORSHIP_END_DATE_COMPARATOR = new Comparator<Tutorship>() {
+		@Override
+		public int compare(Tutorship t1, Tutorship t2) {
+			if (t1.getEndDate() == null) {
+				return -1;
+			} else if (t2.getEndDate() == null) {
+				return 1;
+			} else {
+				return (t1.getEndDate().isBefore(t2.getEndDate()) ? -1 : (t1.getEndDate().isAfter(t2.getEndDate()) ? 1 : (t1
+						.getIdInternal() <= t2.getIdInternal()) ? -1 : 1));
+			}
+		}
+	};
 
-    public static Comparator<Tutorship> TUTORSHIP_START_DATE_COMPARATOR = new Comparator<Tutorship>() {
-	@Override
-	public int compare(Tutorship t1, Tutorship t2) {
-	    if (t1.getStartDate() == null) {
-		return -1;
-	    } else if (t2.getStartDate() == null) {
-		return 1;
-	    } else {
-		return (t1.getStartDate().isBefore(t2.getStartDate()) ? -1 : (t1.getStartDate().isAfter(t2.getStartDate()) ? 1
-			: (t1.getIdInternal() <= t2.getIdInternal()) ? -1 : 1));
-	    }
-	}
-    };
+	public static Comparator<Tutorship> TUTORSHIP_START_DATE_COMPARATOR = new Comparator<Tutorship>() {
+		@Override
+		public int compare(Tutorship t1, Tutorship t2) {
+			if (t1.getStartDate() == null) {
+				return -1;
+			} else if (t2.getStartDate() == null) {
+				return 1;
+			} else {
+				return (t1.getStartDate().isBefore(t2.getStartDate()) ? -1 : (t1.getStartDate().isAfter(t2.getStartDate()) ? 1 : (t1
+						.getIdInternal() <= t2.getIdInternal()) ? -1 : 1));
+			}
+		}
+	};
 
-    // Tutorship maximum period, in years
-    public static final int TUTORSHIP_MAX_PERIOD = 2;
+	// Tutorship maximum period, in years
+	public static final int TUTORSHIP_MAX_PERIOD = 2;
 
-    public Tutorship(Teacher teacher, Partial tutorshipStartDate, Partial tutorshipEndDate) {
-	super();
+	public Tutorship(Teacher teacher, Partial tutorshipStartDate, Partial tutorshipEndDate) {
+		super();
 
-	setRootDomainObject(RootDomainObject.getInstance());
-	setTeacher(teacher);
-	setStartDate(tutorshipStartDate);
-	setEndDate(tutorshipEndDate);
-    }
-
-    public void delete() {
-	removeStudentCurricularPlan();
-	removeTeacher();
-	if (hasTutorshipLog()) {
-	    getTutorshipLog().delete();
-	}
-	removeRootDomainObject();
-	super.deleteDomainObject();
-    }
-
-    public boolean hasEndDate() {
-	if (getEndDate() != null)
-	    return true;
-	return false;
-    }
-
-    public boolean isActive() {
-	if (!getStudent().isActive()) {
-	    return false;
-	}
-	if (!this.hasEndDate())
-	    return false;
-
-	YearMonthDay currentYearMonthDay = new YearMonthDay();
-	Partial currentDate = new Partial(new DateTimeFieldType[] { DateTimeFieldType.year(), DateTimeFieldType.monthOfYear() },
-		new int[] { currentYearMonthDay.year().get(), currentYearMonthDay.monthOfYear().get() });
-
-	if (getEndDate().isAfter(currentDate)) {
-	    return true;
+		setRootDomainObject(RootDomainObject.getInstance());
+		setTeacher(teacher);
+		setStartDate(tutorshipStartDate);
+		setEndDate(tutorshipEndDate);
 	}
 
-	return false;
-    }
-
-    public boolean isActive(AcademicInterval semester) {
-	RegistrationState registrationState = getStudent().getStateInDate(semester.getEnd());
-	if (registrationState != null && !registrationState.isActive()) {
-	    return false;
+	public void delete() {
+		removeStudentCurricularPlan();
+		removeTeacher();
+		if (hasTutorshipLog()) {
+			getTutorshipLog().delete();
+		}
+		removeRootDomainObject();
+		super.deleteDomainObject();
 	}
-	if (!this.hasEndDate()) {
-	    return false;
+
+	public boolean hasEndDate() {
+		if (getEndDate() != null) {
+			return true;
+		}
+		return false;
 	}
-	return getEndDate().toDateTime(new DateTime(0)).isAfter(semester.getEnd());
-    }
 
-    public static int getLastPossibleTutorshipYear() {
-	YearMonthDay currentDate = new YearMonthDay();
-	return currentDate.getYear() + TUTORSHIP_MAX_PERIOD;
-    }
+	public boolean isActive() {
+		if (!getStudent().isActive()) {
+			return false;
+		}
+		if (!this.hasEndDate()) {
+			return false;
+		}
 
-    public Registration getStudent() {
-	return this.getStudentCurricularPlan().getRegistration();
-    }
+		YearMonthDay currentYearMonthDay = new YearMonthDay();
+		Partial currentDate =
+				new Partial(new DateTimeFieldType[] { DateTimeFieldType.year(), DateTimeFieldType.monthOfYear() }, new int[] {
+						currentYearMonthDay.year().get(), currentYearMonthDay.monthOfYear().get() });
 
-    public boolean belongsToAnotherTeacher() {
-	Student student = this.getStudentCurricularPlan().getRegistration().getStudent();
-	Registration registration = student.getLastActiveRegistration();
+		if (getEndDate().isAfter(currentDate)) {
+			return true;
+		}
 
-	if (registration == null)
-	    return false;
-
-	Tutorship lastTutorship = registration.getActiveStudentCurricularPlan().getLastTutorship();
-
-	if (lastTutorship != null && !lastTutorship.equals(this))
-	    return true;
-
-	return false;
-    }
-
-    public static List<Tutorship> getStudentActiveTutorships(Integer studentNumber) {
-	List<Tutorship> tutorships = new ArrayList<Tutorship>();
-	for (Tutorship t : RootDomainObject.getInstance().getTutorships()) {
-	    if (t.getStudent().getNumber().equals(studentNumber) && t.isActive()) {
-		tutorships.add(t);
-	    }
+		return false;
 	}
-	return tutorships;
-    }
 
-    public List<ExecutionYear> getCoveredExecutionYears() {
-	return ExecutionYear.readExecutionYears(getStartDateExecutionYear(), getEndDateExecutionYear());
-    }
+	public boolean isActive(AcademicInterval semester) {
+		RegistrationState registrationState = getStudent().getStateInDate(semester.getEnd());
+		if (registrationState != null && !registrationState.isActive()) {
+			return false;
+		}
+		if (!this.hasEndDate()) {
+			return false;
+		}
+		return getEndDate().toDateTime(new DateTime(0)).isAfter(semester.getEnd());
+	}
 
-    private ExecutionYear getStartDateExecutionYear() {
-	int year = getStartDate().get(DateTimeFieldType.year());
-	int month = getStartDate().get(DateTimeFieldType.monthOfYear());
-	return ExecutionYear.readByDateTime(new LocalDate(year, month, 1).toDateTimeAtCurrentTime());
-    }
+	public static int getLastPossibleTutorshipYear() {
+		YearMonthDay currentDate = new YearMonthDay();
+		return currentDate.getYear() + TUTORSHIP_MAX_PERIOD;
+	}
 
-    private ExecutionYear getEndDateExecutionYear() {
-	int year = getEndDate().get(DateTimeFieldType.year());
-	int month = getEndDate().get(DateTimeFieldType.monthOfYear());
-	return ExecutionYear.readByDateTime(new LocalDate(year, month, 1).toDateTimeAtCurrentTime());
-    }
+	public Registration getStudent() {
+		return this.getStudentCurricularPlan().getRegistration();
+	}
 
-    public Person getPerson() {
-	return getTeacher().getPerson();
-    }
+	public boolean belongsToAnotherTeacher() {
+		Student student = this.getStudentCurricularPlan().getRegistration().getStudent();
+		Registration registration = student.getLastActiveRegistration();
 
-    public boolean getTutorshipLogEditable() {
-	DegreeCurricularPlan degreeCurricularPlan = getStudent().getLastDegreeCurricularPlan();
-	return !(degreeCurricularPlan == null || getTutorshipLog() == null);
-    }
+		if (registration == null) {
+			return false;
+		}
+
+		Tutorship lastTutorship = registration.getActiveStudentCurricularPlan().getLastTutorship();
+
+		if (lastTutorship != null && !lastTutorship.equals(this)) {
+			return true;
+		}
+
+		return false;
+	}
+
+	public static List<Tutorship> getStudentActiveTutorships(Integer studentNumber) {
+		List<Tutorship> tutorships = new ArrayList<Tutorship>();
+		for (Tutorship t : RootDomainObject.getInstance().getTutorships()) {
+			if (t.getStudent().getNumber().equals(studentNumber) && t.isActive()) {
+				tutorships.add(t);
+			}
+		}
+		return tutorships;
+	}
+
+	public List<ExecutionYear> getCoveredExecutionYears() {
+		return ExecutionYear.readExecutionYears(getStartDateExecutionYear(), getEndDateExecutionYear());
+	}
+
+	private ExecutionYear getStartDateExecutionYear() {
+		int year = getStartDate().get(DateTimeFieldType.year());
+		int month = getStartDate().get(DateTimeFieldType.monthOfYear());
+		return ExecutionYear.readByDateTime(new LocalDate(year, month, 1).toDateTimeAtCurrentTime());
+	}
+
+	private ExecutionYear getEndDateExecutionYear() {
+		int year = getEndDate().get(DateTimeFieldType.year());
+		int month = getEndDate().get(DateTimeFieldType.monthOfYear());
+		return ExecutionYear.readByDateTime(new LocalDate(year, month, 1).toDateTimeAtCurrentTime());
+	}
+
+	public Person getPerson() {
+		return getTeacher().getPerson();
+	}
+
+	public boolean getTutorshipLogEditable() {
+		DegreeCurricularPlan degreeCurricularPlan = getStudent().getLastDegreeCurricularPlan();
+		return !(degreeCurricularPlan == null || getTutorshipLog() == null);
+	}
 
 }

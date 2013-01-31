@@ -14,54 +14,44 @@ import net.sourceforge.fenixedu.util.HostAccessControl;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(module = "external", path = "/setEmail", scope = "request", parameter = "method")
 public class SetEmailDA extends FenixDispatchAction {
 
-    public ActionForward setEmail(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-	    throws Exception {
-	final String host = HostAccessControl.getRemoteAddress(request);
-	final String ip = request.getRemoteAddr();
-	final String password = request.getParameter("password");
-	final String userUId = request.getParameter("userUId");
-	final String email = request.getParameter("email");
+	public ActionForward setEmail(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+		final String host = HostAccessControl.getRemoteAddress(request);
+		final String ip = request.getRemoteAddr();
+		final String password = request.getParameter("password");
+		final String userUId = request.getParameter("userUId");
+		final String email = request.getParameter("email");
 
-	String message = "ko";
+		String message = "ko";
 
-	try {
+		try {
 
-	    SetEmail.run(host, ip, password, userUId, email);
-	    message = "ok";
-	} catch (NotAuthorizedException ex) {
-	    message = "Not authorized";
-	} catch (UserAlreadyHasEmailException ex) {
-	    message = "User already has email.";
-	} catch (UserDoesNotExistException ex) {
-	    message = "User does not exist.";
-	} catch (Throwable ex) {
-	    message = ex.getMessage();
-	    ex.printStackTrace();
-	} finally {
-	    final ServletOutputStream servletOutputStream = response.getOutputStream();
-	    response.setContentType("text/html");
-	    servletOutputStream.print(message);
-	    servletOutputStream.flush();
-	    response.flushBuffer();
+			SetEmail.run(host, ip, password, userUId, email);
+			message = "ok";
+		} catch (NotAuthorizedException ex) {
+			message = "Not authorized";
+		} catch (UserAlreadyHasEmailException ex) {
+			message = "User already has email.";
+		} catch (UserDoesNotExistException ex) {
+			message = "User does not exist.";
+		} catch (Throwable ex) {
+			message = ex.getMessage();
+			ex.printStackTrace();
+		} finally {
+			final ServletOutputStream servletOutputStream = response.getOutputStream();
+			response.setContentType("text/html");
+			servletOutputStream.print(message);
+			servletOutputStream.flush();
+			response.flushBuffer();
+		}
+
+		return null;
 	}
-
-	return null;
-    }
 
 }

@@ -46,88 +46,89 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class EditGroupShift extends FenixService {
 
-    private static final MessageResources messages = MessageResources.getMessageResources("resources/GlobalResources");
+	private static final MessageResources messages = MessageResources.getMessageResources("resources/GlobalResources");
 
-    @Checked("RolePredicates.STUDENT_PREDICATE")
-    @Service
-    public static Boolean run(Integer studentGroupID, Integer groupingID, Integer newShiftID, String username)
-	    throws FenixServiceException {
+	@Checked("RolePredicates.STUDENT_PREDICATE")
+	@Service
+	public static Boolean run(Integer studentGroupID, Integer groupingID, Integer newShiftID, String username)
+			throws FenixServiceException {
 
-	final Grouping grouping = rootDomainObject.readGroupingByOID(groupingID);
-	if (grouping == null) {
-	    throw new ExistingServiceException();
+		final Grouping grouping = rootDomainObject.readGroupingByOID(groupingID);
+		if (grouping == null) {
+			throw new ExistingServiceException();
+		}
+
+		final StudentGroup studentGroup = rootDomainObject.readStudentGroupByOID(studentGroupID);
+		if (studentGroup == null) {
+			throw new InvalidArgumentsServiceException();
+		}
+
+		final Shift shift = rootDomainObject.readShiftByOID(newShiftID);
+		if (grouping.getShiftType() == null || !shift.containsType(grouping.getShiftType())) {
+			throw new InvalidStudentNumberServiceException();
+		}
+
+		final Registration registration = Registration.readByUsername(username);
+
+		IGroupEnrolmentStrategyFactory enrolmentGroupPolicyStrategyFactory = GroupEnrolmentStrategyFactory.getInstance();
+		IGroupEnrolmentStrategy strategy = enrolmentGroupPolicyStrategyFactory.getGroupEnrolmentStrategyInstance(grouping);
+
+		if (!strategy.checkStudentInGrouping(grouping, username)) {
+			throw new NotAuthorizedException();
+		}
+
+		if (!checkStudentInStudentGroup(registration, studentGroup)) {
+			throw new InvalidSituationServiceException();
+		}
+
+		boolean result = strategy.checkNumberOfGroups(grouping, shift);
+		if (!result) {
+			throw new InvalidChangeServiceException();
+		}
+		studentGroup.setShift(shift);
+
+		informStudents(studentGroup, registration, grouping);
+
+		return true;
 	}
 
-	final StudentGroup studentGroup = rootDomainObject.readStudentGroupByOID(studentGroupID);
-	if (studentGroup == null) {
-	    throw new InvalidArgumentsServiceException();
+	private static boolean checkStudentInStudentGroup(Registration registration, StudentGroup studentGroup)
+			throws FenixServiceException {
+		boolean found = false;
+		List studentGroupAttends = studentGroup.getAttends();
+		Attends attend = null;
+		Iterator iterStudentGroupAttends = studentGroupAttends.iterator();
+		while (iterStudentGroupAttends.hasNext() && !found) {
+			attend = ((Attends) iterStudentGroupAttends.next());
+			if (attend.getRegistration().equals(registration)) {
+				found = true;
+			}
+		}
+		return found;
 	}
 
-	final Shift shift = rootDomainObject.readShiftByOID(newShiftID);
-	if (grouping.getShiftType() == null || !shift.containsType(grouping.getShiftType())) {
-	    throw new InvalidStudentNumberServiceException();
+	private static void informStudents(final StudentGroup studentGroup, final Registration registration, final Grouping grouping) {
+		final Set<Person> recievers = new HashSet<Person>();
+		for (final Attends attends : studentGroup.getAttends()) {
+			recievers.add(attends.getRegistration().getPerson());
+		}
+
+		final StringBuilder executionCourseNames = new StringBuilder();
+		for (final ExecutionCourse executionCourse : grouping.getExecutionCourses()) {
+			if (executionCourseNames.length() > 0) {
+				executionCourseNames.append(", ");
+			}
+			executionCourseNames.append(executionCourse.getNome());
+		}
+		final String message =
+				messages.getMessage("message.body.grouping.change.shift", registration.getNumber().toString(), studentGroup
+						.getGroupNumber().toString(), executionCourseNames.toString());
+		final String groupName = messages.getMessage("message.group.name", studentGroup.getGroupNumber());
+		final Collection<Recipient> recipients =
+				Collections.singletonList(new Recipient(groupName, new FixedSetGroup(recievers)));
+
+		SystemSender systemSender = rootDomainObject.getSystemSender();
+		new Message(systemSender, systemSender.getConcreteReplyTos(), recipients,
+				messages.getMessage("message.subject.grouping.change"), message, "");
 	}
-
-	final Registration registration = Registration.readByUsername(username);
-
-	IGroupEnrolmentStrategyFactory enrolmentGroupPolicyStrategyFactory = GroupEnrolmentStrategyFactory.getInstance();
-	IGroupEnrolmentStrategy strategy = enrolmentGroupPolicyStrategyFactory.getGroupEnrolmentStrategyInstance(grouping);
-
-	if (!strategy.checkStudentInGrouping(grouping, username)) {
-	    throw new NotAuthorizedException();
-	}
-
-	if (!checkStudentInStudentGroup(registration, studentGroup)) {
-	    throw new InvalidSituationServiceException();
-	}
-
-	boolean result = strategy.checkNumberOfGroups(grouping, shift);
-	if (!result) {
-	    throw new InvalidChangeServiceException();
-	}
-	studentGroup.setShift(shift);
-
-	informStudents(studentGroup, registration, grouping);
-
-	return true;
-    }
-
-    private static boolean checkStudentInStudentGroup(Registration registration, StudentGroup studentGroup)
-	    throws FenixServiceException {
-	boolean found = false;
-	List studentGroupAttends = studentGroup.getAttends();
-	Attends attend = null;
-	Iterator iterStudentGroupAttends = studentGroupAttends.iterator();
-	while (iterStudentGroupAttends.hasNext() && !found) {
-	    attend = ((Attends) iterStudentGroupAttends.next());
-	    if (attend.getRegistration().equals(registration)) {
-		found = true;
-	    }
-	}
-	return found;
-    }
-
-    private static void informStudents(final StudentGroup studentGroup, final Registration registration, final Grouping grouping) {
-	final Set<Person> recievers = new HashSet<Person>();
-	for (final Attends attends : studentGroup.getAttends()) {
-	    recievers.add(attends.getRegistration().getPerson());
-	}
-
-	final StringBuilder executionCourseNames = new StringBuilder();
-	for (final ExecutionCourse executionCourse : grouping.getExecutionCourses()) {
-	    if (executionCourseNames.length() > 0) {
-		executionCourseNames.append(", ");
-	    }
-	    executionCourseNames.append(executionCourse.getNome());
-	}
-	final String message = messages.getMessage("message.body.grouping.change.shift", registration.getNumber().toString(),
-		studentGroup.getGroupNumber().toString(), executionCourseNames.toString());
-	final String groupName = messages.getMessage("message.group.name", studentGroup.getGroupNumber());
-	final Collection<Recipient> recipients = Collections
-		.singletonList(new Recipient(groupName, new FixedSetGroup(recievers)));
-
-	SystemSender systemSender = rootDomainObject.getSystemSender();
-	new Message(systemSender, systemSender.getConcreteReplyTos(), recipients, messages
-		.getMessage("message.subject.grouping.change"), message, "");
-    }
 }

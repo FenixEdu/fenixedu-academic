@@ -13,42 +13,44 @@ import java.util.List;
  */
 
 public class InfoViewClassSchedule extends InfoObject {
-    protected InfoClass infoClass;
+	protected InfoClass infoClass;
 
-    protected List classLessons;
+	protected List classLessons;
 
-    public InfoViewClassSchedule() {
-    }
-
-    public InfoViewClassSchedule(InfoClass infoClass, List classLessons) {
-	setInfoClass(infoClass);
-	setClassLessons(classLessons);
-    }
-
-    public List getClassLessons() {
-	return classLessons;
-    }
-
-    public InfoClass getInfoClass() {
-	return infoClass;
-    }
-
-    public void setClassLessons(List list) {
-	classLessons = list;
-    }
-
-    public void setInfoClass(InfoClass class1) {
-	infoClass = class1;
-    }
-
-    public boolean equals(Object obj) {
-	boolean resultado = false;
-	if (obj instanceof InfoViewClassSchedule) {
-	    InfoViewClassSchedule infoViewClassSchedule = (InfoViewClassSchedule) obj;
-	    resultado = getInfoClass().equals(infoViewClassSchedule.getInfoClass())
-		    && getClassLessons().size() == infoViewClassSchedule.getClassLessons().size();
+	public InfoViewClassSchedule() {
 	}
-	return resultado;
-    }
+
+	public InfoViewClassSchedule(InfoClass infoClass, List classLessons) {
+		setInfoClass(infoClass);
+		setClassLessons(classLessons);
+	}
+
+	public List getClassLessons() {
+		return classLessons;
+	}
+
+	public InfoClass getInfoClass() {
+		return infoClass;
+	}
+
+	public void setClassLessons(List list) {
+		classLessons = list;
+	}
+
+	public void setInfoClass(InfoClass class1) {
+		infoClass = class1;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		boolean resultado = false;
+		if (obj instanceof InfoViewClassSchedule) {
+			InfoViewClassSchedule infoViewClassSchedule = (InfoViewClassSchedule) obj;
+			resultado =
+					getInfoClass().equals(infoViewClassSchedule.getInfoClass())
+							&& getClassLessons().size() == infoViewClassSchedule.getClassLessons().size();
+		}
+		return resultado;
+	}
 
 }

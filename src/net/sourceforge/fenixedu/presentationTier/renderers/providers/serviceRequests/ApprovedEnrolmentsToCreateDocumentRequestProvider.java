@@ -22,54 +22,55 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class ApprovedEnrolmentsToCreateDocumentRequestProvider implements DataProvider {
 
-    @Override
-    public Converter getConverter() {
-	return new DomainObjectKeyArrayConverter();
-    }
-
-    @Override
-    public Object provide(Object source, Object currentValue) {
-	final DocumentRequestCreateBean documentRequestCreateBean = (DocumentRequestCreateBean) source;
-
-	Set<Degree> degrees = AcademicAuthorizationGroup.getDegreesForOperation(AccessControl.getPerson(),
-		AcademicOperationType.SERVICE_REQUESTS);
-	SortedSet<Enrolment> aprovedEnrolments = new TreeSet<Enrolment>(Enrolment.COMPARATOR_BY_NAME_AND_ID);
-	for (Degree degree : degrees) {
-	    for (final Registration registration : documentRequestCreateBean.getStudent().getRegistrationsFor(degree)) {
-		aprovedEnrolments.addAll(registration.getApprovedEnrolments());
-	    }
+	@Override
+	public Converter getConverter() {
+		return new DomainObjectKeyArrayConverter();
 	}
-	documentRequestCreateBean.setEnrolments(new ArrayList<Enrolment>(aprovedEnrolments));
-	filter(aprovedEnrolments, documentRequestCreateBean);
 
-	return aprovedEnrolments;
-    }
+	@Override
+	public Object provide(Object source, Object currentValue) {
+		final DocumentRequestCreateBean documentRequestCreateBean = (DocumentRequestCreateBean) source;
 
-    private void filter(final SortedSet<Enrolment> aprovedEnrolments, DocumentRequestCreateBean documentRequestCreateBean) {
-	final CycleType cycleType = documentRequestCreateBean.getRequestedCycle();
-	if (cycleType != null) {
-	    final Iterator<Enrolment> elements = aprovedEnrolments.iterator();
-	    while (elements.hasNext()) {
-		final Enrolment enrolment = elements.next();
-		if (!hasCycleType(enrolment, cycleType) && !isSourceInAnyCycleGroup(enrolment, cycleType)) {
-		    elements.remove();
+		Set<Degree> degrees =
+				AcademicAuthorizationGroup.getDegreesForOperation(AccessControl.getPerson(),
+						AcademicOperationType.SERVICE_REQUESTS);
+		SortedSet<Enrolment> aprovedEnrolments = new TreeSet<Enrolment>(Enrolment.COMPARATOR_BY_NAME_AND_ID);
+		for (Degree degree : degrees) {
+			for (final Registration registration : documentRequestCreateBean.getStudent().getRegistrationsFor(degree)) {
+				aprovedEnrolments.addAll(registration.getApprovedEnrolments());
+			}
 		}
-	    }
-	}
-    }
+		documentRequestCreateBean.setEnrolments(new ArrayList<Enrolment>(aprovedEnrolments));
+		filter(aprovedEnrolments, documentRequestCreateBean);
 
-    private boolean hasCycleType(final Enrolment enrolment, final CycleType cycleType) {
-	CycleCurriculumGroup cycleCurriculumGroup = enrolment.getParentCycleCurriculumGroup();
-	return cycleCurriculumGroup != null && cycleCurriculumGroup.getCycleType() == cycleType;
-    }
-
-    private boolean isSourceInAnyCycleGroup(final Enrolment enrolment, final CycleType cycleType) {
-	for (final InternalEnrolmentWrapper wrapper : enrolment.getEnrolmentWrappers()) {
-	    if (wrapper.getCredits().hasAnyDismissalInCycle(cycleType)) {
-		return true;
-	    }
+		return aprovedEnrolments;
 	}
-	return false;
-    }
+
+	private void filter(final SortedSet<Enrolment> aprovedEnrolments, DocumentRequestCreateBean documentRequestCreateBean) {
+		final CycleType cycleType = documentRequestCreateBean.getRequestedCycle();
+		if (cycleType != null) {
+			final Iterator<Enrolment> elements = aprovedEnrolments.iterator();
+			while (elements.hasNext()) {
+				final Enrolment enrolment = elements.next();
+				if (!hasCycleType(enrolment, cycleType) && !isSourceInAnyCycleGroup(enrolment, cycleType)) {
+					elements.remove();
+				}
+			}
+		}
+	}
+
+	private boolean hasCycleType(final Enrolment enrolment, final CycleType cycleType) {
+		CycleCurriculumGroup cycleCurriculumGroup = enrolment.getParentCycleCurriculumGroup();
+		return cycleCurriculumGroup != null && cycleCurriculumGroup.getCycleType() == cycleType;
+	}
+
+	private boolean isSourceInAnyCycleGroup(final Enrolment enrolment, final CycleType cycleType) {
+		for (final InternalEnrolmentWrapper wrapper : enrolment.getEnrolmentWrappers()) {
+			if (wrapper.getCredits().hasAnyDismissalInCycle(cycleType)) {
+				return true;
+			}
+		}
+		return false;
+	}
 
 }

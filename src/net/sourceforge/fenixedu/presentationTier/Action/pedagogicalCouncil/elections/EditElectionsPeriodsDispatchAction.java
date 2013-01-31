@@ -19,18 +19,9 @@ import org.apache.struts.action.ActionMapping;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(module = "pedagogicalCouncil", path = "/editElectionsPeriods", scope = "request", parameter = "method")
 @Forwards(value = {
@@ -38,197 +29,198 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
 		@Forward(name = "createEditCandidacyPeriods", path = "/pedagogicalCouncil/elections/createEditCandidacyPeriods.jsp") })
 public class EditElectionsPeriodsDispatchAction extends ElectionsPeriodsManagementDispatchAction {
 
-    private static final String ELECTIONS_PACKAGE = "net.sourceforge.fenixedu.applicationTier.Servico.pedagogicalCouncil.elections";
+	private static final String ELECTIONS_PACKAGE =
+			"net.sourceforge.fenixedu.applicationTier.Servico.pedagogicalCouncil.elections";
 
-    private ActionForward prepareEditYearDelegateElectionPeriod(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response, DelegateElection election, YearMonthDay startDate,
-	    YearMonthDay endDate) throws Exception {
-	final String forwardTo = (String) getFromRequest(request, "forwardTo");
+	private ActionForward prepareEditYearDelegateElectionPeriod(ActionMapping mapping, ActionForm actionForm,
+			HttpServletRequest request, HttpServletResponse response, DelegateElection election, YearMonthDay startDate,
+			YearMonthDay endDate) throws Exception {
+		final String forwardTo = (String) getFromRequest(request, "forwardTo");
 
-	ElectionPeriodBean bean = new ElectionPeriodBean();
-	bean.setDegree(election.getDegree());
-	bean.setDegreeType(election.getDegree().getDegreeType());
-	bean.setStartDate(startDate);
-	bean.setEndDate(endDate);
+		ElectionPeriodBean bean = new ElectionPeriodBean();
+		bean.setDegree(election.getDegree());
+		bean.setDegreeType(election.getDegree().getDegreeType());
+		bean.setStartDate(startDate);
+		bean.setEndDate(endDate);
 
-	bean.setCurricularYear(((YearDelegateElection) election).getCurricularYear());
+		bean.setCurricularYear(((YearDelegateElection) election).getCurricularYear());
 
-	bean.setElection(election);
+		bean.setElection(election);
 
-	request.setAttribute("forwardTo", forwardTo);
-	request.setAttribute("electionPeriodBean", bean);
-	request.setAttribute("editElectionBean", bean);
+		request.setAttribute("forwardTo", forwardTo);
+		request.setAttribute("electionPeriodBean", bean);
+		request.setAttribute("editElectionBean", bean);
 
-	return selectDegreeType(mapping, actionForm, request, response);
-    }
-
-    public ActionForward prepareEditYearDelegateCandidacyPeriod(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
-
-	Integer electionOID = Integer.parseInt((String) getFromRequest(request, "selectedPeriod"));
-	final DelegateElection election = rootDomainObject.readDelegateElectionByOID(electionOID);
-
-	YearMonthDay startDate = election.getCandidacyStartDate();
-	YearMonthDay endDate = election.getCandidacyEndDate();
-
-	return prepareEditYearDelegateElectionPeriod(mapping, actionForm, request, response, election, startDate, endDate);
-    }
-
-    public ActionForward prepareEditYearDelegateVotingPeriod(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
-
-	Integer electionOID = Integer.parseInt((String) getFromRequest(request, "selectedPeriod"));
-	final DelegateElection election = rootDomainObject.readDelegateElectionByOID(electionOID);
-
-	YearMonthDay startDate = election.getLastVotingStartDate();
-	YearMonthDay endDate = election.getLastVotingEndDate();
-
-	return prepareEditYearDelegateElectionPeriod(mapping, actionForm, request, response, election, startDate, endDate);
-    }
-
-    public ActionForward prepareEditYearDelegateElectionsPeriods(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
-	final String forwardTo = (String) getFromRequest(request, "forwardTo");
-	final List<String> selectedDegrees = (List<String>) getCheckboxesValues(request, "selectedDegrees");
-	request.setAttribute("selectedDegrees", selectedDegrees);
-
-	ElectionPeriodBean bean = (ElectionPeriodBean) getFromRequest(request, "electionPeriodBean");
-	RenderUtils.invalidateViewState("electionPeriodBean");
-
-	if (selectedDegrees != null) {
-	    request.setAttribute("selectedDegrees", selectedDegrees);
-	    request.setAttribute("editElectionBean", bean);
+		return selectDegreeType(mapping, actionForm, request, response);
 	}
 
-	request.setAttribute("forwardTo", forwardTo);
-	request.setAttribute("electionPeriodBean", bean);
+	public ActionForward prepareEditYearDelegateCandidacyPeriod(ActionMapping mapping, ActionForm actionForm,
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-	return selectDegreeType(mapping, actionForm, request, response);
-    }
+		Integer electionOID = Integer.parseInt((String) getFromRequest(request, "selectedPeriod"));
+		final DelegateElection election = rootDomainObject.readDelegateElectionByOID(electionOID);
 
-    public ActionForward prepareDeleteYearDelegateElectionsPeriods(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
-	final String forwardTo = (String) getFromRequest(request, "forwardTo");
-	final List<String> selectedDegrees = (List<String>) getCheckboxesValues(request, "selectedDegrees");
+		YearMonthDay startDate = election.getCandidacyStartDate();
+		YearMonthDay endDate = election.getCandidacyEndDate();
 
-	ElectionPeriodBean bean = (ElectionPeriodBean) getFromRequest(request, "electionPeriodBean");
-	RenderUtils.invalidateViewState("electionPeriodBean");
-
-	if (selectedDegrees != null) {
-	    request.setAttribute("selectedDegrees", selectedDegrees);
-	    request.setAttribute("deleteElectionBean", bean);
+		return prepareEditYearDelegateElectionPeriod(mapping, actionForm, request, response, election, startDate, endDate);
 	}
 
-	if (selectedDegrees == null && request.getParameter("deleteVotingPeriod") != null) {
-	    request.setAttribute("deleteElectionBean", bean);
+	public ActionForward prepareEditYearDelegateVotingPeriod(ActionMapping mapping, ActionForm actionForm,
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+		Integer electionOID = Integer.parseInt((String) getFromRequest(request, "selectedPeriod"));
+		final DelegateElection election = rootDomainObject.readDelegateElectionByOID(electionOID);
+
+		YearMonthDay startDate = election.getLastVotingStartDate();
+		YearMonthDay endDate = election.getLastVotingEndDate();
+
+		return prepareEditYearDelegateElectionPeriod(mapping, actionForm, request, response, election, startDate, endDate);
 	}
 
-	request.setAttribute("forwardTo", forwardTo);
-	request.setAttribute("electionPeriodBean", bean);
+	public ActionForward prepareEditYearDelegateElectionsPeriods(ActionMapping mapping, ActionForm actionForm,
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
+		final String forwardTo = (String) getFromRequest(request, "forwardTo");
+		final List<String> selectedDegrees = (List<String>) getCheckboxesValues(request, "selectedDegrees");
+		request.setAttribute("selectedDegrees", selectedDegrees);
 
-	return selectDegreeType(mapping, actionForm, request, response);
-    }
+		ElectionPeriodBean bean = (ElectionPeriodBean) getFromRequest(request, "electionPeriodBean");
+		RenderUtils.invalidateViewState("electionPeriodBean");
 
-    public ActionForward editYearDelegateCandidacyPeriods(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
-
-	final List<String> selectedDegrees = (List<String>) getCheckboxesValues(request, "selectedDegrees");
-
-	ElectionPeriodBean editElectionBean = (ElectionPeriodBean) getFromRequest(request, "editElectionBean");
-	RenderUtils.invalidateViewState("editElectionBean");
-	RenderUtils.invalidateViewState("electionPeriodBean");
-
-	request.setAttribute("forwardTo", "createEditCandidacyPeriods");
-	request.setAttribute("electionPeriodBean", editElectionBean);
-
-	if (request.getParameter("deleteVotingPeriod") != null) {
-	    return prepareDeleteYearDelegateElectionsPeriods(mapping, actionForm, request, response);
-	}
-
-	if (request.getParameter("delete") != null) {
-	    if (selectedDegrees == null) {
-		DeleteDelegateCandidacyPeriod.run(editElectionBean);
-	    } else {
-		for (String degreeOID : selectedDegrees) {
-		    DeleteDelegateCandidacyPeriod.run(editElectionBean, degreeOID);
+		if (selectedDegrees != null) {
+			request.setAttribute("selectedDegrees", selectedDegrees);
+			request.setAttribute("editElectionBean", bean);
 		}
-	    }
 
-	    editElectionBean.setCurricularYear(null);
-	    editElectionBean.setStartDate(null);
-	    editElectionBean.setEndDate(null);
-	    editElectionBean.setDegree(null);
-	    editElectionBean.setElection(null);
+		request.setAttribute("forwardTo", forwardTo);
+		request.setAttribute("electionPeriodBean", bean);
 
-	    return selectDegreeType(mapping, actionForm, request, response);
+		return selectDegreeType(mapping, actionForm, request, response);
 	}
 
-	if (selectedDegrees == null) {
-	    EditDelegateCandidacyPeriod.run(editElectionBean);
-	} else {
-	    for (String degreeOID : selectedDegrees) {
-		EditDelegateCandidacyPeriod.run(editElectionBean, degreeOID);
-	    }
-	}
+	public ActionForward prepareDeleteYearDelegateElectionsPeriods(ActionMapping mapping, ActionForm actionForm,
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
+		final String forwardTo = (String) getFromRequest(request, "forwardTo");
+		final List<String> selectedDegrees = (List<String>) getCheckboxesValues(request, "selectedDegrees");
 
-	editElectionBean.setCurricularYear(null);
-	editElectionBean.setStartDate(null);
-	editElectionBean.setEndDate(null);
-	editElectionBean.setDegree(null);
-	editElectionBean.setElection(null);
+		ElectionPeriodBean bean = (ElectionPeriodBean) getFromRequest(request, "electionPeriodBean");
+		RenderUtils.invalidateViewState("electionPeriodBean");
 
-	return selectDegreeType(mapping, actionForm, request, response);
-    }
-
-    public ActionForward editYearDelegateVotingPeriods(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-
-	final List<String> selectedDegrees = (List<String>) getCheckboxesValues(request, "selectedDegrees");
-
-	ElectionPeriodBean editElectionBean = (ElectionPeriodBean) getFromRequest(request, "editElectionBean");
-	RenderUtils.invalidateViewState("editElectionBean");
-	RenderUtils.invalidateViewState("electionPeriodBean");
-
-	request.setAttribute("forwardTo", "createEditVotingPeriods");
-	request.setAttribute("electionPeriodBean", editElectionBean);
-
-	if (request.getParameter("deleteVotingPeriod") != null) {
-	    return prepareDeleteYearDelegateElectionsPeriods(mapping, actionForm, request, response);
-	}
-
-	if (request.getParameter("delete") != null) {
-	    if (selectedDegrees == null) {
-		DeleteDelegateVotingPeriod.run(editElectionBean);
-	    } else {
-		for (String degreeOID : selectedDegrees) {
-		    DeleteDelegateVotingPeriod.run(editElectionBean, degreeOID);
+		if (selectedDegrees != null) {
+			request.setAttribute("selectedDegrees", selectedDegrees);
+			request.setAttribute("deleteElectionBean", bean);
 		}
-	    }
 
-	    editElectionBean.setCurricularYear(null);
-	    editElectionBean.setStartDate(null);
-	    editElectionBean.setEndDate(null);
-	    editElectionBean.setDegree(null);
-	    editElectionBean.setElection(null);
+		if (selectedDegrees == null && request.getParameter("deleteVotingPeriod") != null) {
+			request.setAttribute("deleteElectionBean", bean);
+		}
 
-	    return selectDegreeType(mapping, actionForm, request, response);
+		request.setAttribute("forwardTo", forwardTo);
+		request.setAttribute("electionPeriodBean", bean);
+
+		return selectDegreeType(mapping, actionForm, request, response);
 	}
 
-	if (selectedDegrees == null) {
-	    EditDelegateVotingPeriod.run(editElectionBean);
-	} else {
-	    for (String degreeOID : selectedDegrees) {
-		EditDelegateVotingPeriod.run(editElectionBean, degreeOID);
-	    }
+	public ActionForward editYearDelegateCandidacyPeriods(ActionMapping mapping, ActionForm actionForm,
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+		final List<String> selectedDegrees = (List<String>) getCheckboxesValues(request, "selectedDegrees");
+
+		ElectionPeriodBean editElectionBean = (ElectionPeriodBean) getFromRequest(request, "editElectionBean");
+		RenderUtils.invalidateViewState("editElectionBean");
+		RenderUtils.invalidateViewState("electionPeriodBean");
+
+		request.setAttribute("forwardTo", "createEditCandidacyPeriods");
+		request.setAttribute("electionPeriodBean", editElectionBean);
+
+		if (request.getParameter("deleteVotingPeriod") != null) {
+			return prepareDeleteYearDelegateElectionsPeriods(mapping, actionForm, request, response);
+		}
+
+		if (request.getParameter("delete") != null) {
+			if (selectedDegrees == null) {
+				DeleteDelegateCandidacyPeriod.run(editElectionBean);
+			} else {
+				for (String degreeOID : selectedDegrees) {
+					DeleteDelegateCandidacyPeriod.run(editElectionBean, degreeOID);
+				}
+			}
+
+			editElectionBean.setCurricularYear(null);
+			editElectionBean.setStartDate(null);
+			editElectionBean.setEndDate(null);
+			editElectionBean.setDegree(null);
+			editElectionBean.setElection(null);
+
+			return selectDegreeType(mapping, actionForm, request, response);
+		}
+
+		if (selectedDegrees == null) {
+			EditDelegateCandidacyPeriod.run(editElectionBean);
+		} else {
+			for (String degreeOID : selectedDegrees) {
+				EditDelegateCandidacyPeriod.run(editElectionBean, degreeOID);
+			}
+		}
+
+		editElectionBean.setCurricularYear(null);
+		editElectionBean.setStartDate(null);
+		editElectionBean.setEndDate(null);
+		editElectionBean.setDegree(null);
+		editElectionBean.setElection(null);
+
+		return selectDegreeType(mapping, actionForm, request, response);
 	}
 
-	editElectionBean.setCurricularYear(null);
-	editElectionBean.setStartDate(null);
-	editElectionBean.setEndDate(null);
-	editElectionBean.setDegree(null);
-	editElectionBean.setElection(null);
+	public ActionForward editYearDelegateVotingPeriods(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
 
-	return selectDegreeType(mapping, actionForm, request, response);
-    }
+		final List<String> selectedDegrees = (List<String>) getCheckboxesValues(request, "selectedDegrees");
+
+		ElectionPeriodBean editElectionBean = (ElectionPeriodBean) getFromRequest(request, "editElectionBean");
+		RenderUtils.invalidateViewState("editElectionBean");
+		RenderUtils.invalidateViewState("electionPeriodBean");
+
+		request.setAttribute("forwardTo", "createEditVotingPeriods");
+		request.setAttribute("electionPeriodBean", editElectionBean);
+
+		if (request.getParameter("deleteVotingPeriod") != null) {
+			return prepareDeleteYearDelegateElectionsPeriods(mapping, actionForm, request, response);
+		}
+
+		if (request.getParameter("delete") != null) {
+			if (selectedDegrees == null) {
+				DeleteDelegateVotingPeriod.run(editElectionBean);
+			} else {
+				for (String degreeOID : selectedDegrees) {
+					DeleteDelegateVotingPeriod.run(editElectionBean, degreeOID);
+				}
+			}
+
+			editElectionBean.setCurricularYear(null);
+			editElectionBean.setStartDate(null);
+			editElectionBean.setEndDate(null);
+			editElectionBean.setDegree(null);
+			editElectionBean.setElection(null);
+
+			return selectDegreeType(mapping, actionForm, request, response);
+		}
+
+		if (selectedDegrees == null) {
+			EditDelegateVotingPeriod.run(editElectionBean);
+		} else {
+			for (String degreeOID : selectedDegrees) {
+				EditDelegateVotingPeriod.run(editElectionBean, degreeOID);
+			}
+		}
+
+		editElectionBean.setCurricularYear(null);
+		editElectionBean.setStartDate(null);
+		editElectionBean.setEndDate(null);
+		editElectionBean.setDegree(null);
+		editElectionBean.setElection(null);
+
+		return selectDegreeType(mapping, actionForm, request, response);
+	}
 
 }

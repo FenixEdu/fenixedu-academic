@@ -18,28 +18,29 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class SelectRooms extends FenixService {
 
-    @Service
-    public static Object run(InfoRoomEditor infoRoom) {
+	@Service
+	public static Object run(InfoRoomEditor infoRoom) {
 
-	List<AllocatableSpace> salas = AllocatableSpace.findActiveAllocatableSpacesBySpecifiedArguments(infoRoom.getNome(),
-		infoRoom.getEdificio(), infoRoom.getPiso(), infoRoom.getTipo(), infoRoom.getCapacidadeNormal(), infoRoom
-			.getCapacidadeExame());
+		List<AllocatableSpace> salas =
+				AllocatableSpace.findActiveAllocatableSpacesBySpecifiedArguments(infoRoom.getNome(), infoRoom.getEdificio(),
+						infoRoom.getPiso(), infoRoom.getTipo(), infoRoom.getCapacidadeNormal(), infoRoom.getCapacidadeExame());
 
-	if (salas == null)
-	    return new ArrayList();
+		if (salas == null) {
+			return new ArrayList();
+		}
 
-	Iterator iter = salas.iterator();
-	List salasView = new ArrayList();
-	AllocatableSpace sala;
+		Iterator iter = salas.iterator();
+		List salasView = new ArrayList();
+		AllocatableSpace sala;
 
-	while (iter.hasNext()) {
-	    sala = (AllocatableSpace) iter.next();
-	    if (sala.containsIdentification()) {
-		salasView.add(InfoRoom.newInfoFromDomain(sala));
-	    }
+		while (iter.hasNext()) {
+			sala = (AllocatableSpace) iter.next();
+			if (sala.containsIdentification()) {
+				salasView.add(InfoRoom.newInfoFromDomain(sala));
+			}
+		}
+
+		return salasView;
 	}
-
-	return salasView;
-    }
 
 }

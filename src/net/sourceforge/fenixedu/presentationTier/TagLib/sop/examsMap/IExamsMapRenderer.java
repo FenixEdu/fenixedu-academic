@@ -15,6 +15,6 @@ import java.util.Locale;
  *         Window>Preferences>Java>Code Generation>Code and Comments
  */
 public interface IExamsMapRenderer {
-    public abstract StringBuilder render(Locale locale);
+	public abstract StringBuilder render(Locale locale);
 
 }

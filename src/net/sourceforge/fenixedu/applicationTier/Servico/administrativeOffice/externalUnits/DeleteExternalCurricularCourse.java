@@ -6,8 +6,8 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class DeleteExternalCurricularCourse extends FenixService {
 
-    @Service
-    public static void run(final ExternalCurricularCourse externalCurricularCourse) {
-	externalCurricularCourse.delete();
-    }
+	@Service
+	public static void run(final ExternalCurricularCourse externalCurricularCourse) {
+		externalCurricularCourse.delete();
+	}
 }

@@ -23,48 +23,48 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
  * 
  */
 public class InfoReport extends DataTranferObject {
-    private List<IReportLine> lines;
+	private List<IReportLine> lines;
 
-    public List getLines() {
-	return lines;
-    }
-
-    public void setLines(List<IReportLine> lines) {
-	this.lines = lines;
-    }
-
-    public Integer getLinesSize() {
-	return Integer.valueOf(lines.size());
-    }
-
-    public void getReportToExcel(HSSFSheet sheet, ExcelStyle excelStyle, ReportType reportType) {
-	sheet.addMergedRegion(new Region(0, (short) 0, 0, (short) lines.get(0).getNumberOfColumns()));
-	for (int i = 1; i <= sheet.getLastRowNum(); i++) {
-	    sheet.addMergedRegion(new Region(i, (short) 1, i, (short) lines.get(0).getNumberOfColumns()));
-	}
-	HSSFRow row = null;
-	HSSFCell cell = null;
-	int lastRowNum = sheet.getLastRowNum() + 2;
-	if (lines != null && lines.size() > 0) {
-	    row = sheet.createRow(lastRowNum);
-	    lines.get(0).getHeaderToExcel(sheet, excelStyle, reportType);
-	    lastRowNum++;
-	    for (IReportLine reportLine : lines) {
-		reportLine.getLineToExcel(sheet, excelStyle, reportType);
-	    }
-	    lines.get(0).getTotalLineToExcel(sheet, excelStyle, reportType);
+	public List getLines() {
+		return lines;
 	}
 
-	row = sheet.createRow(sheet.getLastRowNum() + 2);
-	row.setHeight((short) 0x349);
-	cell = row.createCell(0);
-	cell.setCellValue(reportType.getReportNote());
-	cell.setCellStyle(excelStyle.getValueStyle());
-	sheet.addMergedRegion(new Region(sheet.getLastRowNum(), (short) 0, sheet.getLastRowNum(), (short) lines.get(0)
-		.getNumberOfColumns()));
-    }
+	public void setLines(List<IReportLine> lines) {
+		this.lines = lines;
+	}
 
-    protected String getString(String label) {
-	return (ResourceBundle.getBundle("resources.ProjectsManagementResources", Language.getLocale())).getString(label);
-    }
+	public Integer getLinesSize() {
+		return Integer.valueOf(lines.size());
+	}
+
+	public void getReportToExcel(HSSFSheet sheet, ExcelStyle excelStyle, ReportType reportType) {
+		sheet.addMergedRegion(new Region(0, (short) 0, 0, (short) lines.get(0).getNumberOfColumns()));
+		for (int i = 1; i <= sheet.getLastRowNum(); i++) {
+			sheet.addMergedRegion(new Region(i, (short) 1, i, (short) lines.get(0).getNumberOfColumns()));
+		}
+		HSSFRow row = null;
+		HSSFCell cell = null;
+		int lastRowNum = sheet.getLastRowNum() + 2;
+		if (lines != null && lines.size() > 0) {
+			row = sheet.createRow(lastRowNum);
+			lines.get(0).getHeaderToExcel(sheet, excelStyle, reportType);
+			lastRowNum++;
+			for (IReportLine reportLine : lines) {
+				reportLine.getLineToExcel(sheet, excelStyle, reportType);
+			}
+			lines.get(0).getTotalLineToExcel(sheet, excelStyle, reportType);
+		}
+
+		row = sheet.createRow(sheet.getLastRowNum() + 2);
+		row.setHeight((short) 0x349);
+		cell = row.createCell(0);
+		cell.setCellValue(reportType.getReportNote());
+		cell.setCellStyle(excelStyle.getValueStyle());
+		sheet.addMergedRegion(new Region(sheet.getLastRowNum(), (short) 0, sheet.getLastRowNum(), (short) lines.get(0)
+				.getNumberOfColumns()));
+	}
+
+	protected String getString(String label) {
+		return (ResourceBundle.getBundle("resources.ProjectsManagementResources", Language.getLocale())).getString(label);
+	}
 }

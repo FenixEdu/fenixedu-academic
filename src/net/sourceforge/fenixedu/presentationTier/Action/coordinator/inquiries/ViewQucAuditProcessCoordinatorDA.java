@@ -17,14 +17,15 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 @Mapping(path = "/auditResult", module = "coordinator")
-@Forwards( { @Forward(name = "viewProcessDetails", path = "/pedagogicalCouncil/inquiries/viewProcessDetailsNoAction.jsp") })
+@Forwards({ @Forward(name = "viewProcessDetails", path = "/pedagogicalCouncil/inquiries/viewProcessDetailsNoAction.jsp") })
 public class ViewQucAuditProcessCoordinatorDA extends ViewQucAuditProcessDA {
 
-    public ActionForward viewProcessDetails(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
-	DegreeCurricularPlan dcp = AbstractDomainObject.fromExternalId(request.getParameter("degreeCurricularPlanOID"));
-	request.setAttribute("degreeCurricularPlanID", dcp.getIdInternal().toString());
-	CoordinatedDegreeInfo.setCoordinatorContext(request);
-	return super.viewProcessDetails(mapping, form, request, response);
-    }
+	@Override
+	public ActionForward viewProcessDetails(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) {
+		DegreeCurricularPlan dcp = AbstractDomainObject.fromExternalId(request.getParameter("degreeCurricularPlanOID"));
+		request.setAttribute("degreeCurricularPlanID", dcp.getIdInternal().toString());
+		CoordinatedDegreeInfo.setCoordinatorContext(request);
+		return super.viewProcessDetails(mapping, form, request, response);
+	}
 }

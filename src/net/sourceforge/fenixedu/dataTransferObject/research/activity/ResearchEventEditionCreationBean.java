@@ -9,82 +9,82 @@ import org.joda.time.YearMonthDay;
 
 public class ResearchEventEditionCreationBean extends ResearchEventCreationBean implements Serializable {
 
-    private EventEdition edition;
-    private ResearchActivityParticipationRole editionRole;
-    private String eventEditionName;
-    private YearMonthDay endDate;
-    private YearMonthDay startDate;
-    private String organization;
-    private String eventLocation;
-    private String editionUrl;
+	private EventEdition edition;
+	private ResearchActivityParticipationRole editionRole;
+	private String eventEditionName;
+	private YearMonthDay endDate;
+	private YearMonthDay startDate;
+	private String organization;
+	private String eventLocation;
+	private String editionUrl;
 
-    public String getEditionUrl() {
-	return editionUrl;
-    }
+	public String getEditionUrl() {
+		return editionUrl;
+	}
 
-    public void setEditionUrl(String url) {
-	this.editionUrl = url;
-    }
+	public void setEditionUrl(String url) {
+		this.editionUrl = url;
+	}
 
-    public String getEventEditionName() {
-	return eventEditionName;
-    }
+	public String getEventEditionName() {
+		return eventEditionName;
+	}
 
-    public void setEventEditionName(String eventEditionName) {
-	this.eventEditionName = eventEditionName;
-    }
+	public void setEventEditionName(String eventEditionName) {
+		this.eventEditionName = eventEditionName;
+	}
 
-    public ResearchActivityParticipationRole getEditionRole() {
-	return editionRole;
-    }
+	public ResearchActivityParticipationRole getEditionRole() {
+		return editionRole;
+	}
 
-    public void setEditionRole(ResearchActivityParticipationRole role) {
-	this.editionRole = role;
-    }
+	public void setEditionRole(ResearchActivityParticipationRole role) {
+		this.editionRole = role;
+	}
 
-    public ResearchEventEditionCreationBean() {
-	super();
-	this.edition = null;
-    }
+	public ResearchEventEditionCreationBean() {
+		super();
+		this.edition = null;
+	}
 
-    public EventEdition getEventEdition() {
-	return this.edition;
-    }
+	public EventEdition getEventEdition() {
+		return this.edition;
+	}
 
-    public void setEventEdition(EventEdition edition) {
-	this.edition = edition;
-    }
+	public void setEventEdition(EventEdition edition) {
+		this.edition = edition;
+	}
 
-    public YearMonthDay getEndDate() {
-	return endDate;
-    }
+	public YearMonthDay getEndDate() {
+		return endDate;
+	}
 
-    public void setEndDate(YearMonthDay endDate) {
-	this.endDate = endDate;
-    }
+	public void setEndDate(YearMonthDay endDate) {
+		this.endDate = endDate;
+	}
 
-    public String getEventLocation() {
-	return eventLocation;
-    }
+	public String getEventLocation() {
+		return eventLocation;
+	}
 
-    public void setEventLocation(String eventLocation) {
-	this.eventLocation = eventLocation;
-    }
+	public void setEventLocation(String eventLocation) {
+		this.eventLocation = eventLocation;
+	}
 
-    public String getOrganization() {
-	return organization;
-    }
+	public String getOrganization() {
+		return organization;
+	}
 
-    public void setOrganization(String organization) {
-	this.organization = organization;
-    }
+	public void setOrganization(String organization) {
+		this.organization = organization;
+	}
 
-    public YearMonthDay getStartDate() {
-	return startDate;
-    }
+	public YearMonthDay getStartDate() {
+		return startDate;
+	}
 
-    public void setStartDate(YearMonthDay startDate) {
-	this.startDate = startDate;
-    }
+	public void setStartDate(YearMonthDay startDate) {
+		this.startDate = startDate;
+	}
 
 }

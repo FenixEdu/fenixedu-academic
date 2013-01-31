@@ -8,16 +8,16 @@ import pt.ist.fenixWebFramework.renderers.converters.EnumArrayConverter;
 
 public class SearchPhdMigrationProcessBeanFilterMigratedProcessesProvider implements DataProvider {
 
-    @Override
-    public Object provide(Object source, Object currentValue) {
-	return Arrays.asList(net.sourceforge.fenixedu.domain.phd.migration.SearchPhdMigrationProcessBean.FilterMigratedProcesses
-		.values());
-    }
+	@Override
+	public Object provide(Object source, Object currentValue) {
+		return Arrays.asList(net.sourceforge.fenixedu.domain.phd.migration.SearchPhdMigrationProcessBean.FilterMigratedProcesses
+				.values());
+	}
 
-    @Override
-    public Converter getConverter() {
-	return new EnumArrayConverter(
-		net.sourceforge.fenixedu.domain.phd.migration.SearchPhdMigrationProcessBean.FilterMigratedProcesses.class);
-    }
+	@Override
+	public Converter getConverter() {
+		return new EnumArrayConverter(
+				net.sourceforge.fenixedu.domain.phd.migration.SearchPhdMigrationProcessBean.FilterMigratedProcesses.class);
+	}
 
 }

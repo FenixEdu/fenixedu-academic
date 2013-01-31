@@ -9,14 +9,14 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitName;
 
 public class SearchAllUnits extends SearchParties {
-    @Override
-    protected Collection search(String value, int size) {
-	Collection<UnitName> unitNames = UnitName.find(value, size);
-	List<Unit> resultUnits = new ArrayList<Unit>();
-	for (UnitName name : unitNames) {
-	    resultUnits.add(name.getUnit());
+	@Override
+	protected Collection search(String value, int size) {
+		Collection<UnitName> unitNames = UnitName.find(value, size);
+		List<Unit> resultUnits = new ArrayList<Unit>();
+		for (UnitName name : unitNames) {
+			resultUnits.add(name.getUnit());
+		}
+		return resultUnits;
 	}
-	return resultUnits;
-    }
 
 }

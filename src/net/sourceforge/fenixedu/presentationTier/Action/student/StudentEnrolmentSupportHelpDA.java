@@ -17,45 +17,39 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(path = "/exceptionHandlingAction", module = "student")
-@Forwards( { @Forward(name = "supportHelpInquiry", path = "/supportHelpInquiry.jsp", contextRelative = true, useTile = false),
-	@Forward(name = "showErrorPage", path = "/exception/errorRegistered.jsp", contextRelative = true, useTile = false)
+@Forwards({ @Forward(name = "supportHelpInquiry", path = "/supportHelpInquiry.jsp", contextRelative = true, useTile = false),
+		@Forward(name = "showErrorPage", path = "/exception/errorRegistered.jsp", contextRelative = true, useTile = false)
 
 })
 public class StudentEnrolmentSupportHelpDA extends ExceptionHandlingAction {
 
-    @Override
-    public final ActionForward prepareSupportHelp(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
+	@Override
+	public final ActionForward prepareSupportHelp(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
 
-	final SupportRequestBean requestBean = new SupportRequestBean();
-	requestBean.setResponseEmail(getLoggedPerson(request).getInstitutionalOrDefaultEmailAddressValue());
-	requestBean.setRequestContext(rootDomainObject.readContentByOID(Integer.valueOf(request.getParameter("contextId"))));
+		final SupportRequestBean requestBean = new SupportRequestBean();
+		requestBean.setResponseEmail(getLoggedPerson(request).getInstitutionalOrDefaultEmailAddressValue());
+		requestBean.setRequestContext(rootDomainObject.readContentByOID(Integer.valueOf(request.getParameter("contextId"))));
 
-	final ResourceBundle bundle = ResourceBundle.getBundle("resources.ApplicationResources", Language.getLocale());
-	final ExecutionSemester executionSemester = ExecutionSemester.readActualExecutionSemester();
-	requestBean.setSubject(bundle.getString("label.student.enrolments") + " " + executionSemester.getQualifiedName());
+		final ResourceBundle bundle = ResourceBundle.getBundle("resources.ApplicationResources", Language.getLocale());
+		final ExecutionSemester executionSemester = ExecutionSemester.readActualExecutionSemester();
+		requestBean.setSubject(bundle.getString("label.student.enrolments") + " " + executionSemester.getQualifiedName());
 
-	request.setAttribute("requestBean", requestBean);
-	return mapping.findForward("supportHelpInquiry");
-    }
+		request.setAttribute("requestBean", requestBean);
+		return mapping.findForward("supportHelpInquiry");
+	}
 
-    @Override
-    protected ActionForward getActionForward(ActionMapping mapping) {
-	return mapping.findForward("showErrorPage");
-    }
+	@Override
+	protected ActionForward getActionForward(ActionMapping mapping) {
+		return mapping.findForward("showErrorPage");
+	}
 
-    @Override
-    protected String getSendToEmailAddress(HttpServletRequest request, SupportRequestBean requestBean) {
-	final ResourceBundle bundle = ResourceBundle.getBundle("resources.GlobalResources", Language.getLocale());
-	return bundle.getString("support.enrolments.mail");
-    }
+	@Override
+	protected String getSendToEmailAddress(HttpServletRequest request, SupportRequestBean requestBean) {
+		final ResourceBundle bundle = ResourceBundle.getBundle("resources.GlobalResources", Language.getLocale());
+		return bundle.getString("support.enrolments.mail");
+	}
 
 }

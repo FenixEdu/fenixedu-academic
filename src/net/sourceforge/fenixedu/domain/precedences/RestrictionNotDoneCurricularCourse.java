@@ -15,38 +15,40 @@ import org.apache.commons.collections.Transformer;
 
 public class RestrictionNotDoneCurricularCourse extends RestrictionNotDoneCurricularCourse_Base {
 
-    public RestrictionNotDoneCurricularCourse() {
-	super();
-    }
-
-    public RestrictionNotDoneCurricularCourse(Integer number, Precedence precedence, CurricularCourse precedentCurricularCourse) {
-	super();
-
-	setPrecedence(precedence);
-	setPrecedentCurricularCourse(precedentCurricularCourse);
-    }
-
-    public CurricularCourseEnrollmentType evaluate(PrecedenceContext precedenceContext) {
-
-	if (!precedenceContext.getStudentCurricularPlan().isCurricularCourseApproved(this.getPrecedentCurricularCourse())) {
-	    return CurricularCourseEnrollmentType.DEFINITIVE;
+	public RestrictionNotDoneCurricularCourse() {
+		super();
 	}
 
-	List enrollmentsWithEnrolledStateInPreviousExecutionPeriod = precedenceContext.getStudentCurricularPlan()
-		.getAllStudentEnrolledEnrollmentsInExecutionPeriod(
-			precedenceContext.getExecutionPeriod().getPreviousExecutionPeriod());
+	public RestrictionNotDoneCurricularCourse(Integer number, Precedence precedence, CurricularCourse precedentCurricularCourse) {
+		super();
 
-	List result = (List) CollectionUtils.collect(enrollmentsWithEnrolledStateInPreviousExecutionPeriod, new Transformer() {
-	    public Object transform(Object obj) {
-		Enrolment enrollment = (Enrolment) obj;
-		return enrollment.getCurricularCourse();
-	    }
-	});
-
-	if (result.contains(this.getPrecedentCurricularCourse())) {
-	    return CurricularCourseEnrollmentType.TEMPORARY;
+		setPrecedence(precedence);
+		setPrecedentCurricularCourse(precedentCurricularCourse);
 	}
 
-	return CurricularCourseEnrollmentType.NOT_ALLOWED;
-    }
+	@Override
+	public CurricularCourseEnrollmentType evaluate(PrecedenceContext precedenceContext) {
+
+		if (!precedenceContext.getStudentCurricularPlan().isCurricularCourseApproved(this.getPrecedentCurricularCourse())) {
+			return CurricularCourseEnrollmentType.DEFINITIVE;
+		}
+
+		List enrollmentsWithEnrolledStateInPreviousExecutionPeriod =
+				precedenceContext.getStudentCurricularPlan().getAllStudentEnrolledEnrollmentsInExecutionPeriod(
+						precedenceContext.getExecutionPeriod().getPreviousExecutionPeriod());
+
+		List result = (List) CollectionUtils.collect(enrollmentsWithEnrolledStateInPreviousExecutionPeriod, new Transformer() {
+			@Override
+			public Object transform(Object obj) {
+				Enrolment enrollment = (Enrolment) obj;
+				return enrollment.getCurricularCourse();
+			}
+		});
+
+		if (result.contains(this.getPrecedentCurricularCourse())) {
+			return CurricularCourseEnrollmentType.TEMPORARY;
+		}
+
+		return CurricularCourseEnrollmentType.NOT_ALLOWED;
+	}
 }

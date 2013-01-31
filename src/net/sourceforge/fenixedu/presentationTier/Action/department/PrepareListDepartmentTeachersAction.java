@@ -17,57 +17,55 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.security.UserView;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
  * @author jpvl
  */
-@Mapping(module = "departmentAdmOffice", path = "/prepareListDepartmentTeachers", input = "/index.do", attribute = "searchTeachersDepartmentForm", formBean = "searchTeachersDepartmentForm", scope = "request")
+@Mapping(
+		module = "departmentAdmOffice",
+		path = "/prepareListDepartmentTeachers",
+		input = "/index.do",
+		attribute = "searchTeachersDepartmentForm",
+		formBean = "searchTeachersDepartmentForm",
+		scope = "request")
 @Forwards(value = { @Forward(name = "successfull-prepare", path = "/listDepartmentTeachers.do?method=doSearch") })
 public class PrepareListDepartmentTeachersAction extends Action {
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @seeorg.apache.struts.action.Action#execute(org.apache.struts.action.
-     * ActionMapping, org.apache.struts.action.ActionForm,
-     * javax.servlet.http.HttpServletRequest,
-     * javax.servlet.http.HttpServletResponse)
-     */
-    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-	    throws Exception {
-	IUserView userView = UserView.getUser();
-	InfoDepartment infoDepartment = (InfoDepartment) ReadDepartmentByUser.run(userView.getUtilizador());
-	request.setAttribute("infoDepartment", infoDepartment);
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @seeorg.apache.struts.action.Action#execute(org.apache.struts.action.
+	 * ActionMapping, org.apache.struts.action.ActionForm,
+	 * javax.servlet.http.HttpServletRequest,
+	 * javax.servlet.http.HttpServletResponse)
+	 */
+	@Override
+	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+		IUserView userView = UserView.getUser();
+		InfoDepartment infoDepartment = ReadDepartmentByUser.run(userView.getUtilizador());
+		request.setAttribute("infoDepartment", infoDepartment);
 
-	ActionForward actionForward = buildActionForward(mapping.findForward("successfull-prepare"), infoDepartment);
-	return actionForward;
-    }
+		ActionForward actionForward = buildActionForward(mapping.findForward("successfull-prepare"), infoDepartment);
+		return actionForward;
+	}
 
-    /**
-     * @param forward
-     * @param infoDepartment
-     * @return
-     */
-    private ActionForward buildActionForward(ActionForward forward, InfoDepartment infoDepartment) {
-	ActionForward forwardBuilded = new ActionForward();
-	forwardBuilded.setName(forward.getName());
-	forwardBuilded.setContextRelative(forward.getContextRelative());
-	forwardBuilded.setRedirect(forward.getRedirect());
-	StringBuilder path = new StringBuilder(forward.getPath());
-	path.append("&idInternal=").append(infoDepartment.getIdInternal());
-	forwardBuilded.setPath(path.toString());
-	return forwardBuilded;
-    }
+	/**
+	 * @param forward
+	 * @param infoDepartment
+	 * @return
+	 */
+	private ActionForward buildActionForward(ActionForward forward, InfoDepartment infoDepartment) {
+		ActionForward forwardBuilded = new ActionForward();
+		forwardBuilded.setName(forward.getName());
+		forwardBuilded.setContextRelative(forward.getContextRelative());
+		forwardBuilded.setRedirect(forward.getRedirect());
+		StringBuilder path = new StringBuilder(forward.getPath());
+		path.append("&idInternal=").append(infoDepartment.getIdInternal());
+		forwardBuilded.setPath(path.toString());
+		return forwardBuilded;
+	}
 }

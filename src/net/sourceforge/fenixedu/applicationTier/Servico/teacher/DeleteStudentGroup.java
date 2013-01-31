@@ -15,16 +15,16 @@ import net.sourceforge.fenixedu.domain.StudentGroup;
  */
 public class DeleteStudentGroup extends FenixService {
 
-    public Boolean run(Integer executionCourseCode, Integer studentGroupCode) throws FenixServiceException {
-	StudentGroup deletedStudentGroup = rootDomainObject.readStudentGroupByOID(studentGroupCode);
+	public Boolean run(Integer executionCourseCode, Integer studentGroupCode) throws FenixServiceException {
+		StudentGroup deletedStudentGroup = rootDomainObject.readStudentGroupByOID(studentGroupCode);
 
-	if (deletedStudentGroup == null) {
-	    throw new ExistingServiceException();
+		if (deletedStudentGroup == null) {
+			throw new ExistingServiceException();
+		}
+
+		deletedStudentGroup.delete();
+
+		return Boolean.TRUE;
 	}
-
-	deletedStudentGroup.delete();
-
-	return Boolean.TRUE;
-    }
 
 }

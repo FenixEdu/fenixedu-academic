@@ -21,28 +21,31 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
  * @author Tânia Pousão Created on 6/Out/2003
  */
 @Mapping(module = "masterDegreeAdministrativeOffice", path = "/showStudentCurricularCoursePlan", scope = "request")
-@Forwards(value = { @Forward(name = "ShowStudentCurricularCoursePlan", path = "df.page.showStudentCurricularCoursePlan", tileProperties = @Tile(title = "teste75")) })
+@Forwards(value = { @Forward(
+		name = "ShowStudentCurricularCoursePlan",
+		path = "df.page.showStudentCurricularCoursePlan",
+		tileProperties = @Tile(title = "teste75")) })
 public class ShowStudentCurricularCoursePlanAction extends FenixDispatchAction {
 
-    @Override
-    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-	    throws Exception {
+	@Override
+	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
 
-	Integer studentCurricularPlanId = null;
-	String studentCurricularPlanIdString = request.getParameter("studentCurricularPlanId");
-	if (studentCurricularPlanIdString == null) {
-	    studentCurricularPlanIdString = (String) request.getAttribute("studentCurricularPlanId");
+		Integer studentCurricularPlanId = null;
+		String studentCurricularPlanIdString = request.getParameter("studentCurricularPlanId");
+		if (studentCurricularPlanIdString == null) {
+			studentCurricularPlanIdString = (String) request.getAttribute("studentCurricularPlanId");
+		}
+		studentCurricularPlanId = new Integer(studentCurricularPlanIdString);
+
+		IUserView userView = getUserView(request);
+
+		InfoStudentCurricularPlan infoStudentCurricularPlan =
+				(InfoStudentCurricularPlan) ReadPosGradStudentCurricularPlanById.run(studentCurricularPlanId);
+
+		request.setAttribute("student", infoStudentCurricularPlan.getInfoStudent());
+		request.setAttribute("studentCurricularPlan", infoStudentCurricularPlan);
+
+		return mapping.findForward("ShowStudentCurricularCoursePlan");
 	}
-	studentCurricularPlanId = new Integer(studentCurricularPlanIdString);
-
-	IUserView userView = getUserView(request);
-
-	InfoStudentCurricularPlan infoStudentCurricularPlan = (InfoStudentCurricularPlan) ReadPosGradStudentCurricularPlanById
-		.run(studentCurricularPlanId);
-
-	request.setAttribute("student", infoStudentCurricularPlan.getInfoStudent());
-	request.setAttribute("studentCurricularPlan", infoStudentCurricularPlan);
-
-	return mapping.findForward("ShowStudentCurricularCoursePlan");
-    }
 }

@@ -54,595 +54,596 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class PhdMigrationIndividualProcessData extends PhdMigrationIndividualProcessData_Base {
 
-    private transient PhdMigrationIndividualProcessDataBean processBean;
+	private transient PhdMigrationIndividualProcessDataBean processBean;
 
-    private PhdMigrationIndividualProcessData() {
-	super();
-    }
-
-    protected PhdMigrationIndividualProcessData(String data) {
-	setData(data);
-	setMigrationStatus(PhdMigrationProcessStateType.NOT_MIGRATED);
-    }
-
-    public boolean hasProcessBean() {
-	return processBean != null;
-    }
-
-    public PhdMigrationIndividualProcessDataBean getProcessBean() {
-	if (hasProcessBean()) {
-	    return processBean;
+	private PhdMigrationIndividualProcessData() {
+		super();
 	}
 
-	processBean = new PhdMigrationIndividualProcessDataBean(this);
-	return processBean;
-    }
-
-    public void setProcessBean(PhdMigrationIndividualProcessDataBean processBean) {
-	this.processBean = processBean;
-    }
-
-    public void parse() {
-	getProcessBean();
-    }
-
-    public void parseAndSetNumber() {
-	final PhdMigrationIndividualProcessDataBean personalBean = getProcessBean();
-	setNumber(processBean.getProcessNumber());
-    }
-
-    public boolean hasMigrationParseLog() {
-	return !StringUtils.isEmpty(getMigrationParseLog());
-    }
-
-    public String getMigrationException() {
-	if (!hasMigrationParseLog()) {
-	    return null;
+	protected PhdMigrationIndividualProcessData(String data) {
+		setData(data);
+		setMigrationStatus(PhdMigrationProcessStateType.NOT_MIGRATED);
 	}
 
-	String exceptionLine = getMigrationParseLog();
-	int messageStartIdx = exceptionLine.indexOf(" ");
-	if (messageStartIdx == -1) {
-	    return exceptionLine;
-	}
-	return exceptionLine.substring(0, exceptionLine.indexOf(" ") - 1);
-    }
-
-    public String getMigrationExceptionMessage() {
-	if (!hasMigrationParseLog()) {
-	    return null;
+	public boolean hasProcessBean() {
+		return processBean != null;
 	}
 
-	String exceptionLine = getMigrationParseLog();
-	int messageStartIdx = exceptionLine.indexOf(" ");
-	if (messageStartIdx == -1) {
-	    return null;
-	}
-	return exceptionLine.substring(exceptionLine.indexOf(" "));
-    }
+	public PhdMigrationIndividualProcessDataBean getProcessBean() {
+		if (hasProcessBean()) {
+			return processBean;
+		}
 
-    public String getMigrationExceptionMessageFromBundle() {
-	final String exceptionString = getMigrationException();
-
-	if (exceptionString == null) {
-	    return null;
+		processBean = new PhdMigrationIndividualProcessDataBean(this);
+		return processBean;
 	}
 
-	final String messageString = getMigrationExceptionMessage();
-	String errorTranslated = null;
+	public void setProcessBean(PhdMigrationIndividualProcessDataBean processBean) {
+		this.processBean = processBean;
+	}
 
-	/*
-	 * If the exception was a DomainException, we try to fetch the error
-	 * message from the bundle
-	 */
-	if (exceptionString.contains(DomainException.class.getSimpleName())) {
-	    if (messageString == null) {
-		errorTranslated = exceptionString + " " + messageString;
-	    } else {
+	public void parse() {
+		getProcessBean();
+	}
+
+	public void parseAndSetNumber() {
+		final PhdMigrationIndividualProcessDataBean personalBean = getProcessBean();
+		setNumber(processBean.getProcessNumber());
+	}
+
+	public boolean hasMigrationParseLog() {
+		return !StringUtils.isEmpty(getMigrationParseLog());
+	}
+
+	public String getMigrationException() {
+		if (!hasMigrationParseLog()) {
+			return null;
+		}
+
+		String exceptionLine = getMigrationParseLog();
+		int messageStartIdx = exceptionLine.indexOf(" ");
+		if (messageStartIdx == -1) {
+			return exceptionLine;
+		}
+		return exceptionLine.substring(0, exceptionLine.indexOf(" ") - 1);
+	}
+
+	public String getMigrationExceptionMessage() {
+		if (!hasMigrationParseLog()) {
+			return null;
+		}
+
+		String exceptionLine = getMigrationParseLog();
+		int messageStartIdx = exceptionLine.indexOf(" ");
+		if (messageStartIdx == -1) {
+			return null;
+		}
+		return exceptionLine.substring(exceptionLine.indexOf(" "));
+	}
+
+	public String getMigrationExceptionMessageFromBundle() {
+		final String exceptionString = getMigrationException();
+
+		if (exceptionString == null) {
+			return null;
+		}
+
+		final String messageString = getMigrationExceptionMessage();
+		String errorTranslated = null;
+
+		/*
+		 * If the exception was a DomainException, we try to fetch the error
+		 * message from the bundle
+		 */
+		if (exceptionString.contains(DomainException.class.getSimpleName())) {
+			if (messageString == null) {
+				errorTranslated = exceptionString + " " + messageString;
+			} else {
+				try {
+					errorTranslated =
+							ResourceBundle.getBundle("resources.ApplicationResources", Language.getLocale()).getString(
+									messageString);
+				} catch (Exception e) {
+					errorTranslated = exceptionString + " " + messageString;
+				}
+			}
+			return errorTranslated;
+		}
+
+		/*
+		 * Else, it must have been a Migration exception, which may have
+		 * additional information in the messageString
+		 */
 		try {
-		    errorTranslated = ResourceBundle.getBundle("resources.ApplicationResources", Language.getLocale()).getString(
-			    messageString);
+			errorTranslated =
+					ResourceBundle.getBundle("resources.PhdResources", Language.getLocale()).getString(
+							"label.phd.migration.exception." + exceptionString);
 		} catch (Exception e) {
-		    errorTranslated = exceptionString + " " + messageString;
+			return exceptionString + " " + messageString;
 		}
-	    }
-	    return errorTranslated;
-	}
-	
-	/*
-	 * Else, it must have been a Migration exception, which may have
-	 * additional information in the messageString
-	 */
-	try {
-	    errorTranslated = ResourceBundle.getBundle("resources.PhdResources", Language.getLocale()).getString(
-		"label.phd.migration.exception." + exceptionString);
-	} catch (Exception e) {
-	    return exceptionString + " " + messageString;
+
+		errorTranslated += " - " + getMigrationExceptionMessage();
+
+		return errorTranslated;
 	}
 
-	errorTranslated += " - " + getMigrationExceptionMessage();
-	
-	return errorTranslated;
-    }
-
-    public Person getGuidingPerson() {
-	if (getProcessBean().getGuiderNumber().contains("E")) {
-	    throw new PersonNotFoundException();
-	}
-
-	return getPerson(getProcessBean().getGuiderNumber());
-    }
-
-    public Person getAssistantGuidingPerson() {
-	if (getProcessBean().getAssistantGuiderNumber().contains("E")) {
-	    throw new PersonNotFoundException();
-	}
-
-	return getPerson(getProcessBean().getAssistantGuiderNumber());
-    }
-
-    public Person getPerson(String identification) {
-	Teacher teacher = Employee.readByNumber(Integer.valueOf(identification)).getPerson().getTeacher();
-
-	if (teacher == null) {
-	    throw new PersonNotFoundException();
-	}
-
-	return teacher.getPerson();
-    }
-
-    public boolean isMigratedToIndividualProgramProcess() {
-	return getMigratedIndividualProgramProcess() != null;
-    }
-
-    public boolean isNotMigrated() {
-	return getMigrationStatus().equals(PhdMigrationProcessStateType.NOT_MIGRATED)
-		&& getMigratedIndividualProgramProcess() == null;
-    }
-
-    public boolean isRegistered() {
-	if (hasPhdMigrationIndividualPersonalData()) {
-	    try {
-		if (getPhdMigrationIndividualPersonalData().isPersonRegisteredOnFenix()) {
-		    return true;
+	public Person getGuidingPerson() {
+		if (getProcessBean().getGuiderNumber().contains("E")) {
+			throw new PersonNotFoundException();
 		}
-	    } catch (PhdMigrationException e) {
-	    }
-	}
-	return false;
-    }
 
-    public boolean isNotRegisteredAndNoSimilarsExist() {
-	if (hasPhdMigrationIndividualPersonalData()) {
-	    try {
-		if (!getPhdMigrationIndividualPersonalData().isPersonRegisteredOnFenix()) {
-		    return true;
+		return getPerson(getProcessBean().getGuiderNumber());
+	}
+
+	public Person getAssistantGuidingPerson() {
+		if (getProcessBean().getAssistantGuiderNumber().contains("E")) {
+			throw new PersonNotFoundException();
 		}
-	    } catch (PhdMigrationException e) {
-	    }
-	}
-	return false;
-    }
 
-    public boolean isThereAnySimilarRegistration() {
-	if (hasPhdMigrationIndividualPersonalData()) {
-	    try {
-		getPhdMigrationIndividualPersonalData().isPersonRegisteredOnFenix();
-	    } catch (PhdMigrationException e) {
-		return true;
-	    }
-	}
-	return false;
-    }
-
-    public PhdIndividualProgramProcess getMigratedIndividualProgramProcess() {
-
-	final SearchPhdIndividualProgramProcessBean searchBean = new SearchPhdIndividualProgramProcessBean();
-	searchBean.setFilterPhdPrograms(false);
-	searchBean.setFilterPhdProcesses(false);
-
-	for (final PhdIndividualProgramProcess process : PhdIndividualProgramProcess.search(searchBean.getPredicates())) {
-	    if (process.getPhdStudentNumber() != null && process.getPhdStudentNumber().equals(getNumber())) {
-		return process;
-	    }
+		return getPerson(getProcessBean().getAssistantGuiderNumber());
 	}
 
-	return null;
-    }
+	public Person getPerson(String identification) {
+		Teacher teacher = Employee.readByNumber(Integer.valueOf(identification)).getPerson().getTeacher();
 
-    public boolean hasExistingIndividualProgramProcess() {
-	return getPhdIndividualProgramProcess() != null;
-    }
+		if (teacher == null) {
+			throw new PersonNotFoundException();
+		}
 
-    public PhdIndividualProgramProcess getPhdIndividualProgramProcess() {
-	final PhdMigrationIndividualPersonalData personalData = getPhdMigrationIndividualPersonalData();
-
-	if (personalData == null) {
-	    return null;
+		return teacher.getPerson();
 	}
 
-	if (!personalData.isPersonRegisteredOnFenix()) {
-	    return null;
+	public boolean isMigratedToIndividualProgramProcess() {
+		return getMigratedIndividualProgramProcess() != null;
 	}
 
-	final Person student = personalData.getPerson();
-
-	if (student.hasAnyPhdIndividualProgramProcesses()) {
-	    return student.getPhdIndividualProgramProcesses().get(0);
+	public boolean isNotMigrated() {
+		return getMigrationStatus().equals(PhdMigrationProcessStateType.NOT_MIGRATED)
+				&& getMigratedIndividualProgramProcess() == null;
 	}
 
-	return null;
-    }
-
-    public ExecutionYear getExecutionYear() {
-	final LocalDate date = retrieveDateForExecutionYear();
-	if (date != null) {
-	    return ExecutionYear.readByDateTime(date);
-	} else {
-	    return null;
-	}
-    }
-
-    private LocalDate retrieveDateForExecutionYear() {
-	if (getProcessBean().getStartDevelopmentDate() != null) {
-	    return getProcessBean().getStartDevelopmentDate();
-	}
-	if (getProcessBean().getRatificationDate() != null) {
-	    return getProcessBean().getRatificationDate();
-	}
-	if (getProcessBean().getStartProcessDate() != null) {
-	    return getProcessBean().getStartProcessDate();
-	}
-	return null;
-    }
-
-    public PhdMigrationProcessStateType estimatedFinalMigrationStatus() {
-	if (isProcessCanceled()) {
-	    return PhdMigrationProcessStateType.CANCELED;
+	public boolean isRegistered() {
+		if (hasPhdMigrationIndividualPersonalData()) {
+			try {
+				if (getPhdMigrationIndividualPersonalData().isPersonRegisteredOnFenix()) {
+					return true;
+				}
+			} catch (PhdMigrationException e) {
+			}
+		}
+		return false;
 	}
 
-	if (getProcessBean().getEdictDate() != null || getProcessBean().getClassification() != null) {
-	    return PhdMigrationProcessStateType.CONCLUDED;
+	public boolean isNotRegisteredAndNoSimilarsExist() {
+		if (hasPhdMigrationIndividualPersonalData()) {
+			try {
+				if (!getPhdMigrationIndividualPersonalData().isPersonRegisteredOnFenix()) {
+					return true;
+				}
+			} catch (PhdMigrationException e) {
+			}
+		}
+		return false;
 	}
 
-	if (getProcessBean().getFirstDiscussionDate() != null || getProcessBean().getSecondDiscussionDate() != null) {
-	    return PhdMigrationProcessStateType.COMPLETED_THESIS_DISCUSSION;
+	public boolean isThereAnySimilarRegistration() {
+		if (hasPhdMigrationIndividualPersonalData()) {
+			try {
+				getPhdMigrationIndividualPersonalData().isPersonRegisteredOnFenix();
+			} catch (PhdMigrationException e) {
+				return true;
+			}
+		}
+		return false;
 	}
 
-	if (getProcessBean().getRequirementDate() != null) {
-	    return PhdMigrationProcessStateType.REQUESTED_THESIS_DISCUSSION;
+	public PhdIndividualProgramProcess getMigratedIndividualProgramProcess() {
+
+		final SearchPhdIndividualProgramProcessBean searchBean = new SearchPhdIndividualProgramProcessBean();
+		searchBean.setFilterPhdPrograms(false);
+		searchBean.setFilterPhdProcesses(false);
+
+		for (final PhdIndividualProgramProcess process : PhdIndividualProgramProcess.search(searchBean.getPredicates())) {
+			if (process.getPhdStudentNumber() != null && process.getPhdStudentNumber().equals(getNumber())) {
+				return process;
+			}
+		}
+
+		return null;
 	}
 
-	if (getProcessBean().getStartDevelopmentDate() != null || getProcessBean().getRatificationDate() != null) {
-	    return PhdMigrationProcessStateType.WORK_DEVELOPMENT;
+	public boolean hasExistingIndividualProgramProcess() {
+		return getPhdIndividualProgramProcess() != null;
 	}
 
-	if (getProcessBean().getRatificationDate() != null) {
-	    return PhdMigrationProcessStateType.CANDIDACY_RATIFIED;
+	public PhdIndividualProgramProcess getPhdIndividualProgramProcess() {
+		final PhdMigrationIndividualPersonalData personalData = getPhdMigrationIndividualPersonalData();
+
+		if (personalData == null) {
+			return null;
+		}
+
+		if (!personalData.isPersonRegisteredOnFenix()) {
+			return null;
+		}
+
+		final Person student = personalData.getPerson();
+
+		if (student.hasAnyPhdIndividualProgramProcesses()) {
+			return student.getPhdIndividualProgramProcesses().get(0);
+		}
+
+		return null;
 	}
 
-	if (getProcessBean().getStartProcessDate() != null) {
-	    return PhdMigrationProcessStateType.CANDIDACY_CREATED;
+	public ExecutionYear getExecutionYear() {
+		final LocalDate date = retrieveDateForExecutionYear();
+		if (date != null) {
+			return ExecutionYear.readByDateTime(date);
+		} else {
+			return null;
+		}
 	}
 
-	return PhdMigrationProcessStateType.NOT_MIGRATED;
-    }
-
-    public boolean possibleToCompleteNextState() {
-	final PhdMigrationProcessStateType activeState = getMigrationStatus();
-	
-	if(activeState.equals(PhdMigrationProcessStateType.CANCELED) || activeState.equals(PhdMigrationProcessStateType.CONCLUDED)) {
-	    return false;
-	}
-	
-	if (getProcessBean().getClassification() != null) {
-	    return true;
-	}
-
-	if (activeState.equals(PhdMigrationProcessStateType.COMPLETED_THESIS_DISCUSSION)) {
-	    if (getProcessBean().getEdictDate() != null) {
-		return true;
-	    }
+	private LocalDate retrieveDateForExecutionYear() {
+		if (getProcessBean().getStartDevelopmentDate() != null) {
+			return getProcessBean().getStartDevelopmentDate();
+		}
+		if (getProcessBean().getRatificationDate() != null) {
+			return getProcessBean().getRatificationDate();
+		}
+		if (getProcessBean().getStartProcessDate() != null) {
+			return getProcessBean().getStartProcessDate();
+		}
+		return null;
 	}
 
-	if (activeState.equals(PhdMigrationProcessStateType.REQUESTED_THESIS_DISCUSSION)) {
-	    if (getProcessBean().getFirstDiscussionDate() != null || getProcessBean().getSecondDiscussionDate() != null) {
-		return true;
-	    }
-	}
-	
-	if(activeState.equals(PhdMigrationProcessStateType.WORK_DEVELOPMENT)) {
-	    if (getProcessBean().getRequirementDate() != null) {
-		return true;
-	    }
-	}
-	
-	if (activeState.equals(PhdMigrationProcessStateType.CANDIDACY_RATIFIED)) {
-	    if (getProcessBean().getStartDevelopmentDate() != null || getProcessBean().getRatificationDate() != null) {
-		return true;
-	    }
-	}
+	public PhdMigrationProcessStateType estimatedFinalMigrationStatus() {
+		if (isProcessCanceled()) {
+			return PhdMigrationProcessStateType.CANCELED;
+		}
 
-	if(activeState.equals(PhdMigrationProcessStateType.CANDIDACY_CREATED)) {
-	    if (getProcessBean().getRatificationDate() != null) {
-		return true;
-	    }
-	}
-	
-	if(activeState.equals(PhdMigrationProcessStateType.NOT_MIGRATED)) {
-	    if (getProcessBean().getStartProcessDate() != null) {
-		return true;
-	    }
-	}
-	
-	return false;
-    }
+		if (getProcessBean().getEdictDate() != null || getProcessBean().getClassification() != null) {
+			return PhdMigrationProcessStateType.CONCLUDED;
+		}
 
-    private boolean isProcessCanceled() {
-	return getProcessBean().getAnnulmentDate() != null;
-    }
+		if (getProcessBean().getFirstDiscussionDate() != null || getProcessBean().getSecondDiscussionDate() != null) {
+			return PhdMigrationProcessStateType.COMPLETED_THESIS_DISCUSSION;
+		}
 
-    @Service
-    public Boolean proceedWithMigration(IUserView userView) {
+		if (getProcessBean().getRequirementDate() != null) {
+			return PhdMigrationProcessStateType.REQUESTED_THESIS_DISCUSSION;
+		}
 
-	PhdMigrationProcessStateType activeState;
-	PhdIndividualProgramProcess individualProcess = null;
+		if (getProcessBean().getStartDevelopmentDate() != null || getProcessBean().getRatificationDate() != null) {
+			return PhdMigrationProcessStateType.WORK_DEVELOPMENT;
+		}
 
-	boolean returnVal = false;
+		if (getProcessBean().getRatificationDate() != null) {
+			return PhdMigrationProcessStateType.CANDIDACY_RATIFIED;
+		}
 
-	while (possibleToCompleteNextState()) {
-	    activeState = getMigrationStatus();
+		if (getProcessBean().getStartProcessDate() != null) {
+			return PhdMigrationProcessStateType.CANDIDACY_CREATED;
+		}
 
-	    returnVal = true;
-
-	    if (activeState.equals(PhdMigrationProcessStateType.NOT_MIGRATED)) {
-		individualProcess = createCandidacyProcess(userView);
-		sendCandidacyToCoordinator(userView, individualProcess);
-		setMigrationStatus(PhdMigrationProcessStateType.CANDIDACY_CREATED);
-		continue;
-	    }
-
-	    if (activeState.equals(PhdMigrationProcessStateType.CANDIDACY_CREATED)) {
-		ratifyCandidacyProcess(userView, individualProcess);
-		setMigrationStatus(PhdMigrationProcessStateType.CANDIDACY_RATIFIED);
-		continue;
-	    }
-
-	    if (activeState.equals(PhdMigrationProcessStateType.CANDIDACY_RATIFIED)) {
-		formalizeRegistration(userView, individualProcess);
-		setMigrationStatus(PhdMigrationProcessStateType.WORK_DEVELOPMENT);
-		continue;
-	    }
-
-	    if (activeState.equals(PhdMigrationProcessStateType.WORK_DEVELOPMENT)) {
-		requirePublicThesisPresentation(userView, individualProcess);
-		setMigrationStatus(PhdMigrationProcessStateType.REQUESTED_THESIS_DISCUSSION);
-		continue;
-	    }
-
-	    if (activeState.equals(PhdMigrationProcessStateType.REQUESTED_THESIS_DISCUSSION)) {
-		skipJuryActivities(userView, individualProcess);
-		manageMeetingsAndFinalThesis(userView, individualProcess);
-		setMigrationStatus(PhdMigrationProcessStateType.COMPLETED_THESIS_DISCUSSION);
-		continue;
-	    }
-
-	    if (activeState.equals(PhdMigrationProcessStateType.COMPLETED_THESIS_DISCUSSION)) {
-		ratifyFinalThesis(userView, individualProcess);
-		setMigrationStatus(PhdMigrationProcessStateType.CONCLUDED);
-		continue;
-	    }
-
-	    break;
+		return PhdMigrationProcessStateType.NOT_MIGRATED;
 	}
 
-	if (isProcessCanceled()) {
-	    cancelPhdProgram(userView, individualProcess, getProcessBean().getAnnulmentDate());
-	    setMigrationStatus(PhdMigrationProcessStateType.CANCELED);
+	public boolean possibleToCompleteNextState() {
+		final PhdMigrationProcessStateType activeState = getMigrationStatus();
+
+		if (activeState.equals(PhdMigrationProcessStateType.CANCELED)
+				|| activeState.equals(PhdMigrationProcessStateType.CONCLUDED)) {
+			return false;
+		}
+
+		if (getProcessBean().getClassification() != null) {
+			return true;
+		}
+
+		if (activeState.equals(PhdMigrationProcessStateType.COMPLETED_THESIS_DISCUSSION)) {
+			if (getProcessBean().getEdictDate() != null) {
+				return true;
+			}
+		}
+
+		if (activeState.equals(PhdMigrationProcessStateType.REQUESTED_THESIS_DISCUSSION)) {
+			if (getProcessBean().getFirstDiscussionDate() != null || getProcessBean().getSecondDiscussionDate() != null) {
+				return true;
+			}
+		}
+
+		if (activeState.equals(PhdMigrationProcessStateType.WORK_DEVELOPMENT)) {
+			if (getProcessBean().getRequirementDate() != null) {
+				return true;
+			}
+		}
+
+		if (activeState.equals(PhdMigrationProcessStateType.CANDIDACY_RATIFIED)) {
+			if (getProcessBean().getStartDevelopmentDate() != null || getProcessBean().getRatificationDate() != null) {
+				return true;
+			}
+		}
+
+		if (activeState.equals(PhdMigrationProcessStateType.CANDIDACY_CREATED)) {
+			if (getProcessBean().getRatificationDate() != null) {
+				return true;
+			}
+		}
+
+		if (activeState.equals(PhdMigrationProcessStateType.NOT_MIGRATED)) {
+			if (getProcessBean().getStartProcessDate() != null) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
-	activeState = getMigrationStatus();
-	if (!activeState.equals(estimatedFinalMigrationStatus())) {
-	    throw new FinalEstimatedStateNotReachedException("Estimated: " + estimatedFinalMigrationStatus() + "\treached: "
-		    + activeState);
+	private boolean isProcessCanceled() {
+		return getProcessBean().getAnnulmentDate() != null;
 	}
 
-	setMigrationDate(new DateTime());
+	@Service
+	public Boolean proceedWithMigration(IUserView userView) {
 
-	return returnVal;
-    }
+		PhdMigrationProcessStateType activeState;
+		PhdIndividualProgramProcess individualProcess = null;
 
-    private PhdIndividualProgramProcess createCandidacyProcess(final IUserView userView) {
-	final PhdProgramCandidacyProcessBean candidacyBean = new PhdProgramCandidacyProcessBean();
+		boolean returnVal = false;
 
-	candidacyBean.setCandidacyDate(getProcessBean().getStartProcessDate());
-	candidacyBean.setState(PhdProgramCandidacyProcessState.STAND_BY_WITH_COMPLETE_INFORMATION);
-	candidacyBean.setPersonBean(getPhdMigrationIndividualPersonalData().getPersonBean());
-	candidacyBean.setMigratedProcess(true);
-	candidacyBean.setProgram(getProcessBean().getPhdProgram());
-	candidacyBean.setThesisTitle(getProcessBean().getTitle());
-	candidacyBean.setPhdStudentNumber(getPhdMigrationIndividualPersonalData().getNumber());
-	candidacyBean.setCollaborationType(PhdIndividualProgramCollaborationType.NONE);
-	candidacyBean.setExecutionYear(getExecutionYear());
-	candidacyBean.setFocusArea((getProcessBean().getPhdProgram().getPhdProgramFocusAreasCount() == 1) ? getProcessBean()
-		.getPhdProgram().getPhdProgramFocusAreas().get(0)
-		: null);
+		while (possibleToCompleteNextState()) {
+			activeState = getMigrationStatus();
 
-	final PhdIndividualProgramProcess individualProcess = (PhdIndividualProgramProcess) CreateNewProcess.run(
-		PhdIndividualProgramProcess.class, candidacyBean);
+			returnVal = true;
 
-	return individualProcess;
-    }
+			if (activeState.equals(PhdMigrationProcessStateType.NOT_MIGRATED)) {
+				individualProcess = createCandidacyProcess(userView);
+				sendCandidacyToCoordinator(userView, individualProcess);
+				setMigrationStatus(PhdMigrationProcessStateType.CANDIDACY_CREATED);
+				continue;
+			}
 
-    private void sendCandidacyToCoordinator(final IUserView userView, final PhdIndividualProgramProcess individualProcess) {
-	final PhdProgramCandidacyProcess candidacyProcess = individualProcess.getCandidacyProcess();
+			if (activeState.equals(PhdMigrationProcessStateType.CANDIDACY_CREATED)) {
+				ratifyCandidacyProcess(userView, individualProcess);
+				setMigrationStatus(PhdMigrationProcessStateType.CANDIDACY_RATIFIED);
+				continue;
+			}
 
-	final PhdProgramCandidacyProcessStateBean reviewBean = new PhdProgramCandidacyProcessStateBean(
-		candidacyProcess.getIndividualProgramProcess());
-	reviewBean.setState(PhdProgramCandidacyProcessState.PENDING_FOR_COORDINATOR_OPINION);
-	reviewBean.setGenerateAlert(false);
-	ExecuteProcessActivity
-		.run(candidacyProcess,
-			net.sourceforge.fenixedu.domain.phd.candidacy.activities.RequestCandidacyReview.class.getSimpleName(),
-			reviewBean);
+			if (activeState.equals(PhdMigrationProcessStateType.CANDIDACY_RATIFIED)) {
+				formalizeRegistration(userView, individualProcess);
+				setMigrationStatus(PhdMigrationProcessStateType.WORK_DEVELOPMENT);
+				continue;
+			}
 
-	final PhdProgramCandidacyProcessStateBean requestRatifyBean = new PhdProgramCandidacyProcessStateBean(individualProcess);
-	requestRatifyBean.setGenerateAlert(false);
-	requestRatifyBean.setState(PhdProgramCandidacyProcessState.WAITING_FOR_SCIENTIFIC_COUNCIL_RATIFICATION);
-	ExecuteProcessActivity.run(candidacyProcess,
-		net.sourceforge.fenixedu.domain.phd.candidacy.activities.RequestRatifyCandidacy.class.getSimpleName(),
-		requestRatifyBean);
-    }
+			if (activeState.equals(PhdMigrationProcessStateType.WORK_DEVELOPMENT)) {
+				requirePublicThesisPresentation(userView, individualProcess);
+				setMigrationStatus(PhdMigrationProcessStateType.REQUESTED_THESIS_DISCUSSION);
+				continue;
+			}
 
-    private void ratifyCandidacyProcess(final IUserView userView, final PhdIndividualProgramProcess individualProcess) {
-	final PhdProgramCandidacyProcess candidacyProcess = individualProcess.getCandidacyProcess();
-	final RatifyCandidacyBean ratifyBean = new RatifyCandidacyBean(candidacyProcess);
-	ratifyBean.setWhenRatified(getProcessBean().getRatificationDate());
-	ExecuteProcessActivity.run(candidacyProcess,
-		net.sourceforge.fenixedu.domain.phd.candidacy.activities.RatifyCandidacy.class.getSimpleName(), ratifyBean);
-    }
+			if (activeState.equals(PhdMigrationProcessStateType.REQUESTED_THESIS_DISCUSSION)) {
+				skipJuryActivities(userView, individualProcess);
+				manageMeetingsAndFinalThesis(userView, individualProcess);
+				setMigrationStatus(PhdMigrationProcessStateType.COMPLETED_THESIS_DISCUSSION);
+				continue;
+			}
 
-    private void formalizeRegistration(final IUserView userView, final PhdIndividualProgramProcess individualProcess) {
-	final PhdIndividualProgramProcessBean individualProcessBean = new PhdIndividualProgramProcessBean(individualProcess);
-	individualProcessBean.setQualificationExamsPerformed(QualificationExamsResult.NO);
-	individualProcessBean.setQualificationExamsRequired(QualificationExamsResult.NO);
-	ExecuteProcessActivity.run(individualProcess, EditQualificationExams.class.getSimpleName(), individualProcessBean);
+			if (activeState.equals(PhdMigrationProcessStateType.COMPLETED_THESIS_DISCUSSION)) {
+				ratifyFinalThesis(userView, individualProcess);
+				setMigrationStatus(PhdMigrationProcessStateType.CONCLUDED);
+				continue;
+			}
 
-	final PhdStudyPlanBean planBean = new PhdStudyPlanBean(individualProcess);
-	planBean.setExempted(true);
-	ExecuteProcessActivity.run(individualProcess, AddStudyPlan.class.getSimpleName(), planBean);
+			break;
+		}
 
-	final PhdProgramCandidacyProcess candidacyProcess = individualProcess.getCandidacyProcess();
-	final RegistrationFormalizationBean formalizationBean = new RegistrationFormalizationBean(candidacyProcess);
-	formalizationBean.setWhenStartedStudies(getMostAccurateStartDevelopmentDate());
-	formalizationBean.setSelectRegistration(false);
-	ExecuteProcessActivity.run(candidacyProcess,
-		net.sourceforge.fenixedu.domain.phd.candidacy.activities.RegistrationFormalization.class.getSimpleName(),
-		formalizationBean);
-    }
+		if (isProcessCanceled()) {
+			cancelPhdProgram(userView, individualProcess, getProcessBean().getAnnulmentDate());
+			setMigrationStatus(PhdMigrationProcessStateType.CANCELED);
+		}
 
-    private LocalDate getMostAccurateStartDevelopmentDate() {
-	if (getProcessBean().getStartDevelopmentDate() != null) {
-	    return getProcessBean().getStartDevelopmentDate();
-	} else {
-	    return getProcessBean().getRatificationDate();
-	}
-    }
+		activeState = getMigrationStatus();
+		if (!activeState.equals(estimatedFinalMigrationStatus())) {
+			throw new FinalEstimatedStateNotReachedException("Estimated: " + estimatedFinalMigrationStatus() + "\treached: "
+					+ activeState);
+		}
 
-    private void requirePublicThesisPresentation(final IUserView userView, final PhdIndividualProgramProcess individualProcess) {
-	ExecuteProcessActivity.run(individualProcess, ExemptPublicPresentationSeminarComission.class.getSimpleName(),
-		new PublicPresentationSeminarProcessBean());
+		setMigrationDate(new DateTime());
 
-	if (!StringUtils.isEmpty(getProcessBean().getGuiderNumber())) {
-	    final PhdMigrationGuiding migrationGuiding = getGuiding(getProcessBean().getGuiderNumber());
-	    if (migrationGuiding != null) {
-		migrationGuiding.parse();
-		final PhdParticipantBean guidingBean = migrationGuiding.getPhdParticipantBean(individualProcess);
-		ExecuteProcessActivity.run(individualProcess, AddGuidingInformation.class.getSimpleName(), guidingBean);
-	    }
+		return returnVal;
 	}
 
-	if (!StringUtils.isEmpty(getProcessBean().getAssistantGuiderNumber())) {
-	    final PhdMigrationGuiding migrationAssistantGuiding = getGuiding(getProcessBean().getAssistantGuiderNumber());
-	    if (migrationAssistantGuiding != null) {
-		migrationAssistantGuiding.parse();
-		final PhdParticipantBean assistantGuidingBean = migrationAssistantGuiding
-			.getPhdParticipantBean(individualProcess);
-		ExecuteProcessActivity.run(individualProcess, AddAssistantGuidingInformation.class.getSimpleName(),
-			assistantGuidingBean);
-	    }
+	private PhdIndividualProgramProcess createCandidacyProcess(final IUserView userView) {
+		final PhdProgramCandidacyProcessBean candidacyBean = new PhdProgramCandidacyProcessBean();
+
+		candidacyBean.setCandidacyDate(getProcessBean().getStartProcessDate());
+		candidacyBean.setState(PhdProgramCandidacyProcessState.STAND_BY_WITH_COMPLETE_INFORMATION);
+		candidacyBean.setPersonBean(getPhdMigrationIndividualPersonalData().getPersonBean());
+		candidacyBean.setMigratedProcess(true);
+		candidacyBean.setProgram(getProcessBean().getPhdProgram());
+		candidacyBean.setThesisTitle(getProcessBean().getTitle());
+		candidacyBean.setPhdStudentNumber(getPhdMigrationIndividualPersonalData().getNumber());
+		candidacyBean.setCollaborationType(PhdIndividualProgramCollaborationType.NONE);
+		candidacyBean.setExecutionYear(getExecutionYear());
+		candidacyBean.setFocusArea((getProcessBean().getPhdProgram().getPhdProgramFocusAreasCount() == 1) ? getProcessBean()
+				.getPhdProgram().getPhdProgramFocusAreas().get(0) : null);
+
+		final PhdIndividualProgramProcess individualProcess =
+				(PhdIndividualProgramProcess) CreateNewProcess.run(PhdIndividualProgramProcess.class, candidacyBean);
+
+		return individualProcess;
 	}
 
-	final PhdThesisProcessBean thesisBean = new PhdThesisProcessBean(individualProcess);
-	thesisBean.setWhenThesisDiscussionRequired(getProcessBean().getRequirementDate());
-	thesisBean.setGenerateAlert(false);
-	thesisBean.setToNotify(false);
-	ExecuteProcessActivity.run(individualProcess, RequestPublicThesisPresentation.class.getSimpleName(), thesisBean);
-    }
+	private void sendCandidacyToCoordinator(final IUserView userView, final PhdIndividualProgramProcess individualProcess) {
+		final PhdProgramCandidacyProcess candidacyProcess = individualProcess.getCandidacyProcess();
 
-    private PhdMigrationGuiding getGuiding(String guidingNumber) {
-	String alternativeGuidingNumber = "0".concat(guidingNumber);
-	for (PhdMigrationGuiding migrationGuiding : getPhdMigrationProcess().getPhdMigrationGuiding()) {
-	    if (guidingNumber.equals(migrationGuiding.getTeacherNumber())
-		    || alternativeGuidingNumber.equals(migrationGuiding.getTeacherNumber())) {
-		return migrationGuiding;
-	    }
+		final PhdProgramCandidacyProcessStateBean reviewBean =
+				new PhdProgramCandidacyProcessStateBean(candidacyProcess.getIndividualProgramProcess());
+		reviewBean.setState(PhdProgramCandidacyProcessState.PENDING_FOR_COORDINATOR_OPINION);
+		reviewBean.setGenerateAlert(false);
+		ExecuteProcessActivity
+				.run(candidacyProcess,
+						net.sourceforge.fenixedu.domain.phd.candidacy.activities.RequestCandidacyReview.class.getSimpleName(),
+						reviewBean);
+
+		final PhdProgramCandidacyProcessStateBean requestRatifyBean = new PhdProgramCandidacyProcessStateBean(individualProcess);
+		requestRatifyBean.setGenerateAlert(false);
+		requestRatifyBean.setState(PhdProgramCandidacyProcessState.WAITING_FOR_SCIENTIFIC_COUNCIL_RATIFICATION);
+		ExecuteProcessActivity.run(candidacyProcess,
+				net.sourceforge.fenixedu.domain.phd.candidacy.activities.RequestRatifyCandidacy.class.getSimpleName(),
+				requestRatifyBean);
 	}
 
-	return null;
-	// throw new
-	// PhdMigrationGuidingNotFoundException("Did not find guiding with code: "
-	// + guidingNumber);
-    }
-
-    private void skipJuryActivities(final IUserView userView,
-	    final PhdIndividualProgramProcess individualProcess) {
-	final PhdThesisProcess thesisProcess = individualProcess.getThesisProcess();
-	final PhdThesisProcessBean thesisBean = new PhdThesisProcessBean();
-	thesisBean.setThesisProcess(thesisProcess);
-	thesisBean.setToNotify(false);
-	thesisBean.setGenerateAlert(false);
-	ExecuteProcessActivity.run(individualProcess.getThesisProcess(), SkipThesisJuryActivities.class.getSimpleName(),
-		thesisBean);
-    }
-
-    private void manageMeetingsAndFinalThesis(final IUserView userView, final PhdIndividualProgramProcess individualProcess) {
-	final PhdThesisProcess thesisProcess = individualProcess.getThesisProcess();
-	final PhdThesisProcessBean thesisBean = new PhdThesisProcessBean();
-	thesisBean.setThesisProcess(thesisProcess);
-	thesisBean.setToNotify(false);
-	thesisBean.setGenerateAlert(false);
-	final PhdMeetingSchedulingProcess meetingProcess = thesisProcess.getMeetingProcess();
-	ExecuteProcessActivity.run(meetingProcess, ScheduleFirstThesisMeetingRequest.class, thesisBean);
-
-	thesisBean.setScheduledDate(getMeetingDate());
-	thesisBean.setScheduledPlace("");
-	ExecuteProcessActivity.run(meetingProcess, SkipScheduleFirstThesisMeeting.class, thesisBean);
-	
-	thesisBean.setScheduledDate(getMostAccurateDiscussionDateTime());
-	thesisBean.setScheduledPlace("");
-	ExecuteProcessActivity.run(thesisProcess, SkipScheduleThesisDiscussion.class, thesisBean);
-
-	ExecuteProcessActivity.run(thesisProcess, SubmitThesis.class, thesisBean);
-    }
-
-    private DateTime getMostAccurateDiscussionDateTime() {
-	if (getProcessBean().getSecondDiscussionDate() != null) {
-	    return getProcessBean().getSecondDiscussionDate().toDateTimeAtCurrentTime();
-	} else if (getProcessBean().getFirstDiscussionDate() != null) {
-	    return getProcessBean().getFirstDiscussionDate().toDateTimeAtCurrentTime();
+	private void ratifyCandidacyProcess(final IUserView userView, final PhdIndividualProgramProcess individualProcess) {
+		final PhdProgramCandidacyProcess candidacyProcess = individualProcess.getCandidacyProcess();
+		final RatifyCandidacyBean ratifyBean = new RatifyCandidacyBean(candidacyProcess);
+		ratifyBean.setWhenRatified(getProcessBean().getRatificationDate());
+		ExecuteProcessActivity.run(candidacyProcess,
+				net.sourceforge.fenixedu.domain.phd.candidacy.activities.RatifyCandidacy.class.getSimpleName(), ratifyBean);
 	}
 
-	return null;
-    }
+	private void formalizeRegistration(final IUserView userView, final PhdIndividualProgramProcess individualProcess) {
+		final PhdIndividualProgramProcessBean individualProcessBean = new PhdIndividualProgramProcessBean(individualProcess);
+		individualProcessBean.setQualificationExamsPerformed(QualificationExamsResult.NO);
+		individualProcessBean.setQualificationExamsRequired(QualificationExamsResult.NO);
+		ExecuteProcessActivity.run(individualProcess, EditQualificationExams.class.getSimpleName(), individualProcessBean);
 
-    private DateTime getMeetingDate() {
-	if (getProcessBean().getMeetingDate() != null) {
-	    return getProcessBean().getMeetingDate().toDateTimeAtCurrentTime();
-	} else {
-	    return null;
+		final PhdStudyPlanBean planBean = new PhdStudyPlanBean(individualProcess);
+		planBean.setExempted(true);
+		ExecuteProcessActivity.run(individualProcess, AddStudyPlan.class.getSimpleName(), planBean);
+
+		final PhdProgramCandidacyProcess candidacyProcess = individualProcess.getCandidacyProcess();
+		final RegistrationFormalizationBean formalizationBean = new RegistrationFormalizationBean(candidacyProcess);
+		formalizationBean.setWhenStartedStudies(getMostAccurateStartDevelopmentDate());
+		formalizationBean.setSelectRegistration(false);
+		ExecuteProcessActivity.run(candidacyProcess,
+				net.sourceforge.fenixedu.domain.phd.candidacy.activities.RegistrationFormalization.class.getSimpleName(),
+				formalizationBean);
 	}
-    }
 
-    private void ratifyFinalThesis(final IUserView userView, final PhdIndividualProgramProcess individualProcess) {
-	final PhdThesisProcess thesisProcess = individualProcess.getThesisProcess();
-	final PhdThesisProcessBean thesisBean = new PhdThesisProcessBean();
-	thesisBean.setThesisProcess(thesisProcess);
-	thesisBean.setToNotify(false);
-	thesisBean.setGenerateAlert(false);
-	thesisBean.setWhenFinalThesisRatified(getProcessBean().getEdictDate());
-	ExecuteProcessActivity.run(thesisProcess, RatifyFinalThesis.class, thesisBean);
+	private LocalDate getMostAccurateStartDevelopmentDate() {
+		if (getProcessBean().getStartDevelopmentDate() != null) {
+			return getProcessBean().getStartDevelopmentDate();
+		} else {
+			return getProcessBean().getRatificationDate();
+		}
+	}
 
-	thesisBean.setConclusionDate(getProcessBean().getEdictDate());
-	thesisBean.setFinalGrade(getProcessBean().getClassification());
-	ExecuteProcessActivity.run(thesisProcess, SetFinalGrade.class, thesisBean);
-    }
+	private void requirePublicThesisPresentation(final IUserView userView, final PhdIndividualProgramProcess individualProcess) {
+		ExecuteProcessActivity.run(individualProcess, ExemptPublicPresentationSeminarComission.class.getSimpleName(),
+				new PublicPresentationSeminarProcessBean());
 
-    private void cancelPhdProgram(final IUserView userView, final PhdIndividualProgramProcess individualProcess,
-	    LocalDate anullmentDate) {
-	final PhdIndividualProgramProcessBean processBean = new PhdIndividualProgramProcessBean(individualProcess);
-	processBean.setStateDate(anullmentDate);
-	ExecuteProcessActivity.run(individualProcess, CancelPhdProgramProcess.class.getSimpleName(), processBean);
-    }
+		if (!StringUtils.isEmpty(getProcessBean().getGuiderNumber())) {
+			final PhdMigrationGuiding migrationGuiding = getGuiding(getProcessBean().getGuiderNumber());
+			if (migrationGuiding != null) {
+				migrationGuiding.parse();
+				final PhdParticipantBean guidingBean = migrationGuiding.getPhdParticipantBean(individualProcess);
+				ExecuteProcessActivity.run(individualProcess, AddGuidingInformation.class.getSimpleName(), guidingBean);
+			}
+		}
+
+		if (!StringUtils.isEmpty(getProcessBean().getAssistantGuiderNumber())) {
+			final PhdMigrationGuiding migrationAssistantGuiding = getGuiding(getProcessBean().getAssistantGuiderNumber());
+			if (migrationAssistantGuiding != null) {
+				migrationAssistantGuiding.parse();
+				final PhdParticipantBean assistantGuidingBean =
+						migrationAssistantGuiding.getPhdParticipantBean(individualProcess);
+				ExecuteProcessActivity.run(individualProcess, AddAssistantGuidingInformation.class.getSimpleName(),
+						assistantGuidingBean);
+			}
+		}
+
+		final PhdThesisProcessBean thesisBean = new PhdThesisProcessBean(individualProcess);
+		thesisBean.setWhenThesisDiscussionRequired(getProcessBean().getRequirementDate());
+		thesisBean.setGenerateAlert(false);
+		thesisBean.setToNotify(false);
+		ExecuteProcessActivity.run(individualProcess, RequestPublicThesisPresentation.class.getSimpleName(), thesisBean);
+	}
+
+	private PhdMigrationGuiding getGuiding(String guidingNumber) {
+		String alternativeGuidingNumber = "0".concat(guidingNumber);
+		for (PhdMigrationGuiding migrationGuiding : getPhdMigrationProcess().getPhdMigrationGuiding()) {
+			if (guidingNumber.equals(migrationGuiding.getTeacherNumber())
+					|| alternativeGuidingNumber.equals(migrationGuiding.getTeacherNumber())) {
+				return migrationGuiding;
+			}
+		}
+
+		return null;
+		// throw new
+		// PhdMigrationGuidingNotFoundException("Did not find guiding with code: "
+		// + guidingNumber);
+	}
+
+	private void skipJuryActivities(final IUserView userView, final PhdIndividualProgramProcess individualProcess) {
+		final PhdThesisProcess thesisProcess = individualProcess.getThesisProcess();
+		final PhdThesisProcessBean thesisBean = new PhdThesisProcessBean();
+		thesisBean.setThesisProcess(thesisProcess);
+		thesisBean.setToNotify(false);
+		thesisBean.setGenerateAlert(false);
+		ExecuteProcessActivity.run(individualProcess.getThesisProcess(), SkipThesisJuryActivities.class.getSimpleName(),
+				thesisBean);
+	}
+
+	private void manageMeetingsAndFinalThesis(final IUserView userView, final PhdIndividualProgramProcess individualProcess) {
+		final PhdThesisProcess thesisProcess = individualProcess.getThesisProcess();
+		final PhdThesisProcessBean thesisBean = new PhdThesisProcessBean();
+		thesisBean.setThesisProcess(thesisProcess);
+		thesisBean.setToNotify(false);
+		thesisBean.setGenerateAlert(false);
+		final PhdMeetingSchedulingProcess meetingProcess = thesisProcess.getMeetingProcess();
+		ExecuteProcessActivity.run(meetingProcess, ScheduleFirstThesisMeetingRequest.class, thesisBean);
+
+		thesisBean.setScheduledDate(getMeetingDate());
+		thesisBean.setScheduledPlace("");
+		ExecuteProcessActivity.run(meetingProcess, SkipScheduleFirstThesisMeeting.class, thesisBean);
+
+		thesisBean.setScheduledDate(getMostAccurateDiscussionDateTime());
+		thesisBean.setScheduledPlace("");
+		ExecuteProcessActivity.run(thesisProcess, SkipScheduleThesisDiscussion.class, thesisBean);
+
+		ExecuteProcessActivity.run(thesisProcess, SubmitThesis.class, thesisBean);
+	}
+
+	private DateTime getMostAccurateDiscussionDateTime() {
+		if (getProcessBean().getSecondDiscussionDate() != null) {
+			return getProcessBean().getSecondDiscussionDate().toDateTimeAtCurrentTime();
+		} else if (getProcessBean().getFirstDiscussionDate() != null) {
+			return getProcessBean().getFirstDiscussionDate().toDateTimeAtCurrentTime();
+		}
+
+		return null;
+	}
+
+	private DateTime getMeetingDate() {
+		if (getProcessBean().getMeetingDate() != null) {
+			return getProcessBean().getMeetingDate().toDateTimeAtCurrentTime();
+		} else {
+			return null;
+		}
+	}
+
+	private void ratifyFinalThesis(final IUserView userView, final PhdIndividualProgramProcess individualProcess) {
+		final PhdThesisProcess thesisProcess = individualProcess.getThesisProcess();
+		final PhdThesisProcessBean thesisBean = new PhdThesisProcessBean();
+		thesisBean.setThesisProcess(thesisProcess);
+		thesisBean.setToNotify(false);
+		thesisBean.setGenerateAlert(false);
+		thesisBean.setWhenFinalThesisRatified(getProcessBean().getEdictDate());
+		ExecuteProcessActivity.run(thesisProcess, RatifyFinalThesis.class, thesisBean);
+
+		thesisBean.setConclusionDate(getProcessBean().getEdictDate());
+		thesisBean.setFinalGrade(getProcessBean().getClassification());
+		ExecuteProcessActivity.run(thesisProcess, SetFinalGrade.class, thesisBean);
+	}
+
+	private void cancelPhdProgram(final IUserView userView, final PhdIndividualProgramProcess individualProcess,
+			LocalDate anullmentDate) {
+		final PhdIndividualProgramProcessBean processBean = new PhdIndividualProgramProcessBean(individualProcess);
+		processBean.setStateDate(anullmentDate);
+		ExecuteProcessActivity.run(individualProcess, CancelPhdProgramProcess.class.getSimpleName(), processBean);
+	}
 
 }

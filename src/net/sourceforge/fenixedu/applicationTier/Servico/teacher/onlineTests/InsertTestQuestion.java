@@ -21,76 +21,77 @@ import org.apache.commons.beanutils.BeanComparator;
 
 public class InsertTestQuestion extends FenixService {
 
-    private String path = new String();
+	private String path = new String();
 
-    public void run(Integer executionCourseId, Integer testId, String[] metadataId, Integer questionOrder, Double questionValue,
-	    CorrectionFormula formula, String path) throws FenixServiceException {
-	this.path = path.replace('\\', '/');
+	public void run(Integer executionCourseId, Integer testId, String[] metadataId, Integer questionOrder, Double questionValue,
+			CorrectionFormula formula, String path) throws FenixServiceException {
+		this.path = path.replace('\\', '/');
 
-	for (int i = 0; i < metadataId.length; i++) {
-	    Metadata metadata = rootDomainObject.readMetadataByOID(new Integer(metadataId[i]));
-	    if (metadata == null) {
-		throw new InvalidArgumentsServiceException();
-	    }
-	    Question question = null;
-	    if (metadata.getVisibleQuestions() != null && metadata.getVisibleQuestions().size() != 0) {
-		question = metadata.getVisibleQuestions().get(0);
-	    } else {
-		throw new InvalidArgumentsServiceException();
-	    }
-	    if (question == null) {
-		throw new InvalidArgumentsServiceException();
-	    }
-	    Test test = rootDomainObject.readTestByOID(testId);
-	    if (test == null) {
-		throw new InvalidArgumentsServiceException();
-	    }
-	    List<TestQuestion> testQuestionList = new ArrayList<TestQuestion>(test.getTestQuestions());
-	    Collections.sort(testQuestionList, new BeanComparator("testQuestionOrder"));
-	    if (testQuestionList != null) {
-		if (questionOrder == null || questionOrder.equals(Integer.valueOf(-1))) {
-		    questionOrder = Integer.valueOf(testQuestionList.size() + 1);
-		} else
-		    questionOrder = Integer.valueOf(questionOrder.intValue() + 1);
-		for (TestQuestion iterTestQuestion : testQuestionList) {
-		    Integer iterQuestionOrder = iterTestQuestion.getTestQuestionOrder();
-		    if (questionOrder.compareTo(iterQuestionOrder) <= 0) {
-			iterTestQuestion.setTestQuestionOrder(Integer.valueOf(iterQuestionOrder.intValue() + 1));
-		    }
-		}
-	    }
-	    Double thisQuestionValue = questionValue;
-	    if (questionValue == null) {
-		ParseSubQuestion parseQuestion = new ParseSubQuestion();
-		if (thisQuestionValue == null) {
-		    thisQuestionValue = new Double(0);
-		}
-		try {
-		    InfoQuestion infoQuestion = InfoQuestion.newInfoFromDomain(question);
-		    question = parseQuestion.parseSubQuestion(question, this.path);
-		    if (infoQuestion.getQuestionValue() != null) {
-			thisQuestionValue = infoQuestion.getQuestionValue();
-		    } else {
-			for (SubQuestion subQuestion : question.getSubQuestions()) {
-			    if (subQuestion.getQuestionValue() != null) {
-				thisQuestionValue = new Double(thisQuestionValue.doubleValue()
-					+ subQuestion.getQuestionValue().doubleValue());
-			    }
+		for (String element : metadataId) {
+			Metadata metadata = rootDomainObject.readMetadataByOID(new Integer(element));
+			if (metadata == null) {
+				throw new InvalidArgumentsServiceException();
 			}
-		    }
+			Question question = null;
+			if (metadata.getVisibleQuestions() != null && metadata.getVisibleQuestions().size() != 0) {
+				question = metadata.getVisibleQuestions().get(0);
+			} else {
+				throw new InvalidArgumentsServiceException();
+			}
+			if (question == null) {
+				throw new InvalidArgumentsServiceException();
+			}
+			Test test = rootDomainObject.readTestByOID(testId);
+			if (test == null) {
+				throw new InvalidArgumentsServiceException();
+			}
+			List<TestQuestion> testQuestionList = new ArrayList<TestQuestion>(test.getTestQuestions());
+			Collections.sort(testQuestionList, new BeanComparator("testQuestionOrder"));
+			if (testQuestionList != null) {
+				if (questionOrder == null || questionOrder.equals(Integer.valueOf(-1))) {
+					questionOrder = Integer.valueOf(testQuestionList.size() + 1);
+				} else {
+					questionOrder = Integer.valueOf(questionOrder.intValue() + 1);
+				}
+				for (TestQuestion iterTestQuestion : testQuestionList) {
+					Integer iterQuestionOrder = iterTestQuestion.getTestQuestionOrder();
+					if (questionOrder.compareTo(iterQuestionOrder) <= 0) {
+						iterTestQuestion.setTestQuestionOrder(Integer.valueOf(iterQuestionOrder.intValue() + 1));
+					}
+				}
+			}
+			Double thisQuestionValue = questionValue;
+			if (questionValue == null) {
+				ParseSubQuestion parseQuestion = new ParseSubQuestion();
+				if (thisQuestionValue == null) {
+					thisQuestionValue = new Double(0);
+				}
+				try {
+					InfoQuestion infoQuestion = InfoQuestion.newInfoFromDomain(question);
+					question = parseQuestion.parseSubQuestion(question, this.path);
+					if (infoQuestion.getQuestionValue() != null) {
+						thisQuestionValue = infoQuestion.getQuestionValue();
+					} else {
+						for (SubQuestion subQuestion : question.getSubQuestions()) {
+							if (subQuestion.getQuestionValue() != null) {
+								thisQuestionValue =
+										new Double(thisQuestionValue.doubleValue() + subQuestion.getQuestionValue().doubleValue());
+							}
+						}
+					}
 
-		} catch (Exception e) {
-		    throw new FenixServiceException(e);
+				} catch (Exception e) {
+					throw new FenixServiceException(e);
+				}
+
+			}
+			TestQuestion testQuestion = new TestQuestion();
+			test.setLastModifiedDate(Calendar.getInstance().getTime());
+			testQuestion.setQuestion(question);
+			testQuestion.setTest(test);
+			testQuestion.setTestQuestionOrder(questionOrder);
+			testQuestion.setTestQuestionValue(thisQuestionValue);
+			testQuestion.setCorrectionFormula(formula);
 		}
-
-	    }
-	    TestQuestion testQuestion = new TestQuestion();
-	    test.setLastModifiedDate(Calendar.getInstance().getTime());
-	    testQuestion.setQuestion(question);
-	    testQuestion.setTest(test);
-	    testQuestion.setTestQuestionOrder(questionOrder);
-	    testQuestion.setTestQuestionValue(thisQuestionValue);
-	    testQuestion.setCorrectionFormula(formula);
 	}
-    }
 }

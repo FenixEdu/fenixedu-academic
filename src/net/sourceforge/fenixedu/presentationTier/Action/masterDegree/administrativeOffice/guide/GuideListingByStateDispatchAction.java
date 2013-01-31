@@ -34,120 +34,130 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
  * 
  * 
  */
-@Mapping(module = "masterDegreeAdministrativeOffice", path = "/guideListingByState", input = "/guideListingByState.do?method=prepareChooseState&page=0", attribute = "chooseGuideStateForm", formBean = "chooseGuideStateForm", scope = "request", parameter = "method")
+@Mapping(
+		module = "masterDegreeAdministrativeOffice",
+		path = "/guideListingByState",
+		input = "/guideListingByState.do?method=prepareChooseState&page=0",
+		attribute = "chooseGuideStateForm",
+		formBean = "chooseGuideStateForm",
+		scope = "request",
+		parameter = "method")
 @Forwards(value = {
-	@Forward(name = "ShowList", path = "df.page.showSearchGuideListResult", tileProperties = @Tile(title = "teste73")),
-	@Forward(name = "PrepareSuccess", path = "df.page.searchGuideByState", tileProperties = @Tile(title = "teste74")) })
+		@Forward(name = "ShowList", path = "df.page.showSearchGuideListResult", tileProperties = @Tile(title = "teste73")),
+		@Forward(name = "PrepareSuccess", path = "df.page.searchGuideByState", tileProperties = @Tile(title = "teste74")) })
 public class GuideListingByStateDispatchAction extends FenixDispatchAction {
 
-    public ActionForward prepareChooseState(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
+	public ActionForward prepareChooseState(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
 
-	DynaActionForm chooseGuide = (DynaActionForm) form;
+		DynaActionForm chooseGuide = (DynaActionForm) form;
 
-	chooseGuide.set("year", String.valueOf(Calendar.getInstance().get(Calendar.YEAR)));
+		chooseGuide.set("year", String.valueOf(Calendar.getInstance().get(Calendar.YEAR)));
 
-	return mapping.findForward("PrepareSuccess");
-    }
-
-    public ActionForward chooseState(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-
-	IUserView userView = getUserView(request);
-
-	DynaActionForm chooseGuide = (DynaActionForm) form;
-
-	Integer year = new Integer((String) chooseGuide.get("year"));
-	String state = (String) chooseGuide.get("state");
-
-	GuideState situationOfGuide = null;
-	if ((state != null) && (state.length() > 0)) {
-	    situationOfGuide = GuideState.valueOf(state);
+		return mapping.findForward("PrepareSuccess");
 	}
 
-	List guideList = null;
-	try {
+	public ActionForward chooseState(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
 
-	    guideList = ListGuidesByState.run(year, situationOfGuide);
-	} catch (FenixServiceException e) {
-	    throw new FenixActionException(e);
+		IUserView userView = getUserView(request);
+
+		DynaActionForm chooseGuide = (DynaActionForm) form;
+
+		Integer year = new Integer((String) chooseGuide.get("year"));
+		String state = (String) chooseGuide.get("state");
+
+		GuideState situationOfGuide = null;
+		if ((state != null) && (state.length() > 0)) {
+			situationOfGuide = GuideState.valueOf(state);
+		}
+
+		List guideList = null;
+		try {
+
+			guideList = ListGuidesByState.run(year, situationOfGuide);
+		} catch (FenixServiceException e) {
+			throw new FenixActionException(e);
+		}
+
+		request.setAttribute("year", year);
+
+		if (!guideList.isEmpty()) {
+			List result = prepareList(guideList);
+			request.setAttribute("listOfGuides", result);
+		}
+
+		return mapping.findForward("ShowList");
 	}
 
-	request.setAttribute("year", year);
+	/**
+	 * @param guideList
+	 * @return
+	 */
+	private List prepareList(List guideList) {
 
-	if (!guideList.isEmpty()) {
-	    List result = prepareList(guideList);
-	    request.setAttribute("listOfGuides", result);
+		List nonPayedGuides = new ArrayList();
+		List payedGuides = new ArrayList();
+		List annulledGuides = new ArrayList();
+
+		Double nonPayedGuidesTotal = new Double(0);
+		Double payedGuidesTotal = new Double(0);
+		Double annulledGuidesTotal = new Double(0);
+
+		Iterator iterator = guideList.iterator();
+		while (iterator.hasNext()) {
+			InfoGuide infoGuide = (InfoGuide) iterator.next();
+
+			if (infoGuide.getInfoGuideSituation().getSituation().equals(GuideState.ANNULLED)) {
+				annulledGuides.add(infoGuide);
+				annulledGuidesTotal =
+						NumberUtils.formatNumber(
+								new Double(annulledGuidesTotal.floatValue() + infoGuide.getTotal().floatValue()), 2);
+			} else if (infoGuide.getInfoGuideSituation().getSituation().equals(GuideState.PAYED)) {
+				payedGuides.add(infoGuide);
+				payedGuidesTotal =
+						NumberUtils
+								.formatNumber(new Double(payedGuidesTotal.floatValue() + infoGuide.getTotal().floatValue()), 2);
+			} else if (infoGuide.getInfoGuideSituation().getSituation().equals(GuideState.NON_PAYED)) {
+				nonPayedGuides.add(infoGuide);
+				nonPayedGuidesTotal =
+						NumberUtils.formatNumber(
+								new Double(nonPayedGuidesTotal.floatValue() + infoGuide.getTotal().floatValue()), 2);
+			}
+		}
+
+		// Create the presantation object
+
+		List result = new ArrayList();
+		if (!annulledGuides.isEmpty()) {
+			InfoGuideList infoGuideList = new InfoGuideList();
+			infoGuideList.setGuides(annulledGuides);
+			infoGuideList.setSituation(GuideState.ANNULLED.name());
+			infoGuideList.setTotal(annulledGuidesTotal);
+			result.add(infoGuideList);
+		}
+
+		if (!payedGuides.isEmpty()) {
+			InfoGuideList infoGuideList = new InfoGuideList();
+			infoGuideList.setGuides(payedGuides);
+			infoGuideList.setSituation(GuideState.PAYED.name());
+			infoGuideList.setTotal(payedGuidesTotal);
+			result.add(infoGuideList);
+		}
+
+		if (!nonPayedGuides.isEmpty()) {
+			InfoGuideList infoGuideList = new InfoGuideList();
+			infoGuideList.setGuides(nonPayedGuides);
+			infoGuideList.setSituation(GuideState.NON_PAYED.name());
+			infoGuideList.setTotal(nonPayedGuidesTotal);
+			result.add(infoGuideList);
+		}
+
+		if (result.isEmpty()) {
+			return null;
+		}
+		return result;
+
 	}
-
-	return mapping.findForward("ShowList");
-    }
-
-    /**
-     * @param guideList
-     * @return
-     */
-    private List prepareList(List guideList) {
-
-	List nonPayedGuides = new ArrayList();
-	List payedGuides = new ArrayList();
-	List annulledGuides = new ArrayList();
-
-	Double nonPayedGuidesTotal = new Double(0);
-	Double payedGuidesTotal = new Double(0);
-	Double annulledGuidesTotal = new Double(0);
-
-	Iterator iterator = guideList.iterator();
-	while (iterator.hasNext()) {
-	    InfoGuide infoGuide = (InfoGuide) iterator.next();
-
-	    if (infoGuide.getInfoGuideSituation().getSituation().equals(GuideState.ANNULLED)) {
-		annulledGuides.add(infoGuide);
-		annulledGuidesTotal = NumberUtils.formatNumber(new Double(annulledGuidesTotal.floatValue()
-			+ infoGuide.getTotal().floatValue()), 2);
-	    } else if (infoGuide.getInfoGuideSituation().getSituation().equals(GuideState.PAYED)) {
-		payedGuides.add(infoGuide);
-		payedGuidesTotal = NumberUtils.formatNumber(new Double(payedGuidesTotal.floatValue()
-			+ infoGuide.getTotal().floatValue()), 2);
-	    } else if (infoGuide.getInfoGuideSituation().getSituation().equals(GuideState.NON_PAYED)) {
-		nonPayedGuides.add(infoGuide);
-		nonPayedGuidesTotal = NumberUtils.formatNumber(new Double(nonPayedGuidesTotal.floatValue()
-			+ infoGuide.getTotal().floatValue()), 2);
-	    }
-	}
-
-	// Create the presantation object
-
-	List result = new ArrayList();
-	if (!annulledGuides.isEmpty()) {
-	    InfoGuideList infoGuideList = new InfoGuideList();
-	    infoGuideList.setGuides(annulledGuides);
-	    infoGuideList.setSituation(GuideState.ANNULLED.name());
-	    infoGuideList.setTotal(annulledGuidesTotal);
-	    result.add(infoGuideList);
-	}
-
-	if (!payedGuides.isEmpty()) {
-	    InfoGuideList infoGuideList = new InfoGuideList();
-	    infoGuideList.setGuides(payedGuides);
-	    infoGuideList.setSituation(GuideState.PAYED.name());
-	    infoGuideList.setTotal(payedGuidesTotal);
-	    result.add(infoGuideList);
-	}
-
-	if (!nonPayedGuides.isEmpty()) {
-	    InfoGuideList infoGuideList = new InfoGuideList();
-	    infoGuideList.setGuides(nonPayedGuides);
-	    infoGuideList.setSituation(GuideState.NON_PAYED.name());
-	    infoGuideList.setTotal(nonPayedGuidesTotal);
-	    result.add(infoGuideList);
-	}
-
-	if (result.isEmpty()) {
-	    return null;
-	}
-	return result;
-
-    }
 
 }

@@ -10,36 +10,36 @@ package net.sourceforge.fenixedu.applicationTier.Servico.exceptions;
  */
 public class EmptyRequiredFieldServiceException extends FenixServiceException {
 
-    /**
+	/**
      *  
      */
-    public EmptyRequiredFieldServiceException() {
-	super();
+	public EmptyRequiredFieldServiceException() {
+		super();
 
-    }
+	}
 
-    /**
-     * @param s
-     */
-    public EmptyRequiredFieldServiceException(String s) {
-	super(s);
+	/**
+	 * @param s
+	 */
+	public EmptyRequiredFieldServiceException(String s) {
+		super(s);
 
-    }
+	}
 
-    /**
-     * @param cause
-     */
-    public EmptyRequiredFieldServiceException(Throwable cause) {
-	super(cause);
+	/**
+	 * @param cause
+	 */
+	public EmptyRequiredFieldServiceException(Throwable cause) {
+		super(cause);
 
-    }
+	}
 
-    /**
-     * @param message
-     * @param cause
-     */
-    public EmptyRequiredFieldServiceException(String message, Throwable cause) {
-	super(message, cause);
+	/**
+	 * @param message
+	 * @param cause
+	 */
+	public EmptyRequiredFieldServiceException(String message, Throwable cause) {
+		super(message, cause);
 
-    }
+	}
 }

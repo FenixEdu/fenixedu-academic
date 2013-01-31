@@ -7,12 +7,14 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class ExecutionYearsFromRegistrationCurriculumLines implements DataProvider {
 
-    public Object provide(Object source, Object currentValue) {
-	return ((RegistrationSelectExecutionYearBean) source).getRegistration().getSortedCurriculumLinesExecutionYears();
-    }
+	@Override
+	public Object provide(Object source, Object currentValue) {
+		return ((RegistrationSelectExecutionYearBean) source).getRegistration().getSortedCurriculumLinesExecutionYears();
+	}
 
-    public Converter getConverter() {
-	return new DomainObjectKeyConverter();
-    }
+	@Override
+	public Converter getConverter() {
+		return new DomainObjectKeyConverter();
+	}
 
 }

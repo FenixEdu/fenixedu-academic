@@ -12,20 +12,20 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class CompetenceCoursesForDepartmentProvider implements DataProvider {
 
-    @Override
-    public Converter getConverter() {
-	return new DomainObjectKeyConverter();
-    }
-
-    @Override
-    public Object provide(Object source, Object currentValue) {
-	SpecialSeasonStatusTrackerBean bean = ((SpecialSeasonStatusTrackerBean)  source);
-	final List<CompetenceCourse> courses = new ArrayList<CompetenceCourse>();
-	if(bean != null && bean.getDepartment() != null) {
-	    courses.addAll(bean.getDepartment().getBolonhaCompetenceCourses());
-	    Collections.sort(courses, CompetenceCourse.COMPETENCE_COURSE_COMPARATOR_BY_NAME);
+	@Override
+	public Converter getConverter() {
+		return new DomainObjectKeyConverter();
 	}
-	return courses;
-    }
+
+	@Override
+	public Object provide(Object source, Object currentValue) {
+		SpecialSeasonStatusTrackerBean bean = ((SpecialSeasonStatusTrackerBean) source);
+		final List<CompetenceCourse> courses = new ArrayList<CompetenceCourse>();
+		if (bean != null && bean.getDepartment() != null) {
+			courses.addAll(bean.getDepartment().getBolonhaCompetenceCourses());
+			Collections.sort(courses, CompetenceCourse.COMPETENCE_COURSE_COMPARATOR_BY_NAME);
+		}
+		return courses;
+	}
 
 }

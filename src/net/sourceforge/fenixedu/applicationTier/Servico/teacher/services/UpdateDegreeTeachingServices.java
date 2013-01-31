@@ -16,41 +16,42 @@ import net.sourceforge.fenixedu.util.BundleUtil;
 
 public class UpdateDegreeTeachingServices extends FenixService {
 
-    public void run(Integer professorshipID, List<ShiftIDTeachingPercentage> shiftsIDsTeachingPercentages, RoleType roleType) {
+	public void run(Integer professorshipID, List<ShiftIDTeachingPercentage> shiftsIDsTeachingPercentages, RoleType roleType) {
 
-	Professorship professorship = rootDomainObject.readProfessorshipByOID(professorshipID);
-	Teacher teacher = professorship.getTeacher();
-	ExecutionSemester executionSemester = professorship.getExecutionCourse().getExecutionPeriod();
-	TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionSemester);
-	if (teacherService == null) {
-	    teacherService = new TeacherService(teacher, executionSemester);
-	}
-
-	final StringBuilder log = new StringBuilder();
-	log.append(BundleUtil.getStringFromResourceBundle("resources.TeacherCreditsSheetResources", "label.teacher.schedule.change"));
-
-	for (ShiftIDTeachingPercentage shiftIDTeachingPercentage : shiftsIDsTeachingPercentages) {
-	    Shift shift = rootDomainObject.readShiftByOID(shiftIDTeachingPercentage.getShiftID());
-	    DegreeTeachingService degreeTeachingService = teacherService.getDegreeTeachingServiceByShiftAndProfessorship(shift,
-		    professorship);
-	    if (degreeTeachingService != null) {
-		degreeTeachingService.updatePercentage(shiftIDTeachingPercentage.getPercentage(), roleType);
-	    } else {
-		if (shiftIDTeachingPercentage.getPercentage() == null
-			|| (shiftIDTeachingPercentage.getPercentage() != null && shiftIDTeachingPercentage.getPercentage() != 0)) {
-		    new DegreeTeachingService(teacherService, professorship, shift, shiftIDTeachingPercentage.getPercentage(),
-			    roleType);
+		Professorship professorship = rootDomainObject.readProfessorshipByOID(professorshipID);
+		Teacher teacher = professorship.getTeacher();
+		ExecutionSemester executionSemester = professorship.getExecutionCourse().getExecutionPeriod();
+		TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionSemester);
+		if (teacherService == null) {
+			teacherService = new TeacherService(teacher, executionSemester);
 		}
-	    }
 
-	    log.append(shift.getPresentationName());
-	    if (shiftIDTeachingPercentage.getPercentage() != null) {
-		log.append("= ");
-		log.append(shiftIDTeachingPercentage.getPercentage());
-	    }
-	    log.append("% ; ");
+		final StringBuilder log = new StringBuilder();
+		log.append(BundleUtil.getStringFromResourceBundle("resources.TeacherCreditsSheetResources",
+				"label.teacher.schedule.change"));
+
+		for (ShiftIDTeachingPercentage shiftIDTeachingPercentage : shiftsIDsTeachingPercentages) {
+			Shift shift = rootDomainObject.readShiftByOID(shiftIDTeachingPercentage.getShiftID());
+			DegreeTeachingService degreeTeachingService =
+					teacherService.getDegreeTeachingServiceByShiftAndProfessorship(shift, professorship);
+			if (degreeTeachingService != null) {
+				degreeTeachingService.updatePercentage(shiftIDTeachingPercentage.getPercentage(), roleType);
+			} else {
+				if (shiftIDTeachingPercentage.getPercentage() == null
+						|| (shiftIDTeachingPercentage.getPercentage() != null && shiftIDTeachingPercentage.getPercentage() != 0)) {
+					new DegreeTeachingService(teacherService, professorship, shift, shiftIDTeachingPercentage.getPercentage(),
+							roleType);
+				}
+			}
+
+			log.append(shift.getPresentationName());
+			if (shiftIDTeachingPercentage.getPercentage() != null) {
+				log.append("= ");
+				log.append(shiftIDTeachingPercentage.getPercentage());
+			}
+			log.append("% ; ");
+		}
+
+		new TeacherServiceLog(teacherService, log.toString());
 	}
-
-	new TeacherServiceLog(teacherService, log.toString());
-    }
 }

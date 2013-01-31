@@ -14,106 +14,105 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class PhdCandidacyReferee extends PhdCandidacyReferee_Base {
 
-    private PhdCandidacyReferee() {
-	super();
-    }
-
-    public PhdCandidacyReferee(final PhdProgramCandidacyProcess process, final PhdCandidacyRefereeBean bean) {
-	this();
-
-
-	check(process, "error.PhdCandidacyReferee.invalid.process");
-	check(bean.getName(), "error.PhdCandidacyReferee.invalid.name");
-	check(bean.getEmail(), "error.PhdCandidacyReferee.invalid.email");
-
-	if (process.getCandidacyRefereeByEmail(bean.getEmail()) != null) {
-	    throw new DomainException("error.PhdCandidacyReferee.for.email.exists");
+	private PhdCandidacyReferee() {
+		super();
 	}
 
-	setPhdProgramCandidacyProcess(process);
-	setName(bean.getName());
-	setEmail(bean.getEmail());
-	setInstitution(bean.getInstitution());
-	setValue(UUID.randomUUID().toString());
+	public PhdCandidacyReferee(final PhdProgramCandidacyProcess process, final PhdCandidacyRefereeBean bean) {
+		this();
 
-	// new PhdCandidacyRefereeAlert(this);
-	sendEmail();
-    }
+		check(process, "error.PhdCandidacyReferee.invalid.process");
+		check(bean.getName(), "error.PhdCandidacyReferee.invalid.name");
+		check(bean.getEmail(), "error.PhdCandidacyReferee.invalid.email");
 
-    @Override
-    public boolean hasCandidacyProcess() {
-	return hasPhdProgramCandidacyProcess();
-    }
+		if (process.getCandidacyRefereeByEmail(bean.getEmail()) != null) {
+			throw new DomainException("error.PhdCandidacyReferee.for.email.exists");
+		}
 
-    public boolean isLetterAvailable() {
-	return hasLetter();
-    }
+		setPhdProgramCandidacyProcess(process);
+		setName(bean.getName());
+		setEmail(bean.getEmail());
+		setInstitution(bean.getInstitution());
+		setValue(UUID.randomUUID().toString());
 
-    public PhdIndividualProgramProcess getIndividualProgramProcess() {
-	return getPhdProgramCandidacyProcess().getIndividualProgramProcess();
-    }
-
-    @Service
-    public void sendEmail() {
-	sendEmail(createSubject(), createBody());
-    }
-
-    private String createSubject() {
-	final ResourceBundle bundle = ResourceBundle.getBundle("resources.PhdResources", Language.getLocale());
-	return String.format(bundle.getString("message.phd.email.subject.referee"), getCandidatePerson().getName(),
-		getCandidatePerson().getName());
-    }
-
-    public Person getCandidatePerson() {
-	return getPhdProgramCandidacyProcess().getPerson();
-    }
-
-    private String createBody() {
-	return getPhdProgramCandidacyProcess().getPublicPhdCandidacyPeriod().getEmailMessageBodyForRefereeForm(this);
-    }
-
-    public void delete() {
-	disconnect();
-	deleteDomainObject();
-    }
-
-    private void disconnect() {
-	if (hasLetter()) {
-	    throw new DomainException("error.PhdCandidacyReferee.has.letter");
-	}
-	
-	removePhdProgramCandidacyProcess();
-	removeRootDomainObject();
-
-	List<PhdCandidacyRefereeAlert> alerts = new ArrayList<PhdCandidacyRefereeAlert>();
-	alerts.addAll(getAlerts());
-	
-	for (PhdCandidacyRefereeAlert phdCandidacyRefereeAlert : alerts) {
-	    removeAlerts(phdCandidacyRefereeAlert);
-	}
-    }
-
-    public String getRefereeSubmissionFormLinkPt() {
-	if (getPhdProgramCandidacyProcess().getPublicPhdCandidacyPeriod().isInstitutionCandidacyPeriod()) {
-	    InstitutionPhdCandidacyPeriod publicPhdCandidacyPeriod = (InstitutionPhdCandidacyPeriod) getPhdProgramCandidacyProcess()
-		    .getPublicPhdCandidacyPeriod();
-
-	    return publicPhdCandidacyPeriod.getRefereeSubmissionFormLinkPt(this);
+		// new PhdCandidacyRefereeAlert(this);
+		sendEmail();
 	}
 
-	return null;
-    }
-
-    public String getRefereeSubmissionFormLinkEn() {
-	if (getPhdProgramCandidacyProcess().getPublicPhdCandidacyPeriod().isInstitutionCandidacyPeriod()) {
-	    InstitutionPhdCandidacyPeriod publicPhdCandidacyPeriod = (InstitutionPhdCandidacyPeriod) getPhdProgramCandidacyProcess()
-		    .getPublicPhdCandidacyPeriod();
-
-	    return publicPhdCandidacyPeriod.getRefereeSubmissionFormLinkEn(this);
+	@Override
+	public boolean hasCandidacyProcess() {
+		return hasPhdProgramCandidacyProcess();
 	}
 
-	return null;
+	public boolean isLetterAvailable() {
+		return hasLetter();
+	}
 
-    }
+	public PhdIndividualProgramProcess getIndividualProgramProcess() {
+		return getPhdProgramCandidacyProcess().getIndividualProgramProcess();
+	}
+
+	@Service
+	public void sendEmail() {
+		sendEmail(createSubject(), createBody());
+	}
+
+	private String createSubject() {
+		final ResourceBundle bundle = ResourceBundle.getBundle("resources.PhdResources", Language.getLocale());
+		return String.format(bundle.getString("message.phd.email.subject.referee"), getCandidatePerson().getName(),
+				getCandidatePerson().getName());
+	}
+
+	public Person getCandidatePerson() {
+		return getPhdProgramCandidacyProcess().getPerson();
+	}
+
+	private String createBody() {
+		return getPhdProgramCandidacyProcess().getPublicPhdCandidacyPeriod().getEmailMessageBodyForRefereeForm(this);
+	}
+
+	public void delete() {
+		disconnect();
+		deleteDomainObject();
+	}
+
+	private void disconnect() {
+		if (hasLetter()) {
+			throw new DomainException("error.PhdCandidacyReferee.has.letter");
+		}
+
+		removePhdProgramCandidacyProcess();
+		removeRootDomainObject();
+
+		List<PhdCandidacyRefereeAlert> alerts = new ArrayList<PhdCandidacyRefereeAlert>();
+		alerts.addAll(getAlerts());
+
+		for (PhdCandidacyRefereeAlert phdCandidacyRefereeAlert : alerts) {
+			removeAlerts(phdCandidacyRefereeAlert);
+		}
+	}
+
+	public String getRefereeSubmissionFormLinkPt() {
+		if (getPhdProgramCandidacyProcess().getPublicPhdCandidacyPeriod().isInstitutionCandidacyPeriod()) {
+			InstitutionPhdCandidacyPeriod publicPhdCandidacyPeriod =
+					(InstitutionPhdCandidacyPeriod) getPhdProgramCandidacyProcess().getPublicPhdCandidacyPeriod();
+
+			return publicPhdCandidacyPeriod.getRefereeSubmissionFormLinkPt(this);
+		}
+
+		return null;
+	}
+
+	public String getRefereeSubmissionFormLinkEn() {
+		if (getPhdProgramCandidacyProcess().getPublicPhdCandidacyPeriod().isInstitutionCandidacyPeriod()) {
+			InstitutionPhdCandidacyPeriod publicPhdCandidacyPeriod =
+					(InstitutionPhdCandidacyPeriod) getPhdProgramCandidacyProcess().getPublicPhdCandidacyPeriod();
+
+			return publicPhdCandidacyPeriod.getRefereeSubmissionFormLinkEn(this);
+		}
+
+		return null;
+
+	}
 
 }

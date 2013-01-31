@@ -8,21 +8,21 @@ import pt.ist.fenixWebFramework.renderers.layouts.Layout;
 
 public class LessonPlainRenderer extends OutputRenderer {
 
-    @Override
-    protected Layout getLayout(Object object, Class type) {
-	return new Layout() {
+	@Override
+	protected Layout getLayout(Object object, Class type) {
+		return new Layout() {
 
-	    @Override
-	    public HtmlComponent createComponent(Object object, Class type) {
+			@Override
+			public HtmlComponent createComponent(Object object, Class type) {
 
-		if (object == null) {
-		    return new HtmlText();
-		}
+				if (object == null) {
+					return new HtmlText();
+				}
 
-		Lesson lesson = (Lesson) object;
-		return new HtmlText(lesson.prettyPrint());
-	    }
-	};
-    }
+				Lesson lesson = (Lesson) object;
+				return new HtmlText(lesson.prettyPrint());
+			}
+		};
+	}
 
 }

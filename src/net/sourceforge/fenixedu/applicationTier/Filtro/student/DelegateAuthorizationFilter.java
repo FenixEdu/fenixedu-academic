@@ -13,12 +13,13 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
  * 
  */
 public class DelegateAuthorizationFilter extends AuthorizationByRoleFilter {
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorAplicacao.Filtro.AuthorizationByRoleFilter#getRoleType()
-     */
-    protected RoleType getRoleType() {
-	return RoleType.DELEGATE;
-    }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see ServidorAplicacao.Filtro.AuthorizationByRoleFilter#getRoleType()
+	 */
+	@Override
+	protected RoleType getRoleType() {
+		return RoleType.DELEGATE;
+	}
 }

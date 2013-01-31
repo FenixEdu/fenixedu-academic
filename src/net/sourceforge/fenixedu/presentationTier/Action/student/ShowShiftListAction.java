@@ -30,67 +30,68 @@ import org.apache.struts.action.ActionMapping;
 
 public class ShowShiftListAction extends Action {
 
-    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-	    throws Exception {
+	@Override
+	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
 
-	String indexes = request.getParameter("index");
-	String[] indexij = indexes.split("-");
-	Integer indexi = new Integer(indexij[0]);
-	Integer indexj = new Integer(indexij[1]);
+		String indexes = request.getParameter("index");
+		String[] indexij = indexes.split("-");
+		Integer indexi = new Integer(indexij[0]);
+		Integer indexj = new Integer(indexij[1]);
 
-	InfoShiftEnrolment iSE = (InfoShiftEnrolment) request.getAttribute("infoShiftEnrolment");
-	InfoExecutionCourse executionCourse = null;
-	ShiftType lessonType = null;
+		InfoShiftEnrolment iSE = (InfoShiftEnrolment) request.getAttribute("infoShiftEnrolment");
+		InfoExecutionCourse executionCourse = null;
+		ShiftType lessonType = null;
 
-	List infoEnrollmentWithShift = iSE.getInfoEnrolmentWithShift();
-	executionCourse = ((InfoCourseExecutionAndListOfTypeLessonAndInfoShift) (infoEnrollmentWithShift.get(indexi.intValue())))
-		.getInfoExecutionCourse();
+		List infoEnrollmentWithShift = iSE.getInfoEnrolmentWithShift();
+		executionCourse =
+				((InfoCourseExecutionAndListOfTypeLessonAndInfoShift) (infoEnrollmentWithShift.get(indexi.intValue())))
+						.getInfoExecutionCourse();
 
-	lessonType = ((TypeLessonAndInfoShift) ((InfoCourseExecutionAndListOfTypeLessonAndInfoShift) (iSE
-		.getInfoEnrolmentWithShift().get(indexi.intValue()))).getTypeLessonsAndInfoShifts().get(indexj.intValue()))
-		.getTypeLesson();
+		lessonType =
+				((TypeLessonAndInfoShift) ((InfoCourseExecutionAndListOfTypeLessonAndInfoShift) (iSE.getInfoEnrolmentWithShift()
+						.get(indexi.intValue()))).getTypeLessonsAndInfoShifts().get(indexj.intValue())).getTypeLesson();
 
-	List shiftsList = new ArrayList();
+		List shiftsList = new ArrayList();
 
-	try {
-	    shiftsList = (ArrayList) ReadShiftsByTypeFromExecutionCourse.run(executionCourse, lessonType);
-	    if (!shiftsList.isEmpty()) {
-		request.setAttribute("shiftsList", shiftsList);
-	    }
+		try {
+			shiftsList = ReadShiftsByTypeFromExecutionCourse.run(executionCourse, lessonType);
+			if (!shiftsList.isEmpty()) {
+				request.setAttribute("shiftsList", shiftsList);
+			}
 
-	} catch (Exception e) {
-	    ActionErrors actionErrors = new ActionErrors();
-	    actionErrors.add("unableToReadShifts", new ActionError("errors.unableToReadShifts"));
-	    saveErrors(request, actionErrors);
-	    return mapping.getInputForward();
+		} catch (Exception e) {
+			ActionErrors actionErrors = new ActionErrors();
+			actionErrors.add("unableToReadShifts", new ActionError("errors.unableToReadShifts"));
+			saveErrors(request, actionErrors);
+			return mapping.getInputForward();
+		}
+
+		try {
+			List vacancies = new ArrayList();
+			Iterator iterator = shiftsList.iterator();
+			while (iterator.hasNext()) {
+				InfoShift element = (InfoShift) iterator.next();
+
+				List students = LerAlunosDeTurno.run(new ShiftKey(element.getNome(), element.getInfoDisciplinaExecucao()));
+				Integer vacancy = element.getLotacao();
+
+				vacancy = new Integer(vacancy.intValue() - students.size());
+				vacancies.add(vacancy);
+			}
+
+			if (!vacancies.isEmpty()) {
+				request.setAttribute("vacancies", vacancies);
+			}
+		} catch (Exception e) {
+			ActionErrors actionErrors = new ActionErrors();
+			actionErrors.add("unableToReadVacancies", new ActionError("errors.unableToReadVacancies"));
+			saveErrors(request, actionErrors);
+			return mapping.getInputForward();
+		}
+
+		return mapping.findForward("viewShiftsList");
+
 	}
-
-	try {
-	    List vacancies = new ArrayList();
-	    Iterator iterator = shiftsList.iterator();
-	    while (iterator.hasNext()) {
-		InfoShift element = (InfoShift) iterator.next();
-
-		List students = (ArrayList) LerAlunosDeTurno.run(new ShiftKey(element.getNome(), element
-			.getInfoDisciplinaExecucao()));
-		Integer vacancy = element.getLotacao();
-
-		vacancy = new Integer(vacancy.intValue() - students.size());
-		vacancies.add(vacancy);
-	    }
-
-	    if (!vacancies.isEmpty()) {
-		request.setAttribute("vacancies", vacancies);
-	    }
-	} catch (Exception e) {
-	    ActionErrors actionErrors = new ActionErrors();
-	    actionErrors.add("unableToReadVacancies", new ActionError("errors.unableToReadVacancies"));
-	    saveErrors(request, actionErrors);
-	    return mapping.getInputForward();
-	}
-
-	return mapping.findForward("viewShiftsList");
-
-    }
 
 }

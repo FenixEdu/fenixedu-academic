@@ -19,41 +19,43 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
  */
 public class AccessFinalDegreeWorkProposalAuthorizationFilter extends DomainObjectAuthorizationFilter {
 
-    protected RoleType getRoleType() {
-	return RoleType.COORDINATOR;
-    }
-
-    protected boolean verifyCondition(IUserView id, Integer objectId) {
-	if (objectId == null) {
-	    return false;
+	@Override
+	protected RoleType getRoleType() {
+		return RoleType.COORDINATOR;
 	}
 
-	final Proposal proposal = rootDomainObject.readProposalByOID(objectId);
-	if (proposal == null) {
-	    return false;
-	}
-
-	final Person person = id.getPerson();
-	if (person == proposal.getOrientator() || person == proposal.getCoorientator()) {
-	    return true;
-	}
-
-	for (final ExecutionDegree executionDegree : proposal.getScheduleing().getExecutionDegreesSet()) {
-	    for (final Coordinator coordinator : executionDegree.getCoordinatorsListSet()) {
-		if (coordinator != null && person == coordinator.getPerson()) {
-		    return true;
+	@Override
+	protected boolean verifyCondition(IUserView id, Integer objectId) {
+		if (objectId == null) {
+			return false;
 		}
-	    }
-	    for (final ScientificCommission scientificCommission : person.getScientificCommissionsSet()) {
-		if (executionDegree == scientificCommission.getExecutionDegree()
-			|| (executionDegree.getDegreeCurricularPlan() == scientificCommission.getExecutionDegree()
-				.getDegreeCurricularPlan() && executionDegree.getExecutionYear() == scientificCommission
-				.getExecutionDegree().getExecutionYear().getPreviousExecutionYear())) {
-		    return true;
-		}
-	    }
-	}
 
-	return false;
-    }
+		final Proposal proposal = rootDomainObject.readProposalByOID(objectId);
+		if (proposal == null) {
+			return false;
+		}
+
+		final Person person = id.getPerson();
+		if (person == proposal.getOrientator() || person == proposal.getCoorientator()) {
+			return true;
+		}
+
+		for (final ExecutionDegree executionDegree : proposal.getScheduleing().getExecutionDegreesSet()) {
+			for (final Coordinator coordinator : executionDegree.getCoordinatorsListSet()) {
+				if (coordinator != null && person == coordinator.getPerson()) {
+					return true;
+				}
+			}
+			for (final ScientificCommission scientificCommission : person.getScientificCommissionsSet()) {
+				if (executionDegree == scientificCommission.getExecutionDegree()
+						|| (executionDegree.getDegreeCurricularPlan() == scientificCommission.getExecutionDegree()
+								.getDegreeCurricularPlan() && executionDegree.getExecutionYear() == scientificCommission
+								.getExecutionDegree().getExecutionYear().getPreviousExecutionYear())) {
+					return true;
+				}
+			}
+		}
+
+		return false;
+	}
 }

@@ -10,13 +10,13 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadBuildings extends FenixService {
 
-    @Service
-    public static List<InfoBuilding> run() {
-	final List<InfoBuilding> result = new ArrayList<InfoBuilding>();
-	for (final Building building : Building.getAllActiveBuildings()) {
-	    result.add(InfoBuilding.newInfoFromDomain(building));
+	@Service
+	public static List<InfoBuilding> run() {
+		final List<InfoBuilding> result = new ArrayList<InfoBuilding>();
+		for (final Building building : Building.getAllActiveBuildings()) {
+			result.add(InfoBuilding.newInfoFromDomain(building));
+		}
+		return result;
 	}
-	return result;
-    }
 
 }

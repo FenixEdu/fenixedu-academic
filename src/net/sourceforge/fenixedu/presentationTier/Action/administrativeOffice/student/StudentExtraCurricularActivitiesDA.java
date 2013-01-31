@@ -16,37 +16,38 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
  * @author Pedro Santos (pedro.miguel.santos@ist.utl.pt)
  */
 @Mapping(path = "/studentExtraCurricularActivities", module = "academicAdministration")
-@Forwards({ @Forward(name = "manageActivities", path = "/academicAdminOffice/student/extraCurricularActivities/manageActivities.jsp") })
+@Forwards({ @Forward(
+		name = "manageActivities",
+		path = "/academicAdminOffice/student/extraCurricularActivities/manageActivities.jsp") })
 public class StudentExtraCurricularActivitiesDA extends FenixDispatchAction {
 
-    public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-	Student student = DomainObject.fromExternalId(request.getParameter("studentId"));
-	request.setAttribute("student", student);
-	return mapping.findForward("manageActivities");
-    }
+	public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		Student student = DomainObject.fromExternalId(request.getParameter("studentId"));
+		request.setAttribute("student", student);
+		return mapping.findForward("manageActivities");
+	}
 
-    public ActionForward createActivity(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) {
-	ExtraCurricularActivity activity = getRenderedObject();
-	RenderUtils.invalidateViewState();
-	request.setAttribute("student", activity.getStudent());
-	return mapping.findForward("manageActivities");
-    }
+	public ActionForward createActivity(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) {
+		ExtraCurricularActivity activity = getRenderedObject();
+		RenderUtils.invalidateViewState();
+		request.setAttribute("student", activity.getStudent());
+		return mapping.findForward("manageActivities");
+	}
 
-    public ActionForward deleteActivity(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) {
-	ExtraCurricularActivity activity = DomainObject.fromExternalId(request.getParameter("activityId"));
-	RenderUtils.invalidateViewState();
-	final Student student = activity.getStudent();
-	activity.delete();
-	request.setAttribute("student", student);
-	return mapping.findForward("manageActivities");
-    }
+	public ActionForward deleteActivity(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) {
+		ExtraCurricularActivity activity = DomainObject.fromExternalId(request.getParameter("activityId"));
+		RenderUtils.invalidateViewState();
+		final Student student = activity.getStudent();
+		activity.delete();
+		request.setAttribute("student", student);
+		return mapping.findForward("manageActivities");
+	}
 }

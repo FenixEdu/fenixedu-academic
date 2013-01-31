@@ -23,31 +23,34 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 @Mapping(module = "scientificCouncil", path = "/projectTutorialCourses", scope = "request", parameter = "method")
-@Forwards(value = { @Forward(name = "showDepartmentExecutionCourses", path = "/credits/showDepartmentExecutionCourses.jsp", tileProperties = @Tile(title = "private.scientificcouncil.credits.coursestypes")) })
+@Forwards(value = { @Forward(
+		name = "showDepartmentExecutionCourses",
+		path = "/credits/showDepartmentExecutionCourses.jsp",
+		tileProperties = @Tile(title = "private.scientificcouncil.credits.coursestypes")) })
 public class ProjectTutorialExecutionCoursesDA extends FenixDispatchAction {
 
-    public ActionForward showDepartmentExecutionCourses(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws NumberFormatException, FenixFilterException, FenixServiceException {
-	DepartmentCreditsBean departmentCreditsBean = getRenderedObject();
-	if (departmentCreditsBean == null) {
-	    departmentCreditsBean = new DepartmentCreditsBean();
-	    departmentCreditsBean.setAvailableDepartments(new ArrayList<Department>(rootDomainObject.getDepartments()));
+	public ActionForward showDepartmentExecutionCourses(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws NumberFormatException, FenixFilterException, FenixServiceException {
+		DepartmentCreditsBean departmentCreditsBean = getRenderedObject();
+		if (departmentCreditsBean == null) {
+			departmentCreditsBean = new DepartmentCreditsBean();
+			departmentCreditsBean.setAvailableDepartments(new ArrayList<Department>(rootDomainObject.getDepartments()));
+		}
+		request.setAttribute("departmentCreditsBean", departmentCreditsBean);
+		return mapping.findForward("showDepartmentExecutionCourses");
 	}
-	request.setAttribute("departmentCreditsBean", departmentCreditsBean);
-	return mapping.findForward("showDepartmentExecutionCourses");
-    }
 
-    public ActionForward changeExecutionCourseType(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws NumberFormatException, FenixFilterException, FenixServiceException {
+	public ActionForward changeExecutionCourseType(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws NumberFormatException, FenixFilterException, FenixServiceException {
 
-	ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId((String) getFromRequest(request,
-		"executionCourseOid"));
-	executionCourse.changeProjectTutorialCourse();
-	Department department = AbstractDomainObject.fromExternalId((String) getFromRequest(request, "departmentOid"));
-	DepartmentCreditsBean departmentCreditsBean = new DepartmentCreditsBean(department, new ArrayList<Department>(
-		rootDomainObject.getDepartments()));
-	request.setAttribute("departmentCreditsBean", departmentCreditsBean);
-	return mapping.findForward("showDepartmentExecutionCourses");
-    }
+		ExecutionCourse executionCourse =
+				AbstractDomainObject.fromExternalId((String) getFromRequest(request, "executionCourseOid"));
+		executionCourse.changeProjectTutorialCourse();
+		Department department = AbstractDomainObject.fromExternalId((String) getFromRequest(request, "departmentOid"));
+		DepartmentCreditsBean departmentCreditsBean =
+				new DepartmentCreditsBean(department, new ArrayList<Department>(rootDomainObject.getDepartments()));
+		request.setAttribute("departmentCreditsBean", departmentCreditsBean);
+		return mapping.findForward("showDepartmentExecutionCourses");
+	}
 
 }

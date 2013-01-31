@@ -12,36 +12,36 @@ package net.sourceforge.fenixedu.dataTransferObject;
  */
 public class InfoSiteExamMap extends DataTranferObject implements ISiteComponent {
 
-    private InfoExamsMap infoExamsMap;
+	private InfoExamsMap infoExamsMap;
 
-    private InfoExecutionDegree infoExecutionDegree;
+	private InfoExecutionDegree infoExecutionDegree;
 
-    /**
-     * @return
-     */
-    public InfoExamsMap getInfoExamsMap() {
-	return infoExamsMap;
-    }
+	/**
+	 * @return
+	 */
+	public InfoExamsMap getInfoExamsMap() {
+		return infoExamsMap;
+	}
 
-    /**
-     * @param map
-     */
-    public void setInfoExamsMap(InfoExamsMap map) {
-	infoExamsMap = map;
-    }
+	/**
+	 * @param map
+	 */
+	public void setInfoExamsMap(InfoExamsMap map) {
+		infoExamsMap = map;
+	}
 
-    /**
-     * @return
-     */
-    public InfoExecutionDegree getInfoExecutionDegree() {
-	return infoExecutionDegree;
-    }
+	/**
+	 * @return
+	 */
+	public InfoExecutionDegree getInfoExecutionDegree() {
+		return infoExecutionDegree;
+	}
 
-    /**
-     * @param degree
-     */
-    public void setInfoExecutionDegree(InfoExecutionDegree degree) {
-	infoExecutionDegree = degree;
-    }
+	/**
+	 * @param degree
+	 */
+	public void setInfoExecutionDegree(InfoExecutionDegree degree) {
+		infoExecutionDegree = degree;
+	}
 
 }

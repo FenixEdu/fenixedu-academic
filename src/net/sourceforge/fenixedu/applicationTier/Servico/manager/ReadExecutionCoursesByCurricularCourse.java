@@ -13,20 +13,20 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadExecutionCoursesByCurricularCourse extends FenixService {
 
-    @Service
-    public static List run(Integer curricularCourseId) throws FenixServiceException {
-	CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(curricularCourseId);
-	if (curricularCourse == null) {
-	    throw new NonExistingServiceException("message.nonExistingCurricularCourse", null);
-	}
+	@Service
+	public static List run(Integer curricularCourseId) throws FenixServiceException {
+		CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(curricularCourseId);
+		if (curricularCourse == null) {
+			throw new NonExistingServiceException("message.nonExistingCurricularCourse", null);
+		}
 
-	List<ExecutionCourse> executionCourses = curricularCourse.getAssociatedExecutionCourses();
+		List<ExecutionCourse> executionCourses = curricularCourse.getAssociatedExecutionCourses();
 
-	List<InfoExecutionCourse> result = new ArrayList<InfoExecutionCourse>(executionCourses.size());
-	for (ExecutionCourse executionCourse : executionCourses) {
-	    result.add(InfoExecutionCourse.newInfoFromDomain(executionCourse));
+		List<InfoExecutionCourse> result = new ArrayList<InfoExecutionCourse>(executionCourses.size());
+		for (ExecutionCourse executionCourse : executionCourses) {
+			result.add(InfoExecutionCourse.newInfoFromDomain(executionCourse));
+		}
+		return result;
 	}
-	return result;
-    }
 
 }

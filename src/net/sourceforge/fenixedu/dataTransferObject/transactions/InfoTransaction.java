@@ -18,173 +18,173 @@ import net.sourceforge.fenixedu.domain.transactions.TransactionType;
  */
 public abstract class InfoTransaction extends InfoObject {
 
-    private Double value;
+	private Double value;
 
-    private Timestamp transactionDate;
+	private Timestamp transactionDate;
 
-    private String remarks;
+	private String remarks;
 
-    private PaymentType paymentType;
+	private PaymentType paymentType;
 
-    private TransactionType transactionType;
+	private TransactionType transactionType;
 
-    private Boolean wasInternalBalance;
+	private Boolean wasInternalBalance;
 
-    private InfoPerson infoResponsiblePerson;
+	private InfoPerson infoResponsiblePerson;
 
-    private InfoPersonAccount infoPersonAccount;
+	private InfoPersonAccount infoPersonAccount;
 
-    public InfoTransaction() {
-    }
-
-    public static InfoTransaction newInfoFromDomain(Transaction transaction) {
-
-	InfoTransaction infoTransaction = null;
-
-	if (transaction instanceof PaymentTransaction) {
-	    infoTransaction = InfoPaymentTransaction.newInfoFromDomain((PaymentTransaction) transaction);
-	} else if (transaction instanceof ReimbursementTransaction) {
-	    infoTransaction = InfoReimbursementTransaction.newInfoFromDomain((ReimbursementTransaction) transaction);
+	public InfoTransaction() {
 	}
 
-	return infoTransaction;
+	public static InfoTransaction newInfoFromDomain(Transaction transaction) {
 
-    }
+		InfoTransaction infoTransaction = null;
 
-    /**
-     * @param infoTransaction
-     * @param transaction
-     */
-    protected void copyFromDomain(Transaction transaction) {
-	super.copyFromDomain(transaction);
-	this.paymentType = transaction.getPaymentType();
-	this.remarks = transaction.getRemarks();
-	if (transaction.getTransactionDate() != null) {
-	    this.setTransactionDate(new Timestamp(transaction.getTransactionDate().getTime()));
+		if (transaction instanceof PaymentTransaction) {
+			infoTransaction = InfoPaymentTransaction.newInfoFromDomain((PaymentTransaction) transaction);
+		} else if (transaction instanceof ReimbursementTransaction) {
+			infoTransaction = InfoReimbursementTransaction.newInfoFromDomain((ReimbursementTransaction) transaction);
+		}
+
+		return infoTransaction;
+
 	}
-	this.transactionType = transaction.getTransactionType();
-	this.value = transaction.getValue();
-	this.wasInternalBalance = transaction.getWasInternalBalance();
 
-    }
+	/**
+	 * @param infoTransaction
+	 * @param transaction
+	 */
+	protected void copyFromDomain(Transaction transaction) {
+		super.copyFromDomain(transaction);
+		this.paymentType = transaction.getPaymentType();
+		this.remarks = transaction.getRemarks();
+		if (transaction.getTransactionDate() != null) {
+			this.setTransactionDate(new Timestamp(transaction.getTransactionDate().getTime()));
+		}
+		this.transactionType = transaction.getTransactionType();
+		this.value = transaction.getValue();
+		this.wasInternalBalance = transaction.getWasInternalBalance();
 
-    /**
-     * @return Returns the infoPersonAccount.
-     */
-    public InfoPersonAccount getInfoPersonAccount() {
-	return infoPersonAccount;
-    }
+	}
 
-    /**
-     * @param infoPersonAccount
-     *            The infoPersonAccount to set.
-     */
-    public void setInfoPersonAccount(InfoPersonAccount infoPersonAccount) {
-	this.infoPersonAccount = infoPersonAccount;
-    }
+	/**
+	 * @return Returns the infoPersonAccount.
+	 */
+	public InfoPersonAccount getInfoPersonAccount() {
+		return infoPersonAccount;
+	}
 
-    /**
-     * @return Returns the infoResponsiblePerson.
-     */
-    public InfoPerson getInfoResponsiblePerson() {
-	return infoResponsiblePerson;
-    }
+	/**
+	 * @param infoPersonAccount
+	 *            The infoPersonAccount to set.
+	 */
+	public void setInfoPersonAccount(InfoPersonAccount infoPersonAccount) {
+		this.infoPersonAccount = infoPersonAccount;
+	}
 
-    /**
-     * @param infoResponsiblePerson
-     *            The infoResponsiblePerson to set.
-     */
-    public void setInfoResponsiblePerson(InfoPerson infoResponsiblePerson) {
-	this.infoResponsiblePerson = infoResponsiblePerson;
-    }
+	/**
+	 * @return Returns the infoResponsiblePerson.
+	 */
+	public InfoPerson getInfoResponsiblePerson() {
+		return infoResponsiblePerson;
+	}
 
-    /**
-     * @return Returns the paymentType.
-     */
-    public PaymentType getPaymentType() {
-	return paymentType;
-    }
+	/**
+	 * @param infoResponsiblePerson
+	 *            The infoResponsiblePerson to set.
+	 */
+	public void setInfoResponsiblePerson(InfoPerson infoResponsiblePerson) {
+		this.infoResponsiblePerson = infoResponsiblePerson;
+	}
 
-    /**
-     * @param paymentType
-     *            The paymentType to set.
-     */
-    public void setPaymentType(PaymentType paymentType) {
-	this.paymentType = paymentType;
-    }
+	/**
+	 * @return Returns the paymentType.
+	 */
+	public PaymentType getPaymentType() {
+		return paymentType;
+	}
 
-    /**
-     * @return Returns the remarks.
-     */
-    public String getRemarks() {
-	return remarks;
-    }
+	/**
+	 * @param paymentType
+	 *            The paymentType to set.
+	 */
+	public void setPaymentType(PaymentType paymentType) {
+		this.paymentType = paymentType;
+	}
 
-    /**
-     * @param remarks
-     *            The remarks to set.
-     */
-    public void setRemarks(String remarks) {
-	this.remarks = remarks;
-    }
+	/**
+	 * @return Returns the remarks.
+	 */
+	public String getRemarks() {
+		return remarks;
+	}
 
-    /**
-     * @return Returns the transactionDate.
-     */
-    public Timestamp getTransactionDate() {
-	return transactionDate;
-    }
+	/**
+	 * @param remarks
+	 *            The remarks to set.
+	 */
+	public void setRemarks(String remarks) {
+		this.remarks = remarks;
+	}
 
-    /**
-     * @param transactionDate
-     *            The transactionDate to set.
-     */
-    public void setTransactionDate(Timestamp transactionDate) {
-	this.transactionDate = transactionDate;
-    }
+	/**
+	 * @return Returns the transactionDate.
+	 */
+	public Timestamp getTransactionDate() {
+		return transactionDate;
+	}
 
-    /**
-     * @return Returns the transactionType.
-     */
-    public TransactionType getTransactionType() {
-	return transactionType;
-    }
+	/**
+	 * @param transactionDate
+	 *            The transactionDate to set.
+	 */
+	public void setTransactionDate(Timestamp transactionDate) {
+		this.transactionDate = transactionDate;
+	}
 
-    /**
-     * @param transactionType
-     *            The transactionType to set.
-     */
-    public void setTransactionType(TransactionType transactionType) {
-	this.transactionType = transactionType;
-    }
+	/**
+	 * @return Returns the transactionType.
+	 */
+	public TransactionType getTransactionType() {
+		return transactionType;
+	}
 
-    /**
-     * @return Returns the value.
-     */
-    public Double getValue() {
-	return value;
-    }
+	/**
+	 * @param transactionType
+	 *            The transactionType to set.
+	 */
+	public void setTransactionType(TransactionType transactionType) {
+		this.transactionType = transactionType;
+	}
 
-    /**
-     * @param value
-     *            The value to set.
-     */
-    public void setValue(Double value) {
-	this.value = value;
-    }
+	/**
+	 * @return Returns the value.
+	 */
+	public Double getValue() {
+		return value;
+	}
 
-    /**
-     * @return Returns the wasInternalBalance.
-     */
-    public Boolean getWasInternalBalance() {
-	return wasInternalBalance;
-    }
+	/**
+	 * @param value
+	 *            The value to set.
+	 */
+	public void setValue(Double value) {
+		this.value = value;
+	}
 
-    /**
-     * @param wasInternalBalance
-     *            The wasInternalBalance to set.
-     */
-    public void setWasInternalBalance(Boolean wasInternalBalance) {
-	this.wasInternalBalance = wasInternalBalance;
-    }
+	/**
+	 * @return Returns the wasInternalBalance.
+	 */
+	public Boolean getWasInternalBalance() {
+		return wasInternalBalance;
+	}
+
+	/**
+	 * @param wasInternalBalance
+	 *            The wasInternalBalance to set.
+	 */
+	public void setWasInternalBalance(Boolean wasInternalBalance) {
+		this.wasInternalBalance = wasInternalBalance;
+	}
 }

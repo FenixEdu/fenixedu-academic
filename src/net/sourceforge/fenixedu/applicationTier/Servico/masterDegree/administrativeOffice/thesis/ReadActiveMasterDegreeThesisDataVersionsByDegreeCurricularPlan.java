@@ -22,28 +22,29 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class ReadActiveMasterDegreeThesisDataVersionsByDegreeCurricularPlan extends FenixService {
 
-    @Checked("RolePredicates.COORDINATOR_PREDICATE")
-    @Service
-    public static List run(Integer degreeCurricularPlanID) throws FenixServiceException {
+	@Checked("RolePredicates.COORDINATOR_PREDICATE")
+	@Service
+	public static List run(Integer degreeCurricularPlanID) throws FenixServiceException {
 
-	DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanID);
+		DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanID);
 
-	List masterDegreeThesisDataVersions = degreeCurricularPlan.readActiveMasterDegreeThesisDataVersions();
+		List masterDegreeThesisDataVersions = degreeCurricularPlan.readActiveMasterDegreeThesisDataVersions();
 
-	if (masterDegreeThesisDataVersions == null || masterDegreeThesisDataVersions.isEmpty()) {
-	    throw new NonExistingServiceException("error.exception.masterDegree.nonExistingMasterDegreeThesis");
+		if (masterDegreeThesisDataVersions == null || masterDegreeThesisDataVersions.isEmpty()) {
+			throw new NonExistingServiceException("error.exception.masterDegree.nonExistingMasterDegreeThesis");
+		}
+
+		CollectionUtils.transform(masterDegreeThesisDataVersions, new Transformer() {
+
+			@Override
+			public Object transform(Object arg0) {
+				MasterDegreeThesisDataVersion masterDegreeThesisDataVersion = (MasterDegreeThesisDataVersion) arg0;
+				return InfoMasterDegreeThesisDataVersionWithGuidersAndRespAndThesis
+						.newInfoFromDomain(masterDegreeThesisDataVersion);
+			}
+
+		});
+
+		return masterDegreeThesisDataVersions;
 	}
-
-	CollectionUtils.transform(masterDegreeThesisDataVersions, new Transformer() {
-
-	    public Object transform(Object arg0) {
-		MasterDegreeThesisDataVersion masterDegreeThesisDataVersion = (MasterDegreeThesisDataVersion) arg0;
-		return InfoMasterDegreeThesisDataVersionWithGuidersAndRespAndThesis
-			.newInfoFromDomain(masterDegreeThesisDataVersion);
-	    }
-
-	});
-
-	return masterDegreeThesisDataVersions;
-    }
 }

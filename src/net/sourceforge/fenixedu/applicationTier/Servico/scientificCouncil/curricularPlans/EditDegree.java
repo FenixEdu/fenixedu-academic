@@ -16,41 +16,41 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class EditDegree extends FenixService {
 
-    @Checked("RolePredicates.SCIENTIFIC_COUNCIL_PREDICATE")
-    @Service
-    public static void run(Integer idInternal, String name, String nameEn, String acronym, DegreeType degreeType,
-	    Double ectsCredits, GradeScale gradeScale, String prevailingScientificArea, ExecutionYear executionYear)
-	    throws FenixServiceException {
-	if (idInternal == null || name == null || nameEn == null || acronym == null || degreeType == null || ectsCredits == null) {
-	    throw new InvalidArgumentsServiceException();
-	}
-
-	final Degree degreeToEdit = rootDomainObject.readDegreeByOID(idInternal);
-
-	if (degreeToEdit == null) {
-	    throw new NonExistingServiceException();
-	} else if (!degreeToEdit.getSigla().equalsIgnoreCase(acronym)
-		|| !degreeToEdit.getNameFor(executionYear).getContent(Language.pt).equalsIgnoreCase(name)
-		|| !degreeToEdit.getDegreeType().equals(degreeType)) {
-
-	    final List<Degree> degrees = Degree.readNotEmptyDegrees();
-
-	    // assert unique degree code and unique pair name/type
-	    for (Degree degree : degrees) {
-		if (degree != degreeToEdit) {
-		    if (degree.getSigla().equalsIgnoreCase(acronym)) {
-			throw new FenixServiceException("error.existing.degree.acronym");
-		    }
-		    if ((degree.getNameFor(executionYear).getContent(Language.pt).equalsIgnoreCase(name) || degree.getNameFor(
-			    executionYear).getContent(Language.en).equalsIgnoreCase(nameEn))
-			    && degree.getDegreeType().equals(degreeType)) {
-			throw new FenixServiceException("error.existing.degree.name.and.type");
-		    }
+	@Checked("RolePredicates.SCIENTIFIC_COUNCIL_PREDICATE")
+	@Service
+	public static void run(Integer idInternal, String name, String nameEn, String acronym, DegreeType degreeType,
+			Double ectsCredits, GradeScale gradeScale, String prevailingScientificArea, ExecutionYear executionYear)
+			throws FenixServiceException {
+		if (idInternal == null || name == null || nameEn == null || acronym == null || degreeType == null || ectsCredits == null) {
+			throw new InvalidArgumentsServiceException();
 		}
-	    }
-	}
 
-	degreeToEdit.edit(name, nameEn, acronym, degreeType, ectsCredits, gradeScale, prevailingScientificArea, executionYear);
-    }
+		final Degree degreeToEdit = rootDomainObject.readDegreeByOID(idInternal);
+
+		if (degreeToEdit == null) {
+			throw new NonExistingServiceException();
+		} else if (!degreeToEdit.getSigla().equalsIgnoreCase(acronym)
+				|| !degreeToEdit.getNameFor(executionYear).getContent(Language.pt).equalsIgnoreCase(name)
+				|| !degreeToEdit.getDegreeType().equals(degreeType)) {
+
+			final List<Degree> degrees = Degree.readNotEmptyDegrees();
+
+			// assert unique degree code and unique pair name/type
+			for (Degree degree : degrees) {
+				if (degree != degreeToEdit) {
+					if (degree.getSigla().equalsIgnoreCase(acronym)) {
+						throw new FenixServiceException("error.existing.degree.acronym");
+					}
+					if ((degree.getNameFor(executionYear).getContent(Language.pt).equalsIgnoreCase(name) || degree
+							.getNameFor(executionYear).getContent(Language.en).equalsIgnoreCase(nameEn))
+							&& degree.getDegreeType().equals(degreeType)) {
+						throw new FenixServiceException("error.existing.degree.name.and.type");
+					}
+				}
+			}
+		}
+
+		degreeToEdit.edit(name, nameEn, acronym, degreeType, ectsCredits, gradeScale, prevailingScientificArea, executionYear);
+	}
 
 }

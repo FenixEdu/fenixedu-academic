@@ -14,22 +14,13 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.util.RequestUtils;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(module = "publico", path = "/scientificCouncil/viewSite", scope = "session", parameter = "method")
-@Forwards(value = {
-		@Forward(name = "announcementsAction", path = "/scientificCouncil/announcements.do"),
+@Forwards(value = { @Forward(name = "announcementsAction", path = "/scientificCouncil/announcements.do"),
 		@Forward(name = "frontPage-INTRO_BANNER", path = "scientificCouncil-site-front-page-intro-banner"),
 		@Forward(name = "eventsAction", path = "/scientificCouncil/events.do"),
 		@Forward(name = "frontPage-BANNER_INTRO", path = "scientificCouncil-site-front-page-banner-intro"),
@@ -45,21 +36,21 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
 		@Forward(name = "unit-organization", path = "scientificCouncil-organization") })
 public class ViewScientificCouncilSiteDA extends UnitSiteVisualizationDA {
 
-    @Override
-    protected String getDirectLinkContext(HttpServletRequest request) {
-	MetaDomainObjectPortal portal = (MetaDomainObjectPortal) MetaDomainObject.getMeta(ScientificCouncilSite.class)
-		.getAssociatedPortal();
-	try {
-	    return RequestUtils.absoluteURL(request, portal.getNormalizedName().getContent()).toString();
-	} catch (MalformedURLException e) {
-	    return "";
+	@Override
+	protected String getDirectLinkContext(HttpServletRequest request) {
+		MetaDomainObjectPortal portal =
+				(MetaDomainObjectPortal) MetaDomainObject.getMeta(ScientificCouncilSite.class).getAssociatedPortal();
+		try {
+			return RequestUtils.absoluteURL(request, portal.getNormalizedName().getContent()).toString();
+		} catch (MalformedURLException e) {
+			return "";
+		}
 	}
-    }
 
-    @Override
-    protected ActionForward getSiteDefaultView(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
-	return presentation(mapping, form, request, response);
-    }
+	@Override
+	protected ActionForward getSiteDefaultView(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) {
+		return presentation(mapping, form, request, response);
+	}
 
 }

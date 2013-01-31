@@ -9,16 +9,16 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 import pt.ist.fenixWebFramework.renderers.converters.EnumConverter;
 
 public class VisibleStudentStatuteTypeProvider implements DataProvider {
-    
-    @Override
-    public Object provide(Object source, Object currentValue) {
-	List<StudentStatuteType> result = new ArrayList<StudentStatuteType>(StudentStatuteType.VISIBLE_STATUTES);
-	return result;
-    }
 
-    @Override
-    public Converter getConverter() {
-	return new EnumConverter();
-    }
+	@Override
+	public Object provide(Object source, Object currentValue) {
+		List<StudentStatuteType> result = new ArrayList<StudentStatuteType>(StudentStatuteType.VISIBLE_STATUTES);
+		return result;
+	}
+
+	@Override
+	public Converter getConverter() {
+		return new EnumConverter();
+	}
 
 }

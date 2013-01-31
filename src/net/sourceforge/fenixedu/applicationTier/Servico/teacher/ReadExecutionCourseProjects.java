@@ -33,43 +33,43 @@ import pt.ist.fenixWebFramework.services.Service;
 // student package net.sourceforge.fenixedu.(ReadExecutionCourseProjects)
 public class ReadExecutionCourseProjects extends FenixService {
 
-    @Service
-    public static ISiteComponent run(Integer executionCourseCode) throws FenixServiceException {
+	@Service
+	public static ISiteComponent run(Integer executionCourseCode) throws FenixServiceException {
 
-	InfoSiteProjects infoSiteProjects = null;
+		InfoSiteProjects infoSiteProjects = null;
 
-	ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseCode);
+		ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseCode);
 
-	List executionCourseProjects = new ArrayList();
-	List groupPropertiesExecutionCourseList = executionCourse.getExportGroupings();
-	Iterator iterGroupPropertiesExecutionCourseList = groupPropertiesExecutionCourseList.iterator();
-	while (iterGroupPropertiesExecutionCourseList.hasNext()) {
-	    ExportGrouping groupPropertiesExecutionCourse = (ExportGrouping) iterGroupPropertiesExecutionCourseList.next();
-	    if (groupPropertiesExecutionCourse.getProposalState().getState().intValue() == 1
-		    || groupPropertiesExecutionCourse.getProposalState().getState().intValue() == 2) {
-		executionCourseProjects.add(groupPropertiesExecutionCourse.getGrouping());
-	    }
+		List executionCourseProjects = new ArrayList();
+		List groupPropertiesExecutionCourseList = executionCourse.getExportGroupings();
+		Iterator iterGroupPropertiesExecutionCourseList = groupPropertiesExecutionCourseList.iterator();
+		while (iterGroupPropertiesExecutionCourseList.hasNext()) {
+			ExportGrouping groupPropertiesExecutionCourse = (ExportGrouping) iterGroupPropertiesExecutionCourseList.next();
+			if (groupPropertiesExecutionCourse.getProposalState().getState().intValue() == 1
+					|| groupPropertiesExecutionCourse.getProposalState().getState().intValue() == 2) {
+				executionCourseProjects.add(groupPropertiesExecutionCourse.getGrouping());
+			}
+		}
+
+		if (executionCourseProjects.size() != 0) {
+			infoSiteProjects = new InfoSiteProjects();
+
+			List infoGroupPropertiesList = new ArrayList();
+			Iterator iterator = executionCourseProjects.iterator();
+
+			while (iterator.hasNext()) {
+				Grouping groupProperties = (Grouping) iterator.next();
+
+				InfoGrouping infoGroupProperties = InfoGrouping.newInfoFromDomain(groupProperties);
+				infoGroupPropertiesList.add(infoGroupProperties);
+			}
+
+			infoSiteProjects.setInfoGroupPropertiesList(infoGroupPropertiesList);
+			InfoExecutionCourse infoExecutionCourse = InfoExecutionCourse.newInfoFromDomain(executionCourse);
+			infoSiteProjects.setInfoExecutionCourse(infoExecutionCourse);
+		}
+
+		return infoSiteProjects;
 	}
-
-	if (executionCourseProjects.size() != 0) {
-	    infoSiteProjects = new InfoSiteProjects();
-
-	    List infoGroupPropertiesList = new ArrayList();
-	    Iterator iterator = executionCourseProjects.iterator();
-
-	    while (iterator.hasNext()) {
-		Grouping groupProperties = (Grouping) iterator.next();
-
-		InfoGrouping infoGroupProperties = InfoGrouping.newInfoFromDomain(groupProperties);
-		infoGroupPropertiesList.add(infoGroupProperties);
-	    }
-
-	    infoSiteProjects.setInfoGroupPropertiesList(infoGroupPropertiesList);
-	    InfoExecutionCourse infoExecutionCourse = InfoExecutionCourse.newInfoFromDomain(executionCourse);
-	    infoSiteProjects.setInfoExecutionCourse(infoExecutionCourse);
-	}
-
-	return infoSiteProjects;
-    }
 
 }

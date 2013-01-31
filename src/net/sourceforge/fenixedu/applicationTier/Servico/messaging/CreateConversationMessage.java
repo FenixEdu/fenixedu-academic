@@ -5,16 +5,17 @@ import net.sourceforge.fenixedu.domain.messaging.ConversationMessage;
 
 public class CreateConversationMessage extends ForumService {
 
-    public CreateConversationMessage() {
-	super();
-    }
+	public CreateConversationMessage() {
+		super();
+	}
 
-    public void run(CreateConversationMessageBean createConversationMessageBean) {
+	public void run(CreateConversationMessageBean createConversationMessageBean) {
 
-	ConversationMessage conversationMessage = createConversationMessageBean.getConversationThread()
-		.createConversationMessage(createConversationMessageBean.getCreator(), createConversationMessageBean.getBody());
-	super.sendNotifications(conversationMessage);
+		ConversationMessage conversationMessage =
+				createConversationMessageBean.getConversationThread().createConversationMessage(
+						createConversationMessageBean.getCreator(), createConversationMessageBean.getBody());
+		super.sendNotifications(conversationMessage);
 
-    }
+	}
 
 }

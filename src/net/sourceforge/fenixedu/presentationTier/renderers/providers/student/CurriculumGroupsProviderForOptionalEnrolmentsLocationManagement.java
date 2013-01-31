@@ -18,34 +18,36 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class CurriculumGroupsProviderForOptionalEnrolmentsLocationManagement implements DataProvider {
 
-    @Override
-    public Object provide(Object source, Object currentValue) {
-	final OptionalEnrolmentLocationBean bean = (OptionalEnrolmentLocationBean) source;
+	@Override
+	public Object provide(Object source, Object currentValue) {
+		final OptionalEnrolmentLocationBean bean = (OptionalEnrolmentLocationBean) source;
 
-	final Collection<CurriculumGroup> result = new TreeSet<CurriculumGroup>(
-		CurriculumGroup.COMPARATOR_BY_FULL_PATH_NAME_AND_ID);
+		final Collection<CurriculumGroup> result =
+				new TreeSet<CurriculumGroup>(CurriculumGroup.COMPARATOR_BY_FULL_PATH_NAME_AND_ID);
 
-	final Set<AcademicProgram> programs = AcademicAuthorizationGroup.getProgramsForOperation(AccessControl.getPerson(),
-		AcademicOperationType.STUDENT_ENROLMENTS);
+		final Set<AcademicProgram> programs =
+				AcademicAuthorizationGroup.getProgramsForOperation(AccessControl.getPerson(),
+						AcademicOperationType.STUDENT_ENROLMENTS);
 
-	for (final Registration registration : bean.getStudent().getRegistrations()) {
+		for (final Registration registration : bean.getStudent().getRegistrations()) {
 
-	    if (!registration.isBolonha()) {
-		continue;
-	    }
+			if (!registration.isBolonha()) {
+				continue;
+			}
 
-	    if (!programs.contains(registration.getDegree()))
-		continue;
+			if (!programs.contains(registration.getDegree())) {
+				continue;
+			}
 
-	    final StudentCurricularPlan studentCurricularPlan = registration.getLastStudentCurricularPlan();
-	    result.addAll(studentCurricularPlan.getCurricularCoursePossibleGroups(bean.getEnrolment().getCurricularCourse()));
+			final StudentCurricularPlan studentCurricularPlan = registration.getLastStudentCurricularPlan();
+			result.addAll(studentCurricularPlan.getCurricularCoursePossibleGroups(bean.getEnrolment().getCurricularCourse()));
+		}
+		return result;
 	}
-	return result;
-    }
 
-    @Override
-    public Converter getConverter() {
-	return new DomainObjectKeyConverter();
-    }
+	@Override
+	public Converter getConverter() {
+		return new DomainObjectKeyConverter();
+	}
 
 }

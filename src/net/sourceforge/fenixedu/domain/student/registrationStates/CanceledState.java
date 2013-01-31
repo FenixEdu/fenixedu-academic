@@ -15,19 +15,19 @@ import org.joda.time.DateTime;
  */
 public class CanceledState extends CanceledState_Base {
 
-    protected CanceledState(Registration registration, Person person, DateTime dateTime) {
-	super();
-	init(registration, person, dateTime);
-    }
+	protected CanceledState(Registration registration, Person person, DateTime dateTime) {
+		super();
+		init(registration, person, dateTime);
+	}
 
-    @Override
-    public Set<String> getValidNextStates() {
-	return Collections.singleton(RegistrationStateType.REGISTERED.name());
-    }
+	@Override
+	public Set<String> getValidNextStates() {
+		return Collections.singleton(RegistrationStateType.REGISTERED.name());
+	}
 
-    @Override
-    public RegistrationStateType getStateType() {
-	return RegistrationStateType.CANCELED;
-    }
+	@Override
+	public RegistrationStateType getStateType() {
+		return RegistrationStateType.CANCELED;
+	}
 
 }

@@ -10,22 +10,13 @@ import net.sourceforge.fenixedu.domain.messaging.PartyAnnouncementBoard;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(module = "webSiteManager", path = "/manageResearchUnitAnnouncements", scope = "session", parameter = "method")
-@Forwards(value = {
-		@Forward(name = "viewAnnouncement", path = "research-announcements-view-announcement"),
+@Forwards(value = { @Forward(name = "viewAnnouncement", path = "research-announcements-view-announcement"),
 		@Forward(name = "uploadFile", path = "research-announcements-uploadFile"),
 		@Forward(name = "edit", path = "research-announcements-edit-announcement"),
 		@Forward(name = "listAnnouncements", path = "research-announcements-list-announcements"),
@@ -35,15 +26,16 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
 		@Forward(name = "listAnnouncementBoards", path = "research-announcements-list-boards") })
 public class ManageResearchUnitAnnouncementsDA extends UnitSiteAnnouncementManagement {
 
-    public ActionForward editAnnouncementBoards(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-	List<PartyAnnouncementBoard> boards = getUnit(request).getBoards();
-	request.setAttribute("announcementBoards", boards);
-	return mapping.findForward(boards.isEmpty() ? "noBoards" : "listAnnouncementBoards");
-    }
+	public ActionForward editAnnouncementBoards(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		List<PartyAnnouncementBoard> boards = getUnit(request).getBoards();
+		request.setAttribute("announcementBoards", boards);
+		return mapping.findForward(boards.isEmpty() ? "noBoards" : "listAnnouncementBoards");
+	}
 
-    protected String getContextInformation(ActionMapping mapping, HttpServletRequest request) {
-	return "/manageResearchUnitAnnouncements.do";
-    }
+	@Override
+	protected String getContextInformation(ActionMapping mapping, HttpServletRequest request) {
+		return "/manageResearchUnitAnnouncements.do";
+	}
 
 }

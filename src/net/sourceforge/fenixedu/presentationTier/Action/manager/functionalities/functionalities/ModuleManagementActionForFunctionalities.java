@@ -1,24 +1,15 @@
 package net.sourceforge.fenixedu.presentationTier.Action.manager.functionalities.functionalities;
 
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(module = "functionalities", path = "/private/module", scope = "session", parameter = "method")
-@Forwards(value = {
-		@Forward(name = "view.module", path = "/manager/functionalities/view-module.jsp"),
+@Forwards(value = { @Forward(name = "view.module", path = "/manager/functionalities/view-module.jsp"),
 		@Forward(name = "edit", path = "/manager/functionalities/edit-module.jsp"),
 		@Forward(name = "view", path = "/manager/functionalities/view-module.jsp"),
 		@Forward(name = "create", path = "/manager/functionalities/create-module.jsp"),
 		@Forward(name = "upload", path = "/manager/functionalities/upload-structure.jsp") })
-public class ModuleManagementActionForFunctionalities extends net.sourceforge.fenixedu.presentationTier.Action.manager.functionalities.ModuleManagementAction {
+public class ModuleManagementActionForFunctionalities extends
+		net.sourceforge.fenixedu.presentationTier.Action.manager.functionalities.ModuleManagementAction {
 }

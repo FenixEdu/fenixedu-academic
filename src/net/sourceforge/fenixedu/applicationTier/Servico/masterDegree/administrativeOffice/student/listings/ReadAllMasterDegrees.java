@@ -18,20 +18,21 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class ReadAllMasterDegrees extends FenixService {
 
-    @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
-    @Service
-    public static List run(DegreeType degreeType) throws FenixServiceException {
-	List<Degree> result = Degree.readAllByDegreeType(degreeType);
+	@Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
+	@Service
+	public static List run(DegreeType degreeType) throws FenixServiceException {
+		List<Degree> result = Degree.readAllByDegreeType(degreeType);
 
-	if (result == null || result.size() == 0) {
-	    throw new NonExistingServiceException();
+		if (result == null || result.size() == 0) {
+			throw new NonExistingServiceException();
+		}
+
+		List degrees = new ArrayList();
+		Iterator iterator = result.iterator();
+		while (iterator.hasNext()) {
+			degrees.add(InfoDegree.newInfoFromDomain((Degree) iterator.next()));
+		}
+		return degrees;
+
 	}
-
-	List degrees = new ArrayList();
-	Iterator iterator = result.iterator();
-	while (iterator.hasNext())
-	    degrees.add(InfoDegree.newInfoFromDomain((Degree) iterator.next()));
-	return degrees;
-
-    }
 }

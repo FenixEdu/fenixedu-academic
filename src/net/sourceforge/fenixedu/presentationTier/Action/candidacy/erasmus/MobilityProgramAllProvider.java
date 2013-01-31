@@ -5,9 +5,9 @@ import net.sourceforge.fenixedu.presentationTier.renderers.providers.AbstractDom
 
 public class MobilityProgramAllProvider extends AbstractDomainObjectProvider {
 
-    @Override
-    public Object provide(Object arg0, Object arg1) {
-	return MobilityProgram.getAllMobilityPrograms();
-    }
+	@Override
+	public Object provide(Object arg0, Object arg1) {
+		return MobilityProgram.getAllMobilityPrograms();
+	}
 
 }

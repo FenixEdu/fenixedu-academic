@@ -27,46 +27,46 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadExamsByExecutionCourseInitialsAndSeasonAndExecutionPeriod extends FenixService {
 
-    @Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
-    @Service
-    public static InfoViewExamByDayAndShift run(String executionCourseInitials, Season season,
-	    InfoExecutionPeriod infoExecutionPeriod) {
-	InfoViewExamByDayAndShift infoViewExamByDayAndShift = new InfoViewExamByDayAndShift();
+	@Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
+	@Service
+	public static InfoViewExamByDayAndShift run(String executionCourseInitials, Season season,
+			InfoExecutionPeriod infoExecutionPeriod) {
+		InfoViewExamByDayAndShift infoViewExamByDayAndShift = new InfoViewExamByDayAndShift();
 
-	ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(infoExecutionPeriod.getIdInternal());
-	ExecutionCourse executionCourse = executionSemester.getExecutionCourseByInitials(executionCourseInitials);
+		ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(infoExecutionPeriod.getIdInternal());
+		ExecutionCourse executionCourse = executionSemester.getExecutionCourseByInitials(executionCourseInitials);
 
-	List<Exam> associatedExams = new ArrayList();
-	List<Evaluation> associatedEvaluations = executionCourse.getAssociatedEvaluations();
-	for (Evaluation evaluation : associatedEvaluations) {
-	    if (evaluation instanceof Exam) {
-		associatedExams.add((Exam) evaluation);
-	    }
-	}
-	for (int i = 0; i < associatedExams.size(); i++) {
-	    Exam exam = associatedExams.get(i);
-	    if (exam.getSeason().equals(season)) {
-		infoViewExamByDayAndShift.setInfoExam(InfoExam.newInfoFromDomain(exam));
-
-		List infoExecutionCourses = new ArrayList();
-		List infoDegrees = new ArrayList();
-		for (int j = 0; j < exam.getAssociatedExecutionCourses().size(); j++) {
-		    ExecutionCourse tempExecutionCourse = exam.getAssociatedExecutionCourses().get(j);
-		    infoExecutionCourses.add(InfoExecutionCourse.newInfoFromDomain(tempExecutionCourse));
-
-		    // prepare degrees associated with exam
-		    List tempAssociatedCurricularCourses = executionCourse.getAssociatedCurricularCourses();
-		    for (int k = 0; k < tempAssociatedCurricularCourses.size(); k++) {
-			Degree tempDegree = ((CurricularCourse) tempAssociatedCurricularCourses.get(k)).getDegreeCurricularPlan()
-				.getDegree();
-			infoDegrees.add(InfoDegree.newInfoFromDomain(tempDegree));
-		    }
+		List<Exam> associatedExams = new ArrayList();
+		List<Evaluation> associatedEvaluations = executionCourse.getAssociatedEvaluations();
+		for (Evaluation evaluation : associatedEvaluations) {
+			if (evaluation instanceof Exam) {
+				associatedExams.add((Exam) evaluation);
+			}
 		}
-		infoViewExamByDayAndShift.setInfoExecutionCourses(infoExecutionCourses);
-		infoViewExamByDayAndShift.setInfoDegrees(infoDegrees);
-	    }
-	}
+		for (int i = 0; i < associatedExams.size(); i++) {
+			Exam exam = associatedExams.get(i);
+			if (exam.getSeason().equals(season)) {
+				infoViewExamByDayAndShift.setInfoExam(InfoExam.newInfoFromDomain(exam));
 
-	return infoViewExamByDayAndShift;
-    }
+				List infoExecutionCourses = new ArrayList();
+				List infoDegrees = new ArrayList();
+				for (int j = 0; j < exam.getAssociatedExecutionCourses().size(); j++) {
+					ExecutionCourse tempExecutionCourse = exam.getAssociatedExecutionCourses().get(j);
+					infoExecutionCourses.add(InfoExecutionCourse.newInfoFromDomain(tempExecutionCourse));
+
+					// prepare degrees associated with exam
+					List tempAssociatedCurricularCourses = executionCourse.getAssociatedCurricularCourses();
+					for (int k = 0; k < tempAssociatedCurricularCourses.size(); k++) {
+						Degree tempDegree =
+								((CurricularCourse) tempAssociatedCurricularCourses.get(k)).getDegreeCurricularPlan().getDegree();
+						infoDegrees.add(InfoDegree.newInfoFromDomain(tempDegree));
+					}
+				}
+				infoViewExamByDayAndShift.setInfoExecutionCourses(infoExecutionCourses);
+				infoViewExamByDayAndShift.setInfoDegrees(infoDegrees);
+			}
+		}
+
+		return infoViewExamByDayAndShift;
+	}
 }

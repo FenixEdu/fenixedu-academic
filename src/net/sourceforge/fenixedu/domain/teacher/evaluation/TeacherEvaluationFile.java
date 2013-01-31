@@ -14,59 +14,61 @@ import pt.utl.ist.fenix.tools.file.VirtualPathNode;
 
 public class TeacherEvaluationFile extends TeacherEvaluationFile_Base {
 
-    public TeacherEvaluationFile(TeacherEvaluation teacherEvaluation, TeacherEvaluationFileType teacherEvaluationFileType,
-	    String filename, byte[] content, Person createdBy) {
-	super();
-	setTeacherEvaluation(teacherEvaluation);
-	setTeacherEvaluationFileType(teacherEvaluationFileType);
-	setCreatedBy(createdBy);
-	filename = processFilename(teacherEvaluation, teacherEvaluationFileType, getExtension(filename));
-	init(getfilePath(teacherEvaluationFileType), filename, filename, null, content, null);
-    }
-
-    private String getExtension(String filename) {
-	int dot = filename.lastIndexOf('.');
-	return dot < 0 ? "txt" : filename.substring(dot + 1, filename.length());
-    }
-
-    private String processFilename(TeacherEvaluation teacherEvaluation, TeacherEvaluationFileType teacherEvaluationFileType,
-	    String extension) {
-	List<String> parts = new Vector<String>(4);
-	if (!teacherEvaluationFileType.isAutoEvaluationFile()) {
-	    parts.add("res");
+	public TeacherEvaluationFile(TeacherEvaluation teacherEvaluation, TeacherEvaluationFileType teacherEvaluationFileType,
+			String filename, byte[] content, Person createdBy) {
+		super();
+		setTeacherEvaluation(teacherEvaluation);
+		setTeacherEvaluationFileType(teacherEvaluationFileType);
+		setCreatedBy(createdBy);
+		filename = processFilename(teacherEvaluation, teacherEvaluationFileType, getExtension(filename));
+		init(getfilePath(teacherEvaluationFileType), filename, filename, null, content, null);
 	}
-	parts.add(teacherEvaluation.getFilenameTypePrefix());
-	try {
-	    parts.add("d" + teacherEvaluation.getTeacherEvaluationProcess().getEvaluee().getTeacher().getPerson().getEmployee().getEmployeeNumber());
-	} catch (NullPointerException e) {
-	    parts.add(teacherEvaluation.getTeacherEvaluationProcess().getEvaluee().getIstUsername());
+
+	private String getExtension(String filename) {
+		int dot = filename.lastIndexOf('.');
+		return dot < 0 ? "txt" : filename.substring(dot + 1, filename.length());
 	}
-	parts.add(teacherEvaluation.getTeacherEvaluationProcess().getFacultyEvaluationProcess().getSuffix());
-	return StringUtils.join(parts, "_") + "." + extension;
-    }
 
-    private VirtualPath getfilePath(TeacherEvaluationFileType teacherEvaluationFileType) {
-	final VirtualPath filePath = new VirtualPath();
-	filePath.addNode(new VirtualPathNode("TeacherEvaluationFiles", "TeacherEvaluation Files"));
-	filePath.addNode(new VirtualPathNode("TeacherEvaluation" + getIdInternal(), teacherEvaluationFileType.name()));
-	return filePath;
-    }
+	private String processFilename(TeacherEvaluation teacherEvaluation, TeacherEvaluationFileType teacherEvaluationFileType,
+			String extension) {
+		List<String> parts = new Vector<String>(4);
+		if (!teacherEvaluationFileType.isAutoEvaluationFile()) {
+			parts.add("res");
+		}
+		parts.add(teacherEvaluation.getFilenameTypePrefix());
+		try {
+			parts.add("d"
+					+ teacherEvaluation.getTeacherEvaluationProcess().getEvaluee().getTeacher().getPerson().getEmployee()
+							.getEmployeeNumber());
+		} catch (NullPointerException e) {
+			parts.add(teacherEvaluation.getTeacherEvaluationProcess().getEvaluee().getIstUsername());
+		}
+		parts.add(teacherEvaluation.getTeacherEvaluationProcess().getFacultyEvaluationProcess().getSuffix());
+		return StringUtils.join(parts, "_") + "." + extension;
+	}
 
-    @Override
-    public void delete() {
-	removeTeacherEvaluation();
-	removeCreatedBy();
-	super.delete();
-    }
+	private VirtualPath getfilePath(TeacherEvaluationFileType teacherEvaluationFileType) {
+		final VirtualPath filePath = new VirtualPath();
+		filePath.addNode(new VirtualPathNode("TeacherEvaluationFiles", "TeacherEvaluation Files"));
+		filePath.addNode(new VirtualPathNode("TeacherEvaluation" + getIdInternal(), teacherEvaluationFileType.name()));
+		return filePath;
+	}
 
-    @Service
-    public static TeacherEvaluationFile create(FileUploadBean fileUploadBean, Person createdBy) throws IOException {
-	return new TeacherEvaluationFile(fileUploadBean.getTeacherEvaluationProcess().getCurrentTeacherEvaluation(),
-		fileUploadBean.getTeacherEvaluationFileType(), fileUploadBean.getFilename(), fileUploadBean.getBytes(), createdBy);
-    }
+	@Override
+	public void delete() {
+		removeTeacherEvaluation();
+		removeCreatedBy();
+		super.delete();
+	}
 
-    public TeacherEvaluationFile copy(TeacherEvaluation evaluation) {
-	return new TeacherEvaluationFile(evaluation, getTeacherEvaluationFileType(), getFilename(), getContents(), getCreatedBy());
-    }
+	@Service
+	public static TeacherEvaluationFile create(FileUploadBean fileUploadBean, Person createdBy) throws IOException {
+		return new TeacherEvaluationFile(fileUploadBean.getTeacherEvaluationProcess().getCurrentTeacherEvaluation(),
+				fileUploadBean.getTeacherEvaluationFileType(), fileUploadBean.getFilename(), fileUploadBean.getBytes(), createdBy);
+	}
+
+	public TeacherEvaluationFile copy(TeacherEvaluation evaluation) {
+		return new TeacherEvaluationFile(evaluation, getTeacherEvaluationFileType(), getFilename(), getContents(), getCreatedBy());
+	}
 
 }

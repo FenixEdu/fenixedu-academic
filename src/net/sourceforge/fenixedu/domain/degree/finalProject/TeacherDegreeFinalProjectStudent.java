@@ -8,27 +8,28 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 
 public class TeacherDegreeFinalProjectStudent extends TeacherDegreeFinalProjectStudent_Base implements ICreditsEventOriginator {
 
-    public TeacherDegreeFinalProjectStudent() {
-	setRootDomainObject(RootDomainObject.getInstance());
-    }
+	public TeacherDegreeFinalProjectStudent() {
+		setRootDomainObject(RootDomainObject.getInstance());
+	}
 
-    public TeacherDegreeFinalProjectStudent(ExecutionSemester executionSemester, Teacher teacher, Registration registration) {
-	this();
-	setExecutionPeriod(executionSemester);
-	setTeacher(teacher);
-	setStudent(registration);
-    }
+	public TeacherDegreeFinalProjectStudent(ExecutionSemester executionSemester, Teacher teacher, Registration registration) {
+		this();
+		setExecutionPeriod(executionSemester);
+		setTeacher(teacher);
+		setStudent(registration);
+	}
 
-    public boolean belongsToExecutionPeriod(ExecutionSemester executionSemester) {
-	return this.getExecutionPeriod().equals(executionSemester);
-    }
+	@Override
+	public boolean belongsToExecutionPeriod(ExecutionSemester executionSemester) {
+		return this.getExecutionPeriod().equals(executionSemester);
+	}
 
-    public void delete() {
-	setExecutionPeriod(null);
-	setTeacher(null);
-	setStudent(null);
+	public void delete() {
+		setExecutionPeriod(null);
+		setTeacher(null);
+		setStudent(null);
 
-	removeRootDomainObject();
-	super.deleteDomainObject();
-    }
+		removeRootDomainObject();
+		super.deleteDomainObject();
+	}
 }

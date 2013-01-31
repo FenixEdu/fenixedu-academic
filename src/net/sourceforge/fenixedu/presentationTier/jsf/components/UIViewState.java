@@ -4,25 +4,25 @@ import javax.faces.component.UIComponentBase;
 
 public class UIViewState extends UIComponentBase {
 
-    public UIViewState() {
-	super();
-    }
+	public UIViewState() {
+		super();
+	}
 
-    public void setAttribute(String name, Object value) {
-	this.getAttributes().put(name, value);
-    }
+	public void setAttribute(String name, Object value) {
+		this.getAttributes().put(name, value);
+	}
 
-    public Object getAttribute(String name) {
-	return this.getAttributes().get(name);
-    }
+	public Object getAttribute(String name) {
+		return this.getAttributes().get(name);
+	}
 
-    public void removeAttribute(String name) {
-	this.getAttributes().remove(name);
-    }
+	public void removeAttribute(String name) {
+		this.getAttributes().remove(name);
+	}
 
-    @Override
-    public String getFamily() {
-	return null;
-    }
+	@Override
+	public String getFamily() {
+		return null;
+	}
 
 }

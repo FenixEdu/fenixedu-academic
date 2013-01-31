@@ -10,40 +10,40 @@ import net.sourceforge.fenixedu.domain.transactions.ReimbursementTransaction;
  */
 public class InfoReimbursementTransaction extends InfoTransaction {
 
-    private InfoReimbursementGuideEntry infoReimbursementGuideEntry;
+	private InfoReimbursementGuideEntry infoReimbursementGuideEntry;
 
-    public void copyFromDomain(ReimbursementTransaction reimbursementTransaction) {
+	public void copyFromDomain(ReimbursementTransaction reimbursementTransaction) {
 
-	super.copyFromDomain(reimbursementTransaction);
+		super.copyFromDomain(reimbursementTransaction);
 
-	this.infoReimbursementGuideEntry = InfoReimbursementGuideEntry.newInfoFromDomain(reimbursementTransaction
-		.getReimbursementGuideEntry());
-    }
-
-    public static InfoReimbursementTransaction newInfoFromDomain(ReimbursementTransaction reimbursementTransaction) {
-
-	if (reimbursementTransaction == null) {
-	    return null;
+		this.infoReimbursementGuideEntry =
+				InfoReimbursementGuideEntry.newInfoFromDomain(reimbursementTransaction.getReimbursementGuideEntry());
 	}
 
-	InfoReimbursementTransaction infoReimbursementTransaction = new InfoReimbursementTransaction();
-	infoReimbursementTransaction.copyFromDomain(reimbursementTransaction);
+	public static InfoReimbursementTransaction newInfoFromDomain(ReimbursementTransaction reimbursementTransaction) {
 
-	return infoReimbursementTransaction;
-    }
+		if (reimbursementTransaction == null) {
+			return null;
+		}
 
-    /**
-     * @return Returns the infoReimbursementGuideEntry.
-     */
-    public InfoReimbursementGuideEntry getInfoReimbursementGuideEntry() {
-	return infoReimbursementGuideEntry;
-    }
+		InfoReimbursementTransaction infoReimbursementTransaction = new InfoReimbursementTransaction();
+		infoReimbursementTransaction.copyFromDomain(reimbursementTransaction);
 
-    /**
-     * @param infoReimbursementGuideEntry
-     *            The infoReimbursementGuideEntry to set.
-     */
-    public void setInfoReimbursementGuideEntry(InfoReimbursementGuideEntry infoReimbursementGuideEntry) {
-	this.infoReimbursementGuideEntry = infoReimbursementGuideEntry;
-    }
+		return infoReimbursementTransaction;
+	}
+
+	/**
+	 * @return Returns the infoReimbursementGuideEntry.
+	 */
+	public InfoReimbursementGuideEntry getInfoReimbursementGuideEntry() {
+		return infoReimbursementGuideEntry;
+	}
+
+	/**
+	 * @param infoReimbursementGuideEntry
+	 *            The infoReimbursementGuideEntry to set.
+	 */
+	public void setInfoReimbursementGuideEntry(InfoReimbursementGuideEntry infoReimbursementGuideEntry) {
+		this.infoReimbursementGuideEntry = infoReimbursementGuideEntry;
+	}
 }

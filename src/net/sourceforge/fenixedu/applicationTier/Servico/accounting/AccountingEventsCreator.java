@@ -9,40 +9,40 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class AccountingEventsCreator {
 
-    @Checked("AcademicPredicates.MANAGE_ACCOUNTING_EVENTS")
-    @Service
-    static public void createInsuranceEvent(final StudentCurricularPlan studentCurricularPlan, final ExecutionYear executionYear) {
-	studentCurricularPlan.getRegistration().getStudent().createInsuranceEvent(studentCurricularPlan, executionYear);
-    }
+	@Checked("AcademicPredicates.MANAGE_ACCOUNTING_EVENTS")
+	@Service
+	static public void createInsuranceEvent(final StudentCurricularPlan studentCurricularPlan, final ExecutionYear executionYear) {
+		studentCurricularPlan.getRegistration().getStudent().createInsuranceEvent(studentCurricularPlan, executionYear);
+	}
 
-    @Checked("AcademicPredicates.MANAGE_ACCOUNTING_EVENTS")
-    @Service
-    static public void createGratuityEvent(final StudentCurricularPlan studentCurricularPlan, final ExecutionYear executionYear) {
-	studentCurricularPlan.getRegistration().getStudent().createGratuityEvent(studentCurricularPlan, executionYear);
-    }
+	@Checked("AcademicPredicates.MANAGE_ACCOUNTING_EVENTS")
+	@Service
+	static public void createGratuityEvent(final StudentCurricularPlan studentCurricularPlan, final ExecutionYear executionYear) {
+		studentCurricularPlan.getRegistration().getStudent().createGratuityEvent(studentCurricularPlan, executionYear);
+	}
 
-    @Checked("AcademicPredicates.MANAGE_ACCOUNTING_EVENTS")
-    @Service
-    static public void createAdministrativeOfficeFeeAndInsuranceEvent(final StudentCurricularPlan studentCurricularPlan,
-	    final ExecutionYear executionYear) {
-	studentCurricularPlan.getRegistration().getStudent()
-		.createAdministrativeOfficeFeeEvent(studentCurricularPlan, executionYear);
-    }
+	@Checked("AcademicPredicates.MANAGE_ACCOUNTING_EVENTS")
+	@Service
+	static public void createAdministrativeOfficeFeeAndInsuranceEvent(final StudentCurricularPlan studentCurricularPlan,
+			final ExecutionYear executionYear) {
+		studentCurricularPlan.getRegistration().getStudent()
+				.createAdministrativeOfficeFeeEvent(studentCurricularPlan, executionYear);
+	}
 
-    @Checked("AcademicPredicates.MANAGE_ACCOUNTING_EVENTS")
-    @Service
-    static public void createEnrolmentOutOfPeriodEvent(final StudentCurricularPlan studentCurricularPlan,
-	    final ExecutionSemester executionSemester, final Integer numberOfDelayDays) {
-	studentCurricularPlan.getRegistration().getStudent()
-		.createEnrolmentOutOfPeriodEvent(studentCurricularPlan, executionSemester, numberOfDelayDays);
-    }
+	@Checked("AcademicPredicates.MANAGE_ACCOUNTING_EVENTS")
+	@Service
+	static public void createEnrolmentOutOfPeriodEvent(final StudentCurricularPlan studentCurricularPlan,
+			final ExecutionSemester executionSemester, final Integer numberOfDelayDays) {
+		studentCurricularPlan.getRegistration().getStudent()
+				.createEnrolmentOutOfPeriodEvent(studentCurricularPlan, executionSemester, numberOfDelayDays);
+	}
 
-    @Checked("AcademicPredicates.MANAGE_ACCOUNTING_EVENTS")
-    @Service
-    static public void createDfaRegistrationEvent(final StudentCurricularPlan studentCurricularPlan,
-	    final ExecutionYear executionYear) {
-	new DfaRegistrationEvent(studentCurricularPlan.getDegree().getAdministrativeOffice(), studentCurricularPlan.getPerson(),
-		studentCurricularPlan.getRegistration(), executionYear);
-    }
+	@Checked("AcademicPredicates.MANAGE_ACCOUNTING_EVENTS")
+	@Service
+	static public void createDfaRegistrationEvent(final StudentCurricularPlan studentCurricularPlan,
+			final ExecutionYear executionYear) {
+		new DfaRegistrationEvent(studentCurricularPlan.getDegree().getAdministrativeOffice(), studentCurricularPlan.getPerson(),
+				studentCurricularPlan.getRegistration(), executionYear);
+	}
 
 }

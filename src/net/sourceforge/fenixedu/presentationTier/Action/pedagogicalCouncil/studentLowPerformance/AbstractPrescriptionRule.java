@@ -10,44 +10,44 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 
 public abstract class AbstractPrescriptionRule {
 
-    public boolean appliesFor(PrescriptionEnum prescriptionEnum) {
-	return prescriptionEnum.equals(getPrescriptionEnum());
-    }
-
-    public abstract boolean isPrescript(Registration registration, BigDecimal ects, int numberOfEntriesStudentInSecretary);
-
-    public static List<AbstractPrescriptionRule> readPrescriptionRules(PrescriptionEnum prescriptionEnum) {
-	List<AbstractPrescriptionRule> abstractPrescriptionRules = new LinkedList<AbstractPrescriptionRule>();
-	for (AbstractPrescriptionRule abstractPrescriptionRule : getPrescriptionRules()) {
-	    if (abstractPrescriptionRule.appliesFor(prescriptionEnum)) {
-		abstractPrescriptionRules.add(abstractPrescriptionRule);
-	    }
+	public boolean appliesFor(PrescriptionEnum prescriptionEnum) {
+		return prescriptionEnum.equals(getPrescriptionEnum());
 	}
-	return abstractPrescriptionRules;
-    }
 
-    private static AbstractPrescriptionRule[] getPrescriptionRules() {
-	return new AbstractPrescriptionRule[] { new PrescriptionRuleMomentOne(), new PrescriptionRuleMomentTwo(),
-		new PrescriptionRuleMomentThree(), new PrescriptionRuleMomentFour(), new PrescriptionRuleMomentFive(),
-		new PrescriptionRuleThreeEntries(), new PrescriptionRuleFourEntries(), new PrescriptionRuleFiveEntries() };
-    }
+	public abstract boolean isPrescript(Registration registration, BigDecimal ects, int numberOfEntriesStudentInSecretary);
 
-    public static List<AbstractPrescriptionRule> readProviderPrescriptionRules() {
-	List<AbstractPrescriptionRule> abstractPrescriptionRules = new LinkedList<AbstractPrescriptionRule>();
-	abstractPrescriptionRules.add(new PrescriptionRuleMomentOne());
-	abstractPrescriptionRules.add(new PrescriptionRuleMomentTwo());
-	abstractPrescriptionRules.add(new PrescriptionRuleMomentThree());
-	abstractPrescriptionRules.add(new PrescriptionRuleMomentFour());
-	abstractPrescriptionRules.add(new PrescriptionRuleMomentFive());
-	abstractPrescriptionRules.add(new PrescriptionRuleGeneric());
-	return abstractPrescriptionRules;
-    }
+	public static List<AbstractPrescriptionRule> readPrescriptionRules(PrescriptionEnum prescriptionEnum) {
+		List<AbstractPrescriptionRule> abstractPrescriptionRules = new LinkedList<AbstractPrescriptionRule>();
+		for (AbstractPrescriptionRule abstractPrescriptionRule : getPrescriptionRules()) {
+			if (abstractPrescriptionRule.appliesFor(prescriptionEnum)) {
+				abstractPrescriptionRules.add(abstractPrescriptionRule);
+			}
+		}
+		return abstractPrescriptionRules;
+	}
 
-    public abstract PrescriptionEnum getPrescriptionEnum();
+	private static AbstractPrescriptionRule[] getPrescriptionRules() {
+		return new AbstractPrescriptionRule[] { new PrescriptionRuleMomentOne(), new PrescriptionRuleMomentTwo(),
+				new PrescriptionRuleMomentThree(), new PrescriptionRuleMomentFour(), new PrescriptionRuleMomentFive(),
+				new PrescriptionRuleThreeEntries(), new PrescriptionRuleFourEntries(), new PrescriptionRuleFiveEntries() };
+	}
 
-    public abstract ExecutionYear getRegistrationStart();
+	public static List<AbstractPrescriptionRule> readProviderPrescriptionRules() {
+		List<AbstractPrescriptionRule> abstractPrescriptionRules = new LinkedList<AbstractPrescriptionRule>();
+		abstractPrescriptionRules.add(new PrescriptionRuleMomentOne());
+		abstractPrescriptionRules.add(new PrescriptionRuleMomentTwo());
+		abstractPrescriptionRules.add(new PrescriptionRuleMomentThree());
+		abstractPrescriptionRules.add(new PrescriptionRuleMomentFour());
+		abstractPrescriptionRules.add(new PrescriptionRuleMomentFive());
+		abstractPrescriptionRules.add(new PrescriptionRuleGeneric());
+		return abstractPrescriptionRules;
+	}
 
-    public abstract BigDecimal getMinimumEcts();
+	public abstract PrescriptionEnum getPrescriptionEnum();
 
-    protected abstract int getNumberOfEntriesStudentInSecretary();
+	public abstract ExecutionYear getRegistrationStart();
+
+	public abstract BigDecimal getMinimumEcts();
+
+	protected abstract int getNumberOfEntriesStudentInSecretary();
 }

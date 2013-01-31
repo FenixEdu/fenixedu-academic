@@ -33,197 +33,194 @@ import org.apache.struts.validator.DynaValidatorForm;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.security.UserView;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
  * @author Ana e Ricardo
  * 
  */
-@Mapping(module = "resourceAllocationManager", path = "/associateRoomToExam", input = "/associateRoomToExam.do?method=prepare&page=0", attribute = "examNewForm", formBean = "examNewForm", scope = "request", parameter = "method")
-@Forwards(value = {
-		@Forward(name = "AssociateRoom", path = "df.page.associateRoomToExam"),
+@Mapping(
+		module = "resourceAllocationManager",
+		path = "/associateRoomToExam",
+		input = "/associateRoomToExam.do?method=prepare&page=0",
+		attribute = "examNewForm",
+		formBean = "examNewForm",
+		scope = "request",
+		parameter = "method")
+@Forwards(value = { @Forward(name = "AssociateRoom", path = "df.page.associateRoomToExam"),
 		@Forward(name = "forwardChoose", path = "/createExamNew.do?method=prepareAfterAssociateRoom&page=0") })
 public class AssociateRoomToExamDA extends FenixDateAndTimeContextDispatchAction
 // extends
 // FenixExecutionCourseAndExecutionDegreeAndCurricularYearContextDispatchAction
 {
 
-    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-	    throws Exception {
+	public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
 
-	String infoExamId = (String) request.getAttribute(PresentationConstants.EXAM_OID);
-	if (infoExamId == null) {
-	    infoExamId = request.getParameter(PresentationConstants.EXAM_OID);
-	}
-	request.setAttribute(PresentationConstants.EXAM_OID, infoExamId);
+		String infoExamId = (String) request.getAttribute(PresentationConstants.EXAM_OID);
+		if (infoExamId == null) {
+			infoExamId = request.getParameter(PresentationConstants.EXAM_OID);
+		}
+		request.setAttribute(PresentationConstants.EXAM_OID, infoExamId);
 
-	DynaActionForm examForm = (DynaActionForm) form;
-	IUserView userView = UserView.getUser();
+		DynaActionForm examForm = (DynaActionForm) form;
+		IUserView userView = UserView.getUser();
 
-	String[] executionCourse = (String[]) examForm.get("executionCourses");
-	request.setAttribute("executionCoursesArray", executionCourse);
+		String[] executionCourse = (String[]) examForm.get("executionCourses");
+		request.setAttribute("executionCoursesArray", executionCourse);
 
-	List<String> executionCourseNames = new ArrayList<String>();
+		List<String> executionCourseNames = new ArrayList<String>();
 
-	for (int iterEC = 0; iterEC < executionCourse.length; iterEC++) {
+		for (String element : executionCourse) {
 
-	    InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) ReadExecutionCourseByOID.run(new Integer(
-		    executionCourse[iterEC]));
+			InfoExecutionCourse infoExecutionCourse = ReadExecutionCourseByOID.run(new Integer(element));
 
-	    executionCourseNames.add(infoExecutionCourse.getNome());
-	}
-
-	request.setAttribute(PresentationConstants.LIST_EXECUTION_COURSE_NAMES, executionCourseNames);
-
-	// exam start time
-	Calendar examStartTime = Calendar.getInstance();
-	Integer startHour = new Integer((String) examForm.get("beginningHour"));
-	Integer startMinute = new Integer((String) examForm.get("beginningMinute"));
-	examStartTime.set(Calendar.HOUR_OF_DAY, startHour.intValue());
-	examStartTime.set(Calendar.MINUTE, startMinute.intValue());
-	examStartTime.set(Calendar.SECOND, 0);
-
-	// exam end time
-	Calendar examEndTime = Calendar.getInstance();
-	Integer endHour = new Integer((String) examForm.get("endHour"));
-	Integer endMinute = new Integer((String) examForm.get("endMinute"));
-	examEndTime.set(Calendar.HOUR_OF_DAY, endHour.intValue());
-	examEndTime.set(Calendar.MINUTE, endMinute.intValue());
-	examEndTime.set(Calendar.SECOND, 0);
-
-	// exam date
-	Calendar examDate = Calendar.getInstance();
-	Integer day = new Integer((String) examForm.get("day"));
-	Integer month = new Integer((String) examForm.get("month"));
-	Integer year = new Integer((String) examForm.get("year"));
-	examDate.set(Calendar.YEAR, year.intValue());
-	examDate.set(Calendar.MONTH, month.intValue() - 1);
-	examDate.set(Calendar.DAY_OF_MONTH, day.intValue());
-
-	int dayOfWeekInt = examDate.get(Calendar.DAY_OF_WEEK);
-	DiaSemana dayOfWeek = new DiaSemana(dayOfWeekInt);
-
-	List<InfoRoom> availableInfoRoom = (List<InfoRoom>) ReadAvailableRoomsForExam.run(YearMonthDay
-		.fromCalendarFields(examDate), YearMonthDay.fromCalendarFields(examDate), HourMinuteSecond
-		.fromCalendarFields(examStartTime), HourMinuteSecond.fromCalendarFields(examEndTime), dayOfWeek, null, null,
-		Boolean.FALSE);
-
-	String[] rooms = (String[]) examForm.get("rooms");
-	List<InfoRoom> selectedRooms = new ArrayList<InfoRoom>();
-	List<InfoRoom> finalAvailableRooms = new ArrayList<InfoRoom>();
-
-	if (rooms != null && rooms.length > 0) {
-
-	    for (int iterRooms = 0; iterRooms < rooms.length; iterRooms++) {
-		InfoRoom infoRoom = (InfoRoom) ReadRoomByOID.run(Integer.valueOf(rooms[iterRooms]));
-		selectedRooms.add(infoRoom);
-	    }
-
-	    for (int iterSR = 0; iterSR < selectedRooms.size(); iterSR++) {
-		InfoRoom selectedInfoRoom = (InfoRoom) selectedRooms.get(iterSR);
-
-		boolean infoContida = false;
-
-		for (int iterAIF = 0; iterAIF < availableInfoRoom.size(); iterAIF++) {
-		    InfoRoom availInfoRoom = (InfoRoom) availableInfoRoom.get(iterAIF);
-
-		    if (selectedInfoRoom.equals(availInfoRoom)) {
-			infoContida = true;
-			break;
-		    }
+			executionCourseNames.add(infoExecutionCourse.getNome());
 		}
 
-		if (!infoContida) {
-		    finalAvailableRooms.add(selectedInfoRoom);
+		request.setAttribute(PresentationConstants.LIST_EXECUTION_COURSE_NAMES, executionCourseNames);
+
+		// exam start time
+		Calendar examStartTime = Calendar.getInstance();
+		Integer startHour = new Integer((String) examForm.get("beginningHour"));
+		Integer startMinute = new Integer((String) examForm.get("beginningMinute"));
+		examStartTime.set(Calendar.HOUR_OF_DAY, startHour.intValue());
+		examStartTime.set(Calendar.MINUTE, startMinute.intValue());
+		examStartTime.set(Calendar.SECOND, 0);
+
+		// exam end time
+		Calendar examEndTime = Calendar.getInstance();
+		Integer endHour = new Integer((String) examForm.get("endHour"));
+		Integer endMinute = new Integer((String) examForm.get("endMinute"));
+		examEndTime.set(Calendar.HOUR_OF_DAY, endHour.intValue());
+		examEndTime.set(Calendar.MINUTE, endMinute.intValue());
+		examEndTime.set(Calendar.SECOND, 0);
+
+		// exam date
+		Calendar examDate = Calendar.getInstance();
+		Integer day = new Integer((String) examForm.get("day"));
+		Integer month = new Integer((String) examForm.get("month"));
+		Integer year = new Integer((String) examForm.get("year"));
+		examDate.set(Calendar.YEAR, year.intValue());
+		examDate.set(Calendar.MONTH, month.intValue() - 1);
+		examDate.set(Calendar.DAY_OF_MONTH, day.intValue());
+
+		int dayOfWeekInt = examDate.get(Calendar.DAY_OF_WEEK);
+		DiaSemana dayOfWeek = new DiaSemana(dayOfWeekInt);
+
+		List<InfoRoom> availableInfoRoom =
+				ReadAvailableRoomsForExam.run(YearMonthDay.fromCalendarFields(examDate),
+						YearMonthDay.fromCalendarFields(examDate), HourMinuteSecond.fromCalendarFields(examStartTime),
+						HourMinuteSecond.fromCalendarFields(examEndTime), dayOfWeek, null, null, Boolean.FALSE);
+
+		String[] rooms = (String[]) examForm.get("rooms");
+		List<InfoRoom> selectedRooms = new ArrayList<InfoRoom>();
+		List<InfoRoom> finalAvailableRooms = new ArrayList<InfoRoom>();
+
+		if (rooms != null && rooms.length > 0) {
+
+			for (String room : rooms) {
+				InfoRoom infoRoom = ReadRoomByOID.run(Integer.valueOf(room));
+				selectedRooms.add(infoRoom);
+			}
+
+			for (int iterSR = 0; iterSR < selectedRooms.size(); iterSR++) {
+				InfoRoom selectedInfoRoom = selectedRooms.get(iterSR);
+
+				boolean infoContida = false;
+
+				for (int iterAIF = 0; iterAIF < availableInfoRoom.size(); iterAIF++) {
+					InfoRoom availInfoRoom = availableInfoRoom.get(iterAIF);
+
+					if (selectedInfoRoom.equals(availInfoRoom)) {
+						infoContida = true;
+						break;
+					}
+				}
+
+				if (!infoContida) {
+					finalAvailableRooms.add(selectedInfoRoom);
+				}
+			}
+
+			finalAvailableRooms.addAll(availableInfoRoom);
+
+			sortList(request, finalAvailableRooms);
+
+			request.setAttribute(PresentationConstants.AVAILABLE_ROOMS, finalAvailableRooms);
+		} else {
+			sortList(request, availableInfoRoom);
+			request.setAttribute(PresentationConstants.AVAILABLE_ROOMS, availableInfoRoom);
 		}
-	    }
 
-	    finalAvailableRooms.addAll(availableInfoRoom);
+		String date =
+				new String((String) examForm.get("day") + "/" + (String) examForm.get("month") + "/"
+						+ (String) examForm.get("year"));
 
-	    sortList(request, finalAvailableRooms);
+		String startTime = new String((String) examForm.get("beginningHour") + ":" + (String) examForm.get("beginningMinute"));
 
-	    request.setAttribute(PresentationConstants.AVAILABLE_ROOMS, finalAvailableRooms);
-	} else {
-	    sortList(request, availableInfoRoom);
-	    request.setAttribute(PresentationConstants.AVAILABLE_ROOMS, availableInfoRoom);
+		String endTime = new String((String) examForm.get("endHour") + ":" + (String) examForm.get("endMinute"));
+
+		request.setAttribute(PresentationConstants.EXAM_DATEANDTIME_STR, date + " das " + startTime + " às " + endTime);
+
+		String[] scopeIDArray = (String[]) examForm.get("scopes");
+		request.setAttribute("scopes", scopeIDArray);
+
+		InfoExecutionCourse infoExecutionCourse =
+				(InfoExecutionCourse) request.getAttribute(PresentationConstants.EXECUTION_COURSE);
+		request.setAttribute("executionCourseOID", infoExecutionCourse.getIdInternal());
+
+		return mapping.findForward("AssociateRoom");
 	}
 
-	String date = new String((String) examForm.get("day") + "/" + (String) examForm.get("month") + "/"
-		+ (String) examForm.get("year"));
+	public ActionForward choose(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
 
-	String startTime = new String((String) examForm.get("beginningHour") + ":" + (String) examForm.get("beginningMinute"));
+		String infoExamId = (String) request.getAttribute(PresentationConstants.EXAM_OID);
+		if (infoExamId == null) {
+			infoExamId = request.getParameter(PresentationConstants.EXAM_OID);
+		}
+		request.setAttribute(PresentationConstants.EXAM_OID, infoExamId);
 
-	String endTime = new String((String) examForm.get("endHour") + ":" + (String) examForm.get("endMinute"));
+		DynaValidatorForm chooseRoomForm = (DynaValidatorForm) form;
 
-	request.setAttribute(PresentationConstants.EXAM_DATEANDTIME_STR, date + " das " + startTime + " às " + endTime);
+		String[] scopeIDArray = (String[]) chooseRoomForm.get("scopes");
+		request.setAttribute("scopes", scopeIDArray);
 
-	String[] scopeIDArray = (String[]) examForm.get("scopes");
-	request.setAttribute("scopes", scopeIDArray);
+		String[] roomIDArray = (String[]) chooseRoomForm.get("rooms");
+		request.setAttribute("rooms", roomIDArray);
 
-	InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) request
-		.getAttribute(PresentationConstants.EXECUTION_COURSE);
-	request.setAttribute("executionCourseOID", infoExecutionCourse.getIdInternal());
+		ContextUtils.setCurricularYearContext(request);
+		ContextUtils.setExecutionDegreeContext(request);
+		ContextUtils.setExecutionPeriodContext(request);
+		ContextUtils.setCurricularYearsContext(request);
 
-	return mapping.findForward("AssociateRoom");
-    }
+		String executionDegreeOID = (String) request.getAttribute(PresentationConstants.EXECUTION_DEGREE_OID);
+		request.setAttribute("executionDegreeOID", executionDegreeOID);
 
-    public ActionForward choose(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-	    throws Exception {
+		InfoExecutionCourse infoExecutionCourse =
+				(InfoExecutionCourse) request.getAttribute(PresentationConstants.EXECUTION_COURSE);
+		request.setAttribute("executionCourseOID", infoExecutionCourse.getIdInternal());
 
-	String infoExamId = (String) request.getAttribute(PresentationConstants.EXAM_OID);
-	if (infoExamId == null) {
-	    infoExamId = request.getParameter(PresentationConstants.EXAM_OID);
+		return mapping.findForward("forwardChoose");
 	}
-	request.setAttribute(PresentationConstants.EXAM_OID, infoExamId);
 
-	DynaValidatorForm chooseRoomForm = (DynaValidatorForm) form;
+	private void sortList(HttpServletRequest request, List<InfoRoom> infoRooms) {
 
-	String[] scopeIDArray = (String[]) chooseRoomForm.get("scopes");
-	request.setAttribute("scopes", scopeIDArray);
+		String sortParameter = request.getParameter("sortBy");
 
-	String[] roomIDArray = (String[]) chooseRoomForm.get("rooms");
-	request.setAttribute("rooms", roomIDArray);
-
-	ContextUtils.setCurricularYearContext(request);
-	ContextUtils.setExecutionDegreeContext(request);
-	ContextUtils.setExecutionPeriodContext(request);
-	ContextUtils.setCurricularYearsContext(request);
-
-	String executionDegreeOID = (String) request.getAttribute(PresentationConstants.EXECUTION_DEGREE_OID);
-	request.setAttribute("executionDegreeOID", executionDegreeOID);
-
-	InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) request
-		.getAttribute(PresentationConstants.EXECUTION_COURSE);
-	request.setAttribute("executionCourseOID", infoExecutionCourse.getIdInternal());
-
-	return mapping.findForward("forwardChoose");
-    }
-
-    private void sortList(HttpServletRequest request, List<InfoRoom> infoRooms) {
-
-	String sortParameter = request.getParameter("sortBy");
-
-	if ((sortParameter != null) && (sortParameter.length() != 0)) {
-	    if (sortParameter.equals("capacity")) {
-		Collections.sort(infoRooms, new ReverseComparator(new BeanComparator("capacidadeExame")));
-	    } else if (sortParameter.equals("building")) {
-		Collections.sort(infoRooms, new BeanComparator("edificio"));
-	    } else {
-		Collections.sort(infoRooms, new BeanComparator("tipo"));
-	    }
-	} else {
-	    Collections.sort(infoRooms, new BeanComparator("capacidadeExame"));
+		if ((sortParameter != null) && (sortParameter.length() != 0)) {
+			if (sortParameter.equals("capacity")) {
+				Collections.sort(infoRooms, new ReverseComparator(new BeanComparator("capacidadeExame")));
+			} else if (sortParameter.equals("building")) {
+				Collections.sort(infoRooms, new BeanComparator("edificio"));
+			} else {
+				Collections.sort(infoRooms, new BeanComparator("tipo"));
+			}
+		} else {
+			Collections.sort(infoRooms, new BeanComparator("capacidadeExame"));
+		}
 	}
-    }
 }

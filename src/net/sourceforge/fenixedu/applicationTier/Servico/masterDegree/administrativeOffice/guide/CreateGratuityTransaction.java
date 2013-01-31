@@ -27,31 +27,31 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class CreateGratuityTransaction extends FenixService {
 
-    @Checked("RolePredicates.MANAGER_PREDICATE")
-    @Service
-    public static void run(Integer guideEntryID, IUserView userView) {
+	@Checked("RolePredicates.MANAGER_PREDICATE")
+	@Service
+	public static void run(Integer guideEntryID, IUserView userView) {
 
-	GuideEntry guideEntry = rootDomainObject.readGuideEntryByOID(guideEntryID);
+		GuideEntry guideEntry = rootDomainObject.readGuideEntryByOID(guideEntryID);
 
-	Guide guide = guideEntry.getGuide();
-	Registration registration = guide.getPerson().readStudentByDegreeType(DegreeType.MASTER_DEGREE);
-	GratuitySituation gratuitySituation = registration.readGratuitySituationByExecutionDegree(guide.getExecutionDegree());
-	PersonAccount personAccount = guide.getPerson().getAssociatedPersonAccount();
+		Guide guide = guideEntry.getGuide();
+		Registration registration = guide.getPerson().readStudentByDegreeType(DegreeType.MASTER_DEGREE);
+		GratuitySituation gratuitySituation = registration.readGratuitySituationByExecutionDegree(guide.getExecutionDegree());
+		PersonAccount personAccount = guide.getPerson().getAssociatedPersonAccount();
 
-	if (personAccount == null) {
-	    personAccount = new PersonAccount(guide.getPerson());
+		if (personAccount == null) {
+			personAccount = new PersonAccount(guide.getPerson());
+		}
+
+		Person responsible = Person.readPersonByUsername(userView.getUtilizador());
+
+		Double value = new Double(guideEntry.getPrice().doubleValue() * guideEntry.getQuantity().intValue());
+
+		new GratuityTransaction(value, new Timestamp(Calendar.getInstance().getTimeInMillis()), guideEntry.getDescription(),
+				guide.getPaymentType(), TransactionType.GRATUITY_ADHOC_PAYMENT, Boolean.FALSE, responsible, personAccount,
+				guideEntry, gratuitySituation);
+
+		gratuitySituation.updateValues();
+
 	}
-
-	Person responsible = Person.readPersonByUsername(userView.getUtilizador());
-
-	Double value = new Double(guideEntry.getPrice().doubleValue() * guideEntry.getQuantity().intValue());
-
-	new GratuityTransaction(value, new Timestamp(Calendar.getInstance().getTimeInMillis()), guideEntry.getDescription(),
-		guide.getPaymentType(), TransactionType.GRATUITY_ADHOC_PAYMENT, Boolean.FALSE, responsible, personAccount,
-		guideEntry, gratuitySituation);
-
-	gratuitySituation.updateValues();
-
-    }
 
 }

@@ -24,130 +24,131 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Mapping(path = "/authorizations", module = "academicAdministration")
 @Forwards({ @Forward(name = "listAuthorizations", path = "/academicAdministration/authorizations/authorizations.jsp"),
-	@Forward(name = "managePartyAuthorization", path = "/academicAdministration/authorizations/authorizationsPerPerson.jsp") })
+		@Forward(name = "managePartyAuthorization", path = "/academicAdministration/authorizations/authorizationsPerPerson.jsp") })
 public class AcademicAuthorizationManagementDispatchAction extends FenixDispatchAction {
 
-    public ActionForward authorizations(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) {
-	SortedMap<Party, TreeSet<PersistentAcademicAuthorizationGroup>> groups = new TreeMap<Party, TreeSet<PersistentAcademicAuthorizationGroup>>(
-		Party.COMPARATOR_BY_SUBPARTY_AND_NAME_AND_ID);
-	for (PersistentAccessGroup group : rootDomainObject.getPersistentAccessGroupSet()) {
-	    if (group instanceof PersistentAcademicAuthorizationGroup) {
-		for (Party member : group.getMemberSet()) {
-		    if (!groups.containsKey(member)) {
-			groups.put(member, new TreeSet<PersistentAcademicAuthorizationGroup>(
-				PersistentAcademicAuthorizationGroup.COMPARATOR_BY_LOCALIZED_NAME));
-		    }
-		    groups.get(member).add((PersistentAcademicAuthorizationGroup) group);
+	public ActionForward authorizations(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) {
+		SortedMap<Party, TreeSet<PersistentAcademicAuthorizationGroup>> groups =
+				new TreeMap<Party, TreeSet<PersistentAcademicAuthorizationGroup>>(Party.COMPARATOR_BY_SUBPARTY_AND_NAME_AND_ID);
+		for (PersistentAccessGroup group : rootDomainObject.getPersistentAccessGroupSet()) {
+			if (group instanceof PersistentAcademicAuthorizationGroup) {
+				for (Party member : group.getMemberSet()) {
+					if (!groups.containsKey(member)) {
+						groups.put(member, new TreeSet<PersistentAcademicAuthorizationGroup>(
+								PersistentAcademicAuthorizationGroup.COMPARATOR_BY_LOCALIZED_NAME));
+					}
+					groups.get(member).add((PersistentAcademicAuthorizationGroup) group);
+				}
+			}
 		}
-	    }
+
+		request.setAttribute("groups", groups.entrySet());
+		request.setAttribute("authorizationsBean", new AuthorizationsManagementBean());
+		return mapping.findForward("listAuthorizations");
 	}
 
-	request.setAttribute("groups", groups.entrySet());
-	request.setAttribute("authorizationsBean", new AuthorizationsManagementBean());
-	return mapping.findForward("listAuthorizations");
-    }
+	public ActionForward managePartyAuthorization(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) {
+		AuthorizationsManagementBean bean = getRenderedObject("authorizationsBean");
+		if (bean == null) {
+			Party party = getDomainObject(request, "partyId");
+			bean = new AuthorizationsManagementBean();
+			bean.setParty(party);
+		}
 
-    public ActionForward managePartyAuthorization(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) {
-	AuthorizationsManagementBean bean = getRenderedObject("authorizationsBean");
-	if (bean == null) {
-	    Party party = getDomainObject(request, "partyId");
-	    bean = new AuthorizationsManagementBean();
-	    bean.setParty(party);
+		if (request.getParameter("removeNewAuthorization") != null) {
+			bean.removeAuthorization("-1");
+		}
+
+		request.setAttribute("managementBean", bean);
+
+		return mapping.findForward("managePartyAuthorization");
 	}
 
-	if (request.getParameter("removeNewAuthorization") != null) {
-	    bean.removeAuthorization("-1");
+	public ActionForward addNewAuthorization(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) {
+
+		AuthorizationsManagementBean bean = getRenderedObject("managementBean");
+
+		bean.addNewAuthorization();
+
+		request.setAttribute("managementBean", bean);
+
+		return mapping.findForward("managePartyAuthorization");
 	}
 
-	request.setAttribute("managementBean", bean);
+	public ActionForward deleteAuthorization(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) {
 
-	return mapping.findForward("managePartyAuthorization");
-    }
+		AuthorizationsManagementBean bean = getRenderedObject("managementBean");
 
-    public ActionForward addNewAuthorization(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) {
+		bean.removeAuthorization(request.getParameter("oid"));
 
-	AuthorizationsManagementBean bean = getRenderedObject("managementBean");
+		request.setAttribute("managementBean", bean);
 
-	bean.addNewAuthorization();
-
-	request.setAttribute("managementBean", bean);
-
-	return mapping.findForward("managePartyAuthorization");
-    }
-
-    public ActionForward deleteAuthorization(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) {
-
-	AuthorizationsManagementBean bean = getRenderedObject("managementBean");
-
-	bean.removeAuthorization(request.getParameter("oid"));
-
-	request.setAttribute("managementBean", bean);
-
-	return mapping.findForward("managePartyAuthorization");
-    }
-
-    public ActionForward editAuthorization(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) {
-
-	AuthorizationsManagementBean bean = getRenderedObject("managementBean");
-
-	bean.editAuthorization(request.getParameter("oid"));
-
-	request.setAttribute("managementBean", bean);
-
-	return mapping.findForward("managePartyAuthorization");
-    }
-
-    public ActionForward editAuthorizationPrograms(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) {
-
-	AuthorizationsManagementBean bean = getRenderedObject("managementBean");
-
-	bean.editAuthorizationPrograms(request.getParameter("oid"), request.getParameter("courses"),
-		request.getParameter("offices"));
-
-	request.setAttribute("managementBean", bean);
-
-	return mapping.findForward("managePartyAuthorization");
-    }
-
-    public ActionForward createAuthorization(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) {
-
-	AuthorizationsManagementBean bean = getRenderedObject("managementBean");
-
-	try {
-	    bean.createAuthorization(request.getParameter("courses"), request.getParameter("offices"));
-	} catch (DomainException e) {
-	    addActionMessage(request, e.getKey(), e.getArgs());
+		return mapping.findForward("managePartyAuthorization");
 	}
 
-	request.setAttribute("managementBean", bean);
+	public ActionForward editAuthorization(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) {
 
-	return mapping.findForward("managePartyAuthorization");
-    }
+		AuthorizationsManagementBean bean = getRenderedObject("managementBean");
 
-    public ActionForward removePartyFromGroup(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) {
+		bean.editAuthorization(request.getParameter("oid"));
 
-	PersistentAcademicAuthorizationGroup group = getDomainObject(request, "groupId");
-	Party party = getDomainObject(request, "partyId");
+		request.setAttribute("managementBean", bean);
 
-	revokePartyFromGroup(group, party);
+		return mapping.findForward("managePartyAuthorization");
+	}
 
-	return authorizations(mapping, actionForm, request, response);
-    }
+	public ActionForward editAuthorizationPrograms(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) {
 
-    @Service
-    private void revokePartyFromGroup(PersistentAcademicAuthorizationGroup group, Party party) {
-	if (group.getMember().size() > 1) {
-	    group.revoke(party);
-	} else
-	    group.delete();
-    }
+		AuthorizationsManagementBean bean = getRenderedObject("managementBean");
+
+		bean.editAuthorizationPrograms(request.getParameter("oid"), request.getParameter("courses"),
+				request.getParameter("offices"));
+
+		request.setAttribute("managementBean", bean);
+
+		return mapping.findForward("managePartyAuthorization");
+	}
+
+	public ActionForward createAuthorization(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) {
+
+		AuthorizationsManagementBean bean = getRenderedObject("managementBean");
+
+		try {
+			bean.createAuthorization(request.getParameter("courses"), request.getParameter("offices"));
+		} catch (DomainException e) {
+			addActionMessage(request, e.getKey(), e.getArgs());
+		}
+
+		request.setAttribute("managementBean", bean);
+
+		return mapping.findForward("managePartyAuthorization");
+	}
+
+	public ActionForward removePartyFromGroup(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) {
+
+		PersistentAcademicAuthorizationGroup group = getDomainObject(request, "groupId");
+		Party party = getDomainObject(request, "partyId");
+
+		revokePartyFromGroup(group, party);
+
+		return authorizations(mapping, actionForm, request, response);
+	}
+
+	@Service
+	private void revokePartyFromGroup(PersistentAcademicAuthorizationGroup group, Party party) {
+		if (group.getMember().size() > 1) {
+			group.revoke(party);
+		} else {
+			group.delete();
+		}
+	}
 
 }

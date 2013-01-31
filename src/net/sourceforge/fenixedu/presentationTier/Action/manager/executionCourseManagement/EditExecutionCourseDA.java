@@ -13,57 +13,51 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(path = "/editExecutionCourseChooseExPeriod", module = "manager")
-@Forwards( {
-	@Forward(name = "editChooseExecutionPeriod", path = "/manager/executionCourseManagement/editChooseExecutionPeriod.jsp"),
-	@Forward(name = "editChooseCourseAndYear", path = "/manager/executionCourseManagement/editChooseCourseAndYear.jsp"),
-	@Forward(name = "editExecutionCourse", path = "/manager/executionCourseManagement/listExecutionCourseActions.jsp") })
+@Forwards({
+		@Forward(name = "editChooseExecutionPeriod", path = "/manager/executionCourseManagement/editChooseExecutionPeriod.jsp"),
+		@Forward(name = "editChooseCourseAndYear", path = "/manager/executionCourseManagement/editChooseCourseAndYear.jsp"),
+		@Forward(name = "editExecutionCourse", path = "/manager/executionCourseManagement/listExecutionCourseActions.jsp") })
 public class EditExecutionCourseDA extends FenixDispatchAction {
 
-    public ActionForward prepareEditExecutionCourse(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
+	public ActionForward prepareEditExecutionCourse(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) {
 
-	request.setAttribute("sessionBean", new ExecutionCourseBean());
+		request.setAttribute("sessionBean", new ExecutionCourseBean());
 
-	return mapping.findForward("editChooseExecutionPeriod");
-    }
-
-    public ActionForward secondPrepareEditExecutionCourse(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
-
-	ExecutionCourseBean bean = getRenderedObject("sessionBeanJSP");
-
-	/*
-	 * Se chooseNotLinked=checked, entao limpar as dropboxes do curso e ano
-	 * curricular.
-	 */
-	if (bean.getChooseNotLinked() != null) {
-	    if (bean.getChooseNotLinked()) {
-		bean.setExecutionDegree(null);
-		bean.setCurricularYear(null);
-	    }
+		return mapping.findForward("editChooseExecutionPeriod");
 	}
 
-	request.setAttribute("sessionBean", bean);
+	public ActionForward secondPrepareEditExecutionCourse(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) {
 
-	RenderUtils.invalidateViewState("sessionBeanJSP");
+		ExecutionCourseBean bean = getRenderedObject("sessionBeanJSP");
 
-	return mapping.findForward("editChooseCourseAndYear");
-    }
+		/*
+		 * Se chooseNotLinked=checked, entao limpar as dropboxes do curso e ano
+		 * curricular.
+		 */
+		if (bean.getChooseNotLinked() != null) {
+			if (bean.getChooseNotLinked()) {
+				bean.setExecutionDegree(null);
+				bean.setCurricularYear(null);
+			}
+		}
 
-    public ActionForward listExecutionCourseActions(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
+		request.setAttribute("sessionBean", bean);
 
-	ExecutionCourseBean bean = getRenderedObject("sessionBeanJSP");
-	request.setAttribute("sessionBean", bean);
+		RenderUtils.invalidateViewState("sessionBeanJSP");
 
-	return mapping.findForward("editExecutionCourse");
-    }
+		return mapping.findForward("editChooseCourseAndYear");
+	}
+
+	public ActionForward listExecutionCourseActions(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) {
+
+		ExecutionCourseBean bean = getRenderedObject("sessionBeanJSP");
+		request.setAttribute("sessionBean", bean);
+
+		return mapping.findForward("editExecutionCourse");
+	}
 }

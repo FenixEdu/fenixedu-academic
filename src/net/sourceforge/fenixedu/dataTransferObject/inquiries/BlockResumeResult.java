@@ -20,183 +20,184 @@ import org.apache.commons.lang.StringUtils;
 
 public abstract class BlockResumeResult implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    private Person person;
-    private ResultPersonCategory personCategory;
-    private String firstHeaderKey;
-    private String firstPresentationName;
-    private Set<InquiryResult> resultBlocks;
-    private boolean regentViewHimself;
-    private boolean backToResume;
+	private Person person;
+	private ResultPersonCategory personCategory;
+	private String firstHeaderKey;
+	private String firstPresentationName;
+	private Set<InquiryResult> resultBlocks;
+	private boolean regentViewHimself;
+	private boolean backToResume;
 
-    protected abstract void initResultBlocks();
+	protected abstract void initResultBlocks();
 
-    protected abstract InquiryAnswer getInquiryAnswer();
+	protected abstract InquiryAnswer getInquiryAnswer();
 
-    protected abstract int getNumberOfInquiryQuestions();
+	protected abstract int getNumberOfInquiryQuestions();
 
-    protected abstract List<InquiryResult> getInquiryResultsByQuestion(InquiryQuestion inquiryQuestion);
+	protected abstract List<InquiryResult> getInquiryResultsByQuestion(InquiryQuestion inquiryQuestion);
 
-    public List<Integer> getMandatoryIssues() {
-	List<Integer> mandatory = new ArrayList<Integer>();
-	for (InquiryResult inquiryResult : getResultBlocks()) {
-	    mandatory.add(mandatory.size(), getNumberOfMandatoryIssues(inquiryResult));
-	}
-	return mandatory;
-    }
-
-    private int getNumberOfMandatoryIssues(InquiryResult inquiryResult) {
-	int count = 0;
-	List<InquiryBlock> associatedBlocks = getAssociatedBlocks(inquiryResult);
-	for (InquiryBlock inquiryBlock : associatedBlocks) {
-	    for (InquiryGroupQuestion inquiryGroupQuestion : inquiryBlock.getInquiryGroupsQuestions()) {
-		for (InquiryQuestion inquiryQuestion : inquiryGroupQuestion.getInquiryQuestions()) {
-		    List<InquiryResult> inquiryResultsQuestion = getInquiryResultsByQuestion(inquiryQuestion);
-		    for (InquiryResult inquiryResultQuestion : inquiryResultsQuestion) {
-			if (isMandatoryComment(inquiryResultQuestion)) {
-			    count++;
-			}
-		    }
+	public List<Integer> getMandatoryIssues() {
+		List<Integer> mandatory = new ArrayList<Integer>();
+		for (InquiryResult inquiryResult : getResultBlocks()) {
+			mandatory.add(mandatory.size(), getNumberOfMandatoryIssues(inquiryResult));
 		}
-	    }
+		return mandatory;
 	}
-	return count;
-    }
 
-    private boolean isMandatoryComment(InquiryResult inquiryResultQuestion) {
-	if (!isRegentViewHimself()) {
-	    return inquiryResultQuestion != null && inquiryResultQuestion.getResultClassification().isMandatoryComment();
-	} else {
-	    InquiryResultComment resultComment = inquiryResultQuestion.getInquiryResultComment(getPerson(), getPersonCategory());
-	    if (inquiryResultQuestion != null && inquiryResultQuestion.getResultClassification().isMandatoryComment()
-		    && (resultComment == null || StringUtils.isEmpty(resultComment.getComment()))) {
-		return true;
-	    }
-	    return false;
+	private int getNumberOfMandatoryIssues(InquiryResult inquiryResult) {
+		int count = 0;
+		List<InquiryBlock> associatedBlocks = getAssociatedBlocks(inquiryResult);
+		for (InquiryBlock inquiryBlock : associatedBlocks) {
+			for (InquiryGroupQuestion inquiryGroupQuestion : inquiryBlock.getInquiryGroupsQuestions()) {
+				for (InquiryQuestion inquiryQuestion : inquiryGroupQuestion.getInquiryQuestions()) {
+					List<InquiryResult> inquiryResultsQuestion = getInquiryResultsByQuestion(inquiryQuestion);
+					for (InquiryResult inquiryResultQuestion : inquiryResultsQuestion) {
+						if (isMandatoryComment(inquiryResultQuestion)) {
+							count++;
+						}
+					}
+				}
+			}
+		}
+		return count;
 	}
-    }
 
-    private int getCommentedMandatoryIssues(InquiryResult inquiryResult) {
-	int count = 0;
-	List<InquiryBlock> associatedBlocks = getAssociatedBlocks(inquiryResult);
-	for (InquiryBlock inquiryBlock : associatedBlocks) {
-	    for (InquiryGroupQuestion inquiryGroupQuestion : inquiryBlock.getInquiryGroupsQuestions()) {
-		for (InquiryQuestion inquiryQuestion : inquiryGroupQuestion.getInquiryQuestions()) {
-		    List<InquiryResult> inquiryResultsQuestion = getInquiryResultsByQuestion(inquiryQuestion);
-		    for (InquiryResult inquiryResultQuestion : inquiryResultsQuestion) {
-			InquiryResultComment inquiryResultComment = inquiryResultQuestion != null ? inquiryResultQuestion
-				.getInquiryResultComment(getPerson(), getPersonCategory()) : null;
+	private boolean isMandatoryComment(InquiryResult inquiryResultQuestion) {
+		if (!isRegentViewHimself()) {
+			return inquiryResultQuestion != null && inquiryResultQuestion.getResultClassification().isMandatoryComment();
+		} else {
+			InquiryResultComment resultComment = inquiryResultQuestion.getInquiryResultComment(getPerson(), getPersonCategory());
 			if (inquiryResultQuestion != null && inquiryResultQuestion.getResultClassification().isMandatoryComment()
-				&& inquiryResultComment != null && !StringUtils.isEmpty(inquiryResultComment.getComment())) {
-			    count++;
+					&& (resultComment == null || StringUtils.isEmpty(resultComment.getComment()))) {
+				return true;
 			}
-		    }
+			return false;
 		}
-	    }
-	}
-	return count;
-    }
-
-    public String getCompletionState() {
-	return getCompletionStateType().getLocalizedName();
-    }
-
-    public InquiryResponseState getCompletionStateType() {
-	int mandatoryIssues = 0;
-	int mandatoryCommentedIssues = 0;
-	for (InquiryResult inquiryResult : getResultBlocks()) {
-	    mandatoryIssues += getNumberOfMandatoryIssues(inquiryResult);
-	    mandatoryCommentedIssues += getCommentedMandatoryIssues(inquiryResult);
 	}
 
-	InquiryAnswer inquiryAnswer = getInquiryAnswer();
-	int numberOfQuestions = getNumberOfInquiryQuestions();
-
-	if ((mandatoryIssues > 0 && mandatoryCommentedIssues == 0 && inquiryAnswer == null)
-		|| (mandatoryIssues == 0 && inquiryAnswer == null)) {
-	    return InquiryResponseState.EMPTY;
-	} else if (mandatoryIssues - mandatoryCommentedIssues > 0) {
-	    return InquiryResponseState.INCOMPLETE;
-	} else if (inquiryAnswer == null || inquiryAnswer.getNumberOfAnsweredQuestions() < numberOfQuestions) {
-	    return InquiryResponseState.PARTIALLY_FILLED;
-	} else {
-	    return InquiryResponseState.COMPLETE;
-	}
-    }
-
-    private List<InquiryBlock> getAssociatedBlocks(InquiryResult inquiryResult) {
-	List<InquiryBlock> associatedBlocks = inquiryResult.getInquiryQuestion().getAssociatedBlocks();
-	if (!inquiryResult.getInquiryQuestion().getAssociatedResultBlocks().isEmpty()) {
-	    associatedBlocks = new ArrayList<InquiryBlock>();
-	    for (InquiryBlock inquiryBlock : inquiryResult.getInquiryQuestion().getAssociatedResultBlocks()) {
-		for (InquiryGroupQuestion groupQuestion : inquiryBlock.getInquiryGroupsQuestions()) {
-		    for (InquiryQuestion inquiryQuestion : groupQuestion.getInquiryQuestions()) {
-			associatedBlocks.addAll(inquiryQuestion.getAssociatedBlocks());
-		    }
+	private int getCommentedMandatoryIssues(InquiryResult inquiryResult) {
+		int count = 0;
+		List<InquiryBlock> associatedBlocks = getAssociatedBlocks(inquiryResult);
+		for (InquiryBlock inquiryBlock : associatedBlocks) {
+			for (InquiryGroupQuestion inquiryGroupQuestion : inquiryBlock.getInquiryGroupsQuestions()) {
+				for (InquiryQuestion inquiryQuestion : inquiryGroupQuestion.getInquiryQuestions()) {
+					List<InquiryResult> inquiryResultsQuestion = getInquiryResultsByQuestion(inquiryQuestion);
+					for (InquiryResult inquiryResultQuestion : inquiryResultsQuestion) {
+						InquiryResultComment inquiryResultComment =
+								inquiryResultQuestion != null ? inquiryResultQuestion.getInquiryResultComment(getPerson(),
+										getPersonCategory()) : null;
+						if (inquiryResultQuestion != null && inquiryResultQuestion.getResultClassification().isMandatoryComment()
+								&& inquiryResultComment != null && !StringUtils.isEmpty(inquiryResultComment.getComment())) {
+							count++;
+						}
+					}
+				}
+			}
 		}
-	    }
+		return count;
 	}
-	return associatedBlocks;
-    }
 
-    public Person getPerson() {
-	return person;
-    }
+	public String getCompletionState() {
+		return getCompletionStateType().getLocalizedName();
+	}
 
-    public void setPerson(Person person) {
-	this.person = person;
-    }
+	public InquiryResponseState getCompletionStateType() {
+		int mandatoryIssues = 0;
+		int mandatoryCommentedIssues = 0;
+		for (InquiryResult inquiryResult : getResultBlocks()) {
+			mandatoryIssues += getNumberOfMandatoryIssues(inquiryResult);
+			mandatoryCommentedIssues += getCommentedMandatoryIssues(inquiryResult);
+		}
 
-    public ResultPersonCategory getPersonCategory() {
-	return personCategory;
-    }
+		InquiryAnswer inquiryAnswer = getInquiryAnswer();
+		int numberOfQuestions = getNumberOfInquiryQuestions();
 
-    public void setPersonCategory(ResultPersonCategory personCategory) {
-	this.personCategory = personCategory;
-    }
+		if ((mandatoryIssues > 0 && mandatoryCommentedIssues == 0 && inquiryAnswer == null)
+				|| (mandatoryIssues == 0 && inquiryAnswer == null)) {
+			return InquiryResponseState.EMPTY;
+		} else if (mandatoryIssues - mandatoryCommentedIssues > 0) {
+			return InquiryResponseState.INCOMPLETE;
+		} else if (inquiryAnswer == null || inquiryAnswer.getNumberOfAnsweredQuestions() < numberOfQuestions) {
+			return InquiryResponseState.PARTIALLY_FILLED;
+		} else {
+			return InquiryResponseState.COMPLETE;
+		}
+	}
 
-    public Set<InquiryResult> getResultBlocks() {
-	return resultBlocks;
-    }
+	private List<InquiryBlock> getAssociatedBlocks(InquiryResult inquiryResult) {
+		List<InquiryBlock> associatedBlocks = inquiryResult.getInquiryQuestion().getAssociatedBlocks();
+		if (!inquiryResult.getInquiryQuestion().getAssociatedResultBlocks().isEmpty()) {
+			associatedBlocks = new ArrayList<InquiryBlock>();
+			for (InquiryBlock inquiryBlock : inquiryResult.getInquiryQuestion().getAssociatedResultBlocks()) {
+				for (InquiryGroupQuestion groupQuestion : inquiryBlock.getInquiryGroupsQuestions()) {
+					for (InquiryQuestion inquiryQuestion : groupQuestion.getInquiryQuestions()) {
+						associatedBlocks.addAll(inquiryQuestion.getAssociatedBlocks());
+					}
+				}
+			}
+		}
+		return associatedBlocks;
+	}
 
-    public void setResultBlocks(Set<InquiryResult> resultBlocks) {
-	this.resultBlocks = resultBlocks;
-    }
+	public Person getPerson() {
+		return person;
+	}
 
-    public void setFirstHeaderKey(String firstHeaderKey) {
-	this.firstHeaderKey = firstHeaderKey;
-    }
+	public void setPerson(Person person) {
+		this.person = person;
+	}
 
-    public String getFirstHeaderKey() {
-	return firstHeaderKey;
-    }
+	public ResultPersonCategory getPersonCategory() {
+		return personCategory;
+	}
 
-    public void setFirstPresentationName(String firstPresentationName) {
-	this.firstPresentationName = firstPresentationName;
-    }
+	public void setPersonCategory(ResultPersonCategory personCategory) {
+		this.personCategory = personCategory;
+	}
 
-    public String getFirstPresentationName() {
-	return firstPresentationName;
-    }
+	public Set<InquiryResult> getResultBlocks() {
+		return resultBlocks;
+	}
 
-    public String getFirstHeaderName() {
-	return BundleUtil.getStringFromResourceBundle("resources.InquiriesResources", getFirstHeaderKey());
-    }
+	public void setResultBlocks(Set<InquiryResult> resultBlocks) {
+		this.resultBlocks = resultBlocks;
+	}
 
-    public void setRegentViewHimself(boolean regentViewHimself) {
-	this.regentViewHimself = regentViewHimself;
-    }
+	public void setFirstHeaderKey(String firstHeaderKey) {
+		this.firstHeaderKey = firstHeaderKey;
+	}
 
-    public boolean isRegentViewHimself() {
-	return regentViewHimself;
-    }
+	public String getFirstHeaderKey() {
+		return firstHeaderKey;
+	}
 
-    public void setBackToResume(boolean backToResume) {
-	this.backToResume = backToResume;
-    }
+	public void setFirstPresentationName(String firstPresentationName) {
+		this.firstPresentationName = firstPresentationName;
+	}
 
-    public boolean isBackToResume() {
-	return backToResume;
-    }
+	public String getFirstPresentationName() {
+		return firstPresentationName;
+	}
+
+	public String getFirstHeaderName() {
+		return BundleUtil.getStringFromResourceBundle("resources.InquiriesResources", getFirstHeaderKey());
+	}
+
+	public void setRegentViewHimself(boolean regentViewHimself) {
+		this.regentViewHimself = regentViewHimself;
+	}
+
+	public boolean isRegentViewHimself() {
+		return regentViewHimself;
+	}
+
+	public void setBackToResume(boolean backToResume) {
+		this.backToResume = backToResume;
+	}
+
+	public boolean isBackToResume() {
+		return backToResume;
+	}
 }

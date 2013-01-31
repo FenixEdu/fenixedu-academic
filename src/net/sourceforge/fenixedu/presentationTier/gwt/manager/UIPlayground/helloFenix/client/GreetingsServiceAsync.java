@@ -3,6 +3,6 @@ package net.sourceforge.fenixedu.presentationTier.gwt.manager.UIPlayground.hello
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
 public interface GreetingsServiceAsync {
-    
-    public void getGreetings(AsyncCallback callback);
+
+	public void getGreetings(AsyncCallback callback);
 }

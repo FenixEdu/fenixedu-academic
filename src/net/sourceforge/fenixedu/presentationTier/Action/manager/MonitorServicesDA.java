@@ -22,18 +22,9 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.security.UserView;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
  * @author Luis Cruz
@@ -42,51 +33,51 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
 @Forwards(value = { @Forward(name = "Show", path = "/manager/monitorServices_bd.jsp") })
 public class MonitorServicesDA extends FenixDispatchAction {
 
-    public ActionForward monitor(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-	    throws Exception {
+	public ActionForward monitor(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
 
-	IUserView userView = UserView.getUser();
+		IUserView userView = UserView.getUser();
 
-	Boolean loggingIsOn = ServiceManagerServiceFactory.serviceLoggingIsOn(userView);
-	request.setAttribute("loggingIsOn", loggingIsOn);
+		Boolean loggingIsOn = ServiceManagerServiceFactory.serviceLoggingIsOn(userView);
+		request.setAttribute("loggingIsOn", loggingIsOn);
 
-	Map serviceLogs = ServiceManagerServiceFactory.getServicesLogInfo(userView);
-	ComparatorChain comparator = new ComparatorChain(new BeanComparator("averageExecutionTime"), true);
-	SortedSet sortederviceLogs = new TreeSet(comparator);
-	sortederviceLogs.addAll(serviceLogs.values());
-	request.setAttribute("serviceLogs", sortederviceLogs);
+		Map serviceLogs = ServiceManagerServiceFactory.getServicesLogInfo(userView);
+		ComparatorChain comparator = new ComparatorChain(new BeanComparator("averageExecutionTime"), true);
+		SortedSet sortederviceLogs = new TreeSet(comparator);
+		sortederviceLogs.addAll(serviceLogs.values());
+		request.setAttribute("serviceLogs", sortederviceLogs);
 
-	return mapping.findForward("Show");
-    }
+		return mapping.findForward("Show");
+	}
 
-    public ActionForward activateMonotoring(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
+	public ActionForward activateMonotoring(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
 
-	IUserView userView = UserView.getUser();
+		IUserView userView = UserView.getUser();
 
-	ServiceManagerServiceFactory.turnServiceLoggingOn(userView);
+		ServiceManagerServiceFactory.turnServiceLoggingOn(userView);
 
-	return monitor(mapping, form, request, response);
-    }
+		return monitor(mapping, form, request, response);
+	}
 
-    public ActionForward deactivateMonotoring(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
+	public ActionForward deactivateMonotoring(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
 
-	IUserView userView = UserView.getUser();
+		IUserView userView = UserView.getUser();
 
-	ServiceManagerServiceFactory.turnServiceLoggingOff(userView);
+		ServiceManagerServiceFactory.turnServiceLoggingOff(userView);
 
-	return monitor(mapping, form, request, response);
-    }
+		return monitor(mapping, form, request, response);
+	}
 
-    public ActionForward clearServiceLogs(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
+	public ActionForward clearServiceLogs(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
 
-	IUserView userView = UserView.getUser();
+		IUserView userView = UserView.getUser();
 
-	ServiceManagerServiceFactory.clearServiceLogHistory(userView);
+		ServiceManagerServiceFactory.clearServiceLogHistory(userView);
 
-	return monitor(mapping, form, request, response);
-    }
+		return monitor(mapping, form, request, response);
+	}
 
 }

@@ -6,88 +6,88 @@ import org.joda.time.YearMonthDay;
 
 public class AlumniErrorSendingMailBean implements Serializable {
 
-    private String contactEmail;
-    private String documentIdNumber;
-    private String fullName;
-    private YearMonthDay dateOfBirthYearMonthDay;
-    private String socialSecurityNumber;
-    private String nameOfFather;
-    private String nameOfMother;
-    private Integer studentNumber;
-    private String errorMessage;
+	private String contactEmail;
+	private String documentIdNumber;
+	private String fullName;
+	private YearMonthDay dateOfBirthYearMonthDay;
+	private String socialSecurityNumber;
+	private String nameOfFather;
+	private String nameOfMother;
+	private Integer studentNumber;
+	private String errorMessage;
 
-    public AlumniErrorSendingMailBean() {
-    }
+	public AlumniErrorSendingMailBean() {
+	}
 
-    public String getContactEmail() {
-	return contactEmail;
-    }
+	public String getContactEmail() {
+		return contactEmail;
+	}
 
-    public void setContactEmail(String contactEmail) {
-	this.contactEmail = contactEmail;
-    }
+	public void setContactEmail(String contactEmail) {
+		this.contactEmail = contactEmail;
+	}
 
-    public String getDocumentIdNumber() {
-	return documentIdNumber;
-    }
+	public String getDocumentIdNumber() {
+		return documentIdNumber;
+	}
 
-    public void setDocumentIdNumber(String documentIdNumber) {
-	this.documentIdNumber = documentIdNumber;
-    }
+	public void setDocumentIdNumber(String documentIdNumber) {
+		this.documentIdNumber = documentIdNumber;
+	}
 
-    public String getFullName() {
-	return fullName;
-    }
+	public String getFullName() {
+		return fullName;
+	}
 
-    public void setFullName(String fullName) {
-	this.fullName = fullName;
-    }
+	public void setFullName(String fullName) {
+		this.fullName = fullName;
+	}
 
-    public YearMonthDay getDateOfBirthYearMonthDay() {
-	return dateOfBirthYearMonthDay;
-    }
+	public YearMonthDay getDateOfBirthYearMonthDay() {
+		return dateOfBirthYearMonthDay;
+	}
 
-    public void setDateOfBirthYearMonthDay(YearMonthDay dateOfBirthYearMonthDay) {
-	this.dateOfBirthYearMonthDay = dateOfBirthYearMonthDay;
-    }
+	public void setDateOfBirthYearMonthDay(YearMonthDay dateOfBirthYearMonthDay) {
+		this.dateOfBirthYearMonthDay = dateOfBirthYearMonthDay;
+	}
 
-    public String getSocialSecurityNumber() {
-	return socialSecurityNumber;
-    }
+	public String getSocialSecurityNumber() {
+		return socialSecurityNumber;
+	}
 
-    public void setSocialSecurityNumber(String socialSecurityNumber) {
-	this.socialSecurityNumber = socialSecurityNumber;
-    }
+	public void setSocialSecurityNumber(String socialSecurityNumber) {
+		this.socialSecurityNumber = socialSecurityNumber;
+	}
 
-    public String getNameOfFather() {
-	return nameOfFather;
-    }
+	public String getNameOfFather() {
+		return nameOfFather;
+	}
 
-    public void setNameOfFather(String nameOfFather) {
-	this.nameOfFather = nameOfFather;
-    }
+	public void setNameOfFather(String nameOfFather) {
+		this.nameOfFather = nameOfFather;
+	}
 
-    public String getNameOfMother() {
-	return nameOfMother;
-    }
+	public String getNameOfMother() {
+		return nameOfMother;
+	}
 
-    public void setNameOfMother(String nameOfMother) {
-	this.nameOfMother = nameOfMother;
-    }
-    
-    public Integer getStudentNumber() {
-        return studentNumber;
-    }
+	public void setNameOfMother(String nameOfMother) {
+		this.nameOfMother = nameOfMother;
+	}
 
-    public void setStudentNumber(Integer studentNumber) {
-        this.studentNumber = studentNumber;
-    }
-    
-    public String getErrorMessage() {
-        return errorMessage;
-    }
+	public Integer getStudentNumber() {
+		return studentNumber;
+	}
 
-    public void setErrorMessage(String errorMessage) {
-        this.errorMessage = errorMessage;
-    }
+	public void setStudentNumber(Integer studentNumber) {
+		this.studentNumber = studentNumber;
+	}
+
+	public String getErrorMessage() {
+		return errorMessage;
+	}
+
+	public void setErrorMessage(String errorMessage) {
+		this.errorMessage = errorMessage;
+	}
 }

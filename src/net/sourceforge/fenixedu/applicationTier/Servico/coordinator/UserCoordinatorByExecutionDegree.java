@@ -11,14 +11,14 @@ import net.sourceforge.fenixedu.domain.Person;
  */
 public class UserCoordinatorByExecutionDegree extends FenixService {
 
-    public Boolean run(Integer executionDegreeCode, final Person person, String degree2Compare) throws FenixServiceException {
-	final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeCode);
-	final Coordinator coordinator = executionDegree.getCoordinatorByTeacher(person);
+	public Boolean run(Integer executionDegreeCode, final Person person, String degree2Compare) throws FenixServiceException {
+		final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeCode);
+		final Coordinator coordinator = executionDegree.getCoordinatorByTeacher(person);
 
-	if (coordinator == null) {
-	    throw new FenixServiceException("error.exception.notAuthorized");
+		if (coordinator == null) {
+			throw new FenixServiceException("error.exception.notAuthorized");
+		}
+		return Boolean.valueOf(coordinator.getExecutionDegree().getDegreeCurricularPlan().getDegree().getSigla()
+				.startsWith(degree2Compare));
 	}
-	return Boolean.valueOf(coordinator.getExecutionDegree().getDegreeCurricularPlan().getDegree().getSigla().startsWith(
-		degree2Compare));
-    }
 }

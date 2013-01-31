@@ -10,21 +10,21 @@ import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDTeacher;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDValueType;
 
 public class SetTSDProfessorship extends FenixService {
-    public TSDProfessorship run(Integer tsdCourseId, Integer tsdTeacherId, Map<String, Object> tsdCourseParameters) {
+	public TSDProfessorship run(Integer tsdCourseId, Integer tsdTeacherId, Map<String, Object> tsdCourseParameters) {
 
-	TSDCourse tsdCourse = rootDomainObject.readTSDCourseByOID(tsdCourseId);
-	TSDTeacher tsdTeacher = rootDomainObject.readTSDTeacherByOID(tsdTeacherId);
-	ShiftType type = ShiftType.valueOf((String) tsdCourseParameters.get("shiftType"));
+		TSDCourse tsdCourse = rootDomainObject.readTSDCourseByOID(tsdCourseId);
+		TSDTeacher tsdTeacher = rootDomainObject.readTSDTeacherByOID(tsdTeacherId);
+		ShiftType type = ShiftType.valueOf((String) tsdCourseParameters.get("shiftType"));
 
-	TSDProfessorship tsdProfessorship = tsdCourse.getTSDProfessorshipByTSDTeacherAndShiftType(tsdTeacher, type);
+		TSDProfessorship tsdProfessorship = tsdCourse.getTSDProfessorshipByTSDTeacherAndShiftType(tsdTeacher, type);
 
-	if (tsdProfessorship == null) {
-	    tsdProfessorship = new TSDProfessorship(tsdCourse, tsdTeacher, type);
+		if (tsdProfessorship == null) {
+			tsdProfessorship = new TSDProfessorship(tsdCourse, tsdTeacher, type);
+		}
+
+		tsdProfessorship.setHoursManual((Double) tsdCourseParameters.get("hoursManual"));
+		tsdProfessorship.setHoursType(TSDValueType.valueOf((String) tsdCourseParameters.get("hoursType")));
+
+		return tsdProfessorship;
 	}
-
-	tsdProfessorship.setHoursManual((Double) tsdCourseParameters.get("hoursManual"));
-	tsdProfessorship.setHoursType(TSDValueType.valueOf((String) tsdCourseParameters.get("hoursType")));
-
-	return tsdProfessorship;
-    }
 }

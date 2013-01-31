@@ -12,60 +12,60 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 
 public class AuthorGroup extends Group {
 
-    @Override
-    public boolean equals(final Object other) {
-	boolean result = other != null;
-
-	if (result) {
-	    result = this.getClass().equals(other.getClass());
-	}
-
-	return result;
-    }
-
-    @Override
-    public int hashCode() {
-	return getClass().hashCode();
-    }
-
-    public static class AuthorGroupBuilder implements GroupBuilder {
 	@Override
-	public Group build(Object[] arguments) {
-	    return new AuthorGroup();
-	}
+	public boolean equals(final Object other) {
+		boolean result = other != null;
 
-	@Override
-	public int getMinArguments() {
-	    return 0;
-	}
-
-	@Override
-	public int getMaxArguments() {
-	    return 0;
-	}
-    }
-
-    @Override
-    public Set<Person> getElements() {
-	Set<Person> authors = new HashSet<Person>();
-	for (Party party : RootDomainObject.getInstance().getPartysSet()) {
-	    if (party instanceof Person) {
-		if (((Person) party).hasAnyResultParticipations()) {
-		    authors.add((Person) party);
+		if (result) {
+			result = this.getClass().equals(other.getClass());
 		}
-	    }
+
+		return result;
 	}
-	return authors;
-    }
 
-    @Override
-    public boolean isMember(Person person) {
-	return person != null && person.hasAnyResultParticipations();
-    }
+	@Override
+	public int hashCode() {
+		return getClass().hashCode();
+	}
 
-    @Override
-    protected Argument[] getExpressionArguments() {
-	return new Argument[0];
-    }
+	public static class AuthorGroupBuilder implements GroupBuilder {
+		@Override
+		public Group build(Object[] arguments) {
+			return new AuthorGroup();
+		}
+
+		@Override
+		public int getMinArguments() {
+			return 0;
+		}
+
+		@Override
+		public int getMaxArguments() {
+			return 0;
+		}
+	}
+
+	@Override
+	public Set<Person> getElements() {
+		Set<Person> authors = new HashSet<Person>();
+		for (Party party : RootDomainObject.getInstance().getPartysSet()) {
+			if (party instanceof Person) {
+				if (((Person) party).hasAnyResultParticipations()) {
+					authors.add((Person) party);
+				}
+			}
+		}
+		return authors;
+	}
+
+	@Override
+	public boolean isMember(Person person) {
+		return person != null && person.hasAnyResultParticipations();
+	}
+
+	@Override
+	protected Argument[] getExpressionArguments() {
+		return new Argument[0];
+	}
 
 }

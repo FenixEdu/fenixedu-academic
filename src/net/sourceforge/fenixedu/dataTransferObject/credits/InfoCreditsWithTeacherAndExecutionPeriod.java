@@ -8,27 +8,27 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
  */
 public class InfoCreditsWithTeacherAndExecutionPeriod extends InfoCreditsWithTeacher {
 
-    /**
-     * @param infoCredits
-     */
-    public InfoCreditsWithTeacherAndExecutionPeriod(InfoCredits infoCredits) {
-	super(infoCredits);
-    }
+	/**
+	 * @param infoCredits
+	 */
+	public InfoCreditsWithTeacherAndExecutionPeriod(InfoCredits infoCredits) {
+		super(infoCredits);
+	}
 
-    private InfoExecutionPeriod infoExecutionPeriod;
+	private InfoExecutionPeriod infoExecutionPeriod;
 
-    /**
-     * @return Returns the infoExecutionPeriod.
-     */
-    public InfoExecutionPeriod getInfoExecutionPeriod() {
-	return infoExecutionPeriod;
-    }
+	/**
+	 * @return Returns the infoExecutionPeriod.
+	 */
+	public InfoExecutionPeriod getInfoExecutionPeriod() {
+		return infoExecutionPeriod;
+	}
 
-    /**
-     * @param infoExecutionPeriod
-     *            The infoExecutionPeriod to set.
-     */
-    public void setInfoExecutionPeriod(InfoExecutionPeriod infoExecutionPeriod) {
-	this.infoExecutionPeriod = infoExecutionPeriod;
-    }
+	/**
+	 * @param infoExecutionPeriod
+	 *            The infoExecutionPeriod to set.
+	 */
+	public void setInfoExecutionPeriod(InfoExecutionPeriod infoExecutionPeriod) {
+		this.infoExecutionPeriod = infoExecutionPeriod;
+	}
 }

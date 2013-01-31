@@ -26,86 +26,86 @@ import net.sourceforge.fenixedu.domain.Teacher;
 
 public class DeleteProjectProposal extends FenixService {
 
-    public Boolean run(Integer objectCode, Integer groupPropertiesCode, Integer executionCourseCode,
-	    String withdrawalPersonUsername) throws FenixServiceException {
+	public Boolean run(Integer objectCode, Integer groupPropertiesCode, Integer executionCourseCode,
+			String withdrawalPersonUsername) throws FenixServiceException {
 
-	Person withdrawalPerson = Teacher.readTeacherByUsername(withdrawalPersonUsername).getPerson();
-	Grouping groupProperties = rootDomainObject.readGroupingByOID(groupPropertiesCode);
-	ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseCode);
-	ExecutionCourse startExecutionCourse = rootDomainObject.readExecutionCourseByOID(objectCode);
+		Person withdrawalPerson = Teacher.readTeacherByUsername(withdrawalPersonUsername).getPerson();
+		Grouping groupProperties = rootDomainObject.readGroupingByOID(groupPropertiesCode);
+		ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseCode);
+		ExecutionCourse startExecutionCourse = rootDomainObject.readExecutionCourseByOID(objectCode);
 
-	if (groupProperties == null) {
-	    throw new InvalidArgumentsServiceException("error.noGroupProperties");
-	}
-	if (executionCourse == null || startExecutionCourse == null) {
-	    throw new InvalidArgumentsServiceException("error.noExecutionCourse");
-	}
-
-	ExportGrouping groupingExecutionCourse = executionCourse.getExportGrouping(groupProperties);
-
-	if (groupingExecutionCourse == null) {
-	    throw new InvalidArgumentsServiceException("error.noProjectProposal");
-	}
-
-	// List teachers to advise
-	List group = new ArrayList();
-
-	List groupPropertiesExecutionCourseList = groupProperties.getExportGroupings();
-	Iterator iterGroupPropertiesExecutionCourseList = groupPropertiesExecutionCourseList.iterator();
-
-	while (iterGroupPropertiesExecutionCourseList.hasNext()) {
-
-	    ExportGrouping groupPropertiesExecutionCourseAux = (ExportGrouping) iterGroupPropertiesExecutionCourseList.next();
-	    if (groupPropertiesExecutionCourseAux.getProposalState().getState().intValue() == 1
-		    || groupPropertiesExecutionCourseAux.getProposalState().getState().intValue() == 2) {
-
-		List professorships = groupPropertiesExecutionCourseAux.getExecutionCourse().getProfessorships();
-
-		Iterator iterProfessorship = professorships.iterator();
-		while (iterProfessorship.hasNext()) {
-		    final Professorship professorship = (Professorship) iterProfessorship.next();
-		    final Person person = professorship.getPerson();
-
-		    if (!person.equals(withdrawalPerson) && !group.contains(person)) {
-			group.add(person);
-		    }
+		if (groupProperties == null) {
+			throw new InvalidArgumentsServiceException("error.noGroupProperties");
 		}
-	    }
+		if (executionCourse == null || startExecutionCourse == null) {
+			throw new InvalidArgumentsServiceException("error.noExecutionCourse");
+		}
+
+		ExportGrouping groupingExecutionCourse = executionCourse.getExportGrouping(groupProperties);
+
+		if (groupingExecutionCourse == null) {
+			throw new InvalidArgumentsServiceException("error.noProjectProposal");
+		}
+
+		// List teachers to advise
+		List group = new ArrayList();
+
+		List groupPropertiesExecutionCourseList = groupProperties.getExportGroupings();
+		Iterator iterGroupPropertiesExecutionCourseList = groupPropertiesExecutionCourseList.iterator();
+
+		while (iterGroupPropertiesExecutionCourseList.hasNext()) {
+
+			ExportGrouping groupPropertiesExecutionCourseAux = (ExportGrouping) iterGroupPropertiesExecutionCourseList.next();
+			if (groupPropertiesExecutionCourseAux.getProposalState().getState().intValue() == 1
+					|| groupPropertiesExecutionCourseAux.getProposalState().getState().intValue() == 2) {
+
+				List professorships = groupPropertiesExecutionCourseAux.getExecutionCourse().getProfessorships();
+
+				Iterator iterProfessorship = professorships.iterator();
+				while (iterProfessorship.hasNext()) {
+					final Professorship professorship = (Professorship) iterProfessorship.next();
+					final Person person = professorship.getPerson();
+
+					if (!person.equals(withdrawalPerson) && !group.contains(person)) {
+						group.add(person);
+					}
+				}
+			}
+		}
+
+		List professorshipsAux = executionCourse.getProfessorships();
+
+		Iterator iterProfessorshipsAux = professorshipsAux.iterator();
+		while (iterProfessorshipsAux.hasNext()) {
+			Professorship professorshipAux = (Professorship) iterProfessorshipsAux.next();
+			Teacher teacherAux = professorshipAux.getTeacher();
+			if (!(teacherAux.getPerson()).equals(withdrawalPerson) && !group.contains(teacherAux.getPerson())) {
+				group.add(teacherAux.getPerson());
+			}
+		}
+
+		List<ExecutionCourse> ecs = groupProperties.getExecutionCourses();
+		StringBuilder sb = new StringBuilder();
+		sb.setLength(0);
+
+		// proposal deleted is in same executioCourse
+		if (startExecutionCourse.getExternalId().compareTo(groupingExecutionCourse.getExecutionCourse().getExternalId()) == 0) {
+			for (ExecutionCourse ec : ecs) {
+				GroupsAndShiftsManagementLog.createLog(ec, "resources.MessagingResources",
+						"log.executionCourse.groupAndShifts.grouping.exportGroup.droppedSelf", groupProperties.getName(),
+						startExecutionCourse.getNome(), startExecutionCourse.getDegreePresentationString());
+			}
+		} else {
+			for (ExecutionCourse ec : ecs) {
+				GroupsAndShiftsManagementLog.createLog(ec, "resources.MessagingResources",
+						"log.executionCourse.groupAndShifts.grouping.exportGroup.dropped", groupProperties.getName(),
+						startExecutionCourse.getNome(), startExecutionCourse.getDegreePresentationString(),
+						groupingExecutionCourse.getExecutionCourse().getName(), groupingExecutionCourse.getExecutionCourse()
+								.getDegreePresentationString());
+			}
+		}
+		groupingExecutionCourse.delete();
+
+		return true;
 	}
-
-	List professorshipsAux = executionCourse.getProfessorships();
-
-	Iterator iterProfessorshipsAux = professorshipsAux.iterator();
-	while (iterProfessorshipsAux.hasNext()) {
-	    Professorship professorshipAux = (Professorship) iterProfessorshipsAux.next();
-	    Teacher teacherAux = professorshipAux.getTeacher();
-	    if (!(teacherAux.getPerson()).equals(withdrawalPerson) && !group.contains(teacherAux.getPerson())) {
-		group.add(teacherAux.getPerson());
-	    }
-	}
-
-	List<ExecutionCourse> ecs = groupProperties.getExecutionCourses();
-	StringBuilder sb = new StringBuilder();
-	sb.setLength(0);
-
-	// proposal deleted is in same executioCourse
-	if (startExecutionCourse.getExternalId().compareTo(groupingExecutionCourse.getExecutionCourse().getExternalId()) == 0) {
-	    for (ExecutionCourse ec : ecs) {
-		GroupsAndShiftsManagementLog.createLog(ec, "resources.MessagingResources",
-			"log.executionCourse.groupAndShifts.grouping.exportGroup.droppedSelf", groupProperties.getName(),
-			startExecutionCourse.getNome(), startExecutionCourse.getDegreePresentationString());
-	    }
-	} else {
-	    for (ExecutionCourse ec : ecs) {
-		GroupsAndShiftsManagementLog.createLog(ec, "resources.MessagingResources",
-			"log.executionCourse.groupAndShifts.grouping.exportGroup.dropped", groupProperties.getName(),
-			startExecutionCourse.getNome(), startExecutionCourse.getDegreePresentationString(),
-			groupingExecutionCourse.getExecutionCourse().getName(), groupingExecutionCourse.getExecutionCourse()
-				.getDegreePresentationString());
-	    }
-	}
-	groupingExecutionCourse.delete();
-
-	return true;
-    }
 }

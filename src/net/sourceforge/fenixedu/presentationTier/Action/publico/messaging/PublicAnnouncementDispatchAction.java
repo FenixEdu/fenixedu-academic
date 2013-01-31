@@ -16,18 +16,10 @@ import net.sourceforge.fenixedu.presentationTier.Action.messaging.AnnouncementMa
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
  * @author <a href="mailto:goncalo@ist.utl.pt">Goncalo Luiz</a><br>
@@ -39,25 +31,25 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
 @Forwards(value = { @Forward(name = "viewAnnouncement", path = "public-view-announcement") })
 public class PublicAnnouncementDispatchAction extends AnnouncementManagement {
 
-    @Override
-    public ActionForward start(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
+	@Override
+	public ActionForward start(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
 
-	return null;
-    }
+		return null;
+	}
 
-    @Override
-    protected String getExtraRequestParameters(HttpServletRequest request) {
-	return "";
-    }
+	@Override
+	protected String getExtraRequestParameters(HttpServletRequest request) {
+		return "";
+	}
 
-    @Override
-    protected String getContextInformation(ActionMapping mapping, HttpServletRequest request) {
-	return "/publicAnnouncements";
-    }
+	@Override
+	protected String getContextInformation(ActionMapping mapping, HttpServletRequest request) {
+		return "/publicAnnouncements";
+	}
 
-    @Override
-    protected Collection<AnnouncementBoard> boardsToView(HttpServletRequest request) throws Exception {
-	return new ArrayList<AnnouncementBoard>();
-    }
+	@Override
+	protected Collection<AnnouncementBoard> boardsToView(HttpServletRequest request) throws Exception {
+		return new ArrayList<AnnouncementBoard>();
+	}
 }

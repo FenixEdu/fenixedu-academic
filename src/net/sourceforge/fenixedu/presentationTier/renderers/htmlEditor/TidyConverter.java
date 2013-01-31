@@ -19,84 +19,85 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public abstract class TidyConverter extends Converter {
 
-    public static final String TIDY_PROPERTIES = "HtmlEditor-Tidy.properties";
+	public static final String TIDY_PROPERTIES = "HtmlEditor-Tidy.properties";
 
-    private static final String ENCODING = PropertiesManager.DEFAULT_CHARSET;
+	private static final String ENCODING = PropertiesManager.DEFAULT_CHARSET;
 
-    public String getTidyProperties() {
-	return TIDY_PROPERTIES;
-    }
-
-    @Override
-    public Object convert(Class type, Object value) {
-	String htmlText = (String) value;
-
-	if (htmlText == null || htmlText.length() == 0) {
-	    return null;
+	public String getTidyProperties() {
+		return TIDY_PROPERTIES;
 	}
 
-	ByteArrayInputStream inStream = new ByteArrayInputStream(htmlText.getBytes());
-	ByteArrayOutputStream outStream = new ByteArrayOutputStream();
+	@Override
+	public Object convert(Class type, Object value) {
+		String htmlText = (String) value;
 
-	Tidy tidy = createTidyParser();
+		if (htmlText == null || htmlText.length() == 0) {
+			return null;
+		}
 
-	TidyErrorsListener errorListener = new TidyErrorsListener();
-	tidy.setMessageListener(errorListener);
+		ByteArrayInputStream inStream = new ByteArrayInputStream(htmlText.getBytes());
+		ByteArrayOutputStream outStream = new ByteArrayOutputStream();
 
-	Document document = tidy.parseDOM(inStream, null);
+		Tidy tidy = createTidyParser();
 
-	if (errorListener.isBogus()) {
-	    throw new ConversionException("renderers.converter.safe.invalid");
+		TidyErrorsListener errorListener = new TidyErrorsListener();
+		tidy.setMessageListener(errorListener);
+
+		Document document = tidy.parseDOM(inStream, null);
+
+		if (errorListener.isBogus()) {
+			throw new ConversionException("renderers.converter.safe.invalid");
+		}
+
+		parseDocument(outStream, tidy, document);
+
+		try {
+			return filterOutput(new String(outStream.toByteArray(), ENCODING));
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+			throw new ConversionException("tidy.converter.ending.notSupported.critical");
+		}
 	}
 
-	parseDocument(outStream, tidy, document);
-
-	try {
-	    return filterOutput(new String(outStream.toByteArray(), ENCODING));
-	} catch (UnsupportedEncodingException e) {
-	    e.printStackTrace();
-	    throw new ConversionException("tidy.converter.ending.notSupported.critical");
-	}
-    }
-
-    protected String filterOutput(String output) {
-	return output;
-    }
-
-    private Tidy createTidyParser() {
-	Tidy tidy = new Tidy();
-
-	Properties properties = new Properties();
-	try {
-	    properties.load(getClass().getResourceAsStream(getTidyProperties()));
-	} catch (IOException e) {
-	    e.printStackTrace();
+	protected String filterOutput(String output) {
+		return output;
 	}
 
-	tidy.setConfigurationFromProps(properties);
+	private Tidy createTidyParser() {
+		Tidy tidy = new Tidy();
 
-	return tidy;
-    }
+		Properties properties = new Properties();
+		try {
+			properties.load(getClass().getResourceAsStream(getTidyProperties()));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 
-    protected abstract void parseDocument(OutputStream outStream, Tidy tidy, Document document);
+		tidy.setConfigurationFromProps(properties);
 
-    class TidyErrorsListener implements TidyMessageListener {
-
-	boolean bogus;
-
-	public boolean isBogus() {
-	    return this.bogus;
+		return tidy;
 	}
 
-	public void setBogus(boolean bogus) {
-	    this.bogus = bogus;
-	}
+	protected abstract void parseDocument(OutputStream outStream, Tidy tidy, Document document);
 
-	public void messageReceived(TidyMessage message) {
-	    if (message.getLevel().equals(TidyMessage.Level.ERROR)) {
-		setBogus(true);
-	    }
-	}
+	class TidyErrorsListener implements TidyMessageListener {
 
-    }
+		boolean bogus;
+
+		public boolean isBogus() {
+			return this.bogus;
+		}
+
+		public void setBogus(boolean bogus) {
+			this.bogus = bogus;
+		}
+
+		@Override
+		public void messageReceived(TidyMessage message) {
+			if (message.getLevel().equals(TidyMessage.Level.ERROR)) {
+				setBogus(true);
+			}
+		}
+
+	}
 }

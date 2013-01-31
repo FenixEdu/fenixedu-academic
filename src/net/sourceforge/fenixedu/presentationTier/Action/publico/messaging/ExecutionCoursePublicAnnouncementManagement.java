@@ -24,18 +24,10 @@ import net.sourceforge.fenixedu.presentationTier.Action.messaging.announcements.
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
  * @author <a href="mailto:goncalo@ist.utl.pt">Goncalo Luiz</a><br>
@@ -44,99 +36,100 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
  * 
  */
 @Mapping(module = "publico", path = "/announcementManagement", scope = "request", parameter = "method")
-@Forwards(value = {
-		@Forward(name = "viewAnnouncement", path = "executionCoruse-view-announcement"),
+@Forwards(value = { @Forward(name = "viewAnnouncement", path = "executionCoruse-view-announcement"),
 		@Forward(name = "listAnnouncements", path = "public-list-announcements") })
 public class ExecutionCoursePublicAnnouncementManagement extends PublicAnnouncementDispatchAction {
 
-    protected Integer getRequestedExecutionCourseId(HttpServletRequest request) {
+	protected Integer getRequestedExecutionCourseId(HttpServletRequest request) {
 
-	final String executionCourseIDString = request.getParameter("executionCourseID");
+		final String executionCourseIDString = request.getParameter("executionCourseID");
 
-	if (executionCourseIDString == null) {
-	    ExecutionCourseSite site = (ExecutionCourseSite) AbstractFunctionalityContext.getCurrentContext(request)
-		    .getSelectedContainer();
-	    return site.getSiteExecutionCourse().getIdInternal();
+		if (executionCourseIDString == null) {
+			ExecutionCourseSite site =
+					(ExecutionCourseSite) AbstractFunctionalityContext.getCurrentContext(request).getSelectedContainer();
+			return site.getSiteExecutionCourse().getIdInternal();
+		}
+
+		return Integer.valueOf(executionCourseIDString);
 	}
 
-	return Integer.valueOf(executionCourseIDString);
-    }
-
-    protected ExecutionCourse getRequestedExecutionCourse(HttpServletRequest request) {
-	Integer id = this.getRequestedExecutionCourseId(request);
-	return RootDomainObject.getInstance().readExecutionCourseByOID(id);
-    }
-
-    @Override
-    protected AnnouncementBoard getRequestedAnnouncementBoard(HttpServletRequest request) {
-	return this.getRequestedExecutionCourse(request).getBoard();
-    }
-
-    @Override
-    public ActionForward start(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-	return super.viewAnnouncements(mapping, actionForm, request, response);
-    }
-
-    @Override
-    protected Collection<Announcement> getThisMonthAnnouncements(AnnouncementBoard board, HttpServletRequest request) {
-	boolean useArchive = request.getParameter("ommitArchive") == null;
-	if (useArchive) {
-	    return super.getThisMonthAnnouncements(board, request);
-	} else {
-	    List<Announcement> announcements = new ArrayList<Announcement>(board.getAnnouncements());
-	    Collections.sort(announcements, Announcement.NEWEST_FIRST);
-
-	    return announcements;
+	protected ExecutionCourse getRequestedExecutionCourse(HttpServletRequest request) {
+		Integer id = this.getRequestedExecutionCourseId(request);
+		return RootDomainObject.getInstance().readExecutionCourseByOID(id);
 	}
-    }
 
-    @Override
-    protected AnnouncementArchive buildArchive(AnnouncementBoard board, HttpServletRequest request) {
-	boolean useArchive = request.getParameter("ommitArchive") == null;
-	if (useArchive) {
-	    return super.buildArchive(board, request);
-	} else {
-	    return null;
+	@Override
+	protected AnnouncementBoard getRequestedAnnouncementBoard(HttpServletRequest request) {
+		return this.getRequestedExecutionCourse(request).getBoard();
 	}
-    }
 
-    @Override
-    public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-	ExecutionCourse course = getRequestedExecutionCourse(request);
-	request.setAttribute("executionCourse", course);
-	return super.execute(mapping, actionForm, request, response);
-    }
-
-    @Override
-    protected String getExtraRequestParameters(HttpServletRequest request) {
-	return "executionCourseID=" + this.getRequestedExecutionCourseId(request);
-    }
-
-    @Override
-    protected String getContextInformation(ActionMapping mapping, HttpServletRequest request) {
-	return "/announcementManagement.do";
-
-    }
-
-    @Override
-    protected Collection<AnnouncementBoard> boardsToView(HttpServletRequest request) throws Exception {
-	Collection<AnnouncementBoard> boards = new ArrayList<AnnouncementBoard>(1);
-	AnnouncementBoard board = this.getRequestedExecutionCourse(request).getBoard();
-	if (board.getReaders() == null || (getUserView(request) != null && board.getReaders().allows(getUserView(request)))) {
-	    boards.add(this.getRequestedExecutionCourse(request).getBoard());
+	@Override
+	public ActionForward start(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		return super.viewAnnouncements(mapping, actionForm, request, response);
 	}
-	return boards;
-    }
 
-    public ActionForward editAnnouncement(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-	throw new NotAuthorizedActionException("cannot edit announcement");
-    }
+	@Override
+	protected Collection<Announcement> getThisMonthAnnouncements(AnnouncementBoard board, HttpServletRequest request) {
+		boolean useArchive = request.getParameter("ommitArchive") == null;
+		if (useArchive) {
+			return super.getThisMonthAnnouncements(board, request);
+		} else {
+			List<Announcement> announcements = new ArrayList<Announcement>(board.getAnnouncements());
+			Collections.sort(announcements, Announcement.NEWEST_FIRST);
 
-    public ActionForward deleteAnnouncement(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-	throw new NotAuthorizedActionException("cannot delete announcement");
-    }
+			return announcements;
+		}
+	}
+
+	@Override
+	protected AnnouncementArchive buildArchive(AnnouncementBoard board, HttpServletRequest request) {
+		boolean useArchive = request.getParameter("ommitArchive") == null;
+		if (useArchive) {
+			return super.buildArchive(board, request);
+		} else {
+			return null;
+		}
+	}
+
+	@Override
+	public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		ExecutionCourse course = getRequestedExecutionCourse(request);
+		request.setAttribute("executionCourse", course);
+		return super.execute(mapping, actionForm, request, response);
+	}
+
+	@Override
+	protected String getExtraRequestParameters(HttpServletRequest request) {
+		return "executionCourseID=" + this.getRequestedExecutionCourseId(request);
+	}
+
+	@Override
+	protected String getContextInformation(ActionMapping mapping, HttpServletRequest request) {
+		return "/announcementManagement.do";
+
+	}
+
+	@Override
+	protected Collection<AnnouncementBoard> boardsToView(HttpServletRequest request) throws Exception {
+		Collection<AnnouncementBoard> boards = new ArrayList<AnnouncementBoard>(1);
+		AnnouncementBoard board = this.getRequestedExecutionCourse(request).getBoard();
+		if (board.getReaders() == null || (getUserView(request) != null && board.getReaders().allows(getUserView(request)))) {
+			boards.add(this.getRequestedExecutionCourse(request).getBoard());
+		}
+		return boards;
+	}
+
+	@Override
+	public ActionForward editAnnouncement(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		throw new NotAuthorizedActionException("cannot edit announcement");
+	}
+
+	@Override
+	public ActionForward deleteAnnouncement(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		throw new NotAuthorizedActionException("cannot delete announcement");
+	}
 }

@@ -11,83 +11,83 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import org.joda.time.DateTime;
 
 public class EnrolmentPeriodManagementBean implements java.io.Serializable {
-    
-    /**
+
+	/**
      * 
      */
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    private ExecutionSemester executionSemester;
-    private DateTime begin;
-    private DateTime end;
-    
-    private DegreeType degreeType;
-    private EnrolmentPeriodType type;
-    
-    private List<DegreeCurricularPlan> degreeCurricularPlanList;
+	private ExecutionSemester executionSemester;
+	private DateTime begin;
+	private DateTime end;
 
-    public EnrolmentPeriodManagementBean(final ExecutionSemester semester) {
-	this.executionSemester = semester;
+	private DegreeType degreeType;
+	private EnrolmentPeriodType type;
 
-	this.degreeCurricularPlanList = new ArrayList<DegreeCurricularPlan>();
-    }
+	private List<DegreeCurricularPlan> degreeCurricularPlanList;
 
-    public EnrolmentPeriodManagementBean(EnrolmentPeriod enrolmentPeriod, ExecutionSemester semester) {
-	this.degreeType = enrolmentPeriod.getDegree().getDegreeType();
-	this.type = EnrolmentPeriodType.readTypeByClass(enrolmentPeriod.getClass());
-	this.begin = enrolmentPeriod.getStartDateDateTime();
-	this.end = enrolmentPeriod.getEndDateDateTime();
-	this.degreeCurricularPlanList = new ArrayList<DegreeCurricularPlan>();
-	this.degreeCurricularPlanList.add(enrolmentPeriod.getDegreeCurricularPlan());
-	this.executionSemester = semester;
-    }
+	public EnrolmentPeriodManagementBean(final ExecutionSemester semester) {
+		this.executionSemester = semester;
 
-    public ExecutionSemester getExecutionSemester() {
-	return executionSemester;
-    }
+		this.degreeCurricularPlanList = new ArrayList<DegreeCurricularPlan>();
+	}
 
-    public void setExecutionSemester(ExecutionSemester executionSemester) {
-	this.executionSemester = executionSemester;
-    }
+	public EnrolmentPeriodManagementBean(EnrolmentPeriod enrolmentPeriod, ExecutionSemester semester) {
+		this.degreeType = enrolmentPeriod.getDegree().getDegreeType();
+		this.type = EnrolmentPeriodType.readTypeByClass(enrolmentPeriod.getClass());
+		this.begin = enrolmentPeriod.getStartDateDateTime();
+		this.end = enrolmentPeriod.getEndDateDateTime();
+		this.degreeCurricularPlanList = new ArrayList<DegreeCurricularPlan>();
+		this.degreeCurricularPlanList.add(enrolmentPeriod.getDegreeCurricularPlan());
+		this.executionSemester = semester;
+	}
 
-    public DateTime getBegin() {
-	return begin;
-    }
+	public ExecutionSemester getExecutionSemester() {
+		return executionSemester;
+	}
 
-    public void setBegin(DateTime begin) {
-	this.begin = begin;
-    }
+	public void setExecutionSemester(ExecutionSemester executionSemester) {
+		this.executionSemester = executionSemester;
+	}
 
-    public DateTime getEnd() {
-	return end;
-    }
+	public DateTime getBegin() {
+		return begin;
+	}
 
-    public void setEnd(DateTime end) {
-	this.end = end;
-    }
+	public void setBegin(DateTime begin) {
+		this.begin = begin;
+	}
 
-    public DegreeType getDegreeType() {
-	return degreeType;
-    }
+	public DateTime getEnd() {
+		return end;
+	}
 
-    public void setDegreeType(DegreeType degreeType) {
-	this.degreeType = degreeType;
-    }
+	public void setEnd(DateTime end) {
+		this.end = end;
+	}
 
-    public EnrolmentPeriodType getType() {
-	return type;
-    }
+	public DegreeType getDegreeType() {
+		return degreeType;
+	}
 
-    public void setType(EnrolmentPeriodType type) {
-	this.type = type;
-    }
+	public void setDegreeType(DegreeType degreeType) {
+		this.degreeType = degreeType;
+	}
 
-    public List<DegreeCurricularPlan> getDegreeCurricularPlanList() {
-	return degreeCurricularPlanList;
-    }
+	public EnrolmentPeriodType getType() {
+		return type;
+	}
 
-    public void setDegreeCurricularPlanList(List<DegreeCurricularPlan> degreeCurricularPlanList) {
-	this.degreeCurricularPlanList = degreeCurricularPlanList;
-    }
+	public void setType(EnrolmentPeriodType type) {
+		this.type = type;
+	}
+
+	public List<DegreeCurricularPlan> getDegreeCurricularPlanList() {
+		return degreeCurricularPlanList;
+	}
+
+	public void setDegreeCurricularPlanList(List<DegreeCurricularPlan> degreeCurricularPlanList) {
+		this.degreeCurricularPlanList = degreeCurricularPlanList;
+	}
 
 }

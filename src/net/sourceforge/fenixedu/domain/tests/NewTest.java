@@ -6,66 +6,71 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 public class NewTest extends NewTest_Base implements Positionable {
 
-    public NewTest() {
-	super();
-    }
-
-    public NewTest(NewTestGroup testGroup, double scale) {
-	this();
-
-	this.setTestGroup(testGroup);
-	this.setScale(scale);
-	this.setPosition(testGroup.getTestsCount());
-    }
-
-    @Override
-    public NewTest getTest() {
-	return this;
-    }
-
-    public boolean isFirst() {
-	return this.getPosition() == 1;
-    }
-
-    public boolean isLast() {
-	return this.getPosition() == this.getTestGroup().getTestsCount();
-    }
-
-    public void switchPosition(Integer relativePosition) {
-	int currentPosition = this.getPosition();
-	int newPosition = currentPosition + relativePosition;
-	NewTestGroup testGroup = this.getTestGroup();
-
-	if (relativePosition < 0 && this.isFirst()) {
-	    throw new DomainException("could.not.sort.up");
+	public NewTest() {
+		super();
 	}
 
-	if (relativePosition > 0 && this.isLast()) {
-	    throw new DomainException("could.not.sort.down");
+	public NewTest(NewTestGroup testGroup, double scale) {
+		this();
+
+		this.setTestGroup(testGroup);
+		this.setScale(scale);
+		this.setPosition(testGroup.getTestsCount());
 	}
 
-	for (NewTest test : testGroup.getTests()) {
-	    if (test.getPosition() == newPosition) {
-		test.setPosition(currentPosition);
-		break;
-	    }
+	@Override
+	public NewTest getTest() {
+		return this;
 	}
 
-	this.setPosition(newPosition);
-    }
+	@Override
+	public boolean isFirst() {
+		return this.getPosition() == 1;
+	}
 
-    @Override
-    public void delete() {
-	this.removeTestGroup();
+	@Override
+	public boolean isLast() {
+		return this.getPosition() == this.getTestGroup().getTestsCount();
+	}
 
-	for (; this.hasAnyPersons(); this.removePersons(this.getPersons().get(0)))
-	    ;
+	@Override
+	public void switchPosition(Integer relativePosition) {
+		int currentPosition = this.getPosition();
+		int newPosition = currentPosition + relativePosition;
+		NewTestGroup testGroup = this.getTestGroup();
 
-	super.delete();
-    }
+		if (relativePosition < 0 && this.isFirst()) {
+			throw new DomainException("could.not.sort.up");
+		}
 
-    public Person getPerson() {
-	return AccessControl.getPerson();
-    }
+		if (relativePosition > 0 && this.isLast()) {
+			throw new DomainException("could.not.sort.down");
+		}
+
+		for (NewTest test : testGroup.getTests()) {
+			if (test.getPosition() == newPosition) {
+				test.setPosition(currentPosition);
+				break;
+			}
+		}
+
+		this.setPosition(newPosition);
+	}
+
+	@Override
+	public void delete() {
+		this.removeTestGroup();
+
+		for (; this.hasAnyPersons(); this.removePersons(this.getPersons().get(0))) {
+			;
+		}
+
+		super.delete();
+	}
+
+	@Override
+	public Person getPerson() {
+		return AccessControl.getPerson();
+	}
 
 }

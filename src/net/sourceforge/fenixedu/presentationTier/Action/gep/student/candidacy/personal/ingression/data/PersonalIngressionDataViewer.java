@@ -23,88 +23,95 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(path = "/personalIngressionDataViewer", module = "gep")
 @Forwards({
-	@Forward(name = "chooseStudent", path = "/gep/student/candidacy/personal/ingression/data/chooseStudent.jsp", tileProperties = @Tile(title = "private.gep.raidesdata.raidesdatabystudent")),
-	@Forward(name = "viewStudent", path = "/gep/student/candidacy/personal/ingression/data/viewStudent.jsp"),
-	@Forward(name = "viewStudentCandidacy", path = "/gep/student/candidacy/personal/ingression/data/viewStudentCandidacy.jsp"),
-	@Forward(name = "viewPersonalIngressionData", path = "/gep/student/candidacy/personal/ingression/data/viewPersonalIngressionData.jsp"),
-	@Forward(name = "viewIndividualCandidacy", path = "/gep/student/candidacy/personal/ingression/data/viewIndividualCandidacy.jsp"),
-	@Forward(name = "viewRegistration", path = "/gep/student/candidacy/personal/ingression/data/viewRegistration.jsp") })
+		@Forward(
+				name = "chooseStudent",
+				path = "/gep/student/candidacy/personal/ingression/data/chooseStudent.jsp",
+				tileProperties = @Tile(title = "private.gep.raidesdata.raidesdatabystudent")),
+		@Forward(name = "viewStudent", path = "/gep/student/candidacy/personal/ingression/data/viewStudent.jsp"),
+		@Forward(name = "viewStudentCandidacy", path = "/gep/student/candidacy/personal/ingression/data/viewStudentCandidacy.jsp"),
+		@Forward(
+				name = "viewPersonalIngressionData",
+				path = "/gep/student/candidacy/personal/ingression/data/viewPersonalIngressionData.jsp"),
+		@Forward(
+				name = "viewIndividualCandidacy",
+				path = "/gep/student/candidacy/personal/ingression/data/viewIndividualCandidacy.jsp"),
+		@Forward(name = "viewRegistration", path = "/gep/student/candidacy/personal/ingression/data/viewRegistration.jsp") })
 public class PersonalIngressionDataViewer extends FenixDispatchAction {
 
-    public ActionForward chooseStudent(final ActionMapping mapping, final ActionForm actionForm,
-	    final HttpServletRequest request, final HttpServletResponse response) {
-	request.setAttribute("chooseStudentBean", new ChooseStudentBean());
+	public ActionForward chooseStudent(final ActionMapping mapping, final ActionForm actionForm,
+			final HttpServletRequest request, final HttpServletResponse response) {
+		request.setAttribute("chooseStudentBean", new ChooseStudentBean());
 
-	return mapping.findForward("chooseStudent");
-    }
-
-    public ActionForward findStudents(final ActionMapping mapping, final ActionForm actionForm, final HttpServletRequest request,
-	    final HttpServletResponse response) {
-	ChooseStudentBean chooseStudentBean = getRenderedObject("chooseStudentBean");
-	Set<Student> students = chooseStudentBean.findStudents();
-
-	if (students.size() == 1) {
-	    request.setAttribute("student", students.iterator().next());
-	    return mapping.findForward("viewStudent");
+		return mapping.findForward("chooseStudent");
 	}
 
-	request.setAttribute("students", students);
-	request.setAttribute("chooseStudentBean", chooseStudentBean);
+	public ActionForward findStudents(final ActionMapping mapping, final ActionForm actionForm, final HttpServletRequest request,
+			final HttpServletResponse response) {
+		ChooseStudentBean chooseStudentBean = getRenderedObject("chooseStudentBean");
+		Set<Student> students = chooseStudentBean.findStudents();
 
-	return mapping.findForward("chooseStudent");
-    }
+		if (students.size() == 1) {
+			request.setAttribute("student", students.iterator().next());
+			return mapping.findForward("viewStudent");
+		}
 
-    public ActionForward findStudentsInvalid(final ActionMapping mapping, final ActionForm actionForm,
-	    final HttpServletRequest request, final HttpServletResponse response) {
-	ChooseStudentBean chooseStudentBean = getRenderedObject("chooseStudentBean");
+		request.setAttribute("students", students);
+		request.setAttribute("chooseStudentBean", chooseStudentBean);
 
-	request.setAttribute("chooseStudentBean", chooseStudentBean);
+		return mapping.findForward("chooseStudent");
+	}
 
-	return mapping.findForward("chooseStudent");
-    }
+	public ActionForward findStudentsInvalid(final ActionMapping mapping, final ActionForm actionForm,
+			final HttpServletRequest request, final HttpServletResponse response) {
+		ChooseStudentBean chooseStudentBean = getRenderedObject("chooseStudentBean");
 
-    public ActionForward viewStudent(final ActionMapping mapping, final ActionForm actionForm, final HttpServletRequest request,
-	    final HttpServletResponse response) {
-	Student student = getDomainObject(request, "studentId");
+		request.setAttribute("chooseStudentBean", chooseStudentBean);
 
-	request.setAttribute("student", student);
+		return mapping.findForward("chooseStudent");
+	}
 
-	return mapping.findForward("viewStudent");
-    }
+	public ActionForward viewStudent(final ActionMapping mapping, final ActionForm actionForm, final HttpServletRequest request,
+			final HttpServletResponse response) {
+		Student student = getDomainObject(request, "studentId");
 
-    public ActionForward viewStudentCandidacy(final ActionMapping mapping, final ActionForm actionForm,
-	    final HttpServletRequest request, final HttpServletResponse response) {
-	StudentCandidacy studentCandidacy = getDomainObject(request, "studentCandidacyId");
+		request.setAttribute("student", student);
 
-	request.setAttribute("studentCandidacy", studentCandidacy);
+		return mapping.findForward("viewStudent");
+	}
 
-	return mapping.findForward("viewStudentCandidacy");
-    }
+	public ActionForward viewStudentCandidacy(final ActionMapping mapping, final ActionForm actionForm,
+			final HttpServletRequest request, final HttpServletResponse response) {
+		StudentCandidacy studentCandidacy = getDomainObject(request, "studentCandidacyId");
 
-    public ActionForward viewPersonalIngressionData(final ActionMapping mapping, final ActionForm actionForm,
-	    final HttpServletRequest request, final HttpServletResponse response) {
-	PersonalIngressionData personalIngressionData = getDomainObject(request, "personalIngressionDataId");
+		request.setAttribute("studentCandidacy", studentCandidacy);
 
-	request.setAttribute("personalIngressionData", personalIngressionData);
+		return mapping.findForward("viewStudentCandidacy");
+	}
 
-	return mapping.findForward("viewPersonalIngressionData");
-    }
+	public ActionForward viewPersonalIngressionData(final ActionMapping mapping, final ActionForm actionForm,
+			final HttpServletRequest request, final HttpServletResponse response) {
+		PersonalIngressionData personalIngressionData = getDomainObject(request, "personalIngressionDataId");
 
-    public ActionForward viewIndividualCandidacy(final ActionMapping mapping, final ActionForm actionForm,
-	    final HttpServletRequest request, final HttpServletResponse response) {
-	IndividualCandidacy individualCandidacy = getDomainObject(request, "individualCandidacyId");
+		request.setAttribute("personalIngressionData", personalIngressionData);
 
-	request.setAttribute("individualCandidacy", individualCandidacy);
+		return mapping.findForward("viewPersonalIngressionData");
+	}
 
-	return mapping.findForward("viewIndividualCandidacy");
-    }
+	public ActionForward viewIndividualCandidacy(final ActionMapping mapping, final ActionForm actionForm,
+			final HttpServletRequest request, final HttpServletResponse response) {
+		IndividualCandidacy individualCandidacy = getDomainObject(request, "individualCandidacyId");
 
-    public ActionForward viewRegistration(final ActionMapping mapping, final ActionForm actionForm,
-	    final HttpServletRequest request, final HttpServletResponse response) {
-	Registration registration = getDomainObject(request, "registrationId");
+		request.setAttribute("individualCandidacy", individualCandidacy);
 
-	request.setAttribute("registration", registration);
+		return mapping.findForward("viewIndividualCandidacy");
+	}
 
-	return mapping.findForward("viewRegistration");
-    }
+	public ActionForward viewRegistration(final ActionMapping mapping, final ActionForm actionForm,
+			final HttpServletRequest request, final HttpServletResponse response) {
+		Registration registration = getDomainObject(request, "registrationId");
+
+		request.setAttribute("registration", registration);
+
+		return mapping.findForward("viewRegistration");
+	}
 }

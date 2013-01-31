@@ -6,8 +6,8 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class CreateExternalUnitByName extends FenixService {
 
-    @Service
-    public static Unit run(String name) {
-	return Unit.createNewNoOfficialExternalInstitution(name);
-    }
+	@Service
+	public static Unit run(String name) {
+		return Unit.createNewNoOfficialExternalInstitution(name);
+	}
 }

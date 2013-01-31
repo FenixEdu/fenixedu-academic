@@ -17,174 +17,176 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadDepartmentTotalCreditsByPeriod extends FenixService {
 
-    @Checked("RolePredicates.SCIENTIFIC_COUNCIL_PREDICATE")
-    @Service
-    public static Map<ExecutionYear, PeriodCreditsReportDTO> run(Unit department, ExecutionSemester fromExecutionPeriod,
-	    ExecutionSemester untilExecutionPeriod) throws ParseException {
+	@Checked("RolePredicates.SCIENTIFIC_COUNCIL_PREDICATE")
+	@Service
+	public static Map<ExecutionYear, PeriodCreditsReportDTO> run(Unit department, ExecutionSemester fromExecutionPeriod,
+			ExecutionSemester untilExecutionPeriod) throws ParseException {
 
-	List<ExecutionSemester> executionPeriodsBetween = getExecutionPeriodsBetween(fromExecutionPeriod, untilExecutionPeriod);
+		List<ExecutionSemester> executionPeriodsBetween = getExecutionPeriodsBetween(fromExecutionPeriod, untilExecutionPeriod);
 
-	List<Teacher> teachers = department.getAllTeachers(fromExecutionPeriod.getBeginDateYearMonthDay(),
-		untilExecutionPeriod.getEndDateYearMonthDay());
+		List<Teacher> teachers =
+				department.getAllTeachers(fromExecutionPeriod.getBeginDateYearMonthDay(),
+						untilExecutionPeriod.getEndDateYearMonthDay());
 
-	SortedMap<ExecutionYear, PeriodCreditsReportDTO> departmentGlobalCredits = new TreeMap<ExecutionYear, PeriodCreditsReportDTO>(
-		ExecutionYear.COMPARATOR_BY_YEAR);
+		SortedMap<ExecutionYear, PeriodCreditsReportDTO> departmentGlobalCredits =
+				new TreeMap<ExecutionYear, PeriodCreditsReportDTO>(ExecutionYear.COMPARATOR_BY_YEAR);
 
-	ExecutionSemester lasExecutionPeriod = (!executionPeriodsBetween.isEmpty()) ? executionPeriodsBetween
-		.get(executionPeriodsBetween.size() - 1) : null;
-	for (Teacher teacher : teachers) {
-	    if (!teacher.isMonitor(lasExecutionPeriod) && !teacher.isInactive(lasExecutionPeriod)) {
-		Unit workingUnit = teacher.getLastWorkingUnit(untilExecutionPeriod.getBeginDateYearMonthDay(),
-			untilExecutionPeriod.getEndDateYearMonthDay());
-		Unit workingUnitDepartment = (workingUnit != null) ? workingUnit.getDepartmentUnit() : null;
-		if (workingUnitDepartment != null && workingUnitDepartment.getDepartment().equals(department.getDepartment())) {
-		    for (ExecutionSemester executionSemester : executionPeriodsBetween) {
-			if (executionSemester.getSemester().intValue() == 2) {
-			    updateCredits(teacher, executionSemester, departmentGlobalCredits, untilExecutionPeriod);
+		ExecutionSemester lasExecutionPeriod =
+				(!executionPeriodsBetween.isEmpty()) ? executionPeriodsBetween.get(executionPeriodsBetween.size() - 1) : null;
+		for (Teacher teacher : teachers) {
+			if (!teacher.isMonitor(lasExecutionPeriod) && !teacher.isInactive(lasExecutionPeriod)) {
+				Unit workingUnit =
+						teacher.getLastWorkingUnit(untilExecutionPeriod.getBeginDateYearMonthDay(),
+								untilExecutionPeriod.getEndDateYearMonthDay());
+				Unit workingUnitDepartment = (workingUnit != null) ? workingUnit.getDepartmentUnit() : null;
+				if (workingUnitDepartment != null && workingUnitDepartment.getDepartment().equals(department.getDepartment())) {
+					for (ExecutionSemester executionSemester : executionPeriodsBetween) {
+						if (executionSemester.getSemester().intValue() == 2) {
+							updateCredits(teacher, executionSemester, departmentGlobalCredits, untilExecutionPeriod);
+						}
+					}
+				}
 			}
-		    }
 		}
-	    }
-	}
-	return departmentGlobalCredits;
-    }
-
-    private static void updateCredits(Teacher teacher, ExecutionSemester executionSemester,
-	    Map<ExecutionYear, PeriodCreditsReportDTO> departmentCredits, ExecutionSemester untilExecutionPeriod)
-	    throws ParseException {
-
-	double teacherPeriodTotalCredits = teacher.getBalanceOfCreditsUntil(executionSemester);
-
-	if (!departmentCredits.containsKey(executionSemester.getExecutionYear())) {
-	    departmentCredits.put(executionSemester.getExecutionYear(), new PeriodCreditsReportDTO());
+		return departmentGlobalCredits;
 	}
 
-	PeriodCreditsReportDTO reportDTO = departmentCredits.get(executionSemester.getExecutionYear());
-	reportDTO.setCredits(round(reportDTO.getCredits() + teacherPeriodTotalCredits));
+	private static void updateCredits(Teacher teacher, ExecutionSemester executionSemester,
+			Map<ExecutionYear, PeriodCreditsReportDTO> departmentCredits, ExecutionSemester untilExecutionPeriod)
+			throws ParseException {
 
-	boolean careerTeacher = teacher.isTeacherCareerCategory(executionSemester);
-	if (careerTeacher) {
-	    reportDTO.setCareerCategoryTeacherCredits(round(reportDTO.getCareerCategoryTeacherCredits()
-		    + teacherPeriodTotalCredits));
-	} else {
-	    reportDTO.setNotCareerCategoryTeacherCredits(round(reportDTO.getNotCareerCategoryTeacherCredits()
-		    + teacherPeriodTotalCredits));
+		double teacherPeriodTotalCredits = teacher.getBalanceOfCreditsUntil(executionSemester);
+
+		if (!departmentCredits.containsKey(executionSemester.getExecutionYear())) {
+			departmentCredits.put(executionSemester.getExecutionYear(), new PeriodCreditsReportDTO());
+		}
+
+		PeriodCreditsReportDTO reportDTO = departmentCredits.get(executionSemester.getExecutionYear());
+		reportDTO.setCredits(round(reportDTO.getCredits() + teacherPeriodTotalCredits));
+
+		boolean careerTeacher = teacher.isTeacherCareerCategory(executionSemester);
+		if (careerTeacher) {
+			reportDTO.setCareerCategoryTeacherCredits(round(reportDTO.getCareerCategoryTeacherCredits()
+					+ teacherPeriodTotalCredits));
+		} else {
+			reportDTO.setNotCareerCategoryTeacherCredits(round(reportDTO.getNotCareerCategoryTeacherCredits()
+					+ teacherPeriodTotalCredits));
+		}
+
+		if (executionSemester.equals(untilExecutionPeriod)) {
+			if (careerTeacher) {
+				reportDTO.setCareerTeachersSize(reportDTO.getCareerTeachersSize() + 1);
+				reportDTO.setCareerTeachersBalance(round(reportDTO.getCareerCategoryTeacherCredits()
+						/ reportDTO.getCareerTeachersSize()));
+			} else {
+				reportDTO.setNotCareerTeachersSize(reportDTO.getNotCareerTeachersSize() + 1);
+				reportDTO.setNotCareerTeachersBalance(round(reportDTO.getNotCareerCategoryTeacherCredits()
+						/ reportDTO.getNotCareerTeachersSize()));
+			}
+			reportDTO.setTeachersSize(reportDTO.getTeachersSize() + 1);
+			reportDTO.setBalance(round(reportDTO.getCredits() / reportDTO.getTeachersSize()));
+		}
 	}
 
-	if (executionSemester.equals(untilExecutionPeriod)) {
-	    if (careerTeacher) {
-		reportDTO.setCareerTeachersSize(reportDTO.getCareerTeachersSize() + 1);
-		reportDTO.setCareerTeachersBalance(round(reportDTO.getCareerCategoryTeacherCredits()
-			/ reportDTO.getCareerTeachersSize()));
-	    } else {
-		reportDTO.setNotCareerTeachersSize(reportDTO.getNotCareerTeachersSize() + 1);
-		reportDTO.setNotCareerTeachersBalance(round(reportDTO.getNotCareerCategoryTeacherCredits()
-			/ reportDTO.getNotCareerTeachersSize()));
-	    }
-	    reportDTO.setTeachersSize(reportDTO.getTeachersSize() + 1);
-	    reportDTO.setBalance(round(reportDTO.getCredits() / reportDTO.getTeachersSize()));
-	}
-    }
+	private static List<ExecutionSemester> getExecutionPeriodsBetween(ExecutionSemester fromExecutionPeriod,
+			ExecutionSemester untilExecutionPeriod) {
 
-    private static List<ExecutionSemester> getExecutionPeriodsBetween(ExecutionSemester fromExecutionPeriod,
-	    ExecutionSemester untilExecutionPeriod) {
+		List<ExecutionSemester> executionPeriodsBetween = new ArrayList<ExecutionSemester>();
 
-	List<ExecutionSemester> executionPeriodsBetween = new ArrayList<ExecutionSemester>();
-
-	ExecutionSemester tempExecutionPeriod = fromExecutionPeriod;
-	while (tempExecutionPeriod != untilExecutionPeriod) {
-	    executionPeriodsBetween.add(tempExecutionPeriod);
-	    tempExecutionPeriod = tempExecutionPeriod.getNextExecutionPeriod();
-	}
-	executionPeriodsBetween.add(untilExecutionPeriod);
-	return executionPeriodsBetween;
-    }
-
-    private static Double round(double n) {
-	return Math.round((n * 100.0)) / 100.0;
-    }
-
-    public static class PeriodCreditsReportDTO {
-	private double credits;
-	private double balance;
-	private double careerTeachersBalance;
-	private double notCareerTeachersBalance;
-	private double careerCategoryTeacherCredits;
-	private double notCareerCategoryTeacherCredits;
-	private int teachersSize;
-	private int careerTeachersSize;
-	private int notCareerTeachersSize;
-
-	public double getBalance() {
-	    return balance;
+		ExecutionSemester tempExecutionPeriod = fromExecutionPeriod;
+		while (tempExecutionPeriod != untilExecutionPeriod) {
+			executionPeriodsBetween.add(tempExecutionPeriod);
+			tempExecutionPeriod = tempExecutionPeriod.getNextExecutionPeriod();
+		}
+		executionPeriodsBetween.add(untilExecutionPeriod);
+		return executionPeriodsBetween;
 	}
 
-	public void setBalance(double balance) {
-	    this.balance = balance;
+	private static Double round(double n) {
+		return Math.round((n * 100.0)) / 100.0;
 	}
 
-	public double getCredits() {
-	    return credits;
-	}
+	public static class PeriodCreditsReportDTO {
+		private double credits;
+		private double balance;
+		private double careerTeachersBalance;
+		private double notCareerTeachersBalance;
+		private double careerCategoryTeacherCredits;
+		private double notCareerCategoryTeacherCredits;
+		private int teachersSize;
+		private int careerTeachersSize;
+		private int notCareerTeachersSize;
 
-	public void setCredits(double credits) {
-	    this.credits = credits;
-	}
+		public double getBalance() {
+			return balance;
+		}
 
-	public int getTeachersSize() {
-	    return teachersSize;
-	}
+		public void setBalance(double balance) {
+			this.balance = balance;
+		}
 
-	public void setTeachersSize(int teachersSize) {
-	    this.teachersSize = teachersSize;
-	}
+		public double getCredits() {
+			return credits;
+		}
 
-	public double getCareerCategoryTeacherCredits() {
-	    return careerCategoryTeacherCredits;
-	}
+		public void setCredits(double credits) {
+			this.credits = credits;
+		}
 
-	public void setCareerCategoryTeacherCredits(double careerCategoryTeacherCredits) {
-	    this.careerCategoryTeacherCredits = careerCategoryTeacherCredits;
-	}
+		public int getTeachersSize() {
+			return teachersSize;
+		}
 
-	public double getNotCareerCategoryTeacherCredits() {
-	    return notCareerCategoryTeacherCredits;
-	}
+		public void setTeachersSize(int teachersSize) {
+			this.teachersSize = teachersSize;
+		}
 
-	public void setNotCareerCategoryTeacherCredits(double notCareerCategoryTeacherCredits) {
-	    this.notCareerCategoryTeacherCredits = notCareerCategoryTeacherCredits;
-	}
+		public double getCareerCategoryTeacherCredits() {
+			return careerCategoryTeacherCredits;
+		}
 
-	public double getCareerTeachersBalance() {
-	    return careerTeachersBalance;
-	}
+		public void setCareerCategoryTeacherCredits(double careerCategoryTeacherCredits) {
+			this.careerCategoryTeacherCredits = careerCategoryTeacherCredits;
+		}
 
-	public void setCareerTeachersBalance(double careerTeachersBalance) {
-	    this.careerTeachersBalance = careerTeachersBalance;
-	}
+		public double getNotCareerCategoryTeacherCredits() {
+			return notCareerCategoryTeacherCredits;
+		}
 
-	public int getCareerTeachersSize() {
-	    return careerTeachersSize;
-	}
+		public void setNotCareerCategoryTeacherCredits(double notCareerCategoryTeacherCredits) {
+			this.notCareerCategoryTeacherCredits = notCareerCategoryTeacherCredits;
+		}
 
-	public void setCareerTeachersSize(int careerTeachersSize) {
-	    this.careerTeachersSize = careerTeachersSize;
-	}
+		public double getCareerTeachersBalance() {
+			return careerTeachersBalance;
+		}
 
-	public double getNotCareerTeachersBalance() {
-	    return notCareerTeachersBalance;
-	}
+		public void setCareerTeachersBalance(double careerTeachersBalance) {
+			this.careerTeachersBalance = careerTeachersBalance;
+		}
 
-	public void setNotCareerTeachersBalance(double notCareerTeachersBalance) {
-	    this.notCareerTeachersBalance = notCareerTeachersBalance;
-	}
+		public int getCareerTeachersSize() {
+			return careerTeachersSize;
+		}
 
-	public int getNotCareerTeachersSize() {
-	    return notCareerTeachersSize;
-	}
+		public void setCareerTeachersSize(int careerTeachersSize) {
+			this.careerTeachersSize = careerTeachersSize;
+		}
 
-	public void setNotCareerTeachersSize(int notCareerTeachersSize) {
-	    this.notCareerTeachersSize = notCareerTeachersSize;
+		public double getNotCareerTeachersBalance() {
+			return notCareerTeachersBalance;
+		}
+
+		public void setNotCareerTeachersBalance(double notCareerTeachersBalance) {
+			this.notCareerTeachersBalance = notCareerTeachersBalance;
+		}
+
+		public int getNotCareerTeachersSize() {
+			return notCareerTeachersSize;
+		}
+
+		public void setNotCareerTeachersSize(int notCareerTeachersSize) {
+			this.notCareerTeachersSize = notCareerTeachersSize;
+		}
 	}
-    }
 }

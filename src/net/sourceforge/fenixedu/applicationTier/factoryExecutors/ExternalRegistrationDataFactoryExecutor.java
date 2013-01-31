@@ -15,19 +15,20 @@ import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
  */
 public class ExternalRegistrationDataFactoryExecutor {
 
-    @SuppressWarnings("serial")
-    public static class ExternalRegistrationDataEditor extends ExternalRegistrationDataBean implements FactoryExecutor,
-	    Serializable {
+	@SuppressWarnings("serial")
+	public static class ExternalRegistrationDataEditor extends ExternalRegistrationDataBean implements FactoryExecutor,
+			Serializable {
 
-	public ExternalRegistrationDataEditor(ExternalRegistrationData externalRegistrationData) {
-	    super(externalRegistrationData);
+		public ExternalRegistrationDataEditor(ExternalRegistrationData externalRegistrationData) {
+			super(externalRegistrationData);
+		}
+
+		@Override
+		public Object execute() {
+			getExternalRegistrationData().edit(this);
+			return null;
+		}
+
 	}
-
-	public Object execute() {
-	    getExternalRegistrationData().edit(this);
-	    return null;
-	}
-
-    }
 
 }

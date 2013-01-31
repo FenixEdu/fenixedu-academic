@@ -21,129 +21,131 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Mapping(path = "/phdCandidacyPeriodManagement", module = "academicAdministration")
 @Forwards({
-	@Forward(name = "list", path = "/phd/candidacy/academicAdminOffice/periods/list.jsp"),
-	@Forward(name = "createPhdCandidacyPeriod", path = "/phd/candidacy/academicAdminOffice/periods/createPhdCandidacyPeriod.jsp"),
-	@Forward(name = "editPhdCandidacyPeriod", path = "/phd/candidacy/academicAdminOffice/periods/editPhdCandidacyPeriod.jsp"),
-	@Forward(name = "view", path = "/phd/candidacy/academicAdminOffice/periods/view.jsp") })
+		@Forward(name = "list", path = "/phd/candidacy/academicAdminOffice/periods/list.jsp"),
+		@Forward(
+				name = "createPhdCandidacyPeriod",
+				path = "/phd/candidacy/academicAdminOffice/periods/createPhdCandidacyPeriod.jsp"),
+		@Forward(name = "editPhdCandidacyPeriod", path = "/phd/candidacy/academicAdminOffice/periods/editPhdCandidacyPeriod.jsp"),
+		@Forward(name = "view", path = "/phd/candidacy/academicAdminOffice/periods/view.jsp") })
 public class PhdCandidacyPeriodManagementDA extends FenixDispatchAction {
 
-    public ActionForward list(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
-	request.setAttribute("phdCandidacyPeriods", PhdCandidacyPeriod.readPhdCandidacyPeriods());
+	public ActionForward list(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+		request.setAttribute("phdCandidacyPeriods", PhdCandidacyPeriod.readPhdCandidacyPeriods());
 
-	return mapping.findForward("list");
-    }
-
-    public ActionForward prepareCreatePhdCandidacyPeriod(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
-	PhdCandidacyPeriodBean bean = new PhdCandidacyPeriodBean();
-	request.setAttribute("phdCandidacyPeriodBean", bean);
-
-	return mapping.findForward("createPhdCandidacyPeriod");
-    }
-
-    public ActionForward createPhdCandidacyPeriod(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
-	PhdCandidacyPeriodBean bean = readPhdCandidacyPeriodBean();
-
-	switch (bean.getType()) {
-	case EPFL:
-	    try {
-		EPFLPhdCandidacyPeriod.create(bean);
-		break;
-	    } catch (final DomainException e) {
-		addActionMessage("error", request, e.getKey(), e.getArgs());
-		return createPhdCandidacyPeriodInvalid(mapping, form, request, response);
-	    }
-	case INSTITUTION:
-	    try {
-		InstitutionPhdCandidacyPeriod.create(bean);
-		break;
-	    } catch (final DomainException e) {
-		addActionMessage("error", request, e.getKey(), e.getArgs());
-		return createPhdCandidacyPeriodInvalid(mapping, form, request, response);
-	    }
-	default:
-	    throw new DomainException("error.PhdCandidacyPeriodBean.type.missing");
+		return mapping.findForward("list");
 	}
 
-	return list(mapping, form, request, response);
-    }
+	public ActionForward prepareCreatePhdCandidacyPeriod(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) {
+		PhdCandidacyPeriodBean bean = new PhdCandidacyPeriodBean();
+		request.setAttribute("phdCandidacyPeriodBean", bean);
 
-    public ActionForward createPhdCandidacyPeriodInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
-	request.setAttribute("phdCandidacyPeriodBean", readPhdCandidacyPeriodBean());
-	request.setAttribute("phdCandidacyPeriod", readPhdCandidacyPeriod(request));
-
-	return mapping.findForward("createPhdCandidacyPeriod");
-    }
-
-    public ActionForward prepareEditPhdCandidacyPeriod(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
-	PhdCandidacyPeriod phdCandidacyPeriod = readPhdCandidacyPeriod(request);
-	request.setAttribute("phdCandidacyPeriodBean", new PhdCandidacyPeriodBean(phdCandidacyPeriod));
-	request.setAttribute("phdCandidacyPeriod", readPhdCandidacyPeriod(request));
-
-	return mapping.findForward("editPhdCandidacyPeriod");
-    }
-
-    public ActionForward editPhdCandidacyPeriod(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
-	PhdCandidacyPeriod phdCandidacyPeriod = readPhdCandidacyPeriod(request);
-	PhdCandidacyPeriodBean bean = readPhdCandidacyPeriodBean();
-
-	try {
-	    phdCandidacyPeriod.edit(bean.getStart(), bean.getEnd());
-	} catch (DomainException e) {
-	    addActionMessage("error", request, e.getKey(), e.getArgs());
-	    return editPhdCandidacyPeriodInvalid(mapping, form, request, response);
+		return mapping.findForward("createPhdCandidacyPeriod");
 	}
 
-	return list(mapping, form, request, response);
-    }
+	public ActionForward createPhdCandidacyPeriod(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) {
+		PhdCandidacyPeriodBean bean = readPhdCandidacyPeriodBean();
 
-    public ActionForward editPhdCandidacyPeriodInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
-	request.setAttribute("phdCandidacyPeriodBean", readPhdCandidacyPeriodBean());
-	request.setAttribute("phdCandidacyPeriod", readPhdCandidacyPeriod(request));
+		switch (bean.getType()) {
+		case EPFL:
+			try {
+				EPFLPhdCandidacyPeriod.create(bean);
+				break;
+			} catch (final DomainException e) {
+				addActionMessage("error", request, e.getKey(), e.getArgs());
+				return createPhdCandidacyPeriodInvalid(mapping, form, request, response);
+			}
+		case INSTITUTION:
+			try {
+				InstitutionPhdCandidacyPeriod.create(bean);
+				break;
+			} catch (final DomainException e) {
+				addActionMessage("error", request, e.getKey(), e.getArgs());
+				return createPhdCandidacyPeriodInvalid(mapping, form, request, response);
+			}
+		default:
+			throw new DomainException("error.PhdCandidacyPeriodBean.type.missing");
+		}
 
-	return mapping.findForward("editPhdCandidacyPeriod");
-    }
+		return list(mapping, form, request, response);
+	}
 
-    public ActionForward addPhdProgram(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
-	PhdCandidacyPeriodBean phdCandidacyPeriodBean = readPhdCandidacyPeriodBean();
-	InstitutionPhdCandidacyPeriod phdCandidacyPeriod = (InstitutionPhdCandidacyPeriod) readPhdCandidacyPeriod(request);
+	public ActionForward createPhdCandidacyPeriodInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) {
+		request.setAttribute("phdCandidacyPeriodBean", readPhdCandidacyPeriodBean());
+		request.setAttribute("phdCandidacyPeriod", readPhdCandidacyPeriod(request));
 
-	phdCandidacyPeriod.addPhdProgramListToPeriod(phdCandidacyPeriodBean.getPhdProgramList());
+		return mapping.findForward("createPhdCandidacyPeriod");
+	}
 
-	return prepareEditPhdCandidacyPeriod(mapping, form, request, response);
-    }
+	public ActionForward prepareEditPhdCandidacyPeriod(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) {
+		PhdCandidacyPeriod phdCandidacyPeriod = readPhdCandidacyPeriod(request);
+		request.setAttribute("phdCandidacyPeriodBean", new PhdCandidacyPeriodBean(phdCandidacyPeriod));
+		request.setAttribute("phdCandidacyPeriod", readPhdCandidacyPeriod(request));
 
-    public ActionForward removePhdProgram(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
-	InstitutionPhdCandidacyPeriod phdCandidacyPeriod = (InstitutionPhdCandidacyPeriod) readPhdCandidacyPeriod(request);
-	phdCandidacyPeriod.removePhdProgramInPeriod(readPhdProgram(request));
+		return mapping.findForward("editPhdCandidacyPeriod");
+	}
 
-	return prepareEditPhdCandidacyPeriod(mapping, form, request, response);
-    }
+	public ActionForward editPhdCandidacyPeriod(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) {
+		PhdCandidacyPeriod phdCandidacyPeriod = readPhdCandidacyPeriod(request);
+		PhdCandidacyPeriodBean bean = readPhdCandidacyPeriodBean();
 
-    public ActionForward view(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
-	PhdCandidacyPeriod period = readPhdCandidacyPeriod(request);
+		try {
+			phdCandidacyPeriod.edit(bean.getStart(), bean.getEnd());
+		} catch (DomainException e) {
+			addActionMessage("error", request, e.getKey(), e.getArgs());
+			return editPhdCandidacyPeriodInvalid(mapping, form, request, response);
+		}
 
-	request.setAttribute("phdCandidacyPeriod", period);
+		return list(mapping, form, request, response);
+	}
 
-	return mapping.findForward("view");
-    }
+	public ActionForward editPhdCandidacyPeriodInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) {
+		request.setAttribute("phdCandidacyPeriodBean", readPhdCandidacyPeriodBean());
+		request.setAttribute("phdCandidacyPeriod", readPhdCandidacyPeriod(request));
 
-    private PhdProgram readPhdProgram(final HttpServletRequest request) {
-	return getDomainObject(request, "phdProgramId");
-    }
+		return mapping.findForward("editPhdCandidacyPeriod");
+	}
 
-    private PhdCandidacyPeriodBean readPhdCandidacyPeriodBean() {
-	return getRenderedObject("phdCandidacyPeriodBean");
-    }
+	public ActionForward addPhdProgram(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) {
+		PhdCandidacyPeriodBean phdCandidacyPeriodBean = readPhdCandidacyPeriodBean();
+		InstitutionPhdCandidacyPeriod phdCandidacyPeriod = (InstitutionPhdCandidacyPeriod) readPhdCandidacyPeriod(request);
 
-    private PhdCandidacyPeriod readPhdCandidacyPeriod(HttpServletRequest request) {
-	return getDomainObject(request, "phdCandidacyPeriodId");
-    }
+		phdCandidacyPeriod.addPhdProgramListToPeriod(phdCandidacyPeriodBean.getPhdProgramList());
+
+		return prepareEditPhdCandidacyPeriod(mapping, form, request, response);
+	}
+
+	public ActionForward removePhdProgram(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) {
+		InstitutionPhdCandidacyPeriod phdCandidacyPeriod = (InstitutionPhdCandidacyPeriod) readPhdCandidacyPeriod(request);
+		phdCandidacyPeriod.removePhdProgramInPeriod(readPhdProgram(request));
+
+		return prepareEditPhdCandidacyPeriod(mapping, form, request, response);
+	}
+
+	public ActionForward view(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+		PhdCandidacyPeriod period = readPhdCandidacyPeriod(request);
+
+		request.setAttribute("phdCandidacyPeriod", period);
+
+		return mapping.findForward("view");
+	}
+
+	private PhdProgram readPhdProgram(final HttpServletRequest request) {
+		return getDomainObject(request, "phdProgramId");
+	}
+
+	private PhdCandidacyPeriodBean readPhdCandidacyPeriodBean() {
+		return getRenderedObject("phdCandidacyPeriodBean");
+	}
+
+	private PhdCandidacyPeriod readPhdCandidacyPeriod(HttpServletRequest request) {
+		return getDomainObject(request, "phdCandidacyPeriodId");
+	}
 }

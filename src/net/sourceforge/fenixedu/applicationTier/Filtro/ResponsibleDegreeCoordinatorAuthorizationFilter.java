@@ -20,63 +20,65 @@ import pt.utl.ist.berserk.ServiceResponse;
  */
 public class ResponsibleDegreeCoordinatorAuthorizationFilter extends AuthorizationByRoleFilter {
 
-    public ResponsibleDegreeCoordinatorAuthorizationFilter() {
+	public ResponsibleDegreeCoordinatorAuthorizationFilter() {
 
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorAplicacao.Filtro.AuthorizationByRoleFilter#getRoleType()
-     */
-    protected RoleType getRoleType() {
-	return RoleType.COORDINATOR;
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see
-     * ServidorAplicacao.Filtro.AuthorizationByRoleFilter#execute(pt.utl.ist
-     * .berserk.ServiceRequest, pt.utl.ist.berserk.ServiceResponse)
-     */
-    public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
-	IUserView id = getRemoteUser(request);
-	Object[] arguments = getServiceCallArguments(request);
-
-	try {
-	    if ((id == null) || (id.getRoleTypes() == null) || !id.hasRoleType(getRoleType())
-		    || !isResponsibleCoordinatorOfExecutionDegree(id, arguments)) {
-		throw new NotAuthorizedFilterException();
-	    }
-	} catch (RuntimeException e) {
-	    throw new NotAuthorizedFilterException();
-	}
-    }
-
-    /**
-     * @param id
-     * @param argumentos
-     * @return
-     */
-    private boolean isResponsibleCoordinatorOfExecutionDegree(IUserView id, Object[] argumentos) {
-	boolean result = false;
-	if (argumentos == null) {
-	    return result;
-	}
-	try {
-	    final Person person = id.getPerson();
-
-	    ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID((Integer) argumentos[0]);
-	    Coordinator coordinator = executionDegree.getCoordinatorByTeacher(person);
-
-	    result = (coordinator != null) && coordinator.getResponsible().booleanValue();
-
-	} catch (Exception e) {
-	    return false;
 	}
 
-	return result;
-    }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see ServidorAplicacao.Filtro.AuthorizationByRoleFilter#getRoleType()
+	 */
+	@Override
+	protected RoleType getRoleType() {
+		return RoleType.COORDINATOR;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * ServidorAplicacao.Filtro.AuthorizationByRoleFilter#execute(pt.utl.ist
+	 * .berserk.ServiceRequest, pt.utl.ist.berserk.ServiceResponse)
+	 */
+	@Override
+	public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
+		IUserView id = getRemoteUser(request);
+		Object[] arguments = getServiceCallArguments(request);
+
+		try {
+			if ((id == null) || (id.getRoleTypes() == null) || !id.hasRoleType(getRoleType())
+					|| !isResponsibleCoordinatorOfExecutionDegree(id, arguments)) {
+				throw new NotAuthorizedFilterException();
+			}
+		} catch (RuntimeException e) {
+			throw new NotAuthorizedFilterException();
+		}
+	}
+
+	/**
+	 * @param id
+	 * @param argumentos
+	 * @return
+	 */
+	private boolean isResponsibleCoordinatorOfExecutionDegree(IUserView id, Object[] argumentos) {
+		boolean result = false;
+		if (argumentos == null) {
+			return result;
+		}
+		try {
+			final Person person = id.getPerson();
+
+			ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID((Integer) argumentos[0]);
+			Coordinator coordinator = executionDegree.getCoordinatorByTeacher(person);
+
+			result = (coordinator != null) && coordinator.getResponsible().booleanValue();
+
+		} catch (Exception e) {
+			return false;
+		}
+
+		return result;
+	}
 
 }

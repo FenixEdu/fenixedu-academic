@@ -5,30 +5,30 @@ import java.util.List;
 
 public enum AcademicalInstitutionType {
 
-    NATIONAL_PUBLIC_INSTITUTION,
+	NATIONAL_PUBLIC_INSTITUTION,
 
-    NATIONAL_PRIVATE_INSTITUTION,
+	NATIONAL_PRIVATE_INSTITUTION,
 
-    FOREIGN_INSTITUTION,
+	FOREIGN_INSTITUTION,
 
-    OTHER_INSTITUTION,
+	OTHER_INSTITUTION,
 
-    PUBLIC_HIGH_SCHOOL,
+	PUBLIC_HIGH_SCHOOL,
 
-    PRIVATE_HIGH_SCHOOL,
+	PRIVATE_HIGH_SCHOOL,
 
-    PRIVATE_AND_PUBLIC_HIGH_SCHOOL;
+	PRIVATE_AND_PUBLIC_HIGH_SCHOOL;
 
-    public String getName() {
-	return name();
-    }
+	public String getName() {
+		return name();
+	}
 
-    static public List<AcademicalInstitutionType> getHighSchoolTypes() {
-	return Arrays.asList(PUBLIC_HIGH_SCHOOL, PRIVATE_HIGH_SCHOOL, PRIVATE_AND_PUBLIC_HIGH_SCHOOL);
-    }
+	static public List<AcademicalInstitutionType> getHighSchoolTypes() {
+		return Arrays.asList(PUBLIC_HIGH_SCHOOL, PRIVATE_HIGH_SCHOOL, PRIVATE_AND_PUBLIC_HIGH_SCHOOL);
+	}
 
-    static public List<AcademicalInstitutionType> getHigherEducationTypes() {
-	return Arrays.asList(NATIONAL_PUBLIC_INSTITUTION, NATIONAL_PRIVATE_INSTITUTION, FOREIGN_INSTITUTION, OTHER_INSTITUTION);
-    }
+	static public List<AcademicalInstitutionType> getHigherEducationTypes() {
+		return Arrays.asList(NATIONAL_PUBLIC_INSTITUTION, NATIONAL_PRIVATE_INSTITUTION, FOREIGN_INSTITUTION, OTHER_INSTITUTION);
+	}
 
 }

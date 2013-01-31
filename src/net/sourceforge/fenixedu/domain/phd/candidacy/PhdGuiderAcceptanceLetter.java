@@ -7,61 +7,61 @@ import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdParticipant;
 
 public class PhdGuiderAcceptanceLetter extends PhdGuiderAcceptanceLetter_Base {
-    
-    protected PhdGuiderAcceptanceLetter() {
-        super();
-    }
 
-    public PhdGuiderAcceptanceLetter(PhdParticipant guider, PhdIndividualProgramDocumentType documentType, String remarks,
-	    byte[] content, String filename, Person uploader) {
-	this();
-
-	init(guider, documentType, remarks, content, filename, uploader);
-    }
-
-    private void init(PhdParticipant guider, PhdIndividualProgramDocumentType documentType, String remarks, byte[] content,
-	    String filename, Person uploader) {
-	PhdIndividualProgramProcess process = guider.getIndividualProcess();
-
-	checkParameters(guider, documentType);
-	super.init(process, documentType, remarks, content, filename, uploader);
-
-	setPhdGuider(guider);
-    }
-
-    protected void checkParameters(PhdParticipant guider, PhdIndividualProgramDocumentType documentType) {
-	checkDocumentType(documentType);
-	
-	if (guider == null) {
-	    throw new DomainException("phd.candidacy.PhdGuiderAcceptanceLetter.guider.required");
-	}
-    }
-
-    private void checkDocumentType(PhdIndividualProgramDocumentType documentType) {
-	if (PhdIndividualProgramDocumentType.GUIDER_ACCEPTANCE_LETTER.equals(documentType)) {
-	    return;
+	protected PhdGuiderAcceptanceLetter() {
+		super();
 	}
 
-	if (PhdIndividualProgramDocumentType.ASSISTENT_GUIDER_ACCEPTANCE_LETTER.equals(documentType)) {
-	    return;
+	public PhdGuiderAcceptanceLetter(PhdParticipant guider, PhdIndividualProgramDocumentType documentType, String remarks,
+			byte[] content, String filename, Person uploader) {
+		this();
+
+		init(guider, documentType, remarks, content, filename, uploader);
 	}
 
-	throw new DomainException("phd.candidacy.PhdGuiderAcceptanceLetter.invalid.type");
-    }
+	private void init(PhdParticipant guider, PhdIndividualProgramDocumentType documentType, String remarks, byte[] content,
+			String filename, Person uploader) {
+		PhdIndividualProgramProcess process = guider.getIndividualProcess();
 
-    @Override
-    public boolean isPersonAllowedToAccess(Person person) {
-	PhdIndividualProgramProcess process = (PhdIndividualProgramProcess) getPhdProgramProcess();
+		checkParameters(guider, documentType);
+		super.init(process, documentType, remarks, content, filename, uploader);
 
-	if (!process.getCandidacyProcess().isPublicCandidacy()) {
-	    return super.isPersonAllowedToAccess(person);
+		setPhdGuider(guider);
 	}
 
-	if (!process.getCandidacyProcess().getPublicPhdCandidacyPeriod().isOpen()) {
-	    return super.isPersonAllowedToAccess(person);
+	protected void checkParameters(PhdParticipant guider, PhdIndividualProgramDocumentType documentType) {
+		checkDocumentType(documentType);
+
+		if (guider == null) {
+			throw new DomainException("phd.candidacy.PhdGuiderAcceptanceLetter.guider.required");
+		}
 	}
 
-	return true;
-    }
+	private void checkDocumentType(PhdIndividualProgramDocumentType documentType) {
+		if (PhdIndividualProgramDocumentType.GUIDER_ACCEPTANCE_LETTER.equals(documentType)) {
+			return;
+		}
+
+		if (PhdIndividualProgramDocumentType.ASSISTENT_GUIDER_ACCEPTANCE_LETTER.equals(documentType)) {
+			return;
+		}
+
+		throw new DomainException("phd.candidacy.PhdGuiderAcceptanceLetter.invalid.type");
+	}
+
+	@Override
+	public boolean isPersonAllowedToAccess(Person person) {
+		PhdIndividualProgramProcess process = (PhdIndividualProgramProcess) getPhdProgramProcess();
+
+		if (!process.getCandidacyProcess().isPublicCandidacy()) {
+			return super.isPersonAllowedToAccess(person);
+		}
+
+		if (!process.getCandidacyProcess().getPublicPhdCandidacyPeriod().isOpen()) {
+			return super.isPersonAllowedToAccess(person);
+		}
+
+		return true;
+	}
 
 }

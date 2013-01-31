@@ -17,28 +17,28 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class EditExamRooms extends FenixService {
 
-    @Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
-    @Service
-    public static InfoExam run(InfoExam infoExam, final List<Integer> roomsForExam) throws FenixServiceException {
+	@Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
+	@Service
+	public static InfoExam run(InfoExam infoExam, final List<Integer> roomsForExam) throws FenixServiceException {
 
-	final List<AllocatableSpace> finalRoomList = new ArrayList<AllocatableSpace>();
-	for (final Integer id : roomsForExam) {
-	    finalRoomList.add((AllocatableSpace) rootDomainObject.readResourceByOID(id));
+		final List<AllocatableSpace> finalRoomList = new ArrayList<AllocatableSpace>();
+		for (final Integer id : roomsForExam) {
+			finalRoomList.add((AllocatableSpace) rootDomainObject.readResourceByOID(id));
+		}
+
+		final Exam exam = (Exam) rootDomainObject.readEvaluationByOID(infoExam.getIdInternal());
+		if (exam == null) {
+			throw new NonExistingServiceException();
+		}
+
+		// Remove all elements
+		// TODO : Do this more intelegently.
+		exam.getAssociatedRooms().clear();
+
+		// Add all elements
+		exam.getAssociatedRooms().addAll(finalRoomList);
+
+		return InfoExam.newInfoFromDomain(exam);
 	}
-
-	final Exam exam = (Exam) rootDomainObject.readEvaluationByOID(infoExam.getIdInternal());
-	if (exam == null) {
-	    throw new NonExistingServiceException();
-	}
-
-	// Remove all elements
-	// TODO : Do this more intelegently.
-	exam.getAssociatedRooms().clear();
-
-	// Add all elements
-	exam.getAssociatedRooms().addAll(finalRoomList);
-
-	return InfoExam.newInfoFromDomain(exam);
-    }
 
 }

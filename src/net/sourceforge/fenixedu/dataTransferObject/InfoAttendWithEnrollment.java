@@ -11,91 +11,92 @@ import java.util.Map;
  * @author João Mota
  */
 public class InfoAttendWithEnrollment extends InfoObject implements Serializable {
-    protected InfoStudent _aluno;
+	protected InfoStudent _aluno;
 
-    protected InfoExecutionCourse _disciplinaExecucao;
+	protected InfoExecutionCourse _disciplinaExecucao;
 
-    protected Integer enrollments;
+	protected Integer enrollments;
 
-    protected InfoEnrolment infoEnrolment;
+	protected InfoEnrolment infoEnrolment;
 
-    protected Map infoShifts;
+	protected Map infoShifts;
 
-    public InfoAttendWithEnrollment() {
-    }
-
-    public InfoAttendWithEnrollment(InfoStudent aluno, InfoExecutionCourse disciplinaExecucao) {
-	setAluno(aluno);
-	setDisciplinaExecucao(disciplinaExecucao);
-    }
-
-    public InfoStudent getAluno() {
-	return _aluno;
-    }
-
-    public void setAluno(InfoStudent aluno) {
-	_aluno = aluno;
-    }
-
-    public InfoExecutionCourse getDisciplinaExecucao() {
-	return _disciplinaExecucao;
-    }
-
-    public void setDisciplinaExecucao(InfoExecutionCourse disciplinaExecucao) {
-	_disciplinaExecucao = disciplinaExecucao;
-    }
-
-    public boolean equals(Object obj) {
-	boolean resultado = false;
-	if (obj instanceof InfoFrequenta) {
-	    InfoFrequenta frequenta = (InfoFrequenta) obj;
-	    resultado = getAluno().equals(frequenta.getAluno()) && getDisciplinaExecucao().equals(getDisciplinaExecucao());
+	public InfoAttendWithEnrollment() {
 	}
-	return resultado;
-    }
 
-    /**
-     * @return Returns the enrollments.
-     */
-    public Integer getEnrollments() {
-	return enrollments;
-    }
+	public InfoAttendWithEnrollment(InfoStudent aluno, InfoExecutionCourse disciplinaExecucao) {
+		setAluno(aluno);
+		setDisciplinaExecucao(disciplinaExecucao);
+	}
 
-    /**
-     * @param enrollments
-     *            The enrollments to set.
-     */
-    public void setEnrollments(Integer enrollments) {
-	this.enrollments = enrollments;
-    }
+	public InfoStudent getAluno() {
+		return _aluno;
+	}
 
-    /**
-     * @return Returns the infoEnrolment.
-     */
-    public InfoEnrolment getInfoEnrolment() {
-	return infoEnrolment;
-    }
+	public void setAluno(InfoStudent aluno) {
+		_aluno = aluno;
+	}
 
-    /**
-     * @param infoEnrolment
-     *            The infoEnrolment to set.
-     */
-    public void setInfoEnrolment(InfoEnrolment infoEnrolment) {
-	this.infoEnrolment = infoEnrolment;
-    }
+	public InfoExecutionCourse getDisciplinaExecucao() {
+		return _disciplinaExecucao;
+	}
 
-    /**
-     * @return Returns the infoShifts.
-     */
-    public Map getInfoShifts() {
-	return infoShifts;
-    }
+	public void setDisciplinaExecucao(InfoExecutionCourse disciplinaExecucao) {
+		_disciplinaExecucao = disciplinaExecucao;
+	}
 
-    /**
-     * @param infoShifts
-     *            The infoShifts to set.
-     */
-    public void setInfoShifts(Map infoShifts) {
-	this.infoShifts = infoShifts;
-    }
+	@Override
+	public boolean equals(Object obj) {
+		boolean resultado = false;
+		if (obj instanceof InfoFrequenta) {
+			InfoFrequenta frequenta = (InfoFrequenta) obj;
+			resultado = getAluno().equals(frequenta.getAluno()) && getDisciplinaExecucao().equals(getDisciplinaExecucao());
+		}
+		return resultado;
+	}
+
+	/**
+	 * @return Returns the enrollments.
+	 */
+	public Integer getEnrollments() {
+		return enrollments;
+	}
+
+	/**
+	 * @param enrollments
+	 *            The enrollments to set.
+	 */
+	public void setEnrollments(Integer enrollments) {
+		this.enrollments = enrollments;
+	}
+
+	/**
+	 * @return Returns the infoEnrolment.
+	 */
+	public InfoEnrolment getInfoEnrolment() {
+		return infoEnrolment;
+	}
+
+	/**
+	 * @param infoEnrolment
+	 *            The infoEnrolment to set.
+	 */
+	public void setInfoEnrolment(InfoEnrolment infoEnrolment) {
+		this.infoEnrolment = infoEnrolment;
+	}
+
+	/**
+	 * @return Returns the infoShifts.
+	 */
+	public Map getInfoShifts() {
+		return infoShifts;
+	}
+
+	/**
+	 * @param infoShifts
+	 *            The infoShifts to set.
+	 */
+	public void setInfoShifts(Map infoShifts) {
+		this.infoShifts = infoShifts;
+	}
 }

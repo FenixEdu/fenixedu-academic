@@ -11,26 +11,32 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(path = "/personnelUnitFunctionalities", module = "personnelSection")
 @Forwards({
-	@Forward(name = "managePersistedGroups", path = "manage-persisted-groups", tileProperties = @Tile(title = "private.staffarea.communication.groups")),
-	@Forward(name = "createPersistedGroup", path = "create-persisted-group", tileProperties = @Tile(title = "private.staffarea.communication.groups")),
-	@Forward(name = "editPersistedGroup", path = "edit-persisted-group", tileProperties = @Tile(title = "private.staffarea.communication.groups")),
-	@Forward(name = "uploadFile", path = "upload-file", tileProperties = @Tile(title = "private.staffarea.communication.groups")),
-	@Forward(name = "manageFiles", path = "manage-files", tileProperties = @Tile(title = "private.staffarea.communication.groups")),
-	@Forward(name = "editFile", path = "edit-file", tileProperties = @Tile(title = "private.staffarea.communication.groups")),
-	@Forward(name = "editUploaders", path = "edit-uploaders", tileProperties = @Tile(title = "private.staffarea.communication.groups")) })
+		@Forward(name = "managePersistedGroups", path = "manage-persisted-groups", tileProperties = @Tile(
+				title = "private.staffarea.communication.groups")),
+		@Forward(name = "createPersistedGroup", path = "create-persisted-group", tileProperties = @Tile(
+				title = "private.staffarea.communication.groups")),
+		@Forward(name = "editPersistedGroup", path = "edit-persisted-group", tileProperties = @Tile(
+				title = "private.staffarea.communication.groups")),
+		@Forward(name = "uploadFile", path = "upload-file", tileProperties = @Tile(
+				title = "private.staffarea.communication.groups")),
+		@Forward(name = "manageFiles", path = "manage-files", tileProperties = @Tile(
+				title = "private.staffarea.communication.groups")),
+		@Forward(name = "editFile", path = "edit-file", tileProperties = @Tile(title = "private.staffarea.communication.groups")),
+		@Forward(name = "editUploaders", path = "edit-uploaders", tileProperties = @Tile(
+				title = "private.staffarea.communication.groups")) })
 public class PersonnelSectionUnitFunctionalities extends UnitFunctionalities {
 
-    private static Unit personnelSectionUnit = null;
+	private static Unit personnelSectionUnit = null;
 
-    @Override
-    protected Unit getUnit(HttpServletRequest request) {
-	if (personnelSectionUnit == null) {
-	    personnelSectionUnit = super.getUnit(request);
-	    if (personnelSectionUnit == null) {
-		personnelSectionUnit = Unit.readByCostCenterCode(6231);
-	    }
+	@Override
+	protected Unit getUnit(HttpServletRequest request) {
+		if (personnelSectionUnit == null) {
+			personnelSectionUnit = super.getUnit(request);
+			if (personnelSectionUnit == null) {
+				personnelSectionUnit = Unit.readByCostCenterCode(6231);
+			}
+		}
+
+		return personnelSectionUnit;
 	}
-
-	return personnelSectionUnit;
-    }
 }

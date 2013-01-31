@@ -9,36 +9,37 @@ import org.joda.time.Interval;
 
 public class Delegate extends Delegate_Base {
 
-    public Delegate() {
-	super();
-	setRootDomainObject(RootDomainObject.getInstance());
-    }
-
-    public boolean isActiveForExecutionYear(final ExecutionYear executionYear) {
-	return hasDelegateFunction()
-		&& getDelegateFunction().belongsToPeriod(executionYear.getBeginDateYearMonthDay(),
-			executionYear.getEndDateYearMonthDay());
-    }
-
-    public boolean isActiveForFirstExecutionYear(final ExecutionYear executionYear) {
-	if (hasDelegateFunction() && getDelegateFunction().getBeginDate() != null) {
-	    Interval interval = new Interval(getDelegateFunction().getBeginDate().toDateTimeAtMidnight(), getDelegateFunction()
-		    .getEndDate().toDateTimeAtMidnight().plusDays(1));
-	    return executionYear.overlapsInterval(interval);
+	public Delegate() {
+		super();
+		setRootDomainObject(RootDomainObject.getInstance());
 	}
-	return false;
-    }
 
-    protected Degree getDegree() {
-	return ((DegreeUnit) getDelegateFunction().getFunction().getUnit()).getDegree();
-    }
+	public boolean isActiveForExecutionYear(final ExecutionYear executionYear) {
+		return hasDelegateFunction()
+				&& getDelegateFunction().belongsToPeriod(executionYear.getBeginDateYearMonthDay(),
+						executionYear.getEndDateYearMonthDay());
+	}
 
-    public void delete() {
-	getDelegateFunction().delete();
-	removeDelegateFunction();
-	removeRegistration();
-	removeRootDomainObject();
-	deleteDomainObject();
-    }
+	public boolean isActiveForFirstExecutionYear(final ExecutionYear executionYear) {
+		if (hasDelegateFunction() && getDelegateFunction().getBeginDate() != null) {
+			Interval interval =
+					new Interval(getDelegateFunction().getBeginDate().toDateTimeAtMidnight(), getDelegateFunction().getEndDate()
+							.toDateTimeAtMidnight().plusDays(1));
+			return executionYear.overlapsInterval(interval);
+		}
+		return false;
+	}
+
+	protected Degree getDegree() {
+		return ((DegreeUnit) getDelegateFunction().getFunction().getUnit()).getDegree();
+	}
+
+	public void delete() {
+		getDelegateFunction().delete();
+		removeDelegateFunction();
+		removeRegistration();
+		removeRootDomainObject();
+		deleteDomainObject();
+	}
 
 }

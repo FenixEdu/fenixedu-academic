@@ -24,32 +24,33 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class ReadOldInquiriesTeachersResByDegreeId extends FenixService {
 
-    @Checked("RolePredicates.TEACHER_PREDICATE")
-    @Service
-    public static List run(Integer degreeId) throws FenixServiceException {
-	Degree degree = rootDomainObject.readDegreeByOID(degreeId);
+	@Checked("RolePredicates.TEACHER_PREDICATE")
+	@Service
+	public static List run(Integer degreeId) throws FenixServiceException {
+		Degree degree = rootDomainObject.readDegreeByOID(degreeId);
 
-	if (degree == null) {
-	    throw new FenixServiceException("nullDegreeId");
-	}
-
-	List<OldInquiriesTeachersRes> oldInquiriesTeachersResList = degree.getAssociatedOldInquiriesTeachersRes();
-
-	CollectionUtils.transform(oldInquiriesTeachersResList, new Transformer() {
-
-	    public Object transform(Object oldInquiriesTeachersRes) {
-		InfoOldInquiriesTeachersRes ioits = new InfoOldInquiriesTeachersRes();
-		try {
-		    ioits.copyFromDomain((OldInquiriesTeachersRes) oldInquiriesTeachersRes);
-
-		} catch (Exception ex) {
+		if (degree == null) {
+			throw new FenixServiceException("nullDegreeId");
 		}
 
-		return ioits;
-	    }
-	});
+		List<OldInquiriesTeachersRes> oldInquiriesTeachersResList = degree.getAssociatedOldInquiriesTeachersRes();
 
-	return oldInquiriesTeachersResList;
-    }
+		CollectionUtils.transform(oldInquiriesTeachersResList, new Transformer() {
+
+			@Override
+			public Object transform(Object oldInquiriesTeachersRes) {
+				InfoOldInquiriesTeachersRes ioits = new InfoOldInquiriesTeachersRes();
+				try {
+					ioits.copyFromDomain((OldInquiriesTeachersRes) oldInquiriesTeachersRes);
+
+				} catch (Exception ex) {
+				}
+
+				return ioits;
+			}
+		});
+
+		return oldInquiriesTeachersResList;
+	}
 
 }

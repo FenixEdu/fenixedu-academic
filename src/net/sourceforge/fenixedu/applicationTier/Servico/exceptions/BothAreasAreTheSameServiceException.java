@@ -6,27 +6,28 @@ package net.sourceforge.fenixedu.applicationTier.Servico.exceptions;
 
 public class BothAreasAreTheSameServiceException extends FenixServiceException {
 
-    public BothAreasAreTheSameServiceException() {
-    }
+	public BothAreasAreTheSameServiceException() {
+	}
 
-    public BothAreasAreTheSameServiceException(String message) {
-	super(message);
-    }
+	public BothAreasAreTheSameServiceException(String message) {
+		super(message);
+	}
 
-    public BothAreasAreTheSameServiceException(Throwable cause) {
-	super(cause);
-    }
+	public BothAreasAreTheSameServiceException(Throwable cause) {
+		super(cause);
+	}
 
-    public BothAreasAreTheSameServiceException(String message, Throwable cause) {
-	super(message, cause);
-    }
+	public BothAreasAreTheSameServiceException(String message, Throwable cause) {
+		super(message, cause);
+	}
 
-    public String toString() {
-	String result = "[BothAreasAreTheSameServiceException\n";
-	result += "message" + this.getMessage() + "\n";
-	result += "cause" + this.getCause() + "\n";
-	result += "]";
-	return result;
-    }
+	@Override
+	public String toString() {
+		String result = "[BothAreasAreTheSameServiceException\n";
+		result += "message" + this.getMessage() + "\n";
+		result += "cause" + this.getCause() + "\n";
+		result += "]";
+		return result;
+	}
 
 }

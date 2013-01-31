@@ -19,81 +19,82 @@ import net.sourceforge.fenixedu.domain.grant.owner.GrantOwner;
  */
 public class InfoGrantOwner extends InfoObject {
 
-    private InfoPerson personInfo;
+	private InfoPerson personInfo;
 
-    private Integer grantOwnerNumber;
+	private Integer grantOwnerNumber;
 
-    private Integer cardCopyNumber;
+	private Integer cardCopyNumber;
 
-    private Date dateSendCGD;
+	private Date dateSendCGD;
 
-    public boolean equals(Object obj) {
-	return ((obj instanceof InfoGrantOwner) && ((this.personInfo.equals(((InfoGrantOwner) obj).getPersonInfo())) && (this.grantOwnerNumber
-		.equals(((InfoGrantOwner) obj).getGrantOwnerNumber()))));
-    }
-
-    public InfoPerson getPersonInfo() {
-	return personInfo;
-    }
-
-    public Integer getGrantOwnerNumber() {
-	return grantOwnerNumber;
-    }
-
-    public Integer getCardCopyNumber() {
-	return cardCopyNumber;
-    }
-
-    public Date getDateSendCGD() {
-	return dateSendCGD;
-    }
-
-    public void setPersonInfo(InfoPerson infoPerson) {
-	this.personInfo = infoPerson;
-    }
-
-    public void setGrantOwnerNumber(Integer number) {
-	this.grantOwnerNumber = number;
-    }
-
-    public void setCardCopyNumber(Integer copyNumber) {
-	this.cardCopyNumber = copyNumber;
-    }
-
-    public void setDateSendCGD(Date dateSend) {
-	this.dateSendCGD = dateSend;
-    }
-
-    public void copyFromDomain(GrantOwner grantOwner) {
-	super.copyFromDomain(grantOwner);
-	if (grantOwner != null) {
-	    setGrantOwnerNumber(grantOwner.getNumber());
-	    setCardCopyNumber(grantOwner.getCardCopyNumber());
-	    setDateSendCGD(grantOwner.getDateSendCGD());
+	@Override
+	public boolean equals(Object obj) {
+		return ((obj instanceof InfoGrantOwner) && ((this.personInfo.equals(((InfoGrantOwner) obj).getPersonInfo())) && (this.grantOwnerNumber
+				.equals(((InfoGrantOwner) obj).getGrantOwnerNumber()))));
 	}
-    }
 
-    public static InfoGrantOwner newInfoFromDomain(GrantOwner grantOwner) {
-	InfoGrantOwner infoGrantOwner = null;
-	if (grantOwner != null) {
-	    infoGrantOwner = new InfoGrantOwner();
-	    infoGrantOwner.copyFromDomain(grantOwner);
+	public InfoPerson getPersonInfo() {
+		return personInfo;
 	}
-	return infoGrantOwner;
-    }
 
-    /*
-     * - Temporary solution to remove create InfoPerson wrapper - This attribute
-     * should be removed and placed in InfoGrantOwnerEditor
-     */
-    private InfoPersonEditor infoPersonEditor;
+	public Integer getGrantOwnerNumber() {
+		return grantOwnerNumber;
+	}
 
-    public InfoPersonEditor getInfoPersonEditor() {
-	return infoPersonEditor;
-    }
+	public Integer getCardCopyNumber() {
+		return cardCopyNumber;
+	}
 
-    public void setInfoPersonEditor(InfoPersonEditor infoPersonEditor) {
-	this.infoPersonEditor = infoPersonEditor;
-    }
+	public Date getDateSendCGD() {
+		return dateSendCGD;
+	}
+
+	public void setPersonInfo(InfoPerson infoPerson) {
+		this.personInfo = infoPerson;
+	}
+
+	public void setGrantOwnerNumber(Integer number) {
+		this.grantOwnerNumber = number;
+	}
+
+	public void setCardCopyNumber(Integer copyNumber) {
+		this.cardCopyNumber = copyNumber;
+	}
+
+	public void setDateSendCGD(Date dateSend) {
+		this.dateSendCGD = dateSend;
+	}
+
+	public void copyFromDomain(GrantOwner grantOwner) {
+		super.copyFromDomain(grantOwner);
+		if (grantOwner != null) {
+			setGrantOwnerNumber(grantOwner.getNumber());
+			setCardCopyNumber(grantOwner.getCardCopyNumber());
+			setDateSendCGD(grantOwner.getDateSendCGD());
+		}
+	}
+
+	public static InfoGrantOwner newInfoFromDomain(GrantOwner grantOwner) {
+		InfoGrantOwner infoGrantOwner = null;
+		if (grantOwner != null) {
+			infoGrantOwner = new InfoGrantOwner();
+			infoGrantOwner.copyFromDomain(grantOwner);
+		}
+		return infoGrantOwner;
+	}
+
+	/*
+	 * - Temporary solution to remove create InfoPerson wrapper - This attribute
+	 * should be removed and placed in InfoGrantOwnerEditor
+	 */
+	private InfoPersonEditor infoPersonEditor;
+
+	public InfoPersonEditor getInfoPersonEditor() {
+		return infoPersonEditor;
+	}
+
+	public void setInfoPersonEditor(InfoPersonEditor infoPersonEditor) {
+		this.infoPersonEditor = infoPersonEditor;
+	}
 
 }

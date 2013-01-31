@@ -15,48 +15,48 @@ import org.w3c.tidy.Tidy;
  */
 public class HtmlValidator {
 
-    private Tidy tidy = null;
-    private OutputStream outputStreamError = null;
+	private Tidy tidy = null;
+	private OutputStream outputStreamError = null;
 
-    public HtmlValidator() {
-	init();
-    }
-
-    private void init() {
-	tidy = new Tidy();
-	Properties properties = new Properties();
-	ResourceBundle resourceBundle = ResourceBundle.getBundle("jtidy");
-
-	convertPropertyResourceBundleToProperties(resourceBundle, properties);
-	tidy.setConfigurationFromProps(properties);
-
-	outputStreamError = new ByteArrayOutputStream();
-	tidy.setErrout(new PrintWriter(outputStreamError, true));
-    }
-
-    private static void convertPropertyResourceBundleToProperties(ResourceBundle resourceBundle, Properties properties) {
-	for (Enumeration enumeration = resourceBundle.getKeys(); enumeration.hasMoreElements();) {
-	    String key = (String) enumeration.nextElement();
-	    properties.setProperty(key, resourceBundle.getString(key));
+	public HtmlValidator() {
+		init();
 	}
-    }
 
-    public String getErrors() {
-	return this.outputStreamError.toString();
-    }
+	private void init() {
+		tidy = new Tidy();
+		Properties properties = new Properties();
+		ResourceBundle resourceBundle = ResourceBundle.getBundle("jtidy");
 
-    public String validateHTMLString(String htmlInput) {
+		convertPropertyResourceBundleToProperties(resourceBundle, properties);
+		tidy.setConfigurationFromProps(properties);
 
-	InputStream inputStreamData = new java.io.ByteArrayInputStream(htmlInput.getBytes());
-	OutputStream outputStreamData = new ByteArrayOutputStream();
-	reset(this.outputStreamError);
+		outputStreamError = new ByteArrayOutputStream();
+		tidy.setErrout(new PrintWriter(outputStreamError, true));
+	}
 
-	tidy.parse(inputStreamData, outputStreamData);
+	private static void convertPropertyResourceBundleToProperties(ResourceBundle resourceBundle, Properties properties) {
+		for (Enumeration enumeration = resourceBundle.getKeys(); enumeration.hasMoreElements();) {
+			String key = (String) enumeration.nextElement();
+			properties.setProperty(key, resourceBundle.getString(key));
+		}
+	}
 
-	return outputStreamData.toString();
-    }
+	public String getErrors() {
+		return this.outputStreamError.toString();
+	}
 
-    private void reset(OutputStream outputStream) {
-	((ByteArrayOutputStream) outputStream).reset();
-    }
+	public String validateHTMLString(String htmlInput) {
+
+		InputStream inputStreamData = new java.io.ByteArrayInputStream(htmlInput.getBytes());
+		OutputStream outputStreamData = new ByteArrayOutputStream();
+		reset(this.outputStreamError);
+
+		tidy.parse(inputStreamData, outputStreamData);
+
+		return outputStreamData.toString();
+	}
+
+	private void reset(OutputStream outputStream) {
+		((ByteArrayOutputStream) outputStream).reset();
+	}
 }

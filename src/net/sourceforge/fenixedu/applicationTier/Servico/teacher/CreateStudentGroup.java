@@ -20,30 +20,31 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 
 public class CreateStudentGroup extends FenixService {
 
-    private List buildStudentList(List<String> studentUserNames, Grouping grouping) throws FenixServiceException {
+	private List buildStudentList(List<String> studentUserNames, Grouping grouping) throws FenixServiceException {
 
-	List studentList = new ArrayList();
-	for (final String studantUserName : studentUserNames) {
-	    Attends attend = grouping.getStudentAttend(studantUserName);
-	    Registration registration = attend.getRegistration();
-	    studentList.add(registration);
+		List studentList = new ArrayList();
+		for (final String studantUserName : studentUserNames) {
+			Attends attend = grouping.getStudentAttend(studantUserName);
+			Registration registration = attend.getRegistration();
+			studentList.add(registration);
+		}
+		return studentList;
 	}
-	return studentList;
-    }
 
-    public Boolean run(Integer executionCourseID, Integer groupNumber, Integer groupingID, Integer shiftID, List studentUserNames)
-	    throws FenixServiceException {
-	final Grouping grouping = rootDomainObject.readGroupingByOID(groupingID);
+	public Boolean run(Integer executionCourseID, Integer groupNumber, Integer groupingID, Integer shiftID, List studentUserNames)
+			throws FenixServiceException {
+		final Grouping grouping = rootDomainObject.readGroupingByOID(groupingID);
 
-	if (grouping == null)
-	    throw new FenixServiceException();
+		if (grouping == null) {
+			throw new FenixServiceException();
+		}
 
-	Shift shift = rootDomainObject.readShiftByOID(shiftID);
+		Shift shift = rootDomainObject.readShiftByOID(shiftID);
 
-	List studentList = buildStudentList(studentUserNames, grouping);
+		List studentList = buildStudentList(studentUserNames, grouping);
 
-	grouping.createStudentGroup(shift, groupNumber, studentList);
+		grouping.createStudentGroup(shift, groupNumber, studentList);
 
-	return true;
-    }
+		return true;
+	}
 }

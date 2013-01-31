@@ -14,47 +14,47 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class Under23TransportsDeclarationDocument extends AdministrativeOfficeDocument {
 
-    static private final long serialVersionUID = 1L;
+	static private final long serialVersionUID = 1L;
 
-    protected Under23TransportsDeclarationDocument(final Under23TransportsDeclarationRequest documentRequest) {
-	super(documentRequest);
-    }
+	protected Under23TransportsDeclarationDocument(final Under23TransportsDeclarationRequest documentRequest) {
+		super(documentRequest);
+	}
 
-    @Override
-    protected Under23TransportsDeclarationRequest getDocumentRequest() {
-	return (Under23TransportsDeclarationRequest) super.getDocumentRequest();
-    }
+	@Override
+	protected Under23TransportsDeclarationRequest getDocumentRequest() {
+		return (Under23TransportsDeclarationRequest) super.getDocumentRequest();
+	}
 
-    @Override
-    protected void fillReport() {
+	@Override
+	protected void fillReport() {
 
-	final Person person = getDocumentRequest().getPerson();
+		final Person person = getDocumentRequest().getPerson();
 
-	addParameter("personName", person.getName());
-	addParameter("documentIdNumber", person.getDocumentIdNumber());
-	addParameter("emissionDate", person.getEmissionDateOfDocumentIdYearMonthDay() == null ? "" : person
-		.getEmissionDateOfDocumentIdYearMonthDay().toString(DEFAULT_DATE_FORMAT));
-	addParameter("birthDate", person.getDateOfBirthYearMonthDay().toString(DEFAULT_DATE_FORMAT));
+		addParameter("personName", person.getName());
+		addParameter("documentIdNumber", person.getDocumentIdNumber());
+		addParameter("emissionDate", person.getEmissionDateOfDocumentIdYearMonthDay() == null ? "" : person
+				.getEmissionDateOfDocumentIdYearMonthDay().toString(DEFAULT_DATE_FORMAT));
+		addParameter("birthDate", person.getDateOfBirthYearMonthDay().toString(DEFAULT_DATE_FORMAT));
 
-	addParameter("executionYear", getExecutionYear().getQualifiedName());
-	addParameter("institutionName", UnitUtils.readInstitutionUnit().getName());
+		addParameter("executionYear", getExecutionYear().getQualifiedName());
+		addParameter("institutionName", UnitUtils.readInstitutionUnit().getName());
 
-	Unit adminOfficeUnit = getAdministrativeOffice().getUnit();
+		Unit adminOfficeUnit = getAdministrativeOffice().getUnit();
 
-	addAddressInformation("person", getDocumentRequest().getPerson());
-	addAddressInformation("institution", adminOfficeUnit);
-	addParameter("institutionPhone", adminOfficeUnit.getDefaultPhone().getNumber());
+		addAddressInformation("person", getDocumentRequest().getPerson());
+		addAddressInformation("institution", adminOfficeUnit);
+		addParameter("institutionPhone", adminOfficeUnit.getDefaultPhone().getNumber());
 
-	addParameter("reportDate", new LocalDate().toString("dd 'de' MMMM 'de' yyyy", Language.getLocale()));
-    }
+		addParameter("reportDate", new LocalDate().toString("dd 'de' MMMM 'de' yyyy", Language.getLocale()));
+	}
 
-    private void addAddressInformation(final String prefix, final Party party) {
-	final PhysicalAddress address = party.getDefaultPhysicalAddress();
-	addParameter(prefix + "Address", address.getAddress());
-	addParameter(prefix + "Parish", address.getParishOfResidence());
-	addParameter(prefix + "Municipality", address.getDistrictSubdivisionOfResidence());
-	addParameter(prefix + "AreaCode", address.getAreaCode());
-	addParameter(prefix + "AreaOfAreaCode", address.getAreaOfAreaCode());
-    }
+	private void addAddressInformation(final String prefix, final Party party) {
+		final PhysicalAddress address = party.getDefaultPhysicalAddress();
+		addParameter(prefix + "Address", address.getAddress());
+		addParameter(prefix + "Parish", address.getParishOfResidence());
+		addParameter(prefix + "Municipality", address.getDistrictSubdivisionOfResidence());
+		addParameter(prefix + "AreaCode", address.getAreaCode());
+		addParameter(prefix + "AreaOfAreaCode", address.getAreaOfAreaCode());
+	}
 
 }

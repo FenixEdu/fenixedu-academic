@@ -11,109 +11,109 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState.RegistrationStateCreator;
+import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
 
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
 public class RegistrationConclusionProcess extends RegistrationConclusionProcess_Base {
 
-    private RegistrationConclusionProcess(final RegistrationConclusionBean bean) {
-	super();
-	super.setRootDomainObject(RootDomainObject.getInstance());
+	private RegistrationConclusionProcess(final RegistrationConclusionBean bean) {
+		super();
+		super.setRootDomainObject(RootDomainObject.getInstance());
 
-	final Registration registration = bean.getRegistration();
-	final ExecutionYear conclusionYear = bean.getConclusionYear();
+		final Registration registration = bean.getRegistration();
+		final ExecutionYear conclusionYear = bean.getConclusionYear();
 
-	check(registration, "error.RegistrationConclusionProcess.argument.must.not.be.null");
-	check(conclusionYear, "error.RegistrationConclusionProcess.conclusionYear.cannot.be.null");
+		check(registration, "error.RegistrationConclusionProcess.argument.must.not.be.null");
+		check(conclusionYear, "error.RegistrationConclusionProcess.conclusionYear.cannot.be.null");
 
-	super.setRegistration(registration);
-	super.setConclusionYear(conclusionYear);
-	addVersions(bean);
-    }
-
-    @Override
-    public boolean isRegistrationConclusionProcess() {
-	return true;
-    }
-
-    public static void conclude(final RegistrationConclusionBean bean) {
-	if (bean.isConclusionProcessed()) {
-	    throw new DomainException("error.ConclusionProcess.already.concluded.must.update");
+		super.setRegistration(registration);
+		super.setConclusionYear(conclusionYear);
+		addVersions(bean);
 	}
 
-	createRegistrationStates(new RegistrationConclusionProcess(bean));
-    }
-
-    @Override
-    public void update(final RegistrationConclusionBean bean) {
-	if (!bean.isConclusionProcessed()) {
-	    throw new DomainException("error.ConclusionProcess.is.not.concluded");
+	@Override
+	public boolean isRegistrationConclusionProcess() {
+		return true;
 	}
 
-	addVersions(bean);
+	public static void conclude(final RegistrationConclusionBean bean) {
+		if (bean.isConclusionProcessed()) {
+			throw new DomainException("error.ConclusionProcess.already.concluded.must.update");
+		}
 
-    }
-
-    private static void createRegistrationStates(final RegistrationConclusionProcess conclusionProcess) {
-	final Registration reg = conclusionProcess.getRegistration();
-	final Person responsible = conclusionProcess.getResponsible();
-	final DateTime creation = conclusionProcess.getCreationDateTime();
-
-	if (isSchoolPartConcludedDegreeType(reg)) {
-	    if (!reg.isSchoolPartConcluded() && !reg.isConcluded()) {
-		RegistrationStateCreator.createState(reg, responsible, creation, RegistrationStateType.SCHOOLPARTCONCLUDED);
-	    }
-	} else {
-	    if (!reg.isConcluded()) {
-		RegistrationStateCreator.createState(reg, responsible, creation, RegistrationStateType.CONCLUDED);
-	    }
+		createRegistrationStates(new RegistrationConclusionProcess(bean));
 	}
-    }
 
-    private static List<DegreeType> SCHOOLPART_DEGREE_TYPES = Arrays.asList(
+	@Override
+	public void update(final RegistrationConclusionBean bean) {
+		if (!bean.isConclusionProcessed()) {
+			throw new DomainException("error.ConclusionProcess.is.not.concluded");
+		}
 
-    DegreeType.MASTER_DEGREE,
+		addVersions(bean);
 
-    DegreeType.BOLONHA_ADVANCED_SPECIALIZATION_DIPLOMA);
+	}
 
-    private static boolean isSchoolPartConcludedDegreeType(final Registration reg) {
-	return SCHOOLPART_DEGREE_TYPES.contains(reg.getDegreeType());
-    }
+	private static void createRegistrationStates(final RegistrationConclusionProcess conclusionProcess) {
+		final Registration reg = conclusionProcess.getRegistration();
+		final Person responsible = conclusionProcess.getResponsible();
+		final DateTime creation = conclusionProcess.getCreationDateTime();
 
-    @Override
-    final public void update(final Person responsible, final Integer finalAverage, final LocalDate conclusionDate,
-	    final String notes) {
-	addVersions(new RegistrationConclusionBean(getRegistration()));
-	getLastVersion().update(responsible, finalAverage, conclusionDate, notes);
-    }
+		if (isSchoolPartConcludedDegreeType(reg)) {
+			if (!reg.isSchoolPartConcluded() && !reg.isConcluded()) {
+				RegistrationStateCreator.createState(reg, responsible, creation, RegistrationStateType.SCHOOLPARTCONCLUDED);
+			}
+		} else {
+			if (!reg.isConcluded()) {
+				RegistrationStateCreator.createState(reg, responsible, creation, RegistrationStateType.CONCLUDED);
+			}
+		}
+	}
 
-    final public void update(final Person responsible, final Integer finalAverage, BigDecimal average,
-	    final LocalDate conclusionDate, final String notes) {
-	addVersions(new RegistrationConclusionBean(getRegistration()));
-	getLastVersion().update(responsible, finalAverage, average, conclusionDate, notes);
-    }
+	private static List<DegreeType> SCHOOLPART_DEGREE_TYPES = Arrays.asList(
 
-    @Override
-    protected void addSpecificVersionInfo() {
-	getLastVersion().setMasterDegreeThesis(getRegistration().getMasterDegreeThesis());
-    }
+	DegreeType.MASTER_DEGREE,
 
-    @Override
-    public void setRootDomainObject(RootDomainObject rootDomainObject) {
-	throw new DomainException("error.ConclusionProcess.method.not.allowed");
-    }
+	DegreeType.BOLONHA_ADVANCED_SPECIALIZATION_DIPLOMA);
 
-    @Override
-    public void setRegistration(Registration registration) {
-	throw new DomainException("error.ConclusionProcess.method.not.allowed");
-    }
+	private static boolean isSchoolPartConcludedDegreeType(final Registration reg) {
+		return SCHOOLPART_DEGREE_TYPES.contains(reg.getDegreeType());
+	}
 
-    @Override
-    public void setConclusionYear(ExecutionYear conclusionYear) {
-	throw new DomainException("error.ConclusionProcess.method.not.allowed");
-    }
+	@Override
+	final public void update(final Person responsible, final Integer finalAverage, final LocalDate conclusionDate,
+			final String notes) {
+		addVersions(new RegistrationConclusionBean(getRegistration()));
+		getLastVersion().update(responsible, finalAverage, conclusionDate, notes);
+	}
+
+	final public void update(final Person responsible, final Integer finalAverage, BigDecimal average,
+			final LocalDate conclusionDate, final String notes) {
+		addVersions(new RegistrationConclusionBean(getRegistration()));
+		getLastVersion().update(responsible, finalAverage, average, conclusionDate, notes);
+	}
+
+	@Override
+	protected void addSpecificVersionInfo() {
+		getLastVersion().setMasterDegreeThesis(getRegistration().getMasterDegreeThesis());
+	}
+
+	@Override
+	public void setRootDomainObject(RootDomainObject rootDomainObject) {
+		throw new DomainException("error.ConclusionProcess.method.not.allowed");
+	}
+
+	@Override
+	public void setRegistration(Registration registration) {
+		throw new DomainException("error.ConclusionProcess.method.not.allowed");
+	}
+
+	@Override
+	public void setConclusionYear(ExecutionYear conclusionYear) {
+		throw new DomainException("error.ConclusionProcess.method.not.allowed");
+	}
 
 }

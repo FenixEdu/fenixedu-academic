@@ -21,187 +21,188 @@ import net.sourceforge.fenixedu.domain.Seminaries.SeminaryCandidacy;
  */
 public class InfoCandidacy extends InfoObject {
 
-    private List<InfoCaseStudyChoice> caseStudyChoices;
+	private List<InfoCaseStudyChoice> caseStudyChoices;
 
-    private String motivation;
+	private String motivation;
 
-    private String seminaryName;
+	private String seminaryName;
 
-    private InfoTheme theme;
+	private InfoTheme theme;
 
-    private InfoModality infoModality;
+	private InfoModality infoModality;
 
-    private InfoStudent infoStudent;
+	private InfoStudent infoStudent;
 
-    private InfoCurricularCourse curricularCourse;
+	private InfoCurricularCourse curricularCourse;
 
-    private InfoSeminary infoSeminary;
+	private InfoSeminary infoSeminary;
 
-    private Boolean approved;
+	private Boolean approved;
 
-    /**
-     * @return
-     */
-    public List<InfoCaseStudyChoice> getCaseStudyChoices() {
-	return caseStudyChoices;
-    }
-
-    /**
-     * @param list
-     */
-    public void setCaseStudyChoices(List<InfoCaseStudyChoice> list) {
-	caseStudyChoices = list;
-    }
-
-    /**
-     * @return
-     */
-    public String getMotivation() {
-	return motivation;
-    }
-
-    /**
-     * @param string
-     */
-    public void setMotivation(String string) {
-	motivation = string;
-    }
-
-    public String toString() {
-	String result = "[InfoCandidacy:";
-	result += "Theme=" + this.theme.getIdInternal() + ";";
-	result += "IdInternal=" + super.getIdInternal() + ";";
-	result += "Motivation=" + this.motivation + ";";
-	result += "Registration=" + this.getInfoStudent().getIdInternal() + ";";
-	result += "CaseStudyChoices" + this.caseStudyChoices + ";";
-	result += "CurricularCourse=" + this.curricularCourse.getIdInternal() + ";";
-	result += "Seminary:=" + this.infoSeminary.getIdInternal() + ";";
-	result += "Modality=" + this.getInfoModality().getIdInternal() + "]";
-	return result;
-    }
-
-    /**
-     * @return
-     */
-    public String getSeminaryName() {
-	return seminaryName;
-    }
-
-    /**
-     * @param string
-     */
-    public void setSeminaryName(String string) {
-	seminaryName = string;
-    }
-
-    /**
-     * @return
-     */
-    public Boolean getApproved() {
-	return approved;
-    }
-
-    /**
-     * @param boolean1
-     */
-    public void setApproved(Boolean boolean1) {
-	approved = boolean1;
-    }
-
-    public void copyFromDomain(SeminaryCandidacy candidacy) {
-	super.copyFromDomain(candidacy);
-	if (candidacy != null) {
-	    setApproved(candidacy.getApproved());
-	    setCurricularCourse(InfoCurricularCourse.newInfoFromDomain(candidacy.getCurricularCourse()));
-	    setInfoModality(InfoModality.newInfoFromDomain(candidacy.getModality()));
-	    setMotivation(candidacy.getMotivation());
-	    setInfoSeminary(InfoSeminaryWithEquivalencies.newInfoFromDomain(candidacy.getSeminary()));
-	    setInfoStudent(InfoStudent.newInfoFromDomain(candidacy.getStudent()));
-	    setTheme(InfoTheme.newInfoFromDomain(candidacy.getTheme()));
+	/**
+	 * @return
+	 */
+	public List<InfoCaseStudyChoice> getCaseStudyChoices() {
+		return caseStudyChoices;
 	}
-    }
 
-    public static InfoCandidacy newInfoFromDomain(SeminaryCandidacy candidacy) {
-	InfoCandidacy infoCandidacy = null;
-	if (candidacy != null) {
-	    infoCandidacy = new InfoCandidacy();
-	    infoCandidacy.copyFromDomain(candidacy);
+	/**
+	 * @param list
+	 */
+	public void setCaseStudyChoices(List<InfoCaseStudyChoice> list) {
+		caseStudyChoices = list;
 	}
-	return infoCandidacy;
-    }
 
-    /**
-     * @return Returns the infoSeminary.
-     */
-    public InfoSeminary getInfoSeminary() {
-	return infoSeminary;
-    }
+	/**
+	 * @return
+	 */
+	public String getMotivation() {
+		return motivation;
+	}
 
-    /**
-     * @param infoSeminary
-     *            The infoSeminary to set.
-     */
-    public void setInfoSeminary(InfoSeminary infoSeminary) {
-	this.infoSeminary = infoSeminary;
-    }
+	/**
+	 * @param string
+	 */
+	public void setMotivation(String string) {
+		motivation = string;
+	}
 
-    /**
-     * @return Returns the infoStudent.
-     */
-    public InfoStudent getInfoStudent() {
-	return infoStudent;
-    }
+	@Override
+	public String toString() {
+		String result = "[InfoCandidacy:";
+		result += "Theme=" + this.theme.getIdInternal() + ";";
+		result += "IdInternal=" + super.getIdInternal() + ";";
+		result += "Motivation=" + this.motivation + ";";
+		result += "Registration=" + this.getInfoStudent().getIdInternal() + ";";
+		result += "CaseStudyChoices" + this.caseStudyChoices + ";";
+		result += "CurricularCourse=" + this.curricularCourse.getIdInternal() + ";";
+		result += "Seminary:=" + this.infoSeminary.getIdInternal() + ";";
+		result += "Modality=" + this.getInfoModality().getIdInternal() + "]";
+		return result;
+	}
 
-    /**
-     * @param infoStudent
-     *            The infoStudent to set.
-     */
-    public void setInfoStudent(InfoStudent infoStudent) {
-	this.infoStudent = infoStudent;
-    }
+	/**
+	 * @return
+	 */
+	public String getSeminaryName() {
+		return seminaryName;
+	}
 
-    /**
-     * @return Returns the infoModality.
-     */
-    public InfoModality getInfoModality() {
-	return infoModality;
-    }
+	/**
+	 * @param string
+	 */
+	public void setSeminaryName(String string) {
+		seminaryName = string;
+	}
 
-    /**
-     * @param infoModality
-     *            The infoModality to set.
-     */
-    public void setInfoModality(InfoModality infoModality) {
-	this.infoModality = infoModality;
-    }
+	/**
+	 * @return
+	 */
+	public Boolean getApproved() {
+		return approved;
+	}
 
-    /**
-     * @return Returns the curricularCourse.
-     */
-    public InfoCurricularCourse getCurricularCourse() {
-	return curricularCourse;
-    }
+	/**
+	 * @param boolean1
+	 */
+	public void setApproved(Boolean boolean1) {
+		approved = boolean1;
+	}
 
-    /**
-     * @param curricularCourse
-     *            The curricularCourse to set.
-     */
-    public void setCurricularCourse(InfoCurricularCourse curricularCourse) {
-	this.curricularCourse = curricularCourse;
-    }
+	public void copyFromDomain(SeminaryCandidacy candidacy) {
+		super.copyFromDomain(candidacy);
+		if (candidacy != null) {
+			setApproved(candidacy.getApproved());
+			setCurricularCourse(InfoCurricularCourse.newInfoFromDomain(candidacy.getCurricularCourse()));
+			setInfoModality(InfoModality.newInfoFromDomain(candidacy.getModality()));
+			setMotivation(candidacy.getMotivation());
+			setInfoSeminary(InfoSeminaryWithEquivalencies.newInfoFromDomain(candidacy.getSeminary()));
+			setInfoStudent(InfoStudent.newInfoFromDomain(candidacy.getStudent()));
+			setTheme(InfoTheme.newInfoFromDomain(candidacy.getTheme()));
+		}
+	}
 
-    /**
-     * @return Returns the theme.
-     */
-    public InfoTheme getTheme() {
-	return theme;
-    }
+	public static InfoCandidacy newInfoFromDomain(SeminaryCandidacy candidacy) {
+		InfoCandidacy infoCandidacy = null;
+		if (candidacy != null) {
+			infoCandidacy = new InfoCandidacy();
+			infoCandidacy.copyFromDomain(candidacy);
+		}
+		return infoCandidacy;
+	}
 
-    /**
-     * @param theme
-     *            The theme to set.
-     */
-    public void setTheme(InfoTheme theme) {
-	this.theme = theme;
-    }
+	/**
+	 * @return Returns the infoSeminary.
+	 */
+	public InfoSeminary getInfoSeminary() {
+		return infoSeminary;
+	}
+
+	/**
+	 * @param infoSeminary
+	 *            The infoSeminary to set.
+	 */
+	public void setInfoSeminary(InfoSeminary infoSeminary) {
+		this.infoSeminary = infoSeminary;
+	}
+
+	/**
+	 * @return Returns the infoStudent.
+	 */
+	public InfoStudent getInfoStudent() {
+		return infoStudent;
+	}
+
+	/**
+	 * @param infoStudent
+	 *            The infoStudent to set.
+	 */
+	public void setInfoStudent(InfoStudent infoStudent) {
+		this.infoStudent = infoStudent;
+	}
+
+	/**
+	 * @return Returns the infoModality.
+	 */
+	public InfoModality getInfoModality() {
+		return infoModality;
+	}
+
+	/**
+	 * @param infoModality
+	 *            The infoModality to set.
+	 */
+	public void setInfoModality(InfoModality infoModality) {
+		this.infoModality = infoModality;
+	}
+
+	/**
+	 * @return Returns the curricularCourse.
+	 */
+	public InfoCurricularCourse getCurricularCourse() {
+		return curricularCourse;
+	}
+
+	/**
+	 * @param curricularCourse
+	 *            The curricularCourse to set.
+	 */
+	public void setCurricularCourse(InfoCurricularCourse curricularCourse) {
+		this.curricularCourse = curricularCourse;
+	}
+
+	/**
+	 * @return Returns the theme.
+	 */
+	public InfoTheme getTheme() {
+		return theme;
+	}
+
+	/**
+	 * @param theme
+	 *            The theme to set.
+	 */
+	public void setTheme(InfoTheme theme) {
+		this.theme = theme;
+	}
 }

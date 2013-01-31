@@ -13,5 +13,5 @@ import javax.servlet.jsp.PageContext;
  * 
  */
 public interface IExamsMapRenderer {
-    public abstract StringBuilder render(Locale locale, PageContext pageContext);
+	public abstract StringBuilder render(Locale locale, PageContext pageContext);
 }

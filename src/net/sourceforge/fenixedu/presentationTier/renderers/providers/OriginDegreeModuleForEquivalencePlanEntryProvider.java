@@ -12,17 +12,19 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class OriginDegreeModuleForEquivalencePlanEntryProvider implements DataProvider {
 
-    public Object provide(Object source, Object currentValue) {
-	final EquivalencePlanEntryCreator equivalencePlanEntryCreator = (EquivalencePlanEntryCreator) source;
-	final DegreeCurricularPlanEquivalencePlan equivalencePlan = (DegreeCurricularPlanEquivalencePlan) equivalencePlanEntryCreator
-		.getEquivalencePlan();
-	final DegreeCurricularPlan degreeCurricularPlan = equivalencePlan.getSourceDegreeCurricularPlan();
-	final Set<DegreeModule> degreeModules = degreeCurricularPlan.getAllDegreeModules();
-	return degreeModules;
-    }
+	@Override
+	public Object provide(Object source, Object currentValue) {
+		final EquivalencePlanEntryCreator equivalencePlanEntryCreator = (EquivalencePlanEntryCreator) source;
+		final DegreeCurricularPlanEquivalencePlan equivalencePlan =
+				(DegreeCurricularPlanEquivalencePlan) equivalencePlanEntryCreator.getEquivalencePlan();
+		final DegreeCurricularPlan degreeCurricularPlan = equivalencePlan.getSourceDegreeCurricularPlan();
+		final Set<DegreeModule> degreeModules = degreeCurricularPlan.getAllDegreeModules();
+		return degreeModules;
+	}
 
-    public Converter getConverter() {
-	return new DomainObjectKeyConverter();
-    }
+	@Override
+	public Converter getConverter() {
+		return new DomainObjectKeyConverter();
+	}
 
 }

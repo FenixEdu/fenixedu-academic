@@ -5,10 +5,10 @@ import net.sourceforge.fenixedu.presentationTier.renderers.providers.AbstractDom
 
 public class MigrationExecutionYearsProvider extends AbstractDomainObjectProvider {
 
-    @Override
-    public Object provide(Object source, Object current) {
-	return ExecutionYear.readExecutionYears(ExecutionYear.readExecutionYearByName("1980/1981"),
-		ExecutionYear.readCurrentExecutionYear());
-    }
+	@Override
+	public Object provide(Object source, Object current) {
+		return ExecutionYear.readExecutionYears(ExecutionYear.readExecutionYearByName("1980/1981"),
+				ExecutionYear.readCurrentExecutionYear());
+	}
 
 }

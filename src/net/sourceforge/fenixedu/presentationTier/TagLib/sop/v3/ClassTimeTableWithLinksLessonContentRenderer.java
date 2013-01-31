@@ -18,74 +18,75 @@ import net.sourceforge.fenixedu.domain.Site;
  */
 public class ClassTimeTableWithLinksLessonContentRenderer implements LessonSlotContentRenderer {
 
-    private String application;
+	private String application;
 
-    public ClassTimeTableWithLinksLessonContentRenderer(String application) {
-	setApplication(application);
-    }
-
-    public StringBuilder render(String context, LessonSlot lessonSlot) {
-
-	StringBuilder strBuffer = new StringBuilder();
-	InfoShowOccupation showOccupation = lessonSlot.getInfoLessonWrapper().getInfoShowOccupation();
-
-	if (showOccupation instanceof InfoLesson) {
-
-	    InfoLesson lesson = (InfoLesson) showOccupation;
-	    final InfoExecutionCourse infoExecutionCourse = lesson.getInfoShift().getInfoDisciplinaExecucao();
-	    final Site site = infoExecutionCourse.getExecutionCourse().getSite();
-
-	    if (site.isPublic()) {
-		strBuffer
-			.append(pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX);
-	    } else {
-		strBuffer.append(pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestRewriter.HAS_CONTEXT_PREFIX);
-	    }
-	    strBuffer.append("<a href=\"").append(context);
-	    strBuffer.append(site.getReversePath());
-	    strBuffer.append("\">");
-	    strBuffer.append(infoExecutionCourse.getSigla()).append("</a>");
-	    strBuffer.append("&nbsp;").append("&nbsp;(").append(lesson.getInfoShift().getShiftTypesCodePrettyPrint()).append(
-		    ")&nbsp;");
-
-	    if (lesson.getInfoRoomOccupation() != null) {
-		strBuffer.append(lesson.getInfoRoomOccupation().getInfoRoom().getNome());
-	    }
-
-	    return strBuffer;
-
-	} else if (showOccupation instanceof InfoLessonInstance) {
-
-	    InfoLessonInstance lesson = (InfoLessonInstance) showOccupation;
-	    final InfoExecutionCourse infoExecutionCourse = lesson.getInfoShift().getInfoDisciplinaExecucao();
-	    final Site site = infoExecutionCourse.getExecutionCourse().getSite();
-
-	    if (site.isPublic()) {
-		strBuffer
-			.append(pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX);
-	    } else {
-		strBuffer.append(pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestRewriter.HAS_CONTEXT_PREFIX);
-	    }
-	    strBuffer.append("<a href=\"").append(context);
-	    strBuffer.append(infoExecutionCourse.getExecutionCourse().getSite().getReversePath());
-	    strBuffer.append("\">");
-	    strBuffer.append("&nbsp;").append("&nbsp;(").append(lesson.getShiftTypeCodesPrettyPrint()).append(")&nbsp;");
-
-	    if (lesson.getInfoRoomOccupation() != null) {
-		strBuffer.append(lesson.getInfoRoomOccupation().getInfoRoom().getNome());
-	    }
-
-	    return strBuffer;
+	public ClassTimeTableWithLinksLessonContentRenderer(String application) {
+		setApplication(application);
 	}
 
-	return new StringBuilder("");
-    }
+	@Override
+	public StringBuilder render(String context, LessonSlot lessonSlot) {
 
-    public String getApplication() {
-	return application;
-    }
+		StringBuilder strBuffer = new StringBuilder();
+		InfoShowOccupation showOccupation = lessonSlot.getInfoLessonWrapper().getInfoShowOccupation();
 
-    public void setApplication(String application) {
-	this.application = application;
-    }
+		if (showOccupation instanceof InfoLesson) {
+
+			InfoLesson lesson = (InfoLesson) showOccupation;
+			final InfoExecutionCourse infoExecutionCourse = lesson.getInfoShift().getInfoDisciplinaExecucao();
+			final Site site = infoExecutionCourse.getExecutionCourse().getSite();
+
+			if (site.isPublic()) {
+				strBuffer
+						.append(pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX);
+			} else {
+				strBuffer.append(pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestRewriter.HAS_CONTEXT_PREFIX);
+			}
+			strBuffer.append("<a href=\"").append(context);
+			strBuffer.append(site.getReversePath());
+			strBuffer.append("\">");
+			strBuffer.append(infoExecutionCourse.getSigla()).append("</a>");
+			strBuffer.append("&nbsp;").append("&nbsp;(").append(lesson.getInfoShift().getShiftTypesCodePrettyPrint())
+					.append(")&nbsp;");
+
+			if (lesson.getInfoRoomOccupation() != null) {
+				strBuffer.append(lesson.getInfoRoomOccupation().getInfoRoom().getNome());
+			}
+
+			return strBuffer;
+
+		} else if (showOccupation instanceof InfoLessonInstance) {
+
+			InfoLessonInstance lesson = (InfoLessonInstance) showOccupation;
+			final InfoExecutionCourse infoExecutionCourse = lesson.getInfoShift().getInfoDisciplinaExecucao();
+			final Site site = infoExecutionCourse.getExecutionCourse().getSite();
+
+			if (site.isPublic()) {
+				strBuffer
+						.append(pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX);
+			} else {
+				strBuffer.append(pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestRewriter.HAS_CONTEXT_PREFIX);
+			}
+			strBuffer.append("<a href=\"").append(context);
+			strBuffer.append(infoExecutionCourse.getExecutionCourse().getSite().getReversePath());
+			strBuffer.append("\">");
+			strBuffer.append("&nbsp;").append("&nbsp;(").append(lesson.getShiftTypeCodesPrettyPrint()).append(")&nbsp;");
+
+			if (lesson.getInfoRoomOccupation() != null) {
+				strBuffer.append(lesson.getInfoRoomOccupation().getInfoRoom().getNome());
+			}
+
+			return strBuffer;
+		}
+
+		return new StringBuilder("");
+	}
+
+	public String getApplication() {
+		return application;
+	}
+
+	public void setApplication(String application) {
+		this.application = application;
+	}
 }

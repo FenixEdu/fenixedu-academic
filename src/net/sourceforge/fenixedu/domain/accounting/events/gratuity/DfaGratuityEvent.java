@@ -26,96 +26,96 @@ import org.joda.time.YearMonthDay;
 
 public class DfaGratuityEvent extends DfaGratuityEvent_Base {
 
-    protected DfaGratuityEvent() {
-	super();
-    }
-
-    public DfaGratuityEvent(AdministrativeOffice administrativeOffice, Person person,
-	    StudentCurricularPlan studentCurricularPlan, ExecutionYear executionYear) {
-
-	this();
-
-	checkRulesToCreate(studentCurricularPlan);
-	init(administrativeOffice, person, studentCurricularPlan, executionYear);
-    }
-
-    private void checkRulesToCreate(StudentCurricularPlan studentCurricularPlan) {
-	if (studentCurricularPlan.getDegreeType() != DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA) {
-	    throw new DomainException(
-		    "error.net.sourceforge.fenixedu.domain.accounting.events.gratuity.DfaGratuityEvent.invalid.degreeType");
-	}
-    }
-
-    @Override
-    public boolean canApplyExemption(final GratuityExemptionJustificationType justificationType) {
-	if (isCustomEnrolmentModel()) {
-	    return justificationType == GratuityExemptionJustificationType.OTHER_INSTITUTION
-		    || justificationType == GratuityExemptionJustificationType.DIRECTIVE_COUNCIL_AUTHORIZATION;
-
+	protected DfaGratuityEvent() {
+		super();
 	}
 
-	return true;
-    }
+	public DfaGratuityEvent(AdministrativeOffice administrativeOffice, Person person,
+			StudentCurricularPlan studentCurricularPlan, ExecutionYear executionYear) {
 
-    @Override
-    protected List<AccountingEventPaymentCode> updatePaymentCodes() {
-	final EntryDTO entryDTO = calculateEntries(new DateTime()).get(0);
+		this();
 
-	if (!getNonProcessedPaymentCodes().isEmpty()) {
-	    getNonProcessedPaymentCodes().get(0).update(new YearMonthDay(), calculatePaymentCodeEndDate(),
-		    entryDTO.getAmountToPay(), entryDTO.getAmountToPay());
+		checkRulesToCreate(studentCurricularPlan);
+		init(administrativeOffice, person, studentCurricularPlan, executionYear);
 	}
 
-	return getNonProcessedPaymentCodes();
+	private void checkRulesToCreate(StudentCurricularPlan studentCurricularPlan) {
+		if (studentCurricularPlan.getDegreeType() != DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA) {
+			throw new DomainException(
+					"error.net.sourceforge.fenixedu.domain.accounting.events.gratuity.DfaGratuityEvent.invalid.degreeType");
+		}
+	}
 
-    }
+	@Override
+	public boolean canApplyExemption(final GratuityExemptionJustificationType justificationType) {
+		if (isCustomEnrolmentModel()) {
+			return justificationType == GratuityExemptionJustificationType.OTHER_INSTITUTION
+					|| justificationType == GratuityExemptionJustificationType.DIRECTIVE_COUNCIL_AUTHORIZATION;
 
-    @Override
-    protected List<AccountingEventPaymentCode> createPaymentCodes() {
-	final EntryDTO entryDTO = calculateEntries(new DateTime()).get(0);
+		}
 
-	return Collections.singletonList(AccountingEventPaymentCode.create(PaymentCodeType.TOTAL_GRATUITY, new YearMonthDay(),
-		calculatePaymentCodeEndDate(), this, entryDTO.getAmountToPay(), entryDTO.getAmountToPay(), getStudent()
-			.getPerson()));
-    }
+		return true;
+	}
 
-    private Student getStudent() {
-	return getStudentCurricularPlan().getRegistration().getStudent();
-    }
+	@Override
+	protected List<AccountingEventPaymentCode> updatePaymentCodes() {
+		final EntryDTO entryDTO = calculateEntries(new DateTime()).get(0);
 
-    private YearMonthDay calculatePaymentCodeEndDate() {
-	return calculateNextEndDate(new YearMonthDay());
-    }
+		if (!getNonProcessedPaymentCodes().isEmpty()) {
+			getNonProcessedPaymentCodes().get(0).update(new YearMonthDay(), calculatePaymentCodeEndDate(),
+					entryDTO.getAmountToPay(), entryDTO.getAmountToPay());
+		}
 
-    @Override
-    public boolean isExemptionAppliable() {
-	return true;
-    }
+		return getNonProcessedPaymentCodes();
 
-    @Override
-    protected Set<Entry> internalProcess(User responsibleUser, AccountingEventPaymentCode paymentCode, Money amountToPay,
-	    SibsTransactionDetailDTO transactionDetail) {
-	return internalProcess(responsibleUser, Collections
-		.singletonList(new EntryDTO(EntryType.GRATUITY_FEE, this, amountToPay)), transactionDetail);
-    }
+	}
 
-    @Override
-    public boolean isOtherPartiesPaymentsSupported() {
-	return true;
-    }
+	@Override
+	protected List<AccountingEventPaymentCode> createPaymentCodes() {
+		final EntryDTO entryDTO = calculateEntries(new DateTime()).get(0);
 
-    static public Set<AccountingTransaction> readPaymentsFor(final YearMonthDay startDate, final YearMonthDay endDate) {
-	return readPaymentsFor(DfaGratuityEvent.class, startDate, endDate);
+		return Collections.singletonList(AccountingEventPaymentCode.create(PaymentCodeType.TOTAL_GRATUITY, new YearMonthDay(),
+				calculatePaymentCodeEndDate(), this, entryDTO.getAmountToPay(), entryDTO.getAmountToPay(), getStudent()
+						.getPerson()));
+	}
 
-    }
+	private Student getStudent() {
+		return getStudentCurricularPlan().getRegistration().getStudent();
+	}
 
-    @Override
-    public Set<EntryType> getPossibleEntryTypesForDeposit() {
-	return Collections.singleton(EntryType.GRATUITY_FEE);
-    }
-    
-    @Override
-    public boolean isDfaGratuityEvent() {
-	return true;
-    }
+	private YearMonthDay calculatePaymentCodeEndDate() {
+		return calculateNextEndDate(new YearMonthDay());
+	}
+
+	@Override
+	public boolean isExemptionAppliable() {
+		return true;
+	}
+
+	@Override
+	protected Set<Entry> internalProcess(User responsibleUser, AccountingEventPaymentCode paymentCode, Money amountToPay,
+			SibsTransactionDetailDTO transactionDetail) {
+		return internalProcess(responsibleUser,
+				Collections.singletonList(new EntryDTO(EntryType.GRATUITY_FEE, this, amountToPay)), transactionDetail);
+	}
+
+	@Override
+	public boolean isOtherPartiesPaymentsSupported() {
+		return true;
+	}
+
+	static public Set<AccountingTransaction> readPaymentsFor(final YearMonthDay startDate, final YearMonthDay endDate) {
+		return readPaymentsFor(DfaGratuityEvent.class, startDate, endDate);
+
+	}
+
+	@Override
+	public Set<EntryType> getPossibleEntryTypesForDeposit() {
+		return Collections.singleton(EntryType.GRATUITY_FEE);
+	}
+
+	@Override
+	public boolean isDfaGratuityEvent() {
+		return true;
+	}
 }

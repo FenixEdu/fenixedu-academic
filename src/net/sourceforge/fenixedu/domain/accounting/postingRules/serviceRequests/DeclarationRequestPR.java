@@ -9,21 +9,21 @@ import org.joda.time.DateTime;
 
 public class DeclarationRequestPR extends DeclarationRequestPR_Base {
 
-    protected DeclarationRequestPR() {
-	super();
-    }
+	protected DeclarationRequestPR() {
+		super();
+	}
 
-    public DeclarationRequestPR(EntryType entryType, EventType eventType, DateTime startDate, DateTime endDate,
-	    ServiceAgreementTemplate serviceAgreementTemplate, Money fixedAmount) {
-	init(entryType, eventType, startDate, endDate, serviceAgreementTemplate, fixedAmount);
-    }
+	public DeclarationRequestPR(EntryType entryType, EventType eventType, DateTime startDate, DateTime endDate,
+			ServiceAgreementTemplate serviceAgreementTemplate, Money fixedAmount) {
+		init(entryType, eventType, startDate, endDate, serviceAgreementTemplate, fixedAmount);
+	}
 
-    @Override
-    public DeclarationRequestPR edit(final Money fixedAmount) {
-	deactivate();
-	return new DeclarationRequestPR(getEntryType(), getEventType(), new DateTime().minus(1000), null,
-		getServiceAgreementTemplate(), fixedAmount);
+	@Override
+	public DeclarationRequestPR edit(final Money fixedAmount) {
+		deactivate();
+		return new DeclarationRequestPR(getEntryType(), getEventType(), new DateTime().minus(1000), null,
+				getServiceAgreementTemplate(), fixedAmount);
 
-    }
+	}
 
 }

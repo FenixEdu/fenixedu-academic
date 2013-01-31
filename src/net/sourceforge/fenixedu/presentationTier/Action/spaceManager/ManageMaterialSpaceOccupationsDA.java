@@ -25,97 +25,102 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(module = "SpaceManager", path = "/manageMaterialSpaceOccupations", scope = "session", parameter = "method")
 @Forwards(value = {
-	@Forward(name = "prepareEditMaterialSpaceOccupation", path = "/spaceManager/editMaterialSpaceOccupation.jsp"),
-	@Forward(name = "showMaterialSpaceOccupations", path = "/spaceManager/manageMaterialSpaceOccupations.jsp", tileProperties = @Tile(title = "private.spacemanagement.searchspaces")),
-	@Forward(name = "insertMaterialOccupation", path = "/spaceManager/insertNewMaterialOccupation.jsp"),
-	@Forward(name = "chooseMaterialType", path = "/spaceManager/insertNewMaterialOccupation.jsp") })
+		@Forward(name = "prepareEditMaterialSpaceOccupation", path = "/spaceManager/editMaterialSpaceOccupation.jsp"),
+		@Forward(
+				name = "showMaterialSpaceOccupations",
+				path = "/spaceManager/manageMaterialSpaceOccupations.jsp",
+				tileProperties = @Tile(title = "private.spacemanagement.searchspaces")),
+		@Forward(name = "insertMaterialOccupation", path = "/spaceManager/insertNewMaterialOccupation.jsp"),
+		@Forward(name = "chooseMaterialType", path = "/spaceManager/insertNewMaterialOccupation.jsp") })
 public class ManageMaterialSpaceOccupationsDA extends FenixDispatchAction {
 
-    public ActionForward showMaterialSpaceOccupations(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
+	public ActionForward showMaterialSpaceOccupations(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) {
 
-	readAndSetSpaceInformation(request);
-	return mapping.findForward("showMaterialSpaceOccupations");
-    }
-
-    public ActionForward prepareInsertMaterialOccupation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-	IViewState viewState = RenderUtils.getViewState("materialTypeWithMaterial");
-	if (viewState != null) {
-	    MaterialTypeBean materialTypeBean = (MaterialTypeBean) viewState.getMetaObject().getObject();
-	    if (materialTypeBean.getMaterialType() == null) {
-		addActionMessage(request, "error.material.not.found");
-	    }
-	    request.setAttribute("prepare-search-was-called", Boolean.TRUE);
+		readAndSetSpaceInformation(request);
+		return mapping.findForward("showMaterialSpaceOccupations");
 	}
-	viewState = (viewState == null) ? RenderUtils.getViewState("materialTypeToCreate") : viewState;
-	return setMaterialTypeBean(mapping, request, viewState);
-    }
 
-    public ActionForward prepareChooseMaterial(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-
-	IViewState viewState = RenderUtils.getViewState();
-	RenderUtils.invalidateViewState();
-	return setMaterialTypeBean(mapping, request, viewState);
-    }
-
-    public ActionForward prepareEditMaterialSpaceOccupation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-
-	readAndSetSpaceInformation(request);
-	MaterialSpaceOccupation materialOccupation = getMaterialOccupationFromParameter(request);
-	request.setAttribute("materialSpaceOccupation", materialOccupation);
-	return mapping.findForward("prepareEditMaterialSpaceOccupation");
-    }
-
-    public ActionForward deleteMaterialSpaceOccupation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-
-	MaterialSpaceOccupation materialOccupation = getMaterialOccupationFromParameter(request);
-
-	try {
-	    DeleteMaterialSpaceOccupation.run(materialOccupation);
-	} catch (DomainException e) {
-	    addActionMessage(request, e.getMessage());
+	public ActionForward prepareInsertMaterialOccupation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+		IViewState viewState = RenderUtils.getViewState("materialTypeWithMaterial");
+		if (viewState != null) {
+			MaterialTypeBean materialTypeBean = (MaterialTypeBean) viewState.getMetaObject().getObject();
+			if (materialTypeBean.getMaterialType() == null) {
+				addActionMessage(request, "error.material.not.found");
+			}
+			request.setAttribute("prepare-search-was-called", Boolean.TRUE);
+		}
+		viewState = (viewState == null) ? RenderUtils.getViewState("materialTypeToCreate") : viewState;
+		return setMaterialTypeBean(mapping, request, viewState);
 	}
-	readAndSetSpaceInformation(request);
-	return mapping.findForward("showMaterialSpaceOccupations");
-    }
 
-    public ActionForward prepareChooseMaterialType(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+	public ActionForward prepareChooseMaterial(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
-	SpaceInformation spaceInformation = readAndSetSpaceInformation(request);
-	request.setAttribute("materialTypeBean", new MaterialTypeBean(spaceInformation));
-	return mapping.findForward("insertMaterialOccupation");
-    }
+		IViewState viewState = RenderUtils.getViewState();
+		RenderUtils.invalidateViewState();
+		return setMaterialTypeBean(mapping, request, viewState);
+	}
 
-    private ActionForward setMaterialTypeBean(ActionMapping mapping, HttpServletRequest request, IViewState viewState) {
-	final MaterialTypeBean materialTypeBean = (MaterialTypeBean) viewState.getMetaObject().getObject();
-	request.setAttribute("materialTypeBean", materialTypeBean);
-	return mapping.findForward("insertMaterialOccupation");
-    }
+	public ActionForward prepareEditMaterialSpaceOccupation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
-    private SpaceInformation readAndSetSpaceInformation(HttpServletRequest request) {
-	final SpaceInformation spaceInformation = getSpaceInformationFromParameter(request);
-	request.setAttribute("selectedSpaceInformation", spaceInformation);
-	request.setAttribute("selectedSpace", spaceInformation.getSpace());
-	return spaceInformation;
-    }
+		readAndSetSpaceInformation(request);
+		MaterialSpaceOccupation materialOccupation = getMaterialOccupationFromParameter(request);
+		request.setAttribute("materialSpaceOccupation", materialOccupation);
+		return mapping.findForward("prepareEditMaterialSpaceOccupation");
+	}
 
-    private SpaceInformation getSpaceInformationFromParameter(final HttpServletRequest request) {
-	final String spaceInformationIDString = request.getParameterMap().containsKey("spaceInformationID") ? request
-		.getParameter("spaceInformationID") : (String) request.getAttribute("spaceInformationID");
-	final Integer spaceInformationID = spaceInformationIDString != null ? Integer.valueOf(spaceInformationIDString) : null;
-	return rootDomainObject.readSpaceInformationByOID(spaceInformationID);
-    }
+	public ActionForward deleteMaterialSpaceOccupation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
-    private MaterialSpaceOccupation getMaterialOccupationFromParameter(final HttpServletRequest request) {
-	final String materialOccupationIDString = request.getParameterMap().containsKey("materialOccupationID") ? request
-		.getParameter("materialOccupationID") : (String) request.getAttribute("materialOccupationID");
-	final Integer materialOccupationID = materialOccupationIDString != null ? Integer.valueOf(materialOccupationIDString)
-		: null;
-	return (MaterialSpaceOccupation) rootDomainObject.readResourceAllocationByOID(materialOccupationID);
-    }
+		MaterialSpaceOccupation materialOccupation = getMaterialOccupationFromParameter(request);
+
+		try {
+			DeleteMaterialSpaceOccupation.run(materialOccupation);
+		} catch (DomainException e) {
+			addActionMessage(request, e.getMessage());
+		}
+		readAndSetSpaceInformation(request);
+		return mapping.findForward("showMaterialSpaceOccupations");
+	}
+
+	public ActionForward prepareChooseMaterialType(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+
+		SpaceInformation spaceInformation = readAndSetSpaceInformation(request);
+		request.setAttribute("materialTypeBean", new MaterialTypeBean(spaceInformation));
+		return mapping.findForward("insertMaterialOccupation");
+	}
+
+	private ActionForward setMaterialTypeBean(ActionMapping mapping, HttpServletRequest request, IViewState viewState) {
+		final MaterialTypeBean materialTypeBean = (MaterialTypeBean) viewState.getMetaObject().getObject();
+		request.setAttribute("materialTypeBean", materialTypeBean);
+		return mapping.findForward("insertMaterialOccupation");
+	}
+
+	private SpaceInformation readAndSetSpaceInformation(HttpServletRequest request) {
+		final SpaceInformation spaceInformation = getSpaceInformationFromParameter(request);
+		request.setAttribute("selectedSpaceInformation", spaceInformation);
+		request.setAttribute("selectedSpace", spaceInformation.getSpace());
+		return spaceInformation;
+	}
+
+	private SpaceInformation getSpaceInformationFromParameter(final HttpServletRequest request) {
+		final String spaceInformationIDString =
+				request.getParameterMap().containsKey("spaceInformationID") ? request.getParameter("spaceInformationID") : (String) request
+						.getAttribute("spaceInformationID");
+		final Integer spaceInformationID = spaceInformationIDString != null ? Integer.valueOf(spaceInformationIDString) : null;
+		return rootDomainObject.readSpaceInformationByOID(spaceInformationID);
+	}
+
+	private MaterialSpaceOccupation getMaterialOccupationFromParameter(final HttpServletRequest request) {
+		final String materialOccupationIDString =
+				request.getParameterMap().containsKey("materialOccupationID") ? request.getParameter("materialOccupationID") : (String) request
+						.getAttribute("materialOccupationID");
+		final Integer materialOccupationID =
+				materialOccupationIDString != null ? Integer.valueOf(materialOccupationIDString) : null;
+		return (MaterialSpaceOccupation) rootDomainObject.readResourceAllocationByOID(materialOccupationID);
+	}
 }

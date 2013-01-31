@@ -16,55 +16,55 @@ import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public abstract class UnitSiteMenuRenderer extends SiteMenuRenderer {
 
-    @Override
-    protected Collection<MenuEntry> getEntries(Object object) {
-	UnitSite site = (UnitSite) getSite(object);
-	Container container = getTargetSection(site);
-	List<MenuEntry> defaultEntries = getDefaultEntries(site);
-	if (container != null) {
-	    defaultEntries.addAll(container.getMenu());
-	}
-	return defaultEntries;
-    }
-
-    protected List<MenuEntry> getDefaultEntries(Site site) {
-	return new ArrayList<MenuEntry>(site.getTemplate().getOrderedChildrenNodes());
-    }
-
-    protected Section getTargetSection(Site site) {
-	MultiLanguageString name = getTargetSectionName();
-
-	for (Section section : site.getTopLevelSections()) {
-	    if (equalInAnyLanguage(section.getName(), name)) {
-		return section;
-	    }
+	@Override
+	protected Collection<MenuEntry> getEntries(Object object) {
+		UnitSite site = (UnitSite) getSite(object);
+		Container container = getTargetSection(site);
+		List<MenuEntry> defaultEntries = getDefaultEntries(site);
+		if (container != null) {
+			defaultEntries.addAll(container.getMenu());
+		}
+		return defaultEntries;
 	}
 
-	return null;
-    }
+	protected List<MenuEntry> getDefaultEntries(Site site) {
+		return new ArrayList<MenuEntry>(site.getTemplate().getOrderedChildrenNodes());
+	}
 
-    protected SortedSet<Section> getTargetSubSections(Section section) {
-	return section.getOrderedSubSections();
-    }
+	protected Section getTargetSection(Site site) {
+		MultiLanguageString name = getTargetSectionName();
 
-    protected MultiLanguageString i18n(String pt, String en) {
-	MultiLanguageString mls = new MultiLanguageString();
-	mls.setContent(Language.pt, pt);
-	mls.setContent(Language.en, en);
+		for (Section section : site.getTopLevelSections()) {
+			if (equalInAnyLanguage(section.getName(), name)) {
+				return section;
+			}
+		}
 
-	return mls;
-    }
+		return null;
+	}
 
-    protected abstract List<Section> getBaseSections(Site site);
+	protected SortedSet<Section> getTargetSubSections(Section section) {
+		return section.getOrderedSubSections();
+	}
 
-    protected abstract MultiLanguageString getTargetSectionName();
+	protected MultiLanguageString i18n(String pt, String en) {
+		MultiLanguageString mls = new MultiLanguageString();
+		mls.setContent(Language.pt, pt);
+		mls.setContent(Language.en, en);
 
-    protected boolean equalInAnyLanguage(MultiLanguageString target, MultiLanguageString sub) {
-	return target.equalInAnyLanguage(sub);
-    }
+		return mls;
+	}
 
-    protected boolean isTemplatedContent(Site site, Content content) {
-	return site.getTemplate().getChildrenAsContent().contains(content);
-    }
+	protected abstract List<Section> getBaseSections(Site site);
+
+	protected abstract MultiLanguageString getTargetSectionName();
+
+	protected boolean equalInAnyLanguage(MultiLanguageString target, MultiLanguageString sub) {
+		return target.equalInAnyLanguage(sub);
+	}
+
+	protected boolean isTemplatedContent(Site site, Content content) {
+		return site.getTemplate().getChildrenAsContent().contains(content);
+	}
 
 }

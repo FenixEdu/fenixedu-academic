@@ -44,179 +44,182 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
  */
 public abstract class RequestUtils {
 
-    public static final InfoExecutionCourse getExecutionCourseBySigla(HttpServletRequest request,
-	    String infoExecutionCourseInitials) throws Exception {
+	public static final InfoExecutionCourse getExecutionCourseBySigla(HttpServletRequest request,
+			String infoExecutionCourseInitials) throws Exception {
 
-	AcademicInterval academicInterval = AcademicInterval.getAcademicIntervalFromResumedString((String) request
-		.getAttribute(PresentationConstants.ACADEMIC_INTERVAL));
+		AcademicInterval academicInterval =
+				AcademicInterval.getAcademicIntervalFromResumedString((String) request
+						.getAttribute(PresentationConstants.ACADEMIC_INTERVAL));
 
-	final ExecutionCourse executionCourse = ExecutionCourse.getExecutionCourseByInitials(academicInterval,
-		infoExecutionCourseInitials);
-	if (executionCourse != null) {
-	    return InfoExecutionCourse.newInfoFromDomain(executionCourse);
+		final ExecutionCourse executionCourse =
+				ExecutionCourse.getExecutionCourseByInitials(academicInterval, infoExecutionCourseInitials);
+		if (executionCourse != null) {
+			return InfoExecutionCourse.newInfoFromDomain(executionCourse);
+		}
+
+		throw new IllegalArgumentException("Not find executionCourse!");
 	}
 
-	throw new IllegalArgumentException("Not find executionCourse!");
-    }
+	public static final InfoExecutionCourse getExecutionCourseFromRequest(HttpServletRequest request)
+			throws FenixActionException, FenixFilterException, FenixServiceException {
+		InfoExecutionCourse infoExecutionCourse = null;
+		InfoExecutionPeriod infoExecutionPeriod = getExecutionPeriodFromRequest(request);
+		String code = request.getParameter("exeCode");
 
-    public static final InfoExecutionCourse getExecutionCourseFromRequest(HttpServletRequest request)
-	    throws FenixActionException, FenixFilterException, FenixServiceException {
-	InfoExecutionCourse infoExecutionCourse = null;
-	InfoExecutionPeriod infoExecutionPeriod = getExecutionPeriodFromRequest(request);
-	String code = request.getParameter("exeCode");
-
-	infoExecutionCourse = (InfoExecutionCourse) ReadExecutionCourse.run(infoExecutionPeriod, code);
-	return infoExecutionCourse;
-    }
-
-    public static final InfoExecutionYear getExecutionYearFromRequest(HttpServletRequest request) throws FenixActionException,
-	    FenixFilterException, FenixServiceException {
-	InfoExecutionYear infoExecutionYear = null;
-	String year = (String) request.getAttribute("eYName");
-	if (year == null) {
-	    year = request.getParameter("eYName");
+		infoExecutionCourse = (InfoExecutionCourse) ReadExecutionCourse.run(infoExecutionPeriod, code);
+		return infoExecutionCourse;
 	}
 
-	if (year != null) {
+	public static final InfoExecutionYear getExecutionYearFromRequest(HttpServletRequest request) throws FenixActionException,
+			FenixFilterException, FenixServiceException {
+		InfoExecutionYear infoExecutionYear = null;
+		String year = (String) request.getAttribute("eYName");
+		if (year == null) {
+			year = request.getParameter("eYName");
+		}
 
-	    infoExecutionYear = ReadExecutionYear.run(year);
-	}
-	return infoExecutionYear;
-    }
+		if (year != null) {
 
-    public static final InfoExecutionPeriod getExecutionPeriodFromRequest(HttpServletRequest request)
-	    throws FenixActionException, FenixFilterException {
-	InfoExecutionPeriod infoExecutionPeriod = null;
-	InfoExecutionYear infoExecutionYear;
-	try {
-	    infoExecutionYear = getExecutionYearFromRequest(request);
-	} catch (FenixServiceException e) {
-	    throw new FenixActionException(e);
-	}
-	String name = (String) request.getAttribute("ePName");
-	if (name == null) {
-	    name = request.getParameter("ePName");
+			infoExecutionYear = ReadExecutionYear.run(year);
+		}
+		return infoExecutionYear;
 	}
 
-	if (name != null & infoExecutionYear != null) {
+	public static final InfoExecutionPeriod getExecutionPeriodFromRequest(HttpServletRequest request)
+			throws FenixActionException, FenixFilterException {
+		InfoExecutionPeriod infoExecutionPeriod = null;
+		InfoExecutionYear infoExecutionYear;
+		try {
+			infoExecutionYear = getExecutionYearFromRequest(request);
+		} catch (FenixServiceException e) {
+			throw new FenixActionException(e);
+		}
+		String name = (String) request.getAttribute("ePName");
+		if (name == null) {
+			name = request.getParameter("ePName");
+		}
 
-	    infoExecutionPeriod = ReadExecutionPeriod.run(name, infoExecutionYear);
-	}
-	return infoExecutionPeriod;
-    }
+		if (name != null & infoExecutionYear != null) {
 
-    public static final InfoSite getSiteFromRequest(HttpServletRequest request) throws FenixActionException, FenixFilterException {
-	InfoSite infoSite = null;
-
-	try {
-	    InfoExecutionCourse infoExecutionCourse = getExecutionCourseFromRequest(request);
-
-	    infoSite = ReadSite.run(infoExecutionCourse);
-
-	} catch (FenixServiceException e) {
-	    throw new FenixActionException(e);
-	}
-
-	return infoSite;
-    }
-
-    public static final InfoExecutionDegree getExecutionDegreeFromRequest(HttpServletRequest request,
-	    InfoExecutionYear infoExecutionYear) throws FenixActionException, FenixFilterException {
-
-	InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) request.getAttribute("exeDegree");
-	if (infoExecutionDegree != null) {
-	    return infoExecutionDegree;
+			infoExecutionPeriod = ReadExecutionPeriod.run(name, infoExecutionYear);
+		}
+		return infoExecutionPeriod;
 	}
 
-	String degreeInitials = (String) request.getAttribute("degreeInitials");
-	String nameDegreeCurricularPlan = (String) request.getAttribute("nameDegreeCurricularPlan");
+	public static final InfoSite getSiteFromRequest(HttpServletRequest request) throws FenixActionException, FenixFilterException {
+		InfoSite infoSite = null;
 
-	if (degreeInitials == null) {
-	    degreeInitials = request.getParameter("degreeInitials");
-	}
-	if (nameDegreeCurricularPlan == null) {
-	    nameDegreeCurricularPlan = request.getParameter("nameDegreeCurricularPlan");
-	}
+		try {
+			InfoExecutionCourse infoExecutionCourse = getExecutionCourseFromRequest(request);
 
-	infoExecutionDegree = ReadExecutionDegreesByExecutionYearAndDegreeInitials.run(infoExecutionYear, degreeInitials,
-		nameDegreeCurricularPlan);
+			infoSite = ReadSite.run(infoExecutionCourse);
 
-	return infoExecutionDegree;
-    }
+		} catch (FenixServiceException e) {
+			throw new FenixActionException(e);
+		}
 
-    public static final void setSiteFirstPageToRequest(HttpServletRequest request, InfoSite infoSite) {
-	if (infoSite != null) {
-	    request.setAttribute("siteMail", infoSite.getMail());
-	    request.setAttribute("altSite", infoSite.getAlternativeSite());
-	    request.setAttribute("initStat", infoSite.getInitialStatement());
-	    request.setAttribute("intro", infoSite.getIntroduction());
-
-	}
-    }
-
-    public static final void setExecutionCourseToRequest(HttpServletRequest request, InfoExecutionCourse infoExecutionCourse) {
-	if (infoExecutionCourse != null) {
-	    request.setAttribute("exeName", infoExecutionCourse.getNome());
-	    request.setAttribute("exeCode", infoExecutionCourse.getSigla());
-	    request.setAttribute("ePName", infoExecutionCourse.getInfoExecutionPeriod().getName());
-	    request.setAttribute("eYName", infoExecutionCourse.getInfoExecutionPeriod().getInfoExecutionYear().getYear());
-
-	}
-    }
-
-    public static final void setExecutionPeriodToRequest(HttpServletRequest request, InfoExecutionPeriod infoExecutionPeriod) {
-	if (infoExecutionPeriod != null) {
-
-	    request.setAttribute("ePName", infoExecutionPeriod.getName());
-	    request.setAttribute("eYName", infoExecutionPeriod.getInfoExecutionYear().getYear());
-
-	}
-    }
-
-    public static final void setExecutionDegreeToRequest(HttpServletRequest request, InfoExecutionDegree executionDegree) {
-	if (executionDegree != null) {
-	    request.setAttribute("exeDegree", executionDegree);
-	    request.setAttribute("nameDegreeCurricularPlan", executionDegree.getInfoDegreeCurricularPlan().getName());
-	    if (executionDegree.getInfoDegreeCurricularPlan().getInfoDegree() != null)
-		request.setAttribute("degreeInitials", executionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getSigla());
-	    request.setAttribute("degreeCurricularPlanID", executionDegree.getInfoDegreeCurricularPlan().getIdInternal());
-	    request.setAttribute("executionDegree", RootDomainObject.getInstance().readExecutionDegreeByOID(
-		    executionDegree.getIdInternal()));
+		return infoSite;
 	}
 
-    }
+	public static final InfoExecutionDegree getExecutionDegreeFromRequest(HttpServletRequest request,
+			InfoExecutionYear infoExecutionYear) throws FenixActionException, FenixFilterException {
 
-    public static final void keepExecutionPeriodInRequest(HttpServletRequest request) {
-	request.setAttribute("ePName", request.getParameter("ePName"));
-	request.setAttribute("eYName", request.getParameter("eYName"));
-    }
+		InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) request.getAttribute("exeDegree");
+		if (infoExecutionDegree != null) {
+			return infoExecutionDegree;
+		}
 
-    public static final InfoExecutionPeriod setExecutionContext(HttpServletRequest request) throws FenixActionException,
-	    FenixFilterException {
+		String degreeInitials = (String) request.getAttribute("degreeInitials");
+		String nameDegreeCurricularPlan = (String) request.getAttribute("nameDegreeCurricularPlan");
 
-	IUserView userView = UserView.getUser();
+		if (degreeInitials == null) {
+			degreeInitials = request.getParameter("degreeInitials");
+		}
+		if (nameDegreeCurricularPlan == null) {
+			nameDegreeCurricularPlan = request.getParameter("nameDegreeCurricularPlan");
+		}
 
-	// Read executionPeriod from request
-	InfoExecutionPeriod infoExecutionPeriod = RequestUtils.getExecutionPeriodFromRequest(request);
+		infoExecutionDegree =
+				ReadExecutionDegreesByExecutionYearAndDegreeInitials.run(infoExecutionYear, degreeInitials,
+						nameDegreeCurricularPlan);
 
-	// If executionPeriod not in request nor in DB, read current
-	if (infoExecutionPeriod == null) {
-	    userView = UserView.getUser();
-	    infoExecutionPeriod = ReadCurrentExecutionPeriod.run();
+		return infoExecutionDegree;
 	}
-	return infoExecutionPeriod;
-    }
 
-    public static void setLessonTypes(HttpServletRequest request) {
-	final List<LabelValueBean> tiposAula = new ArrayList<LabelValueBean>();
-	final ResourceBundle bundle = ResourceBundle.getBundle("resources.EnumerationResources", Language.getLocale());
-	for (final ShiftType shiftType : ShiftType.values()) {
-	    tiposAula.add(createLabelValueBean(bundle, shiftType));
+	public static final void setSiteFirstPageToRequest(HttpServletRequest request, InfoSite infoSite) {
+		if (infoSite != null) {
+			request.setAttribute("siteMail", infoSite.getMail());
+			request.setAttribute("altSite", infoSite.getAlternativeSite());
+			request.setAttribute("initStat", infoSite.getInitialStatement());
+			request.setAttribute("intro", infoSite.getIntroduction());
+
+		}
 	}
-	request.setAttribute("tiposAula", tiposAula);
-    }
 
-    public static LabelValueBean createLabelValueBean(final ResourceBundle resourceBundle, final ShiftType shiftType) {
-	return new LabelValueBean(resourceBundle.getString(shiftType.getName()), shiftType.name());
-    }
+	public static final void setExecutionCourseToRequest(HttpServletRequest request, InfoExecutionCourse infoExecutionCourse) {
+		if (infoExecutionCourse != null) {
+			request.setAttribute("exeName", infoExecutionCourse.getNome());
+			request.setAttribute("exeCode", infoExecutionCourse.getSigla());
+			request.setAttribute("ePName", infoExecutionCourse.getInfoExecutionPeriod().getName());
+			request.setAttribute("eYName", infoExecutionCourse.getInfoExecutionPeriod().getInfoExecutionYear().getYear());
+
+		}
+	}
+
+	public static final void setExecutionPeriodToRequest(HttpServletRequest request, InfoExecutionPeriod infoExecutionPeriod) {
+		if (infoExecutionPeriod != null) {
+
+			request.setAttribute("ePName", infoExecutionPeriod.getName());
+			request.setAttribute("eYName", infoExecutionPeriod.getInfoExecutionYear().getYear());
+
+		}
+	}
+
+	public static final void setExecutionDegreeToRequest(HttpServletRequest request, InfoExecutionDegree executionDegree) {
+		if (executionDegree != null) {
+			request.setAttribute("exeDegree", executionDegree);
+			request.setAttribute("nameDegreeCurricularPlan", executionDegree.getInfoDegreeCurricularPlan().getName());
+			if (executionDegree.getInfoDegreeCurricularPlan().getInfoDegree() != null) {
+				request.setAttribute("degreeInitials", executionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getSigla());
+			}
+			request.setAttribute("degreeCurricularPlanID", executionDegree.getInfoDegreeCurricularPlan().getIdInternal());
+			request.setAttribute("executionDegree",
+					RootDomainObject.getInstance().readExecutionDegreeByOID(executionDegree.getIdInternal()));
+		}
+
+	}
+
+	public static final void keepExecutionPeriodInRequest(HttpServletRequest request) {
+		request.setAttribute("ePName", request.getParameter("ePName"));
+		request.setAttribute("eYName", request.getParameter("eYName"));
+	}
+
+	public static final InfoExecutionPeriod setExecutionContext(HttpServletRequest request) throws FenixActionException,
+			FenixFilterException {
+
+		IUserView userView = UserView.getUser();
+
+		// Read executionPeriod from request
+		InfoExecutionPeriod infoExecutionPeriod = RequestUtils.getExecutionPeriodFromRequest(request);
+
+		// If executionPeriod not in request nor in DB, read current
+		if (infoExecutionPeriod == null) {
+			userView = UserView.getUser();
+			infoExecutionPeriod = ReadCurrentExecutionPeriod.run();
+		}
+		return infoExecutionPeriod;
+	}
+
+	public static void setLessonTypes(HttpServletRequest request) {
+		final List<LabelValueBean> tiposAula = new ArrayList<LabelValueBean>();
+		final ResourceBundle bundle = ResourceBundle.getBundle("resources.EnumerationResources", Language.getLocale());
+		for (final ShiftType shiftType : ShiftType.values()) {
+			tiposAula.add(createLabelValueBean(bundle, shiftType));
+		}
+		request.setAttribute("tiposAula", tiposAula);
+	}
+
+	public static LabelValueBean createLabelValueBean(final ResourceBundle resourceBundle, final ShiftType shiftType) {
+		return new LabelValueBean(resourceBundle.getString(shiftType.getName()), shiftType.name());
+	}
 }

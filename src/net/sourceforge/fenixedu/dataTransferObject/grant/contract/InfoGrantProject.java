@@ -11,45 +11,45 @@ import net.sourceforge.fenixedu.domain.grant.contract.GrantProject;
  */
 public class InfoGrantProject extends InfoGrantPaymentEntity {
 
-    private InfoGrantCostCenter infoGrantCostCenter;
+	private InfoGrantCostCenter infoGrantCostCenter;
 
-    /**
-     * @return Returns the infoGrantCostCenter.
-     */
-    public InfoGrantCostCenter getInfoGrantCostCenter() {
-	return infoGrantCostCenter;
-    }
-
-    /**
-     * @param infoGrantCostCenter
-     *            The infoGrantCostCenter to set.
-     */
-    public void setInfoGrantCostCenter(InfoGrantCostCenter infoGrantCostCenter) {
-	this.infoGrantCostCenter = infoGrantCostCenter;
-    }
-
-    /**
-     * @param GrantProject
-     */
-    public void copyFromDomain(GrantProject grantProject) {
-	if (grantProject != null) {
-
-	    super.copyFromDomain(grantProject);
-	    setNumber(grantProject.getNumber());
-	    setDesignation(grantProject.getDesignation());
+	/**
+	 * @return Returns the infoGrantCostCenter.
+	 */
+	public InfoGrantCostCenter getInfoGrantCostCenter() {
+		return infoGrantCostCenter;
 	}
-    }
 
-    /**
-     * @param GrantProject
-     * @return
-     */
-    public static InfoGrantProject newInfoFromDomain(GrantProject grantProject) {
-	InfoGrantProject infoGrantProject = null;
-	if (grantProject != null) {
-	    infoGrantProject = new InfoGrantProject();
-	    infoGrantProject.copyFromDomain(grantProject);
+	/**
+	 * @param infoGrantCostCenter
+	 *            The infoGrantCostCenter to set.
+	 */
+	public void setInfoGrantCostCenter(InfoGrantCostCenter infoGrantCostCenter) {
+		this.infoGrantCostCenter = infoGrantCostCenter;
 	}
-	return infoGrantProject;
-    }
+
+	/**
+	 * @param GrantProject
+	 */
+	public void copyFromDomain(GrantProject grantProject) {
+		if (grantProject != null) {
+
+			super.copyFromDomain(grantProject);
+			setNumber(grantProject.getNumber());
+			setDesignation(grantProject.getDesignation());
+		}
+	}
+
+	/**
+	 * @param GrantProject
+	 * @return
+	 */
+	public static InfoGrantProject newInfoFromDomain(GrantProject grantProject) {
+		InfoGrantProject infoGrantProject = null;
+		if (grantProject != null) {
+			infoGrantProject = new InfoGrantProject();
+			infoGrantProject.copyFromDomain(grantProject);
+		}
+		return infoGrantProject;
+	}
 }

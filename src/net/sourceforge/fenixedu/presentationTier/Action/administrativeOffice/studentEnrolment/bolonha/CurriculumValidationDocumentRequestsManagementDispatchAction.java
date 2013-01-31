@@ -32,168 +32,176 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Mapping(path = "/curriculumValidationDocumentRequestsManagement", module = "academicAdministration")
 @Forwards({
-	@Forward(name = "printDocument", path = "/academicAdminOffice/student/curriculumValidation/documentRequests/printDocument.jsp"),
-	@Forward(name = "viewDocuments", path = "/academicAdminOffice/student/curriculumValidation/documentRequests/viewDocuments.jsp"),
-	@Forward(name = "notValidDocument", path = "/academicAdminOffice/student/curriculumValidation/documentRequests/notValidDocument.jsp") })
+		@Forward(
+				name = "printDocument",
+				path = "/academicAdminOffice/student/curriculumValidation/documentRequests/printDocument.jsp"),
+		@Forward(
+				name = "viewDocuments",
+				path = "/academicAdminOffice/student/curriculumValidation/documentRequests/viewDocuments.jsp"),
+		@Forward(
+				name = "notValidDocument",
+				path = "/academicAdminOffice/student/curriculumValidation/documentRequests/notValidDocument.jsp") })
 public class CurriculumValidationDocumentRequestsManagementDispatchAction extends DocumentRequestsManagementDispatchAction {
 
-    @Override
-    public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
+	@Override
+	public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
 
-	StudentCurricularPlan studentCurricularPlan = readStudentCurricularPlan(request);
-	request.setAttribute("studentCurriculumValidationAllowed",
-		studentCurricularPlan.getEvaluationForCurriculumValidationAllowed());
+		StudentCurricularPlan studentCurricularPlan = readStudentCurricularPlan(request);
+		request.setAttribute("studentCurriculumValidationAllowed",
+				studentCurricularPlan.getEvaluationForCurriculumValidationAllowed());
 
-	return super.execute(mapping, actionForm, request, response);
-    }
-
-    public ActionForward listDocuments(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) {
-	StudentCurricularPlan studentCurricularPlan = readStudentCurricularPlan(request);
-
-	Registration registration = studentCurricularPlan.getRegistration();
-	request.setAttribute("registration", registration);
-
-	return mapping.findForward("viewDocuments");
-    }
-
-    public ActionForward preparePrintDocument(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) {
-	Integer dcocumentRequestId = getRequestParameterAsInteger(request, "documentRequestId");
-
-	final IDocumentRequest documentRequest = getDocumentRequest(request);
-
-	if (!(DocumentRequestType.DEGREE_FINALIZATION_CERTIFICATE.equals(documentRequest.getDocumentRequestType()) || DocumentRequestType.DIPLOMA_REQUEST
-		.equals(documentRequest.getDocumentRequestType()))) {
-	    return mapping.findForward("notValidDocument");
+		return super.execute(mapping, actionForm, request, response);
 	}
 
-	String conlusionDate = "";
-	String degreeDescription = "";
-	String graduatedTitle = "";
-	if (DocumentRequestType.DEGREE_FINALIZATION_CERTIFICATE.equals(documentRequest.getDocumentRequestType())) {
-	    AdministrativeOfficeDocument document = AdministrativeOfficeDocument.AdministrativeOfficeDocumentCreator.create(
-		    documentRequest).get(0);
-	    conlusionDate = (String) document.getParameters().get("degreeFinalizationDate");
-	    degreeDescription = (String) document.getParameters().get("degreeDescription");
-	    graduatedTitle = (String) document.getParameters().get("graduateTitle");
-	} else if (DocumentRequestType.DIPLOMA_REQUEST.equals(documentRequest.getDocumentRequestType())) {
-	    AdministrativeOfficeDocument document = AdministrativeOfficeDocument.AdministrativeOfficeDocumentCreator.create(
-		    documentRequest).get(0);
-	    conlusionDate = (String) AdministrativeOfficeDocument.AdministrativeOfficeDocumentCreator.create(documentRequest)
-		    .get(0).getParameters().get("conclusionDate");
-	    degreeDescription = (String) document.getParameters().get("degreeFilteredName");
-	    graduatedTitle = (String) document.getParameters().get("graduateTitle");
+	public ActionForward listDocuments(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) {
+		StudentCurricularPlan studentCurricularPlan = readStudentCurricularPlan(request);
+
+		Registration registration = studentCurricularPlan.getRegistration();
+		request.setAttribute("registration", registration);
+
+		return mapping.findForward("viewDocuments");
 	}
 
-	DocumentFieldsCustomization customization = new DocumentFieldsCustomization();
-	customization.setConclusionDate(conlusionDate);
-	customization.setDegreeDescription(degreeDescription);
-	customization.setGraduatedTitle(graduatedTitle);
+	public ActionForward preparePrintDocument(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) {
+		Integer dcocumentRequestId = getRequestParameterAsInteger(request, "documentRequestId");
 
-	request.setAttribute("documentFieldsCustomization", customization);
-	request.setAttribute("documentRequest", documentRequest);
+		final IDocumentRequest documentRequest = getDocumentRequest(request);
 
-	return mapping.findForward("printDocument");
-    }
+		if (!(DocumentRequestType.DEGREE_FINALIZATION_CERTIFICATE.equals(documentRequest.getDocumentRequestType()) || DocumentRequestType.DIPLOMA_REQUEST
+				.equals(documentRequest.getDocumentRequestType()))) {
+			return mapping.findForward("notValidDocument");
+		}
 
-    @Override
-    public ActionForward printDocument(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws JRException, IOException, FenixFilterException, FenixServiceException {
-	final IDocumentRequest documentRequest = getDocumentRequest(request);
-	try {
-	    final List<AdministrativeOfficeDocument> documents = AdministrativeOfficeDocument.AdministrativeOfficeDocumentCreator
-		    .create(documentRequest);
+		String conlusionDate = "";
+		String degreeDescription = "";
+		String graduatedTitle = "";
+		if (DocumentRequestType.DEGREE_FINALIZATION_CERTIFICATE.equals(documentRequest.getDocumentRequestType())) {
+			AdministrativeOfficeDocument document =
+					AdministrativeOfficeDocument.AdministrativeOfficeDocumentCreator.create(documentRequest).get(0);
+			conlusionDate = (String) document.getParameters().get("degreeFinalizationDate");
+			degreeDescription = (String) document.getParameters().get("degreeDescription");
+			graduatedTitle = (String) document.getParameters().get("graduateTitle");
+		} else if (DocumentRequestType.DIPLOMA_REQUEST.equals(documentRequest.getDocumentRequestType())) {
+			AdministrativeOfficeDocument document =
+					AdministrativeOfficeDocument.AdministrativeOfficeDocumentCreator.create(documentRequest).get(0);
+			conlusionDate =
+					(String) AdministrativeOfficeDocument.AdministrativeOfficeDocumentCreator.create(documentRequest).get(0)
+							.getParameters().get("conclusionDate");
+			degreeDescription = (String) document.getParameters().get("degreeFilteredName");
+			graduatedTitle = (String) document.getParameters().get("graduateTitle");
+		}
 
-	    DocumentFieldsCustomization customization = getRenderedObject("document.fields.customization");
+		DocumentFieldsCustomization customization = new DocumentFieldsCustomization();
+		customization.setConclusionDate(conlusionDate);
+		customization.setDegreeDescription(degreeDescription);
+		customization.setGraduatedTitle(graduatedTitle);
 
-	    if (documentRequest.isRequestForRegistration()) {
-		DocumentPrintRequest.logRequest(customization.getConclusionDate(), customization.getDegreeDescription(),
-			customization.getGraduatedTitle(), (DocumentRequest) documentRequest);
-	    }
+		request.setAttribute("documentFieldsCustomization", customization);
+		request.setAttribute("documentRequest", documentRequest);
 
-	    if (DocumentRequestType.DEGREE_FINALIZATION_CERTIFICATE.equals(documentRequest.getDocumentRequestType())) {
-		documents.iterator().next().getParameters().put("degreeFinalizationDate", customization.getConclusionDate());
-		documents.iterator().next().getParameters().put("degreeDescription", customization.getDegreeDescription());
-		documents.iterator().next().getParameters().put("graduateTitle", customization.getGraduatedTitle());
-	    } else if (DocumentRequestType.DIPLOMA_REQUEST.equals(documentRequest.getDocumentRequestType())) {
-		documents.iterator().next().getParameters().put("conclusionDate", customization.getConclusionDate());
-		documents.iterator().next().getParameters().put("degreeFilteredName", customization.getDegreeDescription());
-		documents.iterator().next().getParameters().put("graduateTitle", customization.getGraduatedTitle());
-	    }
-
-	    final AdministrativeOfficeDocument[] array = {};
-	    byte[] data = ReportsUtils.exportMultipleToPdfAsByteArray(documents.toArray(array));
-
-	    DocumentRequestGeneratedDocument.store(documentRequest, documents.iterator().next().getReportFileName() + ".pdf",
-		    data);
-	    response.setContentLength(data.length);
-	    response.setContentType("application/pdf");
-	    response.addHeader("Content-Disposition", "attachment; filename=" + documents.iterator().next().getReportFileName()
-		    + ".pdf");
-
-	    final ServletOutputStream writer = response.getOutputStream();
-	    writer.write(data);
-	    writer.flush();
-	    writer.close();
-
-	    response.flushBuffer();
-	    return mapping.findForward("");
-	} catch (DomainException e) {
-	    addActionMessage(request, e.getKey());
-	    if (documentRequest.isRequestForRegistration()) {
-		request.setAttribute("registration", ((DocumentRequest) documentRequest).getRegistration());
-	    }
-	    return mapping.findForward("viewRegistrationDetails");
+		return mapping.findForward("printDocument");
 	}
-    }
 
-    private StudentCurricularPlan readStudentCurricularPlan(HttpServletRequest request) {
-	if (request.getAttribute("studentCurricularPlan") != null)
-	    return (StudentCurricularPlan) request.getAttribute("studentCurricularPlan");
+	@Override
+	public ActionForward printDocument(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) throws JRException, IOException, FenixFilterException, FenixServiceException {
+		final IDocumentRequest documentRequest = getDocumentRequest(request);
+		try {
+			final List<AdministrativeOfficeDocument> documents =
+					AdministrativeOfficeDocument.AdministrativeOfficeDocumentCreator.create(documentRequest);
 
-	request.setAttribute("studentCurricularPlan", getDomainObject(request, "studentCurricularPlanId"));
-	return getDomainObject(request, "studentCurricularPlanId");
+			DocumentFieldsCustomization customization = getRenderedObject("document.fields.customization");
 
-    }
+			if (documentRequest.isRequestForRegistration()) {
+				DocumentPrintRequest.logRequest(customization.getConclusionDate(), customization.getDegreeDescription(),
+						customization.getGraduatedTitle(), (DocumentRequest) documentRequest);
+			}
 
-    public static class DocumentFieldsCustomization implements java.io.Serializable {
-	/**
+			if (DocumentRequestType.DEGREE_FINALIZATION_CERTIFICATE.equals(documentRequest.getDocumentRequestType())) {
+				documents.iterator().next().getParameters().put("degreeFinalizationDate", customization.getConclusionDate());
+				documents.iterator().next().getParameters().put("degreeDescription", customization.getDegreeDescription());
+				documents.iterator().next().getParameters().put("graduateTitle", customization.getGraduatedTitle());
+			} else if (DocumentRequestType.DIPLOMA_REQUEST.equals(documentRequest.getDocumentRequestType())) {
+				documents.iterator().next().getParameters().put("conclusionDate", customization.getConclusionDate());
+				documents.iterator().next().getParameters().put("degreeFilteredName", customization.getDegreeDescription());
+				documents.iterator().next().getParameters().put("graduateTitle", customization.getGraduatedTitle());
+			}
+
+			final AdministrativeOfficeDocument[] array = {};
+			byte[] data = ReportsUtils.exportMultipleToPdfAsByteArray(documents.toArray(array));
+
+			DocumentRequestGeneratedDocument.store(documentRequest, documents.iterator().next().getReportFileName() + ".pdf",
+					data);
+			response.setContentLength(data.length);
+			response.setContentType("application/pdf");
+			response.addHeader("Content-Disposition", "attachment; filename=" + documents.iterator().next().getReportFileName()
+					+ ".pdf");
+
+			final ServletOutputStream writer = response.getOutputStream();
+			writer.write(data);
+			writer.flush();
+			writer.close();
+
+			response.flushBuffer();
+			return mapping.findForward("");
+		} catch (DomainException e) {
+			addActionMessage(request, e.getKey());
+			if (documentRequest.isRequestForRegistration()) {
+				request.setAttribute("registration", ((DocumentRequest) documentRequest).getRegistration());
+			}
+			return mapping.findForward("viewRegistrationDetails");
+		}
+	}
+
+	private StudentCurricularPlan readStudentCurricularPlan(HttpServletRequest request) {
+		if (request.getAttribute("studentCurricularPlan") != null) {
+			return (StudentCurricularPlan) request.getAttribute("studentCurricularPlan");
+		}
+
+		request.setAttribute("studentCurricularPlan", getDomainObject(request, "studentCurricularPlanId"));
+		return getDomainObject(request, "studentCurricularPlanId");
+
+	}
+
+	public static class DocumentFieldsCustomization implements java.io.Serializable {
+		/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
+		private static final long serialVersionUID = 1L;
 
-	private String conclusionDate;
-	private String degreeDescription;
-	private String graduatedTitle;
+		private String conclusionDate;
+		private String degreeDescription;
+		private String graduatedTitle;
 
-	public DocumentFieldsCustomization() {
+		public DocumentFieldsCustomization() {
 
+		}
+
+		public String getConclusionDate() {
+			return this.conclusionDate;
+		}
+
+		public void setConclusionDate(final String value) {
+			this.conclusionDate = value;
+		}
+
+		public String getDegreeDescription() {
+			return degreeDescription;
+		}
+
+		public void setDegreeDescription(String degreeDescription) {
+			this.degreeDescription = degreeDescription;
+		}
+
+		public String getGraduatedTitle() {
+			return graduatedTitle;
+		}
+
+		public void setGraduatedTitle(String graduatedTitle) {
+			this.graduatedTitle = graduatedTitle;
+		}
 	}
-
-	public String getConclusionDate() {
-	    return this.conclusionDate;
-	}
-
-	public void setConclusionDate(final String value) {
-	    this.conclusionDate = value;
-	}
-
-	public String getDegreeDescription() {
-	    return degreeDescription;
-	}
-
-	public void setDegreeDescription(String degreeDescription) {
-	    this.degreeDescription = degreeDescription;
-	}
-
-	public String getGraduatedTitle() {
-	    return graduatedTitle;
-	}
-
-	public void setGraduatedTitle(String graduatedTitle) {
-	    this.graduatedTitle = graduatedTitle;
-	}
-    }
 }

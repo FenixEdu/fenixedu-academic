@@ -17,122 +17,122 @@ import net.sourceforge.fenixedu.util.PublicationType;
  * 
  */
 public class InfoPublicationsNumber extends InfoObject {
-    private PublicationType publicationType;
+	private PublicationType publicationType;
 
-    private Date lastModificationDate;
+	private Date lastModificationDate;
 
-    private Integer national;
+	private Integer national;
 
-    private Integer international;
+	private Integer international;
 
-    private InfoTeacher infoTeacher;
+	private InfoTeacher infoTeacher;
 
-    /**
+	/**
      *  
      */
-    public InfoPublicationsNumber() {
-	super();
+	public InfoPublicationsNumber() {
+		super();
 
-    }
-
-    /**
-     * @return Returns the international.
-     */
-    public Integer getInternational() {
-	return international;
-    }
-
-    /**
-     * @param international
-     *            The international to set.
-     */
-    public void setInternational(Integer international) {
-	this.international = international;
-    }
-
-    /**
-     * @return Returns the lastModificationDate.
-     */
-    public Date getLastModificationDate() {
-	return lastModificationDate;
-    }
-
-    /**
-     * @param lastModificationDate
-     *            The lastModificationDate to set.
-     */
-    public void setLastModificationDate(Date lastModificationDate) {
-	this.lastModificationDate = lastModificationDate;
-    }
-
-    /**
-     * @return Returns the national.
-     */
-    public Integer getNational() {
-	return national;
-    }
-
-    /**
-     * @param national
-     *            The national to set.
-     */
-    public void setNational(Integer national) {
-	this.national = national;
-    }
-
-    /**
-     * @return Returns the publicationType.
-     */
-    public PublicationType getPublicationType() {
-	return publicationType;
-    }
-
-    /**
-     * @param publicationType
-     *            The publicationType to set.
-     */
-    public void setPublicationType(PublicationType publicationType) {
-	this.publicationType = publicationType;
-    }
-
-    /**
-     * @return Returns the infoTeacher.
-     */
-    public InfoTeacher getInfoTeacher() {
-	return infoTeacher;
-    }
-
-    /**
-     * @param infoTeacher
-     *            The infoTeacher to set.
-     */
-    public void setInfoTeacher(InfoTeacher infoTeacher) {
-	this.infoTeacher = infoTeacher;
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see
-     * net.sourceforge.fenixedu.dataTransferObject.InfoObject#copyFromDomain
-     * (Dominio.DomainObject)
-     */
-    public void copyFromDomain(PublicationsNumber publicationsNumber) {
-	super.copyFromDomain(publicationsNumber);
-	if (publicationsNumber != null) {
-	    setInternational(publicationsNumber.getInternational());
-	    setNational(publicationsNumber.getNational());
-	    setPublicationType(publicationsNumber.getPublicationType());
-	    setLastModificationDate(publicationsNumber.getLastModificationDate());
 	}
-    }
 
-    public static InfoPublicationsNumber newInfoFromDomain(PublicationsNumber publicationsNumber) {
-	InfoPublicationsNumber infoPublicationsNumber = null;
-	if (publicationsNumber != null) {
-	    infoPublicationsNumber = new InfoPublicationsNumber();
-	    infoPublicationsNumber.copyFromDomain(publicationsNumber);
+	/**
+	 * @return Returns the international.
+	 */
+	public Integer getInternational() {
+		return international;
 	}
-	return infoPublicationsNumber;
-    }
+
+	/**
+	 * @param international
+	 *            The international to set.
+	 */
+	public void setInternational(Integer international) {
+		this.international = international;
+	}
+
+	/**
+	 * @return Returns the lastModificationDate.
+	 */
+	public Date getLastModificationDate() {
+		return lastModificationDate;
+	}
+
+	/**
+	 * @param lastModificationDate
+	 *            The lastModificationDate to set.
+	 */
+	public void setLastModificationDate(Date lastModificationDate) {
+		this.lastModificationDate = lastModificationDate;
+	}
+
+	/**
+	 * @return Returns the national.
+	 */
+	public Integer getNational() {
+		return national;
+	}
+
+	/**
+	 * @param national
+	 *            The national to set.
+	 */
+	public void setNational(Integer national) {
+		this.national = national;
+	}
+
+	/**
+	 * @return Returns the publicationType.
+	 */
+	public PublicationType getPublicationType() {
+		return publicationType;
+	}
+
+	/**
+	 * @param publicationType
+	 *            The publicationType to set.
+	 */
+	public void setPublicationType(PublicationType publicationType) {
+		this.publicationType = publicationType;
+	}
+
+	/**
+	 * @return Returns the infoTeacher.
+	 */
+	public InfoTeacher getInfoTeacher() {
+		return infoTeacher;
+	}
+
+	/**
+	 * @param infoTeacher
+	 *            The infoTeacher to set.
+	 */
+	public void setInfoTeacher(InfoTeacher infoTeacher) {
+		this.infoTeacher = infoTeacher;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * net.sourceforge.fenixedu.dataTransferObject.InfoObject#copyFromDomain
+	 * (Dominio.DomainObject)
+	 */
+	public void copyFromDomain(PublicationsNumber publicationsNumber) {
+		super.copyFromDomain(publicationsNumber);
+		if (publicationsNumber != null) {
+			setInternational(publicationsNumber.getInternational());
+			setNational(publicationsNumber.getNational());
+			setPublicationType(publicationsNumber.getPublicationType());
+			setLastModificationDate(publicationsNumber.getLastModificationDate());
+		}
+	}
+
+	public static InfoPublicationsNumber newInfoFromDomain(PublicationsNumber publicationsNumber) {
+		InfoPublicationsNumber infoPublicationsNumber = null;
+		if (publicationsNumber != null) {
+			infoPublicationsNumber = new InfoPublicationsNumber();
+			infoPublicationsNumber.copyFromDomain(publicationsNumber);
+		}
+		return infoPublicationsNumber;
+	}
 }

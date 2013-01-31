@@ -3,7 +3,6 @@
  */
 package net.sourceforge.fenixedu.webServices;
 
-
 import javax.servlet.ServletRequest;
 
 import net.sourceforge.fenixedu._development.PropertiesManager;
@@ -23,48 +22,50 @@ import org.codehaus.xfire.MessageContext;
  */
 public class PersonManagement implements IPersonManagement {
 
-    private static final String storedPassword;
+	private static final String storedPassword;
 
-    private static final String storedUsername;
+	private static final String storedUsername;
 
-    static {
-	storedUsername = PropertiesManager.getProperty("webServices.PersonManagement.getPersonInformation.username");
-	storedPassword = PropertiesManager.getProperty("webServices.PersonManagement.getPersonInformation.password");
-    }
-
-    public PersonInformationDTO getPersonInformation(String username, String password, String unserUID, MessageContext context)
-	    throws NotAuthorizedException {
-	checkPermissions(username, password, context);
-	User foundUser = User.readUserByUserUId(unserUID);
-	return foundUser == null ? null : new PersonInformationDTO(foundUser.getPerson());
-    }
-
-    public Boolean setPersonInformation(String username, String password, PersonInformationFromUniqueCardDTO personDTO,
-	    MessageContext context) throws NotAuthorizedException {
-
-	checkPermissions(username, password, context);
-
-	personDTO.print();
-
-	try {
-	    UpdatePersonInformationFromCitizenCard.run(personDTO);
-	} catch (DomainException e) {
-	    return Boolean.FALSE;
+	static {
+		storedUsername = PropertiesManager.getProperty("webServices.PersonManagement.getPersonInformation.username");
+		storedPassword = PropertiesManager.getProperty("webServices.PersonManagement.getPersonInformation.password");
 	}
 
-	return Boolean.TRUE;
-    }
-
-    private void checkPermissions(String username, String password, MessageContext context) throws NotAuthorizedException {
-	// check user/pass
-	if (!storedUsername.equals(username) || !storedPassword.equals(password)) {
-	    throw new NotAuthorizedException();
+	@Override
+	public PersonInformationDTO getPersonInformation(String username, String password, String unserUID, MessageContext context)
+			throws NotAuthorizedException {
+		checkPermissions(username, password, context);
+		User foundUser = User.readUserByUserUId(unserUID);
+		return foundUser == null ? null : new PersonInformationDTO(foundUser.getPerson());
 	}
 
-	// check hosts accessing this service
-	if (!HostAccessControl.isAllowed(this, (ServletRequest) context.getProperty("XFireServletController.httpServletRequest"))) {
-	    throw new NotAuthorizedException();
+	@Override
+	public Boolean setPersonInformation(String username, String password, PersonInformationFromUniqueCardDTO personDTO,
+			MessageContext context) throws NotAuthorizedException {
+
+		checkPermissions(username, password, context);
+
+		personDTO.print();
+
+		try {
+			UpdatePersonInformationFromCitizenCard.run(personDTO);
+		} catch (DomainException e) {
+			return Boolean.FALSE;
+		}
+
+		return Boolean.TRUE;
 	}
-    }
+
+	private void checkPermissions(String username, String password, MessageContext context) throws NotAuthorizedException {
+		// check user/pass
+		if (!storedUsername.equals(username) || !storedPassword.equals(password)) {
+			throw new NotAuthorizedException();
+		}
+
+		// check hosts accessing this service
+		if (!HostAccessControl.isAllowed(this, (ServletRequest) context.getProperty("XFireServletController.httpServletRequest"))) {
+			throw new NotAuthorizedException();
+		}
+	}
 
 }

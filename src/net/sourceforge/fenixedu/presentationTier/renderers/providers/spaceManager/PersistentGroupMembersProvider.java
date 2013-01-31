@@ -12,17 +12,19 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class PersistentGroupMembersProvider implements DataProvider {
 
-    public Object provide(Object source, Object currentValue) {
-	List<PersistentGroupMembers> result = new ArrayList<PersistentGroupMembers>();
-	for (PersistentGroupMembers persistentGroupMembers : RootDomainObject.getInstance().getPersistentGroupMembers()) {
-	    if (persistentGroupMembers.getType().equals(PersistentGroupMembersType.SPACE_OCCUPATION)) {
-		result.add(persistentGroupMembers);
-	    }
+	@Override
+	public Object provide(Object source, Object currentValue) {
+		List<PersistentGroupMembers> result = new ArrayList<PersistentGroupMembers>();
+		for (PersistentGroupMembers persistentGroupMembers : RootDomainObject.getInstance().getPersistentGroupMembers()) {
+			if (persistentGroupMembers.getType().equals(PersistentGroupMembersType.SPACE_OCCUPATION)) {
+				result.add(persistentGroupMembers);
+			}
+		}
+		return result;
 	}
-	return result;
-    }
 
-    public Converter getConverter() {
-	return new DomainObjectKeyConverter();
-    }
+	@Override
+	public Converter getConverter() {
+		return new DomainObjectKeyConverter();
+	}
 }

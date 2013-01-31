@@ -11,74 +11,88 @@ import java.io.Serializable;
  * 
  */
 public class MovementReportLine implements Serializable, IMovementReportLine {
-    private String movementId;
+	private String movementId;
 
-    private Integer rubricId;
+	private Integer rubricId;
 
-    private String type;
+	private String type;
 
-    private String date;
+	private String date;
 
-    private String description;
+	private String description;
 
-    private Double value;
+	private Double value;
 
-    private Double tax;
+	private Double tax;
 
-    public String getDate() {
-	return date;
-    }
+	@Override
+	public String getDate() {
+		return date;
+	}
 
-    public void setDate(String date) {
-	this.date = date;
-    }
+	@Override
+	public void setDate(String date) {
+		this.date = date;
+	}
 
-    public String getDescription() {
-	return description;
-    }
+	@Override
+	public String getDescription() {
+		return description;
+	}
 
-    public void setDescription(String description) {
-	this.description = description;
-    }
+	@Override
+	public void setDescription(String description) {
+		this.description = description;
+	}
 
-    public String getMovementId() {
-	return movementId;
-    }
+	@Override
+	public String getMovementId() {
+		return movementId;
+	}
 
-    public void setMovementId(String movementId) {
-	this.movementId = movementId;
-    }
+	@Override
+	public void setMovementId(String movementId) {
+		this.movementId = movementId;
+	}
 
-    public Integer getRubricId() {
-	return rubricId;
-    }
+	@Override
+	public Integer getRubricId() {
+		return rubricId;
+	}
 
-    public void setRubricId(Integer rubricId) {
-	this.rubricId = rubricId;
-    }
+	@Override
+	public void setRubricId(Integer rubricId) {
+		this.rubricId = rubricId;
+	}
 
-    public Double getTax() {
-	return tax;
-    }
+	@Override
+	public Double getTax() {
+		return tax;
+	}
 
-    public void setTax(Double tax) {
-	this.tax = tax;
-    }
+	@Override
+	public void setTax(Double tax) {
+		this.tax = tax;
+	}
 
-    public String getType() {
-	return type;
-    }
+	@Override
+	public String getType() {
+		return type;
+	}
 
-    public void setType(String type) {
-	this.type = type;
-    }
+	@Override
+	public void setType(String type) {
+		this.type = type;
+	}
 
-    public Double getValue() {
-	return value;
-    }
+	@Override
+	public Double getValue() {
+		return value;
+	}
 
-    public void setValue(Double value) {
-	this.value = value;
-    }
+	@Override
+	public void setValue(Double value) {
+		this.value = value;
+	}
 
 }

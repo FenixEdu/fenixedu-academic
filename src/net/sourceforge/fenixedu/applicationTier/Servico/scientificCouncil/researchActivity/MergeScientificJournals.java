@@ -8,22 +8,23 @@ import net.sourceforge.fenixedu.domain.research.activity.ScientificJournalPartic
 
 public class MergeScientificJournals extends FenixService {
 
-    public void run(MergeScientificJournalPageContainerBean mergeScientificJournalPageContainerBean) {
-	ScientificJournal scientificJournal = new ScientificJournal(mergeScientificJournalPageContainerBean.getName(),
-		mergeScientificJournalPageContainerBean.getResearchActivityLocationType());
-	scientificJournal.setIssn(mergeScientificJournalPageContainerBean.getIssn());
-	scientificJournal.setUrl(mergeScientificJournalPageContainerBean.getUrl());
+	public void run(MergeScientificJournalPageContainerBean mergeScientificJournalPageContainerBean) {
+		ScientificJournal scientificJournal =
+				new ScientificJournal(mergeScientificJournalPageContainerBean.getName(),
+						mergeScientificJournalPageContainerBean.getResearchActivityLocationType());
+		scientificJournal.setIssn(mergeScientificJournalPageContainerBean.getIssn());
+		scientificJournal.setUrl(mergeScientificJournalPageContainerBean.getUrl());
 
-	for (DomainObject domainObject : mergeScientificJournalPageContainerBean.getSelectedObjects()) {
-	    ScientificJournal journal = (ScientificJournal) domainObject;
-	    scientificJournal.getJournalIssuesSet().addAll(journal.getJournalIssuesSet());
+		for (DomainObject domainObject : mergeScientificJournalPageContainerBean.getSelectedObjects()) {
+			ScientificJournal journal = (ScientificJournal) domainObject;
+			scientificJournal.getJournalIssuesSet().addAll(journal.getJournalIssuesSet());
 
-	    for (ScientificJournalParticipation scientificJournalParticipation : journal.getParticipationsSet()) {
-		scientificJournal.addUniqueParticipation(scientificJournalParticipation);
-	    }
+			for (ScientificJournalParticipation scientificJournalParticipation : journal.getParticipationsSet()) {
+				scientificJournal.addUniqueParticipation(scientificJournalParticipation);
+			}
 
-	    journal.delete();
+			journal.delete();
+		}
 	}
-    }
 
 }

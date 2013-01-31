@@ -14,104 +14,104 @@ import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.
  * argument. Optionally you can give the id explicitly as a number.
  * 
  * <p>
- * <code>$I(executionCourseId, '{@link net.sourceforge.fenixedu.domain.ExecutionCourse}')</code> <code>$I(1234, '{@link net.sourceforge.fenixedu.domain.ExecutionCourse}')</code>
+ * <code>$I(executionCourseId, '{@link net.sourceforge.fenixedu.domain.ExecutionCourse}')</code>
+ * <code>$I(1234, '{@link net.sourceforge.fenixedu.domain.ExecutionCourse}')</code>
  * 
  * @author cfgi
  */
 public class IdOperator extends OperatorArgument {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    private static final int PARAMETER = 0;
-    private static final int TYPE = 1;
+	private static final int PARAMETER = 0;
+	private static final int TYPE = 1;
 
-    private NumberOperator number;
-    private ClassOperator type;
+	private NumberOperator number;
+	private ClassOperator type;
 
-    public IdOperator(Argument parameter, Argument type) {
-	super();
+	public IdOperator(Argument parameter, Argument type) {
+		super();
 
-	addArgument(parameter);
-	addArgument(type);
-    }
-
-    public IdOperator(DomainObject object) {
-	this(new StaticArgument(object.getIdInternal()), new StaticArgument(ClassOperator.simplify(object.getClass().getName())));
-    }
-
-    @Override
-    protected void checkOperatorArguments() {
-	int size = getArguments().size();
-
-	if (size != 2) {
-	    throw new WrongNumberOfArgumentsException(size, 2, 2);
-	}
-    }
-
-    @Override
-    protected DomainObject execute() {
-	Integer number = getNumber();
-	Class type = getClassType();
-
-	return RootDomainObject.readDomainObjectByOID(type, number);
-    }
-
-    protected Integer getNumber() {
-	Argument argument = argument(PARAMETER);
-	if (argument instanceof StaticArgument) {
-	    StaticArgument staticArgument = (StaticArgument) argument;
-
-	    if (staticArgument.isNumber()) {
-		return staticArgument.getNumber();
-	    }
+		addArgument(parameter);
+		addArgument(type);
 	}
 
-	return (Integer) getNumberOperator().getValue();
-    }
-
-    /**
-     * @return the NumberOperator that will fetch the oid
-     */
-    protected NumberOperator getNumberOperator() {
-	if (this.number == null) {
-	    this.number = new NumberOperator((GroupContextProvider) this, new ParameterOperator((GroupContextProvider) this,
-		    argument(PARAMETER)));
+	public IdOperator(DomainObject object) {
+		this(new StaticArgument(object.getIdInternal()), new StaticArgument(ClassOperator.simplify(object.getClass().getName())));
 	}
 
-	return this.number;
-    }
+	@Override
+	protected void checkOperatorArguments() {
+		int size = getArguments().size();
 
-    @Override
-    public boolean isDynamic() {
-	checkOperatorArguments();
-
-	Argument argument = argument(PARAMETER);
-
-	if (argument instanceof StaticArgument) {
-	    StaticArgument staticArgument = (StaticArgument) argument;
-
-	    if (staticArgument.isString()) {
-		return true;
-	    }
+		if (size != 2) {
+			throw new WrongNumberOfArgumentsException(size, 2, 2);
+		}
 	}
 
-	return argument(TYPE).isDynamic();
-    }
+	@Override
+	protected DomainObject execute() {
+		Integer number = getNumber();
+		Class type = getClassType();
 
-    /**
-     * @return the target domain class type
-     */
-    protected Class getClassType() {
-	if (this.type == null) {
-	    this.type = new ClassOperator((GroupContextProvider) this, argument(TYPE));
+		return RootDomainObject.readDomainObjectByOID(type, number);
 	}
 
-	return (Class) this.type.getValue();
-    }
+	protected Integer getNumber() {
+		Argument argument = argument(PARAMETER);
+		if (argument instanceof StaticArgument) {
+			StaticArgument staticArgument = (StaticArgument) argument;
 
-    @Override
-    public String getMainValueString() {
-	return String.format("$I(%s, %s)", argument(PARAMETER), argument(TYPE));
-    }
+			if (staticArgument.isNumber()) {
+				return staticArgument.getNumber();
+			}
+		}
+
+		return (Integer) getNumberOperator().getValue();
+	}
+
+	/**
+	 * @return the NumberOperator that will fetch the oid
+	 */
+	protected NumberOperator getNumberOperator() {
+		if (this.number == null) {
+			this.number = new NumberOperator((GroupContextProvider) this, new ParameterOperator(this, argument(PARAMETER)));
+		}
+
+		return this.number;
+	}
+
+	@Override
+	public boolean isDynamic() {
+		checkOperatorArguments();
+
+		Argument argument = argument(PARAMETER);
+
+		if (argument instanceof StaticArgument) {
+			StaticArgument staticArgument = (StaticArgument) argument;
+
+			if (staticArgument.isString()) {
+				return true;
+			}
+		}
+
+		return argument(TYPE).isDynamic();
+	}
+
+	/**
+	 * @return the target domain class type
+	 */
+	protected Class getClassType() {
+		if (this.type == null) {
+			this.type = new ClassOperator(this, argument(TYPE));
+		}
+
+		return (Class) this.type.getValue();
+	}
+
+	@Override
+	public String getMainValueString() {
+		return String.format("$I(%s, %s)", argument(PARAMETER), argument(TYPE));
+	}
 
 }

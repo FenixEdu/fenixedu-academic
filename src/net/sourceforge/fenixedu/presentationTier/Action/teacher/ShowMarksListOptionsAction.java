@@ -23,40 +23,42 @@ import org.apache.struts.action.ActionMapping;
  */
 public class ShowMarksListOptionsAction extends FenixDispatchAction {
 
-    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-	    throws FenixActionException, FenixFilterException {
+	@Override
+	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+			throws FenixActionException, FenixFilterException {
 
-	IUserView userView = getUserView(request);
+		IUserView userView = getUserView(request);
 
-	Integer executionCourseCode = null;
-	String executionCourseCodeString = request.getParameter("objectCode");
-	if (executionCourseCodeString == null) {
-	    executionCourseCodeString = request.getAttribute("objectCode").toString();
+		Integer executionCourseCode = null;
+		String executionCourseCodeString = request.getParameter("objectCode");
+		if (executionCourseCodeString == null) {
+			executionCourseCodeString = request.getAttribute("objectCode").toString();
+		}
+		executionCourseCode = new Integer(executionCourseCodeString);
+
+		Integer evaluationCode = null;
+		String evaluationCodeString = request.getParameter("evaluationCode");
+		if (evaluationCodeString == null) {
+			evaluationCodeString = request.getAttribute("evaluationCode").toString();
+		}
+		evaluationCode = new Integer(evaluationCodeString);
+
+		ISiteComponent commonComponent = new InfoSiteCommon();
+		Object[] args = { executionCourseCode, commonComponent, null, null, null, null };
+
+		TeacherAdministrationSiteView siteView = null;
+		try {
+			siteView =
+					(TeacherAdministrationSiteView) ServiceUtils
+							.executeService("TeacherAdministrationSiteComponentService", args);
+		} catch (FenixServiceException e) {
+			throw new FenixActionException(e);
+		}
+
+		request.setAttribute("siteView", siteView);
+		request.setAttribute("objectCode", ((InfoSiteCommon) siteView.getCommonComponent()).getExecutionCourse().getIdInternal());
+		request.setAttribute("evaluationCode", evaluationCode);
+
+		return mapping.findForward("showMarksListOptions");
 	}
-	executionCourseCode = new Integer(executionCourseCodeString);
-
-	Integer evaluationCode = null;
-	String evaluationCodeString = request.getParameter("evaluationCode");
-	if (evaluationCodeString == null) {
-	    evaluationCodeString = request.getAttribute("evaluationCode").toString();
-	}
-	evaluationCode = new Integer(evaluationCodeString);
-
-	ISiteComponent commonComponent = new InfoSiteCommon();
-	Object[] args = { executionCourseCode, commonComponent, null, null, null, null };
-
-	TeacherAdministrationSiteView siteView = null;
-	try {
-	    siteView = (TeacherAdministrationSiteView) ServiceUtils.executeService("TeacherAdministrationSiteComponentService",
-		    args);
-	} catch (FenixServiceException e) {
-	    throw new FenixActionException(e);
-	}
-
-	request.setAttribute("siteView", siteView);
-	request.setAttribute("objectCode", ((InfoSiteCommon) siteView.getCommonComponent()).getExecutionCourse().getIdInternal());
-	request.setAttribute("evaluationCode", evaluationCode);
-
-	return mapping.findForward("showMarksListOptions");
-    }
 }

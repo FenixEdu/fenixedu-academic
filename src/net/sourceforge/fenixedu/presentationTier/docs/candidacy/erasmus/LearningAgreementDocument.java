@@ -10,49 +10,49 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class LearningAgreementDocument extends FenixReport {
 
-    MobilityIndividualApplicationProcess process;
+	MobilityIndividualApplicationProcess process;
 
-    static final protected char END_CHAR = ' ';
-    static final protected int LINE_LENGTH = 70;
-    static final protected String LINE_BREAK = "\n";
+	static final protected char END_CHAR = ' ';
+	static final protected int LINE_LENGTH = 70;
+	static final protected String LINE_BREAK = "\n";
 
-    public LearningAgreementDocument(MobilityIndividualApplicationProcess process) {
-	this.process = process;
-	fillReport();
-    }
-
-    public LearningAgreementDocument(MobilityIndividualApplicationProcess process, Locale locale) {
-	super(locale);
-	this.process = process;
-	fillReport();
-    }
-
-    @Override
-    protected void fillReport() {
-	addParameter("mobilityProgram", process.getMobilityProgram().getName().getContent(Language.en));
-	addParameter("academicYear", process.getCandidacyExecutionInterval().getName());
-	addParameter("studentName", process.getPersonalDetails().getName());
-	addParameter("sendingInstitution", process.getCandidacy().getMobilityStudentData().getSelectedOpening()
-		.getMobilityAgreement().getUniversityUnit().getNameI18n().getContent());
-
-	addParameter("desiredEnrollments", getChosenSubjectsInformation());
-    }
-
-    private String getChosenSubjectsInformation() {
-	StringBuilder result = new StringBuilder();
-
-	for (CurricularCourse course : process.getCandidacy().getCurricularCourses()) {
-	    result.append(
-		    StringUtils.multipleLineRightPadWithSuffix(course.getNameI18N().getContent(Language.en), LINE_LENGTH,
-			    END_CHAR, course.getEctsCredits().toString())).append(LINE_BREAK);
+	public LearningAgreementDocument(MobilityIndividualApplicationProcess process) {
+		this.process = process;
+		fillReport();
 	}
 
-	return result.toString();
-    }
+	public LearningAgreementDocument(MobilityIndividualApplicationProcess process, Locale locale) {
+		super(locale);
+		this.process = process;
+		fillReport();
+	}
 
-    @Override
-    public String getReportFileName() {
-	return "learning_agreement_" + process.getCandidacy().getPersonalDetails().getDocumentIdNumber();
-    }
+	@Override
+	protected void fillReport() {
+		addParameter("mobilityProgram", process.getMobilityProgram().getName().getContent(Language.en));
+		addParameter("academicYear", process.getCandidacyExecutionInterval().getName());
+		addParameter("studentName", process.getPersonalDetails().getName());
+		addParameter("sendingInstitution", process.getCandidacy().getMobilityStudentData().getSelectedOpening()
+				.getMobilityAgreement().getUniversityUnit().getNameI18n().getContent());
+
+		addParameter("desiredEnrollments", getChosenSubjectsInformation());
+	}
+
+	private String getChosenSubjectsInformation() {
+		StringBuilder result = new StringBuilder();
+
+		for (CurricularCourse course : process.getCandidacy().getCurricularCourses()) {
+			result.append(
+					StringUtils.multipleLineRightPadWithSuffix(course.getNameI18N().getContent(Language.en), LINE_LENGTH,
+							END_CHAR, course.getEctsCredits().toString())).append(LINE_BREAK);
+		}
+
+		return result.toString();
+	}
+
+	@Override
+	public String getReportFileName() {
+		return "learning_agreement_" + process.getCandidacy().getPersonalDetails().getDocumentIdNumber();
+	}
 
 }

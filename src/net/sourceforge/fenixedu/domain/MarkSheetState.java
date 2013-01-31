@@ -5,15 +5,15 @@ package net.sourceforge.fenixedu.domain;
 
 public enum MarkSheetState {
 
-    CONFIRMED,
+	CONFIRMED,
 
-    NOT_CONFIRMED,
+	NOT_CONFIRMED,
 
-    RECTIFICATION,
+	RECTIFICATION,
 
-    RECTIFICATION_NOT_CONFIRMED;
+	RECTIFICATION_NOT_CONFIRMED;
 
-    public String getName() {
-	return name();
-    }
+	public String getName() {
+		return name();
+	}
 }

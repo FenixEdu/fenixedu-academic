@@ -33,63 +33,65 @@ import pt.ist.fenixWebFramework.security.UserView;
 
 public class CreateMasterDegreeThesisLookupDispatchAction extends CreateOrEditMasterDegreeThesisLookupDispatchAction {
 
-    @Override
-    protected Map getKeyMethodMap() {
-	Map map = super.getKeyMethodMap();
-	map.put("button.submit.masterDegree.thesis.createThesis", "createMasterDegreeThesis");
-	map.put("button.cancel", "cancelCreateMasterDegreeThesis");
-	return map;
-    }
-
-    public ActionForward cancelCreateMasterDegreeThesis(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-	return super.cancelMasterDegreeThesis(mapping, form, request, response);
-    }
-
-    public ActionForward createMasterDegreeThesis(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixActionException, FenixFilterException {
-	DynaActionForm createMasterDegreeForm = (DynaActionForm) form;
-	IUserView userView = UserView.getUser();
-
-	Integer scpID = (Integer) createMasterDegreeForm.get("scpID");
-	String dissertationTitle = (String) createMasterDegreeForm.get("dissertationTitle");
-
-	MasterDegreeThesisOperations operations = new MasterDegreeThesisOperations();
-	ActionErrors actionErrors = new ActionErrors();
-
-	try {
-	    operations.getStudentByNumberAndDegreeType(form, request, actionErrors);
-	    operations.getTeachersByNumbers(form, request, "guidersNumbers", PresentationConstants.GUIDERS_LIST, actionErrors);
-	    operations.getTeachersByNumbers(form, request, "assistentGuidersNumbers",
-		    PresentationConstants.ASSISTENT_GUIDERS_LIST, actionErrors);
-	    operations.getExternalPersonsByIDs(form, request, "externalAssistentGuidersIDs",
-		    PresentationConstants.EXTERNAL_ASSISTENT_GUIDERS_LIST, actionErrors);
-	    operations.getExternalPersonsByIDs(form, request, "externalGuidersIDs", PresentationConstants.EXTERNAL_GUIDERS_LIST,
-		    actionErrors);
-	} catch (Exception e1) {
-	    throw new FenixActionException(e1);
-	} finally {
-	    saveErrors(request, actionErrors);
-
-	    if (actionErrors.isEmpty() == false)
-		return mapping.findForward("start");
-
+	@Override
+	protected Map getKeyMethodMap() {
+		Map map = super.getKeyMethodMap();
+		map.put("button.submit.masterDegree.thesis.createThesis", "createMasterDegreeThesis");
+		map.put("button.cancel", "cancelCreateMasterDegreeThesis");
+		return map;
 	}
 
-	try {
-	    CreateMasterDegreeThesis.run(userView, scpID, dissertationTitle, operations
-		    .getTeachersNumbers(form, "guidersNumbers"), operations.getTeachersNumbers(form, "assistentGuidersNumbers"),
-		    operations.getExternalPersonsIDs(form, "externalGuidersIDs"), operations.getExternalPersonsIDs(form,
-			    "externalAssistentGuidersIDs"));
-	} catch (GuiderAlreadyChosenServiceException e) {
-	    throw new GuiderAlreadyChosenActionException(e.getMessage(), mapping.findForward("start"));
-	} catch (ExistingServiceException e) {
-	    throw new ExistingActionException(e.getMessage(), mapping.findForward("start"));
-	} catch (FenixServiceException e) {
-	    throw new ExistingActionException(e.getMessage(), mapping.findForward("start"));
+	public ActionForward cancelCreateMasterDegreeThesis(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		return super.cancelMasterDegreeThesis(mapping, form, request, response);
 	}
 
-	return mapping.findForward("success");
-    }
+	public ActionForward createMasterDegreeThesis(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws FenixActionException, FenixFilterException {
+		DynaActionForm createMasterDegreeForm = (DynaActionForm) form;
+		IUserView userView = UserView.getUser();
+
+		Integer scpID = (Integer) createMasterDegreeForm.get("scpID");
+		String dissertationTitle = (String) createMasterDegreeForm.get("dissertationTitle");
+
+		MasterDegreeThesisOperations operations = new MasterDegreeThesisOperations();
+		ActionErrors actionErrors = new ActionErrors();
+
+		try {
+			operations.getStudentByNumberAndDegreeType(form, request, actionErrors);
+			operations.getTeachersByNumbers(form, request, "guidersNumbers", PresentationConstants.GUIDERS_LIST, actionErrors);
+			operations.getTeachersByNumbers(form, request, "assistentGuidersNumbers",
+					PresentationConstants.ASSISTENT_GUIDERS_LIST, actionErrors);
+			operations.getExternalPersonsByIDs(form, request, "externalAssistentGuidersIDs",
+					PresentationConstants.EXTERNAL_ASSISTENT_GUIDERS_LIST, actionErrors);
+			operations.getExternalPersonsByIDs(form, request, "externalGuidersIDs", PresentationConstants.EXTERNAL_GUIDERS_LIST,
+					actionErrors);
+		} catch (Exception e1) {
+			throw new FenixActionException(e1);
+		} finally {
+			saveErrors(request, actionErrors);
+
+			if (actionErrors.isEmpty() == false) {
+				return mapping.findForward("start");
+			}
+
+		}
+
+		try {
+			CreateMasterDegreeThesis.run(userView, scpID, dissertationTitle,
+					operations.getTeachersNumbers(form, "guidersNumbers"),
+					operations.getTeachersNumbers(form, "assistentGuidersNumbers"),
+					operations.getExternalPersonsIDs(form, "externalGuidersIDs"),
+					operations.getExternalPersonsIDs(form, "externalAssistentGuidersIDs"));
+		} catch (GuiderAlreadyChosenServiceException e) {
+			throw new GuiderAlreadyChosenActionException(e.getMessage(), mapping.findForward("start"));
+		} catch (ExistingServiceException e) {
+			throw new ExistingActionException(e.getMessage(), mapping.findForward("start"));
+		} catch (FenixServiceException e) {
+			throw new ExistingActionException(e.getMessage(), mapping.findForward("start"));
+		}
+
+		return mapping.findForward("success");
+	}
 
 }

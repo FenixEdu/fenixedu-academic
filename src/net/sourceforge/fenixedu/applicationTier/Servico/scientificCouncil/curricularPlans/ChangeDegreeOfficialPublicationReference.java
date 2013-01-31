@@ -9,23 +9,23 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class ChangeDegreeOfficialPublicationReference extends FenixService {
 
-    /**
-     * Must ensure "REQUIRED" slots are filled
-     * 
-     * @param degree
-     * @param date
-     * @throws FenixServiceException
-     */
-    @Checked("RolePredicates.SCIENTIFIC_COUNCIL_PREDICATE")
-    @Service
-    public static void run(DegreeOfficialPublication degreeOfficialPublication, String officialReference)
-	    throws FenixServiceException {
+	/**
+	 * Must ensure "REQUIRED" slots are filled
+	 * 
+	 * @param degree
+	 * @param date
+	 * @throws FenixServiceException
+	 */
+	@Checked("RolePredicates.SCIENTIFIC_COUNCIL_PREDICATE")
+	@Service
+	public static void run(DegreeOfficialPublication degreeOfficialPublication, String officialReference)
+			throws FenixServiceException {
 
-	if (degreeOfficialPublication == null || officialReference == null) {
-	    throw new InvalidArgumentsServiceException();
+		if (degreeOfficialPublication == null || officialReference == null) {
+			throw new InvalidArgumentsServiceException();
+		}
+
+		degreeOfficialPublication.setOfficialReference(officialReference);
 	}
-	
-	degreeOfficialPublication.setOfficialReference(officialReference);
-    }
 
 }

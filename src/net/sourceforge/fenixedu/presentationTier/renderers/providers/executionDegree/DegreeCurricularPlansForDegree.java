@@ -12,23 +12,23 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class DegreeCurricularPlansForDegree implements DataProvider {
 
-    public Object provide(Object source, Object currentValue) {
+	@Override
+	public Object provide(Object source, Object currentValue) {
 
-	final ExecutionDegreeBean executionDegreeBean = (ExecutionDegreeBean) source;
-	final List<DegreeCurricularPlan> result = new ArrayList<DegreeCurricularPlan>();
-	if (executionDegreeBean.getDegree() != null) {
-	    result
-		    .addAll(executionDegreeBean.getDegree().getDegreeCurricularPlansForYear(
-			    executionDegreeBean.getExecutionYear()));
-	    Collections.sort(result, DegreeCurricularPlan.COMPARATOR_BY_NAME);
-	} else {
-	    executionDegreeBean.setDegreeCurricularPlan(null);
+		final ExecutionDegreeBean executionDegreeBean = (ExecutionDegreeBean) source;
+		final List<DegreeCurricularPlan> result = new ArrayList<DegreeCurricularPlan>();
+		if (executionDegreeBean.getDegree() != null) {
+			result.addAll(executionDegreeBean.getDegree().getDegreeCurricularPlansForYear(executionDegreeBean.getExecutionYear()));
+			Collections.sort(result, DegreeCurricularPlan.COMPARATOR_BY_NAME);
+		} else {
+			executionDegreeBean.setDegreeCurricularPlan(null);
+		}
+		return result;
 	}
-	return result;
-    }
 
-    public Converter getConverter() {
-	return new DomainObjectKeyConverter();
-    }
+	@Override
+	public Converter getConverter() {
+		return new DomainObjectKeyConverter();
+	}
 
 }

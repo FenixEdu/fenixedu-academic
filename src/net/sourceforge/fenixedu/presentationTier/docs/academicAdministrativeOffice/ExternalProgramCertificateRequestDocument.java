@@ -16,60 +16,60 @@ import pt.ist.utl.fenix.utils.NumberToWordsConverter;
 
 public class ExternalProgramCertificateRequestDocument extends AdministrativeOfficeDocument {
 
-    private static final long serialVersionUID = 10L;
+	private static final long serialVersionUID = 10L;
 
-    protected ExternalProgramCertificateRequestDocument(final ExternalProgramCertificateRequest externalProgramCertificateRequest) {
-	super(externalProgramCertificateRequest);
-    }
-
-    @Override
-    protected ExternalProgramCertificateRequest getDocumentRequest() {
-	return (ExternalProgramCertificateRequest) super.getDocumentRequest();
-    }
-
-    @Override
-    protected void fillReport() {
-	setPersonFields();
-	addParametersInformation();
-    }
-
-    private void addParametersInformation() {
-	addParameter("studentNumber", getStudentNumber());
-	addParameter("degreeDescription", getDegreeDescription());
-
-	AdministrativeOffice administrativeOffice = getAdministrativeOffice();
-	Unit adminOfficeUnit = administrativeOffice.getUnit();
-	Person activeUnitCoordinator = adminOfficeUnit.getActiveUnitCoordinator();
-
-	addParameter("administrativeOfficeCoordinatorName", activeUnitCoordinator.getName());
-	addParameter("administrativeOfficeName", getMLSTextContent(adminOfficeUnit.getPartyName()));
-	addParameter("institutionName", RootDomainObject.getInstance().getInstitutionUnit().getName());
-	addParameter("universityName", UniversityUnit.getInstitutionsUniversityUnit().getName());
-
-	addParameter("day", new LocalDate().toString(DD_MMMM_YYYY, getLocale()));
-
-	addParameter("numberOfPrograms", NumberToWordsConverter.convert(getDocumentRequest().getNumberOfPrograms()));
-	addParameter("externalInstitutionName", getDocumentRequest().getInstitution().getName());
-    }
-
-    private String getStudentNumber() {
-	final Registration registration = getDocumentRequest().getRegistration();
-	if (ExternalCourseLoadRequest.FREE_PAYMENT_AGREEMENTS.contains(registration.getRegistrationAgreement())) {
-	    final String agreementInformation = registration.getAgreementInformation();
-	    if (!StringUtils.isEmpty(agreementInformation)) {
-		return registration.getRegistrationAgreement().toString() + SINGLE_SPACE + agreementInformation;
-	    }
+	protected ExternalProgramCertificateRequestDocument(final ExternalProgramCertificateRequest externalProgramCertificateRequest) {
+		super(externalProgramCertificateRequest);
 	}
-	return registration.getStudent().getNumber().toString();
-    }
 
-    @Override
-    protected boolean showPriceFields() {
-	return false;
-    }
+	@Override
+	protected ExternalProgramCertificateRequest getDocumentRequest() {
+		return (ExternalProgramCertificateRequest) super.getDocumentRequest();
+	}
 
-    @Override
-    protected void setPersonFields() {
-	addParameter("name", getDocumentRequest().getPerson().getName());
-    }
+	@Override
+	protected void fillReport() {
+		setPersonFields();
+		addParametersInformation();
+	}
+
+	private void addParametersInformation() {
+		addParameter("studentNumber", getStudentNumber());
+		addParameter("degreeDescription", getDegreeDescription());
+
+		AdministrativeOffice administrativeOffice = getAdministrativeOffice();
+		Unit adminOfficeUnit = administrativeOffice.getUnit();
+		Person activeUnitCoordinator = adminOfficeUnit.getActiveUnitCoordinator();
+
+		addParameter("administrativeOfficeCoordinatorName", activeUnitCoordinator.getName());
+		addParameter("administrativeOfficeName", getMLSTextContent(adminOfficeUnit.getPartyName()));
+		addParameter("institutionName", RootDomainObject.getInstance().getInstitutionUnit().getName());
+		addParameter("universityName", UniversityUnit.getInstitutionsUniversityUnit().getName());
+
+		addParameter("day", new LocalDate().toString(DD_MMMM_YYYY, getLocale()));
+
+		addParameter("numberOfPrograms", NumberToWordsConverter.convert(getDocumentRequest().getNumberOfPrograms()));
+		addParameter("externalInstitutionName", getDocumentRequest().getInstitution().getName());
+	}
+
+	private String getStudentNumber() {
+		final Registration registration = getDocumentRequest().getRegistration();
+		if (ExternalCourseLoadRequest.FREE_PAYMENT_AGREEMENTS.contains(registration.getRegistrationAgreement())) {
+			final String agreementInformation = registration.getAgreementInformation();
+			if (!StringUtils.isEmpty(agreementInformation)) {
+				return registration.getRegistrationAgreement().toString() + SINGLE_SPACE + agreementInformation;
+			}
+		}
+		return registration.getStudent().getNumber().toString();
+	}
+
+	@Override
+	protected boolean showPriceFields() {
+		return false;
+	}
+
+	@Override
+	protected void setPersonFields() {
+		addParameter("name", getDocumentRequest().getPerson().getName());
+	}
 }

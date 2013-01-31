@@ -14,37 +14,40 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
-@Mapping(path = "/studentDismissalsExternalEnrolments", module = "academicAdministration", formBean = "studentExternalEnrolmentsForm")
+@Mapping(
+		path = "/studentDismissalsExternalEnrolments",
+		module = "academicAdministration",
+		formBean = "studentExternalEnrolmentsForm")
 @Forwards({ @Forward(name = "manageDismissals", path = "/academicAdminOffice/dismissal/managementDismissals.jsp"),
-	@Forward(name = "visualizeRegistration", path = "/academicAdminOffice/student/registration/viewRegistrationDetails.jsp") })
+		@Forward(name = "visualizeRegistration", path = "/academicAdminOffice/student/registration/viewRegistrationDetails.jsp") })
 public class StudentDismissalsExternalEnrolmentsDA extends StudentExternalEnrolmentsDA {
 
-    @Override
-    public ActionForward backToMainPage(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) {
-	request.setAttribute("studentCurricularPlan", getStudentCurricularPlan(request));
-	return mapping.findForward("manageDismissals");
-    }
+	@Override
+	public ActionForward backToMainPage(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) {
+		request.setAttribute("studentCurricularPlan", getStudentCurricularPlan(request));
+		return mapping.findForward("manageDismissals");
+	}
 
-    @Override
-    public ActionForward cancelExternalEnrolment(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) {
-	request.setAttribute("registration", getRegistration(request, actionForm));
-	return mapping.findForward("visualizeRegistration");
-    }
+	@Override
+	public ActionForward cancelExternalEnrolment(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) {
+		request.setAttribute("registration", getRegistration(request, actionForm));
+		return mapping.findForward("visualizeRegistration");
+	}
 
-    @Override
-    public String getContextInformation() {
-	return "/studentDismissalsExternalEnrolments.do?";
-    }
+	@Override
+	public String getContextInformation() {
+		return "/studentDismissalsExternalEnrolments.do?";
+	}
 
-    @Override
-    protected String getParameters(final HttpServletRequest request) {
-	return "scpID=" + getIntegerFromRequest(request, "scpID");
-    }
+	@Override
+	protected String getParameters(final HttpServletRequest request) {
+		return "scpID=" + getIntegerFromRequest(request, "scpID");
+	}
 
-    private StudentCurricularPlan getStudentCurricularPlan(final HttpServletRequest request) {
-	final Integer scpID = getIntegerFromRequest(request, "scpID");
-	return rootDomainObject.readStudentCurricularPlanByOID(scpID);
-    }
+	private StudentCurricularPlan getStudentCurricularPlan(final HttpServletRequest request) {
+		final Integer scpID = getIntegerFromRequest(request, "scpID");
+		return rootDomainObject.readStudentCurricularPlanByOID(scpID);
+	}
 }

@@ -19,27 +19,27 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 
 public class ReimbursementGuideEntry extends ReimbursementGuideEntry_Base {
 
-    public ReimbursementGuideEntry() {
-	super();
-	setRootDomainObject(RootDomainObject.getInstance());
-    }
+	public ReimbursementGuideEntry() {
+		super();
+		setRootDomainObject(RootDomainObject.getInstance());
+	}
 
-    public void delete() {
-	removeGuideEntry();
-	removeReimbursementGuide();
-	removeReimbursementTransaction();
-	removeRootDomainObject();
-	deleteDomainObject();
-    }
+	public void delete() {
+		removeGuideEntry();
+		removeReimbursementGuide();
+		removeReimbursementTransaction();
+		removeRootDomainObject();
+		deleteDomainObject();
+	}
 
-    @Deprecated
-    public Double getValue() {
-	return getValueBigDecimal().doubleValue();
-    }
+	@Deprecated
+	public Double getValue() {
+		return getValueBigDecimal().doubleValue();
+	}
 
-    @Deprecated
-    public void setValue(Double value) {
-	setValueBigDecimal(BigDecimal.valueOf(value));
-    }
+	@Deprecated
+	public void setValue(Double value) {
+		setValueBigDecimal(BigDecimal.valueOf(value));
+	}
 
 }

@@ -17,12 +17,12 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class ReadPublicExecutionPeriods extends FenixService {
 
-    @Service
-    public static List<InfoExecutionPeriod> run() throws FenixServiceException {
-	final List<InfoExecutionPeriod> result = new ArrayList<InfoExecutionPeriod>();
-	for (final ExecutionSemester executionSemester : ExecutionSemester.readPublicExecutionPeriods()) {
-	    result.add(InfoExecutionPeriod.newInfoFromDomain(executionSemester));
+	@Service
+	public static List<InfoExecutionPeriod> run() throws FenixServiceException {
+		final List<InfoExecutionPeriod> result = new ArrayList<InfoExecutionPeriod>();
+		for (final ExecutionSemester executionSemester : ExecutionSemester.readPublicExecutionPeriods()) {
+			result.add(InfoExecutionPeriod.newInfoFromDomain(executionSemester));
+		}
+		return result;
 	}
-	return result;
-    }
 }

@@ -34,111 +34,110 @@ import org.apache.struts.action.ActionMapping;
  */
 public class CourseListingDispatchAction extends FenixDispatchAction {
 
-    public ActionForward chooseDegreeFromList(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
+	public ActionForward chooseDegreeFromList(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
 
-	DegreeType degreeType = DegreeType.MASTER_DEGREE;
+		DegreeType degreeType = DegreeType.MASTER_DEGREE;
 
-	List result = null;
-	try {
-	    result = (List) ReadAllMasterDegrees.run(degreeType);
-	} catch (NonExistingServiceException e) {
-	    throw new NonExistingActionException("O Degree de Mestrado", e);
+		List result = null;
+		try {
+			result = ReadAllMasterDegrees.run(degreeType);
+		} catch (NonExistingServiceException e) {
+			throw new NonExistingActionException("O Degree de Mestrado", e);
+		}
+
+		request.setAttribute(PresentationConstants.MASTER_DEGREE_LIST, result);
+
+		return mapping.findForward("DisplayMasterDegreeList");
+
 	}
 
-	request.setAttribute(PresentationConstants.MASTER_DEGREE_LIST, result);
+	public ActionForward chooseMasterDegree(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		// Get the Chosen Master Degree
+		Integer masterDegreeID = new Integer(request.getParameter("degreeID"));
+		if (masterDegreeID == null) {
+			masterDegreeID = (Integer) request.getAttribute("degreeID");
+		}
 
-	return mapping.findForward("DisplayMasterDegreeList");
+		List result = null;
 
-    }
+		try {
 
-    public ActionForward chooseMasterDegree(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-	// Get the Chosen Master Degree
-	Integer masterDegreeID = new Integer(request.getParameter("degreeID"));
-	if (masterDegreeID == null) {
-	    masterDegreeID = (Integer) request.getAttribute("degreeID");
+			result = ReadCPlanFromChosenMasterDegree.run(masterDegreeID);
+
+		} catch (NonExistingServiceException e) {
+			throw new NonExistingActionException("O plano curricular ", e);
+		}
+
+		request.setAttribute(PresentationConstants.MASTER_DEGREE_CURRICULAR_PLAN_LIST, result);
+
+		return mapping.findForward("MasterDegreeReady");
+
 	}
 
-	List result = null;
+	public ActionForward prepareList(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		String degreeCurricularPlanId = getFromRequest("curricularPlanID", request);
 
-	try {
+		List curricularCourseList = null;
+		try {
+			curricularCourseList = ReadCurricularCoursesByDegreeCurricularPlan.run(Integer.valueOf(degreeCurricularPlanId));
+		} catch (FenixServiceException e) {
+			throw new FenixActionException(e);
+		}
 
-	    result = (List) ReadCPlanFromChosenMasterDegree.run(masterDegreeID);
+		Collections.sort(curricularCourseList, new BeanComparator("name"));
+		request.setAttribute("curricularCourses", curricularCourseList);
 
-	} catch (NonExistingServiceException e) {
-	    throw new NonExistingActionException("O plano curricular ", e);
+		return mapping.findForward("PrepareSuccess");
 	}
 
-	request.setAttribute(PresentationConstants.MASTER_DEGREE_CURRICULAR_PLAN_LIST, result);
+	public ActionForward getStudentsFromCourse(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		IUserView userView = getUserView(request);
 
-	return mapping.findForward("MasterDegreeReady");
+		// Get the Selected Course
 
-    }
+		Integer scopeCode = null;
+		String scopeCodeString = request.getParameter("scopeCode");
+		if (scopeCodeString == null) {
+			scopeCodeString = (String) request.getAttribute("scopeCode");
+		}
+		if (scopeCodeString != null) {
+			scopeCode = new Integer(scopeCodeString);
+		}
 
-    public ActionForward prepareList(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-	String degreeCurricularPlanId = getFromRequest("curricularPlanID", request);
+		String yearString = getFromRequest("executionYear", request);
 
-	List curricularCourseList = null;
-	try {
-	    curricularCourseList = (List) ReadCurricularCoursesByDegreeCurricularPlan
-		    .run(Integer.valueOf(degreeCurricularPlanId));
-	} catch (FenixServiceException e) {
-	    throw new FenixActionException(e);
+		List enrolments = null;
+		Object args[] = { userView, scopeCode, yearString };
+		try {
+
+			enrolments = (List) ServiceManagerServiceFactory.executeService("ReadStudentListByCurricularCourse", args);
+
+		} catch (NonExistingServiceException e) {
+			ActionErrors errors = new ActionErrors();
+			errors.add("error.exception.noStudents", new ActionError("error.exception.noStudents"));
+			saveErrors(request, errors);
+
+			return prepareList(mapping, form, request, response);
+		}
+
+		BeanComparator numberComparator = new BeanComparator("infoStudentCurricularPlan.infoStudent.number");
+		Collections.sort(enrolments, numberComparator);
+
+		request.setAttribute(PresentationConstants.ENROLMENT_LIST, enrolments);
+
+		return mapping.findForward("Success");
 	}
 
-	Collections.sort(curricularCourseList, new BeanComparator("name"));
-	request.setAttribute("curricularCourses", curricularCourseList);
-
-	return mapping.findForward("PrepareSuccess");
-    }
-
-    public ActionForward getStudentsFromCourse(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-	IUserView userView = getUserView(request);
-
-	// Get the Selected Course
-
-	Integer scopeCode = null;
-	String scopeCodeString = request.getParameter("scopeCode");
-	if (scopeCodeString == null) {
-	    scopeCodeString = (String) request.getAttribute("scopeCode");
+	private String getFromRequest(String parameter, HttpServletRequest request) {
+		String parameterString = request.getParameter(parameter);
+		if (parameterString == null) {
+			parameterString = (String) request.getAttribute(parameter);
+		}
+		return parameterString;
 	}
-	if (scopeCodeString != null) {
-	    scopeCode = new Integer(scopeCodeString);
-	}
-
-	String yearString = getFromRequest("executionYear", request);
-
-	List enrolments = null;
-	Object args[] = { userView, scopeCode, yearString };
-	try {
-
-	    enrolments = (List) ServiceManagerServiceFactory.executeService("ReadStudentListByCurricularCourse", args);
-
-	} catch (NonExistingServiceException e) {
-	    ActionErrors errors = new ActionErrors();
-	    errors.add("error.exception.noStudents", new ActionError("error.exception.noStudents"));
-	    saveErrors(request, errors);
-
-	    return prepareList(mapping, form, request, response);
-	}
-
-	BeanComparator numberComparator = new BeanComparator("infoStudentCurricularPlan.infoStudent.number");
-	Collections.sort(enrolments, numberComparator);
-
-	request.setAttribute(PresentationConstants.ENROLMENT_LIST, enrolments);
-
-	return mapping.findForward("Success");
-    }
-
-    private String getFromRequest(String parameter, HttpServletRequest request) {
-	String parameterString = request.getParameter(parameter);
-	if (parameterString == null) {
-	    parameterString = (String) request.getAttribute(parameter);
-	}
-	return parameterString;
-    }
 
 }

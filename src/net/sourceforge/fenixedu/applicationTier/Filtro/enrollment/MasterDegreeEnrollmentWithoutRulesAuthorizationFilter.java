@@ -20,55 +20,56 @@ import net.sourceforge.fenixedu.domain.student.Registration;
  */
 
 public class MasterDegreeEnrollmentWithoutRulesAuthorizationFilter extends AuthorizationByManyRolesFilter {
-    private static DegreeType DEGREE_TYPE = DegreeType.MASTER_DEGREE;
+	private static DegreeType DEGREE_TYPE = DegreeType.MASTER_DEGREE;
 
-    @Override
-    protected Collection<RoleType> getNeededRoleTypes() {
-	List<RoleType> roles = new ArrayList<RoleType>();
-	roles.add(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE);
-	return roles;
-    }
-
-    protected String hasPrevilege(IUserView id, Object[] arguments) {
-	try {
-	    if (!verifyDegreeTypeIsMasterDegree(arguments)) {
-		return "error.degree.type";
-	    }
-
-	    if (!verifyStudentIsFromMasterDegree(arguments)) {
-		return "error.student.degree.nonMaster";
-	    }
-
-	    return null;
-	} catch (Exception exception) {
-	    exception.printStackTrace();
-	    return "noAuthorization";
-	}
-    }
-
-    private boolean verifyDegreeTypeIsMasterDegree(Object[] arguments) {
-	boolean isNonMaster = false;
-
-	if (arguments != null && arguments[1] != null) {
-	    isNonMaster = DEGREE_TYPE.equals(arguments[1]);
+	@Override
+	protected Collection<RoleType> getNeededRoleTypes() {
+		List<RoleType> roles = new ArrayList<RoleType>();
+		roles.add(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE);
+		return roles;
 	}
 
-	return isNonMaster;
-    }
+	@Override
+	protected String hasPrevilege(IUserView id, Object[] arguments) {
+		try {
+			if (!verifyDegreeTypeIsMasterDegree(arguments)) {
+				return "error.degree.type";
+			}
 
-    private boolean verifyStudentIsFromMasterDegree(Object[] arguments) {
-	Object object = (Object) arguments[0];
-	DegreeType degreeType = null;
-	if (object instanceof Registration) {
-	    Registration registration = (Registration) object;
-	    degreeType = registration.getDegreeType();
-	}
-	if (object instanceof StudentCurricularPlan) {
-	    StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) object;
-	    degreeType = studentCurricularPlan.getDegreeType();
+			if (!verifyStudentIsFromMasterDegree(arguments)) {
+				return "error.student.degree.nonMaster";
+			}
+
+			return null;
+		} catch (Exception exception) {
+			exception.printStackTrace();
+			return "noAuthorization";
+		}
 	}
 
-	return (degreeType != null && (degreeType.equals(DegreeType.MASTER_DEGREE) || degreeType
-		.equals(DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA)));
-    }
+	private boolean verifyDegreeTypeIsMasterDegree(Object[] arguments) {
+		boolean isNonMaster = false;
+
+		if (arguments != null && arguments[1] != null) {
+			isNonMaster = DEGREE_TYPE.equals(arguments[1]);
+		}
+
+		return isNonMaster;
+	}
+
+	private boolean verifyStudentIsFromMasterDegree(Object[] arguments) {
+		Object object = arguments[0];
+		DegreeType degreeType = null;
+		if (object instanceof Registration) {
+			Registration registration = (Registration) object;
+			degreeType = registration.getDegreeType();
+		}
+		if (object instanceof StudentCurricularPlan) {
+			StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) object;
+			degreeType = studentCurricularPlan.getDegreeType();
+		}
+
+		return (degreeType != null && (degreeType.equals(DegreeType.MASTER_DEGREE) || degreeType
+				.equals(DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA)));
+	}
 }

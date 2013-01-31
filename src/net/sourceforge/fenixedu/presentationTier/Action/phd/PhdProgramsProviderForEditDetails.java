@@ -6,9 +6,9 @@ import net.sourceforge.fenixedu.presentationTier.renderers.providers.AbstractDom
 
 public class PhdProgramsProviderForEditDetails extends AbstractDomainObjectProvider {
 
-    @Override
-    public Object provide(Object source, Object current) {
-	final PhdIndividualProgramProcessBean bean = (PhdIndividualProgramProcessBean) source;
-	return bean.hasFocusArea() ? bean.getFocusArea().getPhdPrograms() : RootDomainObject.getInstance().getPhdPrograms();
-    }
+	@Override
+	public Object provide(Object source, Object current) {
+		final PhdIndividualProgramProcessBean bean = (PhdIndividualProgramProcessBean) source;
+		return bean.hasFocusArea() ? bean.getFocusArea().getPhdPrograms() : RootDomainObject.getInstance().getPhdPrograms();
+	}
 }

@@ -6,9 +6,9 @@ import net.sourceforge.fenixedu.domain.accounting.events.ImprovementOfApprovedEn
 
 public class CreateImprovementOfApprovedEnrolmentPenaltyExemptionBean extends CreatePenaltyExemptionBean implements Serializable {
 
-    public CreateImprovementOfApprovedEnrolmentPenaltyExemptionBean(
-	    final ImprovementOfApprovedEnrolmentEvent improvementOfApprovedEnrolmentEvent) {
-	super(improvementOfApprovedEnrolmentEvent);
-    }
+	public CreateImprovementOfApprovedEnrolmentPenaltyExemptionBean(
+			final ImprovementOfApprovedEnrolmentEvent improvementOfApprovedEnrolmentEvent) {
+		super(improvementOfApprovedEnrolmentEvent);
+	}
 
 }

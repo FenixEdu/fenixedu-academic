@@ -10,15 +10,15 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class RemoveCandidateYearDelegateElections extends FenixService {
 
-    @Checked("RolePredicates.STUDENT_PREDICATE")
-    @Service
-    public static void run(YearDelegateElection yearDelegateElection, Student student) throws FenixServiceException {
+	@Checked("RolePredicates.STUDENT_PREDICATE")
+	@Service
+	public static void run(YearDelegateElection yearDelegateElection, Student student) throws FenixServiceException {
 
-	try {
-	    yearDelegateElection.removeCandidates(student);
-	} catch (DomainException ex) {
-	    throw new FenixServiceException(ex.getMessage(), ex.getArgs());
+		try {
+			yearDelegateElection.removeCandidates(student);
+		} catch (DomainException ex) {
+			throw new FenixServiceException(ex.getMessage(), ex.getArgs());
+		}
 	}
-    }
 
 }

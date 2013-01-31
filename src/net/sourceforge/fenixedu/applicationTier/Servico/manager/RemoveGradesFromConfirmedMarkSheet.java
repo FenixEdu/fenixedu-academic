@@ -10,10 +10,10 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class RemoveGradesFromConfirmedMarkSheet extends FenixService {
 
-    @Checked("RolePredicates.MANAGER_PREDICATE")
-    @Service
-    public static void run(MarkSheet markSheet, List<EnrolmentEvaluation> evaluationsToRemove) {
-	markSheet.removeGrades(evaluationsToRemove);
-    }
+	@Checked("RolePredicates.MANAGER_PREDICATE")
+	@Service
+	public static void run(MarkSheet markSheet, List<EnrolmentEvaluation> evaluationsToRemove) {
+		markSheet.removeGrades(evaluationsToRemove);
+	}
 
 }

@@ -13,7 +13,6 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Input;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
@@ -21,15 +20,17 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
  */
 
 @Mapping(path = "/manageRegistrationStartDates", module = "academicAdministration")
-@Forwards({ @Forward(name = "showEditStartDates", path = "/academicAdminOffice/student/registration/manageRegistrationStartDates.jsp") })
+@Forwards({ @Forward(
+		name = "showEditStartDates",
+		path = "/academicAdminOffice/student/registration/manageRegistrationStartDates.jsp") })
 public class ManageRegistrationStartDatesDA extends FenixDispatchAction {
 
-    @Input
-    public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) {
-	final Integer registrationId = getIntegerFromRequest(request, "registrationId");
-	request.setAttribute("registration", rootDomainObject.readRegistrationByOID(registrationId));
-	return mapping.findForward("showEditStartDates");
-    }
+	@Input
+	public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) {
+		final Integer registrationId = getIntegerFromRequest(request, "registrationId");
+		request.setAttribute("registration", rootDomainObject.readRegistrationByOID(registrationId));
+		return mapping.findForward("showEditStartDates");
+	}
 
 }

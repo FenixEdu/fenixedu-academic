@@ -11,31 +11,31 @@ import net.sourceforge.fenixedu.util.EnrolmentAction;
 
 public class CreditsDismissalLog extends CreditsDismissalLog_Base {
 
-    private CreditsDismissalLog() {
-	super();
-    }
+	private CreditsDismissalLog() {
+		super();
+	}
 
-    public CreditsDismissalLog(final EnrolmentAction action, final Registration registration,
-	    final CurriculumGroup curriculumGroup, final Credits credits, final ExecutionSemester executionSemester,
-	    final String who) {
-	this();
+	public CreditsDismissalLog(final EnrolmentAction action, final Registration registration,
+			final CurriculumGroup curriculumGroup, final Credits credits, final ExecutionSemester executionSemester,
+			final String who) {
+		this();
 
-	final CourseGroup courseGroup = findCourseGroup(curriculumGroup);
-	check(courseGroup, "error.CreditsDismissalLog.invalid.courseGroup");
+		final CourseGroup courseGroup = findCourseGroup(curriculumGroup);
+		check(courseGroup, "error.CreditsDismissalLog.invalid.courseGroup");
 
-	init(action, registration, courseGroup, executionSemester, who);
-	setCredits(BigDecimal.valueOf(credits.getGivenCredits()));
-	setSourceDescription(buildSourceDescription(credits));
-    }
+		init(action, registration, courseGroup, executionSemester, who);
+		setCredits(BigDecimal.valueOf(credits.getGivenCredits()));
+		setSourceDescription(buildSourceDescription(credits));
+	}
 
-    private CourseGroup findCourseGroup(final CurriculumGroup curriculumGroup) {
-	return curriculumGroup.isNoCourseGroupCurriculumGroup() ? curriculumGroup.getCurriculumGroup().getDegreeModule()
-		: curriculumGroup.getDegreeModule();
-    }
+	private CourseGroup findCourseGroup(final CurriculumGroup curriculumGroup) {
+		return curriculumGroup.isNoCourseGroupCurriculumGroup() ? curriculumGroup.getCurriculumGroup().getDegreeModule() : curriculumGroup
+				.getDegreeModule();
+	}
 
-    @Override
-    protected String getDegreeModuleName() {
-	return getDegreeModule().getName();
-    }
+	@Override
+	protected String getDegreeModuleName() {
+		return getDegreeModule().getName();
+	}
 
 }
