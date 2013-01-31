@@ -258,8 +258,10 @@ function changeElementsDisplay(elementId, elementId2,elementDisplay, topDisplay)
 
 <p class="mvert2">
 	<bean:message key="message.howManyVehicles" bundle="PARKING_RESOURCES"/>
-	<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.vehicle2" styleId="hasVehicle2radio2" name="parkingForm" property="vehicle2" value="false" onclick="document.getElementById('hasVehicle2').style.display='none'"/>Um 
-	<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.vehicle2" styleId="hasVehicle2radio1" name="parkingForm" property="vehicle2" value="true" onclick="document.getElementById('hasVehicle2').style.display='block'"/>Dois
+	<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.vehicle2" styleId="hasVehicle2radio2" name="parkingForm" property="vehicle2" value="false" onclick="document.getElementById('hasVehicle2').style.display='none'"/>
+		<bean:message key="1.cap" bundle="ENUMERATION_RESOURCES"/> 
+	<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.vehicle2" styleId="hasVehicle2radio1" name="parkingForm" property="vehicle2" value="true" onclick="document.getElementById('hasVehicle2').style.display='block'"/>
+		<bean:message key="2.cap" bundle="ENUMERATION_RESOURCES"/>
 </p>
 	
 	<!-- FIRST CAR BEGINING -->
