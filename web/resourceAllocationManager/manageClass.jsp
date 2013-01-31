@@ -1,6 +1,7 @@
 <%@ taglib uri="/WEB-INF/struts-tiles.tld" prefix="tiles" %>
 <tiles:insert definition="df.layout.two-column" beanName="" flush="true">
-  <tiles:put name="title" value="SOP" />
+  <tiles:put name="title" value="private.resourcemanagement.schedules.classes.edit" />
+  <tiles:put name="bundle" value="TITLES_RESOURCES" />
   <tiles:put name="serviceName" value="SOP - Servico de Organizacao Pedagogica" />
   <tiles:put name="navGeral" value="/commons/commonGeneralNavigationBar.jsp" />
   <tiles:put name="navLocal" value="/resourceAllocationManager/commonNavLocalSchedulesSop.jsp" />

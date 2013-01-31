@@ -174,6 +174,8 @@
 
 	<!-- =================== Lesson Management  =================== -->
 	<definition name="view.all.lesson.dates" extends="definition.sop.schedules" >
+		<put name="title" value="private.resourcemanagement.schedules.shifts.lessonOcurrences"/>
+		<put name="bundle" value="TITLES_RESOURCES"/>
 		<put name="body" value="/resourceAllocationManager/showAllLessonDates.jsp" />
 	</definition>
 
