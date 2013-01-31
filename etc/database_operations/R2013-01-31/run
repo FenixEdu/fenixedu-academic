@@ -43,3 +43,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Correcting inconsistency as reported in RT#364067" correctData#364067.sql IST
