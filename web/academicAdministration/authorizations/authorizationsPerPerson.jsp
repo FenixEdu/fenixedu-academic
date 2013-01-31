@@ -136,6 +136,24 @@
 				</div>
 				
 				</logic:iterate>				
+				
+				<logic:equal name="managementBean" property="party.unit" value="true">
+					<div class="edit-authorizations">
+						<div id="period" class="peopleInUnit period">
+							<header id="header" align="center">
+								<h2>Pessoas na unidade</h2>
+							</header>
+							<ul style="display: none">
+								<logic:iterate id="person" name="managementBean" property="peopleInUnit">
+									<li><bean:write name="person" property="name"/>
+										<span style="float: right"><bean:write name="person" property="username"/></span>
+									</li>
+								</logic:iterate>
+							</ul>
+						</div>
+					</div>
+				</logic:equal>
+
 				</div>
 			
 			</section>

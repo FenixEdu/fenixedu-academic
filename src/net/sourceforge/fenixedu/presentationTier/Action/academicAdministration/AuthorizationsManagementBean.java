@@ -2,19 +2,25 @@ package net.sourceforge.fenixedu.presentationTier.Action.academicAdministration;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
+import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.AcademicProgram;
 import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.accessControl.PersistentAccessGroup;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.PersistentAcademicAuthorizationGroup;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityTypeEnum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.phd.PhdProgram;
 
 import com.google.common.base.Splitter;
@@ -50,8 +56,9 @@ public class AuthorizationsManagementBean implements Serializable {
 
     public boolean getHasNewObject() {
 	for (AuthorizationGroupBean bean : groups) {
-	    if (bean.getNewObject())
+	    if (bean.getNewObject()) {
 		return true;
+	    }
 	}
 	return false;
     }
@@ -90,8 +97,9 @@ public class AuthorizationsManagementBean implements Serializable {
     public void removeAuthorization(String parameter) {
 	AuthorizationGroupBean bean = getBeanByOid(parameter);
 	if (bean != null) {
-	    if (bean.getGroup() != null)
+	    if (bean.getGroup() != null) {
 		bean.delete(party);
+	    }
 	    getGroups().remove(bean);
 	}
     }
@@ -110,8 +118,9 @@ public class AuthorizationsManagementBean implements Serializable {
     private AuthorizationGroupBean getBeanByOid(String parameter) {
 	Long oid = Long.parseLong(parameter);
 	for (AuthorizationGroupBean bean : getGroups()) {
-	    if (bean.getId() == oid)
+	    if (bean.getId() == oid) {
 		return bean;
+	    }
 	}
 	return null;
     }
@@ -163,5 +172,26 @@ public class AuthorizationsManagementBean implements Serializable {
 		offices.add(office);
 	    }
 	}
+    }
+
+    public Collection<Party> getPeopleInUnit() {
+	if (!party.isUnit()) {
+	    return Collections.emptySet();
+	}
+
+	Set<Party> people = new TreeSet<Party>(Party.COMPARATOR_BY_NAME);
+
+	LinkedList<Party> units = new LinkedList<Party>();
+	units.add(party);
+
+	while (!units.isEmpty()) {
+	    Party unit = units.removeFirst();
+
+	    people.addAll(unit.getChildParties(AccountabilityTypeEnum.WORKING_CONTRACT, Person.class));
+
+	    units.addAll(unit.getChildParties(AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE, Unit.class));
+	}
+
+	return people;
     }
 }

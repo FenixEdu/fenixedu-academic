@@ -176,6 +176,24 @@ ul.courses-list {
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d7e38c', endColorstr='#cad77f',GradientType=0 );
 }
 
+.peopleInUnit header {
+	background:#f1d67e;
+	background-image: linear-gradient(bottom, rgb(254,225,139) 100%, rgb(241,214,126) 0%);
+	background-image: -o-linear-gradient(bottom, rgb(254,225,139) 100%, rgb(241,214,126) 0%);
+	background-image: -moz-linear-gradient(bottom, rgb(254,225,139) 100%, rgb(241,214,126) 0%);
+	background-image: -webkit-linear-gradient(bottom, rgb(254,225,139) 100%, rgb(241,214,126) 0%);
+	background-image: -ms-linear-gradient(bottom, rgb(254,225,139) 100%, rgb(241,214,126) 0%);
+
+	background-image: -webkit-gradient(
+		linear,
+		left bottom,
+		left top,
+		color-stop(1, rgb(254,225,139)),
+		color-stop(0, rgb(241,214,126))
+	);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fee18b', endColorstr='#f1d67e',GradientType=0 );
+}
+
 /* Edit Periods */
 .authorization-edit {
 	padding: 30px 0 30px 30px;
@@ -626,6 +644,10 @@ a,input,.symbol {
 				for(i in all) {
 					changedValue($(all[i]));
 				}
+				
+				$('.period').children('header').click(function() {
+					$(this).parent().find('ul').slideToggle('fast');
+				});
 				
 			});
 

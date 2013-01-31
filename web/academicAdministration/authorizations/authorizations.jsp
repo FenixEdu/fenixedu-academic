@@ -80,7 +80,7 @@
 						<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.academicAdministration.authorizations.manage" />
 					</html:link>
 				</header>
-				<ul>
+				<ul style="display: none">
 					<logic:iterate id="rule" name="memberRules" property="value">
 						<li>Pode <strong><bean:write name="rule" property="operation.localizedName" /></strong>
 							<logic:notEmpty	name="rule" property="office"> para os cursos geridos pelas secretarias:
