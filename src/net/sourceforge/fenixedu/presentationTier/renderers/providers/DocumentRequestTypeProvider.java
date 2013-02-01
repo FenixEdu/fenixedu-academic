@@ -48,7 +48,7 @@ public class DocumentRequestTypeProvider implements DataProvider {
 			if (includeQuickDeliveryTypes != documentRequestType.isAllowedToQuickDeliver()) {
 				continue;
 			}
-			if (includePreBolonhaTypes != documentRequestType.isPreBolonha()) {
+			if (!includePreBolonhaTypes && documentRequestType.isPreBolonha()) {
 				continue;
 			}
 			if (documentRequestType.isBolonhaOnly() && bean.hasRegistration() && !bean.getRegistration().isBolonha()) {
