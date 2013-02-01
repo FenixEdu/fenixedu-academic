@@ -29,6 +29,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManage
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.utils.ContextUtils;
 
+import org.apache.log4j.Logger;
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
@@ -45,9 +46,10 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
  */
 public class ManageShiftsDA extends FenixExecutionDegreeAndCurricularYearContextDispatchAction {
 
+	Logger logger = Logger.getLogger(ManageShiftDA.class);
+
 	public ActionForward listShifts(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
-
 		readAndSetInfoToManageShifts(request);
 		return mapping.findForward("ShowShiftList");
 	}
@@ -177,7 +179,8 @@ public class ManageShiftsDA extends FenixExecutionDegreeAndCurricularYearContext
 	private void readAndSetInfoToManageShifts(HttpServletRequest request) throws FenixServiceException, FenixFilterException,
 			Exception {
 		ContextSelectionBean context = (ContextSelectionBean) request.getAttribute(PresentationConstants.CONTEXT_SELECTION_BEAN);
-
+		logger.warn(String.format("ContextSelectionBean: academicInterval %s executionDegree %s curricularYear %s",
+				context.getAcademicInterval(), context.getExecutionDegree(), context.getCurricularYear()));
 		List<InfoShift> infoShifts =
 				ReadShiftsByExecutionPeriodAndExecutionDegreeAndCurricularYear.run(context.getAcademicInterval(),
 						new InfoExecutionDegree(context.getExecutionDegree()),
