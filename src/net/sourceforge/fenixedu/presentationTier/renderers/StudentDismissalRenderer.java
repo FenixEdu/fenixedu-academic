@@ -149,7 +149,7 @@ public class StudentDismissalRenderer extends InputRenderer {
 		return new StudentDismissalLayout();
 	}
 
-	private class StudentDismissalLayout extends Layout {
+	protected class StudentDismissalLayout extends Layout {
 
 		private final CopyCheckBoxValuesController curricularCoursesController = new CopyCheckBoxValuesController();
 
@@ -218,7 +218,7 @@ public class StudentDismissalRenderer extends InputRenderer {
 			return container;
 		}
 
-		private void generateNoCourseGroupCurriculumGroups(HtmlBlockContainer container,
+		protected void generateNoCourseGroupCurriculumGroups(HtmlBlockContainer container,
 				StudentCurricularPlan studentCurricularPlan) {
 			for (NoCourseGroupCurriculumGroup noCourseGroupCurriculumGroup : studentCurricularPlan
 					.getNoCourseGroupCurriculumGroups()) {
@@ -227,7 +227,7 @@ public class StudentDismissalRenderer extends InputRenderer {
 
 		}
 
-		private void generateNoCourseGroupCurriculumGroup(HtmlBlockContainer container,
+		protected void generateNoCourseGroupCurriculumGroup(HtmlBlockContainer container,
 				StudentCurricularPlan studentCurricularPlan, CurriculumGroup curriculumGroup, int depth) {
 			final HtmlTable groupTable = new HtmlTable();
 			container.addChild(groupTable);
@@ -252,7 +252,7 @@ public class StudentDismissalRenderer extends InputRenderer {
 
 		}
 
-		private void generateCourseGroupCycles(final HtmlBlockContainer blockContainer,
+		protected void generateCourseGroupCycles(final HtmlBlockContainer blockContainer,
 				final StudentCurricularPlan studentCurricularPlan, final ExecutionSemester executionSemester) {
 			if (studentCurricularPlan.isBolonhaDegree()) {
 				for (final CycleType cycleType : studentCurricularPlan.getDegreeType().getSupportedCyclesToEnrol()) {
@@ -267,14 +267,14 @@ public class StudentDismissalRenderer extends InputRenderer {
 			}
 		}
 
-		private CourseGroup getCourseGroupWithCycleType(final StudentCurricularPlan studentCurricularPlan,
+		protected CourseGroup getCourseGroupWithCycleType(final StudentCurricularPlan studentCurricularPlan,
 				final CycleType cycleType) {
 			final CycleCurriculumGroup curriculumGroup = studentCurricularPlan.getCycle(cycleType);
 			return curriculumGroup != null ? curriculumGroup.getDegreeModule() : studentCurricularPlan.getDegreeCurricularPlan()
 					.getCycleCourseGroup(cycleType);
 		}
 
-		private void generateCurricularCourses(final HtmlBlockContainer blockContainer,
+		protected void generateCurricularCourses(final HtmlBlockContainer blockContainer,
 				final StudentCurricularPlan studentCurricularPlan, final ExecutionSemester executionSemester) {
 			final HtmlTable groupTable = new HtmlTable();
 			blockContainer.addChild(groupTable);
@@ -322,7 +322,7 @@ public class StudentDismissalRenderer extends InputRenderer {
 			}
 		}
 
-		private void generateCourseGroups(final HtmlBlockContainer blockContainer,
+		protected void generateCourseGroups(final HtmlBlockContainer blockContainer,
 				final StudentCurricularPlan studentCurricularPlan, final CourseGroup courseGroup,
 				final ExecutionSemester executionSemester, int depth) {
 			final HtmlTable groupTable = new HtmlTable();
