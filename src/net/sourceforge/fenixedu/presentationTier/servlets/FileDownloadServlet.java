@@ -34,7 +34,8 @@ public class FileDownloadServlet extends HttpServlet {
 				final Person person = AccessControl.getPerson();
 				if (!file.isPrivate() || file.isPersonAllowedToAccess(person)) {
 					response.setContentType(file.getMimeType());
-					response.addHeader("Content-Disposition", "attachment; filename=" + file.getFilename());
+					response.addHeader("Content-Disposition", "attachment; filename=\"" + file.getFilename() + "\"");
+					//response.addHeader("Content-Disposition", "attachment; filename=" + file.getFilename());
 					response.setContentLength(file.getSize());
 					final DataOutputStream dos = new DataOutputStream(response.getOutputStream());
 					dos.write(file.getContents());
