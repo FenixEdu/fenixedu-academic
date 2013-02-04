@@ -275,6 +275,18 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
 		return result;
 	}
 
+	public Collection<? extends Party> getActiveChildParties(AccountabilityTypeEnum accountabilityTypeEnum,
+			Class<? extends Party> childPartyClass) {
+		final Set<Party> result = new HashSet<Party>();
+		for (final Accountability accountability : getChildsSet()) {
+			if (accountability.isActive() && accountability.getAccountabilityType().getType() == accountabilityTypeEnum
+					&& childPartyClass.isAssignableFrom(accountability.getChildParty().getClass())) {
+				result.add(accountability.getChildParty());
+			}
+		}
+		return result;
+	}
+
 	public Collection<? extends Party> getChildParties(List<AccountabilityTypeEnum> accountabilityTypeEnums,
 			Class<? extends Party> childPartyClass) {
 		final Set<Party> result = new HashSet<Party>();

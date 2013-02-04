@@ -84,7 +84,7 @@ public abstract class PersistentAccessGroup extends PersistentAccessGroup_Base {
 
 	private void fillElements(Set<Person> members, Unit unit) {
 		members.addAll(unit.getPossibleGroupMembers());
-		for (Party child : unit.getChildParties(AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE, Unit.class)) {
+		for (Party child : unit.getActiveChildParties(AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE, Unit.class)) {
 			fillElements(members, (Unit) child);
 		}
 	}
